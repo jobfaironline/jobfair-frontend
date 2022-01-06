@@ -1,0 +1,1 @@
+//handle store assets
