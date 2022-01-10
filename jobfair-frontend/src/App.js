@@ -3,14 +3,13 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import store from "./redux-flow/index";
 import "./App.css";
-import LayoutPage from "./page/Layout";
-
+import LoginPage from "./pages/LoginPage/LoginPage";
 function App() {
   return (
     <BrowserRouter>
       <Provider store={store}>
         <Suspense fallback="loading">
-          <LayoutPage />
+          <LoginPage />
         </Suspense>
       </Provider>
     </BrowserRouter>

@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 const LoginPage = () => {
-    return (
-        <div>
-        {/* hanle page view */}
-        </div>
-    );
-}
+  return (
+    <div>
+      <h2>This web is maintaining</h2>
+    </div>
+  );
+};
 
 export default LoginPage;
