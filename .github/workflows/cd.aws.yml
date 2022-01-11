@@ -29,16 +29,14 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - uses: jakejarvis/s3-sync-action@master
+    - uses: aws-actions/configure-aws-credentials@v1
       with:
-        args: --acl public-read --follow-symlinks --delete
+       aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+       aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+       aws-region: ap-northeast-2
     - uses: actions/download-artifact@v2
       with:
        name: frontend
        path: build
-      env:
-        AWS_S3_BUCKET: job-fair-online-frontend
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: 'ap-southeast-1'   # optional: defaults to us-east-1
-        SOURCE_DIR: 'build'      # optional: defaults to entire repository
+    - run: aws s3 sync ./build s3://job-fair-online-frontend
+
