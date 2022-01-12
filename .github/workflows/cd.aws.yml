@@ -38,5 +38,5 @@ jobs:
       with:
        name: frontend
        path: build
-    - run: aws s3 sync ./build s3://job-fair-online-frontend
+    - run: aws s3 sync ./build s3://job-fair-online-dev/frontend/
 
