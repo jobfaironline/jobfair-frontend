@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-// handle routing
-=======
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import AttendantRouter from "./AttendantRouter";
@@ -8,7 +5,6 @@ import StaffRouter from "./StaffRouter";
 import AdminRouter from "./AdminRouter";
 import CompanyEmployeeRouter from "./CompanyEmployeeRouter";
 import CompanyManagerRouter from "./CompanyManagerRouter";
-
 //init Page
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
@@ -54,4 +50,3 @@ const AppRouter = () => {
   );
 };
 export default AppRouter;
->>>>>>> Stashed changes
