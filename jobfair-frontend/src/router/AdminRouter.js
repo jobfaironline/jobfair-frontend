@@ -3,7 +3,7 @@ import { ADMIN } from "../constants/AppConst";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
-import { contains } from "utils/common";
+import { contains } from "../utils/common";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 const AdminRouter = ({ component: Component, ...rest }) => {
