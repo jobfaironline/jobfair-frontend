@@ -15,7 +15,7 @@ import ContractsPage from "../pages/ContractsPage/ContractsPage";
 import HomePage from "../pages/HomePage";
 const AppRouter = () => {
   return (
-    <Switch>
+    <Switch>      
       {/*init home page*/}
       <Route path="/" exact>
         <HomePage />
