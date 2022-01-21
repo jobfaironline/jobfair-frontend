@@ -1,14 +1,41 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 import Form from "../../components/react-hook-form/form/Form";
 import TextInput from "../../components/react-hook-form/input/TextInput/TextInput";
+import { SigninHandler } from "../../redux-flow/authentication/authentication-action";
 import { schema } from "../../schema/login.schema";
+import { signInAPI } from "../../services/userService";
+import { ToastContainer, toast } from "react-toastify";
+import { injectStyle } from "react-toastify/dist/inject-style";
+import { notify } from "../../utils/toastutil";
+if (typeof window !== "undefined") {
+  injectStyle();
+}
 const LoginPage = () => {
-  const handelOnSubmit = (data) => console.log(data);
+  const dispatch = useDispatch();
+  const [errorRes, setErrorRes] = useState();
+  const handelOnSubmit = (values, actions) =>
+    signInAPI({ email: values.email, password: values.password })
+      .then((res) => {
+        notify(1, "Login Success");
+        dispatch(SigninHandler(res.data));
+      })
+      .catch((err) => {
+        notify(0, "Login Fail");
+        if (err?.response?.data?.message) {
+          notify(0, "Login Fail");
+          setErrorRes(err?.response?.data?.message);
+        }
+      })
+      .finally(() => {
+        notify(9, "requesting");
+      });
   return (
     <Form onSubmit={handelOnSubmit} schema={schema}>
-      <TextInput name="username" />
-      <TextInput name="password" type="password" />
+      <TextInput name="email" label="Email" />
+      <TextInput name="password" type="password" label="Password" />
       <button>Login</button>
+      <ToastContainer />
     </Form>
   );
 };
