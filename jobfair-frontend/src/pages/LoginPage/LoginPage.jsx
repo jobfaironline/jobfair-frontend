@@ -6,8 +6,9 @@ const LoginPage = () => {
   const handelOnSubmit = (data) => console.log(data);
   return (
     <Form onSubmit={handelOnSubmit} schema={schema}>
-      <TextInput name="username" />
-      <TextInput name="password" type="password" />
+      <h2>Log In</h2>
+      <TextInput name="username" label="User Name" />
+      <TextInput name="password" type="password" label="Password" />
       <button>Login</button>
     </Form>
   );
