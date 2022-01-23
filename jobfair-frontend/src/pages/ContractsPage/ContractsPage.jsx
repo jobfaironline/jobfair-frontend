@@ -3,7 +3,7 @@ import React from "react";
 const ContractsPage = () => {
   return (
     <div>
-      <h2>Contacts Page</h2>
+      <h2>Contracts Page</h2>
     </div>
   );
 };

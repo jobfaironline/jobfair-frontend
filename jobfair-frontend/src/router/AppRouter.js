@@ -13,11 +13,8 @@ import JobFairPackPage from "../pages/JobFairPackPage/JobFairPackPage";
 import UserPage from "../pages/UserPage/UserPage";
 import ContractsPage from "../pages/ContractsPage/ContractsPage";
 import HomePage from "../pages/HomePage";
-import NavigationBar from "../components/navbar/Navbar";
 const AppRouter = () => {
   return (
-    <>
-    <NavigationBar/>
     <Switch>      
       {/*init home page*/}
       <Route path="/" exact>
@@ -50,7 +47,6 @@ const AppRouter = () => {
 
       {/*handle Role Admin Pages*/}
     </Switch>
-    </>
   );
 };
 export default AppRouter;
