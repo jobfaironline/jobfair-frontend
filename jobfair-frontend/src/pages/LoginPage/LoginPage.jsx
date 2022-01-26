@@ -14,19 +14,20 @@ if (typeof window !== "undefined") {
 const LoginPage = () => {
   const dispatch = useDispatch();
   const [errorRes, setErrorRes] = useState();
-  const handelOnSubmit = (values, actions) =>
+  const handelOnSubmit = (values, actions) => {
+    console.log("Hello");
     signInAPI({ email: values.email, password: values.password })
       .then((res) => {
-        notify(1, "Login Success");
+        notify(2, "Login Success");
         dispatch(SigninHandler(res.data));
       })
       .catch((err) => {
         notify(0, `Login Faile ${err}`);
         if (err?.response?.data?.message) {
-          notify(0, "Login Fail");
           setErrorRes(err?.response?.data?.message);
         }
       });
+  };
   return (
     <Form onSubmit={handelOnSubmit} schema={schema}>
       <TextInput name="email" label="Email" />

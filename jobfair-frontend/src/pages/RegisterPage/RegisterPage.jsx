@@ -9,8 +9,24 @@ import { registerCompanyAPI } from "../../services/userService";
 const RegisterPage = () => {
   const { TabPane } = Tabs;
   const [errorRes, setErrorRes] = useState();
-  const handleOnSubmitAttendant = (data) => {};
-  const handleOnSubmitCompany = (data) => {};
+  const handleOnSubmitAttendant = (values, actions) => {
+    registerAttendantAPI({
+      email: values.email,
+      lastname: values.attendantName,
+      password: values.password,
+    })
+      .then((data) => {})
+      .catch((err) => {});
+  };
+  const handleOnSubmitCompany = (values, actions) => {
+    registerCompanyAPI({
+      email: values.email,
+      lastname: values.attendantName,
+      password: values.password,
+    })
+      .then((data) => {})
+      .catch((err) => {});
+  };
   return (
     <Tabs defaultActiveKey="1">
       <TabPane tab="ATTENDANT" key="1">

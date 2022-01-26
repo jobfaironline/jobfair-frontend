@@ -15,7 +15,6 @@ export const CallAPI = (
         "content-type": "application/json",
       };
   token = cookie.get(TOKEN_KEY);
-  console.log(token);
   if (token && token !== "undefined") {
     headers.Authorization = `Bearer ${token}`;
   }
