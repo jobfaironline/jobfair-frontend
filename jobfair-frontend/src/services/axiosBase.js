@@ -1,6 +1,6 @@
 import axios from "axios";
+import * as cookie from "js-cookie";
 import { TOKEN_KEY } from "../constants/AppConst";
-
 export const CallAPI = (
   endpoint,
   method = "GET",
@@ -14,7 +14,8 @@ export const CallAPI = (
     : {
         "content-type": "application/json",
       };
-
+  token = cookie.get(TOKEN_KEY);
+  console.log(token);
   if (token && token !== "undefined") {
     headers.Authorization = `Bearer ${token}`;
   }

@@ -21,14 +21,11 @@ const LoginPage = () => {
         dispatch(SigninHandler(res.data));
       })
       .catch((err) => {
-        notify(0, "Login Fail");
+        notify(0, `Login Faile ${err}`);
         if (err?.response?.data?.message) {
           notify(0, "Login Fail");
           setErrorRes(err?.response?.data?.message);
         }
-      })
-      .finally(() => {
-        notify(9, "requesting");
       });
   return (
     <Form onSubmit={handelOnSubmit} schema={schema}>

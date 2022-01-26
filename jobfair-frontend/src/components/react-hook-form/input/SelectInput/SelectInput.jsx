@@ -2,9 +2,11 @@ import React from "react";
 import "./SelectInput.module.scss";
 const SelectInput = ({ register, options, name, ...rest }) => {
   return (
-    <select {...register(name)} {...rest}>
+    <select {...register(name)} {...rest} className="SelectInput">
       {options.map((value) => (
-        <option value={value}>{value}</option>
+        <option value={value} className="optionInput">
+          {value}
+        </option>
       ))}
     </select>
   );
