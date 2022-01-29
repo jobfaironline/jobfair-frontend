@@ -14,11 +14,12 @@ import UserPage from "../pages/UserPage/UserPage";
 import ContractsPage from "../pages/ContractsPage/ContractsPage";
 import HomePage from "../pages/HomePage";
 import NavigationBar from "../components/navbar/Navbar";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 const AppRouter = () => {
   return (
     <>
     <NavigationBar/>
-    <Switch>      
+    <Switch>
       {/*init home page*/}
       <Route path="/" exact>
         <HomePage />
@@ -49,6 +50,9 @@ const AppRouter = () => {
       {/*handle Role Company Manager Pages*/}
 
       {/*handle Role Admin Pages*/}
+      <Route path="/profile" exact>
+        <ProfilePage/>
+      </Route>
     </Switch>
     </>
   );
