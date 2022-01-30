@@ -1,10 +1,10 @@
 import React from "react";
-import "./TextInput.module.scss";
+import styles from "./TextInput.module.scss";
 const TextInput = ({ register, name, label, ...rest }) => {
   return (
     <div>
-      <label for={label}>{label}</label> <br></br>
-      <input {...register(name)} {...rest} className="TextInput" />{" "}
+      <label for={label} className={styles.label}>{label}</label> <br></br>
+      <input {...register(name)} {...rest} className={styles.InputText} autoComplete="off"/>{" "}
     </div>
   );
 };

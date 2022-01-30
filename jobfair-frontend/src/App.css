@@ -7,7 +7,7 @@ body {
 
 .container-fluid {
   margin: 0 auto;
-  max-width: auto;
+  max-width: 100%;
   padding: 0 15px;
   background: #cfcdcf;
 }
@@ -16,7 +16,7 @@ body {
   background: #fff !important;
 }
 
-/* 
+/*
 title holder
 ------------
 */
@@ -32,9 +32,9 @@ title holder
   margin: 0;
 }
 
-/* 
+/*
 Navbar
------- 
+------
 */
 
 .Navbar {
@@ -66,9 +66,9 @@ Navbar
   transition: all 0.3s linear;
 }
 
-/* 
+/*
 home
----- 
+----
 */
 .home {
   background: url("assets/images/bg-hero.jpg") no-repeat;
