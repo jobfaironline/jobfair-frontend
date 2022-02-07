@@ -11,6 +11,7 @@ const authenticationSlice = createSlice({
     isAuthUser: !!localStorage.getItem(USER_STORAGE),
     user: JSON.parse(localStorage.getItem(USER_STORAGE)) || {},
     status: "",
+
   },
   reducers: {
     fetchingLogin: (state, action) => {
