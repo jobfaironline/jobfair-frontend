@@ -2,42 +2,43 @@ import React, { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import Form from "../../components/react-hook-form/form/Form";
 import TextInput from "../../components/react-hook-form/input/TextInput/TextInput";
-import { SigninHandler } from "../../redux-flow/authentication/authentication-action";
-import { schema } from "../../schema/login.schema";
-import { signInAPI } from "../../services/userService";
+import { generateOtpHandler } from "../../redux-flow/reset-password/reset-password-action";
+import { generateOtpSchema } from "../../schema/send.otp.schema";
+import { generateOTPAPI } from "../../services/userService";
 import { ToastContainer, toast } from "react-toastify";
 import { injectStyle } from "react-toastify/dist/inject-style";
 import { notify } from "../../utils/toastutil";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 if (typeof window !== "undefined") {
   injectStyle();
 }
-const LoginPage = () => {
+const GenerateOtpPage = () => {
+  let history = useHistory();
   const dispatch = useDispatch();
   const [errorRes, setErrorRes] = useState();
   const handelOnSubmit = (values, actions) => {
-    console.log("Hello");
-    signInAPI({ email: values.email, password: values.password })
+    generateOTPAPI({ email: values.email })
       .then((res) => {
-        notify(2, "Login Success");
-        dispatch(SigninHandler(res.data));
+        localStorage.setItem("email", values.email);
+        notify(2, "Send OTP Successfully!");
+        dispatch(generateOtpHandler(res.data));
+        history.push("/resetpassword");
       })
       .catch((err) => {
-        notify(0, `Login Faile ${err}`);
+        notify(0, `Send OTP Failed ${err}`);
         if (err?.response?.data?.message) {
           setErrorRes(err?.response?.data?.message);
         }
       });
   };
   return (
-    <Form onSubmit={handelOnSubmit} schema={schema}>
+    <Form onSubmit={handelOnSubmit} schema={generateOtpSchema}>
       <TextInput name="email" label="Email" />
-      <TextInput name="password" type="password" label="Password" />
-      <Link to="/generateotp">Forgot password?</Link>
-      <button>Login</button>
+      <button>Submit</button>
       <ToastContainer />
     </Form>
   );
 };
 
-export default LoginPage;
+export default GenerateOtpPage;

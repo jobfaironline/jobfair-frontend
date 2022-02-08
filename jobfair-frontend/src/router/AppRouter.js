@@ -15,6 +15,8 @@ import ContractsPage from "../pages/ContractsPage/ContractsPage";
 import HomePage from "../pages/HomePage";
 import NavigationBar from "../components/navbar/Navbar";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
+import GenerateOtpPage from "../pages/ResetPasswordPage/GenerateOtpPage";
+import ResetPasswordPage from "../pages/ResetPasswordPage/ResetPasswordPage";
 const AppRouter = () => {
   return (
     <>
@@ -53,6 +55,13 @@ const AppRouter = () => {
       <Route path="/profile" exact>
         <ProfilePage/>
       </Route>
+      //get otp
+      <Route path="/generateotp" exact>
+        <GenerateOtpPage/>
+      </Route>
+      <Route path="/resetpassword" exact>
+        <ResetPasswordPage/>
+        </Route> 
     </Switch>
     </>
   );
