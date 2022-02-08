@@ -1,4 +1,5 @@
 import {
+  ENDPOINT_ATTENDANT,
   ENDPOINT_LOGIN,
   ENDPOINT_REGISTER_ATTENDANT,
   ENDPOINT_REGISTER_COMPANY,
@@ -13,3 +14,6 @@ export const registerAttendantAPI = (data) =>
 //register company role
 export const registerCompanyAPI = (data) =>
   CallAPI(ENDPOINT_REGISTER_COMPANY, "Post", data);
+//view attendant detail
+export const getAttendantDetailAPI = (attendantId) =>
+    CallAPI(ENDPOINT_ATTENDANT + '/' + `${attendantId}`, "GET");

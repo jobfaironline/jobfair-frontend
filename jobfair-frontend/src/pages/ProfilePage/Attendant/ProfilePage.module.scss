@@ -12,6 +12,7 @@
   display: flex;
   margin-top: 5rem;
   flex-direction: column;
+  margin-left: 6rem;
 }
 .father_div {
   height: 10rem;
@@ -32,7 +33,8 @@
 
 
 .element_form {
-  flex: auto;
+  //flex: auto;
+  margin-left: 0.5rem;
 }
 
 .edit_button {
@@ -85,7 +87,7 @@
 
 .label {
   font-weight: bold;
-  font-size: 1.25em;
+  font-size: 1em;
   margin-left: 2em;
 }
 .main_form{
@@ -99,8 +101,8 @@
   float: left;
 }
 
-.gender_select {
+.dropdown {
   width: 20vw;
   font-size: 1.5em;
-  margin: 0.5em 1.25em;
+  margin: 0.5em 1.55em;
 }
