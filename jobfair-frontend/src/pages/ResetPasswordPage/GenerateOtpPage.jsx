@@ -2,7 +2,6 @@ import React, { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import Form from "../../components/react-hook-form/form/Form";
 import TextInput from "../../components/react-hook-form/input/TextInput/TextInput";
-import { generateOtpHandler } from "../../redux-flow/reset-password/reset-password-action";
 import { generateOtpSchema } from "../../schema/send.otp.schema";
 import { generateOTPAPI } from "../../services/userService";
 import { ToastContainer, toast } from "react-toastify";
@@ -15,14 +14,12 @@ if (typeof window !== "undefined") {
 }
 const GenerateOtpPage = () => {
   let history = useHistory();
-  const dispatch = useDispatch();
   const [errorRes, setErrorRes] = useState();
   const handelOnSubmit = (values, actions) => {
     generateOTPAPI({ email: values.email })
       .then((res) => {
         localStorage.setItem("email", values.email);
         notify(2, "Send OTP Successfully!");
-        dispatch(generateOtpHandler(res.data));
         history.push("/resetpassword");
       })
       .catch((err) => {

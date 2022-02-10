@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import TextInput from "../../components/react-hook-form/input/TextInput/TextInput";
-import { resetPasswordHandler } from "../../redux-flow/reset-password/reset-password-action";
 import { resetPasswordSchema } from "../../schema/reset.password.schema";
 import { resetPasswordAPI } from "../../services/userService";
 import { ToastContainer, toast } from "react-toastify";
@@ -15,7 +14,6 @@ if (typeof window !== "undefined") {
 }
 const ResetPasswordPage = () => {
   let history = useHistory();
-  const dispatch = useDispatch();
   const [errorRes, setErrorRes] = useState();
 
   const handelOnSubmit = (values, actions) => {
@@ -28,7 +26,6 @@ const ResetPasswordPage = () => {
       .then((res) => {
         if (res.status === 200) {
           notify(2, "Reset password successfully!");
-          dispatch(resetPasswordHandler(res.data));
           localStorage.removeItem("email");
           history.push("/auth/login");
         }
