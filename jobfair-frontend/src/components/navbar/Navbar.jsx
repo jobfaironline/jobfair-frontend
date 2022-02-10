@@ -30,6 +30,9 @@ const NavigationBar = () => {
           <Menu.Item key="profile">
             <Link to="/profile">Profile</Link>
           </Menu.Item>
+          <Menu.Item key="changepassword">
+            <Link to="/accounts/changepassword">Change Password</Link>
+          </Menu.Item>
         </Menu>
       </div>
     </div>

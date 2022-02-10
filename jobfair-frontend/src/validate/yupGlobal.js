@@ -5,6 +5,9 @@ import {
   REGEX_PASSWORD,
   REGEX_PHONE,
   REGEX_XSS,
+  REGEX_NEW_PASSWORD,
+  REGEX_RE_NEW_PASSWORD,
+
 } from "../constants/AppConst";
 yup.addMethod(yup.string, "password", function (message) {
   return this.matches(REGEX_PASSWORD, {
@@ -26,6 +29,24 @@ yup.addMethod(yup.string, "phone", function (message) {
 });
 yup.addMethod(yup.string, "xss", function (message) {
   return this.matches(REGEX_XSS, {
+    message,
+    excludeEmptyString: true,
+  });
+});
+yup.addMethod(yup.string, "newPassword", function (message) {
+  return this.matches(REGEX_NEW_PASSWORD, {
+    message,
+    excludeEmptyString: true,
+  });
+});
+yup.addMethod(yup.string, "confirmPassword", function (message) {
+  return this.matches(REGEX_RE_NEW_PASSWORD, {
+    message,
+    excludeEmptyString: true,
+  });
+});
+yup.addMethod(yup.string, "oldPassword", function (message) {
+  return this.matches(REGEX_PASSWORD, {
     message,
     excludeEmptyString: true,
   });
