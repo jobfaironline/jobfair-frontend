@@ -19,7 +19,6 @@ const ResetPasswordPage = () => {
   const [errorRes, setErrorRes] = useState();
 
   const handelOnSubmit = (values, actions) => {
-    console.log("reset");
     resetPasswordAPI({
       email: localStorage.getItem("email"),
       otp: values.otp,
