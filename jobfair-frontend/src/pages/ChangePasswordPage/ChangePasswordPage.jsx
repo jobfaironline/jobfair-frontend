@@ -1,7 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { useDispatch } from "react-redux";
 import TextInput from "../../components/react-hook-form/input/TextInput/TextInput";
-import { resetPasswordHandler } from "../../redux-flow/reset-password/reset-password-action";
 import { changePasswordSchema } from "../../schema/change.password.schema";
 import { changePasswordAPI, resetPasswordAPI } from "../../services/userService";
 import { ToastContainer, toast } from "react-toastify";
@@ -15,7 +13,6 @@ if (typeof window !== "undefined") {
 }
 const ChangePasswordPage = () => {
   let history = useHistory();
-  const dispatch = useDispatch();
   const [errorRes, setErrorRes] = useState();
 
   const handelOnSubmit = (values, actions) => {
@@ -26,7 +23,7 @@ const ChangePasswordPage = () => {
       .then((res) => {
         if (res.status === 200) {
           notify(2, "Change password successfully!");
-          dispatch(resetPasswordHandler(res.data));
+          // dispatch(resetPasswordHandler(res.data));
           history.push("/auth/login");
         }
       })
