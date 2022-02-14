@@ -28,10 +28,13 @@ const NavigationBar = () => {
             <Link to="/auth/login">Log In</Link>
           </Menu.Item>
           <Menu.Item key="profile">
-            <Link to="/profile">Profile</Link>
+            <Link to="/profile">Attendant profile</Link>
           </Menu.Item>
           <Menu.Item key="changepassword">
             <Link to="/accounts/changepassword">Change Password</Link>
+          </Menu.Item>
+          <Menu.Item key="company-profile">
+            <Link to="/company/profile">Company profile</Link>
           </Menu.Item>
         </Menu>
       </div>
