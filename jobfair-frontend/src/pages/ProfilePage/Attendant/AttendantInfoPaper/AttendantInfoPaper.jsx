@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Col, Container, Row} from "react-grid-system";
-import styles from "../ProfilePage.module.scss";
 import {Input} from "antd";
 import {jobLevel} from "../../../../Constants/AppConst";
+import styles from "../../ProfilePage.module.scss";
 
 const AttendantInfoPaper = props => {
     const [accountId, setAccountId] = useState("");

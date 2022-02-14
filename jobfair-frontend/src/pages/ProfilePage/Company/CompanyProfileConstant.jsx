@@ -39,38 +39,38 @@ export const SizeConst = [
 
 export const SubCategories = [
     {
-        id: 0,
-        name: 'IT-Hardware/Networking'
+        value: 0,
+        label: 'IT-Hardware/Networking'
     },
     {
-        id: 1,
-        name: 'Household'
+        value: 1,
+        label: 'Household'
     },
     {
-        id: 2,
-        name: 'Marine'
+        value: 2,
+        label: 'Marine'
     },
     {
-        id: 3,
-        name: 'Accounting'
+        value: 3,
+        label: 'Accounting'
     }
 ]
 
 export const benefitConst = [
     {
-        id: 0,
-        name: "Awards"
+        value: 0,
+        label: "Awards"
     },
     {
-        id: 1,
-        name: "Travel"
+        value: 1,
+        label: "Travel"
     },
     {
-        id: 2,
-        name: "Laptop"
+        value: 2,
+        label: "Laptop"
     },
     {
-        id: 3,
-        name: "Transportation"
+        value: 3,
+        label: "Transportation"
     }
 ]

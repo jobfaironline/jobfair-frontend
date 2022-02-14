@@ -1,10 +1,12 @@
 import React from 'react';
-import {useFieldArray, useForm, Controller, set} from "react-hook-form";
+import {Controller, useFieldArray, useForm} from "react-hook-form";
 import {COMPANY_DEFAULT_MODEL} from "./CompanyDefaultModel";
 import {benefitConst, SizeConst, SubCategories} from "./CompanyProfileConstant";
 import {Box, Paper} from "@mui/material";
-import styles from "../Attendant/ProfilePage.module.scss";
 import Select from "react-select";
+import styles from "./index.styles.scss";
+import {updateCompanyProfile} from "../../../services/userService";
+import {ErrorMessage} from "@hookform/error-message";
 
 const data = {
     address: 'fpt',
@@ -20,14 +22,11 @@ const data = {
     ],
     email: 'example@gmail.com',
     employeeMaxNum: 10,
-    id: "",
+    id: "0e9aef5d-aea5-4607-bcdf-04dfb09ef928",
     mediaUrls: [
         "string1", "string2", "string3"
     ],
     name: "KFC CFK",
-    contactName: "Fried Chicken wings",
-    companyProfile: "KFC (also known as Kentucky Fried Chicken) is an American fast food restaurant chain headquartered in Louisville, Kentucky that specializes in fried chicken." +
-        " It is the world's second-largest restaurant chain (as measured by sales) after McDonald's, with 22,621 locations globally in 150 countries as of December 2019.",
     phone: "0123456789",
     sizeId: 0,
     status: "ACTIVE",
@@ -44,12 +43,16 @@ const options = [
     {value: 2, label: "Luong cao"}
 ]
 
+export const PHONE_REGEX = /(([03+[2-9]|05+[6|8|9]|07+[0|6|7|8|9]|08+[1-9]|09+[1-4|6-9]]){3})+[0-9]{7}\b/g;
+export const EMAIL_REGEX = /^([\w!.%+\-])+@([\w\-])+(?:\.[\w\-]+)+$/;
+
 const CompanyProfile = props => {
-    const {register, handleSubmit, control, setValue, getValues} = useForm({
+    const [loadedFiles, setLoadedFiles] = React.useState([]);
+    const {register, handleSubmit, control, setValue, getValues,  formState: { errors }} = useForm({
         defaultValues: COMPANY_DEFAULT_MODEL
     });
 
-    const {fields: benefitFields, append: benenfitAppend, remove: benefitRemove} = useFieldArray({
+    const {fields: benefitFields, append: benefitAppend, remove: benefitRemove} = useFieldArray({
         control,
         name: 'benefits'
     })
@@ -66,8 +69,6 @@ const CompanyProfile = props => {
             setValue('employeeMaxNum', res.data.employeeMaxNum);
             setValue('id', res.data.id);
             setValue('name', res.data.name);
-            setValue('contactName', res.data.contactName);
-            setValue('companyProfile', res.data.companyProfile);
             setValue('phone', res.data.phone);
             setValue('sizeId', res.data.sizeId);
             setValue('status', res.data.status);
@@ -86,7 +87,28 @@ const CompanyProfile = props => {
     }, [])
 
     const onSubmit = (data) => {
+        const result = Array.from(data.mediaUrls).map(item => item.name);
+        setValue('mediaUrls', result);
         console.log(data);
+        //call api update
+        updateCompanyProfile(data)
+            .then(res => {
+                if (res.status === 200) {
+                    console.log("update successfully")
+                }
+            })
+            .catch(err => {
+                console.log("err: ", err)
+            })
+    }
+
+    const addLoadedFile = (file) => {
+        setLoadedFiles((prev) => [...prev, file])
+    }
+
+    const removeLoadedFile = (file) => {
+        const name = file.name;
+        setLoadedFiles(loadedFiles.filter(item => item.name !== name))
     }
 
     const onFileLoad = (e) => {
@@ -95,6 +117,17 @@ const CompanyProfile = props => {
         let fileReader = new FileReader();
         fileReader.onload = () => {
             console.log("image loaded", fileReader.result);
+            // setValue(`mediaUrls.${0}.fileReader.result`)
+            const result = {
+                name: file.name,
+                size: file.size,
+                type: file.type,
+                data: fileReader.result
+            }
+            //add file here
+            addLoadedFile(result);
+            //set
+            setValue('mediaUrls', [...getValues('mediaUrls'), result.name])
         }
 
         fileReader.onabort = () => {
@@ -120,11 +153,29 @@ const CompanyProfile = props => {
                 <Paper elevation={16} variant="outlined" className={styles.paper}>
                     <Box sx={{display: 'flex', flexDirection: 'column', width: '100%'}}>
                         <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                            Company name:* <input {...register('name')} />
-                            Phone number: <input {...register('phone')}/>
+                            Company name:* <input {...register('name', {required: true, maxLength: 100})} />
+                            <ErrorMessage errors={errors} name="name" message="Name is required and have max length is 100."/>
+                            <ErrorMessage
+                                errors={errors}
+                                name="name"
+                                render={({ message }) => <p className={styles.errorMessage}>{message}</p>}
+                            />
+                            Phone number: <input {...register('phone', {pattern: PHONE_REGEX}) }/>
+                            <ErrorMessage errors={errors} name="phone" message="Phone is invalid."/>
+                            <ErrorMessage
+                                errors={errors}
+                                name="name"
+                                render={({ message }) => <p className={styles.errorMessage}>{message}</p>}
+                            />
                         </Box>
                         <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                            Company address: (optional) <input {...register('address')}/>
+                            Company address: (optional) <input {...register('address', {maxLength: 300})}/>
+                            <ErrorMessage errors={errors} name="address" message="Address max length is 300."/>
+                            <ErrorMessage
+                                errors={errors}
+                                name="address"
+                                render={({ message }) => <p className={styles.errorMessage}>{message}</p>}
+                            />
                             Company size: (optional)
                             <select {...register('sizeId')}>
                                 {sizeMap.map(size => (
@@ -132,63 +183,101 @@ const CompanyProfile = props => {
                                 ))}
                             </select>
                         </Box>
-                        Contact Name: (optional)
-                        <input {...register('contactName')}/>
-                        Company Industry:*
-                        <select {...register('subCategoriesIds')}>
-                            {industries.map(size => (
-                                <option value={size.id}>{size.name}</option>
-                            ))}
-                        </select>
-                        Benefit:*
-                        <ul>
-                            {benefitFields.map((item, index) => {
-                                return (
-                                    <li key={item.id}>
-                                        <Controller
-                                            render={({field}) => <Select options={options}/>}
-                                            control={control}
-                                            onChange={([selected]) => {
-                                                // React Select return object instead of value for selection
-                                                return {value: selected};
-                                            }}
-                                            name={`benefits.${index}.id`}
-                                            defaultValue={{value: 0}}
-                                        />
-                                        <button type="button" onClick={() => benefitRemove(index)}>
-                                            Delete
-                                        </button>
-                                    </li>
-                                );
-                            })}
+                        <Box sx={{display: 'flex', flexDirection: 'row'}}>
+                            Email: <input {...register('email', {pattern: EMAIL_REGEX})}/>
+                            <ErrorMessage errors={errors} name="email" message="Email is invalid."/>
+                            <ErrorMessage
+                                errors={errors}
+                                name="email"
+                                render={({ message }) => <p className={styles.errorMessage}>{message}</p>}
+                            />
+                            Company URL: <input {...register('url', {maxLength: 2048})}/>
+                            <ErrorMessage errors={errors} name="url" message="Url is invalid."/>
+                            <ErrorMessage
+                                errors={errors}
+                                name="url"
+                                render={({ message }) => <p className={styles.errorMessage}>{message}</p>}
+                            />
+                        </Box>
+                        <Box sx={{display: 'flex', flexDirection: 'row', width: '100%', ml: 5}}>
+                            Company Industry:*
+                            <Select
+                                defaultValue={[industries[0], industries[1]]}
+                                isMulti
+                                isSearchable
+                                {...register('subCategoriesIds')}
+                                options={industries}
+                                className="basic-multi-select"
+                                classNamePrefix="select"
+                                onChange={(selected) => {
+                                    //onChange will catch a whole array when a change triggered
+                                    //=> map to new object
+                                    // setValue(`subCategoriesIds`, selected.value)
+                                    const result = selected.map(item => item.value);
+                                    setValue(`subCategoriesIds`, result);
+                                }}
+                            />
+                            Benefit:*
+                            <ul>
+                                {benefitFields.map((item, index) => {
+                                    return (
+                                        <li key={item.id}>
+                                            {console.log(getValues(`benefits.${index}.description`))}
+                                            <Controller
+                                                render={({field}) =>
+                                                    <select value={getValues(`benefits.${index}.id`)} onChange={(e) => setValue(`benefits.${index}.id`, e.target.value)}>
+                                                        {benefitConst.map(benefit => <option value={benefit.value}>{benefit.label}</option>)}
+                                                    </select>
+                                                }
+                                                control={control}
+                                                name={`benefits.${index}.id`}
+                                            />
+                                            <Controller render={({field}) => <input {...field}/>}
+                                                        name={`benefits.${index}.description`}
+                                                        control={control}
+                                                        defaultValue={getValues(`benefits.${index}.description`)}
+                                            />
+                                            <button type="button" onClick={() => benefitRemove(index)}>
+                                                Delete
+                                            </button>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
                             <button
                                 type="button"
                                 onClick={() => {
-                                    benenfitAppend({description: "new-description"});
+                                    benefitAppend({value: 1, label: 'Travel'});
                                 }}
                             >
-                                append food
+                                append
                             </button>
-                            <br/>
-                            Company Profile:
-                            <textarea {...register('companyProfile')}/> <br/>
-                            Company Medias:
-                            <input type="file" {...register('mediaUrls')}
-                                   onDragOver={(e) => {
-                                       e.preventDefault();
-                                       e.stopPropagation();
-                                   }}
-                                   onDrop={onFileLoad.bind(this)}
-                                   onChange={onFileLoad.bind(this)}
-                            />
-                            <div>
-                                File container
-                            </div>
-                            <div>
-                                Drag a file here
-                            </div>
+                        </Box>
+                        Company Medias:
+                        <input type="file" {...register('mediaUrls')}
+                               onDragOver={(e) => {
+                                   e.preventDefault();
+                                   e.stopPropagation();
+                               }}
+                               onDrop={onFileLoad.bind(this)}
+                               onChange={onFileLoad.bind(this)}
+                        />
+                        <div>
+                            File container
+                            {loadedFiles.map((file, index) => {
+                                return (
+                                    <div>
+                                        <img src={file.data}/>
+                                        <button onClick={removeLoadedFile(file)}>Remove</button>
+                                    </div>
+                                )
 
-                        </ul>
+                            })}
+                        </div>
+                        <div>
+                            Drag a file here
+                        </div>
+
                     </Box>
                 </Paper>
             </form>

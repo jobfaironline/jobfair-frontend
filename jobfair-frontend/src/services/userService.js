@@ -2,7 +2,7 @@ import {
   ENDPOINT_LOGIN,
   ENDPOINT_REGISTER_ATTENDANT,
   ENDPOINT_REGISTER_COMPANY,
-  ENDPOINT_CHANGE_PASSWORD,
+  ENDPOINT_CHANGE_PASSWORD, ENDPOINT_COMPANY,
 } from "../Constants/EndPoint";
 // handle api with axios
 import { CallAPI } from "./axiosBase.js";
@@ -17,3 +17,5 @@ export const registerCompanyAPI = (data) =>
 //change password
 export const changePasswordAPI = (data) =>
 CallAPI(ENDPOINT_CHANGE_PASSWORD, "POST", data);
+//update company profile
+export const updateCompanyProfile = (data) => CallAPI(ENDPOINT_COMPANY, "POST", data);

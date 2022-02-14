@@ -14,8 +14,6 @@ export const COMPANY_DEFAULT_MODEL =
             "string"
         ],
         name: "",
-        contactName: "",
-        companyProfile: "",
         phone: "",
         sizeId: 0,
         status: "",
