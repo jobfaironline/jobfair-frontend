@@ -18,4 +18,6 @@ export const registerCompanyAPI = (data) =>
 export const changePasswordAPI = (data) =>
 CallAPI(ENDPOINT_CHANGE_PASSWORD, "POST", data);
 //update company profile
-export const updateCompanyProfile = (data) => CallAPI(ENDPOINT_COMPANY, "POST", data);
+export const updateCompanyProfileAPI = (data) => CallAPI(ENDPOINT_COMPANY, "POST", data);
+//get company profile by id
+export const getCompanyProfileAPI = (id) => CallAPI(ENDPOINT_COMPANY + `/${id}`, "GET");

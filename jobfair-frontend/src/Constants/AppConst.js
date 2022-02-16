@@ -31,3 +31,4 @@ export const REGEX_RE_NEW_PASSWORD = "^.{2,}$";
 export const TOKEN_KEY = "token";
 export const TOKEN = "";
 export const USER_STORAGE = "user";
+export const COMPANY_ID_DEMO = "fe99c965-3dc7-4391-9665-1c7c72cce981";
