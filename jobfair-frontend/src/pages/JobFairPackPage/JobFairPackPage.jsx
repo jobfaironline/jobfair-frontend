@@ -1,42 +1,72 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import Model from "./components/model/model";
+import Model from "./components/model/Final_booth_model";
 import { OrbitControls } from "@react-three/drei";
 import { ToastContainer, toast } from "react-toastify";
+import { useEffect } from "react";
+import { mockData } from "./components/mockData/mockData";
+function parseNode(node) {
+  function parse(node) {
+    const object = {};
+    object["geometry"] = node.attributes["geometry"]?.value;
+    object["material"] = node.attributes["material"]?.value;
+    object["position"] = eval(node.attributes["position"]?.value);
+    object["rotation"] = eval(node.attributes["rotation"]?.value);
+    object["scale"] = eval(node.attributes["scale"]?.value);
+    return object;
+  }
+
+  if (node.children.length === 0) {
+    const object = parse(node);
+    object["children"] = null;
+    return object;
+  }
+  const children = [];
+  for (let childNode of node.children) {
+    const result = parseNode(childNode);
+    children.push(result);
+  }
+  const object = parse(node);
+  object["children"] = children;
+  return object;
+}
+function parseText(text) {
+  const pre_process_text = text.replaceAll("{", "'").replaceAll("}", "'");
+  const parser = new DOMParser();
+  const xmlDoc = parser.parseFromString(pre_process_text, "text/xml");
+  const result = [];
+  for (let node of xmlDoc.children) {
+    console.log(node);
+    const nodeObject = parseNode(node);
+    result.push(nodeObject);
+  }
+  return result;
+}
 const JobFairPackPage = () => {
+  const [position, setposition] = useState([-20, 5, 10]);
+  // useEffect(() => console.log(position), [position]);
+  const transfer = (data) => {
+    parseText(data);
+    // console.log();
+  };
   return (
     <>
-      <Canvas
+      {/* <Canvas
         dpr={[1, 2]}
-        camera={{ fov: 45, position: [-75, 30, -10] }}
-        dpr={[1, 5, 2]}
-        // camera={{ position: [-80, 50, -30], fov: 100, near: 1, far: 50 }}
+        camera={{ fov: 45, position: position }}
         style={{ width: "100%", height: "850px" }}
       >
-        {/* <ambientLight intensity={2} />
-      <color attach="background" args={["#202020"]} />
-      <fog attach="fog" args={["#202020", 20, 25]} />
-      <directionalLight position={[-10, 0, -15]} intensity={0.2} />
-      <directionalLight position={[10, 10, 10]} intensity={0.2} />
-      <Suspense fallback={null}>
-        <Model
-          position={[1, -1.4, 0]}
-          rotation={[0, -Math.PI / 2, 0]}
-          modelUrl="/map3Dv1.glb"
-        />
-      </Suspense>
-      <OrbitControls
-        enableZoom={false}
-        enablePan={false}
-        minPolarAngle={Math.PI / 3}
-        maxPolarAngle={Math.PI / 3}
-      /> */}
-        <OrbitControls />
+        <OrbitControls onChange={() => console.log(position)} />
         <directionalLight intensity={0.5} />
         <ambientLight intensity={0.2} />
         <Model />
       </Canvas>
-      <ToastContainer />
+      <ToastContainer /> */}
+      <div style={{ backgroundColor: "red" }}>
+        <button type="button" onClick={() => transfer(mockData)}>
+          Click Me!
+        </button>
+      </div>
     </>
   );
 };
