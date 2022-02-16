@@ -1,15 +1,29 @@
-import React, { useRef } from "react";
+import { Canvas, useThree, useFrame } from "@react-three/fiber";
+import React, { useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
+import { useDrag } from "react-use-gesture";
 
 export default function Model({ ...props }) {
   const group = useRef();
+  const [position, setPosition] = useState([0, 3.99, -7.5]);
   const { nodes, materials } = useGLTF("/final_booth_model.glb");
+  const { size, viewport } = useThree();
+  const aspect = size.width / viewport.width;
+  const bind = useDrag(
+    ({ offset: [x, y] }) => {
+      const [, , z] = position;
+      console.log(x / aspect);
+      setPosition([x / aspect, -y / aspect, -10]);
+    },
+    { pointerEvents: true }
+  );
   return (
     <group ref={group} {...props} dispose={null}>
       <mesh
         geometry={nodes.trash.geometry}
         material={nodes.trash.material}
         position={[5.39, 1.5, -7.96]}
+        onPointerOver={(e) => console.log()}
         scale={[0.4, 1, 0.4]}
       />
       <mesh
@@ -51,7 +65,9 @@ export default function Model({ ...props }) {
       <mesh
         geometry={nodes.banner01.geometry}
         material={nodes.banner01.material}
-        position={[0, 3.99, -7.5]}
+        position={position}
+        onClick={() => console.log(aspect)}
+        {...bind()}
         rotation={[0, 0, 1.38]}
         scale={[2.95, 0.74, 1.31]}
       >
