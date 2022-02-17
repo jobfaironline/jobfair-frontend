@@ -17,8 +17,7 @@ export const GET_ATTENDANT_MODEL =   {
     },
     "title": "DevOps",
     "address": "Ho Chi Minh",
-    // "dob" : moment(new Date(1644825972)),
-    "dob" : moment('2020-06-09T12:40:14+0000'),
+    "dob" : moment(convertToDateString(1645107872766)),
     "jobTitle": "DevOps",
     "yearOfExp": 2,
     "maritalStatus": "MARRIED",
@@ -36,11 +35,11 @@ export const GET_ATTENDANT_MODEL =   {
         {
             "company": "string",
             "description": "string",
-            "fromDate": 0,
+            "fromDate": moment(convertToDateString(0)),
             "id": "string",
             "isCurrentJob": true,
             "position": "string",
-            "toDate": 0
+            "toDate": moment(convertToDateString(0)),
         }
     ],
     "educations": [
@@ -48,8 +47,8 @@ export const GET_ATTENDANT_MODEL =   {
             "id": "9b8a5951-69ac-4bfd-8525-047c94ad1109",
             "subject": "Frog research",
             "school": "FPT University",
-            "fromDate": 1644825972419,
-            "toDate": 1644825972419,
+            "fromDate": moment(convertToDateString(1644825972419)),
+            "toDate": moment(convertToDateString(1644825972419)),
             "achievement": "Golden frog",
             "qualification": "COLLEGE"
         }
@@ -79,8 +78,8 @@ export const GET_ATTENDANT_MODEL =   {
             "name": "Redhat",
             "functionTitle": "Hacker",
             "organization": "RedHat",
-            "fromDate": 1644825972419,
-            "toDate": 1644825972419,
+            "fromDate": moment(convertToDateString(1644825972419)),
+            "toDate": moment(convertToDateString(1644825972419)),
             "isCurrentActivity": true,
             "description": "Hacker at FBI"
         }

@@ -1063,23 +1063,28 @@ export const ResidenceConst = [
 export const JobLevelConst = [
     {
         "id": "0",
-        "name": "Intern/Student"
+        "name" : "INTERN_STUDENT",
+        "description": "Intern/Student"
     },
     {
         "id": "1",
-        "name": "Fresher/Entry level"
+        "name" : "FRESHER",
+        "description": "Fresher/Entry level"
     },
     {
         "id": "2",
-        "name": "Experienced (non-manager)"
+        "name" : "EXPERIENCE",
+        "description": "Experienced (non-manager)"
     },
     {
         "id": "3",
-        "name": "Director"
+        "name": "DIRECTOR",
+        "description": "Director"
     },
     {
         "id": "4",
-        "name": "Director and above"
+        "name" : "DIRECTOR_AND_ABOVE",
+        "description": "Director and above"
     }
 ]
 
@@ -1123,6 +1128,37 @@ export const QualificationConst = [
     }
 
 ]
+export const GenderConst = [
+    {
+        value: "FEMALE",
+        label: "Female"
+    },
+    {
+        value: "MALE",
+        label: "Male"
+    }
+]
 
+export const MaritalConst = [
+    {
+        value: "MARRIED",
+        label: "Married"
+    },
+    {
+        value: "SINGLE",
+        label: "Single"
+    }
+]
+
+export const YesNoConst = [
+    {
+        value: true,
+        label: "Yes"
+    },
+    {
+        value: false,
+        label: "No"
+    }
+]
 export const PROFICIENCY_MAX_VALUE = 5;
 export const PROFICIENCY_MIN_VALUE = 1;
