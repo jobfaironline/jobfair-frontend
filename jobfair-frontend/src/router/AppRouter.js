@@ -16,6 +16,11 @@ import HomePage from "../pages/HomePage";
 import NavigationBar from "../components/navbar/Navbar";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
+
+//TODO: Remove later
+import EmployeeManagementPage from "../pages/EmployeeManagementPage/EmployeeManagementPage";
+import EmployeeRegisterPage from "../pages/EmployeeManagementPage/EmployeeRegisterPage";
+
 const AppRouter = () => {
   return (
     <>
@@ -46,6 +51,13 @@ const AppRouter = () => {
         </Route>
         {/*handle Role Attendant Pages*/}
         {/*handle Role Company Employee Pages*/}
+        {/* TODO: Remove later */}
+        <Route path="/employee-management" exact>
+          <EmployeeManagementPage/>
+        </Route>
+        <Route path="/employee-register" exact>
+          <EmployeeRegisterPage/>
+        </Route>
         {/*handle Role Company Manager Pages*/}
         {/*handle Role Admin Pages*/}
         <Route path="/profile" exact>
