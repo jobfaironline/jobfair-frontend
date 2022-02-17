@@ -3,7 +3,7 @@ import {
   ENDPOINT_REGISTER_ATTENDANT,
   ENDPOINT_REGISTER_COMPANY,
   ENDPOINT_CHANGE_PASSWORD,
-} from "../constants/EndPoint";
+} from "../Constants/EndPoint";
 // handle api with axios
 import { CallAPI } from "./axiosBase.js";
 //Login

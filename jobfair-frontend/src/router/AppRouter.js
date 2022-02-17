@@ -14,8 +14,8 @@ import UserPage from "../pages/UserPage/UserPage";
 import ContractsPage from "../pages/ContractsPage/ContractsPage";
 import HomePage from "../pages/HomePage";
 import NavigationBar from "../components/navbar/Navbar";
-import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
+import AttendantProfile from "../pages/ProfilePage/Attendant";
 const AppRouter = () => {
   return (
     <>
@@ -48,8 +48,8 @@ const AppRouter = () => {
         {/*handle Role Company Employee Pages*/}
         {/*handle Role Company Manager Pages*/}
         {/*handle Role Admin Pages*/}
-        <Route path="/profile" exact>
-          <ProfilePage />
+        <Route path="/attendant/profile" exact>
+          <AttendantProfile/>
         </Route>
         <Route path="/accounts/changepassword" exact>
           <ChangePasswordPage />
