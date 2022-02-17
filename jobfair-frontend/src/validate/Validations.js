@@ -18,3 +18,17 @@ export const MIN_LENGTH_VALIDATOR = (fieldName, minValue) => {
         message: `${fieldName} has min value of length is ${minValue}`
     }
 }
+
+export const CompanyProfileValidation = {
+    name: [
+        {
+            required: true,
+            message: 'This field is required'
+        },
+        {
+            max : 100,
+            message: 'This field has max length is 100 characters'
+        }
+    ],
+
+}

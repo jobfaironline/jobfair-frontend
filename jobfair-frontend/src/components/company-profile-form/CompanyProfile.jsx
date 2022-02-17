@@ -9,7 +9,7 @@ import {
     SubCategories
 } from "../../pages/ProfilePage/Company/CompanyProfileConstant";
 import ImageUpload from "../image-upload/ImageUpload";
-import {MAX_LENGTH_VALIDATOR, REQUIRED_VALIDATOR} from "../../validate/Validations";
+import {CompanyProfileValidation, MAX_LENGTH_VALIDATOR, REQUIRED_VALIDATOR} from "../../validate/Validations";
 
 const CompanyProfileForm = props => {
     const [form] = Form.useForm();
@@ -72,7 +72,7 @@ const CompanyProfileForm = props => {
                     label="Company Name"
                     name='name'
                     required tooltip="This is required"
-                    rules={[REQUIRED_VALIDATOR('Company name'), MAX_LENGTH_VALIDATOR('Company name',100)]}
+                    rules={CompanyProfileValidation.name}
                 >
                     <Input placeholder="Company name" style={{width: '20%'}}/>
                 </Form.Item>
