@@ -4,6 +4,7 @@ import Model from "./components/model/Final_booth_model";
 import { OrbitControls } from "@react-three/drei";
 import { ToastContainer, toast } from "react-toastify";
 const JobFairPackPage = () => {
+    const [isDragging, setIsDragging] = useState(false);
   return (
     <>
       <Canvas
@@ -11,10 +12,10 @@ const JobFairPackPage = () => {
         camera={{ fov: 45, position: [-75, 30, -10] }}
         style={{ width: "100%", height: "850px" }}
       >
-        {/* <OrbitControls /> */}
+          <OrbitControls enabled={!isDragging} />
         <directionalLight intensity={0.5} />
         <ambientLight intensity={0.2} />
-        <Model />
+          <Model setIsDragging={setIsDragging} />
       </Canvas>
       <ToastContainer />
     </>
