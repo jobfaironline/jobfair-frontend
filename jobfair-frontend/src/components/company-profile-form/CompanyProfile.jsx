@@ -9,6 +9,7 @@ import {
     SubCategories
 } from "../../pages/ProfilePage/Company/CompanyProfileConstant";
 import ImageUpload from "../image-upload/ImageUpload";
+import {MAX_LENGTH_VALIDATOR, REQUIRED_VALIDATOR} from "../../validate/Validations";
 
 const CompanyProfileForm = props => {
     const [form] = Form.useForm();
@@ -67,7 +68,12 @@ const CompanyProfileForm = props => {
                 onValuesChange={e => handleOnChangeForm(e)}
                 requiredMark="required"
             >
-                <Form.Item label="Company Name" name='name' required tooltip="This is required">
+                <Form.Item
+                    label="Company Name"
+                    name='name'
+                    required tooltip="This is required"
+                    rules={[REQUIRED_VALIDATOR('Company name'), MAX_LENGTH_VALIDATOR('Company name',100)]}
+                >
                     <Input placeholder="Company name" style={{width: '20%'}}/>
                 </Form.Item>
                 <Form.Item
@@ -83,6 +89,7 @@ const CompanyProfileForm = props => {
                 <Form.Item
                     label="Company Email"
                     required tooltip="This is required"
+                    rules={[REQUIRED_VALIDATOR('Company email'), MAX_LENGTH_VALIDATOR('Company email', 100)]}
                     name="email"
                 >
                     <Input placeholder="Company email" style={{width: '20%'}}/>
@@ -90,6 +97,7 @@ const CompanyProfileForm = props => {
                 <Form.Item
                     label="Company tax ID"
                     required tooltip="This is required"
+                    rules={[REQUIRED_VALIDATOR('Company tax ID'), MAX_LENGTH_VALIDATOR('Company tax ID', 11)]}
                     name="taxId"
                 >
                     <Input placeholder="Company Tax ID" style={{width: '10%'}}/>
@@ -105,7 +113,7 @@ const CompanyProfileForm = props => {
                             <Form.Item
                                 noStyle
                                 name="url"
-                                rules={[{required: true}]}
+                                rules={[REQUIRED_VALIDATOR('Company Url'), MAX_LENGTH_VALIDATOR('Company Url', 2048)]}
                                 style={{display: 'inline-block', width: 'calc(50% - 8px)'}}
                             >
                                 <Input
@@ -202,7 +210,7 @@ const CompanyProfileForm = props => {
                                             <Form.Item
                                                 {...restField}
                                                 name={[name, 'id']}
-                                                rules={[{required: true, message: 'Missing id'}]}
+                                                rules={[REQUIRED_VALIDATOR('id'), MAX_LENGTH_VALIDATOR('id', 100)]}
                                                 style={{width: '10%'}}
                                             >
                                                 <Select
@@ -222,7 +230,7 @@ const CompanyProfileForm = props => {
                                             <Form.Item
                                                 {...restField}
                                                 name={[name, 'description']}
-                                                rules={[{required: true, message: 'Missing description'}]}
+                                                rules={[REQUIRED_VALIDATOR('description'), MAX_LENGTH_VALIDATOR('description', 300)]}
                                                 style={{width: '20%'}}
                                             >
                                                 <Input placeholder="Description"/>
