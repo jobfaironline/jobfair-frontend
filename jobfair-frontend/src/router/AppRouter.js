@@ -15,7 +15,7 @@ import ContractsPage from "../pages/ContractsPage/ContractsPage";
 import HomePage from "../pages/HomePage";
 import NavigationBar from "../components/navbar/Navbar";
 import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
-import AttendantProfile from "../pages/ProfilePage/Attendant";
+import AttendantProfile from "../pages/ProfilePage/AttendantProfilePage";
 const AppRouter = () => {
   return (
     <>

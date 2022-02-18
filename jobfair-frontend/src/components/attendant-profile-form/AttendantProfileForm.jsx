@@ -12,7 +12,7 @@ import {
 } from "./AttendantConstants";
 import moment from "moment";
 import {convertToDateString} from "../../utils/common";
-import {AttendantProfileValidation} from "../../validate/Validation";
+import {AttendantProfileValidation} from "../../validate/AttendantProfileValidation";
 
 const AttendantProfileForm = props => {
     const [defaultData, setDefaultData] = useState(GET_ATTENDANT_MODEL);
