@@ -16,6 +16,7 @@ import HomePage from "../pages/HomePage";
 import NavigationBar from "../components/navbar/Navbar";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
+import RegisterJobFairForm from "../components/register-job-fair-form/RegisterJobFairForm";
 const AppRouter = () => {
   return (
     <>
@@ -53,6 +54,9 @@ const AppRouter = () => {
         </Route>
         <Route path="/accounts/changepassword" exact>
           <ChangePasswordPage />
+        </Route>
+        <Route path="/company/register-job-fair" exact>
+          <RegisterJobFairForm />
         </Route>
       </Switch>
     </>
