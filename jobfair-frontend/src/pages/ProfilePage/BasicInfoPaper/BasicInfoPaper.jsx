@@ -3,7 +3,7 @@ import {Col, Container, Row} from "react-grid-system";
 import styles from "../ProfilePage.module.scss";
 import {Avatar, Input} from "antd";
 import {UserOutlined} from "@ant-design/icons";
-import {DEFAULT_PROFILE_IMAGE} from "../../../constants/AppConst";
+import {DEFAULT_PROFILE_IMAGE} from "../../../Constants/AppConst";
 
 const BasicInfoPaper = (props) => {
     const [email, setEmail] = useState("");
