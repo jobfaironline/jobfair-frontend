@@ -10,6 +10,7 @@ import {
 } from "../../pages/ProfilePage/Company/CompanyProfileConstant";
 import ImageUpload from "../image-upload/ImageUpload";
 import {CompanyProfileValidation, MAX_LENGTH_VALIDATOR, REQUIRED_VALIDATOR} from "../../validate/Validations";
+import {COMPANY_DEFAULT_MODEL} from "../../default_models/CompanyProfileModel";
 
 const CompanyProfileForm = props => {
     const [form] = Form.useForm();
@@ -19,24 +20,8 @@ const CompanyProfileForm = props => {
     const [benefitId, setBenefitId] = useState(0);
     const [url, setUrl] = useState("");
     const [editable, setEditable] = useState(false);
-    const defaultBenefit = [
-        {
-            name: 0,
-            description: "des 1",
-            fieldKey: 0,
-            isListField: true,
-            key: 0,
-            id: 0
-        },
-        {
-            name: 1,
-            description: "des 2",
-            fieldKey: 1,
-            isListField: true,
-            key: 1,
-            id: 1
-        },
-    ];
+    const [data, setData] = useState(COMPANY_DEFAULT_MODEL);
+
 
     //
     const {Option, OptGroup} = Select;
@@ -48,9 +33,11 @@ const CompanyProfileForm = props => {
     }
 
     const onFinish = (values) => {
-        const subCategoriesIds = values['subCategoriesIds'];
-        const result = subCategoriesIds.map(item => SubCategories.find(subCategory => subCategory.label === item).value)
-        values['subCategoriesIds'] = result;
+        const benefits = values['benefits'];
+        if (benefits !== undefined) {
+            const result = benefits.map(item => benefitConst.find(benefit => benefit.label === item).value)
+            values['benefits'] = result;
+        }
         console.log('submitted: ', values)
     }
 
@@ -59,10 +46,7 @@ const CompanyProfileForm = props => {
             Company Information
             <Form
                 form={form}
-                initialValues={{
-                    benefits: defaultBenefit
-                }}
-
+                initialValues={data}
                 layout="vertical"
                 onFinish={onFinish}
                 onValuesChange={e => handleOnChangeForm(e)}
@@ -83,13 +67,14 @@ const CompanyProfileForm = props => {
                         icon: <InfoCircleOutlined/>,
                     }}
                     name='address'
+                    rules={CompanyProfileValidation.address}
                 >
                     <Input placeholder="Company address" style={{width: '30%'}}/>
                 </Form.Item>
                 <Form.Item
                     label="Company Email"
                     required tooltip="This is required"
-                    rules={[REQUIRED_VALIDATOR('Company email'), MAX_LENGTH_VALIDATOR('Company email', 100)]}
+                    rules={CompanyProfileValidation.email}
                     name="email"
                 >
                     <Input placeholder="Company email" style={{width: '20%'}}/>
@@ -97,7 +82,7 @@ const CompanyProfileForm = props => {
                 <Form.Item
                     label="Company tax ID"
                     required tooltip="This is required"
-                    rules={[REQUIRED_VALIDATOR('Company tax ID'), MAX_LENGTH_VALIDATOR('Company tax ID', 11)]}
+                    rules={CompanyProfileValidation.phone}
                     name="taxId"
                 >
                     <Input placeholder="Company Tax ID" style={{width: '10%'}}/>
@@ -113,7 +98,7 @@ const CompanyProfileForm = props => {
                             <Form.Item
                                 noStyle
                                 name="url"
-                                rules={[REQUIRED_VALIDATOR('Company Url'), MAX_LENGTH_VALIDATOR('Company Url', 2048)]}
+                                rules={CompanyProfileValidation.url}
                                 style={{display: 'inline-block', width: 'calc(50% - 8px)'}}
                             >
                                 <Input
@@ -194,7 +179,7 @@ const CompanyProfileForm = props => {
                             <OptGroup label={category.label}>
                                 {SubCategories
                                     .filter(item => item.category_id === category.value)
-                                    .map(item => (<Option value={item.label}>{item.label}</Option>))}
+                                    .map(item => (<Option value={item.value}>{item.label}</Option>))}
                             </OptGroup>
                         ))}
                     </Select>
@@ -209,8 +194,8 @@ const CompanyProfileForm = props => {
                                         <div style={{display: 'flex', flexDirection: 'row'}}>
                                             <Form.Item
                                                 {...restField}
+                                                label="Benefit type"
                                                 name={[name, 'id']}
-                                                rules={[REQUIRED_VALIDATOR('id'), MAX_LENGTH_VALIDATOR('id', 100)]}
                                                 style={{width: '10%'}}
                                             >
                                                 <Select
@@ -230,7 +215,8 @@ const CompanyProfileForm = props => {
                                             <Form.Item
                                                 {...restField}
                                                 name={[name, 'description']}
-                                                rules={[REQUIRED_VALIDATOR('description'), MAX_LENGTH_VALIDATOR('description', 300)]}
+                                                label="Description"
+                                                rules={CompanyProfileValidation.benefits.description}
                                                 style={{width: '20%'}}
                                             >
                                                 <Input placeholder="Description"/>
@@ -240,7 +226,7 @@ const CompanyProfileForm = props => {
                                     );
                                 })}
                                 <Form.Item>
-                                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined/>}>
+                                    <Button style={{width: '30%'}} type="dashed" onClick={() => add()} block icon={<PlusOutlined/>}>
                                         Add field
                                     </Button>
                                 </Form.Item>
