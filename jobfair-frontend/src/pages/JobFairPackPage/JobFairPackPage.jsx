@@ -12,7 +12,7 @@ const JobFairPackPage = () => {
         camera={{ fov: 45, position: [-75, 30, -10] }}
         style={{ width: "100%", height: "850px" }}
       >
-          <OrbitControls enabled={!isDragging} />
+        <OrbitControls enabled={!isDragging} />
         <directionalLight intensity={0.5} />
         <ambientLight intensity={0.2} />
           <Model setIsDragging={setIsDragging} />

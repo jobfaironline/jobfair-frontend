@@ -26,17 +26,34 @@ function TrashCan({ nodes, floorPlane, initialPosition, setIsDragging }){
     />
 }
 
-function Banner({ nodes, floorPlane, initialPosition, setIsDragging }){
+function Banner({ nodes, floorPlane, initialPosition, setIsDragging, borderBox = new THREE.Box3() }){
+    const x_range = {min: borderBox.min.x, max: borderBox.max.x};
+    const z_range = {min: borderBox.min.z, max: borderBox.max.z};
     const [position, setPosition] = useState(initialPosition);
     let planeIntersectPoint = new THREE.Vector3();
+    const mesh = new THREE.Mesh(nodes.banner01.geometry, nodes.banner01.material);
+    mesh.scale.set(...[2.95, 0.74, 1.31])
+    const meshSize = new THREE.Box3().setFromObject(mesh);
+    const z_height = Math.abs(meshSize.max.z - meshSize.min.z);
+    const x_height = Math.abs(meshSize.max.x - meshSize.min.z);
     const bind = useDrag(({ offset: [x, y] , event, active, dragging}) => {
             if (active) {
                 event.ray.intersectPlane(floorPlane, planeIntersectPoint);
-                setPosition([planeIntersectPoint.x, initialPosition[1], planeIntersectPoint.z]);
+                let x = planeIntersectPoint.x;
+                let z = planeIntersectPoint.z;
+
+                if (x < x_range.min + x_height/2 ) x = x_range.min + x_height/2;
+                if (x > x_range.max - x_height/2) x = x_range.max - x_height/2;
+                if (z < z_range.min + z_height/2) z = z_range.min + z_height/2;
+                if (z > z_range.max -  z_height/2) z = z_range.max -  z_height/2;
+
+                setPosition([x, initialPosition[1], z]);
             }
             setIsDragging(active);
         }, { pointerEvents: true }
     );
+
+
     return <mesh
         geometry={nodes.banner01.geometry}
         material={nodes.banner01.material}
@@ -236,6 +253,7 @@ function Rostrum({ nodes, floorPlane, initialPosition, setIsDragging }){
 }
 
 
+
 export default function Model({ ...props }) {
 
   const { nodes, materials } = useGLTF("/final_booth_model.glb");
@@ -243,25 +261,32 @@ export default function Model({ ...props }) {
   const aspect = size.width / viewport.width;
   let floorPlane = new THREE.Plane(new THREE.Vector3(  -0.24, 0.5, 0.15 ), 0)
   const {setIsDragging} = props;
+  const base_ref = useRef();
 
-  console.log(nodes.sand.geometry)
-  console.log(nodes.main_board.geometry)
-  return (
+  const a = <mesh ref={base_ref}
+      geometry={nodes.sand.geometry}
+      material={nodes.sand.material}
+      position={[-0.24, 0.5, 0.15]}
+      scale={[10, 0.5, 10]}
+  />;
+
+    const baseMesh = new THREE.Mesh(a.props.geometry, a.props.material);
+    baseMesh.position.set(...a.props.position);
+    baseMesh.scale.set(...a.props.scale);
+    const box = new THREE.Box3().setFromObject(baseMesh);
+
+
+    return (
     <group  {...props} dispose={null}>
 
-      <mesh
-        geometry={nodes.sand.geometry}
-        material={nodes.sand.material}
-        position={[-0.24, 0.5, 0.15]}
-        scale={[10, 0.5, 10]}
-      />
+        {a}
 
         <Rostrum nodes={nodes} floorPlane={floorPlane} setIsDragging={setIsDragging} initialPosition={[1.07, 2.66, 5.78]}/>
         <SecondBoard nodes={nodes} floorPlane={floorPlane} setIsDragging={setIsDragging} initialPosition={[1.05, 4, 9.15]}/>
         <MainBoard nodes={nodes} floorPlane={floorPlane} setIsDragging={setIsDragging} initialPosition={[7.76, 4.8, -0.61]}/>
         <TrashCan nodes={nodes} floorPlane={floorPlane} setIsDragging={setIsDragging} initialPosition={[5.39, 1.5, -7.96]}/>
-        <Banner nodes={nodes} floorPlane={floorPlane} setIsDragging={setIsDragging} initialPosition={[0, 3.99, -7.5]}/>
-        <Banner nodes={nodes} floorPlane={floorPlane} setIsDragging={setIsDragging} initialPosition={[-7.39, 3.99, 6.24]}/>
+        <Banner nodes={nodes} floorPlane={floorPlane} setIsDragging={setIsDragging} initialPosition={[0, 3.99, -7.5]} borderBox={box}/>
+        <Banner nodes={nodes} floorPlane={floorPlane} setIsDragging={setIsDragging} initialPosition={[-7.39, 3.99, 6.24]} borderBox={box}/>
 
     </group>
   );
