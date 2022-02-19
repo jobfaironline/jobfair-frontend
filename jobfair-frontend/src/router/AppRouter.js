@@ -19,7 +19,7 @@ import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
 
 //TODO: Remove later
 import EmployeeManagementPage from "../pages/EmployeeManagementPage/EmployeeManagementPage";
-import EmployeeRegisterPage from "../pages/EmployeeManagementPage/EmployeeRegisterPage";
+import EmployeeRegisterPage from "../pages/EmployeeRegisterPage/EmployeeRegisterPage";
 
 const AppRouter = () => {
   return (

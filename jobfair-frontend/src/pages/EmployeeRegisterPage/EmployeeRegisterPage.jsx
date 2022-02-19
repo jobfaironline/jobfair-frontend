@@ -1,59 +1,26 @@
 import React, { useState } from "react";
 import { createEmployeesAPI } from "../../services/companyEmployeeService";
 import {
-  Form,
-  Input,
-  InputNumber,
-  Cascader,
   Select,
-  Row,
-  Col,
-  Checkbox,
   Button,
-  AutoComplete,
+  Form,
+  Input
 } from 'antd';
+import { tailFormItemLayout, formItemLayout } from "./EmployeeRegisterPage.style";
+import { useSelector } from "react-redux";
 
 const { Option } = Select;
 
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 8,
-    },
-  },
-  wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 16,
-    },
-  },
-};
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
-};
-
 const RegisterPage = () => {
   const [form] = Form.useForm();
+  const companyId = useSelector((state) => state.authentication.user.companyId);
+
 
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
 
     createEmployeesAPI({
-      companyId: "8e407290-9bdb-4e12-b7d3-d1ffdd1d8479",
+      companyId: companyId,
       confirmPassword: values.confirm,
       email: values.email,
       firstName: values.firstName,

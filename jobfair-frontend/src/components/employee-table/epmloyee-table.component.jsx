@@ -4,7 +4,7 @@ import { Space, Table, Input, Button, Tag } from "antd";
 import Highlighter from 'react-highlight-words';
 import SearchOutlined from '@ant-design/icons/SearchOutlined';
 
-const FormTable = ({formData, editable, extra}) => {
+const FormTable = ({employeeData, extra}) => {
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
@@ -74,7 +74,7 @@ const FormTable = ({formData, editable, extra}) => {
           ),
       });
 
-    const defaultColumns = [
+      const defaultColumns = [
         {
           title: 'ID',
           dataIndex: 'id',
@@ -137,7 +137,7 @@ const FormTable = ({formData, editable, extra}) => {
         <Fragment>
             <Table 
                 columns={finalColumns} 
-                dataSource={formData} 
+                dataSource={employeeData} 
             />
         </Fragment>
     );
