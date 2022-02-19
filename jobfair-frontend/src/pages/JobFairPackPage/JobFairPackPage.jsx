@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Canvas} from "@react-three/fiber";
 import {Model} from "./components/model/Final_booth_model";
 import {OrbitControls, useGLTF} from "@react-three/drei";
@@ -6,6 +6,8 @@ import {ToastContainer} from "react-toastify";
 import {Button} from "antd";
 import {GLTFExporter} from "three/examples/jsm/exporters/GLTFExporter";
 import Menu from "./ItemListMenu";
+import { EffectComposer, Outline } from "@react-three/postprocessing"
+
 
 export const ModeConstant = {
     "SELECT": 0,
@@ -44,6 +46,7 @@ const JobFairPackPage = () => {
 
     ]
 
+
     function handleClick(e) {
         const exporter = new GLTFExporter();
         exporter.parse(
@@ -74,7 +77,8 @@ const JobFairPackPage = () => {
     const [isDragging, setIsDragging] = useState(false);
     const [sampleItems, setSampleItems] = useState(initialSampleItems);
     const [selectedSampleItem, setSelectedSampleItem] = useState({});
-    const [mode, setMode] = useState(ModeConstant.SELECT)
+    const [mode, setMode] = useState(ModeConstant.SELECT);
+    const [selectedItemRef, setSelectedItemRef] = useState();
     const ref = useRef();
     //parse file and get items
     //const {nodes, materials} = useGLTF('https://d3polnwtp0nqe6.cloudfront.net/booths/untitled.glb');
@@ -84,8 +88,8 @@ const JobFairPackPage = () => {
         if (nodes[mesh].parent?.name === "Scene") result.push(nodes[mesh]);
     }
 
+
     const [modelItems, setModelItems] = useState(result);
-    const [selectedItemUUID, setSelectedItemsUUID] = useState("");
     return (
         <>
             <Button onClick={handleClick}>Download</Button>
@@ -98,7 +102,10 @@ const JobFairPackPage = () => {
                 <directionalLight intensity={0.5}/>
                 <ambientLight intensity={0.2}/>
                 <Model setIsDragging={setIsDragging} ref={ref} selectedSampleItem={selectedSampleItem} modelItems={modelItems}
-                       setModelItems={setModelItems} mode={mode} setMode={setMode} />
+                       setModelItems={setModelItems} mode={mode} setMode={setMode} setSelectedItemRef={setSelectedItemRef} selectedItemRef={selectedItemRef} />
+                <EffectComposer multisampling={8} autoClear={false}>
+                    <Outline blur selection={selectedItemRef} visibleEdgeColor="white" edgeStrength={5} width={1000} />
+                </EffectComposer>
             </Canvas>
             <ToastContainer/>
             <Menu items={sampleItems} selected={selectedSampleItem}

@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {useGLTF} from "@react-three/drei";
 import {useDrag} from "react-use-gesture";
 import * as THREE from "three";
-import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {ModeConstant} from "../../JobFairPackPage";
 import {loadModel} from "../../../../utils/model_loader";
+import {useThree} from "@react-three/fiber";
+import { EffectComposer, Outline } from "@react-three/postprocessing"
 
 function calculateMeshDimensionRange(mesh) {
     const borderBox = new THREE.Box3().setFromObject(mesh);
@@ -18,7 +19,7 @@ function calculateMeshDimensionRange(mesh) {
     }
 }
 
-function    calculateMeshSize(mesh) {
+function calculateMeshSize(mesh) {
     const meshSize = new THREE.Box3().setFromObject(mesh, true);
     const vector = new THREE.Vector3();
     meshSize.getSize(vector)
@@ -45,14 +46,14 @@ function calculatePositionWithBoundary({x, y, z, x_range, y_range, z_range, leng
 }
 
 
-function ItemMesh({mesh, setIsDragging, floorMesh, mode}) {
+function ItemMesh({mesh, setIsDragging, floorMesh, mode, setSelectedItemRef, selectedItemRef}) {
     const [position, setPosition] = useState(mesh.position);
+    const itemRef = useRef();
 
-
-
-
-    const bind = useDrag(({offset: [x, y], event, active}) => {
+    const bind = useDrag(({offset: [x, y], event, active, dragging}) => {
             if (mode !== ModeConstant.SELECT) return;
+            if (selectedItemRef?.current.uuid !== itemRef.current.uuid) return;
+
             if (active) {
                 //get intersection point between click coordinate and plane coordinate
                 const planeIntersectPoint = new THREE.Vector3();
@@ -78,12 +79,23 @@ function ItemMesh({mesh, setIsDragging, floorMesh, mode}) {
             setIsDragging(active);
         }, {pointerEvents: true}
     );
+
+
     return (<mesh
         key={mesh.uuid}
+        ref={itemRef}
         geometry={mesh.geometry}
         material={mesh.material}
         position={position}
+        onClick={event => {
+            if (selectedItemRef?.current.uuid === mesh.uuid){
+                setSelectedItemRef(null);
+            } else {
+                setSelectedItemRef(itemRef);
+            }
+        }}
         {...bind()}
+
         rotation={mesh.rotation}
         scale={mesh.scale}
     >
@@ -99,11 +111,11 @@ function FloorMesh({mesh, selectedSampleItem, setModelItems, mode}) {
         }
         //get intersection point between click coordinate and plane coordinate
         const planeIntersectPoint = new THREE.Vector3();
-        const floorPlane = new THREE.Plane(new THREE.Vector3(mesh.position.x, mesh.position.y+0.5, mesh.position.z));
+        const floorPlane = new THREE.Plane(new THREE.Vector3(mesh.position.x, mesh.position.y + 0.5, mesh.position.z));
         e.ray.intersectPlane(floorPlane, planeIntersectPoint);
 
         //load new item mesh
-        const gltf =  await loadModel(selectedSampleItem.url);
+        const gltf = await loadModel(selectedSampleItem.url);
         const itemMesh = gltf.scene.children[0]
 
         //calculate new item position on plane
@@ -111,8 +123,8 @@ function FloorMesh({mesh, selectedSampleItem, setModelItems, mode}) {
         const {length: item_length, width: item_width, height: item_height} = calculateMeshSize(itemMesh);
         const {height: floor_height} = calculateMeshSize(mesh);
         const {x, y, z} = calculatePositionWithBoundary({
-            x:  planeIntersectPoint.x,
-            y: mesh.position.y + floor_height/2 + item_height / 2,
+            x: planeIntersectPoint.x,
+            y: mesh.position.y + floor_height / 2 + item_height / 2,
             z: planeIntersectPoint.z,
             x_range: floor_x_range,
             y_range: [-1000, 10000],
@@ -123,17 +135,16 @@ function FloorMesh({mesh, selectedSampleItem, setModelItems, mode}) {
         });
 
 
-/*        var mat = new THREE.MeshBasicMaterial( { color: 0x0000FF, wireframe : true } );
+        /*        var mat = new THREE.MeshBasicMaterial( { color: 0x0000FF, wireframe : true } );
 
-        var wireframe = new THREE.Mesh( itemMesh.geometry, mat );
+                var wireframe = new THREE.Mesh( itemMesh.geometry, mat );
 
-        wireframe.position.set(x, y, z);
-        wireframe.rotation.set(itemMesh.rotation.x, itemMesh.rotation.y, itemMesh.rotation.z, itemMesh.rotation.order);
-        wireframe.scale.set(itemMesh.scale.x, itemMesh.scale.y, itemMesh.scale.z)*/
+                wireframe.position.set(x, y, z);
+                wireframe.rotation.set(itemMesh.rotation.x, itemMesh.rotation.y, itemMesh.rotation.z, itemMesh.rotation.order);
+                wireframe.scale.set(itemMesh.scale.x, itemMesh.scale.y, itemMesh.scale.z)*/
 
 
         itemMesh.position.set(x, y, z);
-
 
 
         setModelItems(prevState => {
@@ -172,20 +183,21 @@ export const Model = React.forwardRef(({
                                            modelItems,
                                            setModelItems,
                                            mode,
-                                           setModes
+                                           setModes,
+                                           setSelectedItemRef,
+                                           selectedItemRef
                                        }, ref) => {
 
     const floorMesh = modelItems.filter(mesh => mesh.name === "sand")[0];
-
     return (
         <group dispose={null} ref={ref}>
             {modelItems.map(mesh => {
                 if (mesh === floorMesh) {
                     return <FloorMesh mesh={mesh} selectedSampleItem={selectedSampleItem}
-                                      setModelItems={setModelItems} mode={mode}/>
+                                      setModelItems={setModelItems} mode={mode} s/>
                 }
                 return <ItemMesh key={mesh.uuid} mesh={mesh} setIsDragging={setIsDragging} floorMesh={floorMesh}
-                                 mode={mode}/>
+                                 mode={mode} setSelectedItemRef={setSelectedItemRef} selectedItemRef={selectedItemRef}/>
             })}
         </group>
     );
