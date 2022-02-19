@@ -2,10 +2,11 @@ import React from 'react';
 import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 import {Button} from "antd";
 import {LeftOutlined, RightOutlined} from "@ant-design/icons";
+import {ModeConstant} from "./JobFairPackPage";
 
 
 
-export default function ItemListMenu({items, setItems, selected, setSelected}) {
+export default function ItemListMenu({items, selected, setSelected, setMode}) {
 
 
     const isItemSelected = (id) => selected?.id === id;
@@ -13,7 +14,11 @@ export default function ItemListMenu({items, setItems, selected, setSelected}) {
     const handleClick =
         (id) => () => {
             setSelected(prevSelected => {
-                if (prevSelected.id === id) return {};
+                if (prevSelected.id === id) {
+                    setMode(ModeConstant.SELECT);
+                    return {};
+                }
+                setMode(ModeConstant.ADD);
                 return items.filter(item => item.id === id)[0]
             });
         };
