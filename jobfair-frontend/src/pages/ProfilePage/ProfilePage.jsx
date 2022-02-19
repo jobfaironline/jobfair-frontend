@@ -7,12 +7,12 @@ import {useHistory} from "react-router-dom";
 import {Paper} from '@mui/material';
 import SkillPaper from "./SkillPaper/SkillPaper";
 import BasicInfoPaper from "./BasicInfoPaper/BasicInfoPaper";
-import AttendantInfoPaper from "./AttendantInfoPaper/AttendantInfoPaper";
 import WorkHistoryPaper from "./WorkHistoryPaper/WorkHistoryPaper";
 import ActivityPaper from "./ActivityPaper/ActivityPaper";
 import CertificationPaper from "./CertificationPaper/CertificationPaper";
 import EducationPaper from "./EducationPaper/EducationPaper";
 import ReferencePaper from "./ReferencePaper/ReferencePaper";
+import AttendantInfoPaper from "./Attendant/AttendantInfoPaper/AttendantInfoPaper";
 
 
 const ProfilePage = props => {

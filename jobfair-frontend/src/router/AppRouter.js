@@ -1,10 +1,5 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import AttendantRouter from "./AttendantRouter";
-import StaffRouter from "./StaffRouter";
-import AdminRouter from "./AdminRouter";
-import CompanyEmployeeRouter from "./CompanyEmployeeRouter";
-import CompanyManagerRouter from "./CompanyManagerRouter";
+import {Route, Switch} from "react-router-dom";
 //init Page
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
@@ -14,9 +9,11 @@ import UserPage from "../pages/UserPage/UserPage";
 import ContractsPage from "../pages/ContractsPage/ContractsPage";
 import HomePage from "../pages/HomePage";
 import NavigationBar from "../components/navbar/Navbar";
-import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
+import CompanyProfile from "../pages/ProfilePage/Company";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import RegisterJobFairForm from "../components/register-job-fair-form/RegisterJobFairForm";
+
 const AppRouter = () => {
   return (
     <>
@@ -57,6 +54,9 @@ const AppRouter = () => {
         </Route>
         <Route path="/company/register-job-fair" exact>
           <RegisterJobFairForm />
+        </Route>
+        <Route path="/company/profile" exact>
+          <CompanyProfile/>
         </Route>
       </Switch>
     </>
