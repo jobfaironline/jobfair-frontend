@@ -6,7 +6,6 @@
     "@ant-design/icons": "^4.7.0",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.8.8",
     "@mui/material": "^5.2.7",
     "@react-three/drei": "^8.6.4",
