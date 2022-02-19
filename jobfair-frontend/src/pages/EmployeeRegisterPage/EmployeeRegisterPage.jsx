@@ -1,4 +1,4 @@
-import EmployeeForm from "../../components/EmployeeForm/EmployeeForm.component";
+import EmployeeForm from "../../containers/EmployeeForm/EmployeeForm.container";;
 
 const RegisterPage = () => {
 

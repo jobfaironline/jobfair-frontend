@@ -4,7 +4,8 @@ import {
   Select,
   Button,
   Form,
-  Input
+  Input,
+  notification
 } from 'antd';
 import EmployeeFormComponent from '../../components/EmployeeForm/EmployeeForm.component';
 import { useSelector } from "react-redux";
@@ -12,7 +13,6 @@ import { useSelector } from "react-redux";
 const EmployeeForm = () => {
   const [form] = Form.useForm();
   const companyId = useSelector((state) => state.authentication.user.companyId);
-
 
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
@@ -29,10 +29,18 @@ const EmployeeForm = () => {
       phone: values.phone
     })
       .then((data) => {
-        console.log(data);
+        notification['success']({
+            message: `Add employee successfully`,
+            description:
+            `Added employee ${values.email} successfully`,
+          });
       })
       .catch((err) => {
-        console.log(err);
+        notification['error']({
+            message: `Add employee failed`,
+            description:
+            `There is problem while adding, try again later`,
+          });
       });
   };;
 

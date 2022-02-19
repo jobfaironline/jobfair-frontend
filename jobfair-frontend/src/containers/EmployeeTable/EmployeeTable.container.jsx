@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import EmployeeTableComponent from '../../components/EmployeeTable/EmployeeTable.component';
 import { deleteEmployeeAPI, getEmployeesAPI } from "../../services/companyEmployeeService";
-import { Space } from "antd";
+import { Space, notification } from "antd";
 import { useSelector } from "react-redux";
 
 const EmployeeTable = ({extra}) => {
@@ -27,7 +27,11 @@ const EmployeeTable = ({extra}) => {
                 setemployeeData(newValues);
             })
             .catch((e) => {
-                console.log(e);
+                notification['error']({
+                    message: `Get employee data failed`,
+                    description:
+                    `There is problem while deleting, try again later`,
+                  });
             })
     }
     useEffect(() => {
@@ -40,11 +44,19 @@ const EmployeeTable = ({extra}) => {
 
         deleteEmployeeAPI(employeeId)
             .then((res) => {
-                console.log(res);
+                notification['success']({
+                    message: `Delete employee successfully`,
+                    description:
+                    `Deleted employee ${employeeId} successfully`,
+                  });
                 fetchData();
             })
             .catch(e => {
-                console.log(e);
+                notification['error']({
+                    message: `Delete employee failed`,
+                    description:
+                    `There is problem while deleting, try again later`,
+                  });
             })
     };
 
