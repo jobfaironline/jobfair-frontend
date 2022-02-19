@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useGLTF} from "@react-three/drei";
 import {useDrag} from "react-use-gesture";
 import * as THREE from "three";
@@ -187,6 +187,33 @@ export const Model = React.forwardRef(({
                                            setSelectedItemRef,
                                            selectedItemRef
                                        }, ref) => {
+
+    const {scene} = useThree();
+    const handleKeyDown = (event) => {
+        if (selectedItemRef?.current === undefined){
+            return;
+        }
+        const mesh = scene.getObjectByProperty("uuid", selectedItemRef.current.uuid);
+        switch (event.keyCode){
+            case 38: //KEY UP
+                event.preventDefault()
+                mesh.position.set(mesh.position.x, mesh.position.y + 0.1, mesh.position.z);
+                break;
+            case 40: //KEY DOWN
+                event.preventDefault()
+                mesh.position.set(mesh.position.x, mesh.position.y - 0.1, mesh.position.z);
+                break;
+
+        }
+    };
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    },[selectedItemRef])
+
+
 
     const floorMesh = modelItems.filter(mesh => mesh.name === "sand")[0];
     return (

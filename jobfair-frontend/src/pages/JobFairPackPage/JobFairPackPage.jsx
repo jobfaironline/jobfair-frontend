@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {Canvas} from "@react-three/fiber";
+import {Canvas, useThree} from "@react-three/fiber";
 import {Model} from "./components/model/Final_booth_model";
 import {OrbitControls, useGLTF} from "@react-three/drei";
 import {ToastContainer} from "react-toastify";
@@ -88,6 +88,18 @@ const JobFairPackPage = () => {
         if (nodes[mesh].parent?.name === "Scene") result.push(nodes[mesh]);
     }
 
+    const selected = () => {
+        if (mode !== ModeConstant.SELECT) return undefined;
+        return selectedItemRef ? [selectedItemRef] : undefined
+    }
+
+    const changeMode = (mode) => {
+        switch (mode){
+            case ModeConstant.ADD:
+                setSelectedItemRef(null);
+        }
+        setMode(mode);
+    }
 
     const [modelItems, setModelItems] = useState(result);
     return (
@@ -102,14 +114,14 @@ const JobFairPackPage = () => {
                 <directionalLight intensity={0.5}/>
                 <ambientLight intensity={0.2}/>
                 <Model setIsDragging={setIsDragging} ref={ref} selectedSampleItem={selectedSampleItem} modelItems={modelItems}
-                       setModelItems={setModelItems} mode={mode} setMode={setMode} setSelectedItemRef={setSelectedItemRef} selectedItemRef={selectedItemRef} />
+                       setModelItems={setModelItems} mode={mode} setSelectedItemRef={setSelectedItemRef} selectedItemRef={selectedItemRef} />
                 <EffectComposer multisampling={8} autoClear={false}>
-                    <Outline blur selection={selectedItemRef} visibleEdgeColor="white" edgeStrength={5} width={1000} />
+                    <Outline blur selection={selected()} visibleEdgeColor="white" edgeStrength={5} width={1000} />
                 </EffectComposer>
             </Canvas>
             <ToastContainer/>
             <Menu items={sampleItems} selected={selectedSampleItem}
-                  setSelected={setSelectedSampleItem} setMode={setMode}/>
+                  setSelected={setSelectedSampleItem} setMode={changeMode}/>
         </>
     );
 };
