@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import EmployeeTableComponent from '../../components/employee-table/epmloyee-table.component';
+import EmployeeTableComponent from '../../components/EmployeeTable/EmployeeTable.component';
 import { deleteEmployeeAPI, getEmployeesAPI } from "../../services/companyEmployeeService";
 import { Space } from "antd";
 import { useSelector } from "react-redux";

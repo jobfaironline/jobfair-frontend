@@ -1,7 +1,7 @@
 import { Menu, PageHeader, Dropdown, Avatar, Button, Space} from "antd";
 import { UserOutlined } from '@ant-design/icons';
 import { useHistory } from "react-router-dom";
-import EmployeeTable from "../../containers/employee-table/employee-table.container";
+import EmployeeTable from "../../containers/EmployeeTable/EmployeeTable.container";
 
 const EmployeeManagementPage = () => {
 
