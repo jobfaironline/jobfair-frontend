@@ -1,5 +1,5 @@
 import { useThree } from "@react-three/fiber";
-import React, { useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { useGLTF } from "@react-three/drei";
 import { useDrag } from "react-use-gesture";
 import * as THREE from "three";
@@ -253,14 +253,10 @@ function Rostrum({ nodes, floorPlane, initialPosition, setIsDragging }){
 }
 
 
-
-export default function Model({ ...props }) {
-
+export const Model = React.forwardRef(( props, ref ) => {
+    const {setIsDragging} = props;
   const { nodes, materials } = useGLTF("/final_booth_model.glb");
-  const { size, viewport } = useThree();
-  const aspect = size.width / viewport.width;
   let floorPlane = new THREE.Plane(new THREE.Vector3(  -0.24, 0.5, 0.15 ), 0)
-  const {setIsDragging} = props;
   const base_ref = useRef();
 
   const a = <mesh ref={base_ref}
@@ -274,10 +270,11 @@ export default function Model({ ...props }) {
     baseMesh.position.set(...a.props.position);
     baseMesh.scale.set(...a.props.scale);
     const box = new THREE.Box3().setFromObject(baseMesh);
+    const groupRef = useRef();
 
 
     return (
-    <group  {...props} dispose={null}>
+    <group dispose={null} ref={ref}>
 
         {a}
 
@@ -290,6 +287,9 @@ export default function Model({ ...props }) {
 
     </group>
   );
-}
+})
+
+
+
 
 useGLTF.preload("/final_booth_model.glb");
