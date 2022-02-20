@@ -5,7 +5,6 @@ import * as THREE from "three";
 import {ModeConstant} from "../../JobFairPackPage";
 import {loadModel} from "../../../../utils/model_loader";
 import {useThree} from "@react-three/fiber";
-import { EffectComposer, Outline } from "@react-three/postprocessing"
 
 function calculateMeshDimensionRange(mesh) {
     const borderBox = new THREE.Box3().setFromObject(mesh);
@@ -46,14 +45,14 @@ function calculatePositionWithBoundary({x, y, z, x_range, y_range, z_range, leng
 }
 
 
-function ItemMesh({mesh, setIsDragging, floorMesh, mode, setSelectedItemRef, selectedItemRef}) {
+function ItemMesh({mesh, setIsDragging, floorMesh, mode, setSelectedItemRef, selectedItemRef, hoverItemRef, setHoverItemRef}) {
     const [position, setPosition] = useState(mesh.position);
     const itemRef = useRef();
 
     const bind = useDrag(({offset: [x, y], event, active, dragging}) => {
+
             if (mode !== ModeConstant.SELECT) return;
             if (selectedItemRef?.current.uuid !== itemRef.current.uuid) return;
-
             if (active) {
                 //get intersection point between click coordinate and plane coordinate
                 const planeIntersectPoint = new THREE.Vector3();
@@ -92,13 +91,21 @@ function ItemMesh({mesh, setIsDragging, floorMesh, mode, setSelectedItemRef, sel
         material={mesh.material}
         position={position}
         onClick={event => {
-            if (selectedItemRef?.current.uuid === mesh.uuid){
-                setSelectedItemRef(null);
+            if (selectedItemRef?.current.uuid === mesh.uuid) {
+                setSelectedItemRef(undefined);
             } else {
                 setSelectedItemRef(itemRef);
             }
         }}
+        onPointerOver={event => {
+            setHoverItemRef(itemRef);
+        }}
+        onPointerLeave={event => {
+            setHoverItemRef(undefined);
+        }}
+
         {...bind()}
+
 
         rotation={mesh.rotation}
         scale={mesh.scale}
@@ -189,17 +196,19 @@ export const Model = React.forwardRef(({
                                            mode,
                                            setModes,
                                            setSelectedItemRef,
-                                           selectedItemRef
+                                           selectedItemRef,
+                                           hoverItemRef,
+                                           setHoverItemRef
                                        }, ref) => {
 
     const {scene} = useThree();
     const handleKeyDown = (event) => {
-        if (selectedItemRef?.current === undefined){
+        if (selectedItemRef?.current === undefined) {
             return;
         }
         const mesh = scene.getObjectByProperty("uuid", selectedItemRef.current.uuid);
         let myAxis;
-        switch (event.keyCode){
+        switch (event.keyCode) {
             case 37: //KEY LEFT
                 event.preventDefault();
                 myAxis = new THREE.Vector3(0, 1, 0);
@@ -221,19 +230,24 @@ export const Model = React.forwardRef(({
             case 46: //KEY DEL
                 event.preventDefault();
                 setModelItems((prevState) => {
-                    setSelectedItemRef(null);
+                    setSelectedItemRef(undefined);
                     return prevState.filter(itemMesh => itemMesh.uuid !== selectedItemRef.current.uuid);
                 });
                 break;
 
         }
     };
+    const onDocumentMouseMove = (event) => {
+
+    }
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('mousemove', onDocumentMouseMove, false);
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('mousemove', onDocumentMouseMove);
         };
-    },[selectedItemRef])
+    }, [selectedItemRef])
 
     const floorMesh = modelItems.filter(mesh => mesh.name === "sand")[0];
     return (
@@ -244,7 +258,8 @@ export const Model = React.forwardRef(({
                                       setModelItems={setModelItems} mode={mode} s/>
                 }
                 return <ItemMesh key={mesh.uuid} mesh={mesh} setIsDragging={setIsDragging} floorMesh={floorMesh}
-                                 mode={mode} setSelectedItemRef={setSelectedItemRef} selectedItemRef={selectedItemRef}/>
+                                 mode={mode} setSelectedItemRef={setSelectedItemRef} selectedItemRef={selectedItemRef}
+                                 hoverItemRef={hoverItemRef} setHoverItemRef={setHoverItemRef}/>
             })}
         </group>
     );

@@ -79,6 +79,7 @@ const JobFairPackPage = () => {
     const [selectedSampleItem, setSelectedSampleItem] = useState({});
     const [mode, setMode] = useState(ModeConstant.SELECT);
     const [selectedItemRef, setSelectedItemRef] = useState();
+    const [hoverItemRef, setHoverItemRef] = useState();
     const ref = useRef();
     //parse file and get items
     //const {nodes, materials} = useGLTF('https://d3polnwtp0nqe6.cloudfront.net/booths/untitled.glb');
@@ -89,14 +90,21 @@ const JobFairPackPage = () => {
     }
 
     const selected = () => {
-        if (mode !== ModeConstant.SELECT) return undefined;
-        return selectedItemRef ? [selectedItemRef] : undefined
+        const result = [];
+        if (hoverItemRef !== undefined){
+            result.push(hoverItemRef);
+        }
+        if (mode !== ModeConstant.SELECT) return result;
+        if (selectedItemRef !== undefined){
+            result.push(selectedItemRef);
+        }
+        return result.length === 0 ? undefined : result;
     }
 
     const changeMode = (mode) => {
         switch (mode){
             case ModeConstant.ADD:
-                setSelectedItemRef(null);
+                setSelectedItemRef(undefined);
         }
         setMode(mode);
     }
@@ -114,7 +122,9 @@ const JobFairPackPage = () => {
                 <directionalLight intensity={0.5}/>
                 <ambientLight intensity={0.2}/>
                 <Model setIsDragging={setIsDragging} ref={ref} selectedSampleItem={selectedSampleItem} modelItems={modelItems}
-                       setModelItems={setModelItems} mode={mode} setSelectedItemRef={setSelectedItemRef} selectedItemRef={selectedItemRef} />
+                       setModelItems={setModelItems} mode={mode} setSelectedItemRef={setSelectedItemRef} selectedItemRef={selectedItemRef}
+                       hoverItemRef={hoverItemRef} setHoverItemRef={setHoverItemRef}
+                />
                 <EffectComposer multisampling={8} autoClear={false}>
                     <Outline blur selection={selected()} visibleEdgeColor="white" edgeStrength={5} width={1000} />
                 </EffectComposer>
