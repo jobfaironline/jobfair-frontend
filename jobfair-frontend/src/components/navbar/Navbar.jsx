@@ -27,8 +27,8 @@ const NavigationBar = () => {
           <Menu.Item key="login">
             <Link to="/auth/login">Log In</Link>
           </Menu.Item>
-          <Menu.Item key="profile">
-            <Link to="/profile">Attendant profile</Link>
+          <Menu.Item key="attendant-profile">
+            <Link to="/attendant/profile">Attendant Profile</Link>
           </Menu.Item>
           <Menu.Item key="changepassword">
             <Link to="/accounts/changepassword">Change Password</Link>
