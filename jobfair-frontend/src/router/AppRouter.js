@@ -11,8 +11,8 @@ import HomePage from "../pages/HomePage";
 import NavigationBar from "../components/navbar/Navbar";
 import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
 import CompanyProfile from "../pages/ProfilePage/Company";
-import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import RegisterJobFairForm from "../components/register-job-fair-form/RegisterJobFairForm";
+import AttendantProfile from "../pages/ProfilePage/AttendantProfilePage";
 
 const AppRouter = () => {
   return (
@@ -46,11 +46,11 @@ const AppRouter = () => {
         {/*handle Role Company Employee Pages*/}
         {/*handle Role Company Manager Pages*/}
         {/*handle Role Admin Pages*/}
-        <Route path="/profile" exact>
-          <ProfilePage />
-        </Route>
         <Route path="/accounts/changepassword" exact>
           <ChangePasswordPage />
+        </Route>
+        <Route path="/attendant/profile" exact>
+          <AttendantProfile/>
         </Route>
         <Route path="/company/register-job-fair" exact>
           <RegisterJobFairForm />

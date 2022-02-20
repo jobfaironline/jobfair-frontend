@@ -36,3 +36,15 @@ export const getBase64 = (file) => {
     reader.onerror = error => reject(error);
   })
 }
+
+export const convertToDateString = (dateValue) => {
+  const date = new Date(dateValue);
+  // const dateString = date.toISOString().split('T')[0]; //yyyy-mm-dd
+  // const result = dateString.replaceAll('-', '/');
+  // return result;
+  return date.toISOString();
+}
+
+export const convertToDateValue = (dateString) => {
+  return Date.parse(dateString);
+}
