@@ -18,7 +18,7 @@ import {
     NUM_OF_SKILL_TAGS,
     SalaryRangeConst,
     SkillTagsConst
-} from "../../Constants/JobPositionConst";
+} from "../../constants/JobPositionConst";
 import TextArea from "antd/es/input/TextArea";
 import {tailLayout} from "../register-job-fair-form/RegisterJobFairForm";
 import {JobPositionValidation} from "../../validate/CreateJobPositionValidation";

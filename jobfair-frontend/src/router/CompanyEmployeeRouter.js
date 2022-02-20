@@ -1,5 +1,5 @@
 //This routing rule allows the current user to have this role "COMPANY_EMPLOYEE"
-import { COMPANY_EMPLOYEE } from "../Constants/RoleType";
+import { COMPANY_EMPLOYEE } from "../constants/RoleType";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Route, Redirect } from "react-router-dom";

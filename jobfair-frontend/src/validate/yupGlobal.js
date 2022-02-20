@@ -8,7 +8,7 @@ import {
   REGEX_NEW_PASSWORD,
   REGEX_RE_NEW_PASSWORD,
 
-} from "../Constants/ApplicationConst";
+} from "../constants/ApplicationConst";
 yup.addMethod(yup.string, "password", function (message) {
   return this.matches(REGEX_PASSWORD, {
     message,
