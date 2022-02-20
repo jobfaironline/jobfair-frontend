@@ -10,8 +10,9 @@ import ContractsPage from "../pages/ContractsPage/ContractsPage";
 import HomePage from "../pages/HomePage";
 import NavigationBar from "../components/navbar/Navbar";
 import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
-import AttendantProfile from "../pages/ProfilePage/AttendantProfilePage";
 import CompanyProfile from "../pages/ProfilePage/Company";
+import RegisterJobFairForm from "../components/register-job-fair-form/RegisterJobFairForm";
+import AttendantProfile from "../pages/ProfilePage/AttendantProfilePage";
 
 const AppRouter = () => {
   return (
@@ -48,11 +49,14 @@ const AppRouter = () => {
         <Route path="/accounts/changepassword" exact>
           <ChangePasswordPage />
         </Route>
-        <Route path="/company/profile" exact>
-          <CompanyProfile/>
-        </Route>
         <Route path="/attendant/profile" exact>
           <AttendantProfile/>
+        </Route>
+        <Route path="/company/register-job-fair" exact>
+          <RegisterJobFairForm />
+        </Route>
+        <Route path="/company/profile" exact>
+          <CompanyProfile/>
         </Route>
       </Switch>
     </>

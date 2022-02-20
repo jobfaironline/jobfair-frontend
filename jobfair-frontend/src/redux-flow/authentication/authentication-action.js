@@ -1,6 +1,6 @@
 import { authenticationActions } from "./authentication-slice";
 import * as cookie from "js-cookie";
-import { TOKEN_KEY, USER_STORAGE } from "../../Constants/AppConst";
+import { TOKEN_KEY, USER_STORAGE } from "../../constants/ApplicationConst";
 
 export const SigninHandler = (data) => {
   return (dispatch) => {

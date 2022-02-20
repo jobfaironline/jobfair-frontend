@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Form, Input, Button, Radio, Tooltip, Select, Divider, Typography, Space, AutoComplete} from "antd";
 import {CopyOutlined, GiftOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusOutlined} from '@ant-design/icons';
 import {
@@ -9,18 +9,15 @@ import {
     SubCategories
 } from "../../pages/ProfilePage/Company/CompanyProfileConstant";
 import ImageUpload from "../image-upload/ImageUpload";
-import {CompanyProfileValidation, MAX_LENGTH_VALIDATOR, REQUIRED_VALIDATOR} from "../../validate/Validations";
+import {CompanyProfileValidation, MAX_LENGTH_VALIDATOR, REQUIRED_VALIDATOR} from "../../validate/CompanyProfileValidation";
 import {COMPANY_DEFAULT_MODEL} from "../../default_models/CompanyProfileModel";
 
-const CompanyProfileForm = props => {
-    const [form] = Form.useForm();
+const CompanyProfileForm = () => {
 
     //state
     const [totalSelect, setTotalSelect] = useState(0);
     const [benefitId, setBenefitId] = useState(0);
     const [url, setUrl] = useState("");
-    const [editable, setEditable] = useState(false);
-    const [data, setData] = useState(COMPANY_DEFAULT_MODEL);
 
 
     //
@@ -28,30 +25,10 @@ const CompanyProfileForm = props => {
 
     const {Text} = Typography;
 
-    const handleOnChangeForm = (values) => {
-        console.log('changing: ', values);
-    }
-
-    const onFinish = (values) => {
-        const benefits = values['benefits'];
-        if (benefits !== undefined) {
-            const result = benefits.map(item => benefitConst.find(benefit => benefit.label === item).value)
-            values['benefits'] = result;
-        }
-        console.log('submitted: ', values)
-    }
 
     return (
         <div>
-            Company Information
-            <Form
-                form={form}
-                initialValues={data}
-                layout="vertical"
-                onFinish={onFinish}
-                onValuesChange={e => handleOnChangeForm(e)}
-                requiredMark="required"
-            >
+
                 <Form.Item
                     label="Company Name"
                     name='name'
@@ -226,7 +203,8 @@ const CompanyProfileForm = props => {
                                     );
                                 })}
                                 <Form.Item>
-                                    <Button style={{width: '30%'}} type="dashed" onClick={() => add()} block icon={<PlusOutlined/>}>
+                                    <Button style={{width: '30%'}} type="dashed" onClick={() => add()} block
+                                            icon={<PlusOutlined/>}>
                                         Add field
                                     </Button>
                                 </Form.Item>
@@ -245,15 +223,6 @@ const CompanyProfileForm = props => {
                 >
                     <ImageUpload/>
                 </Form.Item>
-                <Form.Item>
-                    <Button type="primary"
-                            style={{background: "orange", borderColor: "orange", borderRadius: 8}}
-                            htmlType="submit"
-                    >
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
         </div>
     );
 };
