@@ -80,6 +80,10 @@ function ItemMesh({mesh, setIsDragging, floorMesh, mode, setSelectedItemRef, sel
         }, {pointerEvents: true}
     );
 
+    useEffect(() => {
+        itemRef.current.uuid = mesh.uuid;
+        itemRef.current.name = mesh.name;
+    })
 
     return (<mesh
         key={mesh.uuid}
@@ -194,14 +198,32 @@ export const Model = React.forwardRef(({
             return;
         }
         const mesh = scene.getObjectByProperty("uuid", selectedItemRef.current.uuid);
+        let myAxis;
         switch (event.keyCode){
+            case 37: //KEY LEFT
+                event.preventDefault();
+                myAxis = new THREE.Vector3(0, 1, 0);
+                mesh.rotateOnWorldAxis(myAxis, THREE.Math.degToRad(10));
+                break;
             case 38: //KEY UP
                 event.preventDefault()
                 mesh.position.set(mesh.position.x, mesh.position.y + 0.1, mesh.position.z);
                 break;
+            case 39: //KEY RIGHT
+                event.preventDefault();
+                myAxis = new THREE.Vector3(0, 1, 0);
+                mesh.rotateOnWorldAxis(myAxis, -THREE.Math.degToRad(10));
+                break;
             case 40: //KEY DOWN
                 event.preventDefault()
                 mesh.position.set(mesh.position.x, mesh.position.y - 0.1, mesh.position.z);
+                break;
+            case 46: //KEY DEL
+                event.preventDefault();
+                setModelItems((prevState) => {
+                    setSelectedItemRef(null);
+                    return prevState.filter(itemMesh => itemMesh.uuid !== selectedItemRef.current.uuid);
+                });
                 break;
 
         }
@@ -212,8 +234,6 @@ export const Model = React.forwardRef(({
             window.removeEventListener('keydown', handleKeyDown);
         };
     },[selectedItemRef])
-
-
 
     const floorMesh = modelItems.filter(mesh => mesh.name === "sand")[0];
     return (
