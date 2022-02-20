@@ -15,8 +15,12 @@ const CompanyProfile = props => {
     const onFinish = (values) => {
         const benefits = values['benefits'];
         if (benefits !== undefined) {
-            console.log(benefits)
-            const result = benefits.map(item => benefitConst.find(benefit => benefit.label === item).value)
+            const result = benefits.map(item => {
+                return {
+                    id: item.id,
+                    description: item.description,
+                }
+            })
             values['benefits'] = result;
         }
         console.log('submitted: ', values)
