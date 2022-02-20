@@ -32,3 +32,9 @@ export const REGEX_RE_NEW_PASSWORD = "^.{2,}$";
 export const TOKEN_KEY = "token";
 export const TOKEN = "";
 export const USER_STORAGE = "user";
+
+export const ModeConstant = {
+  SELECT: 0,
+  ADD: 1,
+  DELETE: 2,
+};
