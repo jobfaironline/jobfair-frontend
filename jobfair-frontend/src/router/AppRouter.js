@@ -1,10 +1,5 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import AttendantRouter from "./AttendantRouter";
-import StaffRouter from "./StaffRouter";
-import AdminRouter from "./AdminRouter";
-import CompanyEmployeeRouter from "./CompanyEmployeeRouter";
-import CompanyManagerRouter from "./CompanyManagerRouter";
+import {Route, Switch} from "react-router-dom";
 //init Page
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
@@ -16,6 +11,8 @@ import HomePage from "../pages/HomePage";
 import NavigationBar from "../components/navbar/Navbar";
 import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
 import AttendantProfile from "../pages/ProfilePage/AttendantProfilePage";
+import CompanyProfile from "../pages/ProfilePage/Company";
+
 const AppRouter = () => {
   return (
     <>
@@ -48,11 +45,14 @@ const AppRouter = () => {
         {/*handle Role Company Employee Pages*/}
         {/*handle Role Company Manager Pages*/}
         {/*handle Role Admin Pages*/}
-        <Route path="/attendant/profile" exact>
-          <AttendantProfile/>
-        </Route>
         <Route path="/accounts/changepassword" exact>
           <ChangePasswordPage />
+        </Route>
+        <Route path="/company/profile" exact>
+          <CompanyProfile/>
+        </Route>
+        <Route path="/attendant/profile" exact>
+          <AttendantProfile/>
         </Route>
       </Switch>
     </>
