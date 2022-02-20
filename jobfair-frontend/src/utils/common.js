@@ -28,6 +28,15 @@ const toSelection = (data) => {
   return { value: data?.id, label: data?.name };
 };
 
+export const getBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  })
+}
+
 export const convertToDateString = (dateValue) => {
   const date = new Date(dateValue);
   // const dateString = date.toISOString().split('T')[0]; //yyyy-mm-dd

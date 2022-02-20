@@ -37,6 +37,12 @@ const NavigationBar = () => {
           <Menu.Item key="changepassword">
             <Link to="/accounts/changepassword">Change Password</Link>
           </Menu.Item>
+          <Menu.Item key="company-profile">
+            <Link to="/company/profile">Company profile</Link>
+          </Menu.Item>
+          <Menu.Item key="manager-register-jobfair">
+            <Link to="/company/register-job-fair">Register to job fair</Link>
+          </Menu.Item>
         </Menu>
       </div>
     </div>
