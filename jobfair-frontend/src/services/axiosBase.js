@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as cookie from "js-cookie";
-import { TOKEN_KEY } from "../constants/ApplicationConst";
+import { TOKEN_KEY } from "../constants/AppConst";
+
 export const CallAPI = (
   endpoint,
   method = "GET",

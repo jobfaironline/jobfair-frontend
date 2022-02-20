@@ -10,9 +10,15 @@ import ContractsPage from "../pages/ContractsPage/ContractsPage";
 import HomePage from "../pages/HomePage";
 import NavigationBar from "../components/navbar/Navbar";
 import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
+
+//TODO: Remove later
+import EmployeeManagementPage from "../pages/EmployeeManagementPage/EmployeeManagementPage";
+import EmployeeRegisterPage from "../pages/EmployeeRegisterPage/EmployeeRegisterPage";
+
 import CompanyProfile from "../pages/ProfilePage/Company";
 import RegisterJobFairForm from "../components/register-job-fair-form/RegisterJobFairForm";
 import AttendantProfile from "../pages/ProfilePage/AttendantProfilePage";
+import AppliedJobPage from "../pages/AppliedJobPage/AppliedJobPage";
 
 const AppRouter = () => {
   return (
@@ -43,7 +49,17 @@ const AppRouter = () => {
           <ContractsPage />
         </Route>
         {/*handle Role Attendant Pages*/}
+        <Route path="/applied-job" exact>
+          <AppliedJobPage/>
+        </Route>
         {/*handle Role Company Employee Pages*/}
+        {/* TODO: Remove later */}
+        <Route path="/employee-management" exact>
+          <EmployeeManagementPage/>
+        </Route>
+        <Route path="/employee-register" exact>
+          <EmployeeRegisterPage/>
+        </Route>
         {/*handle Role Company Manager Pages*/}
         {/*handle Role Admin Pages*/}
         <Route path="/accounts/changepassword" exact>

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { USER_STORAGE } from "../../constants/ApplicationConst";
+import { USER_STORAGE } from "../../constants/AppConst";
 
 const authenticationSlice = createSlice({
   name: "authentication",
