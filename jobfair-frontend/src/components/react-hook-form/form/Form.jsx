@@ -1,6 +1,6 @@
-import React from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import React from 'react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useForm } from 'react-hook-form'
 const Form = ({ defaultValues, children, onSubmit, schema }) => {
   const {
     handleSubmit,
@@ -9,13 +9,13 @@ const Form = ({ defaultValues, children, onSubmit, schema }) => {
   } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
-    mode: "onChange",
-  });
+    mode: 'onChange',
+  })
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {errors.username && <p className="error">{errors.username?.message}</p>}
       {Array.isArray(children)
-        ? children.map((child) => {
+        ? children.map(child => {
             return child.props.name
               ? React.createElement(child.type, {
                   ...{
@@ -24,10 +24,10 @@ const Form = ({ defaultValues, children, onSubmit, schema }) => {
                     key: child.props.name,
                   },
                 })
-              : child;
+              : child
           })
         : children}
     </form>
-  );
-};
-export default Form;
+  )
+}
+export default Form

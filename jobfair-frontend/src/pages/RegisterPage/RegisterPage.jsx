@@ -1,14 +1,14 @@
-import { Tabs } from "antd";
-import React, { useState } from "react";
-import { companySchema } from "../../schema/register.company.schema";
-import { attendantSchema } from "../../schema/register.attendant.schema";
-import Form from "../../components/react-hook-form/form/Form";
-import TextInput from "../../components/react-hook-form/input/TextInput/TextInput";
-import { registerAttendantAPI } from "../../services/userService";
-import { registerCompanyAPI } from "../../services/userService";
+import { Tabs } from 'antd'
+import React, { useState } from 'react'
+import { companySchema } from '../../schema/register.company.schema'
+import { attendantSchema } from '../../schema/register.attendant.schema'
+import Form from '../../components/react-hook-form/form/Form'
+import TextInput from '../../components/react-hook-form/input/TextInput/TextInput'
+import { registerAttendantAPI } from '../../services/userService'
+import { registerCompanyAPI } from '../../services/userService'
 const RegisterPage = () => {
-  const { TabPane } = Tabs;
-  const [errorRes, setErrorRes] = useState();
+  const { TabPane } = Tabs
+  const [errorRes, setErrorRes] = useState()
   const handleOnSubmitAttendant = (values, actions) => {
     registerAttendantAPI({
       email: values.email,
@@ -16,8 +16,8 @@ const RegisterPage = () => {
       password: values.password,
     })
       .then((data) => {})
-      .catch((err) => {});
-  };
+      .catch((err) => {})
+  }
   const handleOnSubmitCompany = (values, actions) => {
     registerCompanyAPI({
       email: values.email,
@@ -25,8 +25,8 @@ const RegisterPage = () => {
       password: values.password,
     })
       .then((data) => {})
-      .catch((err) => {});
-  };
+      .catch((err) => {})
+  }
   return (
     <Tabs defaultActiveKey="1">
       <TabPane tab="ATTENDANT" key="1">
@@ -58,7 +58,7 @@ const RegisterPage = () => {
         </Form>
       </TabPane>
     </Tabs>
-  );
-};
+  )
+}
 
-export default RegisterPage;
+export default RegisterPage

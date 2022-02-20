@@ -1,18 +1,18 @@
-import React, { useMemo } from "react";
-import { Result, Button } from "antd";
-import { useHistory } from "react-router-dom";
+import React, { useMemo } from 'react'
+import { Result, Button } from 'antd'
+import { useHistory } from 'react-router-dom'
 const ErrorPage = ({ code = 404 }) => {
-  const history = useHistory();
+  const history = useHistory()
   const subTitlte = useMemo(() => {
     switch (code) {
       case 403:
-        return "Sorry, you are not authorized to access this page.";
+        return 'Sorry, you are not authorized to access this page.'
       case 404:
-        return "Sorry, the page you visit does not exist.";
+        return 'Sorry, the page you visit does not exist.'
       default:
-        return "Sorry, something went wrong.";
+        return 'Sorry, something went wrong.'
     }
-  }, [code]);
+  }, [code])
   return (
     <>
       <Result
@@ -23,7 +23,7 @@ const ErrorPage = ({ code = 404 }) => {
           <Button
             className="main-button"
             onClick={() => {
-              history.push("/home");
+              history.push('/home')
             }}
           >
             type="primary" Back to Home
@@ -31,6 +31,6 @@ const ErrorPage = ({ code = 404 }) => {
         }
       />
     </>
-  );
-};
-export default ErrorPage;
+  )
+}
+export default ErrorPage
