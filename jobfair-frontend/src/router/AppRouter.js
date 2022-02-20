@@ -14,13 +14,13 @@ import UserPage from "../pages/UserPage/UserPage";
 import ContractsPage from "../pages/ContractsPage/ContractsPage";
 import HomePage from "../pages/HomePage";
 import NavigationBar from "../components/navbar/Navbar";
-import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
 
 //TODO: Remove later
 import EmployeeManagementPage from "../pages/EmployeeManagementPage/EmployeeManagementPage";
 import EmployeeRegisterPage from "../pages/EmployeeRegisterPage/EmployeeRegisterPage";
 
+import AttendantProfile from "../pages/ProfilePage/AttendantProfilePage";
 const AppRouter = () => {
   return (
     <>
@@ -60,8 +60,8 @@ const AppRouter = () => {
         </Route>
         {/*handle Role Company Manager Pages*/}
         {/*handle Role Admin Pages*/}
-        <Route path="/profile" exact>
-          <ProfilePage />
+        <Route path="/attendant/profile" exact>
+          <AttendantProfile/>
         </Route>
         <Route path="/accounts/changepassword" exact>
           <ChangePasswordPage />
