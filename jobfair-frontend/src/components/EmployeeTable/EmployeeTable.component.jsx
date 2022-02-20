@@ -1,8 +1,9 @@
 import { Fragment, useState } from 'react';
 // import { defaultColumns, editableColumns } from './columns-type';
-import { Space, Table, Input, Button, Tag } from "antd";
+import { Space, Table, Input, Button } from "antd";
 import Highlighter from 'react-highlight-words';
 import SearchOutlined from '@ant-design/icons/SearchOutlined';
+import EmployeeTableColumn from './EmployeeTable.column';
 
 const FormTable = ({employeeData, extra}) => {
 
@@ -74,64 +75,9 @@ const FormTable = ({employeeData, extra}) => {
           ),
       });
 
-      const defaultColumns = [
-        {
-          title: 'ID',
-          dataIndex: 'id',
-          key: 'id',
-          ...getColumnSearchProps('id'),
-        },
-        {
-          title: 'Số điện thoại',
-          dataIndex: 'phone',
-          key: 'phone',
-          ...getColumnSearchProps('phone'),
-        },
-        {
-          title: 'Email',
-          dataIndex: 'email',
-          key: 'email',
-          ...getColumnSearchProps('email'),
-        },
-        {
-          title: 'Trạng thái',
-          key: 'status',
-          dataIndex: 'status',
-          filters: [
-            {
-              text: 'Verified',
-              value: "VERIFIED",
-            },
-            {
-              text: 'Inactive',
-              value: "INACTIVE"
-            }
-          ],
-          onFilter: (value, record) => {
-              return record.status === value;
-          },
-          render: (status) => {
-                let objStatus;
-                switch(status) {
-                  case "VERIFIED": objStatus = {
-                    color: 'processing',
-                    message: "Verified"
-                  }; break;
-                  default: objStatus = {
-                    color: 'warning',
-                    message: "Inactive"
-                  };
-                } 
-                return (
-                  <Tag color={objStatus.color}>
-                    {objStatus.message.toUpperCase()}
-                  </Tag>
-                );
-          }
-        },
-    ];
+    const defaultColumns = EmployeeTableColumn(getColumnSearchProps);
 
-    const finalColumns = extra ? [...defaultColumns, extra] : [...defaultColumns]
+    const finalColumns = extra ? [...defaultColumns, extra] : [...defaultColumns];
 
     return (
         <Fragment>

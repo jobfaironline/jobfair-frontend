@@ -5,9 +5,21 @@ import {
   Form,
   Input
 } from 'antd';
+import { EmployeeRegisterValidation } from "../../validate/EmployeeRegisterValidation";
 import { tailFormItemLayout, formItemLayout } from "./EmployeeForm.style";
 
 const { Option } = Select;
+
+const genderType = [
+  {
+    title: "Male",
+    value: "MALE"
+  },
+  {
+    title: "Female",
+    value: "FEMALE"
+  }
+]
 
 const EmployeeForm = ({form, onFinish}) => {
 
@@ -22,16 +34,7 @@ const EmployeeForm = ({form, onFinish}) => {
       <Form.Item
         name="email"
         label="E-mail"
-        rules={[
-          {
-            type: 'email',
-            message: 'The input is not valid E-mail!',
-          },
-          {
-            required: true,
-            message: 'Please input your E-mail!',
-          },
-        ]}
+        rules={EmployeeRegisterValidation.email}
       >
         <Input />
       </Form.Item>
@@ -39,12 +42,7 @@ const EmployeeForm = ({form, onFinish}) => {
       <Form.Item
         name="password"
         label="Password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!',
-          },
-        ]}
+        rules={EmployeeRegisterValidation.password}
         hasFeedback
       >
         <Input.Password />
@@ -55,21 +53,7 @@ const EmployeeForm = ({form, onFinish}) => {
         label="Confirm Password"
         dependencies={['password']}
         hasFeedback
-        rules={[
-          {
-            required: true,
-            message: 'Please confirm your password!',
-          },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
-                return Promise.resolve();
-              }
-
-              return Promise.reject(new Error('The two passwords that you entered do not match!'));
-            },
-          }),
-        ]}
+        rules={EmployeeRegisterValidation.confirm}
       >
         <Input.Password />
       </Form.Item>
@@ -78,13 +62,7 @@ const EmployeeForm = ({form, onFinish}) => {
         name="firstName"
         label="First name"
         tooltip="What do you want others to call you?"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your nickname!',
-            whitespace: true,
-          },
-        ]}
+        rules={EmployeeRegisterValidation.firstName}
       >
         <Input />
       </Form.Item>
@@ -93,13 +71,7 @@ const EmployeeForm = ({form, onFinish}) => {
         name="middleName"
         label="Middle name"
         tooltip="What do you want others to call you?"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your nickname!',
-            whitespace: true,
-          },
-        ]}
+        rules={EmployeeRegisterValidation.middleName}
       >
         <Input />
       </Form.Item>
@@ -108,13 +80,7 @@ const EmployeeForm = ({form, onFinish}) => {
         name="lastName"
         label="Last name"
         tooltip="What do you want others to call you?"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your nickname!',
-            whitespace: true,
-          },
-        ]}
+        rules={EmployeeRegisterValidation.lastName}
       >
         <Input />
       </Form.Item>
@@ -122,12 +88,7 @@ const EmployeeForm = ({form, onFinish}) => {
       <Form.Item
         name="phone"
         label="Phone Number"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your phone number!',
-          },
-        ]}
+        rules={EmployeeRegisterValidation.phone}
       >
         <Input
           style={{
@@ -139,16 +100,16 @@ const EmployeeForm = ({form, onFinish}) => {
       <Form.Item
         name="gender"
         label="Gender"
-        rules={[
-          {
-            required: true,
-            message: 'Please select gender!',
-          },
-        ]}
+        rules={EmployeeRegisterValidation.gender}
       >
         <Select placeholder="select your gender">
-          <Option value="MALE">Male</Option>
-          <Option value="FEMALE">Female</Option>
+          {
+            genderType.map((gender) => {
+              return (
+                <Option value={gender.value}>{gender.title}</Option>
+              )
+            })
+          }
         </Select>
       </Form.Item>
 
@@ -159,13 +120,6 @@ const EmployeeForm = ({form, onFinish}) => {
       </Form.Item>
     </Form>
   );
-};
-
-const handleOnSubmit = (values, actions) => {
-
-  console.log("here");
-
-  
 };
 
 export default EmployeeForm;
