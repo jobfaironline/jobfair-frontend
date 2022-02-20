@@ -1,8 +1,8 @@
-import React from "react";
-import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
-import { Button } from "antd";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import { ModeConstant } from "../../../../constants/AppConst";
+import React from 'react'
+import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu'
+import { Button } from 'antd'
+import { LeftOutlined, RightOutlined } from '@ant-design/icons'
+import { ModeConstant } from '../../../../constants/AppConst'
 
 export default function ItemListMenu({
   items,
@@ -10,22 +10,22 @@ export default function ItemListMenu({
   setSelected,
   setMode,
 }) {
-  const isItemSelected = (id) => selected?.id === id;
+  const isItemSelected = id => selected?.id === id
 
-  const handleClick = (id) => () => {
-    setSelected((prevSelected) => {
+  const handleClick = id => () => {
+    setSelected(prevSelected => {
       if (prevSelected.id === id) {
-        setMode(ModeConstant.SELECT);
-        return {};
+        setMode(ModeConstant.SELECT)
+        return {}
       }
-      setMode(ModeConstant.ADD);
-      return items.filter((item) => item.id === id)[0];
-    });
-  };
+      setMode(ModeConstant.ADD)
+      return items.filter(item => item.id === id)[0]
+    })
+  }
 
   return (
     <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-      {items.map((item) => (
+      {items.map(item => (
         <Card
           itemId={item.id} // NOTE: itemId is required for track items
           title={item.name}
@@ -35,26 +35,25 @@ export default function ItemListMenu({
         />
       ))}
     </ScrollMenu>
-  );
+  )
 }
 
 function LeftArrow() {
-  const { isFirstItemVisible, scrollPrev } =
-    React.useContext(VisibilityContext);
+  const { isFirstItemVisible, scrollPrev } = React.useContext(VisibilityContext)
   return (
     <Button disabled={isFirstItemVisible} onClick={() => scrollPrev()}>
       <LeftOutlined />
     </Button>
-  );
+  )
 }
 
 function RightArrow() {
-  const { isLastItemVisible, scrollNext } = React.useContext(VisibilityContext);
+  const { isLastItemVisible, scrollNext } = React.useContext(VisibilityContext)
   return (
     <Button disabled={isLastItemVisible} onClick={() => scrollNext()}>
       <RightOutlined />
     </Button>
-  );
+  )
 }
 
 function Card({ onClick, selected, title, itemId }) {
@@ -62,7 +61,7 @@ function Card({ onClick, selected, title, itemId }) {
     <div
       onClick={onClick}
       style={{
-        width: "160px",
+        width: '160px',
       }}
       tabIndex={0}
     >
@@ -72,9 +71,9 @@ function Card({ onClick, selected, title, itemId }) {
       </div>
       <div
         style={{
-          height: "200px",
+          height: '200px',
         }}
       />
     </div>
-  );
+  )
 }

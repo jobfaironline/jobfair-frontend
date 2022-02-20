@@ -1,24 +1,24 @@
-import React from "react";
-import {Route, Switch} from "react-router-dom";
+import React from 'react'
+import { Route, Switch } from 'react-router-dom'
 //init Page
-import LoginPage from "../pages/LoginPage/LoginPage";
-import RegisterPage from "../pages/RegisterPage/RegisterPage";
-import FAQPage from "../pages/FAQPage/FAQPage";
-import JobFairPackPage from "../pages/JobFairPackPage/JobFairPackPage";
-import UserPage from "../pages/UserPage/UserPage";
-import ContractsPage from "../pages/ContractsPage/ContractsPage";
-import HomePage from "../pages/HomePage";
-import NavigationBar from "../components/navbar/Navbar";
-import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
+import LoginPage from '../pages/LoginPage/LoginPage'
+import RegisterPage from '../pages/RegisterPage/RegisterPage'
+import FAQPage from '../pages/FAQPage/FAQPage'
+import JobFairPackPage from '../pages/JobFairPackPage/JobFairPackPage'
+import UserPage from '../pages/UserPage/UserPage'
+import ContractsPage from '../pages/ContractsPage/ContractsPage'
+import HomePage from '../pages/HomePage'
+import NavigationBar from '../components/navbar/Navbar'
+import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
 
 //TODO: Remove later
-import EmployeeManagementPage from "../pages/EmployeeManagementPage/EmployeeManagementPage";
-import EmployeeRegisterPage from "../pages/EmployeeRegisterPage/EmployeeRegisterPage";
+import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
+import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
 
-import CompanyProfile from "../pages/ProfilePage/Company";
-import RegisterJobFairForm from "../components/register-job-fair-form/RegisterJobFairForm";
-import AttendantProfile from "../pages/ProfilePage/AttendantProfilePage";
-import AppliedJobPage from "../pages/AppliedJobPage/AppliedJobPage";
+import CompanyProfile from '../pages/ProfilePage/Company'
+import RegisterJobFairForm from '../components/register-job-fair-form/RegisterJobFairForm'
+import AttendantProfile from '../pages/ProfilePage/AttendantProfilePage'
+import AppliedJobPage from '../pages/AppliedJobPage/AppliedJobPage'
 
 const AppRouter = () => {
   return (
@@ -50,15 +50,15 @@ const AppRouter = () => {
         </Route>
         {/*handle Role Attendant Pages*/}
         <Route path="/applied-job" exact>
-          <AppliedJobPage/>
+          <AppliedJobPage />
         </Route>
         {/*handle Role Company Employee Pages*/}
         {/* TODO: Remove later */}
         <Route path="/employee-management" exact>
-          <EmployeeManagementPage/>
+          <EmployeeManagementPage />
         </Route>
         <Route path="/employee-register" exact>
-          <EmployeeRegisterPage/>
+          <EmployeeRegisterPage />
         </Route>
         {/*handle Role Company Manager Pages*/}
         {/*handle Role Admin Pages*/}
@@ -66,16 +66,16 @@ const AppRouter = () => {
           <ChangePasswordPage />
         </Route>
         <Route path="/attendant/profile" exact>
-          <AttendantProfile/>
+          <AttendantProfile />
         </Route>
         <Route path="/company/register-job-fair" exact>
           <RegisterJobFairForm />
         </Route>
         <Route path="/company/profile" exact>
-          <CompanyProfile/>
+          <CompanyProfile />
         </Route>
       </Switch>
     </>
-  );
-};
-export default AppRouter;
+  )
+}
+export default AppRouter
