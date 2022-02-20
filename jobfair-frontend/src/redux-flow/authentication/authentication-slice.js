@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+<<<<<<< Updated upstream
 import { USER_STORAGE } from "../../constants/ApplicationConst";
+=======
+import {USER_STORAGE} from "../../constants/AppConst";
+>>>>>>> Stashed changes
 
 const authenticationSlice = createSlice({
   name: "authentication",

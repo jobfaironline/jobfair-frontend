@@ -11,8 +11,12 @@ import HomePage from "../pages/HomePage";
 import NavigationBar from "../components/navbar/Navbar";
 import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
 import CompanyProfile from "../pages/ProfilePage/Company";
+<<<<<<< Updated upstream
 import RegisterJobFairForm from "../components/register-job-fair-form/RegisterJobFairForm";
 import AttendantProfile from "../pages/ProfilePage/AttendantProfilePage";
+=======
+import AppliedJobPage from "../pages/AppliedJobPage/AppliedJobPage";
+>>>>>>> Stashed changes
 
 const AppRouter = () => {
   return (
@@ -43,6 +47,9 @@ const AppRouter = () => {
           <ContractsPage />
         </Route>
         {/*handle Role Attendant Pages*/}
+        <Route path="/applied-job" exact>
+          <AppliedJobPage/>
+        </Route>
         {/*handle Role Company Employee Pages*/}
         {/*handle Role Company Manager Pages*/}
         {/*handle Role Admin Pages*/}
