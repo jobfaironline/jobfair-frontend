@@ -1,10 +1,5 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import AttendantRouter from "./AttendantRouter";
-import StaffRouter from "./StaffRouter";
-import AdminRouter from "./AdminRouter";
-import CompanyEmployeeRouter from "./CompanyEmployeeRouter";
-import CompanyManagerRouter from "./CompanyManagerRouter";
+import {Route, Switch} from "react-router-dom";
 //init Page
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
@@ -14,8 +9,17 @@ import UserPage from "../pages/UserPage/UserPage";
 import ContractsPage from "../pages/ContractsPage/ContractsPage";
 import HomePage from "../pages/HomePage";
 import NavigationBar from "../components/navbar/Navbar";
-import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
+
+//TODO: Remove later
+import EmployeeManagementPage from "../pages/EmployeeManagementPage/EmployeeManagementPage";
+import EmployeeRegisterPage from "../pages/EmployeeRegisterPage/EmployeeRegisterPage";
+
+import CompanyProfile from "../pages/ProfilePage/Company";
+import RegisterJobFairForm from "../components/register-job-fair-form/RegisterJobFairForm";
+import AttendantProfile from "../pages/ProfilePage/AttendantProfilePage";
+import AppliedJobPage from "../pages/AppliedJobPage/AppliedJobPage";
+
 const AppRouter = () => {
   return (
     <>
@@ -45,14 +49,30 @@ const AppRouter = () => {
           <ContractsPage />
         </Route>
         {/*handle Role Attendant Pages*/}
+        <Route path="/applied-job" exact>
+          <AppliedJobPage/>
+        </Route>
         {/*handle Role Company Employee Pages*/}
+        {/* TODO: Remove later */}
+        <Route path="/employee-management" exact>
+          <EmployeeManagementPage/>
+        </Route>
+        <Route path="/employee-register" exact>
+          <EmployeeRegisterPage/>
+        </Route>
         {/*handle Role Company Manager Pages*/}
         {/*handle Role Admin Pages*/}
-        <Route path="/profile" exact>
-          <ProfilePage />
-        </Route>
         <Route path="/accounts/changepassword" exact>
           <ChangePasswordPage />
+        </Route>
+        <Route path="/attendant/profile" exact>
+          <AttendantProfile/>
+        </Route>
+        <Route path="/company/register-job-fair" exact>
+          <RegisterJobFairForm />
+        </Route>
+        <Route path="/company/profile" exact>
+          <CompanyProfile/>
         </Route>
       </Switch>
     </>

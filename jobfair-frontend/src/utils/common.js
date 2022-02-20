@@ -27,41 +27,24 @@ const toSelection = (data) => {
 
   return { value: data?.id, label: data?.name };
 };
-function parseNode(node) {
-  function parse(node) {
-    const object = {};
-    object["geometry"] = node.attributes["geometry"]?.value;
-    object["material"] = node.attributes["material"]?.value;
-    object["position"] = eval(node.attributes["position"]?.value);
-    object["rotation"] = eval(node.attributes["rotation"]?.value);
-    object["scale"] = eval(node.attributes["scale"]?.value);
-    return object;
-  }
 
-  if (node.children.length === 0) {
-    const object = parse(node);
-    object["children"] = null;
-    return object;
-  }
-  const children = [];
-  for (let childNode of node.children) {
-    const result = parseNode(childNode);
-    children.push(result);
-  }
-  const object = parse(node);
-  object["children"] = children;
-  return object;
+export const getBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  })
 }
-export const parseText = (text) => {
-  let pre_process_text = text.replaceAll("{", "'").replaceAll("}", "'");
-  pre_process_text = `<root> ${pre_process_text} </root>`;
-  const parser = new DOMParser();
-  const xmlDoc = parser.parseFromString(pre_process_text, "text/xml");
-  const result = [];
-  for (let node of xmlDoc.children[0].children) {
-    const nodeObject = parseNode(node);
-    result.push(nodeObject);
-  }
-  console.log(result);
-  return result;
-};
+
+export const convertToDateString = (dateValue) => {
+  const date = new Date(dateValue);
+  // const dateString = date.toISOString().split('T')[0]; //yyyy-mm-dd
+  // const result = dateString.replaceAll('-', '/');
+  // return result;
+  return date.toISOString();
+}
+
+export const convertToDateValue = (dateString) => {
+  return Date.parse(dateString);
+}
