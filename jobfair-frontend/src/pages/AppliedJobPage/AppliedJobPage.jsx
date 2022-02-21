@@ -1,11 +1,11 @@
-import React from "react";
-import AppliedJobList from '../../components/AppliedJobList/AppliedJobList.component';
+import React from 'react'
+import AppliedJobList from '../../components/AppliedJobList/AppliedJobList.component'
 const AppliedJobPage = () => {
-    return (
-        <>
-            <AppliedJobList/>
-        </>
-    );
+  return (
+    <>
+      <AppliedJobList />
+    </>
+  )
 }
 
-export default AppliedJobPage;
+export default AppliedJobPage

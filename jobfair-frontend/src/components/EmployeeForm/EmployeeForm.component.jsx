@@ -1,28 +1,22 @@
-import React, { useState } from "react";
-import {
-  Select,
-  Button,
-  Form,
-  Input
-} from 'antd';
-import { EmployeeRegisterValidation } from "../../validate/EmployeeRegisterValidation";
-import { tailFormItemLayout, formItemLayout } from "./EmployeeForm.style";
+import React, { useState } from 'react'
+import { Select, Button, Form, Input } from 'antd'
+import { EmployeeRegisterValidation } from '../../validate/EmployeeRegisterValidation'
+import { tailFormItemLayout, formItemLayout } from './EmployeeForm.style'
 
-const { Option } = Select;
+const { Option } = Select
 
 const genderType = [
   {
-    title: "Male",
-    value: "MALE"
+    title: 'Male',
+    value: 'MALE',
   },
   {
-    title: "Female",
-    value: "FEMALE"
-  }
+    title: 'Female',
+    value: 'FEMALE',
+  },
 ]
 
-const EmployeeForm = ({form, onFinish}) => {
-
+const EmployeeForm = ({ form, onFinish }) => {
   return (
     <Form
       {...formItemLayout}
@@ -103,13 +97,9 @@ const EmployeeForm = ({form, onFinish}) => {
         rules={EmployeeRegisterValidation.gender}
       >
         <Select placeholder="select your gender">
-          {
-            genderType.map((gender) => {
-              return (
-                <Option value={gender.value}>{gender.title}</Option>
-              )
-            })
-          }
+          {genderType.map(gender => {
+            return <Option value={gender.value}>{gender.title}</Option>
+          })}
         </Select>
       </Form.Item>
 
@@ -119,7 +109,7 @@ const EmployeeForm = ({form, onFinish}) => {
         </Button>
       </Form.Item>
     </Form>
-  );
-};
+  )
+}
 
-export default EmployeeForm;
+export default EmployeeForm
