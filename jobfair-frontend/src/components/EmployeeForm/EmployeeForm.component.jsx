@@ -8,48 +8,19 @@ const { Option } = Select
 const genderType = [
   {
     title: 'Male',
-    value: 'MALE',
+    value: 'MALE'
   },
   {
     title: 'Female',
-    value: 'FEMALE',
-  },
+    value: 'FEMALE'
+  }
 ]
 
 const EmployeeForm = ({ form, onFinish }) => {
   return (
-    <Form
-      {...formItemLayout}
-      form={form}
-      name="register"
-      onFinish={onFinish}
-      scrollToFirstError
-    >
-      <Form.Item
-        name="email"
-        label="E-mail"
-        rules={EmployeeRegisterValidation.email}
-      >
+    <Form {...formItemLayout} form={form} name="register" onFinish={onFinish} scrollToFirstError>
+      <Form.Item name="email" label="E-mail" rules={EmployeeRegisterValidation.email}>
         <Input />
-      </Form.Item>
-
-      <Form.Item
-        name="password"
-        label="Password"
-        rules={EmployeeRegisterValidation.password}
-        hasFeedback
-      >
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        name="confirm"
-        label="Confirm Password"
-        dependencies={['password']}
-        hasFeedback
-        rules={EmployeeRegisterValidation.confirm}
-      >
-        <Input.Password />
       </Form.Item>
 
       <Form.Item
@@ -79,23 +50,15 @@ const EmployeeForm = ({ form, onFinish }) => {
         <Input />
       </Form.Item>
 
-      <Form.Item
-        name="phone"
-        label="Phone Number"
-        rules={EmployeeRegisterValidation.phone}
-      >
+      <Form.Item name="phone" label="Phone Number" rules={EmployeeRegisterValidation.phone}>
         <Input
           style={{
-            width: '100%',
+            width: '100%'
           }}
         />
       </Form.Item>
 
-      <Form.Item
-        name="gender"
-        label="Gender"
-        rules={EmployeeRegisterValidation.gender}
-      >
+      <Form.Item name="gender" label="Gender" rules={EmployeeRegisterValidation.gender}>
         <Select placeholder="select your gender">
           {genderType.map(gender => {
             return <Option value={gender.value}>{gender.title}</Option>

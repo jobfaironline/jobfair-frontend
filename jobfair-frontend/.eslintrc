@@ -12,11 +12,11 @@
         "prettier/prettier": [
             "error",
             {
-              "printWidth": 80,
-              "trailingComma": "none",
-              "semi": false,
-              "singleQuote": true,
-              "no-mixed-spaces-and-tabs": ["error", "smart-tabs"]
+                "printWidth": 80,
+                "trailingComma": "none",
+                "semi": false,
+                "singleQuote": true,
+                "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
             }
         ],
         "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],

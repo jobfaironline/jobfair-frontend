@@ -42,20 +42,20 @@ const EmployeeTableColumn = getColumnSearchProps => {
         switch (status) {
           case 'VERIFIED':
             objStatus = {
-              color: 'processing',
+              color: 'success',
               message: 'Verified'
             }
             break
           case 'REGISTERED':
             objStatus = {
-              color: 'default',
+              color: 'processing',
               message: 'Registered'
             }
             break
-          case 'SUSPENSE':
+          case 'SUSPENSED':
             objStatus = {
               color: 'warning',
-              message: 'Suspense'
+              message: 'Suspensed'
             }
             break
           default:
@@ -66,7 +66,7 @@ const EmployeeTableColumn = getColumnSearchProps => {
             break
         }
         return (
-          <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
+          <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag> // prettier-ignore
         )
       }
     }
