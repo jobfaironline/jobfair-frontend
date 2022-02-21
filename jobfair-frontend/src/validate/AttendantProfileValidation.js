@@ -44,12 +44,13 @@ export const AttendantProfileValidation = {
     () => ({
       validator(_, value) {
         if (!value || value >= 50) {
-          return Promise.resolve()
+          console.log(value)
+          return Promise.reject(
+            new Error('The maximum year of experience is 50 years')
+          )
         }
 
-        return Promise.reject(
-          new Error('The maximum year of experience is 50 years')
-        )
+        return Promise.resolve()
       },
     }),
   ],
@@ -75,7 +76,18 @@ export const AttendantProfileValidation = {
   certifications: {
     name: [{ required: true, message: 'Missing name' }],
     institution: [{ required: true, message: 'Missing institution' }],
-    year: [{ required: true, message: 'Missing year' }],
+    year: [
+      { required: true, message: 'Missing year' },
+      () => ({
+        validator(_, value) {
+          if (!value || value <= 1940) {
+            console.log(value)
+            return Promise.reject(new Error('The minimum year is 1940 years'))
+          }
+          return Promise.resolve()
+        },
+      }),
+    ],
     certificationLink: [
       { required: true, message: 'Missing certificationLink' },
     ],

@@ -73,12 +73,6 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
 
   form.setFieldsValue({ ...defaultData })
 
-  // const ProficiencyIcons = {
-  //   1: <FrownOutlined />,
-  //   2: <MehOutlined />,
-  //   3: <SmileOutlined />,
-  // }
-
   const handleOnChangeDob = dateString => {
     return convertToDateValue(dateString)
   }
