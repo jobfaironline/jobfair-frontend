@@ -3,43 +3,43 @@ export const AttendantProfileValidation = {
     email: [
       {
         required: true,
-        message: 'This field is required',
+        message: 'This field is required'
       },
       {
         max: 322,
-        message: 'This field has max length is 322 characters',
-      },
+        message: 'This field has max length is 322 characters'
+      }
     ],
     phone: [
       {
         required: true,
-        message: 'This field is required',
+        message: 'This field is required'
       },
       {
         max: 11,
-        message: 'This field has max length is 11 characters',
-      },
+        message: 'This field has max length is 11 characters'
+      }
     ],
     dob: [
       {
         required: true,
-        message: 'This field is required',
-      },
+        message: 'This field is required'
+      }
     ],
     firstname: [{ required: true, message: 'First name is required' }],
     middlename: [{ required: true, message: 'Middle name is required' }],
-    lastname: [{ required: true, message: 'Last name is required' }],
+    lastname: [{ required: true, message: 'Last name is required' }]
   },
   address: [
     {
       required: true,
-      message: 'This field is required',
-    },
+      message: 'This field is required'
+    }
   ],
   yearOfExp: [
     {
       required: true,
-      message: 'This field is required',
+      message: 'This field is required'
     },
     () => ({
       validator(_, value) {
@@ -57,14 +57,14 @@ export const AttendantProfileValidation = {
   title: [{ required: true, message: 'Title is required' }],
   jobTitle: [{ required: true, message: 'Job title is required' }],
   skills: {
-    name: [{ required: true, message: 'Missing name' }],
+    name: [{ required: true, message: 'Missing name' }]
   },
   workHistories: {
     company: [{ required: true, message: 'Missing company' }],
     description: [{ required: true, message: 'Missing description' }],
     fromDate: [{ required: true, message: 'Missing fromDate' }],
     toDate: [{ required: true, message: 'Missing toDate' }],
-    position: [[{ required: true, message: 'Missing position' }]],
+    position: [[{ required: true, message: 'Missing position' }]]
   },
   educations: {
     subject: [{ required: true, message: 'Missing subject' }],
@@ -89,15 +89,15 @@ export const AttendantProfileValidation = {
       }),
     ],
     certificationLink: [
-      { required: true, message: 'Missing certificationLink' },
-    ],
+      { required: true, message: 'Missing certificationLink' }
+    ]
   },
   references: {
     company: [{ required: true, message: 'Missing company' }],
     email: [{ required: true, message: 'Missing email' }],
     fullname: [{ required: true, message: 'Missing fullname' }],
     phone: [{ required: true, message: 'Missing phone' }],
-    position: [{ required: true, message: 'Missing position' }],
+    position: [{ required: true, message: 'Missing position' }]
   },
   activities: {
     name: [{ required: true, message: 'Missing name' }],
@@ -105,6 +105,6 @@ export const AttendantProfileValidation = {
     organization: [{ required: true, message: 'Missing organization' }],
     fromDate: [{ required: true, message: 'Missing fromDate' }],
     toDate: [{ required: true, message: 'Missing toDate' }],
-    description: [{ required: true, message: 'Missing description' }],
-  },
+    description: [{ required: true, message: 'Missing description' }]
+  }
 }

@@ -3,453 +3,453 @@ export const NUM_OF_SKILL_TAGS = 5
 export const JobLevelConst = [
   {
     value: 'INTERN_STUDENT',
-    label: 'Intern/Student',
+    label: 'Intern/Student'
   },
   {
     value: 'FRESHER',
-    label: 'Fresher',
+    label: 'Fresher'
   },
   {
     value: 'EXPERIENCE',
-    label: 'Experienced',
+    label: 'Experienced'
   },
   {
     value: 'DIRECTOR',
-    label: 'Director',
+    label: 'Director'
   },
   {
     value: 'DIRECTOR_AND_ABOVE',
-    label: 'Director and above',
-  },
+    label: 'Director and above'
+  }
 ]
 
 export const SalaryRangeConst = [
   {
     value: 100,
-    label: '100$',
+    label: '100$'
   },
   {
     value: 500,
-    label: '500$',
+    label: '500$'
   },
   {
     value: 1000,
-    label: '1000$',
+    label: '1000$'
   },
   {
     value: 1500,
-    label: '1500$',
+    label: '1500$'
   },
   {
     value: 2000,
-    label: '2000$',
+    label: '2000$'
   },
   {
     value: 3000,
-    label: '3000$',
+    label: '3000$'
   },
   {
     value: 5000,
-    label: '5000$',
+    label: '5000$'
   },
   {
     value: 10000,
-    label: '10000$',
-  },
+    label: '10000$'
+  }
 ]
 
 export const JobTypeConst = [
   {
     value: 'FULL_TIME',
-    label: 'Full time',
+    label: 'Full time'
   },
   {
     value: 'INTERNSHIP',
-    label: 'Internship',
+    label: 'Internship'
   },
   {
     value: 'PART_TIME',
-    label: 'Part time',
+    label: 'Part time'
   },
   {
     value: 'FREELANCER',
-    label: 'Freelancer',
+    label: 'Freelancer'
   },
   {
     value: 'OTHER',
-    label: 'Others',
+    label: 'Others'
   },
   {
     value: 'SEASONAL',
-    label: 'Seasonal',
-  },
+    label: 'Seasonal'
+  }
 ]
 
 export const IsRequiredLetterConst = [
   {
     value: 0,
-    label: "Yes, it's always required",
+    label: "Yes, it's always required"
   },
   {
     value: 1,
-    label: 'No, it is optional',
+    label: 'No, it is optional'
   },
   {
     value: 2,
-    label: 'No, it is never required',
-  },
+    label: 'No, it is never required'
+  }
 ]
 
 export const SkillTagsConst = [
   {
     id: 0,
-    name: 'IT System',
+    name: 'IT System'
   },
   {
     id: 1,
-    name: 'IT Operation',
+    name: 'IT Operation'
   },
   {
     id: 2,
-    name: 'Developer Angular',
+    name: 'Developer Angular'
   },
   {
     id: 3,
-    name: 'Graphic',
+    name: 'Graphic'
   },
   {
     id: 4,
-    name: 'Colorist',
+    name: 'Colorist'
   },
   {
     id: 5,
-    name: 'Ban hang',
+    name: 'Ban hang'
   },
   {
     id: 6,
-    name: 'Bao Chi',
+    name: 'Bao Chi'
   },
   {
     id: 7,
-    name: 'Bat dong san',
-  },
+    name: 'Bat dong san'
+  }
 ]
 
 export const LanguageConst = [
   {
     id: 'af',
-    value: 'Afrikaans',
+    value: 'Afrikaans'
   },
   {
     id: 'ar',
-    value: 'Arabic',
+    value: 'Arabic'
   },
   {
     id: 'az',
-    value: 'Azeri',
+    value: 'Azeri'
   },
   {
     id: 'be',
-    value: 'Belarusian',
+    value: 'Belarusian'
   },
   {
     id: 'bg',
-    value: 'Bulgarian',
+    value: 'Bulgarian'
   },
   {
     id: 'ca',
-    value: 'Catalan',
+    value: 'Catalan'
   },
   {
     id: 'cs',
-    value: 'Czech',
+    value: 'Czech'
   },
   {
     id: 'cy',
-    value: 'Welsh',
+    value: 'Welsh'
   },
   {
     id: 'da',
-    value: 'Danish',
+    value: 'Danish'
   },
   {
     id: 'de',
-    value: 'German',
+    value: 'German'
   },
   {
     id: 'dv',
-    value: 'Divehi',
+    value: 'Divehi'
   },
   {
     id: 'el',
-    value: 'Greek',
+    value: 'Greek'
   },
   {
     id: 'en',
-    value: 'English',
+    value: 'English'
   },
   {
     id: 'eo',
-    value: 'Esperanto',
+    value: 'Esperanto'
   },
   {
     id: 'es',
-    value: 'Spanish',
+    value: 'Spanish'
   },
   {
     id: 'et',
-    value: 'Estonian',
+    value: 'Estonian'
   },
   {
     id: 'eu',
-    value: 'Basque',
+    value: 'Basque'
   },
   {
     id: 'fa',
-    value: 'Farsi',
+    value: 'Farsi'
   },
   {
     id: 'fi',
-    value: 'Finnish',
+    value: 'Finnish'
   },
   {
     id: 'fo',
-    value: 'Faroese',
+    value: 'Faroese'
   },
   {
     id: 'fr',
-    value: 'French',
+    value: 'French'
   },
   {
     id: 'gl',
-    value: 'Galician',
+    value: 'Galician'
   },
   {
     id: 'gu',
-    value: 'Gujarati',
+    value: 'Gujarati'
   },
   {
     id: 'he',
-    value: 'Hebrew',
+    value: 'Hebrew'
   },
   {
     id: 'hi',
-    value: 'Hindi',
+    value: 'Hindi'
   },
   {
     id: 'hr',
-    value: 'Croatian',
+    value: 'Croatian'
   },
   {
     id: 'hu',
-    value: 'Hungarian',
+    value: 'Hungarian'
   },
   {
     id: 'hy',
-    value: 'Armenian',
+    value: 'Armenian'
   },
   {
     id: 'id',
-    value: 'Indonesian',
+    value: 'Indonesian'
   },
   {
     id: 'is',
-    value: 'Icelandic',
+    value: 'Icelandic'
   },
   {
     id: 'it',
-    value: 'Italian',
+    value: 'Italian'
   },
   {
     id: 'ja',
-    value: 'Japanese',
+    value: 'Japanese'
   },
   {
     id: 'ka',
-    value: 'Georgian',
+    value: 'Georgian'
   },
   {
     id: 'kk',
-    value: 'Kazakh',
+    value: 'Kazakh'
   },
   {
     id: 'kn',
-    value: 'Kannada',
+    value: 'Kannada'
   },
   {
     id: 'ko',
-    value: 'Korean',
+    value: 'Korean'
   },
   {
     id: 'kok',
-    value: 'Konkani',
+    value: 'Konkani'
   },
   {
     id: 'ky',
-    value: 'Kyrgyz',
+    value: 'Kyrgyz'
   },
   {
     id: 'lt',
-    value: 'Lithuanian',
+    value: 'Lithuanian'
   },
   {
     id: 'lv',
-    value: 'Latvian',
+    value: 'Latvian'
   },
   {
     id: 'mi',
-    value: 'Maori',
+    value: 'Maori'
   },
   {
     id: 'mk',
-    value: 'FYRO Macedonian',
+    value: 'FYRO Macedonian'
   },
   {
     id: 'mn',
-    value: 'Mongolian',
+    value: 'Mongolian'
   },
   {
     id: 'mr',
-    value: 'Marathi',
+    value: 'Marathi'
   },
   {
     id: 'ms',
-    value: 'Malay',
+    value: 'Malay'
   },
   {
     id: 'mt',
-    value: 'Maltese',
+    value: 'Maltese'
   },
   {
     id: 'nb',
-    value: 'Norwegian',
+    value: 'Norwegian'
   },
   {
     id: 'nl',
-    value: 'Dutch',
+    value: 'Dutch'
   },
   {
     id: 'ns',
-    value: 'Northern Sotho',
+    value: 'Northern Sotho'
   },
   {
     id: 'pa',
-    value: 'Punjabi',
+    value: 'Punjabi'
   },
   {
     id: 'pl',
-    value: 'Polish',
+    value: 'Polish'
   },
   {
     id: 'ps',
-    value: 'Pashto',
+    value: 'Pashto'
   },
   {
     id: 'pt',
-    value: 'Portuguese',
+    value: 'Portuguese'
   },
   {
     id: 'qu',
-    value: 'Quechua',
+    value: 'Quechua'
   },
   {
     id: 'ro',
-    value: 'Romanian',
+    value: 'Romanian'
   },
   {
     id: 'ru',
-    value: 'Russian',
+    value: 'Russian'
   },
   {
     id: 'sa',
-    value: 'Sanskrit',
+    value: 'Sanskrit'
   },
   {
     id: 'se',
-    value: 'Sami (Northern)',
+    value: 'Sami (Northern)'
   },
   {
     id: 'sk',
-    value: 'Slovak',
+    value: 'Slovak'
   },
   {
     id: 'sl',
-    value: 'Slovenian',
+    value: 'Slovenian'
   },
   {
     id: 'sq',
-    value: 'Albanian',
+    value: 'Albanian'
   },
   {
     id: 'sv',
-    value: 'Swedish',
+    value: 'Swedish'
   },
   {
     id: 'sw',
-    value: 'Swahili',
+    value: 'Swahili'
   },
   {
     id: 'syr',
-    value: 'Syriac',
+    value: 'Syriac'
   },
   {
     id: 'ta',
-    value: 'Tamil',
+    value: 'Tamil'
   },
   {
     id: 'te',
-    value: 'Telugu',
+    value: 'Telugu'
   },
   {
     id: 'th',
-    value: 'Thai',
+    value: 'Thai'
   },
   {
     id: 'tl',
-    value: 'Tagalog',
+    value: 'Tagalog'
   },
   {
     id: 'tn',
-    value: 'Tswana',
+    value: 'Tswana'
   },
   {
     id: 'tr',
-    value: 'Turkish',
+    value: 'Turkish'
   },
   {
     id: 'ts',
-    value: 'Tsonga',
+    value: 'Tsonga'
   },
   {
     id: 'tt',
-    value: 'Tatar',
+    value: 'Tatar'
   },
   {
     id: 'uk',
-    value: 'Ukrainian',
+    value: 'Ukrainian'
   },
   {
     id: 'ur',
-    value: 'Urdu',
+    value: 'Urdu'
   },
   {
     id: 'uz',
-    value: 'Uzbek (Latin)',
+    value: 'Uzbek (Latin)'
   },
   {
     id: 'vi',
-    value: 'Vietnamese',
+    value: 'Vietnamese'
   },
   {
     id: 'xh',
-    value: 'Xhosa',
+    value: 'Xhosa'
   },
   {
     id: 'zh',
-    value: 'Chinese',
+    value: 'Chinese'
   },
   {
     id: 'zu',
-    value: 'Zulu',
-  },
+    value: 'Zulu'
+  }
 ]

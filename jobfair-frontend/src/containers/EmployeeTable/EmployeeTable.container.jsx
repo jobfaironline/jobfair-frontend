@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import EmployeeTableComponent from '../../components/EmployeeTable/EmployeeTable.component'
-import {
-  deleteEmployeeAPI,
-  getEmployeesAPI,
-} from '../../services/companyEmployeeService'
+import { deleteEmployeeAPI, getEmployeesAPI } from '../../services/companyEmployeeService'
 import { Space, notification } from 'antd'
 import { useSelector } from 'react-redux'
 
@@ -22,7 +19,7 @@ const EmployeeTable = ({ extra }) => {
             id: employee.account.id,
             email: employee.account.email,
             phone: employee.account.phone,
-            status: employee.account.status,
+            status: employee.account.status
           }
         })
 
@@ -31,7 +28,7 @@ const EmployeeTable = ({ extra }) => {
       .catch(e => {
         notification['error']({
           message: `Get employee data failed`,
-          description: `There is problem while deleting, try again later`,
+          description: `There is problem while deleting, try again later`
         })
       })
   }
@@ -40,22 +37,24 @@ const EmployeeTable = ({ extra }) => {
   }, [])
 
   const handleDelete = employeeId => {
-    console.log(employeeId)
-
     deleteEmployeeAPI(employeeId)
       .then(res => {
         notification['success']({
           message: `Delete employee successfully`,
-          description: `Deleted employee ${employeeId} successfully`,
+          description: `Deleted employee ${employeeId} successfully`
         })
         fetchData()
       })
       .catch(e => {
         notification['error']({
           message: `Delete employee failed`,
-          description: `There is problem while deleting, try again later`,
+          description: `There is problem while deleting, try again later`
         })
       })
+  }
+
+  const handleGetDetail = employeeId => {
+    console.log(employeeId)
   }
 
   return (
@@ -64,11 +63,18 @@ const EmployeeTable = ({ extra }) => {
         employeeData={employeeData}
         editable
         extra={{
-          title: 'Hành động',
+          title: 'Actions',
           key: 'action',
           render: (text, record) => {
             return (
               <Space size="middle">
+                <a
+                  onClick={() => {
+                    handleGetDetail(record.id)
+                  }}
+                >
+                  Detail
+                </a>
                 <a
                   onClick={() => {
                     handleDelete(record.id)
@@ -78,7 +84,7 @@ const EmployeeTable = ({ extra }) => {
                 </a>
               </Space>
             )
-          },
+          }
         }}
       />
     </div>

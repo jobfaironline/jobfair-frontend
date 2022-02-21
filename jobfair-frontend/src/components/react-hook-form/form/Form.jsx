@@ -5,11 +5,11 @@ const Form = ({ defaultValues, children, onSubmit, schema }) => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors }
   } = useForm({
     defaultValues,
     resolver: yupResolver(schema),
-    mode: 'onChange',
+    mode: 'onChange'
   })
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -21,8 +21,8 @@ const Form = ({ defaultValues, children, onSubmit, schema }) => {
                   ...{
                     ...child.props,
                     register,
-                    key: child.props.name,
-                  },
+                    key: child.props.name
+                  }
                 })
               : child
           })

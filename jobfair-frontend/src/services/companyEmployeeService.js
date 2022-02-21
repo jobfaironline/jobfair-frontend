@@ -1,6 +1,6 @@
 import {
   ENDPOINT_CRUD_EMPLOYEES,
-  ENDPOINT_REGISTER_EMPLOYEE,
+  ENDPOINT_REGISTER_EMPLOYEE
 } from '../constants/EndPoint'
 // handle api with axios
 import { CallAPI } from './axiosBase.js'

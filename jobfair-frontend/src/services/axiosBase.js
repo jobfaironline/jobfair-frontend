@@ -13,7 +13,7 @@ export const CallAPI = (
   var headers = configHeaders
     ? configHeaders
     : {
-        'content-type': 'application/json',
+        'content-type': 'application/json'
       }
   token = cookie.get(TOKEN_KEY)
   if (token && token !== 'undefined') {
@@ -25,19 +25,19 @@ export const CallAPI = (
     url: `${endpoint}`,
     headers: headers,
     data: body,
-    responseType: responseType,
+    responseType: responseType
   })
 }
 
 export const CallAPIOutsite = (endpoint, method = 'GET', body) => {
   var headers = {
-    'content-type': 'application/json',
+    'content-type': 'application/json'
   }
 
   return axios({
     method: method,
     url: `${endpoint}`,
     headers: headers,
-    data: body,
+    data: body
   })
 }

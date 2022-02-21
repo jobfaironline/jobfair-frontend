@@ -19,5 +19,5 @@ export const JOB_POSITION_MODEL = {
   //
   skillTagIds: [0],
   subCategoryIds: [0, 1, 2],
-  title: 'string',
+  title: 'string'
 }
