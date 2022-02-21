@@ -31,3 +31,4 @@
 /src/pages/ProfilePage/AttendantProfilePage.jsx
 /src/pages/ProfilePage/Company/index.jsx
 /src/redux-flow/authentication/authentication-slice.js
+/src/components/AppliedJobList/AppliedJobList.component.jsx

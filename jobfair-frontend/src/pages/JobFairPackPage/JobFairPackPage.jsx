@@ -15,26 +15,26 @@ const JobFairPackPage = () => {
       id: 1,
       name: 'Banner',
       description: 'Banner',
-      url: './banner.glb',
+      url: './banner.glb'
     },
     {
       id: 2,
       name: 'main board',
       description: 'main board',
-      url: './main_board.glb',
+      url: './main_board.glb'
     },
     {
       id: 3,
       name: 'rostrum',
       description: 'Rostrum',
-      url: './rostrum.glb',
+      url: './rostrum.glb'
     },
     {
       id: 4,
       name: 'Trash',
       description: 'Trash',
-      url: './trash.glb',
-    },
+      url: './trash.glb'
+    }
   ]
 
   function handleClick(e) {
@@ -58,7 +58,7 @@ const JobFairPackPage = () => {
       },
       {
         binary: true,
-        trs: true,
+        trs: true
       }
     )
   }
@@ -68,7 +68,6 @@ const JobFairPackPage = () => {
   const [selectedSampleItem, setSelectedSampleItem] = useState({})
   const [mode, setMode] = useState(ModeConstant.SELECT)
   const [selectedItemRef, setSelectedItemRef] = useState()
-  useEffect(() => console.log(selectedItemRef), [selectedItemRef])
   const [hoverItemRef, setHoverItemRef] = useState()
   const ref = useRef()
   //parse file and get items
@@ -91,7 +90,7 @@ const JobFairPackPage = () => {
     return result.length === 0 ? undefined : result
   }
 
-  const changeMode = (mode) => {
+  const changeMode = mode => {
     switch (mode) {
       case ModeConstant.ADD:
         setSelectedItemRef(undefined)
@@ -103,11 +102,7 @@ const JobFairPackPage = () => {
   return (
     <>
       <Button onClick={handleClick}>Download</Button>
-      <Canvas
-        dpr={[1, 2]}
-        camera={{ fov: 45, position: [-75, 30, -10] }}
-        style={{ width: '100%', height: '850px' }}
-      >
+      <Canvas dpr={[1, 2]} camera={{ fov: 45, position: [-75, 30, -10] }} style={{ width: '100%', height: '850px' }}>
         <OrbitControls enabled={!isDragging} />
         <directionalLight intensity={0.5} />
         <ambientLight intensity={0.2} />
@@ -124,13 +119,7 @@ const JobFairPackPage = () => {
           setHoverItemRef={setHoverItemRef}
         />
         <EffectComposer multisampling={8} autoClear={false}>
-          <Outline
-            blur
-            selection={selected()}
-            visibleEdgeColor="white"
-            edgeStrength={5}
-            width={1000}
-          />
+          <Outline blur selection={selected()} visibleEdgeColor="white" edgeStrength={5} width={1000} />
         </EffectComposer>
       </Canvas>
       <ToastContainer />
