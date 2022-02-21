@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import {Avatar, Button, Card, Divider, Form, Input, Radio, Rate, Select, Space, DatePicker} from "antd";
-import {GET_ATTENDANT_MODEL} from "./AttendantDefaultModel";
+import React, {useEffect, useState} from 'react';
+import {Avatar, Button, Card, DatePicker, Divider, Form, Input, Radio, Rate, Select, Space, Spin} from "antd";
 import {FrownOutlined, MehOutlined, MinusCircleOutlined, PlusOutlined, SmileOutlined} from "@ant-design/icons";
 import {
     CountryConst,
@@ -8,20 +7,21 @@ import {
     JobLevelConst,
     MaritalConst,
     QualificationConst,
-    ResidenceConst, YesNoConst
+    ResidenceConst,
+    YesNoConst
 } from "./AttendantConstants";
-import moment from "moment";
-import {convertToDateString} from "../../utils/common";
 import {AttendantProfileValidation} from "../../validate/AttendantProfileValidation";
+import {convertToDateString, convertToDateValue} from "../../utils/common";
+import moment from "moment";
 
-const AttendantProfileForm = props => {
-    const [defaultData, setDefaultData] = useState(GET_ATTENDANT_MODEL);
+const AttendantProfileFormComponent = ({form, onFinish, data}) => {
 
-
-    const [form] = Form.useForm();
-
-    const onFinish = (values) => {
-        console.log('submitted:', values)
+    const [dob, setDob] = useState('');
+    if (data === undefined || data === null || Object.keys(data).length === 0) {
+        console.log(data);
+        return (
+            <Spin size="large"/>
+        )
     }
 
     const onFormChange = (values) => {
@@ -30,10 +30,42 @@ const AttendantProfileForm = props => {
 
     const {Option} = Select;
 
+    const defaultData = {
+        ...data,
+        dob: moment(convertToDateString(data.dob)),
+        workHistories: data.workHistories.map(item => {
+            return {
+                ...item,
+                fromDate: moment(convertToDateString(item.fromDate)),
+                toDate: moment(convertToDateString(item.toDate))
+            }
+        }),
+        activities: data.activities.map(item => {
+            return {
+                ...item,
+                fromDate: moment(convertToDateString(item.fromDate)),
+                toDate: moment(convertToDateString(item.toDate))
+            }
+        }),
+        educations: data.educations.map(item => {
+            return {
+                ...item,
+                fromDate: moment(convertToDateString(item.fromDate)),
+                toDate: moment(convertToDateString(item.toDate))
+            }
+        })
+    }
+
+    form.setFieldsValue({...defaultData})
+
     const ProficiencyIcons = {
         1: <FrownOutlined/>,
         2: <MehOutlined/>,
         3: <SmileOutlined/>
+    }
+
+    const handleOnChangeDob = (dateString) => {
+        return convertToDateValue(dateString);
     }
 
     const DateFormat = 'YYYY/MM/DD';
@@ -45,7 +77,6 @@ const AttendantProfileForm = props => {
             </Divider>
             <Form form={form}
                   onFinish={onFinish}
-                  initialValues={defaultData}
                   onValuesChange={e => onFormChange(e)}
                   requiredMark="required"
                   autoComplete="off"
@@ -53,7 +84,6 @@ const AttendantProfileForm = props => {
                 <Space direction="vertical" size="large">
                     <Card
                         title="Contact information"
-                        extra={<a href="#">can be triggered to do something</a>}
                         style={{width: 1400}}
                         headStyle={{fontWeight: 700, fontSize: 24}}
                     >
@@ -79,7 +109,8 @@ const AttendantProfileForm = props => {
                                 name="dob"
                                 rules={AttendantProfileValidation.account.dob}
                             >
-                                <DatePicker format={DateFormat} />
+                                <DatePicker format={DateFormat}
+                                            onChange={(date, dateString) => handleOnChangeDob(dateString)}/>
                             </Form.Item>
                             <Form.Item
                                 label="Country"
@@ -105,7 +136,7 @@ const AttendantProfileForm = props => {
                             <Avatar
                                 size={{xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100}}
                                 name={['account', 'profileImageUrl']}
-                                src={defaultData.account.profileImageUrl}
+                                src={data.account.profileImageUrl}
                             />
                         </div>
                         <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -162,6 +193,7 @@ const AttendantProfileForm = props => {
                             <Form.Item
                                 label="Year of experience"
                                 name="yearOfExp"
+                                hasFeedback
                                 rules={AttendantProfileValidation.yearOfExp}
                             >
                                 <Input placeholder="Year of exp" style={{width: '50%', textAlign: 'right'}}
@@ -319,7 +351,7 @@ const AttendantProfileForm = props => {
                                                             rules={AttendantProfileValidation.workHistories.fromDate}
                                                             style={{width: '20%'}}
                                                         >
-                                                            <DatePicker format={DateFormat} />
+                                                            <DatePicker format={DateFormat}/>
                                                         </Form.Item>
                                                         <Form.Item
                                                             {...restField}
@@ -328,7 +360,7 @@ const AttendantProfileForm = props => {
                                                             rules={AttendantProfileValidation.workHistories.toDate}
                                                             style={{width: '20%'}}
                                                         >
-                                                            <DatePicker format={DateFormat} />
+                                                            <DatePicker format={DateFormat}/>
                                                         </Form.Item>
                                                     </div>
                                                     <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -340,7 +372,8 @@ const AttendantProfileForm = props => {
                                                         >
                                                             <Radio.Group>
                                                                 {YesNoConst.map(item => (
-                                                                    <Radio.Button value={item.value}>{item.label}</Radio.Button>
+                                                                    <Radio.Button
+                                                                        value={item.value}>{item.label}</Radio.Button>
                                                                 ))}
                                                             </Radio.Group>
                                                         </Form.Item>
@@ -400,26 +433,35 @@ const AttendantProfileForm = props => {
                                                         >
                                                             <Input placeholder="School"/>
                                                         </Form.Item>
+                                                        <Form.Item
+                                                            {...restField}
+                                                            name={[name, 'achievement']}
+                                                            label="Achievement"
+                                                            rules={AttendantProfileValidation.educations.achievement}
+                                                            style={{width: 300}}
+                                                        >
+                                                            <Input placeholder="School"/>
+                                                        </Form.Item>
                                                     </div>
                                                     <div style={{display: 'flex', flexDirection: 'row'}}>
-                                                    <Form.Item
-                                                        {...restField}
-                                                        name={[name, 'fromDate']}
-                                                        label="From date"
-                                                        rules={AttendantProfileValidation.educations.fromDate}
-                                                        style={{width: '20%'}}
-                                                    >
-                                                        <DatePicker format={DateFormat} />
-                                                    </Form.Item>
-                                                    <Form.Item
-                                                        {...restField}
-                                                        name={[name, 'toDate']}
-                                                        label="To date"
-                                                        rules={AttendantProfileValidation.educations.toDate}
-                                                        style={{width: '20%'}}
-                                                    >
-                                                        <DatePicker format={DateFormat} />
-                                                    </Form.Item>
+                                                        <Form.Item
+                                                            {...restField}
+                                                            name={[name, 'fromDate']}
+                                                            label="From date"
+                                                            rules={AttendantProfileValidation.educations.fromDate}
+                                                            style={{width: '20%'}}
+                                                        >
+                                                            <DatePicker format={DateFormat}/>
+                                                        </Form.Item>
+                                                        <Form.Item
+                                                            {...restField}
+                                                            name={[name, 'toDate']}
+                                                            label="To date"
+                                                            rules={AttendantProfileValidation.educations.toDate}
+                                                            style={{width: '20%'}}
+                                                        >
+                                                            <DatePicker format={DateFormat}/>
+                                                        </Form.Item>
                                                     </div>
                                                     <Form.Item
                                                         {...restField}
@@ -496,7 +538,8 @@ const AttendantProfileForm = props => {
                                                         rules={AttendantProfileValidation.certifications.year}
                                                         style={{width: '20%'}}
                                                     >
-                                                        <Input placeholder="Year" style={{width: '50%', textAlign: 'right'}}
+                                                        <Input placeholder="Year"
+                                                               style={{width: '50%', textAlign: 'right'}}
                                                                type="number" min="0"/>
                                                     </Form.Item>
                                                     <Form.Item
@@ -641,7 +684,7 @@ const AttendantProfileForm = props => {
                                                         rules={AttendantProfileValidation.activities.fromDate}
                                                         style={{width: 300}}
                                                     >
-                                                        <DatePicker format={DateFormat} />
+                                                        <DatePicker format={DateFormat}/>
 
                                                     </Form.Item>
                                                     <Form.Item
@@ -651,7 +694,7 @@ const AttendantProfileForm = props => {
                                                         rules={AttendantProfileValidation.activities.toDate}
                                                         style={{width: 300}}
                                                     >
-                                                        <DatePicker format={DateFormat} />
+                                                        <DatePicker format={DateFormat}/>
                                                     </Form.Item>
                                                     <Form.Item
                                                         {...restField}
@@ -661,7 +704,8 @@ const AttendantProfileForm = props => {
                                                     >
                                                         <Radio.Group>
                                                             {YesNoConst.map(item => (
-                                                                <Radio.Button value={item.value}>{item.label}</Radio.Button>
+                                                                <Radio.Button
+                                                                    value={item.value}>{item.label}</Radio.Button>
                                                             ))}
                                                         </Radio.Group>
                                                     </Form.Item>
@@ -701,4 +745,4 @@ const AttendantProfileForm = props => {
 };
 
 
-export default AttendantProfileForm;
+export default AttendantProfileFormComponent;

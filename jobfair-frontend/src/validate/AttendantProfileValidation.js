@@ -47,10 +47,15 @@ export const AttendantProfileValidation = {
             required: true,
             message: 'This field is required'
         },
-        {
-            max: 80,
-            message: 'Max value of year is 80'
-        },
+        () => ({
+            validator(_, value) {
+                if (!value || value >= 50) {
+                    return Promise.resolve();
+                }
+
+                return Promise.reject(new Error('The maximum year of experience is 50 years'));
+            },
+        }),
     ],
     title: [
         {required: true, message: 'Title is required'}
@@ -87,11 +92,12 @@ export const AttendantProfileValidation = {
         school: [{required: true, message: 'Missing school'}],
         fromDate: [{required: true, message: 'Missing fromDate'}],
         toDate: [{required: true, message: 'Missing toDate'}],
+        achievement: [{required: true, message: 'Missing achievement'}],
     },
     certifications: {
         name: [{required: true, message: 'Missing name'}],
         institution: [{required: true, message: 'Missing institution'}],
-        year: [{required: true, message: 'Missing year'}, {max: 2030, message: 'Maximum year is 2030'}],
+        year: [{required: true, message: 'Missing year'}],
         certificationLink: [{required: true, message: 'Missing certificationLink'}],
     },
     references: {

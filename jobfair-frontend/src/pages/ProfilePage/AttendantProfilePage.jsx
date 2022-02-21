@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import AttendantProfileForm from "../../components/attendant-profile-form/AttendantProfileForm";
+import AttendantProfileFormContainer from "../../containers/AttendantProfileForm/AttendantProfileForm.container";
 
 const AttendantProfile = props => {
     return (
         <div>
-            <AttendantProfileForm/>
+            <AttendantProfileFormContainer/>
         </div>
     );
 };
