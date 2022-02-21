@@ -1,12 +1,11 @@
-import EmployeeForm from "../../containers/EmployeeForm/EmployeeForm.container";;
+import EmployeeForm from '../../containers/EmployeeForm/EmployeeForm.container'
 
 const RegisterPage = () => {
-
   return (
     <>
-      <EmployeeForm/>
+      <EmployeeForm />
     </>
-  );
-};
+  )
+}
 
-export default RegisterPage;
+export default RegisterPage
