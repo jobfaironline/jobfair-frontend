@@ -7,24 +7,24 @@ export const DEFAULT_PROFILE_IMAGE =
 export const jobLevel = [
   {
     id: 0,
-    name: 'Intern/Student',
+    name: 'Intern/Student'
   },
   {
     id: 1,
-    name: 'Fresher/Entry level',
+    name: 'Fresher/Entry level'
   },
   {
     id: 2,
-    name: 'Experienced (non-manager)',
+    name: 'Experienced (non-manager)'
   },
   {
     id: 3,
-    name: 'Director',
+    name: 'Director'
   },
   {
     id: 4,
-    name: 'Director and above',
-  },
+    name: 'Director and above'
+  }
 ]
 export const REGEX_NEW_PASSWORD = '^.{2,}$'
 export const REGEX_RE_NEW_PASSWORD = '^.{2,}$'
@@ -36,5 +36,5 @@ export const USER_STORAGE = 'user'
 export const ModeConstant = {
   SELECT: 0,
   ADD: 1,
-  DELETE: 2,
+  DELETE: 2
 }

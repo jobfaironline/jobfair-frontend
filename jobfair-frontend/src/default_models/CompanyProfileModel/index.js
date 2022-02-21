@@ -13,7 +13,7 @@ export const COMPANY_DEFAULT_MODEL = {
       fieldKey: 0,
       isListField: true,
       key: 0,
-      id: 0,
+      id: 0
     },
     {
       name: 1,
@@ -21,7 +21,7 @@ export const COMPANY_DEFAULT_MODEL = {
       fieldKey: 1,
       isListField: true,
       key: 1,
-      id: 1,
-    },
-  ],
+      id: 1
+    }
+  ]
 }

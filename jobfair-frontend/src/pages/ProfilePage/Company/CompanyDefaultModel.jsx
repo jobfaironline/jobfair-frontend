@@ -3,8 +3,8 @@ export const UPDATE_COMPANY_DEFAULT_MODEL = {
   benefits: [
     {
       description: '',
-      id: 0,
-    },
+      id: 0
+    }
   ],
   email: '',
   employeeMaxNum: 0,
@@ -16,7 +16,7 @@ export const UPDATE_COMPANY_DEFAULT_MODEL = {
   status: '',
   subCategoriesIds: [0, 1, 2],
   taxId: '',
-  url: '',
+  url: ''
 }
 
 export const GET_COMPANY_BY_ID_DEFAULT_MODEL = {
@@ -36,9 +36,9 @@ export const GET_COMPANY_BY_ID_DEFAULT_MODEL = {
       name: '',
       category: {
         id: 0,
-        name: '',
-      },
-    },
+        name: ''
+      }
+    }
   ],
   companyBenefitDTOS: [
     {
@@ -47,10 +47,10 @@ export const GET_COMPANY_BY_ID_DEFAULT_MODEL = {
       benefitDTO: {
         id: 0,
         name: '',
-        description: '',
+        description: ''
       },
-      companyDTO: null,
-    },
+      companyDTO: null
+    }
   ],
-  mediaDTOS: [],
+  mediaDTOS: []
 }

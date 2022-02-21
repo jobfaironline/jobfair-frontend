@@ -8,7 +8,7 @@ export const notify = (state, message) => {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined,
+      progress: undefined
     })
   }
   if (state === 0) {
@@ -19,7 +19,7 @@ export const notify = (state, message) => {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined,
+      progress: undefined
     })
   }
   if (state === 9) {
@@ -30,7 +30,7 @@ export const notify = (state, message) => {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined,
+      progress: undefined
     })
   }
 }
