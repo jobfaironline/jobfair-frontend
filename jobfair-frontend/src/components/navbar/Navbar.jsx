@@ -1,6 +1,6 @@
-import React from "react";
-import { Menu } from "antd";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { Menu } from 'antd'
+import { Link } from 'react-router-dom'
 
 const NavigationBar = () => {
   return (
@@ -46,7 +46,7 @@ const NavigationBar = () => {
         </Menu>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NavigationBar;
+export default NavigationBar
