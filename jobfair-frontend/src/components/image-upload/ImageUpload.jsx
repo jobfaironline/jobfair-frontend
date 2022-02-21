@@ -13,21 +13,21 @@ class ImageUpload extends Component {
         uid: '-1',
         name: 'image.png',
         status: 'done',
-        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
       },
       {
         uid: '-xxx',
         percent: 50,
         name: 'image.png',
         status: 'uploading',
-        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
       },
       {
         uid: '-5',
         name: 'image.png',
-        status: 'error',
-      },
-    ],
+        status: 'error'
+      }
+    ]
   }
 
   handleCancel = () => this.setState({ previewVisible: false })
@@ -41,7 +41,7 @@ class ImageUpload extends Component {
       previewImage: file.url || file.preview,
       previewVisible: true,
       previewTitle:
-        file.name || file.url.substring(file.url.lastIndexOf('/') + 1),
+        file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
     })
   }
 
