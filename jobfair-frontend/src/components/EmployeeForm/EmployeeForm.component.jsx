@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Select, Button, Form, Input } from 'antd'
+import { Select, Button, Form, Input, Popconfirm } from 'antd'
 import { EmployeeRegisterValidation } from '../../validate/EmployeeRegisterValidation'
 import { tailFormItemLayout, formItemLayout } from './EmployeeForm.style'
 
@@ -67,9 +67,11 @@ const EmployeeForm = ({ form, onFinish }) => {
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          Register
-        </Button>
+        <Popconfirm title="Are you sure？" okText="Yes" cancelText="No" onConfirm={() => form.submit()}>
+          <Button type="primary" htmlType="submit">
+            Register
+          </Button>
+        </Popconfirm>
       </Form.Item>
     </Form>
   )

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import EmployeeTableComponent from '../../components/EmployeeTable/EmployeeTable.component'
 import { deleteEmployeeAPI, getEmployeesAPI } from '../../services/companyEmployeeService'
-import { Space, notification } from 'antd'
+import { Space, notification, Popconfirm } from 'antd'
 import { useSelector } from 'react-redux'
 
 const EmployeeTable = ({ extra }) => {
@@ -75,13 +75,16 @@ const EmployeeTable = ({ extra }) => {
                 >
                   Detail
                 </a>
-                <a
-                  onClick={() => {
+                <Popconfirm
+                  title="Are you sure？"
+                  okText="Yes"
+                  cancelText="No"
+                  onConfirm={() => {
                     handleDelete(record.id)
                   }}
                 >
-                  Delete
-                </a>
+                  <a href="#">Delete</a>
+                </Popconfirm>
               </Space>
             )
           }
