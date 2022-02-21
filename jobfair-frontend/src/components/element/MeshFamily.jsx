@@ -6,7 +6,9 @@ const MeshFamily = props => {
     <>
       <Mesh prop={meshData} />;
       {meshData.childres &&
-        meshData.childres.map((mesh, index) => <MeshFamily meshData={mesh} />)}
+        meshData.childres.map((mesh, index) => (
+          <MeshFamily key={index} meshData={mesh} />
+        ))}
     </>
   )
 }

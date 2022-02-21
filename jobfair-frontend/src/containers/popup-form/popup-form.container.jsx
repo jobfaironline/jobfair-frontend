@@ -20,7 +20,7 @@ const PopupFormCheck = () => {
   const dispatch = useDispatch()
   const [form] = Form.useForm()
 
-  const handleCancel = e => {
+  const handleCancel = () => {
     dispatch(hideForm())
   }
 
