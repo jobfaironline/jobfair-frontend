@@ -12,5 +12,5 @@ export const changePasswordSchema = yup.object().shape({
   oldPassword: yup
     .string()
     .required('Please enter your old password')
-    .password(),
+    .password()
 })

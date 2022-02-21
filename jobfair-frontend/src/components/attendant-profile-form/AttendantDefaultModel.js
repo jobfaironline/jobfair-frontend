@@ -13,7 +13,7 @@ export const GET_ATTENDANT_MODEL = {
     lastname: 'Khoi (Attendant 2)',
     middlename: 'Minh',
     gender: 'MALE',
-    role: 'ATTENDANT',
+    role: 'ATTENDANT'
   },
   title: 'DevOps',
   address: 'Ho Chi Minh',
@@ -28,8 +28,8 @@ export const GET_ATTENDANT_MODEL = {
     {
       id: 'da2a5a4d-851b-440f-8afe-58cb3bb6020c',
       name: 'Singing abc',
-      proficiency: 2,
-    },
+      proficiency: 2
+    }
   ],
   workHistories: [
     {
@@ -39,8 +39,8 @@ export const GET_ATTENDANT_MODEL = {
       id: 'string',
       isCurrentJob: true,
       position: 'string',
-      toDate: moment(convertToDateString(0)),
-    },
+      toDate: moment(convertToDateString(0))
+    }
   ],
   educations: [
     {
@@ -50,8 +50,8 @@ export const GET_ATTENDANT_MODEL = {
       fromDate: moment(convertToDateString(1644825972419)),
       toDate: moment(convertToDateString(1644825972419)),
       achievement: 'Golden frog',
-      qualification: 'COLLEGE',
-    },
+      qualification: 'COLLEGE'
+    }
   ],
   certifications: [
     {
@@ -59,8 +59,8 @@ export const GET_ATTENDANT_MODEL = {
       name: 'CCNP',
       institution: 'Cisco',
       year: 2018,
-      certificationLink: 'cisco.com',
-    },
+      certificationLink: 'cisco.com'
+    }
   ],
   references: [
     {
@@ -69,8 +69,8 @@ export const GET_ATTENDANT_MODEL = {
       fullname: 'string',
       id: 'string',
       phone: 'string',
-      position: 'string',
-    },
+      position: 'string'
+    }
   ],
   activities: [
     {
@@ -81,7 +81,7 @@ export const GET_ATTENDANT_MODEL = {
       fromDate: moment(convertToDateString(1644825972419)),
       toDate: moment(convertToDateString(1644825972419)),
       isCurrentActivity: true,
-      description: 'Hacker at FBI',
-    },
-  ],
+      description: 'Hacker at FBI'
+    }
+  ]
 }
