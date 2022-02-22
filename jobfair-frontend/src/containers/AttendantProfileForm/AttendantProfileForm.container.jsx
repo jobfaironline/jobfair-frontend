@@ -37,20 +37,20 @@ const AttendantProfileFormContainer = () => {
       yearOfExp: values.yearOfExp,
     }
     console.log('request body:', body)
-    // updateAttendantProfileAPI(body)
-    //   .then(() => {
-    //     notification['success']({
-    //       message: `Update attendant profile successfully`,
-    //       description: `Update attendant: ${attendantId} successfully`,
-    //     })
-    //     fetchData()
-    //   })
-    //   .catch(() => {
-    //     notification['error']({
-    //       message: `Update attendant profile failed`,
-    //       description: `There is problem while updating, try again later`,
-    //     })
-    //   })
+    updateAttendantProfileAPI(body)
+      .then(() => {
+        notification['success']({
+          message: `Update attendant profile successfully`,
+          description: `Update attendant: ${attendantId} successfully`,
+        })
+        fetchData()
+      })
+      .catch(() => {
+        notification['error']({
+          message: `Update attendant profile failed`,
+          description: `There is problem while updating, try again later`,
+        })
+      })
   }
   const fetchData = async () => {
     getAttendantDetailAPI(attendantId)
