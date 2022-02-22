@@ -19,6 +19,7 @@ import CompanyProfile from '../pages/ProfilePage/Company'
 import RegisterJobFairForm from '../components/register-job-fair-form/RegisterJobFairForm'
 import AttendantProfile from '../pages/ProfilePage/AttendantProfilePage'
 import AppliedJobPage from '../pages/AppliedJobPage/AppliedJobPage'
+import AttendantJobFairPage from "../pages/AttendantJobFairPage/AttendantJobFairPage";
 
 const AppRouter = () => {
   return (
@@ -73,6 +74,9 @@ const AppRouter = () => {
         </Route>
         <Route path="/company/profile" exact>
           <CompanyProfile />
+        </Route>
+        <Route path="/jobfair/attendant" exact>
+          <AttendantJobFairPage/>
         </Route>
       </Switch>
     </>

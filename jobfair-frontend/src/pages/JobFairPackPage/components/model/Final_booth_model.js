@@ -208,7 +208,7 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
   )
 }
 
-function ChildMesh({ mesh }) {
+export function ChildMesh({ mesh }) {
   return (
     <mesh
       key={mesh.uuid}
@@ -219,7 +219,7 @@ function ChildMesh({ mesh }) {
       scale={mesh.scale}
     >
       {mesh.children.map((child) => (
-        <ChildMesh mesh={child} />
+        <ChildMesh key={child.uuid} mesh={child} />
       ))}
     </mesh>
   )
