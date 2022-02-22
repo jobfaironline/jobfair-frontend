@@ -6,23 +6,14 @@ import {
   updateAttendantProfileAPI,
 } from '../../services/attendantService'
 import AttendantProfileFormComponent from '../../components/attendant-profile-form/AttendantProfileForm.component'
-import { convertToDateValue } from '../../utils/common'
+import { convertToDateValue, handleConvert } from '../../utils/common'
 
 const AttendantProfileFormContainer = () => {
   const [form] = Form.useForm()
   const attendantId = useSelector(state => state.authentication.user.userId)
   const [data, setData] = useState({})
 
-  const handleConvert = data => {
-    const result = data.map(item => {
-      return {
-        ...item,
-        fromDate: convertToDateValue(item.fromDate.format()),
-        toDate: convertToDateValue(item.toDate.format()),
-      }
-    })
-    return result
-  }
+
 
   const onFinish = values => {
     console.log('values :', values)
@@ -46,23 +37,22 @@ const AttendantProfileFormContainer = () => {
       yearOfExp: values.yearOfExp,
     }
     console.log('request body:', body)
-    updateAttendantProfileAPI(body)
-      .then(() => {
-        notification['success']({
-          message: `Update attendant profile successfully`,
-          description: `Update attendant: ${attendantId} successfully`,
-        })
-        fetchData()
-      })
-      .catch(() => {
-        notification['error']({
-          message: `Update attendant profile failed`,
-          description: `There is problem while updating, try again later`,
-        })
-      })
+    // updateAttendantProfileAPI(body)
+    //   .then(() => {
+    //     notification['success']({
+    //       message: `Update attendant profile successfully`,
+    //       description: `Update attendant: ${attendantId} successfully`,
+    //     })
+    //     fetchData()
+    //   })
+    //   .catch(() => {
+    //     notification['error']({
+    //       message: `Update attendant profile failed`,
+    //       description: `There is problem while updating, try again later`,
+    //     })
+    //   })
   }
   const fetchData = async () => {
-    console.log(attendantId)
     getAttendantDetailAPI(attendantId)
       .then(res => {
         notification['success']({
