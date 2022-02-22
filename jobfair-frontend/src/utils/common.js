@@ -59,7 +59,7 @@ export const convertToMoment = (data) => {
 }
 
 //attendantProfileForm.container.jsx
-export const handleConvert = data => {
+export const handleConvertRangePicker = data => {
   const result = data.map(item => {
     return {
       ...item,

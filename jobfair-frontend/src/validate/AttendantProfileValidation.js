@@ -55,7 +55,6 @@ export const AttendantProfileValidation = {
     () => ({
       validator(_, value) {
         if (!value || value >= 50) {
-          console.log(value)
           return Promise.reject(
             new Error('The maximum year of experience is 50 years')
           )

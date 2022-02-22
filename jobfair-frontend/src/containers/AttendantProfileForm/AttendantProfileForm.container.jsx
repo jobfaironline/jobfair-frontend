@@ -6,7 +6,7 @@ import {
   updateAttendantProfileAPI,
 } from '../../services/attendantService'
 import AttendantProfileFormComponent from '../../components/attendant-profile-form/AttendantProfileForm.component'
-import { convertToDateValue, handleConvert } from '../../utils/common'
+import { convertToDateValue, handleConvertRangePicker } from '../../utils/common'
 
 const AttendantProfileFormContainer = () => {
   const [form] = Form.useForm()
@@ -19,12 +19,12 @@ const AttendantProfileFormContainer = () => {
     const body = {
       account: values.account,
       accountId: attendantId,
-      activities: handleConvert(values.activities),
+      activities: handleConvertRangePicker(values.activities),
       address: values.address,
       certifications: values.certifications,
       countryId: values.countryId,
       dob: convertToDateValue(values.dob.format()),
-      educations: handleConvert(values.educations),
+      educations: handleConvertRangePicker(values.educations),
       jobLevel: values.jobLevel,
       jobTitle: values.jobTitle,
       maritalStatus: values.maritalStatus,
@@ -32,7 +32,7 @@ const AttendantProfileFormContainer = () => {
       residenceId: values.residenceId,
       skills: values.skills,
       title: values.title,
-      workHistories: handleConvert(values.workHistories),
+      workHistories: handleConvertRangePicker(values.workHistories),
       yearOfExp: values.yearOfExp,
     }
     updateAttendantProfileAPI(body)

@@ -68,7 +68,7 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                 onValuesChange={onFormChange}
                 requiredMark="required"
                 autoComplete="off"
-                scrollToFirstError={true}
+                scrollToFirstError={{block: "center", behavior: "smooth"}}
             >
                 <Space direction="vertical" size="large">
                     <Card
