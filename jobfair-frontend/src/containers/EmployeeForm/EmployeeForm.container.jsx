@@ -9,8 +9,6 @@ const EmployeeForm = () => {
   const companyId = useSelector(state => state.authentication.user.companyId)
 
   const onFinish = values => {
-    console.log('Received values of form: ', values)
-
     createEmployeesAPI({
       companyId: companyId,
       email: values.email,

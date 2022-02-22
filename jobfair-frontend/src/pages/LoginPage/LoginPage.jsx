@@ -15,13 +15,12 @@ const LoginPage = () => {
   const dispatch = useDispatch()
   const [errorRes, setErrorRes] = useState()
   const handelOnSubmit = (values, actions) => {
-    console.log('Hello')
     signInAPI({ email: values.email, password: values.password })
-      .then((res) => {
+      .then(res => {
         notify(2, 'Login Success')
         dispatch(SigninHandler(res.data))
       })
-      .catch((err) => {
+      .catch(err => {
         notify(0, `Login Faile ${err}`)
         if (err?.response?.data?.message) {
           setErrorRes(err?.response?.data?.message)
