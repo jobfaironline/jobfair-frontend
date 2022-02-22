@@ -18,6 +18,10 @@ const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
 //the rtm should be initialize at loading and store in redux
 const rtm = new RTMClient();
 rtm.init(appId);
+//accountName will be get from Redux
+const uid = "tien";
+//channelId is the booth's id
+const channelId = "1234";
 
 class Message {
     constructor(accountName, content, isMyMessage) {
@@ -32,10 +36,10 @@ function MessageForm(props) {
     const [form] = Form.useForm();
     const onFinish = (values) => {
 
-        rtm.sendChannelMessage(values.message, "1234");
+        rtm.sendChannelMessage(values.message, channelId);
 
         setMessageList(prevState => {
-            return [...prevState, new Message("1234", values.message, true)]
+            return [...prevState, new Message(uid, values.message, true)]
         })
         form.resetFields();
 
@@ -183,8 +187,8 @@ function VideoChatComponent(props) {
 }
 
 function MessageChatComponent(props) {
-    const {isChatReady} = props;
-    const [messageList, setMessageList] = useState([]);
+    const {isChatReady, messageList, setMessageList } = props;
+
 
     const chatFeedProps = {
         messageList
@@ -208,13 +212,12 @@ function CommunicationComponent(props) {
     const [isVideoReady, setIsVideoReady] = useState(false);
     const {ready, tracks} = useMicrophoneAndCameraTracks();
     const [users, setUsers] = useState([]);
+    const [messageList, setMessageList] = useState([]);
 
-    //channelId is the booth's id
-    const channelId = "1234";
-    //accountName will be get from Redux
-    const accountName = "1234";
+
     //token will be taken from BE
-    const token = "006c99b02ecc0b940fe90959c6490af4d06IAAKKCPorJfZ/Qc6Z5yj2oXaeEwiFkClrey1P2p3DbAmFqPg45sAAAAAEAD/BcT/MKQUYgEA6APAYBNi";
+    const chatToken = "006c99b02ecc0b940fe90959c6490af4d06IAC2C1+BXG76t7u+3hs8UM/KY1C2I2nYovsf2+qGArgu1cXLnzAAAAAAEABgoz26wMoVYgEA6ANQhxRi";
+    const videoToken = "006c99b02ecc0b940fe90959c6490af4d06IABCzq+SZn1x/HmxPzXVzzEOPAx2P5+qCl/a0Lsoq/hvRqPg45vFy58wIgB800jFvswVYgQAAQBOiRRiAgBOiRRiAwBOiRRiBABOiRRi";
 
     async function initializeRtmClient(rtmClient) {
         rtmClient.on('ConnectionStateChanged', (newState, reason) => {
@@ -250,7 +253,7 @@ function CommunicationComponent(props) {
                 });
             }
         });
-        await rtmClient.login(accountName, token)
+        await rtmClient.login(uid, chatToken)
         await rtmClient.joinChannel(channelId);
         setIsChatReady(true);
     }
@@ -288,7 +291,7 @@ function CommunicationComponent(props) {
             });
         });
 
-        await rtcClient.join(appId, channelId, token, accountName);
+        await rtcClient.join(appId, channelId, videoToken, uid);
         if (tracks) await rtcClient.publish([tracks[0], tracks[1]]);
         setIsVideoReady(true);
     }
@@ -302,15 +305,17 @@ function CommunicationComponent(props) {
 
     const videoProps = {
         channelId,
-        token,
-        accountName,
+        token: videoToken,
+        accountName: uid,
         isVideoReady,
         setIsVideoReady,
         users
     }
 
     const messsageProps = {
-        isChatReady
+        isChatReady,
+        messageList,
+        setMessageList
     }
 
     const RTCClient = useClient();
