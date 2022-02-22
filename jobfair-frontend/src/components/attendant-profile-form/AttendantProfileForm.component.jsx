@@ -29,6 +29,7 @@ import {AttendantProfileValidation} from '../../validate/AttendantProfileValidat
 import {convertToDateString, convertToDateValue, convertToMoment} from '../../utils/common'
 import moment from 'moment'
 import {DateFormat} from "../../constants/ApplicationConst";
+import TextArea from "antd/es/input/TextArea";
 
 const AttendantProfileFormComponent = ({form, onFinish, data}) => {
     if (data === undefined || data === null || Object.keys(data).length === 0) {
@@ -470,7 +471,7 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                                                             }
                                                             style={{width: 300}}
                                                         >
-                                                            <Input placeholder="School"/>
+                                                            <TextArea placeholder="Achievement"/>
                                                         </Form.Item>
                                                     </div>
                                                     <div
