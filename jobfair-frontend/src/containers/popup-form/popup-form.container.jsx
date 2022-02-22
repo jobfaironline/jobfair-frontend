@@ -7,7 +7,7 @@ import {
   selectPopupFormVisibility,
   hideForm,
   confirmForm,
-  editForm,
+  editForm
 } from '../../redux/state-slices/popupFormSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import { getForm } from '../../redux/state-slices/formSlice'
@@ -20,7 +20,7 @@ const PopupFormCheck = () => {
   const dispatch = useDispatch()
   const [form] = Form.useForm()
 
-  const handleCancel = e => {
+  const handleCancel = () => {
     dispatch(hideForm())
   }
 
@@ -63,7 +63,7 @@ const PopupFormCheck = () => {
       onAgree={editable ? handleConfirm : handleAgree}
       formOptions={{
         popupFormData,
-        editable,
+        editable
       }}
       form={form}
     />

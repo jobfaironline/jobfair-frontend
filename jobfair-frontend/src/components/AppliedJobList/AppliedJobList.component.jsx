@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { List, message, Avatar, Skeleton, Divider } from 'antd'
+import { List, Avatar, Skeleton, Divider } from 'antd'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 const InfiniteListExample = () => {
@@ -35,7 +35,7 @@ const InfiniteListExample = () => {
         height: 400,
         overflow: 'auto',
         padding: '0 16px',
-        border: '1px solid rgba(140, 140, 140, 0.35)',
+        border: '1px solid rgba(140, 140, 140, 0.35)'
       }}
     >
       <InfiniteScroll
