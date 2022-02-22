@@ -11,12 +11,15 @@ const EmployeeTable = ({ extra }) => {
   const fetchData = async () => {
     getEmployeesAPI(companyId)
       .then(res => {
-        console.log(res)
         const { data } = res
 
-        const newValues = data.map(employee => {
+        const newValues = data.map((employee, index) => {
+          const { firstname, middlename, lastname } = employee.account
+          const fullName = firstname + ' ' + (middlename ? middlename + ' ' : '') + lastname
+
           return {
-            id: employee.account.id,
+            no: index + 1,
+            fullName: fullName,
             email: employee.account.email,
             phone: employee.account.phone,
             status: employee.account.status

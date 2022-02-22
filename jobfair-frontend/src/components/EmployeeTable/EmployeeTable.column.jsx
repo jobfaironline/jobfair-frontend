@@ -3,22 +3,31 @@ import { Tag } from 'antd'
 const EmployeeTableColumn = getColumnSearchProps => {
   return [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-      ...getColumnSearchProps('id')
+      title: 'No',
+      dataIndex: 'no',
+      key: 'no',
+      ...getColumnSearchProps('no')
     },
     {
-      title: 'Phone number',
-      dataIndex: 'phone',
-      key: 'phone',
-      ...getColumnSearchProps('phone')
+      title: 'Full name',
+      dataIndex: 'fullName',
+      key: 'fullName',
+      ...getColumnSearchProps('fullName'),
+      onFilter: (value, record) => record.name.indexOf(value) === 0,
+      sorter: (a, b) => a.fullname.localeCompare(b.fullname),
+      sortDirections: ['descend']
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
       ...getColumnSearchProps('email')
+    },
+    {
+      title: 'Phone number',
+      dataIndex: 'phone',
+      key: 'phone',
+      ...getColumnSearchProps('phone')
     },
     {
       title: 'Status',

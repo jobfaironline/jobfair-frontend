@@ -26,9 +26,6 @@ const FormTable = ({ employeeData, extra }) => {
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
       <div style={{ padding: 8 }}>
         <Input
-          //   ref={node => {
-          //     this.searchInput = node;
-          //   }}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
           onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
