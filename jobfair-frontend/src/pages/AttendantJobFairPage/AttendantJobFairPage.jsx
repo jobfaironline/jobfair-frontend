@@ -5,6 +5,8 @@ import {AgoraVideoPlayer, createClient, createMicrophoneAndCameraTracks} from "a
 import {Canvas} from "@react-three/fiber";
 import {OrbitControls, useGLTF} from "@react-three/drei";
 import {ChildMesh} from "../JobFairPackPage/components/model/Final_booth_model";
+import {useSelector} from "react-redux";
+import {getAgoraRTCToken, getAgoraRTMToken} from "../../services/agoraTokenService";
 
 
 const {TabPane} = Tabs;
@@ -18,8 +20,6 @@ const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
 //the rtm should be initialize at loading and store in redux
 const rtm = new RTMClient();
 rtm.init(appId);
-//accountName will be get from Redux
-const uid = "tien";
 //channelId is the booth's id
 const channelId = "1234";
 
@@ -32,6 +32,7 @@ class Message {
 }
 
 function MessageForm(props) {
+    const userId = useSelector(state => state.authentication.user.userId);
     const {setMessageList, isChatReady} = props;
     const [form] = Form.useForm();
     const onFinish = (values) => {
@@ -39,7 +40,7 @@ function MessageForm(props) {
         rtm.sendChannelMessage(values.message, channelId);
 
         setMessageList(prevState => {
-            return [...prevState, new Message(uid, values.message, true)]
+            return [...prevState, new Message(userId, values.message, true)]
         })
         form.resetFields();
 
@@ -132,6 +133,7 @@ export const Controls = (props) => {
 const Videos = (props) => {
     const {users, isMuteCamera} = props;
     const {ready, tracks} = useMicrophoneAndCameraTracks();
+
     return (
         <div>
             <div id="videos" style={{
@@ -213,11 +215,11 @@ function CommunicationComponent(props) {
     const {ready, tracks} = useMicrophoneAndCameraTracks();
     const [users, setUsers] = useState([]);
     const [messageList, setMessageList] = useState([]);
+    const userId = useSelector(state => state.authentication.user.userId);
+    const [chatToken, setChatToken] = useState("");
+    const [videoToken, setVideoToken] = useState("");
 
 
-    //token will be taken from BE
-    const chatToken = "006c99b02ecc0b940fe90959c6490af4d06IAC2C1+BXG76t7u+3hs8UM/KY1C2I2nYovsf2+qGArgu1cXLnzAAAAAAEABgoz26wMoVYgEA6ANQhxRi";
-    const videoToken = "006c99b02ecc0b940fe90959c6490af4d06IADAH11y5+0Z/pvXbuipMGmXMnT20jeq7xX22fMG+gkqYqPg45vFy58wIgAP2P/oTdsVYgQAAQDdlxRiAgDdlxRiAwDdlxRiBADdlxRi";
 
     async function initializeRtmClient(rtmClient) {
         rtmClient.on('ConnectionStateChanged', (newState, reason) => {
@@ -253,7 +255,7 @@ function CommunicationComponent(props) {
                 });
             }
         });
-        await rtmClient.login(uid, chatToken)
+        await rtmClient.login(userId, chatToken)
         await rtmClient.joinChannel(channelId);
         setIsChatReady(true);
     }
@@ -291,28 +293,33 @@ function CommunicationComponent(props) {
             });
         });
 
-        await rtcClient.join(appId, channelId, videoToken, uid);
+        await rtcClient.join(appId, channelId, videoToken, userId);
         if (tracks) await rtcClient.publish([tracks[0], tracks[1]]);
         setIsVideoReady(true);
     }
 
-
     useEffect(async () => {
-        if (tracks && ready){
+        if (tracks && ready && chatToken !== "" && videoToken !== ""){
             await initializeRtmClient(rtm);
             const rtcClient = useClient();
-
             await initializeRTCClient(rtcClient);
-
+        }
+        if (chatToken === "" && videoToken === ""){
+            const RTCPromise =  getAgoraRTCToken(channelId).then(value => value.data).then(value => value.token);
+            const RTMPromise =  getAgoraRTMToken().then(value => value.data).then(value => value.token);
+            const [rtcToken, rtmToken] = await Promise.all([RTCPromise, RTMPromise]);
+            setChatToken(rtmToken);
+            setVideoToken(rtcToken);
         }
 
-    }, [tracks, ready]);
+
+    }, [tracks, ready ]);
 
 
     const videoProps = {
         channelId,
         token: videoToken,
-        accountName: uid,
+        accountName: userId,
         isVideoReady,
         setIsVideoReady,
         users,
