@@ -16,7 +16,6 @@ const AttendantProfileFormContainer = () => {
 
 
   const onFinish = values => {
-    console.log('values :', values)
     const body = {
       account: values.account,
       accountId: attendantId,
@@ -36,7 +35,6 @@ const AttendantProfileFormContainer = () => {
       workHistories: handleConvert(values.workHistories),
       yearOfExp: values.yearOfExp,
     }
-    console.log('request body:', body)
     updateAttendantProfileAPI(body)
       .then(() => {
         notification['success']({
