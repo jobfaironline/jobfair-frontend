@@ -6,7 +6,14 @@ const EmployeeTableColumn = getColumnSearchProps => {
       title: 'No',
       dataIndex: 'no',
       key: 'no',
-      ...getColumnSearchProps('no')
+      render(text, record) {
+        return {
+          props: {
+            style: { textAlign: 'end', width: '5px' }
+          },
+          children: text
+        }
+      }
     },
     {
       title: 'Full name',
@@ -14,7 +21,7 @@ const EmployeeTableColumn = getColumnSearchProps => {
       key: 'fullName',
       ...getColumnSearchProps('fullName'),
       onFilter: (value, record) => record.name.indexOf(value) === 0,
-      sorter: (a, b) => a.fullname.localeCompare(b.fullname),
+      sorter: (a, b) => a.fullName.localeCompare(b.fullName),
       sortDirections: ['descend']
     },
     {
