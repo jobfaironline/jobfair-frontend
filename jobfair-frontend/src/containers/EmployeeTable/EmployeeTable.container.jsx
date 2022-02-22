@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import EmployeeTableComponent from '../../components/EmployeeTable/EmployeeTable.component'
+import EmployeeDrawer from '../../containers/EmployeeDrawer/EmployeeDrawer.container'
 import { deleteEmployeeAPI, getEmployeesAPI } from '../../services/companyEmployeeService'
 import { Space, notification, Popconfirm } from 'antd'
 import { useSelector } from 'react-redux'
 
 const EmployeeTable = ({ extra }) => {
-  const [employeeData, setemployeeData] = useState([])
+  const [employeeData, setEmployeeData] = useState([])
+  const [drawerVisibility, setDrawerVisibility] = useState(false)
+  const [neededEmployee, setNeededEmployee] = useState(null)
   const companyId = useSelector(state => state.authentication.user.companyId)
 
   const fetchData = async () => {
@@ -18,6 +21,7 @@ const EmployeeTable = ({ extra }) => {
           const fullName = firstname + ' ' + (middlename ? middlename + ' ' : '') + lastname
 
           return {
+            id: employee.account.id,
             no: index + 1,
             fullName: fullName,
             email: employee.account.email,
@@ -26,7 +30,7 @@ const EmployeeTable = ({ extra }) => {
           }
         })
 
-        setemployeeData(newValues)
+        setEmployeeData(newValues)
       })
       .catch(e => {
         notification['error']({
@@ -57,11 +61,17 @@ const EmployeeTable = ({ extra }) => {
   }
 
   const handleGetDetail = employeeId => {
-    console.log(employeeId)
+    setDrawerVisibility(true)
+    setNeededEmployee(employeeId)
   }
 
   return (
     <div>
+      <EmployeeDrawer
+        drawerVisibility={drawerVisibility}
+        setDrawerVisibility={setDrawerVisibility}
+        employeeId={neededEmployee}
+      />
       <EmployeeTableComponent
         employeeData={employeeData}
         editable
