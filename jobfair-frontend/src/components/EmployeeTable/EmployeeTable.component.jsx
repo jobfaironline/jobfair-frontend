@@ -27,7 +27,7 @@ const FormTable = ({ employeeData, extra }) => {
       setSelectedKeys,
       selectedKeys,
       confirm,
-      clearFilters,
+      clearFilters
     }) => (
       <div style={{ padding: 8 }}>
         <Input
@@ -87,7 +87,7 @@ const FormTable = ({ employeeData, extra }) => {
         />
       ) : (
         text
-      ),
+      )
   })
 
   const defaultColumns = EmployeeTableColumn(getColumnSearchProps)
