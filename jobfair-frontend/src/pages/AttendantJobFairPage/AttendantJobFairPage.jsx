@@ -95,11 +95,11 @@ function ChatFeedComponent(props) {
 }
 
 export const Controls = (props) => {
-    const {setIsMuteCamera} = props;
-    const {ready, tracks} = useMicrophoneAndCameraTracks();
+    const {setIsMuteCamera, tracks} = props;
     const [trackState, setTrackState] = useState({video: true, audio: true});
 
     const mute = async (type) => {
+        console.log(tracks[0]);
         if (type === "audio") {
             await tracks[0].setEnabled(!trackState.audio);
             setTrackState((ps) => {
@@ -162,13 +162,13 @@ const Videos = (props) => {
 };
 
 function VideoChatComponent(props) {
-    const {isVideoReady, users} = props;
+    const {isVideoReady, users, ready, tracks} = props;
 
-    const {ready, tracks} = useMicrophoneAndCameraTracks();
     const [isMuteCamera, setIsMuteCamera] = useState(false);
 
     const controlProps = {
-        setIsMuteCamera
+        setIsMuteCamera,
+        tracks
     }
 
     const videoProps = {
@@ -217,7 +217,7 @@ function CommunicationComponent(props) {
 
     //token will be taken from BE
     const chatToken = "006c99b02ecc0b940fe90959c6490af4d06IAC2C1+BXG76t7u+3hs8UM/KY1C2I2nYovsf2+qGArgu1cXLnzAAAAAAEABgoz26wMoVYgEA6ANQhxRi";
-    const videoToken = "006c99b02ecc0b940fe90959c6490af4d06IABCzq+SZn1x/HmxPzXVzzEOPAx2P5+qCl/a0Lsoq/hvRqPg45vFy58wIgB800jFvswVYgQAAQBOiRRiAgBOiRRiAwBOiRRiBABOiRRi";
+    const videoToken = "006c99b02ecc0b940fe90959c6490af4d06IADAH11y5+0Z/pvXbuipMGmXMnT20jeq7xX22fMG+gkqYqPg45vFy58wIgAP2P/oTdsVYgQAAQDdlxRiAgDdlxRiAwDdlxRiBADdlxRi";
 
     async function initializeRtmClient(rtmClient) {
         rtmClient.on('ConnectionStateChanged', (newState, reason) => {
@@ -296,11 +296,17 @@ function CommunicationComponent(props) {
         setIsVideoReady(true);
     }
 
+
     useEffect(async () => {
-        await initializeRtmClient(rtm);
-        const rtcClient = useClient();
-        await initializeRTCClient(rtcClient)
-    }, []);
+        if (tracks && ready){
+            await initializeRtmClient(rtm);
+            const rtcClient = useClient();
+
+            await initializeRTCClient(rtcClient);
+
+        }
+
+    }, [tracks, ready]);
 
 
     const videoProps = {
@@ -309,7 +315,9 @@ function CommunicationComponent(props) {
         accountName: uid,
         isVideoReady,
         setIsVideoReady,
-        users
+        users,
+        ready,
+        tracks
     }
 
     const messsageProps = {
