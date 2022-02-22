@@ -51,7 +51,8 @@ function ItemMesh({
   setSelectedItemRef,
   selectedItemRef,
   hoverItemRef,
-  setHoverItemRef
+  setHoverItemRef,
+  currentSelectedColor
 }) {
   const [position, setPosition] = useState(mesh.position)
   const itemRef = useRef()
@@ -92,8 +93,7 @@ function ItemMesh({
     itemRef.current.name = mesh.name
   })
   const handleChangeColor = itemRef => {
-    console.log(itemRef)
-    itemRef.current.children[0].material.emissive.setHex(0xff0000)
+    itemRef.current.children[0].material.color.set(currentSelectedColor.hex)
   }
   return (
     <mesh
@@ -214,7 +214,8 @@ export const Model = React.forwardRef(
       setSelectedItemRef,
       selectedItemRef,
       hoverItemRef,
-      setHoverItemRef
+      setHoverItemRef,
+      currentSelectedColor
     },
     ref
   ) => {
@@ -289,6 +290,7 @@ export const Model = React.forwardRef(
               selectedItemRef={selectedItemRef}
               hoverItemRef={hoverItemRef}
               setHoverItemRef={setHoverItemRef}
+              currentSelectedColor={currentSelectedColor}
             />
           )
         })}
