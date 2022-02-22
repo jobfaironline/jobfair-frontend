@@ -23,6 +23,7 @@ const EmployeeForm = () => {
           message: `Add employee successfully`,
           description: `Added employee ${values.email} successfully`
         })
+        form.resetFields()
       })
       .catch(err => {
         notification['error']({

@@ -59,7 +59,7 @@ const EmployeeForm = ({ form, onFinish }) => {
       </Form.Item>
 
       <Form.Item name="gender" label="Gender" rules={EmployeeRegisterValidation.gender}>
-        <Select placeholder="select your gender">
+        <Select defaultValue="MALE" placeholder="select your gender">
           {genderType.map(gender => {
             return <Option value={gender.value}>{gender.title}</Option>
           })}
