@@ -5,7 +5,8 @@ import { TOKEN_KEY } from '../constants/AppConst'
 export const CallAPI = (
   endpoint,
   method = 'GET',
-  body,
+  body = {},
+  params = {},
   configHeaders = null,
   responseType = null
 ) => {
@@ -22,10 +23,11 @@ export const CallAPI = (
 
   return axios({
     method: method,
-    url: `${endpoint}`,
+    url: `http://localhost:5001${endpoint}`,
     headers: headers,
     data: body,
-    responseType: responseType
+    responseType: responseType,
+    params: params
   })
 }
 
