@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
-import { Model } from './components/Model/Final_booth_model'
+import { Model } from './components/model/Final_booth_model'
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import { ToastContainer } from 'react-toastify'
 import { Button } from 'antd'

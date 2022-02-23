@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     Affix,
     Avatar,
@@ -32,12 +32,14 @@ import {DateFormat} from "../../constants/ApplicationConst";
 import TextArea from "antd/es/input/TextArea";
 
 const AttendantProfileFormComponent = ({form, onFinish, data}) => {
+
+    const [countryId, setCountryId] = useState('60ebd8bd-2b10-4d03-a3a4-ccfd0ab504d3');
+
     if (data === undefined || data === null || Object.keys(data).length === 0) {
         return <Spin size="large"/>
     }
 
     const onFormChange = values => {
-        console.log('changing: ', values)
     }
 
     const {Option} = Select
@@ -46,6 +48,7 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
 
     const defaultData = {
         ...data,
+        residenceId: data.countryId !== '60ebd8bd-2b10-4d03-a3a4-ccfd0ab504d3' ? 'fac2e4cd-73fc-4751-be0b-5b9ff52bc3d4' : data.residenceId,
         dob: moment(convertToDateString(data.dob)),
         workHistories: convertToMoment(data.workHistories),
         activities: convertToMoment(data.activities),
@@ -106,11 +109,17 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                                     onChange={(date, dateString) => handleOnChangeDob(dateString)}
                                 />
                             </Form.Item>
-                            <Form.Item label="Country" name="countryId">
+                            <Form.Item
+                                label="Country"
+                                name="countryId"
+                                hasFeedback
+                                rules={AttendantProfileValidation.countryId}
+                            >
                                 <Select
                                     showSearch
                                     style={{width: 250}}
                                     placeholder="Search to Select"
+                                    // onChange={value => setCountryId(value)}
                                     optionFilterProp="children"
                                     filterOption={(input, option) =>
                                         option.children
@@ -176,9 +185,11 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                                             .localeCompare(optionB.children.toLowerCase())
                                     }
                                 >
-                                    {ResidenceConst.map(item => (
+                                    {
+                                        ResidenceConst.map(item => (
                                         <Option value={item.id}>{item.name}</Option>
-                                    ))}
+                                        ))
+                                    }
                                 </Select>
                             </Form.Item>
                             <Form.Item
@@ -271,9 +282,9 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                             {(fields, {add, remove}) => {
                                 return (
                                     <>
-                                        {fields.map(({name, ...restField}) => {
+                                        {fields.map(({key, name, ...restField}) => {
                                             return (
-                                                <div style={{display: 'flex', flexDirection: 'row'}}>
+                                                <div key={key} style={{display: 'flex', flexDirection: 'row'}}>
                                                     <div
                                                         style={{display: 'flex', flexDirection: 'column'}}
                                                     >
@@ -326,10 +337,10 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                             {(fields, {add, remove}) => {
                                 return (
                                     <>
-                                        {fields.map(({name, ...restField}) => {
+                                        {fields.map(({key, name, ...restField}) => {
                                             return (
                                                 <div
-                                                    style={{display: 'flex', flexDirection: 'column'}}
+                                                    key={key} style={{display: 'flex', flexDirection: 'column'}}
                                                 >
                                                     <div
                                                         style={{display: 'flex', flexDirection: 'row'}}
@@ -402,7 +413,9 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                                                             <Input placeholder="Position"/>
                                                         </Form.Item>
                                                     </div>
-                                                    <MinusCircleOutlined onClick={() => remove(name)}/>
+                                                    <MinusCircleOutlined onClick={() => {
+                                                        remove(name)
+                                                    }}/>
                                                 </div>
                                             )
                                         })}
@@ -418,6 +431,7 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                                             </Button>
                                         </Form.Item>
                                     </>
+
                                 )
                             }}
                         </Form.List>
@@ -431,25 +445,15 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                             {(fields, {add, remove}) => {
                                 return (
                                     <>
-                                        {fields.map(({name, ...restField}) => {
+                                        {fields.map(({key, name, ...restField}) => {
                                             return (
                                                 <div
+                                                    key={key}
                                                     style={{display: 'flex', flexDirection: 'column'}}
                                                 >
                                                     <div
                                                         style={{display: 'flex', flexDirection: 'row'}}
                                                     >
-                                                        <Form.Item
-                                                            {...restField}
-                                                            name={[name, 'subject']}
-                                                            label="Subject"
-                                                            rules={
-                                                                AttendantProfileValidation.educations.subject
-                                                            }
-                                                            style={{width: 250}}
-                                                        >
-                                                            <Input/>
-                                                        </Form.Item>
                                                         <Form.Item
                                                             {...restField}
                                                             name={[name, 'school']}
@@ -460,6 +464,17 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                                                             style={{width: 300}}
                                                         >
                                                             <Input placeholder="School"/>
+                                                        </Form.Item>
+                                                        <Form.Item
+                                                            {...restField}
+                                                            name={[name, 'subject']}
+                                                            label="Subject"
+                                                            rules={
+                                                                AttendantProfileValidation.educations.subject
+                                                            }
+                                                            style={{width: 250}}
+                                                        >
+                                                            <TextArea placeholder="Subject"/>
                                                         </Form.Item>
                                                         <Form.Item
                                                             {...restField}
@@ -544,9 +559,10 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                             {(fields, {add, remove}) => {
                                 return (
                                     <>
-                                        {fields.map(({name, ...restField}) => {
+                                        {fields.map(({key, name, ...restField}) => {
                                             return (
                                                 <div
+                                                    key={key}
                                                     style={{display: 'flex', flexDirection: 'column'}}
                                                 >
                                                     <Form.Item
@@ -629,9 +645,10 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                             {(fields, {add, remove}) => {
                                 return (
                                     <>
-                                        {fields.map(({name, ...restField}) => {
+                                        {fields.map(({key, name, ...restField}) => {
                                             return (
                                                 <div
+                                                    key={key}
                                                     style={{display: 'flex', flexDirection: 'column'}}
                                                 >
                                                     <Form.Item
@@ -714,9 +731,10 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                             {(fields, {add, remove}) => {
                                 return (
                                     <>
-                                        {fields.map(({name, ...restField}) => {
+                                        {fields.map(({key, name, ...restField}) => {
                                             return (
                                                 <div
+                                                    key={key}
                                                     style={{display: 'flex', flexDirection: 'column'}}
                                                 >
                                                     <Form.Item
