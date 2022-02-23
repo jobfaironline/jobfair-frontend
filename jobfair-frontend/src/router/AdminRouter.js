@@ -9,12 +9,12 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage'
 const AdminRouter = ({ component: Component, ...rest }) => {
   const { user, isAuthUser } = useSelector(state => state.authentication)
   const resultComponent = props => {
-    var listRole = user.roles?.map(x => x.name)
-    if (isAuthUser && contains([ADMIN], listRole)) {
+    var listRole = user ? Array.of(user.roles) : []
+    if (isAuthUser && listRole.includes(ADMIN)) {
       //check if current role are "ADMIN" allow to access current component
       return <Component {...props} />
     }
-    if (isAuthUser && !contains([ADMIN], listRole)) {
+    if (isAuthUser && !listRole.includes(ADMIN)) {
       //check if current role not in "ADMIN" deny to access current component and show 403 Error Page
       return <ErrorPage code={403} />
     }

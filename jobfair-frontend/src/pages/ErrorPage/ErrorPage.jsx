@@ -25,8 +25,9 @@ const ErrorPage = ({ code = 404 }) => {
             onClick={() => {
               history.push('/home')
             }}
+            type="primary"
           >
-            type="primary" Back to Home
+             Back to Home
           </Button>
         }
       />

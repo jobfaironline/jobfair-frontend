@@ -12,7 +12,7 @@ const EmployeeManagementPage = () => {
       <Space>
         <Button
           type="primary"
-          onClick={() => history.push('/employee-register')}
+          onClick={() => history.push('/company/employee-register')}
         >
           Register employee
         </Button>
