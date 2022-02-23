@@ -9,12 +9,12 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage'
 const StaffRouter = ({ component: Component, ...rest }) => {
   const { user, isAuthUser } = useSelector(state => state.authentication)
   const resultComponent = props => {
-    var listRole = user.roles?.map(x => x.name)
-    if (isAuthUser && contains([STAFF], listRole)) {
+    var listRole = user ? Array.of(user.roles) : []
+    if (isAuthUser && listRole.includes(STAFF)) {
       //check if current role are "STAFF" allow to access current component
       return <Component {...props} />
     }
-    if (isAuthUser && !contains([STAFF], listRole)) {
+    if (isAuthUser && !listRole.includes(STAFF)) {
       //check if current role not in "STAFF" deny to access current component and show 403 Error Page
       return <ErrorPage code={403} />
     }

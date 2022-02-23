@@ -4,10 +4,12 @@ import LoginComponent from "../../components/login/Login.component";
 import {signInAPI} from "../../services/userService";
 import {useDispatch} from "react-redux";
 import {SigninHandler} from "../../redux-flow/authentication/authentication-action";
+import {useHistory} from "react-router-dom";
 
 const LoginContainer = props => {
     const [form] = Form.useForm();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const onFinish = (values) => {
         const body = {
@@ -20,6 +22,7 @@ const LoginContainer = props => {
                         message: `Login successfully.`,
                     })
                     dispatch(SigninHandler(res.data))
+                    history.push("/")
                 })
                 .catch((err) => {
                     notification['error']({
