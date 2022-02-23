@@ -52,7 +52,6 @@ function ItemMesh({
   selectedItemRef,
   hoverItemRef,
   setHoverItemRef,
-  currentSelectedColor
 }) {
   const [position, setPosition] = useState(mesh.position)
   const itemRef = useRef()
@@ -92,9 +91,6 @@ function ItemMesh({
     itemRef.current.uuid = mesh.uuid
     itemRef.current.name = mesh.name
   })
-  const handleChangeColor = itemRef => {
-    itemRef.current.children[0].material.color.set(currentSelectedColor.hex)
-  }
   return (
     <mesh
       key={mesh.uuid}
@@ -106,7 +102,6 @@ function ItemMesh({
         if (selectedItemRef?.current.uuid === mesh.uuid) {
           setSelectedItemRef(undefined)
         } else {
-          handleChangeColor(itemRef)
           setSelectedItemRef(itemRef)
         }
       }}
@@ -119,6 +114,8 @@ function ItemMesh({
       {...bind()}
       rotation={mesh.rotation}
       scale={mesh.scale}
+      castShadow
+      receiveShadow
     >
       {mesh.children.map(child => ChildMesh({ key: child.uuid, mesh: child }))}
     </mesh>
@@ -179,6 +176,8 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
       position={mesh.position}
       rotation={mesh.rotation}
       scale={mesh.scale}
+      castShadow
+      receiveShadow
     >
       {mesh.children.map(child => ChildMesh({ mesh: child }))}
     </mesh>
@@ -194,6 +193,8 @@ function ChildMesh({ mesh }) {
       position={mesh.position}
       rotation={mesh.rotation}
       scale={mesh.scale}
+      castShadow
+      receiveShadow
     >
       {mesh.children.map(child => (
         <ChildMesh mesh={child} />
@@ -215,7 +216,6 @@ export const Model = React.forwardRef(
       selectedItemRef,
       hoverItemRef,
       setHoverItemRef,
-      currentSelectedColor
     },
     ref
   ) => {
@@ -266,7 +266,7 @@ export const Model = React.forwardRef(
 
     const floorMesh = modelItems.filter(mesh => mesh.name === 'sand')[0]
     return (
-      <group dispose={null} ref={ref}>
+      <group dispose={null} ref={ref} >
         {modelItems.map(mesh => {
           if (mesh === floorMesh) {
             return (
@@ -275,7 +275,6 @@ export const Model = React.forwardRef(
                 selectedSampleItem={selectedSampleItem}
                 setModelItems={setModelItems}
                 mode={mode}
-                s
               />
             )
           }
@@ -290,7 +289,6 @@ export const Model = React.forwardRef(
               selectedItemRef={selectedItemRef}
               hoverItemRef={hoverItemRef}
               setHoverItemRef={setHoverItemRef}
-              currentSelectedColor={currentSelectedColor}
             />
           )
         })}
@@ -299,4 +297,4 @@ export const Model = React.forwardRef(
   }
 )
 
-useGLTF.preload('/final_booth_model.glb')
+useGLTF.preload('/untitled.glb')
