@@ -93,6 +93,7 @@ function ItemMesh({
   })
   return (
     <mesh
+        name={mesh.name}
       key={mesh.uuid}
       ref={itemRef}
       geometry={mesh.geometry}
@@ -168,7 +169,7 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
     })
   }
   return (
-    <mesh
+    <mesh name={mesh.name}
       onClick={onPlaneClick}
       key={mesh.uuid}
       geometry={mesh.geometry}
@@ -184,9 +185,9 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
   )
 }
 
-function ChildMesh({ mesh }) {
+export function ChildMesh({ mesh }) {
   return (
-    <mesh
+    <mesh name={mesh.name}
       key={mesh.uuid}
       geometry={mesh.geometry}
       material={mesh.material}
@@ -197,7 +198,7 @@ function ChildMesh({ mesh }) {
       receiveShadow
     >
       {mesh.children.map(child => (
-        <ChildMesh mesh={child} />
+        <ChildMesh mesh={child} key={child.uuid}/>
       ))}
     </mesh>
   )
