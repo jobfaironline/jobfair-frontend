@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { createEmployeesAPI } from '../../services/companyEmployeeService'
-import { Select, Button, Form, Input, notification } from 'antd'
+import { Form, notification } from 'antd'
 import EmployeeFormComponent from '../../components/EmployeeForm/EmployeeForm.component'
 import { useSelector } from 'react-redux'
 
