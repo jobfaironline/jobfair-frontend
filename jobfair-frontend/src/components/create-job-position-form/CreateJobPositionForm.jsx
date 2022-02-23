@@ -24,7 +24,7 @@ import {
   NUM_OF_SIZE_MAXIMUM,
   SizeConst,
   SubCategories,
-} from '../../pages/ProfilePage/Company/CompanyProfileConstant'
+} from '../../constants/CompanyProfileConstant'
 import ImageUpload from '../image-upload/ImageUpload'
 import { JOB_POSITION_MODEL } from '../../default_models/CreateJobPositionModel/JobPositionModel'
 import {
