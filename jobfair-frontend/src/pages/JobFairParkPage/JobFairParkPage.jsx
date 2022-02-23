@@ -6,6 +6,7 @@ import * as THREE from 'three'
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {notify} from "../../utils/toastutil";
 import {ToastContainer} from "react-toastify";
+import {useHistory} from "react-router-dom";
 
 
 const loader = new GLTFLoader();
@@ -56,7 +57,7 @@ const getBootMesh = async (position, foundationBox, url, companyBoothId) => {
 }
 
 const BoothMesh = React.forwardRef((props, ref) => {
-    const {mesh} = props;
+    const {mesh, history} = props;
     return (
         <mesh
             name={mesh.name}
@@ -66,7 +67,9 @@ const BoothMesh = React.forwardRef((props, ref) => {
             material={mesh.material}
             position={mesh.position}
             onClick={event => {
+                console.log(history);
                 notify(2, `Redirect to ${mesh.companyBoothId}`);
+                history.push("/jobfair/attendant");
             }}
             rotation={mesh.rotation}
             scale={mesh.scale}
@@ -79,6 +82,8 @@ const BoothMesh = React.forwardRef((props, ref) => {
 });
 
 const MapModel = React.forwardRef((props, ref) => {
+    const {history} = props;
+
     const {nodes: mapNodes, materials} = useGLTF('./map.glb')
 
     const [boothMeshes, setBoothMeshes] = useState([]);
@@ -142,20 +147,21 @@ const MapModel = React.forwardRef((props, ref) => {
     return (
         <group dispose={null} ref={ref}>
             {result.map(mesh => <ChildMesh key={mesh.uuid} mesh={mesh}/>)}
-            {boothMeshes.map(mesh => <BoothMesh key={mesh.uuid} mesh={mesh}/> )}
+            {boothMeshes.map(mesh => <BoothMesh key={mesh.uuid} mesh={mesh} history={history}/> )}
         </group>
     )
 });
 
 
 const JobFairParkPage = (props) => {
+    const history = useHistory();
     const stageRef = useRef();
     return (<div>
         <Canvas dpr={[1, 2]} camera={{fov: 50}} style={{width: '100%', height: '850px'}}>
             <OrbitControls/>
             <Stage controls={stageRef} preset="rembrandt" intensity={0.3999999999999999} environment="city"
-                   contactShadow={false}>
-                <MapModel/>
+                   contactShadow={false} >
+                <MapModel history={history}/>
             </Stage>
         </Canvas>
         <ToastContainer />
