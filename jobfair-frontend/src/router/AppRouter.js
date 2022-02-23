@@ -23,6 +23,8 @@ import {useSelector} from "react-redux";
 import AttendantRouter from "./AttendantRouter";
 import CompanyEmployeeRouter from "./CompanyEmployeeRouter";
 import CompanyManagerRouter from "./CompanyManagerRouter";
+import AttendantJobFairPage from "../pages/AttendantJobFairPage/AttendantJobFairPage";
+import JobFairParkPage from "../pages/JobFairParkPage/JobFairParkPage";
 
 const AppRouter = () => {
     const role = useSelector(state => state.authentication?.user?.roles);

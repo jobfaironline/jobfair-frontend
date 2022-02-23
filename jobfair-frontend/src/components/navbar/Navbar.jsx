@@ -7,6 +7,9 @@ import {logoutHandler} from "../../redux-flow/authentication/authentication-acti
 export const AttendantMenu = [
     <Menu.Item key="attendant-profile">
         <Link to="/attendant/profile">Attendant Profile</Link>
+    </Menu.Item>,
+    <Menu.Item key="map">
+        <Link to="/map">Map</Link>
     </Menu.Item>
 ]
 
@@ -19,12 +22,18 @@ export const CompanyManagerMenu = [
     </Menu.Item>,
     <Menu.Item key="manager-register-jobfair">
         <Link to="/company/register-job-fair">Register to job fair</Link>
+    </Menu.Item>,
+    <Menu.Item key="map">
+        <Link to="/map">Map</Link>
     </Menu.Item>
 ]
 
 export const CompanyEmployeeMenu = [
     <Menu.Item key="company-profile">
         <Link to="/employee/company-profile">Company profile</Link>
+    </Menu.Item>,
+    <Menu.Item key="map">
+        <Link to="/map">Map</Link>
     </Menu.Item>
 ]
 
@@ -63,9 +72,6 @@ const NavigationBar = () => {
                     </Menu.Item>
                     <Menu.Item key="faq">
                         <Link to="/faq">FAQ</Link>
-                    </Menu.Item>
-                    <Menu.Item key="map">
-                      <Link to="/map">Map</Link>
                     </Menu.Item>
                     {
                         !role ? <Menu.Item key="login">
