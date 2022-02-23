@@ -3,42 +3,26 @@ import { Canvas, useThree } from '@react-three/fiber'
 import { Model } from './components/model/Final_booth_model'
 import { OrbitControls, useGLTF, Stage } from '@react-three/drei'
 import { ToastContainer } from 'react-toastify'
-import { Button } from 'antd'
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter'
 import Menu from './components/Menu/ItemListMenu'
 import { EffectComposer, Outline } from '@react-three/postprocessing'
 import { ModeConstant } from '../../constants/AppConst'
-import { SketchPicker } from 'react-color'
+import SideBarDecoratedBooth from './components/SideBarDecoratedBooth/SideBarDecoratedBooth.component'
+import { initialSampleItems } from './data/SampleDataItems'
 const JobFairPackPage = () => {
-  const initialSampleItems = [
-    {
-      id: 1,
-      name: 'Banner',
-      description: 'Banner',
-      thumblnailUrl: '',
-      url: './untitled.glb'
-    },
-    {
-      id: 2,
-      name: 'main board',
-      description: 'main board',
-      url: './main_board.glb'
-    },
-    {
-      id: 3,
-      name: 'rostrum',
-      description: 'Rostrum',
-      url: './rostrum.glb'
-    },
-    {
-      id: 4,
-      name: 'Trash',
-      description: 'Trash',
-      url: './trash.glb'
-    }
-  ]
+  const [isDragging, setIsDragging] = useState(false)
+  const [sampleItems, setSampleItems] = useState(initialSampleItems)
+  const [selectedSampleItem, setSelectedSampleItem] = useState({})
+  const [mode, setMode] = useState(ModeConstant.SELECT)
+  const [selectedItemRef, setSelectedItemRef] = useState()
+  const [hoverItemRef, setHoverItemRef] = useState()
+  const [decoratedPositionRef, setDecoratedPositionRef] = useState()
+  const [decoratedRotationRef, setDecoratedRotationRef] = useState()
+  const [decoratedColorRef, setDecoratedColorRef] = useState()
+  const ref = useRef()
 
-  function handleClick(e) {
+  function handleDownload(e) {
+    console.log(ref)
     const exporter = new GLTFExporter()
     exporter.parse(
       ref.current.parent,
@@ -63,22 +47,11 @@ const JobFairPackPage = () => {
       }
     )
   }
-
-  const [isDragging, setIsDragging] = useState(false)
-  const [sampleItems, setSampleItems] = useState(initialSampleItems)
-  const [selectedSampleItem, setSelectedSampleItem] = useState({})
-  const [mode, setMode] = useState(ModeConstant.SELECT)
-  const [selectedItemRef, setSelectedItemRef] = useState()
-  const [hoverItemRef, setHoverItemRef] = useState()
-  const ref = useRef()
-  //parse file and get items
-  //const {nodes, materials} = useGLTF('https://d3polnwtp0nqe6.cloudfront.net/booths/untitled.glb');
   const { nodes, materials } = useGLTF('./untitled.glb')
   const result = []
   for (const mesh in nodes) {
     if (nodes[mesh].parent?.name === 'Scene') result.push(nodes[mesh])
   }
-
   const selected = () => {
     const result = []
     if (hoverItemRef !== undefined) {
@@ -90,6 +63,36 @@ const JobFairPackPage = () => {
     }
     return result.length === 0 ? undefined : result
   }
+  //handle on update stage when change item
+  useEffect(() => {
+    if (selectedItemRef == null) return
+    setDecoratedPositionRef(selectedItemRef.current.position)
+    setDecoratedRotationRef(selectedItemRef.current.rotation)
+    setDecoratedColorRef(selectedItemRef.current.material)
+    console.log(selectedItemRef)
+  }, [selectedItemRef])
+
+  //handle on update Position when state change
+  useEffect(() => {
+    if (decoratedPositionRef == null) return
+  }, [decoratedPositionRef])
+
+  //handle on update Rotation when state change
+  useEffect(() => {
+    if (decoratedRotationRef == null) return
+  }, [decoratedRotationRef])
+
+  //handle on update Color when state change
+  useEffect(() => {
+    if (decoratedColorRef == null) return
+    const newMaterial = selectedItemRef.current.material.clone()
+    newMaterial.color.set(decoratedColorRef.hex)
+    newMaterial.transparent = true
+    selectedItemRef.current.material = newMaterial
+    for (const childMesh of selectedItemRef.current.children) {
+      childMesh.material = newMaterial
+    }
+  }, [decoratedColorRef])
 
   const changeMode = mode => {
     switch (mode) {
@@ -98,40 +101,43 @@ const JobFairPackPage = () => {
     }
     setMode(mode)
   }
-  const [currentSelectedColor, setCurrentSelectedColor] = useState()
-  const handleOnChangeColor = color => {
-    setCurrentSelectedColor(color);
-    const newMaterial = selectedItemRef.current.material.clone();
-    newMaterial.color.set(color.hex);
-    newMaterial.transparent = true;
-    selectedItemRef.current.material = newMaterial;
-    for (const childMesh of selectedItemRef.current.children){
-      childMesh.material = newMaterial;
-    }
-  }
   const [modelItems, setModelItems] = useState(result)
-  const StageRef = useRef();
+  const StageRef = useRef()
   return (
     <>
       <div style={{ display: 'flex' }}>
         <div>
-          <Button onClick={handleClick}>Download</Button>
-          <SketchPicker color={currentSelectedColor} onChangeComplete={handleOnChangeColor} />;
+          <SideBarDecoratedBooth
+            decoratedColorRef={decoratedColorRef}
+            selectedItemRef={selectedItemRef}
+            decoratedRotationRef={decoratedRotationRef}
+            decoratedPositionRef={decoratedPositionRef}
+            decoratedColorRef={decoratedColorRef}
+            setDecoratedPositionRef={setDecoratedPositionRef}
+            setDecoratedRotationRef={setDecoratedRotationRef}
+            setDecoratedColorRef={setDecoratedColorRef}
+          />
         </div>
         <Canvas dpr={[1, 2]} camera={{ fov: 50 }} style={{ width: '100%', height: '850px' }}>
           <OrbitControls enabled={!isDragging} />
-          <Stage controls={StageRef} preset="rembrandt" intensity={0.3999999999999999}  environment="city" contactShadow={false}>
+          <Stage
+            controls={StageRef}
+            preset="rembrandt"
+            intensity={0.3999999999999999}
+            environment="city"
+            contactShadow={false}
+          >
             <Model
-                setIsDragging={setIsDragging}
-                ref={ref}
-                selectedSampleItem={selectedSampleItem}
-                modelItems={modelItems}
-                setModelItems={setModelItems}
-                mode={mode}
-                setSelectedItemRef={setSelectedItemRef}
-                selectedItemRef={selectedItemRef}
-                hoverItemRef={hoverItemRef}
-                setHoverItemRef={setHoverItemRef}
+              setIsDragging={setIsDragging}
+              ref={ref}
+              selectedSampleItem={selectedSampleItem}
+              modelItems={modelItems}
+              setModelItems={setModelItems}
+              mode={mode}
+              setSelectedItemRef={setSelectedItemRef}
+              selectedItemRef={selectedItemRef}
+              hoverItemRef={hoverItemRef}
+              setHoverItemRef={setHoverItemRef}
             />
           </Stage>
 
@@ -141,7 +147,6 @@ const JobFairPackPage = () => {
         </Canvas>
         <ToastContainer />
       </div>
-
       <Menu
         items={sampleItems}
         selected={selectedSampleItem}

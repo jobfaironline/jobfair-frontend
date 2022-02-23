@@ -5,44 +5,11 @@ import * as THREE from 'three'
 import { ModeConstant } from '../../../../constants/AppConst'
 import { loadModel } from '../../../../utils/model_loader'
 import { useThree } from '@react-three/fiber'
-
-function calculateMeshDimensionRange(mesh) {
-  const borderBox = new THREE.Box3().setFromObject(mesh)
-  const x_range = { min: borderBox.min.x, max: borderBox.max.x }
-  const y_range = { min: borderBox.min.y, max: borderBox.max.y }
-  const z_range = { min: borderBox.min.z, max: borderBox.max.z }
-  return {
-    x_range,
-    y_range,
-    z_range
-  }
-}
-
-function calculateMeshSize(mesh) {
-  const meshSize = new THREE.Box3().setFromObject(mesh, true)
-  const vector = new THREE.Vector3()
-  meshSize.getSize(vector)
-  return { length: vector.x, height: vector.y, width: vector.z }
-}
-
-function calculatePositionWithBoundary({ x, y, z, x_range, y_range, z_range, length, width, height }) {
-  let new_x = x
-  let new_y = y
-  let new_z = z
-  if (x <= x_range.min + length / 2) new_x = x_range.min + length / 2
-  if (x >= x_range.max - length / 2) new_x = x_range.max - length / 2
-  if (y <= y_range.min + height / 2) new_x = y_range.min + height / 2
-  if (y >= y_range.max - height / 2) new_x = y_range.max - height / 2
-  if (z <= z_range.min + width / 2) new_z = z_range.min + width / 2
-  if (z >= z_range.max - width / 2) new_z = z_range.max - width / 2
-
-  return {
-    x: new_x,
-    y: new_y,
-    z: new_z
-  }
-}
-
+import {
+  calculateMeshDimensionRange,
+  calculateMeshSize,
+  calculatePositionWithBoundary
+} from '../../../../utils/modelSetup'
 function ItemMesh({
   mesh,
   setIsDragging,
@@ -51,7 +18,7 @@ function ItemMesh({
   setSelectedItemRef,
   selectedItemRef,
   hoverItemRef,
-  setHoverItemRef,
+  setHoverItemRef
 }) {
   const [position, setPosition] = useState(mesh.position)
   const itemRef = useRef()
@@ -65,7 +32,6 @@ function ItemMesh({
         const planeIntersectPoint = new THREE.Vector3()
         const floorPlane = new THREE.Plane(floorMesh.position)
         event.ray.intersectPlane(floorPlane, planeIntersectPoint)
-
         //calculate new item position on plane
         const { x_range: floor_x_range, z_range: floor_z_range } = calculateMeshDimensionRange(floorMesh)
         const { length: item_length, width: item_width, height: item_height } = calculateMeshSize(mesh)
@@ -86,7 +52,6 @@ function ItemMesh({
     },
     { pointerEvents: true }
   )
-
   useEffect(() => {
     itemRef.current.uuid = mesh.uuid
     itemRef.current.name = mesh.name
@@ -132,11 +97,9 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
     const planeIntersectPoint = new THREE.Vector3()
     const floorPlane = new THREE.Plane(new THREE.Vector3(mesh.position.x, mesh.position.y + 0.5, mesh.position.z))
     e.ray.intersectPlane(floorPlane, planeIntersectPoint)
-
     //load new item mesh
     const gltf = await loadModel(selectedSampleItem.url)
     const itemMesh = gltf.scene.children[0]
-
     //calculate new item position on plane
     const { x_range: floor_x_range, z_range: floor_z_range } = calculateMeshDimensionRange(mesh)
     const { length: item_length, width: item_width, height: item_height } = calculateMeshSize(itemMesh)
@@ -152,17 +115,7 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
       width: item_width,
       length: item_height
     })
-
-    /*        var mat = new THREE.MeshBasicMaterial( { color: 0x0000FF, wireframe : true } );
-
-                var wireframe = new THREE.Mesh( itemMesh.geometry, mat );
-
-                wireframe.position.set(x, y, z);
-                wireframe.rotation.set(itemMesh.rotation.x, itemMesh.rotation.y, itemMesh.rotation.z, itemMesh.rotation.order);
-                wireframe.scale.set(itemMesh.scale.x, itemMesh.scale.y, itemMesh.scale.z)*/
-
     itemMesh.position.set(x, y, z)
-
     setModelItems(prevState => {
       return [...prevState, gltf.scene.children[0]]
     })
@@ -215,7 +168,7 @@ export const Model = React.forwardRef(
       setSelectedItemRef,
       selectedItemRef,
       hoverItemRef,
-      setHoverItemRef,
+      setHoverItemRef
     },
     ref
   ) => {
@@ -266,7 +219,7 @@ export const Model = React.forwardRef(
 
     const floorMesh = modelItems.filter(mesh => mesh.name === 'sand')[0]
     return (
-      <group dispose={null} ref={ref} >
+      <group dispose={null} ref={ref}>
         {modelItems.map(mesh => {
           if (mesh === floorMesh) {
             return (
