@@ -46,6 +46,9 @@ const NavigationBar = () => {
           <Menu.Item key="/jobfair/attendant">
             <Link to="/jobfair/attendant">Attendant Job Fair</Link>
           </Menu.Item>
+          <Menu.Item key="map">
+            <Link to="/map">Map</Link>
+          </Menu.Item>
         </Menu>
       </div>
     </div>

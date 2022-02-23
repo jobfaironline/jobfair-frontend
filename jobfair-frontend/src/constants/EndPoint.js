@@ -10,3 +10,4 @@ export const ENDPOINT_REGISTER_EMPLOYEE =
 export const ENDPOINT_COMPANY = '/api/v1/companies'
 export const ENDPOINT_AGORA_RTC_TOKEN = '/api/v1/agora-rtc-token'
 export const ENDPOINT_AGORA_RTM_TOKEN = '/api/v1/agora-rtm-token'
+export const ENDPOINT_ATTENDANT = '/api/v1/attendants'

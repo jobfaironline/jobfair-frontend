@@ -20,6 +20,7 @@ import RegisterJobFairForm from '../components/register-job-fair-form/RegisterJo
 import AttendantProfile from '../pages/ProfilePage/AttendantProfilePage'
 import AppliedJobPage from '../pages/AppliedJobPage/AppliedJobPage'
 import AttendantJobFairPage from "../pages/AttendantJobFairPage/AttendantJobFairPage";
+import JobFairParkPage from '../pages/JobFairParkPage/JobFairParkPage'
 
 const AppRouter = () => {
   return (
@@ -77,6 +78,9 @@ const AppRouter = () => {
         </Route>
         <Route path="/jobfair/attendant" exact>
           <AttendantJobFairPage/>
+        </Route>
+        <Route path="/map" exact>
+          <JobFairParkPage />
         </Route>
       </Switch>
     </>

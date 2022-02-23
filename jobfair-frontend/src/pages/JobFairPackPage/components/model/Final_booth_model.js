@@ -14,7 +14,7 @@ function calculateMeshDimensionRange(mesh) {
   return {
     x_range,
     y_range,
-    z_range,
+    z_range
   }
 }
 
@@ -25,17 +25,7 @@ function calculateMeshSize(mesh) {
   return { length: vector.x, height: vector.y, width: vector.z }
 }
 
-function calculatePositionWithBoundary({
-  x,
-  y,
-  z,
-  x_range,
-  y_range,
-  z_range,
-  length,
-  width,
-  height,
-}) {
+function calculatePositionWithBoundary({ x, y, z, x_range, y_range, z_range, length, width, height }) {
   let new_x = x
   let new_y = y
   let new_z = z
@@ -49,7 +39,7 @@ function calculatePositionWithBoundary({
   return {
     x: new_x,
     y: new_y,
-    z: new_z,
+    z: new_z
   }
 }
 
@@ -77,26 +67,18 @@ function ItemMesh({
         event.ray.intersectPlane(floorPlane, planeIntersectPoint)
 
         //calculate new item position on plane
-        const { x_range: floor_x_range, z_range: floor_z_range } =
-          calculateMeshDimensionRange(floorMesh)
-        const {
-          length: item_length,
-          width: item_width,
-          height: item_height,
-        } = calculateMeshSize(mesh)
+        const { x_range: floor_x_range, z_range: floor_z_range } = calculateMeshDimensionRange(floorMesh)
+        const { length: item_length, width: item_width, height: item_height } = calculateMeshSize(mesh)
         const { x, y, z } = calculatePositionWithBoundary({
           x: planeIntersectPoint.x,
           y: mesh.position.y,
           z: planeIntersectPoint.z,
           x_range: floor_x_range,
-          y_range: [
-            mesh.position.y + item_height / 2,
-            mesh.position.y + item_height / 2,
-          ],
+          y_range: [mesh.position.y + item_height / 2, mesh.position.y + item_height / 2],
           z_range: floor_z_range,
           length: item_length,
           width: item_width,
-          height: item_height,
+          height: item_height
         })
         setPosition([x, y, z])
       }
@@ -109,49 +91,47 @@ function ItemMesh({
     itemRef.current.uuid = mesh.uuid
     itemRef.current.name = mesh.name
   })
-
   return (
     <mesh
+        name={mesh.name}
       key={mesh.uuid}
       ref={itemRef}
       geometry={mesh.geometry}
       material={mesh.material}
       position={position}
-      onClick={(event) => {
+      onClick={event => {
         if (selectedItemRef?.current.uuid === mesh.uuid) {
           setSelectedItemRef(undefined)
         } else {
           setSelectedItemRef(itemRef)
         }
       }}
-      onPointerOver={(event) => {
+      onPointerOver={event => {
         setHoverItemRef(itemRef)
       }}
-      onPointerLeave={(event) => {
+      onPointerLeave={event => {
         setHoverItemRef(undefined)
       }}
       {...bind()}
       rotation={mesh.rotation}
       scale={mesh.scale}
+      castShadow
+      receiveShadow
     >
-      {mesh.children.map((child) =>
-        ChildMesh({ key: child.uuid, mesh: child })
-      )}
+      {mesh.children.map(child => ChildMesh({ key: child.uuid, mesh: child }))}
     </mesh>
   )
 }
 
 function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
-  const onPlaneClick = async (e) => {
+  const onPlaneClick = async e => {
     if (mode !== ModeConstant.ADD) return
     if (selectedSampleItem.id === undefined) {
       return
     }
     //get intersection point between click coordinate and plane coordinate
     const planeIntersectPoint = new THREE.Vector3()
-    const floorPlane = new THREE.Plane(
-      new THREE.Vector3(mesh.position.x, mesh.position.y + 0.5, mesh.position.z)
-    )
+    const floorPlane = new THREE.Plane(new THREE.Vector3(mesh.position.x, mesh.position.y + 0.5, mesh.position.z))
     e.ray.intersectPlane(floorPlane, planeIntersectPoint)
 
     //load new item mesh
@@ -159,13 +139,8 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
     const itemMesh = gltf.scene.children[0]
 
     //calculate new item position on plane
-    const { x_range: floor_x_range, z_range: floor_z_range } =
-      calculateMeshDimensionRange(mesh)
-    const {
-      length: item_length,
-      width: item_width,
-      height: item_height,
-    } = calculateMeshSize(itemMesh)
+    const { x_range: floor_x_range, z_range: floor_z_range } = calculateMeshDimensionRange(mesh)
+    const { length: item_length, width: item_width, height: item_height } = calculateMeshSize(itemMesh)
     const { height: floor_height } = calculateMeshSize(mesh)
     const { x, y, z } = calculatePositionWithBoundary({
       x: planeIntersectPoint.x,
@@ -176,7 +151,7 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
       z_range: floor_z_range,
       height: item_length,
       width: item_width,
-      length: item_height,
+      length: item_height
     })
 
     /*        var mat = new THREE.MeshBasicMaterial( { color: 0x0000FF, wireframe : true } );
@@ -189,12 +164,12 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
 
     itemMesh.position.set(x, y, z)
 
-    setModelItems((prevState) => {
+    setModelItems(prevState => {
       return [...prevState, gltf.scene.children[0]]
     })
   }
   return (
-    <mesh
+    <mesh name={mesh.name}
       onClick={onPlaneClick}
       key={mesh.uuid}
       geometry={mesh.geometry}
@@ -202,24 +177,28 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
       position={mesh.position}
       rotation={mesh.rotation}
       scale={mesh.scale}
+      castShadow
+      receiveShadow
     >
-      {mesh.children.map((child) => ChildMesh({ mesh: child }))}
+      {mesh.children.map(child => ChildMesh({ mesh: child }))}
     </mesh>
   )
 }
 
 export function ChildMesh({ mesh }) {
   return (
-    <mesh
+    <mesh name={mesh.name}
       key={mesh.uuid}
       geometry={mesh.geometry}
       material={mesh.material}
       position={mesh.position}
       rotation={mesh.rotation}
       scale={mesh.scale}
+      castShadow
+      receiveShadow
     >
-      {mesh.children.map((child) => (
-        <ChildMesh key={child.uuid} mesh={child} />
+      {mesh.children.map(child => (
+        <ChildMesh mesh={child} key={child.uuid}/>
       ))}
     </mesh>
   )
@@ -242,14 +221,11 @@ export const Model = React.forwardRef(
     ref
   ) => {
     const { scene } = useThree()
-    const handleKeyDown = (event) => {
+    const handleKeyDown = event => {
       if (selectedItemRef?.current === undefined) {
         return
       }
-      const mesh = scene.getObjectByProperty(
-        'uuid',
-        selectedItemRef.current.uuid
-      )
+      const mesh = scene.getObjectByProperty('uuid', selectedItemRef.current.uuid)
       let myAxis
       switch (event.keyCode) {
         case 37: //KEY LEFT
@@ -259,11 +235,7 @@ export const Model = React.forwardRef(
           break
         case 38: //KEY UP
           event.preventDefault()
-          mesh.position.set(
-            mesh.position.x,
-            mesh.position.y + 0.1,
-            mesh.position.z
-          )
+          mesh.position.set(mesh.position.x, mesh.position.y + 0.1, mesh.position.z)
           break
         case 39: //KEY RIGHT
           event.preventDefault()
@@ -272,24 +244,18 @@ export const Model = React.forwardRef(
           break
         case 40: //KEY DOWN
           event.preventDefault()
-          mesh.position.set(
-            mesh.position.x,
-            mesh.position.y - 0.1,
-            mesh.position.z
-          )
+          mesh.position.set(mesh.position.x, mesh.position.y - 0.1, mesh.position.z)
           break
         case 46: //KEY DEL
           event.preventDefault()
-          setModelItems((prevState) => {
+          setModelItems(prevState => {
             setSelectedItemRef(undefined)
-            return prevState.filter(
-              (itemMesh) => itemMesh.uuid !== selectedItemRef.current.uuid
-            )
+            return prevState.filter(itemMesh => itemMesh.uuid !== selectedItemRef.current.uuid)
           })
           break
       }
     }
-    const onDocumentMouseMove = (event) => {}
+    const onDocumentMouseMove = event => {}
     useEffect(() => {
       window.addEventListener('keydown', handleKeyDown)
       window.addEventListener('mousemove', onDocumentMouseMove, false)
@@ -299,10 +265,10 @@ export const Model = React.forwardRef(
       }
     }, [selectedItemRef])
 
-    const floorMesh = modelItems.filter((mesh) => mesh.name === 'sand')[0]
+    const floorMesh = modelItems.filter(mesh => mesh.name === 'sand')[0]
     return (
-      <group dispose={null} ref={ref}>
-        {modelItems.map((mesh) => {
+      <group dispose={null} ref={ref} >
+        {modelItems.map(mesh => {
           if (mesh === floorMesh) {
             return (
               <FloorMesh
@@ -310,7 +276,6 @@ export const Model = React.forwardRef(
                 selectedSampleItem={selectedSampleItem}
                 setModelItems={setModelItems}
                 mode={mode}
-                s
               />
             )
           }
@@ -333,4 +298,4 @@ export const Model = React.forwardRef(
   }
 )
 
-useGLTF.preload('/final_booth_model.glb')
+useGLTF.preload('/untitled.glb')
