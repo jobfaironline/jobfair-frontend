@@ -8,3 +8,4 @@ export const ENDPOINT_CRUD_EMPLOYEES = '/api/v1/company-employees'
 export const ENDPOINT_REGISTER_EMPLOYEE =
   '/api/v1/company-employees/manager/register'
 export const ENDPOINT_COMPANY = '/api/v1/companies'
+export const ENDPOINT_ATTENDANT = '/api/v1/attendants'
