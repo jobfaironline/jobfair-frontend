@@ -138,10 +138,9 @@ const Videos = (props) => {
         <div>
             <div id="videos" style={{
                 height: "40vh",
-                width: "40vw",
                 margin: "auto",
                 alignSelf: "flex-start",
-                display: "grid",
+                display: "flex",
                 gridTemplateColumns: "repeat(auto-fit, minmax(440px, 1fr))",
                 justifyItems: "center",
                 alignItems: "center",
