@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { Model } from './components/model/Final_booth_model'
-import { OrbitControls, useGLTF } from '@react-three/drei'
+import { OrbitControls, useGLTF, Stage } from '@react-three/drei'
 import { ToastContainer } from 'react-toastify'
 import { Button } from 'antd'
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter'
@@ -100,9 +100,17 @@ const JobFairPackPage = () => {
   }
   const [currentSelectedColor, setCurrentSelectedColor] = useState()
   const handleOnChangeColor = color => {
-    setCurrentSelectedColor(color)
+    setCurrentSelectedColor(color);
+    const newMaterial = selectedItemRef.current.material.clone();
+    newMaterial.color.set(color.hex);
+    newMaterial.transparent = true;
+    selectedItemRef.current.material = newMaterial;
+    for (const childMesh of selectedItemRef.current.children){
+      childMesh.material = newMaterial;
+    }
   }
   const [modelItems, setModelItems] = useState(result)
+  const StageRef = useRef();
   return (
     <>
       <div style={{ display: 'flex' }}>
@@ -110,25 +118,25 @@ const JobFairPackPage = () => {
           <Button onClick={handleClick}>Download</Button>
           <SketchPicker color={currentSelectedColor} onChangeComplete={handleOnChangeColor} />;
         </div>
-        <Canvas dpr={[1, 2]} camera={{ fov: 45, position: [-75, 30, -10] }} style={{ width: '100%', height: '850px' }}>
+        <Canvas dpr={[1, 2]} camera={{ fov: 50 }} style={{ width: '100%', height: '850px' }}>
           <OrbitControls enabled={!isDragging} />
-          <directionalLight intensity={0.5} />
-          <ambientLight intensity={0.2} />
-          <Model
-            setIsDragging={setIsDragging}
-            ref={ref}
-            selectedSampleItem={selectedSampleItem}
-            modelItems={modelItems}
-            setModelItems={setModelItems}
-            mode={mode}
-            setSelectedItemRef={setSelectedItemRef}
-            selectedItemRef={selectedItemRef}
-            hoverItemRef={hoverItemRef}
-            setHoverItemRef={setHoverItemRef}
-            currentSelectedColor={currentSelectedColor}
-          />
+          <Stage controls={StageRef} preset="rembrandt" intensity={0.3999999999999999}  environment="city" contactShadow={false}>
+            <Model
+                setIsDragging={setIsDragging}
+                ref={ref}
+                selectedSampleItem={selectedSampleItem}
+                modelItems={modelItems}
+                setModelItems={setModelItems}
+                mode={mode}
+                setSelectedItemRef={setSelectedItemRef}
+                selectedItemRef={selectedItemRef}
+                hoverItemRef={hoverItemRef}
+                setHoverItemRef={setHoverItemRef}
+            />
+          </Stage>
+
           <EffectComposer multisampling={8} autoClear={false}>
-            <Outline blur selection={selected()} visibleEdgeColor="white" edgeStrength={5} width={1000} />
+            <Outline blur selection={selected()} visibleEdgeColor="orange" edgeStrength={5} width={1000} />
           </EffectComposer>
         </Canvas>
         <ToastContainer />
