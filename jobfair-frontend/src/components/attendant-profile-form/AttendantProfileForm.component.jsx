@@ -30,10 +30,12 @@ import {convertToDateString, convertToDateValue, convertToMoment} from '../../ut
 import moment from 'moment'
 import {DateFormat} from "../../constants/ApplicationConst";
 import TextArea from "antd/es/input/TextArea";
+import {set} from "react-hook-form";
 
 const AttendantProfileFormComponent = ({form, onFinish, data}) => {
 
     const [countryId, setCountryId] = useState('60ebd8bd-2b10-4d03-a3a4-ccfd0ab504d3');
+    const [disable, setDisable] = useState(false);
 
     if (data === undefined || data === null || Object.keys(data).length === 0) {
         return <Spin size="large"/>
@@ -61,7 +63,7 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
         return convertToDateValue(dateString)
     }
 
-
+    console.log(disable)
     return (
         <div>
             <Divider orientation="left">Attendant profile</Divider>
@@ -113,13 +115,26 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                                 label="Country"
                                 name="countryId"
                                 hasFeedback
+                                shouldUpdate
                                 rules={AttendantProfileValidation.countryId}
                             >
                                 <Select
                                     showSearch
                                     style={{width: 250}}
                                     placeholder="Search to Select"
-                                    // onChange={value => setCountryId(value)}
+                                    onChange={(value) => {
+                                        if (value === '60ebd8bd-2b10-4d03-a3a4-ccfd0ab504d3') {
+                                            form.setFieldsValue({
+                                                countryId: value,
+                                                residenceId: '014cea47-48fb-4f1a-8c84-561df19e5c5e'
+                                            })
+                                        } else {
+                                            form.setFieldsValue({
+                                                countryId: value,
+                                                residenceId: 'fac2e4cd-73fc-4751-be0b-5b9ff52bc3d4'
+                                            })
+                                        }
+                                    }}
                                     optionFilterProp="children"
                                     filterOption={(input, option) =>
                                         option.children
@@ -168,29 +183,38 @@ const AttendantProfileFormComponent = ({form, onFinish, data}) => {
                             >
                                 <Input placeholder="Address" style={{width: 300}}/>
                             </Form.Item>
-                            <Form.Item label="Residence" name="residenceId">
-                                <Select
-                                    showSearch
-                                    style={{width: 150}}
-                                    placeholder="Search to Select"
-                                    optionFilterProp="children"
-                                    filterOption={(input, option) =>
-                                        option.children
-                                            .toLowerCase()
-                                            .indexOf(input.toLowerCase()) >= 0
-                                    }
-                                    filterSort={(optionA, optionB) =>
-                                        optionA.children
-                                            .toLowerCase()
-                                            .localeCompare(optionB.children.toLowerCase())
-                                    }
-                                >
-                                    {
-                                        ResidenceConst.map(item => (
-                                        <Option value={item.id}>{item.name}</Option>
-                                        ))
-                                    }
-                                </Select>
+                            <Form.Item shouldUpdate>
+                                {() => {
+                                    return (
+                                        <Form.Item
+                                            label="Residence" name="residenceId"
+                                        >
+                                            <Select
+                                                showSearch
+                                                disabled={form.getFieldValue('countryId') !== '60ebd8bd-2b10-4d03-a3a4-ccfd0ab504d3'}
+                                                style={{width: 150}}
+                                                placeholder="Search to Select"
+                                                optionFilterProp="children"
+                                                filterOption={(input, option) =>
+                                                    option.children
+                                                        .toLowerCase()
+                                                        .indexOf(input.toLowerCase()) >= 0
+                                                }
+                                                filterSort={(optionA, optionB) =>
+                                                    optionA.children
+                                                        .toLowerCase()
+                                                        .localeCompare(optionB.children.toLowerCase())
+                                                }
+                                            >
+                                                {
+                                                    ResidenceConst.map(item => (
+                                                        <Option value={item.id}>{item.name}</Option>
+                                                    ))
+                                                }
+                                            </Select>
+                                        </Form.Item>
+                                    );
+                                }}
                             </Form.Item>
                             <Form.Item
                                 label="Year of experience"

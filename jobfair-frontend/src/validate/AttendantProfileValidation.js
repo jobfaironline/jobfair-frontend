@@ -65,6 +65,10 @@ export const AttendantProfileValidation = {
             required: true,
             message: 'This field is required',
         },
+        {
+            max: 300,
+            message: 'This field has max length is 300 characters',
+        },
     ],
     yearOfExp: [
         {
@@ -76,6 +80,11 @@ export const AttendantProfileValidation = {
                 if (!value || value >= 50) {
                     return Promise.reject(
                         new Error('The maximum year of experience is 50 years')
+                    )
+                }
+                if (value < 0) {
+                    return Promise.reject(
+                        new Error('The minimum year of experience is 0 years')
                     )
                 }
 
@@ -132,6 +141,9 @@ export const AttendantProfileValidation = {
                 validator(_, value) {
                     if (!value || value <= 1940) {
                         return Promise.reject(new Error('The minimum year is 1940 years'))
+                    }
+                    if (value > new Date().getFullYear()) {
+                        return Promise.reject(new Error('The year must lower than current year'))
                     }
                     return Promise.resolve()
                 },
