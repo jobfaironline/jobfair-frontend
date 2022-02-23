@@ -20,7 +20,7 @@ const EmployeeTableColumn = getColumnSearchProps => {
       dataIndex: 'fullName',
       key: 'fullName',
       ...getColumnSearchProps('fullName'),
-      onFilter: (value, record) => record.name.indexOf(value) === 0,
+      onFilter: (value, record) => record.fullName.indexOf(value) === 0,
       sorter: (a, b) => a.fullName.localeCompare(b.fullName),
       sortDirections: ['descend']
     },
@@ -48,6 +48,14 @@ const EmployeeTableColumn = getColumnSearchProps => {
         {
           text: 'Inactive',
           value: 'INACTIVE'
+        },
+        {
+          text: 'Suspensed',
+          value: 'SUSPENSED'
+        },
+        {
+          text: 'Registered',
+          value: 'REGISTERED'
         }
       ],
       onFilter: (value, record) => {
