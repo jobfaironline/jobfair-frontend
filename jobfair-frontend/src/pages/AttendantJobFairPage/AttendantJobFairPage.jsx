@@ -1,13 +1,20 @@
 import {Button, Form, Input, Tabs} from "antd";
-import React, {Children, Fragment, useEffect, useState} from "react";
-import RTMClient from "./rtx_client";
-import {AgoraVideoPlayer, createClient, createMicrophoneAndCameraTracks} from "agora-rtc-react";
+import React, {Fragment, useEffect, useState} from "react";
+import RTMClient from "./rtm_client";
+import {
+    AgoraVideoPlayer,
+    createCameraVideoTrack,
+    createClient,
+    createMicrophoneAndCameraTracks,
+    createMicrophoneAudioTrack
+} from "agora-rtc-react";
 import {Canvas} from "@react-three/fiber";
-import {OrbitControls, useGLTF} from "@react-three/drei";
+import {OrbitControls, Stage} from "@react-three/drei";
 import {ChildMesh} from "../JobFairPackPage/components/model/Final_booth_model";
 import {useSelector} from "react-redux";
 import {getAgoraRTCToken, getAgoraRTMToken} from "../../services/agoraTokenService";
 import {useHistory} from "react-router-dom";
+import {loadModel} from "../../utils/model_loader";
 
 
 const {TabPane} = Tabs;
@@ -17,12 +24,179 @@ const config = {
 //the appid should belong to .env
 const appId = "c99b02ecc0b940fe90959c6490af4d06";
 const useClient = createClient(config);
-const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
+
+//const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
+const useMicrophoneTrack = createMicrophoneAudioTrack();
+const useCameraTrack = createCameraVideoTrack();
 //the rtm should be initialize at loading and store in redux
 const rtm = new RTMClient();
 rtm.init(appId);
 //channelId is the booth's id
 const channelId = "1234";
+
+
+
+
+export const Controls = (props) => {
+    const {setMuteState, muteState, audioTrack, cameraTrack} = props;
+
+    const mute = async (type) => {
+        if (type === "audio") {
+            await audioTrack.setMuted(!muteState.audio);
+            setMuteState((ps) => {
+                return {...ps, audio: !ps.audio};
+            });
+        } else if (type === "video") {
+            await cameraTrack.setMuted(!muteState.video);
+            setMuteState((ps) => {
+                return {...ps, video: !ps.video};
+            });
+        }
+    };
+
+    return (
+        <div>
+            {audioTrack ? <p className={muteState.audio ? "on" : ""}
+                             onClick={() => mute("audio")}>
+                {!muteState.audio ? "MuteAudio" : "UnmuteAudio"}
+            </p> : <p>Audio not found</p> }
+
+
+            {cameraTrack ? <p className={muteState.video ? "on" : ""}
+                              onClick={() => mute("video")}>
+                {!muteState.video ? "MuteVideo" : "UnmuteVideo"}
+            </p> : <p>Camera not found</p> }
+
+
+        </div>
+    );
+};
+
+const Videos = (props) => {
+    const {
+        muteState,
+        users,
+        cameraTrack,
+        cameraReady,
+    } = props;
+    if (!cameraReady) return null;
+    return (
+        <div>
+            <div id="videos" style={{
+                height: "60vh",
+                margin: "auto",
+                alignSelf: "flex-start",
+                display: "flex",
+                gridTemplateColumns: "repeat(auto-fit, minmax(440px, 1fr))",
+                justifyItems: "center",
+                alignItems: "center",
+            }}>
+                {/* AgoraVideoPlayer component takes in the video track to render the stream,
+            you can pass in other props that get passed to the rendered div */}
+                {!muteState.video ?
+                    <AgoraVideoPlayer style={{height: '95%', width: '95%'}} className='vid' videoTrack={cameraTrack}/> :
+                    <div style={{height: '95%', width: '95%', backgroundColor: "yellow"}}/>}
+                {users.length > 0 &&
+                users.map((user) => {
+                    if (user.videoTrack) {
+                        return (
+                            <AgoraVideoPlayer style={{height: '95%', width: '95%'}} className='vid'
+                                              videoTrack={user.videoTrack} key={user.uid}/>
+                        );
+                    } else return null;
+                })}
+            </div>
+        </div>
+    );
+};
+
+
+function VideoCallComponent(props) {
+    const {audioReady, audioTrack, cameraReady, cameraTrack} = props;
+
+    const [isRTCClientReady, setIsRTCClientReady] = useState(false);
+    const [users, setUsers] = useState([]);
+    const [muteState, setMuteState] = useState({video: false, audio: false});
+    const userId = useSelector(state => state.authentication.user.userId);
+
+
+    async function initializeRTCClient(rtcClient, rtcToken, userId) {
+        rtcClient.on("user-published", async (user, mediaType) => {
+            await rtcClient.subscribe(user, mediaType);
+            console.log("subscribe success");
+            if (mediaType === "video") {
+                setUsers((prevUsers) => {
+                    return [...prevUsers, user];
+                });
+            }
+            if (mediaType === "audio") {
+                user.audioTrack?.play();
+            }
+        });
+
+        rtcClient.on("user-unpublished", (user, type) => {
+            console.log("unpublished", user, type);
+            if (type === "audio") {
+                user.audioTrack?.stop();
+            }
+            if (type === "video") {
+                setUsers((prevUsers) => {
+                    return prevUsers.filter((User) => User.uid !== user.uid);
+                });
+            }
+        });
+
+        rtcClient.on("user-left", (user) => {
+            console.log("leaving", user);
+            setUsers((prevUsers) => {
+                return prevUsers.filter((User) => User.uid !== user.uid);
+            });
+        });
+
+        await rtcClient.join(appId, channelId, rtcToken, userId);
+    }
+
+    useEffect(async () => {
+        const rtcToken = await getAgoraRTCToken(channelId).then(value => value.data).then(value => value.token);
+        const rtcClient = useClient();
+        await initializeRTCClient(rtcClient, rtcToken, userId);
+        setIsRTCClientReady(true);
+    }, [])
+
+    useEffect(async () => {
+        const rtcClient = useClient();
+        if (isRTCClientReady && audioReady && audioTrack) await rtcClient.publish(audioTrack);
+        if (isRTCClientReady && cameraReady && cameraTrack) {
+            await rtcClient.publish(cameraTrack);
+        }
+    }, [cameraReady, audioReady, cameraTrack, audioTrack, isRTCClientReady]);
+
+
+
+
+
+    const videoProps = {
+        muteState,
+        users,
+        cameraTrack,
+        cameraReady,
+    }
+
+    const controlProps = {
+        setMuteState,
+        muteState,
+        audioTrack,
+        cameraTrack
+    }
+
+    return (
+        <Fragment>
+            <Videos {...videoProps}/>
+            <Controls {...controlProps}/>
+
+        </Fragment>
+    );
+}
 
 class Message {
     constructor(accountName, content, isMyMessage) {
@@ -96,133 +270,12 @@ function ChatFeedComponent(props) {
     );
 }
 
-export const Controls = (props) => {
-    const {setIsMuteCamera, tracks} = props;
-    const [trackState, setTrackState] = useState({video: true, audio: true});
-
-    const mute = async (type) => {
-        console.log(tracks[0]);
-        if (type === "audio") {
-            await tracks[0].setEnabled(!trackState.audio);
-            setTrackState((ps) => {
-                return {...ps, audio: !ps.audio};
-            });
-        } else if (type === "video") {
-            setIsMuteCamera(trackState.video)
-            await tracks[1].setEnabled(!trackState.video);
-            setTrackState((ps) => {
-                return {...ps, video: !ps.video};
-            });
-        }
-    };
-
-    return (
-        <div>
-            <p className={trackState.audio ? "on" : ""}
-               onClick={() => mute("audio")}>
-                {trackState.audio ? "MuteAudio" : "UnmuteAudio"}
-            </p>
-            <p className={trackState.video ? "on" : ""}
-               onClick={() => mute("video")}>
-                {trackState.video ? "MuteVideo" : "UnmuteVideo"}
-            </p>
-
-        </div>
-    );
-};
-
-const Videos = (props) => {
-    const {users, isMuteCamera} = props;
-    const {ready, tracks} = useMicrophoneAndCameraTracks();
-
-    return (
-        <div>
-            <div id="videos" style={{
-                height: "60vh",
-                margin: "auto",
-                alignSelf: "flex-start",
-                display: "flex",
-                gridTemplateColumns: "repeat(auto-fit, minmax(440px, 1fr))",
-                justifyItems: "center",
-                alignItems: "center",
-            }}>
-                {/* AgoraVideoPlayer component takes in the video track to render the stream,
-            you can pass in other props that get passed to the rendered div */}
-                {!isMuteCamera ? <AgoraVideoPlayer style={{height: '95%', width: '95%'}} className='vid' videoTrack={tracks[1]}/> : <div style={{height: '95%', width: '95%', backgroundColor: "black"}}/>}
-                {users.length > 0 &&
-                users.map((user) => {
-                    if (user.videoTrack) {
-                        return (
-                            <AgoraVideoPlayer style={{height: '95%', width: '95%'}} className='vid'
-                                              videoTrack={user.videoTrack} key={user.uid}/>
-                        );
-                    } else return null;
-                })}
-            </div>
-        </div>
-    );
-};
-
-function VideoChatComponent(props) {
-    const {isVideoReady, users, ready, tracks} = props;
-
-    const [isMuteCamera, setIsMuteCamera] = useState(false);
-
-    const controlProps = {
-        setIsMuteCamera,
-        tracks
-    }
-
-    const videoProps = {
-        isMuteCamera,
-        users
-    }
-
-    return (
-        <div>
-            {ready && tracks && (
-                <Controls {...controlProps}/>
-            )}
-            {isVideoReady && tracks && <Videos {...videoProps}/>}
-        </div>
-    );
-}
-
 function MessageChatComponent(props) {
-    const {isChatReady, messageList, setMessageList } = props;
-
-
-    const chatFeedProps = {
-        messageList
-    }
-    const formProps = {
-        setMessageList,
-        isChatReady
-    }
-
-    return (
-        <Fragment>
-            <ChatFeedComponent {...chatFeedProps}/>
-            <MessageForm {...formProps}/>
-        </Fragment>
-    )
-}
-
-
-function CommunicationComponent(props) {
-    const {history} = props;
-    const [isChatReady, setIsChatReady] = useState(false);
-    const [isVideoReady, setIsVideoReady] = useState(false);
-    const {ready, tracks} = useMicrophoneAndCameraTracks();
-    const [users, setUsers] = useState([]);
-    const [messageList, setMessageList] = useState([]);
     const userId = useSelector(state => state.authentication.user.userId);
-    const [chatToken, setChatToken] = useState("");
-    const [videoToken, setVideoToken] = useState("");
+    const [messageList, setMessageList] = useState([]);
+    const [isChatReady, setIsChatReady] = useState(false);
 
-
-
-    async function initializeRtmClient(rtmClient) {
+    async function initializeRtmClient(rtmClient, rtmToken, userId) {
         rtmClient.on('ConnectionStateChanged', (newState, reason) => {
             console.log('reason', reason)
         });
@@ -256,85 +309,40 @@ function CommunicationComponent(props) {
                 });
             }
         });
-        await rtmClient.login(userId, chatToken)
+        await rtmClient.login(userId, rtmToken)
         await rtmClient.joinChannel(channelId);
-        setIsChatReady(true);
-    }
-
-    async function initializeRTCClient(rtcClient) {
-        rtcClient.on("user-published", async (user, mediaType) => {
-            await rtcClient.subscribe(user, mediaType);
-            console.log("subscribe success");
-            if (mediaType === "video") {
-                setUsers((prevUsers) => {
-                    return [...prevUsers, user];
-                });
-            }
-            if (mediaType === "audio") {
-                user.audioTrack?.play();
-            }
-        });
-
-        rtcClient.on("user-unpublished", (user, type) => {
-            console.log("unpublished", user, type);
-            if (type === "audio") {
-                user.audioTrack?.stop();
-            }
-            if (type === "video") {
-                setUsers((prevUsers) => {
-                    return prevUsers.filter((User) => User.uid !== user.uid);
-                });
-            }
-        });
-
-        rtcClient.on("user-left", (user) => {
-            console.log("leaving", user);
-            setUsers((prevUsers) => {
-                return prevUsers.filter((User) => User.uid !== user.uid);
-            });
-        });
-
-        await rtcClient.join(appId, channelId, videoToken, userId);
-        if (tracks) await rtcClient.publish([tracks[0], tracks[1]]);
-        setIsVideoReady(true);
     }
 
     useEffect(async () => {
-        if (chatToken === "" && videoToken === ""){
-            const RTCPromise =  getAgoraRTCToken(channelId).then(value => value.data).then(value => value.token);
-            const RTMPromise =  getAgoraRTMToken().then(value => value.data).then(value => value.token);
-            const [rtcToken, rtmToken] = await Promise.all([RTCPromise, RTMPromise]);
-            setChatToken(rtmToken);
-            setVideoToken(rtcToken);
-        }
-        if (tracks && ready && chatToken !== "" && videoToken !== ""){
-            await initializeRtmClient(rtm);
-            const rtcClient = useClient();
-            await initializeRTCClient(rtcClient);
-        }
-
-    }, [tracks, ready, chatToken, videoToken]);
+        const rtmToken = await getAgoraRTMToken().then(value => value.data).then(value => value.token);
+        await initializeRtmClient(rtm, rtmToken, userId);
+        setIsChatReady(true);
+    }, [])
 
 
-    const videoProps = {
-        channelId,
-        token: videoToken,
-        accountName: userId,
-        isVideoReady,
-        setIsVideoReady,
-        users,
-        ready,
-        tracks
+    const chatFeedProps = {
+        messageList
+    }
+    const formProps = {
+        setMessageList,
+        isChatReady
     }
 
-    const messsageProps = {
-        isChatReady,
-        messageList,
-        setMessageList
-    }
+    return (
+        <Fragment>
+            <ChatFeedComponent {...chatFeedProps}/>
+            <MessageForm {...formProps}/>
+        </Fragment>
+    )
+}
 
-    const RTCClient = useClient();
+const CommunicationContainer = (props) => {
+    const {history} = props;
+    const {ready: audioReady, track: audioTrack} = useMicrophoneTrack();
+    const {ready: cameraReady, track: cameraTrack} = useCameraTrack();
+
     const leaveChannel = async () => {
+        const RTCClient = useClient();
         await RTCClient.leave();
         RTCClient.removeAllListeners();
 
@@ -342,57 +350,59 @@ function CommunicationComponent(props) {
         await rtm.logout();
         await rtm.removeAllListeners();
         // we close the tracks to perform cleanup
-        tracks[0].close();
-        tracks[1].close();
+        if (audioReady) audioTrack.close();
+        if (cameraReady) cameraTrack.close();
         history.goBack();
-        //setIsChatReady(false);
-        //setIsVideoReady(false);
-
 
     };
 
+    const videoProps = {audioReady, audioTrack, cameraReady, cameraTrack}
+
     return (
         <Fragment>
-            <VideoChatComponent {...videoProps}/>
-            <MessageChatComponent {...messsageProps}/>
+            <MessageChatComponent/>
+            <VideoCallComponent {...videoProps}/>
             {<p onClick={() => leaveChannel()}>Leave</p>}
         </Fragment>
-    );
+    )
 }
 
-function Booth(props){
+const CompanyBoothCanvasComponent = (props) => {
+    const {boothMesh} = props;
+    return (
+        <Canvas
+            dpr={[1, 2]}
+            camera={{fov: 45, position: [-75, 30, -10]}}
+            style={{width: '100%', height: '850px'}}
+        >
+            <OrbitControls/>
+            <Stage preset="rembrandt" intensity={0.4} environment="city"
+                   contactShadow={false}>
+                <ChildMesh mesh={boothMesh}/>
+            </Stage>
+        </Canvas>
+    )
+}
 
-    const {nodes, materials} = useGLTF('https://d3polnwtp0nqe6.cloudfront.net/booths/untitled.glb');
-    const [items, setItems] = useState([]);
 
-    useEffect(() => {
-        const result = [];
-        for (const mesh in nodes) {
-            if (nodes[mesh].parent?.name === 'Scene') result.push(nodes[mesh])
-        }
-        setItems(prevState => {
-            return [...prevState, ...result];
-        });
+const CompanyBoothCanvasContainer = (props) => {
+    const {url} = props;
+    const [boothMesh, setBoothMesh] = useState(null);
+    useEffect(async () => {
+        const glb = await loadModel(url);
+        setBoothMesh(glb.scene);
     }, []);
+    if (boothMesh === null) return null;
+    return (
+        <CompanyBoothCanvasComponent boothMesh={boothMesh}/>
+    )
+}
 
+
+const JobFairInformationTabs = (props) => {
+    const {companyDescription, companyJobPostion} = props;
 
     return (
-        <group dispose={null}>
-            {items.map((item) => (<ChildMesh key={item.uuid} mesh={item}/>))}
-        </group>
-    );
-}
-
-useGLTF.preload('https://d3polnwtp0nqe6.cloudfront.net/booths/untitled.glb')
-
-
-
-const AttendantJobFairPage = () => {
-    const history = useHistory();
-
-    return (<Fragment>
-        <CommunicationComponent history={history}/>
-
         <Tabs defaultActiveKey="1" tabPosition={"left"} type="card">
             <TabPane tab={"Company Description"} key={1}>
                 <div>
@@ -435,15 +445,17 @@ const AttendantJobFairPage = () => {
                 </div>
             </TabPane>
         </Tabs>
-        <Canvas
-            dpr={[1, 2]}
-            camera={{ fov: 45, position: [-75, 30, -10] }}
-            style={{ width: '100%', height: '850px' }}
-        >
-            <directionalLight intensity={0.5} />
-            <ambientLight intensity={0.2} />
-            <Booth/>
-        </Canvas>
+    )
+}
+
+
+const AttendantJobFairPage = () => {
+    const history = useHistory();
+
+    return (<Fragment>
+        <CommunicationContainer history={history}/>
+        {/*<JobFairInformationTabs />*/}
+        {/*<CompanyBoothCanvasContainer url={'https://d3polnwtp0nqe6.cloudfront.net/booths/untitled.glb'}/>*/}
     </Fragment>);
 }
 
