@@ -313,8 +313,6 @@ function CommunicationComponent(props) {
             await initializeRTCClient(rtcClient);
         }
 
-
-
     }, [tracks, ready, chatToken, videoToken]);
 
 
