@@ -300,11 +300,6 @@ function CommunicationComponent(props) {
     }
 
     useEffect(async () => {
-        if (tracks && ready && chatToken !== "" && videoToken !== ""){
-            await initializeRtmClient(rtm);
-            const rtcClient = useClient();
-            await initializeRTCClient(rtcClient);
-        }
         if (chatToken === "" && videoToken === ""){
             const RTCPromise =  getAgoraRTCToken(channelId).then(value => value.data).then(value => value.token);
             const RTMPromise =  getAgoraRTMToken().then(value => value.data).then(value => value.token);
@@ -312,9 +307,15 @@ function CommunicationComponent(props) {
             setChatToken(rtmToken);
             setVideoToken(rtcToken);
         }
+        if (tracks && ready && chatToken !== "" && videoToken !== ""){
+            await initializeRtmClient(rtm);
+            const rtcClient = useClient();
+            await initializeRTCClient(rtcClient);
+        }
 
 
-    }, [tracks, ready ]);
+
+    }, [tracks, ready, chatToken, videoToken]);
 
 
     const videoProps = {
