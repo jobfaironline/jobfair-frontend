@@ -16,8 +16,6 @@ const JobFairPackPage = () => {
   const [mode, setMode] = useState(ModeConstant.SELECT)
   const [selectedItemRef, setSelectedItemRef] = useState()
   const [hoverItemRef, setHoverItemRef] = useState()
-  const [decoratedPositionRef, setDecoratedPositionRef] = useState()
-  const [decoratedRotationRef, setDecoratedRotationRef] = useState()
   const [decoratedColorRef, setDecoratedColorRef] = useState()
   const ref = useRef()
 
@@ -108,13 +106,9 @@ const JobFairPackPage = () => {
       <div style={{ display: 'flex' }}>
         <div>
           <SideBarDecoratedBooth
-            decoratedColorRef={decoratedColorRef}
             selectedItemRef={selectedItemRef}
-            decoratedRotationRef={decoratedRotationRef}
-            decoratedPositionRef={decoratedPositionRef}
             decoratedColorRef={decoratedColorRef}
-            setDecoratedPositionRef={setDecoratedPositionRef}
-            setDecoratedRotationRef={setDecoratedRotationRef}
+            setSelectedItemRef={setSelectedItemRef}
             setDecoratedColorRef={setDecoratedColorRef}
           />
         </div>

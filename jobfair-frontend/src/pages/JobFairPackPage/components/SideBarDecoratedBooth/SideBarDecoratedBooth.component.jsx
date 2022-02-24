@@ -4,15 +4,16 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import { useState } from 'react'
-import { ToolOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons'
+import { ToolOutlined, LeftOutlined, RightOutlined, UpOutlined, DownOutlined } from '@ant-design/icons'
 import { InputNumber, Descriptions } from 'antd'
 import { SketchPicker } from 'react-color'
 import { handleDownloadModel } from '../../../../utils/modelDownloader'
 import { Button } from 'antd'
-
+import * as THREE from 'three'
 const SideBarDecoratedBooth = ({
   decoratedColorRef,
   selectedItemRef,
+  setSelectedItemRef,
   decoratedRotationRef,
   decoratedPositionRef,
   setDecoratedPositionRef,
@@ -30,19 +31,44 @@ const SideBarDecoratedBooth = ({
     handleDownloadModel(value)
   }
   const handleOnchangePositionX = value => {
-    console.log(value)
+    // let currentPosition = selectedItemRef.position
+    // selectedItemRef.position.set({ ...currentPosition, ['x']: value })
   }
   const handleOnchangePositionY = value => {
-    console.log(value)
+    // let currentPosition = selectedItemRef.position
+    // selectedItemRef.position.set({ ...currentPosition, ['y']: value })
   }
   const handleOnchangePositionZ = value => {
-    console.log(value)
+    // let currentPosition = selectedItemRef.position
+    // selectedItemRef.position.set({ ...currentPosition, ['z']: value })
   }
   const handleOnRotationLeft = value => {
-    console.log(value)
+    let myAxis
+    myAxis = new THREE.Vector3(0, 1, 0)
+    setSelectedItemRef(selectedItemRef.current.rotateOnWorldAxis(myAxis, THREE.Math.degToRad(10)))
   }
   const handleOnRotationRight = value => {
-    console.log(value)
+    let myAxis
+    myAxis = new THREE.Vector3(0, 1, 0)
+    setSelectedItemRef(selectedItemRef.current.rotateOnWorldAxis(myAxis, -THREE.Math.degToRad(10)))
+  }
+  const handleOnRotationUp = value => {
+    setSelectedItemRef(
+      selectedItemRef.current.position.set(
+        selectedItemRef.current.position.x,
+        selectedItemRef.current.position.y + 0.1,
+        selectedItemRef.current.position.z
+      )
+    )
+  }
+  const handleOnRotationDown = value => {
+    setSelectedItemRef(
+      selectedItemRef.current.position.set(
+        selectedItemRef.current.position.x,
+        selectedItemRef.current.position.y - 0.1,
+        selectedItemRef.current.position.z
+      )
+    )
   }
   const handleOnChangeColor = color => {
     setDecoratedColorRef(color)
@@ -74,13 +100,34 @@ const SideBarDecoratedBooth = ({
           <div>
             <Descriptions title="Position" layout="vertical" bordered size="small" style={{ padding: '1rem' }}>
               <Descriptions.Item label="Width">
-                <InputNumber min={1} max={360} defaultValue={3} bordered={false} onChange={handleOnchangePositionX} />
+                <InputNumber
+                  min={1}
+                  max={360}
+                  step="0.00000000000001"
+                  defaultValue={selectedItemRef.current.position.x}
+                  bordered={false}
+                  onChange={handleOnchangePositionX}
+                />
               </Descriptions.Item>
               <Descriptions.Item label="Height">
-                <InputNumber min={1} max={360} defaultValue={3} bordered={false} onChange={handleOnchangePositionY} />
+                <InputNumber
+                  min={1}
+                  max={360}
+                  step="0.00000000000001"
+                  defaultValue={selectedItemRef.current.position.y}
+                  bordered={false}
+                  onChange={handleOnchangePositionY}
+                />
               </Descriptions.Item>
               <Descriptions.Item label="Top">
-                <InputNumber min={1} max={360} defaultValue={3} bordered={false} onChange={handleOnchangePositionZ} />
+                <InputNumber
+                  min={1}
+                  max={360}
+                  step="0.00000000000001"
+                  defaultValue={selectedItemRef.current.position.z}
+                  bordered={false}
+                  onChange={handleOnchangePositionZ}
+                />
               </Descriptions.Item>
             </Descriptions>
             <Descriptions
@@ -96,6 +143,12 @@ const SideBarDecoratedBooth = ({
               </Descriptions.Item>
               <Descriptions.Item label="Right">
                 <RightOutlined onClick={handleOnRotationRight} />
+              </Descriptions.Item>
+              <Descriptions.Item label="Up">
+                <UpOutlined onClick={handleOnRotationUp} />
+              </Descriptions.Item>
+              <Descriptions.Item label="Down">
+                <DownOutlined onClick={handleOnRotationDown} />
               </Descriptions.Item>
             </Descriptions>
             <Descriptions
