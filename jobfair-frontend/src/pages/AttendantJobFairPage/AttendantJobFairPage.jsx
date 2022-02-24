@@ -7,6 +7,7 @@ import {OrbitControls, useGLTF} from "@react-three/drei";
 import {ChildMesh} from "../JobFairPackPage/components/model/Final_booth_model";
 import {useSelector} from "react-redux";
 import {getAgoraRTCToken, getAgoraRTMToken} from "../../services/agoraTokenService";
+import {useHistory} from "react-router-dom";
 
 
 const {TabPane} = Tabs;
@@ -137,7 +138,7 @@ const Videos = (props) => {
     return (
         <div>
             <div id="videos" style={{
-                height: "40vh",
+                height: "60vh",
                 margin: "auto",
                 alignSelf: "flex-start",
                 display: "flex",
@@ -209,6 +210,7 @@ function MessageChatComponent(props) {
 
 
 function CommunicationComponent(props) {
+    const {history} = props;
     const [isChatReady, setIsChatReady] = useState(false);
     const [isVideoReady, setIsVideoReady] = useState(false);
     const {ready, tracks} = useMicrophoneAndCameraTracks();
@@ -343,8 +345,10 @@ function CommunicationComponent(props) {
         // we close the tracks to perform cleanup
         tracks[0].close();
         tracks[1].close();
-        setIsChatReady(false);
-        setIsVideoReady(false);
+        history.goBack();
+        //setIsChatReady(false);
+        //setIsVideoReady(false);
+
 
     };
 
@@ -385,11 +389,10 @@ useGLTF.preload('https://d3polnwtp0nqe6.cloudfront.net/booths/untitled.glb')
 
 
 const AttendantJobFairPage = () => {
-
-
+    const history = useHistory();
 
     return (<Fragment>
-        <CommunicationComponent/>
+        <CommunicationComponent history={history}/>
 
         <Tabs defaultActiveKey="1" tabPosition={"left"} type="card">
             <TabPane tab={"Company Description"} key={1}>
