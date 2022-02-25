@@ -23,7 +23,7 @@ export const CallAPI = (
 
   return axios({
     method: method,
-    url: `http://localhost:5001${endpoint}`,
+    url: `http://localhost:5000${endpoint}`,
     headers: headers,
     data: body,
     responseType: responseType,
