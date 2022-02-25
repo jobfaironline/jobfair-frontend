@@ -3,13 +3,14 @@ import { useGLTF } from '@react-three/drei'
 import { useDrag } from 'react-use-gesture'
 import * as THREE from 'three'
 import { ModeConstant } from '../../../../constants/AppConst'
-import { loadModel } from '../../../../utils/model_loader'
-import { useThree } from '@react-three/fiber'
 import {
   calculateMeshDimensionRange,
   calculateMeshSize,
-  calculatePositionWithBoundary
-} from '../../../../utils/modelSetup'
+  calculatePositionWithBoundary,
+  loadModel
+} from '../../../../utils/glbModelUtil'
+import { useThree } from '@react-three/fiber'
+
 function ItemMesh({
   mesh,
   setIsDragging,
@@ -18,7 +19,7 @@ function ItemMesh({
   setSelectedItemRef,
   selectedItemRef,
   hoverItemRef,
-  setHoverItemRef
+  setHoverItemRef,
 }) {
   const [position, setPosition] = useState(mesh.position)
   const itemRef = useRef()
@@ -32,6 +33,7 @@ function ItemMesh({
         const planeIntersectPoint = new THREE.Vector3()
         const floorPlane = new THREE.Plane(floorMesh.position)
         event.ray.intersectPlane(floorPlane, planeIntersectPoint)
+
         //calculate new item position on plane
         const { x_range: floor_x_range, z_range: floor_z_range } = calculateMeshDimensionRange(floorMesh)
         const { length: item_length, width: item_width, height: item_height } = calculateMeshSize(mesh)
@@ -52,6 +54,7 @@ function ItemMesh({
     },
     { pointerEvents: true }
   )
+
   useEffect(() => {
     itemRef.current.uuid = mesh.uuid
     itemRef.current.name = mesh.name
@@ -97,9 +100,11 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
     const planeIntersectPoint = new THREE.Vector3()
     const floorPlane = new THREE.Plane(new THREE.Vector3(mesh.position.x, mesh.position.y + 0.5, mesh.position.z))
     e.ray.intersectPlane(floorPlane, planeIntersectPoint)
+
     //load new item mesh
     const gltf = await loadModel(selectedSampleItem.url)
     const itemMesh = gltf.scene.children[0]
+
     //calculate new item position on plane
     const { x_range: floor_x_range, z_range: floor_z_range } = calculateMeshDimensionRange(mesh)
     const { length: item_length, width: item_width, height: item_height } = calculateMeshSize(itemMesh)
@@ -116,6 +121,7 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
       length: item_height
     })
     itemMesh.position.set(x, y, z)
+
     setModelItems(prevState => {
       return [...prevState, gltf.scene.children[0]]
     })
@@ -168,7 +174,7 @@ export const Model = React.forwardRef(
       setSelectedItemRef,
       selectedItemRef,
       hoverItemRef,
-      setHoverItemRef
+      setHoverItemRef,
     },
     ref
   ) => {
@@ -219,7 +225,7 @@ export const Model = React.forwardRef(
 
     const floorMesh = modelItems.filter(mesh => mesh.name === 'sand')[0]
     return (
-      <group dispose={null} ref={ref}>
+      <group dispose={null} ref={ref} >
         {modelItems.map(mesh => {
           if (mesh === floorMesh) {
             return (
