@@ -10,16 +10,7 @@ import { SketchPicker } from 'react-color'
 import { handleDownloadModel } from '../../../../utils/modelDownloader'
 import { Button } from 'antd'
 import * as THREE from 'three'
-const SideBarDecoratedBooth = ({
-  decoratedColorRef,
-  selectedItemRef,
-  setSelectedItemRef,
-  decoratedRotationRef,
-  decoratedPositionRef,
-  setDecoratedPositionRef,
-  setDecoratedRotationRef,
-  setDecoratedColorRef
-}) => {
+const SideBarDecoratedBooth = ({ decoratedColorRef, selectedItemRef, setSelectedItemRef, setDecoratedColorRef }) => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false)
   const handleOnClickOpenSideBar = () => {
     setIsSideBarOpen(true)

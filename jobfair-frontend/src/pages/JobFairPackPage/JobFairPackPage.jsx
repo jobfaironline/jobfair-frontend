@@ -70,16 +70,6 @@ const JobFairPackPage = () => {
     console.log(selectedItemRef)
   }, [selectedItemRef])
 
-  //handle on update Position when state change
-  useEffect(() => {
-    if (decoratedPositionRef == null) return
-  }, [decoratedPositionRef])
-
-  //handle on update Rotation when state change
-  useEffect(() => {
-    if (decoratedRotationRef == null) return
-  }, [decoratedRotationRef])
-
   //handle on update Color when state change
   useEffect(() => {
     if (decoratedColorRef == null) return
