@@ -9,59 +9,15 @@ import Menu from './components/Menu/ItemListMenu'
 import { EffectComposer, Outline } from '@react-three/postprocessing'
 import { ModeConstant } from '../../constants/AppConst'
 import { SketchPicker } from 'react-color'
+import {downloadModel} from "../../utils/glbModelUtil";
+import {initialSampleItems} from "./data/SampleDateItem";
+import SideBarDecoratedBooth from "./components/SideBarDecoratedBooth/SideBarDecoratedBooth.component";
 const JobFairPackPage = () => {
-  const initialSampleItems = [
-    {
-      id: 1,
-      name: 'Banner',
-      description: 'Banner',
-      thumblnailUrl: '',
-      url: './untitled.glb'
-    },
-    {
-      id: 2,
-      name: 'main board',
-      description: 'main board',
-      url: './main_board.glb'
-    },
-    {
-      id: 3,
-      name: 'rostrum',
-      description: 'Rostrum',
-      url: './rostrum.glb'
-    },
-    {
-      id: 4,
-      name: 'Trash',
-      description: 'Trash',
-      url: './trash.glb'
-    }
-  ]
 
   function handleClick(e) {
-    const exporter = new GLTFExporter()
-    exporter.parse(
-      ref.current.parent,
-      // called when the gltf has been generated
-      function (gltf) {
-        const link = document.createElement('a')
-        link.style.display = 'none'
-        document.body.appendChild(link)
-        const blob = new Blob([gltf], { type: 'application/octet-stream' })
-        link.href = URL.createObjectURL(blob)
-        link.download = 'scene.glb'
-        link.click()
-        document.body.removeChild(link)
-      },
-      // called when there is an error in the generation
-      function (error) {
-        console.log('An error happened')
-      },
-      {
-        binary: true,
-        trs: true
-      }
-    )
+    e.stopPropagation();
+    e.preventDefault();
+    downloadModel(ref?.current.parent);
   }
 
   const [isDragging, setIsDragging] = useState(false)
@@ -98,25 +54,16 @@ const JobFairPackPage = () => {
     }
     setMode(mode)
   }
-  const [currentSelectedColor, setCurrentSelectedColor] = useState()
-  const handleOnChangeColor = color => {
-    setCurrentSelectedColor(color);
-    const newMaterial = selectedItemRef.current.material.clone();
-    newMaterial.color.set(color.hex);
-    newMaterial.transparent = true;
-    selectedItemRef.current.material = newMaterial;
-    for (const childMesh of selectedItemRef.current.children){
-      childMesh.material = newMaterial;
-    }
-  }
+
   const [modelItems, setModelItems] = useState(result)
   const StageRef = useRef();
   return (
     <>
       <div style={{ display: 'flex' }}>
         <div>
-          <Button onClick={handleClick}>Download</Button>
-          <SketchPicker color={currentSelectedColor} onChangeComplete={handleOnChangeColor} />;
+          <SideBarDecoratedBooth
+              selectedItemRef={selectedItemRef}
+          />
         </div>
         <Canvas dpr={[1, 2]} camera={{ fov: 50 }} style={{ width: '100%', height: '850px' }}>
           <OrbitControls enabled={!isDragging} />

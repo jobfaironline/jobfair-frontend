@@ -3,45 +3,13 @@ import { useGLTF } from '@react-three/drei'
 import { useDrag } from 'react-use-gesture'
 import * as THREE from 'three'
 import { ModeConstant } from '../../../../constants/AppConst'
-import { loadModel } from '../../../../utils/model_loader'
+import {
+  calculateMeshDimensionRange,
+  calculateMeshSize,
+  calculatePositionWithBoundary,
+  loadModel
+} from '../../../../utils/glbModelUtil'
 import { useThree } from '@react-three/fiber'
-
-function calculateMeshDimensionRange(mesh) {
-  const borderBox = new THREE.Box3().setFromObject(mesh)
-  const x_range = { min: borderBox.min.x, max: borderBox.max.x }
-  const y_range = { min: borderBox.min.y, max: borderBox.max.y }
-  const z_range = { min: borderBox.min.z, max: borderBox.max.z }
-  return {
-    x_range,
-    y_range,
-    z_range
-  }
-}
-
-function calculateMeshSize(mesh) {
-  const meshSize = new THREE.Box3().setFromObject(mesh, true)
-  const vector = new THREE.Vector3()
-  meshSize.getSize(vector)
-  return { length: vector.x, height: vector.y, width: vector.z }
-}
-
-function calculatePositionWithBoundary({ x, y, z, x_range, y_range, z_range, length, width, height }) {
-  let new_x = x
-  let new_y = y
-  let new_z = z
-  if (x <= x_range.min + length / 2) new_x = x_range.min + length / 2
-  if (x >= x_range.max - length / 2) new_x = x_range.max - length / 2
-  if (y <= y_range.min + height / 2) new_x = y_range.min + height / 2
-  if (y >= y_range.max - height / 2) new_x = y_range.max - height / 2
-  if (z <= z_range.min + width / 2) new_z = z_range.min + width / 2
-  if (z >= z_range.max - width / 2) new_z = z_range.max - width / 2
-
-  return {
-    x: new_x,
-    y: new_y,
-    z: new_z
-  }
-}
 
 function ItemMesh({
   mesh,
@@ -152,15 +120,6 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
       width: item_width,
       length: item_height
     })
-
-    /*        var mat = new THREE.MeshBasicMaterial( { color: 0x0000FF, wireframe : true } );
-
-                var wireframe = new THREE.Mesh( itemMesh.geometry, mat );
-
-                wireframe.position.set(x, y, z);
-                wireframe.rotation.set(itemMesh.rotation.x, itemMesh.rotation.y, itemMesh.rotation.z, itemMesh.rotation.order);
-                wireframe.scale.set(itemMesh.scale.x, itemMesh.scale.y, itemMesh.scale.z)*/
-
     itemMesh.position.set(x, y, z)
 
     setModelItems(prevState => {
