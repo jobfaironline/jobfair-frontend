@@ -3,7 +3,7 @@ import React from "react";
 const {TabPane} = Tabs;
 
 
-const AttendantJobFairCompanyInformationTabs = (props) => {
+const AttendantJobFairCompanyInformationTabsComponent = (props) => {
     const {companyDescription, companyJobPostion} = props;
 
     return (
@@ -52,4 +52,4 @@ const AttendantJobFairCompanyInformationTabs = (props) => {
     )
 }
 
-export default AttendantJobFairCompanyInformationTabs;
+export default AttendantJobFairCompanyInformationTabsComponent;

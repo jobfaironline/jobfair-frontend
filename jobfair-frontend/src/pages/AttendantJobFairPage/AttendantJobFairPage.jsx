@@ -1,19 +1,19 @@
 import React, {Fragment, useEffect, useRef} from "react";
-import RTMClient from "./rtm_client";
+import RTMClient from "../../services/RTMClient";
 import {createClient} from "agora-rtc-react";
 import {useHistory} from "react-router-dom";
-import AttendantJobFairCompanyInformationTabs from "./AttendantJobFairCompanyInformationTabs";
-import AttendantJobFairBoothContainer from "./AttendantJobFairBooth.container";
-import {CommunicationContainer} from "./CommunicationPanel.container";
+import AttendantJobFairCompanyInformationTabsComponent from "../../components/AttendantJobFair/AttendantJobFairCompanyInformationTabs.component";
+import {CommunicationContainer} from "../../containers/AttendantJobFair/CommunicationPanel.container";
 import {useDispatch} from "react-redux";
 import {agoraAction} from "../../redux-flow/agora/agora-slice";
+import {AttendantJobFairBoothContainer} from "../../containers/AttendantJobFair/AttendantJobFairBooth.container";
 
 
 const config = {
     mode: "rtc", codec: "vp8",
 };
 
-const { REACT_APP_AGORA_APP_ID } = process.env
+const {REACT_APP_AGORA_APP_ID} = process.env
 
 const useClient = createClient(config);
 const rtm = new RTMClient();
@@ -57,7 +57,7 @@ const AttendantJobFairPage = () => {
 
     return (<Fragment>
         <CommunicationContainer {...communicationProps}/>
-        <AttendantJobFairCompanyInformationTabs/>
+        <AttendantJobFairCompanyInformationTabsComponent/>
         <AttendantJobFairBoothContainer url={'https://d3polnwtp0nqe6.cloudfront.net/booths/untitled.glb'}/>
     </Fragment>);
 }
