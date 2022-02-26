@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useRef} from "react";
 import RTMClient from "../../services/RTMClient";
 import {createClient} from "agora-rtc-react";
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import AttendantJobFairCompanyInformationTabsComponent from "../../components/AttendantJobFair/AttendantJobFairCompanyInformationTabs.component";
 import {CommunicationContainer} from "../../containers/AttendantJobFair/CommunicationPanel.container";
 import {useDispatch} from "react-redux";
@@ -21,8 +21,10 @@ rtm.init(REACT_APP_AGORA_APP_ID);
 
 
 const AttendantJobFairPage = () => {
+
+    const {companyBoothId} = useParams();
     //channelId is the booth's id
-    const channelId = "1234";
+    const channelId = companyBoothId;
     const history = useHistory();
     const audioTrackRef = useRef();
     const cameraTrackRef = useRef();

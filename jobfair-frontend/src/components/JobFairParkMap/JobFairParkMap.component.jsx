@@ -1,5 +1,4 @@
 import React from "react";
-import {notify} from "../../utils/toastutil";
 import {ChildMesh} from "../../pages/JobFairPackPage/components/model/Final_booth_model";
 import {Canvas} from "@react-three/fiber";
 import {OrbitControls, Stage} from "@react-three/drei";
@@ -15,8 +14,7 @@ const BoothMesh = React.forwardRef((props, ref) => {
             material={mesh.material}
             position={mesh.position}
             onClick={event => {
-                notify(2, `Redirect to ${mesh.companyBoothId}`);
-                history.push("/jobfair/attendant");
+                history.push(`/jobfair/attendant/${mesh.companyBoothId}`);
             }}
             rotation={mesh.rotation}
             scale={mesh.scale}
