@@ -36,11 +36,11 @@ const CompanyRegistrationDetailModalContainer = ({...modalProps}) => {
 
     const componentProps = {
         data: {
-            id: registrationDetail.id,
-            createDate: registrationDetail.createDate,
-            description: registrationDetail.description,
+            id: registrationDetail?.id,
+            createDate: registrationDetail?.createDate,
+            description: registrationDetail?.description,
             companyName: companyName,
-            registrationJobPositions: [...registrationDetail.registrationJobPositions],
+            // registrationJobPositions: [...registrationDetail.registrationJobPositions],
         },
         visible: modalProps.visible,
         onOk: onOk,
