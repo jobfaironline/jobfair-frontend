@@ -16,7 +16,8 @@
               "trailingComma": "none",
               "semi": false,
               "singleQuote": true,
-              "no-mixed-spaces-and-tabs": ["error", "smart-tabs"]
+              "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
+              "endOfLine": "auto"
             }
         ],
         "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],

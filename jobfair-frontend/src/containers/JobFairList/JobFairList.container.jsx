@@ -1,54 +1,55 @@
-import React, {useEffect, useState} from 'react';
-import JobFairListComponent from "../../components/JobFairList/JobFairList.component";
-import {getAllJobFairAPI} from "../../services/jobfairService";
-import {notification, Popconfirm, Space} from "antd";
+import React, { useState, useEffect } from 'react'
+import { List, Avatar, Skeleton, Divider, Space, Tag, Button, Drawer } from 'antd'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import { useHistory } from 'react-router-dom'
+import JobFairListComponent from '../../components/JobFairList/JobFairList.component'
 
-const JobFairListContainer = () => {
-    const [data, setData] = useState([]);
+const JobFairList = () => {
+  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState([])
 
-    const fetchData = async () => {
-        getAllJobFairAPI()
-            .then(res => {
-                setData([...res.data])
-                notification['success']({
-                    message: `Get job fair list successfully`,
-                    description: `All job fairs has been fetched.`
-                })
-            })
-            .catch(err => {
-                notification['error']({
-                    message: `Get job fair list failed`,
-                    description: `There is problem while fetching, try again later: ${err}`
-                })
-            })
+  const history = useHistory()
+
+  const loadMoreData = () => {
+    if (loading) {
+      return
     }
+    setLoading(true)
+    fetch('https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo')
+      .then(res => res.json())
+      .then(body => {
+        const mappedData = body.results.map(item => {
+          return {
+            id: item.email,
+            title: item.name.first,
+            company_name: item.name.last,
+            status: 'Happening',
+            interview_date: '12/03/2022',
+            registerLink: `/company-register-jobfair/${item.email}`,
+            apply_date: '01/03/2022'
+          }
+        })
+        setData([...data, ...mappedData])
+        setLoading(false)
+      })
+      .catch(() => {
+        setLoading(false)
+      })
+  }
 
-    useEffect(() => {
-        fetchData()
-    }, [])
+  const handleRegister = link => {
+    history.push(link)
+  }
 
-    return (
-        <>
-            <JobFairListComponent data={data} editable extra={{
-                title: 'Actions',
-                key: 'action',
-                render: (text, record) => {
-                    return (
-                        <Space size="middle">
-                            <a
-                                onClick={() => {
-                                    console.log(record.id)
-                                    // handleGetDetail(record.id)
-                                }}
-                            >
-                                Detail
-                            </a>
-                        </Space>
-                    )
-                }
-            }}/>
-        </>
-    );
-};
+  useEffect(() => {
+    loadMoreData()
+  }, [])
 
-export default JobFairListContainer;
+  return (
+    <>
+      <JobFairListComponent data={data} handleRegister={handleRegister} loadMoreData={loadMoreData} />
+    </>
+  )
+}
+
+export default JobFairList
