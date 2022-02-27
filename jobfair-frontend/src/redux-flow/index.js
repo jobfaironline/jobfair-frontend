@@ -8,11 +8,13 @@ const store = configureStore({
   reducer: {
     authentication: authenticationReducer,
     registrationJobfairForm: registrationJobfairFormReducer,
-    jobPosition: jobPositionsReducer
-  }
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-    serializableCheck: false,
-  }),
+    jobPosition: jobPositionsReducer,
+    agora: agoraReducer
+  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false
+    })
 })
 
 export default store

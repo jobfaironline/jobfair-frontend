@@ -1,50 +1,47 @@
-import React, {useEffect, useState} from "react";
-import {loadModel} from "../../utils/model_loader";
-import * as THREE from "three";
-import JobFairParkMapComponent from "../../components/JobFairParkMap/JobFairParkMap.component";
-import {getLayoutByJobFairId} from "../../services/jobFairService";
-import {useHistory} from "react-router-dom";
-
+import React, { useEffect, useState } from 'react'
+import { loadModel } from '../../utils/model_loader'
+import * as THREE from 'three'
+import JobFairParkMapComponent from '../../components/JobFairParkMap/JobFairParkMap.component'
+import { getLayoutByJobFairId } from '../../services/jobfairService'
+import { useHistory } from 'react-router-dom'
 
 const getBootMesh = async (position, foundationBox, url, companyBoothId) => {
-    const gltf = await loadModel(url);
-    const {x, y, z} = position;
-    let sceneMesh = gltf.scene;
-    //set correct position
-    sceneMesh.position.set(x, y, z);
+  const gltf = await loadModel(url)
+  const { x, y, z } = position
+  let sceneMesh = gltf.scene
+  //set correct position
+  sceneMesh.position.set(x, y, z)
 
-    //scale booth model
-    const foundationSize = new THREE.Vector3();
-    foundationBox.getSize(foundationSize);
+  //scale booth model
+  const foundationSize = new THREE.Vector3()
+  foundationBox.getSize(foundationSize)
 
-    const meshSize = new THREE.Vector3();
-    const meshBoundingBox = new THREE.Box3().setFromObject(sceneMesh);
-    meshBoundingBox.getSize(meshSize)
+  const meshSize = new THREE.Vector3()
+  const meshBoundingBox = new THREE.Box3().setFromObject(sceneMesh)
+  meshBoundingBox.getSize(meshSize)
 
-    const scale = Math.max(foundationSize.x / meshSize.x, foundationSize.z / meshSize.z);
-    sceneMesh.scale.setScalar(scale);
-    sceneMesh.companyBoothId = companyBoothId;
-    return sceneMesh;
+  const scale = Math.max(foundationSize.x / meshSize.x, foundationSize.z / meshSize.z)
+  sceneMesh.scale.setScalar(scale)
+  sceneMesh.companyBoothId = companyBoothId
+  return sceneMesh
 }
 
-const JobFairParkMapContainer = (props) => {
-    const history = useHistory();
-    const {jobFairId} = props;
-    const [state, setState] = useState(
-        {
-            boothMeshes: [],
-            mapMesh: null,
-        }
-    );
+const JobFairParkMapContainer = props => {
+  const history = useHistory()
+  const { jobFairId } = props
+  const [state, setState] = useState({
+    boothMeshes: [],
+    mapMesh: null
+  })
 
-    useEffect(async () => {
-        //fetch this from BE
-        //const url = 'https://d3polnwtp0nqe6.cloudfront.net/Layout/de3edad8-8dcb-4d49-bff1-7ea1b34afe7a';
-        const responseDate = await getLayoutByJobFairId(jobFairId).then(response => response.data)
-        const url = responseDate.jobFairLayoutUrl;
-        const data = responseDate.booths;
-        //the bellow is the data format
-        /*const data = [
+  useEffect(async () => {
+    //fetch this from BE
+    //const url = 'https://d3polnwtp0nqe6.cloudfront.net/Layout/de3edad8-8dcb-4d49-bff1-7ea1b34afe7a';
+    const responseDate = await getLayoutByJobFairId(jobFairId).then(response => response.data)
+    const url = responseDate.jobFairLayoutUrl
+    const data = responseDate.booths
+    //the bellow is the data format
+    /*const data = [
             {
                 position: {x: 19.592493057250977, y: 2.200000047683716, z: 15.210623741149902},
                 slotName: "company00",
@@ -66,48 +63,46 @@ const JobFairParkMapContainer = (props) => {
 
         ];*/
 
-        const glb = await loadModel(url);
+    const glb = await loadModel(url)
 
-        const transformData = {};
-        data.forEach(element => {
-            transformData[element.slotName] = {
-                position: element.position,
-                boothUrl: element.boothUrl,
-                companyBoothId: element.companyBoothId,
-                sizeBox: null,
-            }
-        })
+    const transformData = {}
+    data.forEach(element => {
+      transformData[element.slotName] = {
+        position: element.position,
+        boothUrl: element.boothUrl,
+        companyBoothId: element.companyBoothId,
+        sizeBox: null
+      }
+    })
 
-        for (const mesh of glb.scene.children) {
-            if (Object.keys(transformData).includes(mesh.name)) {
-                transformData[mesh.name].sizeBox = new THREE.Box3().setFromObject(mesh);
-            }
-        }
-        const newBoothMeshesPromise = []
-        for (const slot of Object.values(transformData)) {
-            const boothMesh = getBootMesh(slot.position, slot.sizeBox, slot.boothUrl, slot.companyBoothId);
-            newBoothMeshesPromise.push(boothMesh);
-        }
-        const meshes = await Promise.all(newBoothMeshesPromise)
-
-        //GET data from BE
-        setState({
-            boothMeshes: meshes,
-            mapMesh: glb.scene
-        })
-    }, [])
-
-    if (state.mapMesh === null || state.boothMeshes.length === 0) {
-        return null;
+    for (const mesh of glb.scene.children) {
+      if (Object.keys(transformData).includes(mesh.name)) {
+        transformData[mesh.name].sizeBox = new THREE.Box3().setFromObject(mesh)
+      }
     }
-
-    const clickHandle = (companyBoothId) => {
-        history.push(`/jobfair/attendant/${companyBoothId}`);
+    const newBoothMeshesPromise = []
+    for (const slot of Object.values(transformData)) {
+      const boothMesh = getBootMesh(slot.position, slot.sizeBox, slot.boothUrl, slot.companyBoothId)
+      newBoothMeshesPromise.push(boothMesh)
     }
+    const meshes = await Promise.all(newBoothMeshesPromise)
 
-    return (
-        <JobFairParkMapComponent mapMesh={state.mapMesh} boothMeshes={state.boothMeshes} onClick={clickHandle}/>
-    );
+    //GET data from BE
+    setState({
+      boothMeshes: meshes,
+      mapMesh: glb.scene
+    })
+  }, [])
+
+  if (state.mapMesh === null || state.boothMeshes.length === 0) {
+    return null
+  }
+
+  const clickHandle = companyBoothId => {
+    history.push(`/jobfair/attendant/${companyBoothId}`)
+  }
+
+  return <JobFairParkMapComponent mapMesh={state.mapMesh} boothMeshes={state.boothMeshes} onClick={clickHandle} />
 }
 
-export default JobFairParkMapContainer;
+export default JobFairParkMapContainer
