@@ -40,7 +40,14 @@ const CompanyRegistrationDetailModalContainer = ({...modalProps}) => {
             createDate: registrationDetail?.createDate,
             description: registrationDetail?.description,
             companyName: companyName,
-            // registrationJobPositions: [...registrationDetail.registrationJobPositions],
+            registrationJobPositions: () => {
+                if (registrationDetail !== undefined && registrationDetail.registrationJobPositions !== undefined) {
+                    return [...registrationDetail.registrationJobPositions]
+                }
+                else {
+                    return []
+                }
+            },
         },
         visible: modalProps.visible,
         onOk: onOk,

@@ -35,29 +35,29 @@ const CompanyRegistrationDetailModalComponent = ({...componentProps}) => {
                     <Divider plain orientation="center">
                         <Text>Job position registered </Text>
                     </Divider>
-                    {/*{result.registrationJobPositions?.map((item, index) => (*/}
-                    {/*    <div key={index}>*/}
-                    {/*        <Text strong>{`Job position No.${index}`}</Text>*/}
-                    {/*        <Row>*/}
-                    {/*            <Col span={24}>*/}
-                    {/*                <Text strong>Description: </Text>*/}
-                    {/*                <Text italic>{item.description}</Text>*/}
-                    {/*            </Col>*/}
-                    {/*        </Row>*/}
-                    {/*        <Row>*/}
-                    {/*            <Col span={24}>*/}
-                    {/*                <Text strong>Requirements: </Text>*/}
-                    {/*                <Text italic>{item.requirements}</Text>*/}
-                    {/*            </Col>*/}
-                    {/*        </Row>*/}
-                    {/*        <Row>*/}
-                    {/*            <Col span={24}>*/}
-                    {/*                <Text strong>Person contact information (full name/email): </Text>*/}
-                    {/*                <Text italic>{`${item.contactPersonName}/${item.contactEmail}`}</Text>*/}
-                    {/*            </Col>*/}
-                    {/*        </Row>*/}
-                    {/*    </div>*/}
-                    {/*))}*/}
+                    {result.registrationJobPositions().map((item, index) => (
+                        <div key={index}>
+                            <Text strong>{`Job position No.${index}`}</Text>
+                            <Row>
+                                <Col span={24}>
+                                    <Text strong>Description: </Text>
+                                    <Text italic>{item.description}</Text>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={24}>
+                                    <Text strong>Requirements: </Text>
+                                    <Text italic>{item.requirements}</Text>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={24}>
+                                    <Text strong>Person contact information (full name/email): </Text>
+                                    <Text italic>{`${item.contactPersonName}/${item.contactEmail}`}</Text>
+                                </Col>
+                            </Row>
+                        </div>
+                    ))}
                 </Space>
             </Modal>
         </>
