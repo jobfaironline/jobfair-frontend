@@ -58,7 +58,7 @@ const registrationJobFairFormSlice = createSlice({
       state.form.body.jobPositions = action.payload
     },
     resetForm: (state, action) => {
-      state = {
+      return {
         jobPositionModalVisibility: false,
         jobPositionSubmodalVisibility: false,
         form: {
@@ -75,10 +75,12 @@ const registrationJobFairFormSlice = createSlice({
 })
 
 export const {
-  setFormBody,
   setDraftId,
   setJobPositionModalVisibility,
   setJobPositionSubmodalVisibility,
-  setJobPositions
+  setJobPositions,
+  resetForm,
+  setFormJobFairRegistrationId,
+  setFormDescription
 } = registrationJobFairFormSlice.actions
 export default registrationJobFairFormSlice.reducer

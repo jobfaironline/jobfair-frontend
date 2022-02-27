@@ -23,7 +23,8 @@ import { useSelector } from 'react-redux'
 import AttendantRouter from './AttendantRouter'
 import CompanyEmployeeRouter from './CompanyEmployeeRouter'
 import CompanyManagerRouter from './CompanyManagerRouter'
-import PickJobPositionForm from '../containers/PickJobPositionForm/PickJobPositionForm.container'
+import JobFairsPage from '../pages/JobFairsPage/JobFairsPage'
+import JobfairRegistrationPage from '../pages/JobfairRegistrationPage/JobfairRegistrationPage'
 
 const AppRouter = () => {
   const role = useSelector(state => state.authentication?.user?.roles)
@@ -37,9 +38,12 @@ const AppRouter = () => {
           <HomePage />
         </Route>
 
-        {/* TODO: remove later */}
-        <Route path="/testing" exact>
-          <PickJobPositionForm />
+        {/* TODO: refactor later*/}
+        <Route path="/company-register-jobfair/:jobfairId" exact>
+          <JobfairRegistrationPage />
+        </Route>
+        <Route path="/company-register-jobfair/" exact>
+          <JobfairRegistrationPage />
         </Route>
 
         <Route path="/auth/login" exact>
@@ -63,6 +67,9 @@ const AppRouter = () => {
         </Route>
         <Route path="/contracts" exact>
           <ContractsPage />
+        </Route>
+        <Route path="/jobfair-list" exact>
+          <JobFairsPage />
         </Route>
         <AttendantRouter key="/applied-job" component={<AppliedJobPage />} path="/applied-job" exact />
         <CompanyManagerRouter

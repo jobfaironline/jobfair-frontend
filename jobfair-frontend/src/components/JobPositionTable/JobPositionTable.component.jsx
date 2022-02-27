@@ -84,6 +84,7 @@ const FormTable = ({ jobPositionsInForm, extra, data }) => {
   useEffect(() => {
     const mappedRows = jobPositionsInForm.map(item => item.key)
     if (modalVisible) setSelectedRowKeys(mappedRows)
+  }, [modalVisible])
 
   //handle pick button
   const start = () => {
