@@ -15,16 +15,19 @@ import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
 import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
 import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
 
-import CompanyProfile from '../pages/ProfilePage/Company'
+import CompanyProfile from '../pages/ProfilePage/Company/CompanyProfilePage'
 import RegisterJobFairForm from '../components/register-job-fair-form/RegisterJobFairForm'
-import AttendantProfile from '../pages/ProfilePage/AttendantProfilePage'
+import AttendantProfile from '../pages/ProfilePage/Attendant/AttendantProfilePage'
 import AppliedJobPage from '../pages/AppliedJobPage/AppliedJobPage'
-import { useSelector } from 'react-redux'
+
 import AttendantRouter from './AttendantRouter'
 import CompanyEmployeeRouter from './CompanyEmployeeRouter'
 import CompanyManagerRouter from './CompanyManagerRouter'
 import JobFairsPage from '../pages/JobFairsPage/JobFairsPage'
 import JobfairRegistrationPage from '../pages/JobfairRegistrationPage/JobfairRegistrationPage'
+import { useSelector } from 'react-redux'
+import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage'
+import JobFairParkPage from '../pages/JobFairParkPage/JobFairParkPage'
 
 const AppRouter = () => {
   const role = useSelector(state => state.authentication?.user?.roles)
@@ -36,6 +39,12 @@ const AppRouter = () => {
         {/*init home page*/}
         <Route path="/" exact>
           <HomePage />
+        </Route>
+        <Route path="/map/:jobFairId" exact>
+          <JobFairParkPage />
+        </Route>
+        <Route path="/jobfair/attendant/:companyBoothId" exact>
+          <AttendantJobFairPage />
         </Route>
 
         {/* TODO: refactor later*/}

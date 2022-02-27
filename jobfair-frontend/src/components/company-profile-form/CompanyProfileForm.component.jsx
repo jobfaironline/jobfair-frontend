@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import {
-  Form,
-  Input,
-  Button,
-  Radio,
-  Tooltip,
-  Select,
-  Divider,
-  Typography,
-  Space,
-  AutoComplete,
+    Form,
+    Input,
+    Button,
+    Radio,
+    Tooltip,
+    Select,
+    Divider,
+    Typography,
+    Space,
+    AutoComplete, message,
 } from 'antd'
 import {
   CopyOutlined,
@@ -24,7 +24,7 @@ import {
   NUM_OF_SIZE_MAXIMUM,
   SizeConst,
   SubCategories,
-} from '../../pages/ProfilePage/Company/CompanyProfileConstant'
+} from '../../constants/CompanyProfileConstant'
 import ImageUpload from '../image-upload/ImageUpload'
 import {
   CompanyProfileValidation,
@@ -32,12 +32,13 @@ import {
   REQUIRED_VALIDATOR,
 } from '../../validate/CompanyProfileValidation'
 import { COMPANY_DEFAULT_MODEL } from '../../default_models/CompanyProfileModel'
+import TextArea from "antd/es/input/TextArea";
 
-const CompanyProfileForm = () => {
+const CompanyProfileForm = ({urlValue}) => {
   //state
   const [totalSelect, setTotalSelect] = useState(0)
   const [benefitId, setBenefitId] = useState(0)
-  const [url, setUrl] = useState('')
+  const [url, setUrl] = useState(urlValue)
 
   //
   const { Option, OptGroup } = Select
@@ -53,8 +54,25 @@ const CompanyProfileForm = () => {
         tooltip="This is required"
         rules={CompanyProfileValidation.name}
       >
-        <Input placeholder="Company name" style={{ width: '20%' }} />
+        <Input placeholder="Company name" style={{ width: 300 }} />
       </Form.Item>
+        <Form.Item
+            label="Company Email"
+            required
+            tooltip="This is required"
+            rules={CompanyProfileValidation.email}
+            name="email"
+        >
+            <Input placeholder="Company email" style={{ width: 250 }} />
+        </Form.Item>
+        <Form.Item
+            label="Phone number"
+            name="phone"
+            hasFeedback
+            rules={CompanyProfileValidation.phone}
+        >
+            <Input placeholder="Company phone" style={{width: 200}}/>
+        </Form.Item>
       <Form.Item
         label="Company Address"
         tooltip={{
@@ -64,26 +82,26 @@ const CompanyProfileForm = () => {
         name="address"
         rules={CompanyProfileValidation.address}
       >
-        <Input placeholder="Company address" style={{ width: '30%' }} />
-      </Form.Item>
-      <Form.Item
-        label="Company Email"
-        required
-        tooltip="This is required"
-        rules={CompanyProfileValidation.email}
-        name="email"
-      >
-        <Input placeholder="Company email" style={{ width: '20%' }} />
+        <Input placeholder="Company address" style={{ width: 350 }} />
       </Form.Item>
       <Form.Item
         label="Company tax ID"
         required
         tooltip="This is required"
-        rules={CompanyProfileValidation.phone}
+        rules={CompanyProfileValidation.taxId}
         name="taxId"
       >
-        <Input placeholder="Company Tax ID" style={{ width: '10%' }} />
+        <Input placeholder="Company Tax ID" style={{ width: 300 }} />
       </Form.Item>
+        <Form.Item
+            label="Company description"
+            required
+            tooltip="This is required"
+            rules={CompanyProfileValidation.description}
+            name="companyDescription"
+        >
+            <TextArea showCount maxLength={3000} placeholder="Company description" style={{ width: 300 }} />
+        </Form.Item>
       <div className="site-input-group-wrapper">
         <Form.Item
           label="Company URL"
@@ -100,7 +118,7 @@ const CompanyProfileForm = () => {
               style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
             >
               <Input
-                style={{ width: 'calc( 40% - 200px)' }}
+                style={{ width: 'calc( 60% - 200px)' }}
                 defaultValue={url}
                 onChange={e => setUrl(e.target.value)}
               />
@@ -109,6 +127,11 @@ const CompanyProfileForm = () => {
               <Button
                 onClick={() => {
                   navigator.clipboard.writeText(url)
+                      .then(message.success('Copied to clipboard'))
+                      .catch(err => {
+                          console.log(err)
+                          message.error(`An error occurred, ${err}`, )
+                      })
                 }}
                 icon={<CopyOutlined />}
               />
@@ -185,19 +208,18 @@ const CompanyProfileForm = () => {
           ))}
         </Select>
       </Form.Item>
-      {/*default benefits*/}
       <Form.List name="benefits">
         {(fields, { add, remove }) => {
           return (
             <>
               {fields.map(({ key, name, ...restField }) => {
                 return (
-                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <div key={key} style={{ display: 'flex', flexDirection: 'row' }}>
                     <Form.Item
                       {...restField}
                       label="Benefit type"
                       name={[name, 'id']}
-                      style={{ width: '10%' }}
+                      style={{ width: 150 }}
                     >
                       <Select
                         defaultValue="Select one..."
@@ -218,10 +240,10 @@ const CompanyProfileForm = () => {
                       {...restField}
                       name={[name, 'description']}
                       label="Description"
-                      rules={CompanyProfileValidation.benefits.description}
-                      style={{ width: '20%' }}
+                      rules={CompanyProfileValidation.description}
+                      style={{ width: 400 }}
                     >
-                      <Input placeholder="Description" />
+                      <TextArea placeholder="Description" showCount maxLength={3000}/>
                     </Form.Item>
                     <MinusCircleOutlined onClick={() => remove(name)} />
                   </div>
