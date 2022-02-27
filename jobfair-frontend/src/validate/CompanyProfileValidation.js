@@ -62,12 +62,12 @@ export const CompanyProfileValidation = {
       message: 'This field is required'
     },
     {
-      max: 9,
-      message: 'This field has max length is 9 characters'
+      max: 13,
+      message: 'This field has max length is 13 characters'
     },
     {
-      min: 9,
-      message: 'This field has min length is 9 characters'
+      min: 10,
+      message: 'This field has min length is 10 characters'
     }
   ],
   phone: [
