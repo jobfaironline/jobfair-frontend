@@ -77,7 +77,6 @@ const JobFairParkMapContainer = (props) => {
         })
 
         for (const mesh of glb.scene.children) {
-            console.log(mesh.name);
             if (Object.keys(transformData).includes(mesh.name)) {
                 transformData[mesh.name].sizeBox = new THREE.Box3().setFromObject(mesh);
             }
