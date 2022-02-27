@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 // import { defaultColumns, editableColumns } from './columns-type';
 import { Space, Table, Input, Button } from 'antd'
 import Highlighter from 'react-highlight-words'
