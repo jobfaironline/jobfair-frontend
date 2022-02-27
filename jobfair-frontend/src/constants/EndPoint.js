@@ -8,3 +8,4 @@ export const ENDPOINT_COMPANY = '/api/v1/companies'
 export const ENDPOINT_AGORA_RTC_TOKEN = '/api/v1/agora-rtc-token'
 export const ENDPOINT_AGORA_RTM_TOKEN = '/api/v1/agora-rtm-token'
 export const ENDPOINT_ATTENDANT = '/api/v1/attendants'
+export const ENDPOINT_GET_LAYOUT_BY_JOB_FAIR_ID = '/api/v1/job-fairs/for-3d-map';

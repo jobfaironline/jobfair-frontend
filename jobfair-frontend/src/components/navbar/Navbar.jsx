@@ -33,7 +33,7 @@ export const CompanyEmployeeMenu = [
         <Link to="/employee/company-profile">Company profile</Link>
     </Menu.Item>,
     <Menu.Item key="map">
-        <Link to="/map">Map</Link>
+        <Link to="/map/f86bb668-b6b6-4c6a-bef3-2e6e878da01c">Map</Link>
     </Menu.Item>
 ]
 

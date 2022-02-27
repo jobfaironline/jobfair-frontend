@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {loadModel} from "../../utils/model_loader";
 import * as THREE from "three";
 import JobFairParkMapComponent from "../../components/JobFairParkMap/JobFairParkMap.component";
+import {getLayoutByJobFairId} from "../../services/jobFairService";
 
 
 const getBootMesh = async (position, foundationBox, url, companyBoothId) => {
@@ -26,7 +27,7 @@ const getBootMesh = async (position, foundationBox, url, companyBoothId) => {
 }
 
 const JobFairParkMapContainer = (props) => {
-    const {history} = props;
+    const {history, jobFairId} = props;
     const [state, setState] = useState(
         {
             boothMeshes: [],
@@ -36,33 +37,32 @@ const JobFairParkMapContainer = (props) => {
 
     useEffect(async () => {
         //fetch this from BE
-        const url = './map.glb';
-        const data = [
+        //const url = 'https://d3polnwtp0nqe6.cloudfront.net/Layout/de3edad8-8dcb-4d49-bff1-7ea1b34afe7a';
+        const responseDate = await getLayoutByJobFairId(jobFairId).then(response => response.data)
+        const url = responseDate.jobFairLayoutUrl;
+        const data = responseDate.booths;
+        //the bellow is the data format
+        /*const data = [
             {
                 position: {x: 19.592493057250977, y: 2.200000047683716, z: 15.210623741149902},
                 slotName: "company00",
-                boothUrl: './untitled.glb',
+                boothUrl: 'https://d3polnwtp0nqe6.cloudfront.net/Booth/bf78dec0-98b3-41f7-bca0-72e2c65abcfb',
                 companyBoothId: "123",
             },
             {
                 position: {x: -30.822830200195312, y: 2.200000047683716, z: -15.00773811340332},
                 slotName: "company01",
-                boothUrl: './untitled.glb',
+                boothUrl: 'https://d3polnwtp0nqe6.cloudfront.net/Booth/bf78dec0-98b3-41f7-bca0-72e2c65abcfb',
                 companyBoothId: "1234",
             },
             {
                 position: {x: -16.091472625732422, y: 2.200000047683716, z: 13.914505958557129},
                 slotName: "company02",
-                boothUrl: './untitled.glb',
+                boothUrl: 'https://d3polnwtp0nqe6.cloudfront.net/Booth/bf78dec0-98b3-41f7-bca0-72e2c65abcfb',
                 companyBoothId: "12345",
             },
-            {
-                position: {x: 3.1950831413269043, y: 2.200000047683716, z: -15.310139656066895},
-                slotName: "company03",
-                boothUrl: './untitled.glb',
-                companyBoothId: "123456",
-            }
-        ];
+
+        ];*/
 
         const glb = await loadModel(url);
 
@@ -77,6 +77,7 @@ const JobFairParkMapContainer = (props) => {
         })
 
         for (const mesh of glb.scene.children) {
+            console.log(mesh.name);
             if (Object.keys(transformData).includes(mesh.name)) {
                 transformData[mesh.name].sizeBox = new THREE.Box3().setFromObject(mesh);
             }

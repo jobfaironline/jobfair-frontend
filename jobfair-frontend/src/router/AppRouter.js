@@ -65,7 +65,7 @@ const AppRouter = () => {
                 <Route path="/jobfair/attendant/:companyBoothId" exact>
                   <AttendantJobFairPage/>
                 </Route>
-                <Route path="/map" exact>
+                <Route path="/map/:jobFairId" exact>
                   <JobFairParkPage />
                 </Route>
                 <AttendantRouter key="/applied-job" component={(<AppliedJobPage/>)} path="/applied-job" exact/>

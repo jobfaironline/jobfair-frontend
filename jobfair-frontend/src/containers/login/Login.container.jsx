@@ -22,7 +22,7 @@ const LoginContainer = props => {
                         message: `Login successfully.`,
                     })
                     dispatch(SigninHandler(res.data))
-                    history.push("/map")
+                    history.push("/map/aa887cc1-240a-41de-99b4-5ffe26075279")
                 })
                 .catch((err) => {
                     notification['error']({
