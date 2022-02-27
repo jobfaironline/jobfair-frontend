@@ -15,24 +15,6 @@ const registrationJobFairFormSlice = createSlice({
     }
   },
   reducers: {
-    // fetchingLogin: (state, action) => {
-    //   state = {
-    //     ...state,
-    //     data: [],
-    //     isFetching: true
-    //   }
-    // },
-    // fetchingLoginSuccess: (state, action) => {
-    //   return { ...state, isAuthUser: true, user: action.payload }
-    // },
-    // fetchingLoginFailure: (state, action) => {
-    //   state = {
-    //     ...state,
-    //     isFetching: false,
-    //     error: true,
-    //     status: action.data.status
-    //   }
-    // },
     setFormDescription: (state, action) => {
       state.form.body.description = action.payload
     },

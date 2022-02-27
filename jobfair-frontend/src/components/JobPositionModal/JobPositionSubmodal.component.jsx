@@ -43,14 +43,7 @@ const JobPositionSubmodal = ({ visible, handleOk, handleCancel, form, onFinish }
       onCancel={handleCancel}
       footer={null}
     >
-      <Form
-        {...layout}
-        name="nest-messages"
-        onFinish={onFinish}
-        validateMessages={validateMessages}
-        form={form}
-        onFinish={onFinish}
-      >
+      <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages} form={form}>
         <CreateJobPositionForm form={form} />
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
           <Button type="primary" onClick={() => form.submit()}>
