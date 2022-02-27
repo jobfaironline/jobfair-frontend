@@ -3,7 +3,7 @@ import {
   ENDPOINT_REGISTER_ATTENDANT,
   ENDPOINT_REGISTER_COMPANY,
   ENDPOINT_CHANGE_PASSWORD,
-  ENDPOINT_COMPANY
+  ENDPOINT_COMPANY, ENDPOINT_GET_ACCOUNT_BY_ID
 } from '../constants/EndPoint'
 // handle api with axios
 import { CallAPI } from './axiosBase.js'
@@ -24,3 +24,6 @@ export const updateCompanyProfileAPI = data =>
 //get company profile by id
 export const getCompanyProfileAPI = id =>
   CallAPI(ENDPOINT_COMPANY + `/${id}`, 'GET')
+//get account by accountId
+export const getAccountByIdAPI = id =>
+  CallAPI(`${ENDPOINT_GET_ACCOUNT_BY_ID}/${id}`, 'GET')

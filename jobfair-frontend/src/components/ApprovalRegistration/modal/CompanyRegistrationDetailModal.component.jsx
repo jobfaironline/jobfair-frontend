@@ -1,16 +1,15 @@
 import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {Col, Divider, Empty, Modal, Row, Space, Typography} from "antd";
 
-const CompanyRegistrationDetailModalComponent = ({...componentProps}) => {
+const CompanyRegistrationDetailModalComponent = ({data, visible, onOk, onCancel}) => {
 
-    console.log(componentProps)
-    const {...result} = componentProps.data ? componentProps.data : {};
+    const {...result} = data ? data : {};
     const {Text} = Typography;
 
     return (
         <>
-            <Modal title="Registration Detail" visible={componentProps.visible} onOk={componentProps.onOk}
-                   onCancel={componentProps.onCancel}>
+            <Modal title="Registration Detail" visible={visible} onOk={onOk}
+                   onCancel={onCancel}>
                 <Space size="middle" direction="vertical">
                     <Row>
                         <Col span={24}>

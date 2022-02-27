@@ -3,31 +3,34 @@ import {Button, Modal, notification, Spin} from "antd";
 import CompanyRegistrationDetailModalComponent from "./CompanyRegistrationDetailModal.component";
 import {getCompanyProfileAPI} from "../../../services/userService";
 
-const CompanyRegistrationDetailModalContainer = ({...modalProps}) => {
+const CompanyRegistrationDetailModalContainer = ({registrationId, visible, setModalVisible, registrationList}) => {
 
     const [registrationDetail, setRegistrationDetail] = useState({});
     const [companyName, setCompanyName] = useState('');
-    const registrationId = modalProps?.registrationId;
 
     const fetchData = async () => {
-        const registration = modalProps?.registrationList?.find(item => item.id === registrationId);
+        const registration = registrationList?.find(item => item.id === registrationId);
         setRegistrationDetail(registration)
         const companyId = registration?.companyId;
-        getCompanyProfileAPI(companyId)
+        companyId ? getCompanyProfileAPI(companyId)
             .then(res => {
                 setCompanyName(res.data.name);
             })
             .catch(() => {
-                //
-            })
+                notification['error'] ({
+                    message: `Fail to process`,
+                    description: `Get company profile failed with ID: ${companyId}`,
+                    duration: 2,
+                })
+            }) : null
     }
 
     const onOk = () => {
-        modalProps.setModalVisible(false);
+        setModalVisible(false);
     }
 
     const onCancel = () => {
-        modalProps.setModalVisible(false);
+        setModalVisible(false);
     }
 
     useEffect(() => {
@@ -49,7 +52,7 @@ const CompanyRegistrationDetailModalContainer = ({...modalProps}) => {
                 }
             },
         },
-        visible: modalProps.visible,
+        visible: visible,
         onOk: onOk,
         onCancel: onCancel
     }

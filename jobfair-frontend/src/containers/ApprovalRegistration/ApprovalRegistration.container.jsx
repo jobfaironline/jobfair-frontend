@@ -9,6 +9,7 @@ import TextArea from "antd/es/input/TextArea";
 import {EvaluateConst} from "../../constants/JobPositionConst";
 import CompanyRegistrationDetailModalContainer
     from "../../components/ApprovalRegistration/modal/CompanyRegistrationDetailModal.container";
+import EvaluationFormComponent from "../../components/EvaluationForm/EvaluationForm.component";
 
 const ApprovalRegistrationContainer = () => {
     const [data, setData] = useState([]);
@@ -37,7 +38,7 @@ const ApprovalRegistrationContainer = () => {
             })
             .catch(err => {
                 notification['error'] ({
-                    message: `Cannot load company registration by job fair ID: ${jobFairId}`,
+                    message: `Not found company registration by job fair ID: ${jobFairId}`,
                     description: `${err}`,
                     duration: 2,
                 })
@@ -51,17 +52,15 @@ const ApprovalRegistrationContainer = () => {
     const onFinish = (values) => {
         evaluateJobFairRegistrationAPI(values)
             .then((res) => {
-                console.log(notification['success'])
                 notification['success'] ({
                     message: `Submit evaluation successfully`,
                     description: `Your evaluation has been submitted`,
                     duration: 2,
                 })
 
-                fetchData()
+                fetchData();
             })
             .catch((e) => {
-                console.log(e)
                 notification['error'] ({
                     message: `Submit evaluation failed`,
                     description: `There is problem while submitting, try again later`,
@@ -97,60 +96,8 @@ const ApprovalRegistrationContainer = () => {
                                 }}>
                                     View detail
                                 </a>
-                                {record.status === 'PENDING' ? (
-                                        <Popover
-                                            title="Finish your evaluation"
-                                            content={() => {
-                                                const [form] = Form.useForm();
-                                                return (
-                                                    <>
-                                                        <Form
-                                                            form={form}
-                                                            onFinish={onFinish}
-                                                            requiredMark="required"
-                                                            autoComplete="off"
-                                                            scrollToFirstError={{block: "center", behavior: "smooth"}}
-                                                        >
-                                                            <Space direction="vertical" size="medium">
-                                                                <Form.Item name="companyRegistrationId" noStyle
-                                                                           initialValue={record.id}>
-                                                                    <Input type="text" type="hidden"/>
-                                                                </Form.Item>
-                                                                <Form.Item
-                                                                    label="Message"
-                                                                    name={'message'}
-                                                                    hasFeedback
-                                                                >
-                                                                    <TextArea placeholder="Message"/>
-                                                                </Form.Item>
-                                                                <Form.Item
-                                                                    label="Status"
-                                                                    name={'status'}
-                                                                    hasFeedback
-                                                                    initialValue={'APPROVE'}
-                                                                >
-                                                                    <Radio.Group>
-                                                                        {EvaluateConst.map(item => (
-                                                                            <Radio.Button value={item.id}>
-                                                                                {item.name}
-                                                                            </Radio.Button>
-                                                                        ))}
-                                                                    </Radio.Group>
-                                                                </Form.Item>
-                                                                <Form.Item>
-                                                                    <Button type="primary" htmlType="submit">
-                                                                        Submit
-                                                                    </Button>
-                                                                </Form.Item>
-                                                            </Space>
-                                                        </Form>
-                                                    </>
-                                                )
-                                            }}
-                                            trigger="click"
-                                        >
-                                            <Button type="primary">Add your evaluation</Button>
-                                        </Popover>)
+                                {record.status === 'PENDING' ? <EvaluationFormComponent onFinish={onFinish} id={record.id} name='companyRegistrationId'/>
+
                                     : null}
                             </Space>
                         )
