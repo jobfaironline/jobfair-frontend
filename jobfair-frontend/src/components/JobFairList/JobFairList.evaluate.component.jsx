@@ -4,7 +4,7 @@ import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import Highlighter from "react-highlight-words";
 import JobFairListColumn from "./JobFairList.column";
 
-const JobFairListComponent = ({data, extra}) => {
+const JobFairListEvaluateComponent = ({data, extra}) => {
 
     const [searchText, setSearchText] = useState('')
     const [searchedColumn, setSearchedColumn] = useState('')
@@ -82,4 +82,4 @@ const JobFairListComponent = ({data, extra}) => {
     );
 };
 
-export default JobFairListComponent;
+export default JobFairListEvaluateComponent;

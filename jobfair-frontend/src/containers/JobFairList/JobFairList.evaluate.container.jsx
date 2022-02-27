@@ -1,18 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import JobFairListComponent from "../../components/JobFairList/JobFairList.component";
-import {evaluateJobFairPlanAPI, getAllJobFairAPI, getRegistrationByJobFairId} from "../../services/jobfairService";
-import {Button, Form, Input, notification, Popconfirm, Popover, Radio, Space} from "antd";
+import JobFairListEvaluateComponent from "../../components/JobFairList/JobFairList.evaluate.component";
+import {evaluateJobFairPlanAPI, getAllJobFairAPI} from "../../services/jobfairService";
+import {notification, Space} from "antd";
 import {convertToDateString} from "../../utils/common";
 import {Link} from "react-router-dom";
 import JobFairDetailModalContainer from "../../components/JobFairList/modal/JobFairDetailModal.container";
-import TextArea from "antd/es/input/TextArea";
-import {EvaluateConst} from "../../constants/JobPositionConst";
 import EvaluationFormComponent from "../../components/EvaluationForm/EvaluationForm.component";
 
-const JobFairListContainer = () => {
+const JobFairListEvaluateContainer = () => {
     const [data, setData] = useState([]);
     const [jobFairId, setJobFairId] = useState('');
-    const [creatorId,setCreatorId] = useState('');
+    const [creatorId, setCreatorId] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
 
     const fetchData = async () => {
@@ -83,7 +81,7 @@ const JobFairListContainer = () => {
     return (
         <>
             <JobFairDetailModalContainer {...modalProps}/>
-            <JobFairListComponent data={data} editable extra={{
+            <JobFairListEvaluateComponent data={data} editable extra={{
                 title: 'Actions',
                 key: 'action',
                 render: (text, record) => {
@@ -110,4 +108,4 @@ const JobFairListContainer = () => {
     );
 };
 
-export default JobFairListContainer;
+export default JobFairListEvaluateContainer;

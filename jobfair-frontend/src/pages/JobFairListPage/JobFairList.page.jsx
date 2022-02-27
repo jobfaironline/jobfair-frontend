@@ -1,6 +1,6 @@
 import React from 'react';
 import {Breadcrumb, Divider} from "antd";
-import JobFairListContainer from "../../containers/JobFairList/JobFairList.container";
+import JobFairListEvaluateContainer from "../../containers/JobFairList/JobFairList.evaluate.container";
 import {HomeOutlined, UnorderedListOutlined} from "@ant-design/icons";
 import {useSelector} from "react-redux";
 
@@ -12,7 +12,7 @@ const JobFairListPage = () => {
             <Divider>
                 Job Fair List
             </Divider>
-            <JobFairListContainer/>
+            <JobFairListEvaluateContainer/>
         </>
     );
 };
