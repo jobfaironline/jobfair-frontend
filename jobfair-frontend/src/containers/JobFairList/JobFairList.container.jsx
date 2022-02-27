@@ -47,14 +47,6 @@ const JobFairListContainer = () => {
                 render: (text, record) => {
                     return (
                         <Space size="middle">
-                            <a
-                                onClick={() => {
-                                    console.log(record.id)
-                                    // handleGetDetail(record.id)
-                                }}
-                            >
-                                Detail
-                            </a>
                             <Link to={`/approval-registration/${record.id}`}>Evaluate registration</Link>
                         </Space>
                     )
