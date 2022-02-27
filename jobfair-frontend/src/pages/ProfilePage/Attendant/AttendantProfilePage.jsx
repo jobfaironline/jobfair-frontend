@@ -1,5 +1,5 @@
 import React from 'react';
-import AttendantProfileFormContainer from "../../containers/AttendantProfileForm/AttendantProfileForm.container";
+import AttendantProfileFormContainer from "../../../containers/AttendantProfileForm/AttendantProfileForm.container";
 
 const AttendantProfile = props => {
     return (
