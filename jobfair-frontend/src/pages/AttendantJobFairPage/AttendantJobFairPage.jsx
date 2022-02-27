@@ -25,7 +25,6 @@ const AttendantJobFairPage = () => {
     const {companyBoothId} = useParams();
     //channelId is the booth's id
     const channelId = companyBoothId;
-    const history = useHistory();
     const audioTrackRef = useRef();
     const cameraTrackRef = useRef();
     const dispatch = useDispatch();
@@ -51,7 +50,6 @@ const AttendantJobFairPage = () => {
     })
 
     const communicationProps = {
-        history,
         audioTrackRef,
         cameraTrackRef,
     }

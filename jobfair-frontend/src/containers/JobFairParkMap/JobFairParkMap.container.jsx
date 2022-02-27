@@ -3,6 +3,7 @@ import {loadModel} from "../../utils/model_loader";
 import * as THREE from "three";
 import JobFairParkMapComponent from "../../components/JobFairParkMap/JobFairParkMap.component";
 import {getLayoutByJobFairId} from "../../services/jobFairService";
+import {useHistory} from "react-router-dom";
 
 
 const getBootMesh = async (position, foundationBox, url, companyBoothId) => {
@@ -27,7 +28,8 @@ const getBootMesh = async (position, foundationBox, url, companyBoothId) => {
 }
 
 const JobFairParkMapContainer = (props) => {
-    const {history, jobFairId} = props;
+    const history = useHistory();
+    const {jobFairId} = props;
     const [state, setState] = useState(
         {
             boothMeshes: [],
@@ -99,8 +101,12 @@ const JobFairParkMapContainer = (props) => {
         return null;
     }
 
+    const clickHandle = (companyBoothId) => {
+        history.push(`/jobfair/attendant/${companyBoothId}`);
+    }
+
     return (
-        <JobFairParkMapComponent history={history} mapMesh={state.mapMesh} boothMeshes={state.boothMeshes}/>
+        <JobFairParkMapComponent mapMesh={state.mapMesh} boothMeshes={state.boothMeshes} onClick={clickHandle}/>
     );
 }
 

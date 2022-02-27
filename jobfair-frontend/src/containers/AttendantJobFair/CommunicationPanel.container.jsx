@@ -2,9 +2,11 @@ import AgoraRTC from "agora-rtc-react";
 import React, {Fragment, useEffect, useState} from "react";
 import {VideoPanelContainer} from "./VideoPanel.container";
 import {ChatPanelContainer} from "./ChatPanel.container";
+import {useHistory} from "react-router-dom";
 
 export const CommunicationContainer = (props) => {
-    const {history, audioTrackRef, cameraTrackRef} = props;
+    const history = useHistory();
+    const {audioTrackRef, cameraTrackRef} = props;
 
     const [audioReady, setAudioReady] = useState(false);
     const [audioTrack, setAudioTrack] = useState(null);
