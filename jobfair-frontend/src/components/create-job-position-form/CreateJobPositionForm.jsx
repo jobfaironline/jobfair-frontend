@@ -30,7 +30,7 @@ const CreateJobPositionForm = props => {
   const [isShowSalary, setIsShowSalary] = useState(JOB_POSITION_MODEL.isShowSalary)
   const [isRequiredLetter, setIsRequiredLetter] = useState(JOB_POSITION_MODEL.isRequiredLetter)
   const [isShowContactPerson, setIsShowContactPerson] = useState(JOB_POSITION_MODEL.isShowContactPerson)
-  const [form] = Form.useForm()
+  const form = props.form
 
   const { Option, OptGroup } = Select
 
@@ -52,9 +52,7 @@ const CreateJobPositionForm = props => {
         <Select
           style={{ width: 150 }}
           showSearch
-          onChange={value => {
-            console.log(`selected: ${value}`)
-          }}
+          onChange={value => {}}
           filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
           onSearch={value => console.log(value)}
         >
@@ -77,7 +75,7 @@ const CreateJobPositionForm = props => {
             console.log(`selected: ${value}`)
           }}
           filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-          onSearch={value => console.log(value)}
+          onSearch={value => {}}
         >
           {JobTypeConst.map(item => (
             <Option value={item.value}>{item.label}</Option>
@@ -97,7 +95,6 @@ const CreateJobPositionForm = props => {
           // defaultValue={}
           onChange={value => {
             //value is a array
-            console.log(value)
             if (value.length > NUM_OF_SIZE_MAXIMUM) {
               value.pop()
             }
@@ -125,7 +122,7 @@ const CreateJobPositionForm = props => {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item
+      {/* <Form.Item
         label="Description"
         required
         tooltip="This is required"
@@ -144,8 +141,8 @@ const CreateJobPositionForm = props => {
         style={{ width: 300 }}
       >
         <TextArea placeholder="Requirements" />
-      </Form.Item>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+      </Form.Item> */}
+      {/* <div style={{ display: 'flex', flexDirection: 'row' }}>
         <Form.Item label="Min salary" required tooltip="This is required" name="minSalary" style={{ width: 300 }}>
           <Select
             style={{ width: 150 }}
@@ -193,7 +190,7 @@ const CreateJobPositionForm = props => {
         >
           <Switch checked={isShowSalary} onChange={() => setIsShowSalary(!isShowSalary)} />
         </Form.Item>
-      </div>
+      </div> */}
       <Form.Item
         label="Skill tags"
         required
@@ -207,7 +204,6 @@ const CreateJobPositionForm = props => {
           mode="multiple"
           onChange={value => {
             //value is a array
-            console.log(value)
             if (value.length > NUM_OF_SKILL_TAGS) {
               value.pop()
             }
@@ -233,7 +229,7 @@ const CreateJobPositionForm = props => {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item
+      {/* <Form.Item
         label="Required the cover letter ?"
         required
         tooltip="This is required"
@@ -267,19 +263,19 @@ const CreateJobPositionForm = props => {
             <Option value={item.value}>{item.value}</Option>
           ))}
         </Select>
-      </Form.Item>
+      </Form.Item> */}
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <Form.Item
           label="Contact person"
           required
           tooltip="This is required"
           rules={JobPositionValidation.contactPerson}
-          name="contactPerson"
+          name="contactPersonName"
           style={{ width: 300 }}
         >
           <Input placeholder="Contact person name" />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           label="Show in job ads"
           required
           tooltip="This is required"
@@ -287,14 +283,34 @@ const CreateJobPositionForm = props => {
           style={{ width: 300 }}
         >
           <Switch checked={isShowContactPerson} onChange={() => setIsShowContactPerson(!isShowContactPerson)} />
-        </Form.Item>
+        </Form.Item> */}
       </div>
+      <Form.Item
+        label="Language for applications"
+        required
+        tooltip="This is required"
+        rules={JobPositionValidation.contactPerso}
+        name="preferredLanguage"
+        style={{ width: 300 }}
+      >
+        <Input placeholder="Language" />
+      </Form.Item>
+      <Form.Item
+        label="Location for applications"
+        required
+        tooltip="This is required"
+        rules={JobPositionValidation.contactPerson}
+        name="locationId"
+        style={{ width: 300 }}
+      >
+        <Input placeholder="Location" />
+      </Form.Item>
       <Form.Item
         label="Email for applications"
         required
         tooltip="This is required"
         rules={JobPositionValidation.email}
-        name="email"
+        name="contactEmail"
         style={{ width: 300 }}
       >
         <Input placeholder="Email for receiving applications" />

@@ -14,8 +14,6 @@ const EmployeeDrawer = ({ visible, onClose, data }) => {
     return null
   }
 
-  console.log(data)
-
   const { firstname, middlename, lastname } = data.account
   const fullName = firstname + ' ' + (middlename ? middlename + ' ' : '') + lastname
 

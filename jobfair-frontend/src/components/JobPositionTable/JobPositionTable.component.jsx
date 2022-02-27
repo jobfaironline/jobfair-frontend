@@ -3,9 +3,16 @@ import React, { Fragment, useState } from 'react'
 import { Space, Table, Input, Button } from 'antd'
 import Highlighter from 'react-highlight-words'
 import SearchOutlined from '@ant-design/icons/SearchOutlined'
-import EmployeeTableColumn from './EmployeeTable.column'
+import JobPositionTableColumn from './JobPositionTable.column'
+import {
+  setFormBody,
+  setJobPositions
+} from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
-const FormTable = ({ employeeData, extra }) => {
+const FormTable = ({ jobPositionsInForm, extra, data }) => {
+  //search function
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchedColumn] = useState('')
 
@@ -68,14 +75,50 @@ const FormTable = ({ employeeData, extra }) => {
         text
       )
   })
+  ///////////////////////////
 
-  const defaultColumns = EmployeeTableColumn(getColumnSearchProps)
+  const dispatch = useDispatch()
+  const [selectedRowKeys, setSelectedRowKeys] = useState([])
+  const modalVisible = useSelector(state => state.registrationJobfairForm?.jobPositionModalVisibility)
+
+  useEffect(() => {
+    const mappedRows = jobPositionsInForm.map(item => item.key)
+    if (modalVisible) setSelectedRowKeys(mappedRows)
+
+  //handle pick button
+  const start = () => {
+    const mappedData = []
+    for (const item of data) {
+      if (selectedRowKeys.includes(item.key)) {
+        mappedData.push(item)
+      }
+    }
+    dispatch(setJobPositions(mappedData))
+  }
+
+  const rowSelection = {
+    selectedRowKeys: selectedRowKeys,
+    onChange: (selectedRowKeys, selectedRows) => {
+      setSelectedRowKeys(selectedRowKeys)
+    },
+    getCheckboxProps: record => ({
+      disabled: record.name === 'Disabled User',
+      // Column configuration not to be checked
+      name: record.name
+    })
+  }
+  //
+
+  const defaultColumns = JobPositionTableColumn(getColumnSearchProps)
 
   const finalColumns = extra ? [...defaultColumns, extra] : [...defaultColumns]
 
   return (
     <Fragment>
-      <Table columns={finalColumns} dataSource={employeeData} pagination={{ pageSize: 8 }} />
+      <Button type="primary" onClick={start}>
+        Pick
+      </Button>
+      <Table rowSelection={{ ...rowSelection }} columns={finalColumns} dataSource={data} pagination={{ pageSize: 8 }} />
     </Fragment>
   )
 }

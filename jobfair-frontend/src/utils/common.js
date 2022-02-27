@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment'
 
 export const contains = (list, listCurrent) => {
   var result = false
@@ -48,14 +48,17 @@ export const convertToDateValue = dateString => {
   return Date.parse(dateString)
 }
 
-export const convertToMoment = (data) => {
-  const result =  data.map(item => {
+export const convertToMoment = data => {
+  const result = data.map(item => {
     return {
       ...item,
-      range : [moment(convertToDateString(item.fromDate)), moment(convertToDateString(item.toDate))]
+      range: [
+        moment(convertToDateString(item.fromDate)),
+        moment(convertToDateString(item.toDate))
+      ]
     }
   })
-  return result;
+  return result
 }
 
 //attendantProfileForm.container.jsx
@@ -64,7 +67,7 @@ export const handleConvertRangePicker = data => {
     return {
       ...item,
       fromDate: convertToDateValue(item.range[0].format()),
-      toDate: convertToDateValue(item.range[1].format()),
+      toDate: convertToDateValue(item.range[1].format())
     }
   })
   return result
