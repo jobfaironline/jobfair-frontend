@@ -10,7 +10,6 @@ const CompanyProfileFormContainer = props => {
     const [data, setData] = useState({});
 
     const onFinish = (values) => {
-        console.log('values: ', values);
         const body = {
             address: values.address,
             benefits: values.benefits,
@@ -24,7 +23,6 @@ const CompanyProfileFormContainer = props => {
             taxId: values.taxId,
             url: values.url
         }
-        console.log('request body: ', body)
         updateCompanyProfileAPI(body, companyId)
             .then(() => {
                 notification['success']({
@@ -48,7 +46,6 @@ const CompanyProfileFormContainer = props => {
                     message: `Fetch company profile successfully`,
                     description: `For company with ${companyId}`,
                 })
-                console.log('data fetch: ', res.data)
                 setData({
                     ...res.data,
                         benefits: res.data.companyBenefitDTOS.map(item => {
