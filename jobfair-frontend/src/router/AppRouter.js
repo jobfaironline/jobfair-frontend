@@ -15,9 +15,9 @@ import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
 import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
 import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
 
-import CompanyProfile from '../pages/ProfilePage/Company'
+import CompanyProfile from '../pages/ProfilePage/Company/CompanyProfilePage'
 import RegisterJobFairForm from '../components/register-job-fair-form/RegisterJobFairForm'
-import AttendantProfile from '../pages/ProfilePage/AttendantProfilePage'
+import AttendantProfile from '../pages/ProfilePage/Attendant/AttendantProfilePage'
 import AppliedJobPage from '../pages/AppliedJobPage/AppliedJobPage'
 import {useSelector} from "react-redux";
 import AttendantRouter from "./AttendantRouter";
