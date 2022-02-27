@@ -1,116 +1,86 @@
 import React, {useEffect, useState} from 'react';
 import ApprovalRegistrationComponent
     from "../../components/ApprovalRegistration/components/ApprovalRegistration.component";
-import {useSelector} from "react-redux";
-import {Popconfirm, Space} from "antd";
-import RegistrationDetailDrawerContainer
-    from "../../components/ApprovalRegistration/drawer/RegistrationDetail.drawer.container";
+import {Button, Form, Input, notification, Popover, Radio, Space} from "antd";
+import {useParams} from "react-router-dom";
+import {evaluateJobFairRegistrationAPI, getRegistrationByJobFairId} from "../../services/jobfairService";
+import {convertToDateString} from "../../utils/common";
+import TextArea from "antd/es/input/TextArea";
+import {EvaluateConst} from "../../constants/JobPositionConst";
+import CompanyRegistrationDetailModalContainer
+    from "../../components/ApprovalRegistration/modal/CompanyRegistrationDetailModal.container";
 
-export const defaultRegistration = [
-    {
-        id: 'ID001',
-        createDate: '0523352521',
-        description: 'description 1',
-        company: 'COMPANY_1',
-        status: 'APPROVED',
-    },
-    {
-        id: 'ID002',
-        createDate: '0523352521',
-        description: 'description 2',
-        company: 'COMPANY_1',
-        status: 'PENDING',
-    },
-    {
-        id: 'ID003',
-        createDate: '0523352521',
-        description: 'description 3',
-        company: 'COMPANY_1',
-        status: 'PENDING',
-    },
-    {
-        id: 'ID004',
-        createDate: '0523352521',
-        description: 'description 1',
-        company: 'COMPANY_1',
-        status: 'DENIED',
-    }
-]
+const ApprovalRegistrationContainer = () => {
+    const [data, setData] = useState([]);
+    const [regisId, setRegisId] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
 
-const ApprovalRegistrationContainer = props => {
-    const [data, setData] = useState([])
-    const [drawerVisibility, setDrawerVisibility] = useState(false)
-    const [neededEmployee, setNeededEmployee] = useState(null)
-    const companyId = useSelector(state => state.authentication.user.companyId)
+    const {jobFairId} = useParams();
 
     const fetchData = async () => {
-        setData([...defaultRegistration]);
-        // getEmployeesAPI(companyId)
-        //     .then(res => {
-        //         const { data } = res
-        //
-        //         const newValues = data.map((employee, index) => {
-        //             const { firstname, middlename, lastname } = employee.account
-        //             const fullName = firstname + ' ' + (middlename ? middlename + ' ' : '') + lastname
-        //
-        //             return {
-        //                 id: employee.account.id,
-        //                 no: index + 1,
-        //                 fullName: fullName,
-        //                 email: employee.account.email,
-        //                 phone: employee.account.phone,
-        //                 status: employee.account.status
-        //             }
-        //         })
-        //
-        //         setEmployeeData(newValues)
-        //     })
-        //     .catch(e => {
-        //         notification['error']({
-        //             message: `Get employee data failed`,
-        //             description: `There is problem while deleting, try again later`
-        //         })
-        //     })
+        getRegistrationByJobFairId(jobFairId)
+            .then(res => {
+                const {data} = res;
+                const result = data.map((item, index) => {
+                    return {
+                        ...item,
+                        createDate: convertToDateString(item.createDate).split('T')[0],
+                        no: index + 1,
+                    }
+                })
+                setData([...result])
+                notification['success'] ({
+                    message: `All registration has been loaded`,
+                    description: `with job fair ID: ${jobFairId}`,
+                    duration: 2,
+                })
+            })
+            .catch(err => {
+                notification['error'] ({
+                    message: `Cannot load company registration by job fair ID: ${jobFairId}`,
+                    description: `${err}`,
+                    duration: 2,
+                })
+            })
     }
     useEffect(() => {
         fetchData()
     }, [])
 
-    const handleApprove = id => {
-        // deleteEmployeeAPI(employeeId)
-        //     .then(res => {
-        //         notification['success']({
-        //             message: `Delete employee successfully`,
-        //             description: `Deleted employee ${employeeId} successfully`
-        //         })
-        //         fetchData()
-        //     })
-        //     .catch(e => {
-        //         notification['error']({
-        //             message: `Delete employee failed`,
-        //             description: `There is problem while deleting, try again later`
-        //         })
-        //     })
-        const result = data.map(item => (item.id === id ? Object.assign({}, item, {status: 'APPROVED'}) : item));
-        setData(result)
+
+    const onFinish = (values) => {
+        evaluateJobFairRegistrationAPI(values)
+            .then((res) => {
+                console.log(notification['success'])
+                notification['success'] ({
+                    message: `Submit evaluation successfully`,
+                    description: `Your evaluation has been submitted`,
+                    duration: 2,
+                })
+
+                fetchData()
+            })
+            .catch((e) => {
+                console.log(e)
+                notification['error'] ({
+                    message: `Submit evaluation failed`,
+                    description: `There is problem while submitting, try again later`,
+                    duration: 2,
+                })
+            })
     }
 
-    const handleDenied = (id) => {
-        const result = data.map(item => (item.id === id ? Object.assign({}, item, {status: 'DENIED'}) : item));
-        setData(result)
-    }
-
-    const handleGetDetail = employeeId => {
-        setDrawerVisibility(true)
-        setNeededEmployee(employeeId)
+    const modalProps = {
+        registrationId: regisId,
+        visible: modalVisible,
+        setModalVisible: setModalVisible,
+        registrationList: [...data]
     }
 
     return (
-        <div>
-            <RegistrationDetailDrawerContainer
-                drawerVisibility={drawerVisibility}
-                setDrawerVisibility={setDrawerVisibility}
-                id={neededEmployee}
+        <>
+            <CompanyRegistrationDetailModalContainer
+                {...modalProps}
             />
             <ApprovalRegistrationComponent
                 data={data}
@@ -121,45 +91,73 @@ const ApprovalRegistrationContainer = props => {
                     render: (text, record) => {
                         return (
                             <Space size="middle">
-                                <a
-                                    onClick={() => {
-                                        handleGetDetail(record.id)
-                                    }}
-                                >
-                                    Detail
+                                <a onClick={() => {
+                                    setModalVisible(true)
+                                    setRegisId(record.id)
+                                }}>
+                                    View detail
                                 </a>
                                 {record.status === 'PENDING' ? (
-                                    <Space size="middle">
-                                        <Popconfirm
-                                            title="Approve this registration ?"
-                                            okText="Yes"
-                                            cancelText="No"
-                                            onConfirm={() => {
-                                                handleApprove(record.id)
-                                                console.log('approved:', record.id)
+                                        <Popover
+                                            title="Finish your evaluation"
+                                            content={() => {
+                                                const [form] = Form.useForm();
+                                                return (
+                                                    <>
+                                                        <Form
+                                                            form={form}
+                                                            onFinish={onFinish}
+                                                            requiredMark="required"
+                                                            autoComplete="off"
+                                                            scrollToFirstError={{block: "center", behavior: "smooth"}}
+                                                        >
+                                                            <Space direction="vertical" size="medium">
+                                                                <Form.Item name="companyRegistrationId" noStyle
+                                                                           initialValue={record.id}>
+                                                                    <Input type="text" type="hidden"/>
+                                                                </Form.Item>
+                                                                <Form.Item
+                                                                    label="Message"
+                                                                    name={'message'}
+                                                                    hasFeedback
+                                                                >
+                                                                    <TextArea placeholder="Message"/>
+                                                                </Form.Item>
+                                                                <Form.Item
+                                                                    label="Status"
+                                                                    name={'status'}
+                                                                    hasFeedback
+                                                                    initialValue={'APPROVE'}
+                                                                >
+                                                                    <Radio.Group>
+                                                                        {EvaluateConst.map(item => (
+                                                                            <Radio.Button value={item.id}>
+                                                                                {item.name}
+                                                                            </Radio.Button>
+                                                                        ))}
+                                                                    </Radio.Group>
+                                                                </Form.Item>
+                                                                <Form.Item>
+                                                                    <Button type="primary" htmlType="submit">
+                                                                        Submit
+                                                                    </Button>
+                                                                </Form.Item>
+                                                            </Space>
+                                                        </Form>
+                                                    </>
+                                                )
                                             }}
+                                            trigger="click"
                                         >
-                                            <a href="#">Approve</a>
-                                        </Popconfirm>
-                                        <Popconfirm
-                                            title="Denied this registration ?"
-                                            okText="Yes"
-                                            cancelText="No"
-                                            onConfirm={() => {
-                                                handleDenied(record.id)
-                                                console.log('denied:', record.id)
-                                            }}
-                                        >
-                                            <a href="#">Deny</a>
-                                        </Popconfirm>
-                                    </Space>
-                                ) : null}
+                                            <Button type="primary">Add your evaluation</Button>
+                                        </Popover>)
+                                    : null}
                             </Space>
                         )
                     }
                 }}
             />
-        </div>
+        </>
     )
 };
 

@@ -1,12 +1,30 @@
 import React , {useState} from 'react';
-import {Button, Input, Space, Table} from "antd";
+import {Button, Empty, Input, Space, Spin, Table} from "antd";
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import Highlighter from "react-highlight-words";
 import ApprovalRegistrationColumn from "../columns/ApprovalRegistration.column";
+import {useHistory} from "react-router-dom";
 
 const ApprovalRegistrationComponent = ({data, extra}) => {
+
     const [searchText, setSearchText] = useState('')
     const [searchedColumn, setSearchedColumn] = useState('')
+    const history = useHistory();
+
+    if (data === undefined || data === null ) {
+        return <Spin size="large"/>
+    }
+
+    if (Object.keys(data).length === 0) {
+        return (
+            <>
+                <h1>This job fair hasn't been registered yet!!!</h1>
+                <a onClick={history.goBack}>Back</a>
+                <Empty/>
+            </>
+        )
+    }
+
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm()
@@ -63,9 +81,7 @@ const ApprovalRegistrationComponent = ({data, extra}) => {
                     autoEscape
                     textToHighlight={text ? text.toString() : ''}
                 />
-            ) : (
-                text
-            )
+        ) : (text)
     })
 
     const defaultColumns = ApprovalRegistrationColumn(getColumnSearchProps)
@@ -74,7 +90,8 @@ const ApprovalRegistrationComponent = ({data, extra}) => {
 
     return (
         <>
-            <Table columns={finalColumns} dataSource={data} pagination={{ pageSize: 8 }} />
+            <Table columns={finalColumns} dataSource={data} pagination={{ pageSize: 5 }} />
+            <a onClick={history.goBack}>Back</a>
         </>
     )
 };

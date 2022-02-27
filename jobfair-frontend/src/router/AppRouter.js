@@ -23,6 +23,10 @@ import {useSelector} from "react-redux";
 import AttendantRouter from "./AttendantRouter";
 import CompanyEmployeeRouter from "./CompanyEmployeeRouter";
 import CompanyManagerRouter from "./CompanyManagerRouter";
+import AdminRouter from "./AdminRouter";
+import ApprovalRegistrationPage from "../pages/ApprovalRegistrationPage/ApprovalRegistration.page";
+import StaffRouter from "./StaffRouter";
+import JobFairListPage from "../pages/JobFairListPage/JobFairList.page";
 
 const AppRouter = () => {
     const role = useSelector(state => state.authentication?.user?.roles);
@@ -60,6 +64,9 @@ const AppRouter = () => {
                 <Route path="/contracts" exact>
                     <ContractsPage/>
                 </Route>
+                <Route path="/job-fair" exact>
+                    <JobFairListPage/>
+                </Route>
                 <AttendantRouter key="/applied-job" component={(<AppliedJobPage/>)} path="/applied-job" exact/>
                 <CompanyManagerRouter key="/company/employee-management" component={() => (<EmployeeManagementPage/>)} path="/company/employee-management" exact/>
                 <CompanyManagerRouter key="/company/employee-register" component={(<EmployeeRegisterPage/>)} path="/company/employee-register" exact/>
@@ -67,6 +74,8 @@ const AppRouter = () => {
                 <AttendantRouter key="/attendant/profile" component={() => (<AttendantProfile/>)} path="/attendant/profile" exact/>
                 <CompanyEmployeeRouter key="/company/profile" component={() => (<CompanyProfile/>)} path="/employee/company-profile" exact/>
                 <CompanyManagerRouter key="/company/profile" component={() => (<CompanyProfile/>)} path="/manager/company-profile" exact/>
+                <AdminRouter key="" component={() => (<ApprovalRegistrationPage/>)} path="/approval-registration/:jobFairId" exact/>
+                <StaffRouter key="" component={() => (<ApprovalRegistrationPage/>)} path="/approval-registration/:jobFairId" exact/>
             </Switch>
         </>
     )

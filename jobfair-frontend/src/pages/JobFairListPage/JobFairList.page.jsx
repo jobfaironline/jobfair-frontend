@@ -12,30 +12,6 @@ const JobFairListPage = () => {
             <Divider>
                 Job Fair List
             </Divider>
-            <Breadcrumb>
-                <Breadcrumb.Item href="/">
-                    <HomeOutlined/>
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>
-                    <UnorderedListOutlined/>
-                    <span>Job fair list</span>
-                </Breadcrumb.Item>
-                {
-                    role === 'ADMIN' ?
-                        <Breadcrumb.Item href='/admin/approval-registration'>
-                            <span>Evaluate company registration</span>
-                        </Breadcrumb.Item>
-                        : null
-                }
-                {
-                    role === 'STAFF' ?
-                        <Breadcrumb.Item href='/staff/approval-registration'>
-                            <span>Evaluate company registration</span>
-                        </Breadcrumb.Item>
-                        : null
-                }
-
-            </Breadcrumb>,
             <JobFairListContainer/>
         </>
     );

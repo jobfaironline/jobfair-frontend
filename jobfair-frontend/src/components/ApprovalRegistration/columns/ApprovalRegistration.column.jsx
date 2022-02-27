@@ -7,6 +7,7 @@ const ApprovalRegistrationColumn = getColumnSearchProps => {
             title: 'No',
             dataIndex: 'no',
             key: 'no',
+            ...getColumnSearchProps('no'),
             render(text, record) {
                 return {
                     props: {
@@ -17,7 +18,7 @@ const ApprovalRegistrationColumn = getColumnSearchProps => {
             }
         },
         {
-            title: 'Registration Id',
+            title: 'Registration ID',
             dataIndex: 'id',
             key: 'id',
             ...getColumnSearchProps('id'),
@@ -36,12 +37,6 @@ const ApprovalRegistrationColumn = getColumnSearchProps => {
             dataIndex: 'description',
             key: 'description',
             ...getColumnSearchProps('description')
-        },
-        {
-            title: 'Company',
-            dataIndex: 'company',
-            key: 'company',
-            ...getColumnSearchProps('company')
         },
         {
             title: 'Status',
@@ -67,28 +62,40 @@ const ApprovalRegistrationColumn = getColumnSearchProps => {
             render: status => {
                 let objStatus
                 switch (status) {
-                    case 'APPROVED':
+                    case 'APPROVE':
                         objStatus = {
-                            color: 'success',
+                            color: 'green',
                             message: 'Approved'
+                        }
+                        break
+                    case 'DRAFT':
+                        objStatus = {
+                            color: 'gold',
+                            message: 'Draft'
                         }
                         break
                     case 'PENDING':
                         objStatus = {
-                            color: 'processing',
+                            color: 'blue',
                             message: 'Pending'
                         }
                         break
-                    case 'SUSPENDED':
+                    case 'DELETED':
                         objStatus = {
-                            color: 'warning',
-                            message: 'Suspended'
+                            color: 'magenta',
+                            message: 'Deleted'
+                        }
+                        break
+                    case 'CANCEL':
+                        objStatus = {
+                            color: 'volcano',
+                            message: 'Canceled'
                         }
                         break
                     default:
                         objStatus = {
-                            color: 'error',
-                            message: 'Denied'
+                            color: 'red',
+                            message: 'Rejected'
                         }
                         break
                 }
