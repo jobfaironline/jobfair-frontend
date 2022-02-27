@@ -60,7 +60,7 @@ const AttendantJobFairPage = () => {
     return (<Fragment>
         <CommunicationContainer {...communicationProps}/>
         <AttendantJobFairCompanyInformationTabsComponent/>
-        <AttendantJobFairBoothContainer url={'https://d3polnwtp0nqe6.cloudfront.net/booths/untitled.glb'}/>
+        <AttendantJobFairBoothContainer companyBoothId={companyBoothId}/>
     </Fragment>);
 }
 
