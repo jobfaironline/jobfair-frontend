@@ -21,7 +21,7 @@ const StaffRouter = ({ component: Component, ...rest }) => {
 
     if (!isAuthUser) {
       //check if current user not login send back to login Page
-      return <Redirect to="/auth/signin" />
+      return <Redirect to="/auth/login" />
     }
   }
   return <Route {...rest} render={props => resultComponent(props)} />
