@@ -23,6 +23,8 @@ import {useSelector} from "react-redux";
 import AttendantRouter from "./AttendantRouter";
 import CompanyEmployeeRouter from "./CompanyEmployeeRouter";
 import CompanyManagerRouter from "./CompanyManagerRouter";
+import AttendantJobFairPage from "../pages/AttendantJobFairPage/AttendantJobFairPage";
+import JobFairParkPage from "../pages/JobFairParkPage/JobFairParkPage";
 
 const AppRouter = () => {
     const role = useSelector(state => state.authentication?.user?.roles);
@@ -59,6 +61,12 @@ const AppRouter = () => {
                 </Route>
                 <Route path="/contracts" exact>
                     <ContractsPage/>
+                </Route>
+                <Route path="/jobfair/attendant/:companyBoothId" exact>
+                  <AttendantJobFairPage/>
+                </Route>
+                <Route path="/map/:jobFairId" exact>
+                  <JobFairParkPage />
                 </Route>
                 <AttendantRouter key="/applied-job" component={(<AppliedJobPage/>)} path="/applied-job" exact/>
                 <CompanyManagerRouter key="/company/employee-management" component={() => (<EmployeeManagementPage/>)} path="/company/employee-management" exact/>
