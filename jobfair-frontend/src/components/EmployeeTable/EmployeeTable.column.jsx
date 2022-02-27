@@ -3,22 +3,38 @@ import { Tag } from 'antd'
 const EmployeeTableColumn = getColumnSearchProps => {
   return [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-      ...getColumnSearchProps('id')
+      title: 'No',
+      dataIndex: 'no',
+      key: 'no',
+      render(text, record) {
+        return {
+          props: {
+            style: { textAlign: 'end', width: '5px' }
+          },
+          children: text
+        }
+      }
     },
     {
-      title: 'Phone number',
-      dataIndex: 'phone',
-      key: 'phone',
-      ...getColumnSearchProps('phone')
+      title: 'Full name',
+      dataIndex: 'fullName',
+      key: 'fullName',
+      ...getColumnSearchProps('fullName'),
+      onFilter: (value, record) => record.fullName.indexOf(value) === 0,
+      sorter: (a, b) => a.fullName.localeCompare(b.fullName),
+      sortDirections: ['descend']
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
       ...getColumnSearchProps('email')
+    },
+    {
+      title: 'Phone number',
+      dataIndex: 'phone',
+      key: 'phone',
+      ...getColumnSearchProps('phone')
     },
     {
       title: 'Status',
@@ -32,6 +48,14 @@ const EmployeeTableColumn = getColumnSearchProps => {
         {
           text: 'Inactive',
           value: 'INACTIVE'
+        },
+        {
+          text: 'Suspensed',
+          value: 'SUSPENSED'
+        },
+        {
+          text: 'Registered',
+          value: 'REGISTERED'
         }
       ],
       onFilter: (value, record) => {
@@ -42,20 +66,20 @@ const EmployeeTableColumn = getColumnSearchProps => {
         switch (status) {
           case 'VERIFIED':
             objStatus = {
-              color: 'processing',
+              color: 'success',
               message: 'Verified'
             }
             break
           case 'REGISTERED':
             objStatus = {
-              color: 'default',
+              color: 'processing',
               message: 'Registered'
             }
             break
-          case 'SUSPENSE':
+          case 'SUSPENSED':
             objStatus = {
               color: 'warning',
-              message: 'Suspense'
+              message: 'Suspensed'
             }
             break
           default:
@@ -66,7 +90,7 @@ const EmployeeTableColumn = getColumnSearchProps => {
             break
         }
         return (
-          <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
+          <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag> // prettier-ignore
         )
       }
     }

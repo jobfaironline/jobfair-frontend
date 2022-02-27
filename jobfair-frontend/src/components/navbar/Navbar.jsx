@@ -1,52 +1,93 @@
 import React from 'react'
-import { Menu } from 'antd'
-import { Link } from 'react-router-dom'
+import {Button, Menu} from 'antd'
+import {Link, useHistory} from 'react-router-dom'
+import {useDispatch, useSelector} from "react-redux";
+import {logoutHandler} from "../../redux-flow/authentication/authentication-action";
+
+export const AttendantMenu = [
+    <Menu.Item key="attendant-profile">
+        <Link to="/attendant/profile">Attendant Profile</Link>
+    </Menu.Item>
+]
+
+export const CompanyManagerMenu = [
+    <Menu.Item key="company-profile">
+        <Link to="/manager/company-profile">Company profile</Link>
+    </Menu.Item>,
+    <Menu.Item key="employee-management">
+        <Link to="/company/employee-management">Employee Management</Link>
+    </Menu.Item>,
+    <Menu.Item key="manager-register-jobfair">
+        <Link to="/company/register-job-fair">Register to job fair</Link>
+    </Menu.Item>
+]
+
+export const CompanyEmployeeMenu = [
+    <Menu.Item key="company-profile">
+        <Link to="/employee/company-profile">Company profile</Link>
+    </Menu.Item>
+]
 
 const NavigationBar = () => {
-  return (
-    <div className="container-fluid">
-      <div className="Navbar">
-        <Menu mode="horizontal">
-          <Menu.Item key="home">
-            <Link to="/">
-              <div className="logo">LOGO</div>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="jobfair">
-            <Link to="/JobFairPack">Job Fair Park</Link>
-          </Menu.Item>
-          <Menu.Item key="contact">
-            <Link to="/contracts">Contact</Link>
-          </Menu.Item>
-          <Menu.Item key="faq">
-            <Link to="/faq">FAQ</Link>
-          </Menu.Item>
-          <Menu.Item key="reg">
-            <Link to="/auth/register">Register</Link>
-          </Menu.Item>
-          <Menu.Item key="login">
-            <Link to="/auth/login">Log In</Link>
-          </Menu.Item>
-          <Menu.Item key="attendant-profile">
-            <Link to="/attendant/profile">Attendant Profile</Link>
-          </Menu.Item>
-          {/* remove later */}
-          <Menu.Item key="employee">
-            <Link to="/employee-management">Testing</Link>
-          </Menu.Item>
-          <Menu.Item key="changepassword">
-            <Link to="/accounts/changepassword">Change Password</Link>
-          </Menu.Item>
-          <Menu.Item key="company-profile">
-            <Link to="/company/profile">Company profile</Link>
-          </Menu.Item>
-          <Menu.Item key="manager-register-jobfair">
-            <Link to="/company/register-job-fair">Register to job fair</Link>
-          </Menu.Item>
-        </Menu>
-      </div>
-    </div>
-  )
+    const role = useSelector(state => state.authentication?.user?.roles);
+    const history = useHistory();
+    const dispatch = useDispatch()
+    let extraMenu = () => {
+        switch (role) {
+            case "ATTENDANT" :
+                return AttendantMenu
+            case "COMPANY_MANAGER" :
+                return CompanyManagerMenu
+            case "COMPANY_EMPLOYEE" :
+                return CompanyEmployeeMenu
+            default: return null
+        }
+    }
+    const handleClick = () => {
+        dispatch(logoutHandler())
+    }
+    return (
+        <div className="container-fluid">
+            <div className="Navbar">
+                <Menu mode="horizontal">
+                    <Menu.Item key="home">
+                        <Link to="/">
+                            <div className="logo">LOGO</div>
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="jobfair">
+                        <Link to="/JobFairPack">Job Fair Park</Link>
+                    </Menu.Item>
+                    <Menu.Item key="contact">
+                        <Link to="/contracts">Contact</Link>
+                    </Menu.Item>
+                    <Menu.Item key="faq">
+                        <Link to="/faq">FAQ</Link>
+                    </Menu.Item>
+                    {
+                        !role ? <Menu.Item key="login">
+                            <Link to="/auth/login">Log In</Link>
+                        </Menu.Item>: null
+                    }
+                    {
+                        !role ? <Menu.Item key="reg">
+                            <Link to="/auth/register">Register</Link>
+                        </Menu.Item> : null
+                    }
+                    {
+                        role ? <Menu.Item key="changepassword">
+                            <Link to="/accounts/changepassword">Change Password</Link>
+                        </Menu.Item> : null
+                    }
+                    {extraMenu() ?
+                        extraMenu().map(item => {
+                        return item
+                    }) : history.push("/auth/login") }
+                    {role ? <Button onClick={handleClick}>Logout</Button> : null}
+                </Menu>
+            </div>
+        </div>
+    )
 }
 
 export default NavigationBar

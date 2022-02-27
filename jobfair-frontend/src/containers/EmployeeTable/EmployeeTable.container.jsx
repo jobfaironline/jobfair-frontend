@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import EmployeeTableComponent from '../../components/EmployeeTable/EmployeeTable.component'
+import EmployeeDrawer from '../../containers/EmployeeDrawer/EmployeeDrawer.container'
 import { deleteEmployeeAPI, getEmployeesAPI } from '../../services/companyEmployeeService'
-import { Space, notification } from 'antd'
+import { Space, notification, Popconfirm } from 'antd'
 import { useSelector } from 'react-redux'
 
 const EmployeeTable = ({ extra }) => {
-  const [employeeData, setemployeeData] = useState([])
+  const [employeeData, setEmployeeData] = useState([])
+  const [drawerVisibility, setDrawerVisibility] = useState(false)
+  const [neededEmployee, setNeededEmployee] = useState(null)
   const companyId = useSelector(state => state.authentication.user.companyId)
 
   const fetchData = async () => {
     getEmployeesAPI(companyId)
       .then(res => {
-        console.log(res)
         const { data } = res
 
-        const newValues = data.map(employee => {
+        const newValues = data.map((employee, index) => {
+          const { firstname, middlename, lastname } = employee.account
+          const fullName = firstname + ' ' + (middlename ? middlename + ' ' : '') + lastname
+
           return {
             id: employee.account.id,
+            no: index + 1,
+            fullName: fullName,
             email: employee.account.email,
             phone: employee.account.phone,
             status: employee.account.status
           }
         })
 
-        setemployeeData(newValues)
+        setEmployeeData(newValues)
       })
       .catch(e => {
         notification['error']({
@@ -54,11 +61,17 @@ const EmployeeTable = ({ extra }) => {
   }
 
   const handleGetDetail = employeeId => {
-    console.log(employeeId)
+    setDrawerVisibility(true)
+    setNeededEmployee(employeeId)
   }
 
   return (
     <div>
+      <EmployeeDrawer
+        drawerVisibility={drawerVisibility}
+        setDrawerVisibility={setDrawerVisibility}
+        employeeId={neededEmployee}
+      />
       <EmployeeTableComponent
         employeeData={employeeData}
         editable
@@ -75,13 +88,16 @@ const EmployeeTable = ({ extra }) => {
                 >
                   Detail
                 </a>
-                <a
-                  onClick={() => {
+                <Popconfirm
+                  title="Are you sure？"
+                  okText="Yes"
+                  cancelText="No"
+                  onConfirm={() => {
                     handleDelete(record.id)
                   }}
                 >
-                  Delete
-                </a>
+                  <a href="#">Delete</a>
+                </Popconfirm>
               </Space>
             )
           }

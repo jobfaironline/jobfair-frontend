@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const contains = (list, listCurrent) => {
   var result = false
   list.forEach(e => {
@@ -39,12 +41,31 @@ export const getBase64 = file => {
 
 export const convertToDateString = dateValue => {
   const date = new Date(dateValue)
-  // const dateString = date.toISOString().split('T')[0]; //yyyy-mm-dd
-  // const result = dateString.replaceAll('-', '/');
-  // return result;
   return date.toISOString()
 }
 
 export const convertToDateValue = dateString => {
   return Date.parse(dateString)
+}
+
+export const convertToMoment = (data) => {
+  const result =  data.map(item => {
+    return {
+      ...item,
+      range : [moment(convertToDateString(item.fromDate)), moment(convertToDateString(item.toDate))]
+    }
+  })
+  return result;
+}
+
+//attendantProfileForm.container.jsx
+export const handleConvertRangePicker = data => {
+  const result = data.map(item => {
+    return {
+      ...item,
+      fromDate: convertToDateValue(item.range[0].format()),
+      toDate: convertToDateValue(item.range[1].format()),
+    }
+  })
+  return result
 }

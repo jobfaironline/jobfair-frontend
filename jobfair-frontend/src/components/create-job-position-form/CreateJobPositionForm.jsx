@@ -1,30 +1,14 @@
 import React, { useState } from 'react'
-import {
-  Button,
-  Divider,
-  Form,
-  Input,
-  Radio,
-  Select,
-  Switch,
-  Tooltip,
-  Typography,
-} from 'antd'
+import { Button, Divider, Form, Input, Radio, Select, Switch, Tooltip, Typography } from 'antd'
 import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
-import {
-  CopyOutlined,
-  GiftOutlined,
-  InfoCircleOutlined,
-  MinusCircleOutlined,
-  PlusOutlined,
-} from '@ant-design/icons'
+import { CopyOutlined, GiftOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import {
   benefitConst,
   CategoriesConst,
   NUM_OF_SIZE_MAXIMUM,
   SizeConst,
-  SubCategories,
-} from '../../constants/CompanyProfileConstant'
+  SubCategories
+} from '../../pages/ProfilePage/Company/CompanyProfileConstant'
 import ImageUpload from '../image-upload/ImageUpload'
 import { JOB_POSITION_MODEL } from '../../default_models/CreateJobPositionModel/JobPositionModel'
 import {
@@ -34,7 +18,7 @@ import {
   LanguageConst,
   NUM_OF_SKILL_TAGS,
   SalaryRangeConst,
-  SkillTagsConst,
+  SkillTagsConst
 } from '../../constants/JobPositionConst'
 import TextArea from 'antd/es/input/TextArea'
 import { tailLayout } from '../register-job-fair-form/RegisterJobFairForm'
@@ -67,30 +51,17 @@ const CreateJobPositionForm = props => {
 
   return (
     <>
-      <Form.Item
-        label="Job title"
-        name="title"
-        required
-        tooltip="This is required"
-        rules={JobPositionValidation.title}
-      >
+      <Form.Item label="Job title" name="title" required tooltip="This is required" rules={JobPositionValidation.title}>
         <Input placeholder="Job title" style={{ width: '20%' }} />
       </Form.Item>
-      <Form.Item
-        label="Job level"
-        required
-        tooltip="This is required"
-        name="level"
-      >
+      <Form.Item label="Job level" required tooltip="This is required" name="level">
         <Select
           style={{ width: 150 }}
           showSearch
           onChange={value => {
             console.log(`selected: ${value}`)
           }}
-          filterOption={(input, option) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
+          filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
           onSearch={value => console.log(value)}
         >
           {JobLevelConst.map(item => (
@@ -111,9 +82,7 @@ const CreateJobPositionForm = props => {
           onChange={value => {
             console.log(`selected: ${value}`)
           }}
-          filterOption={(input, option) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
+          filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
           onSearch={value => console.log(value)}
         >
           {JobTypeConst.map(item => (
@@ -148,18 +117,14 @@ const CreateJobPositionForm = props => {
               <Text type={totalSelect > 3 ? 'danger' : 'success'}>
                 {totalSelect > 3
                   ? null
-                  : `You can select ${NUM_OF_SIZE_MAXIMUM} items only. (${
-                      NUM_OF_SIZE_MAXIMUM - totalSelect
-                    } left)`}
+                  : `You can select ${NUM_OF_SIZE_MAXIMUM} items only. (${NUM_OF_SIZE_MAXIMUM - totalSelect} left)`}
               </Text>
             </>
           )}
         >
           {CategoriesConst.map(category => (
             <OptGroup label={category.label}>
-              {SubCategories.filter(
-                item => item.category_id === category.value
-              ).map(item => (
+              {SubCategories.filter(item => item.category_id === category.value).map(item => (
                 <Option value={item.value}>{item.label}</Option>
               ))}
             </OptGroup>
