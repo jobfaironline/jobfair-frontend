@@ -14,12 +14,6 @@ import {initialSampleItems} from "./data/SampleDateItem";
 import SideBarDecoratedBooth from "./components/SideBarDecoratedBooth/SideBarDecoratedBooth.component";
 const JobFairPackPage = () => {
 
-  function handleClick(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    downloadModel(ref?.current.parent);
-  }
-
   const [isDragging, setIsDragging] = useState(false)
   const [sampleItems, setSampleItems] = useState(initialSampleItems)
   const [selectedSampleItem, setSelectedSampleItem] = useState({})
@@ -28,11 +22,15 @@ const JobFairPackPage = () => {
   const [hoverItemRef, setHoverItemRef] = useState()
   const ref = useRef()
   //parse file and get items
-  //const {nodes, materials} = useGLTF('https://d3polnwtp0nqe6.cloudfront.net/booths/untitled.glb');
   const { nodes, materials } = useGLTF('./untitled.glb')
   const result = []
   for (const mesh in nodes) {
     if (nodes[mesh].parent?.name === 'Scene') result.push(nodes[mesh])
+  }
+  for (const mesh of result){
+    if (mesh.material.map !== null){
+      mesh.material.map.center.set(0.5, 0.5)
+    }
   }
 
   const selected = () => {
@@ -55,6 +53,21 @@ const JobFairPackPage = () => {
     setMode(mode)
   }
 
+  const onClick = () => {
+    let sceneNode = ref.current.parent;
+    while (sceneNode.type !== 'Scene'){
+      sceneNode = sceneNode.parent;
+    }
+    const sceneNodeCopy = sceneNode.clone(false);
+    sceneNodeCopy.clear();
+    const copyNode = ref.current.children.map(mesh => mesh.clone());
+    copyNode.forEach(mesh => sceneNodeCopy.children.push(mesh));
+    sceneNodeCopy.name="Scene";
+    debugger;
+    downloadModel(sceneNodeCopy);
+
+  }
+
   const [modelItems, setModelItems] = useState(result)
   const StageRef = useRef();
   return (
@@ -63,11 +76,12 @@ const JobFairPackPage = () => {
         <div>
           <SideBarDecoratedBooth
               selectedItemRef={selectedItemRef}
+              onClick={onClick}
           />
         </div>
         <Canvas dpr={[1, 2]} camera={{ fov: 50 }} style={{ width: '100%', height: '850px' }}>
           <OrbitControls enabled={!isDragging} />
-          <Stage controls={StageRef} preset="rembrandt" intensity={0.3999999999999999}  environment="city" contactShadow={false}>
+          <Stage controls={StageRef} preset="rembrandt" intensity={0.4}  environment="city" contactShadow={false}>
             <Model
                 setIsDragging={setIsDragging}
                 ref={ref}

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useGLTF } from '@react-three/drei'
 import { useDrag } from 'react-use-gesture'
 import * as THREE from 'three'
 import { ModeConstant } from '../../../../constants/AppConst'
@@ -61,6 +60,7 @@ function ItemMesh({
   })
   return (
     <mesh
+      name={mesh.name}
       key={mesh.uuid}
       ref={itemRef}
       geometry={mesh.geometry}
@@ -128,6 +128,7 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
   }
   return (
     <mesh
+      name={mesh.name}
       onClick={onPlaneClick}
       key={mesh.uuid}
       geometry={mesh.geometry}
@@ -146,6 +147,7 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
 function ChildMesh({ mesh }) {
   return (
     <mesh
+      name={mesh.name}
       key={mesh.uuid}
       geometry={mesh.geometry}
       material={mesh.material}
@@ -256,4 +258,3 @@ export const Model = React.forwardRef(
   }
 )
 
-useGLTF.preload('/untitled.glb')
