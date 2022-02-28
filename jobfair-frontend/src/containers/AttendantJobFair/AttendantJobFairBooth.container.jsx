@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {loadModel} from "../../utils/model_loader";
+import {loadModel} from "../../utils/glbModelUtil";
 import {CompanyBoothCanvasComponent} from "../../components/AttendantJobFair/CompanyBoothCanvas.component";
 import {getCompanyBoothLatestLayout} from "../../services/companyBoothService";
 

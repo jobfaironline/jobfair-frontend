@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { loadModel } from '../../utils/model_loader'
+import { loadModel } from '../../utils/glbModelUtil'
 import * as THREE from 'three'
 import JobFairParkMapComponent from '../../components/JobFairParkMap/JobFairParkMap.component'
 import { getLayoutByJobFairId } from '../../services/jobfairService'
