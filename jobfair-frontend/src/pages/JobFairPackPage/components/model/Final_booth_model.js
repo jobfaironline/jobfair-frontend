@@ -144,7 +144,7 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
   )
 }
 
-function ChildMesh({ mesh }) {
+export function ChildMesh({ mesh }) {
   return (
     <mesh
       name={mesh.name}
