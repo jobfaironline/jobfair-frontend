@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 // import { defaultColumns, editableColumns } from './columns-type';
 import { Space, Table, Input, Button } from 'antd'
 import Highlighter from 'react-highlight-words'
@@ -23,22 +23,12 @@ const FormTable = ({ employeeData, extra }) => {
   }
 
   const getColumnSearchProps = dataIndex => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters
-    }) => (
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
       <div style={{ padding: 8 }}>
         <Input
-          //   ref={node => {
-          //     this.searchInput = node;
-          //   }}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={e =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
+          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{ marginBottom: 8, display: 'block' }}
         />
@@ -52,26 +42,15 @@ const FormTable = ({ employeeData, extra }) => {
           >
             Search
           </Button>
-          <Button
-            onClick={() => handleReset(clearFilters, confirm)}
-            size="small"
-            style={{ width: 90 }}
-          >
+          <Button onClick={() => handleReset(clearFilters, confirm)} size="small" style={{ width: 90 }}>
             Reset
           </Button>
         </Space>
       </div>
     ),
-    filterIcon: filtered => (
-      <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
-    ),
+    filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
     onFilter: (value, record) =>
-      record[dataIndex]
-        ? record[dataIndex]
-            .toString()
-            .toLowerCase()
-            .includes(value.toLowerCase())
-        : '',
+      record[dataIndex] ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()) : '',
     onFilterDropdownVisibleChange: visible => {
       if (visible) {
         // setTimeout(() => this.searchInput.select(), 100);
@@ -96,7 +75,7 @@ const FormTable = ({ employeeData, extra }) => {
 
   return (
     <Fragment>
-      <Table columns={finalColumns} dataSource={employeeData} />
+      <Table columns={finalColumns} dataSource={employeeData} pagination={{ pageSize: 8 }} />
     </Fragment>
   )
 }
