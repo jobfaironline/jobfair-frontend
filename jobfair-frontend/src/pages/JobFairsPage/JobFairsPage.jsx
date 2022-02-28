@@ -1,10 +1,11 @@
 import React from 'react'
-import JobFairList from '../../containers/JobFairList/JobFairList.container'
+import JobFairListManagementContainer from "../../containers/JobFairList/JobFairList.management.container";
+
 
 const JobFairsPage = () => {
   return (
     <>
-      <JobFairList />
+      <JobFairListManagementContainer />
     </>
   )
 }

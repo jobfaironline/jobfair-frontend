@@ -37,6 +37,19 @@ export const CompanyEmployeeMenu = [
     </Menu.Item>
 ]
 
+export const AdminMenu = [
+    <Menu.Item key="job-fair-list-admin">
+        <Link to="/job-fair">Job fair list</Link>
+    </Menu.Item>
+]
+
+export const StaffMenu = [
+    <Menu.Item key="job-fair-list-staff">
+        <Link to="/job-fair">Job fair list</Link>
+    </Menu.Item>
+]
+
+
 const NavigationBar = () => {
     const role = useSelector(state => state.authentication?.user?.roles);
     const history = useHistory();
@@ -49,6 +62,10 @@ const NavigationBar = () => {
                 return CompanyManagerMenu
             case "COMPANY_EMPLOYEE" :
                 return CompanyEmployeeMenu
+            case "ADMIN" :
+                return AdminMenu
+            case "STAFF" :
+                return StaffMenu
             default: return null
         }
     }

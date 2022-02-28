@@ -1,124 +1,138 @@
 import React from 'react'
-import { Redirect, Route, Switch } from 'react-router-dom'
-//init Page
-import LoginPage from '../pages/LoginPage/LoginPage'
-import RegisterPage from '../pages/RegisterPage/RegisterPage'
-import FAQPage from '../pages/FAQPage/FAQPage'
-import JobFairPackPage from '../pages/JobFairPackPage/JobFairPackPage'
-import UserPage from '../pages/UserPage/UserPage'
-import ContractsPage from '../pages/ContractsPage/ContractsPage'
-import HomePage from '../pages/HomePage'
-import NavigationBar from '../components/navbar/Navbar'
-import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
+import {Redirect, Route, Switch} from 'react-router-dom'
+import {useSelector} from "react-redux";
+import NavigationBar from "../components/navbar/Navbar";
+import HomePage from "../pages/HomePage";
+import JobFairParkPage from "../pages/JobFairParkPage/JobFairParkPage";
+import AttendantJobFairPage from "../pages/AttendantJobFairPage/AttendantJobFairPage";
+import JobfairRegistrationPage from "../pages/JobfairRegistrationPage/JobfairRegistrationPage";
+import LoginPage from "../pages/LoginPage/LoginPage";
+import RegisterPage from "../pages/RegisterPage/RegisterPage";
+import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
+import FAQPage from "../pages/FAQPage/FAQPage";
+import JobFairPackPage from "../pages/JobFairPackPage/JobFairPackPage";
+import UserPage from "../pages/UserPage/UserPage";
+import ContractsPage from "../pages/ContractsPage/ContractsPage";
+import JobFairsPage from "../pages/JobFairsPage/JobFairsPage";
+import JobFairListPage from "../pages/JobFairListPage/JobFairList.page";
+import AttendantRouter from "./AttendantRouter";
+import CompanyManagerRouter from "./CompanyManagerRouter";
+import AppliedJobPage from "../pages/AppliedJobPage/AppliedJobPage";
+import EmployeeManagementPage from "../pages/EmployeeManagementPage/EmployeeManagementPage";
+import EmployeeRegisterPage from "../pages/EmployeeRegisterPage/EmployeeRegisterPage";
+import RegisterJobFairForm from "../components/register-job-fair-form/RegisterJobFairForm";
+import AttendantProfile from "../pages/ProfilePage/Attendant/AttendantProfilePage";
+import CompanyEmployeeRouter from "./CompanyEmployeeRouter";
+import CompanyProfile from "../pages/ProfilePage/Company/CompanyProfilePage";
+import ApprovalRegistrationPage from "../pages/ApprovalRegistrationPage/ApprovalRegistration.page";
+import AdminRouter from "./AdminRouter";
+import StaffRouter from "./StaffRouter";
 
-//TODO: Remove later
-import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
-import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
-
-import CompanyProfile from '../pages/ProfilePage/Company/CompanyProfilePage'
-import RegisterJobFairForm from '../components/register-job-fair-form/RegisterJobFairForm'
-import AttendantProfile from '../pages/ProfilePage/Attendant/AttendantProfilePage'
-import AppliedJobPage from '../pages/AppliedJobPage/AppliedJobPage'
-
-import AttendantRouter from './AttendantRouter'
-import CompanyEmployeeRouter from './CompanyEmployeeRouter'
-import CompanyManagerRouter from './CompanyManagerRouter'
-import JobFairsPage from '../pages/JobFairsPage/JobFairsPage'
-import JobfairRegistrationPage from '../pages/JobfairRegistrationPage/JobfairRegistrationPage'
-import { useSelector } from 'react-redux'
-import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage'
-import JobFairParkPage from '../pages/JobFairParkPage/JobFairParkPage'
 
 const AppRouter = () => {
-  const role = useSelector(state => state.authentication?.user?.roles)
+    const role = useSelector(state => state.authentication?.user?.roles)
 
-  return (
-    <>
-      <NavigationBar />
-      <Switch>
-        {/*init home page*/}
-        <Route path="/" exact>
-          <HomePage />
-        </Route>
-        <Route path="/map/:jobFairId" exact>
-          <JobFairParkPage />
-        </Route>
-        <Route path="/jobfair/attendant/:companyBoothId" exact>
-          <AttendantJobFairPage />
-        </Route>
+    return (
+        <>
+            <NavigationBar/>
+            <Switch>
+                {/*init home page*/}
+                <Route path="/" exact>
+                    <HomePage/>
+                </Route>
+                <Route path="/map/:jobFairId" exact>
+                    <JobFairParkPage/>
+                </Route>
+                <Route path="/jobfair/attendant/:companyBoothId" exact>
+                    <AttendantJobFairPage/>
+                </Route>
 
-        {/* TODO: refactor later*/}
-        <Route path="/company-register-jobfair/:jobfairId" exact>
-          <JobfairRegistrationPage />
-        </Route>
-        <Route path="/company-register-jobfair/" exact>
-          <JobfairRegistrationPage />
-        </Route>
+                {/* TODO: refactor later*/}
+                <Route path="/company-register-jobfair/:jobfairId" exact>
+                    <JobfairRegistrationPage/>
+                </Route>
+                <Route path="/company-register-jobfair/" exact>
+                    <JobfairRegistrationPage/>
+                </Route>
 
-        <Route path="/auth/login" exact>
-          {/*if user has already login, avoid them to login again*/}
-          {!role ? <LoginPage /> : <Redirect to="/" />}
-        </Route>
-        <Route path="/auth/register" exact>
-          {!role ? <RegisterPage /> : <Redirect to="/" />}
-        </Route>
-        <Route path="/accounts/changepassword" exact>
-          {role ? <ChangePasswordPage /> : <Redirect to="/auth/login" />}
-        </Route>
-        <Route path="/faq" exact>
-          <FAQPage />
-        </Route>
-        <Route path="/JobFairPack" exact>
-          <JobFairPackPage />
-        </Route>
-        <Route path="/user" exact>
-          <UserPage />
-        </Route>
-        <Route path="/contracts" exact>
-          <ContractsPage />
-        </Route>
-        <Route path="/jobfair-list" exact>
-          <JobFairsPage />
-        </Route>
-        <AttendantRouter key="/applied-job" component={<AppliedJobPage />} path="/applied-job" exact />
-        <CompanyManagerRouter
-          key="/company/employee-management"
-          component={() => <EmployeeManagementPage />}
-          path="/company/employee-management"
-          exact
-        />
-        <CompanyManagerRouter
-          key="/company/employee-register"
-          component={() => <EmployeeRegisterPage />}
-          path="/company/employee-register"
-          exact
-        />
-        <CompanyManagerRouter
-          key="/company/register-job-fair"
-          component={() => <RegisterJobFairForm />}
-          path="/company/register-job-fair"
-          exact
-        />
-        <AttendantRouter
-          key="/attendant/profile"
-          component={() => <AttendantProfile />}
-          path="/attendant/profile"
-          exact
-        />
-        <CompanyEmployeeRouter
-          key="/company/profile"
-          component={() => <CompanyProfile />}
-          path="/employee/company-profile"
-          exact
-        />
-        <CompanyManagerRouter
-          key="/company/profile"
-          component={() => <CompanyProfile />}
-          path="/manager/company-profile"
-          exact
-        />
-      </Switch>
-    </>
-  )
+                <Route path="/auth/login" exact>
+                    {/*if user has already login, avoid them to login again*/}
+                    {!role ? <LoginPage/> : <Redirect to="/"/>}
+                </Route>
+                <Route path="/auth/register" exact>
+                    {!role ? <RegisterPage/> : <Redirect to="/"/>}
+                </Route>
+                <Route path="/accounts/changepassword" exact>
+                    {role ? <ChangePasswordPage/> : <Redirect to="/auth/login"/>}
+                </Route>
+                <Route path="/faq" exact>
+                    <FAQPage/>
+                </Route>
+                <Route path="/JobFairPack" exact>
+                    <JobFairPackPage/>
+                </Route>
+                <Route path="/user" exact>
+                    <UserPage/>
+                </Route>
+                <Route path="/contracts" exact>
+                    <ContractsPage/>
+                </Route>
+                <Route path="/jobfair-list" exact>
+                    <JobFairsPage/>
+                </Route>
+                <Route path="/job-fair" exact>
+                    <JobFairListPage/>
+                </Route>
+                <AttendantRouter key="/applied-job" component={<AppliedJobPage/>} path="/applied-job" exact/>
+                <CompanyManagerRouter
+                    key="/company/employee-management"
+                    component={() => <EmployeeManagementPage/>}
+                    path="/company/employee-management"
+                    exact
+                />
+                <CompanyManagerRouter
+                    key="/company/employee-register"
+                    component={() => <EmployeeRegisterPage/>}
+                    path="/company/employee-register"
+                    exact
+                />
+                <CompanyManagerRouter
+                    key="/company/register-job-fair"
+                    component={() => <RegisterJobFairForm/>}
+                    path="/company/register-job-fair"
+                    exact
+                />
+                <AttendantRouter
+                    key="/attendant/profile"
+                    component={() => <AttendantProfile/>}
+                    path="/attendant/profile"
+                    exact
+                />
+                <CompanyEmployeeRouter
+                    key="/company/profile"
+                    component={() => <CompanyProfile/>}
+                    path="/employee/company-profile"
+                    exact
+                />
+                <CompanyManagerRouter
+                    key="/company/profile"
+                    component={() => <CompanyProfile/>}
+                    path="/manager/company-profile"
+                    exact
+                />
+                <AdminRouter
+                    key="" component={() => (<ApprovalRegistrationPage/>)}
+                    path="/approval-registration/:jobFairId"
+                    exact
+                />
+                <StaffRouter
+                    key="" component={() => (<ApprovalRegistrationPage/>)}
+                    path="/approval-registration/:jobFairId"
+                    exact
+                />
+            </Switch>
+        </>
+    )
+
 }
 export default AppRouter
