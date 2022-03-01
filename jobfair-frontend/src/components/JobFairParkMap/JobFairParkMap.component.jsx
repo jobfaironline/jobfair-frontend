@@ -1,5 +1,5 @@
 import React from "react";
-import {ChildMesh} from "../../pages/JobFairPackPage/components/model/Final_booth_model";
+import {ChildMesh} from "../../pages/DecorateBoothPage/components/model/Final_booth_model";
 import {Canvas} from "@react-three/fiber";
 import {OrbitControls, Stage} from "@react-three/drei";
 

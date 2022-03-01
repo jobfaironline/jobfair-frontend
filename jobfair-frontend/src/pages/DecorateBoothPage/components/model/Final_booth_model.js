@@ -85,7 +85,7 @@ function ItemMesh({
       castShadow
       receiveShadow
     >
-      {mesh.children.map(child => ChildMesh({ key: child.uuid, mesh: child }))}
+      {mesh.children.map(child => <ChildMesh mesh={child} key={child.uuid}/>)}
     </mesh>
   )
 }
@@ -144,25 +144,26 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
   )
 }
 
-export function ChildMesh({ mesh }) {
+export const ChildMesh = React.forwardRef(({ mesh }, ref) => {
   return (
-    <mesh
-      name={mesh.name}
-      key={mesh.uuid}
-      geometry={mesh.geometry}
-      material={mesh.material}
-      position={mesh.position}
-      rotation={mesh.rotation}
-      scale={mesh.scale}
-      castShadow
-      receiveShadow
-    >
-      {mesh.children.map(child => (
-        <ChildMesh mesh={child} />
-      ))}
-    </mesh>
+      <mesh
+          ref={ref}
+          name={mesh.name}
+          key={mesh.uuid}
+          geometry={mesh.geometry}
+          material={mesh.material}
+          position={mesh.position}
+          rotation={mesh.rotation}
+          scale={mesh.scale}
+          castShadow
+          receiveShadow
+      >
+        {mesh.children.map(child => (
+            <ChildMesh key={child.uuid} mesh={child} />
+        ))}
+      </mesh>
   )
-}
+})
 
 export const Model = React.forwardRef(
   (
