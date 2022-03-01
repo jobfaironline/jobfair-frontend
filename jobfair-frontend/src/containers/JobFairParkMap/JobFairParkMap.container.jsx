@@ -37,9 +37,9 @@ const JobFairParkMapContainer = props => {
   useEffect(async () => {
     //fetch this from BE
     //const url = 'https://d3polnwtp0nqe6.cloudfront.net/Layout/de3edad8-8dcb-4d49-bff1-7ea1b34afe7a';
-    const responseDate = await getLayoutInformationForJobFairPark(jobFairId).then(response => response.data)
-    const url = responseDate.jobFairLayoutUrl
-    const data = responseDate.booths
+    const responseData = await getLayoutInformationForJobFairPark(jobFairId).then(response => response.data)
+    const url = responseData.jobFairLayoutUrl
+    const data = responseData.booths
     //the bellow is the data format
     /*const data = [
             {
