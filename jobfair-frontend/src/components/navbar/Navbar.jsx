@@ -91,7 +91,7 @@ const NavigationBar = () => {
                         <Link to="/faq">FAQ</Link>
                     </Menu.Item>
                     <Menu.Item key="choose-booth">
-                        <Link to="/choose-booth">Choose Booth</Link>
+                        <Link to="/choose-booth/aa887cc1-240a-41de-99b4-5ffe26075279">Choose Booth</Link>
                     </Menu.Item>
                     {
                         !role ? <Menu.Item key="login">

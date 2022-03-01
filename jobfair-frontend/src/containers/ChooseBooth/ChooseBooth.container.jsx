@@ -1,17 +1,36 @@
 import React, {useEffect, useState} from "react";
 import {loadModel} from "../../utils/glbModelUtil";
 import {ChooseBoothCanvas} from "../../components/ChooseBooth/ChooseBoothCanvas.component";
+import {getLayoutByJobFairId} from "../../services/layoutService";
 
 export const ChooseBoothPageContainer = (props) => {
     const {jobFairId} = props;
-    const url = "./map.glb"
-    const [glbMesh, setGlbMesh] = useState();
+    const [state, setState] = useState({
+        glbMesh: undefined,
+        boothData: []
+    });
 
     useEffect(async () => {
+        const data = await getLayoutByJobFairId(jobFairId).then(response => response.data)
+        const url = data.url;
+
         const glb = await loadModel(url);
-        setGlbMesh(glb.scene);
+        const boothData = [];
+        for (const boothInfo of data.booths) {
+            const {id, name, price, status} = boothInfo;
+            boothData[name] = {
+                id: id,
+                price: price,
+                status: status,
+            }
+            boothData.push(boothData)
+        }
+
+        setState(prevState => {
+            return {...prevState, glbMesh: glb.scene, boothData: boothData}
+        });
     }, [])
 
-    if (glbMesh === undefined) return null;
-    return <ChooseBoothCanvas mesh={glbMesh}/>
+    if (state.glbMesh === undefined || state.boothData.length === 0) return null;
+    return <ChooseBoothCanvas mesh={state.glbMesh} boothData={state.boothData}/>
 }

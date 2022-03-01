@@ -2,7 +2,7 @@ import React, {useRef} from "react";
 import {ChildMesh} from "../../pages/JobFairPackPage/components/model/Final_booth_model";
 
 export const ChooseBoothGroundMesh = (props) => {
-    const {mesh, onPointerOver, onPointerLeave} = props;
+    const {mesh, onPointerOver, onPointerLeave, onClick} = props;
     const ref = useRef()
     return (
         <mesh
@@ -22,6 +22,7 @@ export const ChooseBoothGroundMesh = (props) => {
             onPointerLeave={event => {
                 onPointerLeave(ref);
             }}
+            onClick={onClick}
         >
             {mesh.children.map(child => (
                 <ChildMesh mesh={child}/>

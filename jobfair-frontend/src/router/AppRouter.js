@@ -84,7 +84,7 @@ const AppRouter = () => {
                 <Route path="/job-fair" exact>
                     <JobFairListPage/>
                 </Route>
-                <Route path='/choose-booth' exact>
+                <Route path='/choose-booth/:jobFairId' exact>
                     <ChooseBoothPage/>
                 </Route>
 
