@@ -1,5 +1,5 @@
 import React , {useState} from 'react';
-import {Button, Empty, Input, Space, Spin, Table} from "antd";
+import {Button, Empty, Input, Pagination, Space, Spin, Table} from "antd";
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import Highlighter from "react-highlight-words";
 import ApprovalRegistrationColumn from "../columns/ApprovalRegistration.column";
@@ -90,7 +90,10 @@ const ApprovalRegistrationComponent = ({data, extra}) => {
 
     return (
         <>
-            <Table columns={finalColumns} dataSource={data} pagination={{ pageSize: 5 }} />
+            <Table columns={finalColumns} dataSource={data}
+                   // pagination={{ pageSize: 5 }}
+                   pagination={false}
+            />
             <a onClick={history.goBack}>Back</a>
         </>
     )
