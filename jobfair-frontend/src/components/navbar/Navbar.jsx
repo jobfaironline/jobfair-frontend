@@ -9,7 +9,7 @@ export const AttendantMenu = [
         <Link to="/attendant/profile">Attendant Profile</Link>
     </Menu.Item>,
     <Menu.Item key="map">
-        <Link to="/map">Map</Link>
+        <Link to="/map/f86bb668-b6b6-4c6a-bef3-2e6e878da01c">Map</Link>
     </Menu.Item>
 ]
 
@@ -24,7 +24,7 @@ export const CompanyManagerMenu = [
         <Link to="/company/register-job-fair">Register to job fair</Link>
     </Menu.Item>,
     <Menu.Item key="map">
-        <Link to="/map">Map</Link>
+        <Link to="/map/f86bb668-b6b6-4c6a-bef3-2e6e878da01c">Map</Link>
     </Menu.Item>
 ]
 
@@ -89,6 +89,9 @@ const NavigationBar = () => {
                     </Menu.Item>
                     <Menu.Item key="faq">
                         <Link to="/faq">FAQ</Link>
+                    </Menu.Item>
+                    <Menu.Item key="choose-booth">
+                        <Link to="/choose-booth">Choose Booth</Link>
                     </Menu.Item>
                     {
                         !role ? <Menu.Item key="login">

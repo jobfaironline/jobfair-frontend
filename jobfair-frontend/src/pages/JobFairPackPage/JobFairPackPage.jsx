@@ -1,17 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Canvas, useThree } from '@react-three/fiber'
-import { Model } from './components/model/Final_booth_model'
-import { OrbitControls, useGLTF, Stage } from '@react-three/drei'
-import { ToastContainer } from 'react-toastify'
-import { Button } from 'antd'
-import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter'
+import React, {useRef, useState} from 'react'
+import {Canvas} from '@react-three/fiber'
+import {Model} from './components/model/Final_booth_model'
+import {OrbitControls, Stage, useGLTF} from '@react-three/drei'
+import {ToastContainer} from 'react-toastify'
 import Menu from './components/Menu/ItemListMenu'
-import { EffectComposer, Outline } from '@react-three/postprocessing'
-import { ModeConstant } from '../../constants/AppConst'
-import { SketchPicker } from 'react-color'
+import {EffectComposer, Outline} from '@react-three/postprocessing'
+import {ModeConstant} from '../../constants/AppConst'
 import {downloadModel} from "../../utils/glbModelUtil";
 import {initialSampleItems} from "./data/SampleDateItem";
 import SideBarDecoratedBooth from "./components/SideBarDecoratedBooth/SideBarDecoratedBooth.component";
+
 const JobFairPackPage = () => {
 
   const [isDragging, setIsDragging] = useState(false)
@@ -22,7 +20,7 @@ const JobFairPackPage = () => {
   const [hoverItemRef, setHoverItemRef] = useState()
   const ref = useRef()
   //parse file and get items
-  const { nodes, materials } = useGLTF('./untitled.glb')
+  const { nodes, materials } = useGLTF('https://d3polnwtp0nqe6.cloudfront.net/Booth/bf78dec0-98b3-41f7-bca0-72e2c65abcfb')
   const result = []
   for (const mesh in nodes) {
     if (nodes[mesh].parent?.name === 'Scene') result.push(nodes[mesh])
@@ -35,12 +33,12 @@ const JobFairPackPage = () => {
 
   const selected = () => {
     const result = []
-    if (hoverItemRef !== undefined) {
-      result.push(hoverItemRef)
+    if (hoverItemRef?.current !== undefined) {
+      result.push(hoverItemRef.current)
     }
     if (mode !== ModeConstant.SELECT) return result
-    if (selectedItemRef !== undefined) {
-      result.push(selectedItemRef)
+    if (selectedItemRef?.current !== undefined) {
+      result.push(selectedItemRef.current)
     }
     return result.length === 0 ? undefined : result
   }
@@ -97,7 +95,7 @@ const JobFairPackPage = () => {
           </Stage>
 
           <EffectComposer multisampling={8} autoClear={false}>
-            <Outline blur selection={selected()} visibleEdgeColor="orange" edgeStrength={5} width={1000} />
+            <Outline blur selection={selected()} visibleEdgeColor="yellow" edgeStrength={1000} width={1000} />
           </EffectComposer>
         </Canvas>
         <ToastContainer />

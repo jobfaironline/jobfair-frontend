@@ -34,7 +34,7 @@ export const downloadModel = mesh => {
     },
     // called when there is an error in the generation
     function (error) {
-      console.log('An error happened')
+      console.log(error)
     },
     {
       binary: true,

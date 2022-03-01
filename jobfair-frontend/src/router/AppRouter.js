@@ -27,6 +27,7 @@ import CompanyProfile from "../pages/ProfilePage/Company/CompanyProfilePage";
 import ApprovalRegistrationPage from "../pages/ApprovalRegistrationPage/ApprovalRegistration.page";
 import AdminRouter from "./AdminRouter";
 import StaffRouter from "./StaffRouter";
+import {ChooseBoothPage} from "../pages/ChooseBoothPage/ChooseBoothPage";
 
 
 const AppRouter = () => {
@@ -83,6 +84,10 @@ const AppRouter = () => {
                 <Route path="/job-fair" exact>
                     <JobFairListPage/>
                 </Route>
+                <Route path='/choose-booth' exact>
+                    <ChooseBoothPage/>
+                </Route>
+
                 <AttendantRouter key="/applied-job" component={<AppliedJobPage/>} path="/applied-job" exact/>
                 <CompanyManagerRouter
                     key="/company/employee-management"
