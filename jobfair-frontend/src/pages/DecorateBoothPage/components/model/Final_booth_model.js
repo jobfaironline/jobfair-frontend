@@ -85,7 +85,7 @@ function ItemMesh({
       castShadow
       receiveShadow
     >
-      {mesh.children.map(child => ChildMesh({ key: child.uuid, mesh: child }))}
+      {mesh.children.map(child => <ChildMesh mesh={child} key={child.uuid}/>)}
     </mesh>
   )
 }

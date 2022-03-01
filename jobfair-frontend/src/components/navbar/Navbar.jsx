@@ -81,8 +81,8 @@ const NavigationBar = () => {
                             <div className="logo">LOGO</div>
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="jobfair">
-                        <Link to="/JobFairPack">Job Fair Park</Link>
+                    <Menu.Item key="decorate-booth">
+                        <Link to="/decorate-booth">Decorate Booth</Link>
                     </Menu.Item>
                     <Menu.Item key="contact">
                         <Link to="/contracts">Contact</Link>

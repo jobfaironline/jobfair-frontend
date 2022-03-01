@@ -6,12 +6,14 @@ import {ToastContainer} from 'react-toastify'
 import Menu from './components/Menu/ItemListMenu'
 import {EffectComposer, Outline} from '@react-three/postprocessing'
 import {ModeConstant} from '../../constants/AppConst'
-import {downloadModel} from "../../utils/glbModelUtil";
+import {downloadModel, parseModel} from "../../utils/glbModelUtil";
 import {initialSampleItems} from "./data/SampleDateItem";
 import SideBarDecoratedBooth from "./components/SideBarDecoratedBooth/SideBarDecoratedBooth.component";
+import {useParams} from "react-router-dom";
+import {saveDecoratedBooth} from "../../services/boothPurchaseService";
 
-const JobFairPackPage = () => {
-
+const DecorateBoothPage = () => {
+  const {companyBoothId} = useParams();
   const [isDragging, setIsDragging] = useState(false)
   const [sampleItems, setSampleItems] = useState(initialSampleItems)
   const [selectedSampleItem, setSelectedSampleItem] = useState({})
@@ -51,7 +53,8 @@ const JobFairPackPage = () => {
     setMode(mode)
   }
 
-  const onClick = () => {
+  const onClick = async () => {
+    console.log(companyBoothId);
     let sceneNode = ref.current.parent;
     while (sceneNode.type !== 'Scene'){
       sceneNode = sceneNode.parent;
@@ -61,8 +64,13 @@ const JobFairPackPage = () => {
     const copyNode = ref.current.children.map(mesh => mesh.clone());
     copyNode.forEach(mesh => sceneNodeCopy.children.push(mesh));
     sceneNodeCopy.name="Scene";
-    debugger;
-    downloadModel(sceneNodeCopy);
+
+    const glbData = await parseModel(sceneNodeCopy);
+    const formData  = new FormData();
+    formData.append("companyBoothId", companyBoothId)
+    formData.append("file", glbData)
+    saveDecoratedBooth(formData);
+    //downloadModel(sceneNodeCopy);
 
   }
 
@@ -111,4 +119,4 @@ const JobFairPackPage = () => {
   )
 }
 
-export default JobFairPackPage
+export default DecorateBoothPage

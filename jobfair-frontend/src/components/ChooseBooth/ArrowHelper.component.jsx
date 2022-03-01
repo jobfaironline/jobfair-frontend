@@ -1,7 +1,7 @@
 import React, {useRef} from "react";
 import * as THREE from "three";
 import {useFrame} from "@react-three/fiber";
-import {ChildMesh} from "../../pages/JobFairPackPage/components/model/Final_booth_model";
+import {ChildMesh} from "../../pages/DecorateBoothPage/components/model/Final_booth_model";
 
 export const ArrowHelper = (props) => {
     const {origin} = props;

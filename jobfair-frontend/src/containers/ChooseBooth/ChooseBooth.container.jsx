@@ -32,5 +32,5 @@ export const ChooseBoothPageContainer = (props) => {
     }, [])
 
     if (state.glbMesh === undefined || state.boothData.length === 0) return null;
-    return <ChooseBoothCanvas mesh={state.glbMesh} boothData={state.boothData}/>
+    return <ChooseBoothCanvas mesh={state.glbMesh} boothData={state.boothData} jobFairId={jobFairId}/>
 }

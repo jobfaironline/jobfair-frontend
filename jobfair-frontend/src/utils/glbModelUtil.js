@@ -18,6 +18,27 @@ export async function loadModel(url) {
   })
 }
 
+export const parseModel = async (mesh) => {
+  return new Promise(resolve => {
+    exporter.parse(
+        mesh,
+        // called when the gltf has been generated
+        function (gltf) {
+          const blob = new Blob([gltf], { type: 'application/octet-stream' })
+          resolve(blob);
+        },
+        // called when there is an error in the generation
+        function (error) {
+          console.log(error)
+        },
+        {
+          binary: true,
+          trs: true
+        }
+    )
+  })
+}
+
 export const downloadModel = mesh => {
   exporter.parse(
     mesh,
