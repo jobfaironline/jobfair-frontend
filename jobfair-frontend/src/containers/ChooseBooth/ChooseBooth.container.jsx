@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {loadModel} from "../../utils/glbModelUtil";
 import {ChooseBoothCanvas} from "../../components/ChooseBooth/ChooseBoothCanvas.component";
-import {getLayoutByJobFairId} from "../../services/layoutService";
+import {getLayoutAndAvailableSlotByJobFairId} from "../../services/layoutService";
 
 export const ChooseBoothPageContainer = (props) => {
     const {jobFairId} = props;
@@ -11,11 +11,11 @@ export const ChooseBoothPageContainer = (props) => {
     });
 
     useEffect(async () => {
-        const data = await getLayoutByJobFairId(jobFairId).then(response => response.data)
+        const data = await getLayoutAndAvailableSlotByJobFairId(jobFairId).then(response => response.data)
         const url = data.url;
 
         const glb = await loadModel(url);
-        const boothData = [];
+        const boothData = {};
         for (const boothInfo of data.booths) {
             const {id, name, price, status} = boothInfo;
             boothData[name] = {
@@ -23,7 +23,6 @@ export const ChooseBoothPageContainer = (props) => {
                 price: price,
                 status: status,
             }
-            boothData.push(boothData)
         }
 
         setState(prevState => {

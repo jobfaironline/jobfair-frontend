@@ -64,7 +64,7 @@ export const ChooseBoothCanvas = (props) => {
                        contactShadow={false}>
                     <group dispose={null}>
                         {mesh.children.map(childMesh => {
-                            if (childMesh.name.includes('company')) {
+                            if (childMesh.name.includes('company') && boothData[childMesh.name] !== undefined) {
                                 const id = boothData[childMesh.name].id;
                                 return <ChooseBoothGroundMesh key={childMesh.uuid} mesh={childMesh}
                                                               onPointerOver={onCompanyGroundPointerOver}
@@ -75,7 +75,7 @@ export const ChooseBoothCanvas = (props) => {
                             return <ChildMesh key={childMesh.uuid} mesh={childMesh}/>
                         })}
                         {mesh.children.map(childMesh => {
-                            if (childMesh.name.includes('company')) {
+                            if (childMesh.name.includes('company')  && boothData[childMesh.name] !== undefined) {
                                 return <ArrowHelper origin={childMesh.position}/>
                             }
                             return null;
