@@ -27,6 +27,11 @@ import CompanyProfile from "../pages/ProfilePage/Company/CompanyProfilePage";
 import ApprovalRegistrationPage from "../pages/ApprovalRegistrationPage/ApprovalRegistration.page";
 import AdminRouter from "./AdminRouter";
 import StaffRouter from "./StaffRouter";
+import ResultSuccessComponent from "../components/Result/ResultSuccess.component";
+import ResultFailedComponent from "../components/Result/ResultFailed.component";
+import ResultSuccessPage from "../pages/ResultPage/ResultSuccessPage";
+import ResultFailedPage from "../pages/ResultPage/ResultFailedPage";
+import ConfirmPage from "../pages/ConfirmPage/ConfirmPage";
 
 
 const AppRouter = () => {
@@ -64,6 +69,15 @@ const AppRouter = () => {
                 </Route>
                 <Route path="/accounts/changepassword" exact>
                     {role ? <ChangePasswordPage/> : <Redirect to="/auth/login"/>}
+                </Route>
+                <Route path="/proceed-success" exact>
+                    <ResultSuccessPage/>
+                </Route>
+                <Route path="/proceed-fail" exact>
+                    <ResultFailedPage/>
+                </Route>
+                <Route path="/confirm" exact>
+                    <ConfirmPage/>
                 </Route>
                 <Route path="/faq" exact>
                     <FAQPage/>
