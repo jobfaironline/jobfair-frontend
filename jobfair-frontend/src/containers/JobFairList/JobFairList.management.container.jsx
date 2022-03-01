@@ -1,6 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import {useHistory} from 'react-router-dom'
 import JobFairListManagementComponent from "../../components/JobFairList/JobFairList.management.component";
+import {getAllJobFairAPI} from "../../services/jobfairService";
+import {convertToDateString} from "../../utils/common";
+import {notification} from "antd";
+
+const approvedJobFairId = 'a50a9875-93aa-4605-8afd-29923d3310fe';
+
 
 const JobFairListManagementContainer = props => {
     const [loading, setLoading] = useState(false)
@@ -18,12 +24,13 @@ const JobFairListManagementContainer = props => {
             .then(body => {
                 const mappedData = body.results.map(item => {
                     return {
-                        id: item.email,
+                        id: approvedJobFairId,
+                        // id: item.email,
                         title: item.name.first,
                         company_name: item.name.last,
                         status: 'Happening',
                         interview_date: '12/03/2022',
-                        registerLink: `/company-register-jobfair/${item.email}`,
+                        registerLink: `/company-register-jobfair/${approvedJobFairId}`,
                         apply_date: '01/03/2022'
                     }
                 })

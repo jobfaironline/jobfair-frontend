@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import {createDraftRegistration} from "./registration-jobfair-form-action";
 
 const registrationJobFairFormSlice = createSlice({
   name: 'registrationJobfairForm',
@@ -12,6 +13,29 @@ const registrationJobFairFormSlice = createSlice({
         jobFairRegistrationId: null,
         jobPositions: []
       }
+    },
+    createDraftResult: [],
+    companyInfo: {
+      taxId: "",
+      name: "",
+      address: "",
+      phone: "",
+      email: "",
+      employeeMaxNum: 0,
+      url: "",
+      status: "",
+      sizeId: 0,
+      subCategoriesIds: [
+        0
+      ],
+      benefits: [
+        {
+          id: 0,
+          description: "",
+        },
+      ],
+      // "companyLogoURL": "https://d3polnwtp0nqe6.cloudfront.net/default.png",
+      companyDescription: ""
     }
   },
   reducers: {
@@ -53,6 +77,11 @@ const registrationJobFairFormSlice = createSlice({
         }
       }
     }
+  },
+  extraReducers: builder => {
+    builder.addCase(createDraftRegistration.fulfilled, (state, action) => {
+      return {...state, createDraftResult : action.payload}
+    })
   }
 })
 

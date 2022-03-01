@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import JobFairListEvaluateComponent from "../../components/JobFairList/JobFairList.evaluate.component";
 import {evaluateJobFairPlanAPI, getAllJobFairAPI} from "../../services/jobfairService";
-import {notification, Space} from "antd";
+import {notification, Pagination, Space} from "antd";
 import {convertToDateString} from "../../utils/common";
 import {Link} from "react-router-dom";
 import JobFairDetailModalContainer from "../../components/JobFairList/modal/JobFairDetailModal.container";
@@ -12,12 +12,19 @@ const JobFairListEvaluateContainer = () => {
     const [jobFairId, setJobFairId] = useState('');
     const [creatorId, setCreatorId] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    //pagination
+    const [totalRecord, setTotalRecord] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
 
     const fetchData = async () => {
-        getAllJobFairAPI()
+        getAllJobFairAPI(currentPage, pageSize, 'attendantRegisterStartTime', 'DESC')
             .then(res => {
                 console.log(res.data)
-                const dataSet = res.data.map(item => {
+                const totalRecord = res.data.totalElements;
+                setTotalRecord(totalRecord)
+
+                const dataSet = res.data.content.map(item => {
                     return {
                         ...item,
                         attendantRegisterStartTime: convertToDateString(item.attendantRegisterStartTime).split('T')[0],
@@ -30,11 +37,16 @@ const JobFairListEvaluateContainer = () => {
                     }
                 })
                 setData([...dataSet])
+                notification['success']({
+                    message: `Get job fair list successfully`,
+                    duration: 2
+                })
             })
             .catch(err => {
                 notification['error']({
                     message: `Get job fair list failed`,
-                    description: `There is problem while fetching, try again later: ${err}`
+                    description: `There is problem while fetching, try again later: ${err}`,
+                    duration: 2
                 })
             })
     }
@@ -77,6 +89,14 @@ const JobFairListEvaluateContainer = () => {
                 })
             })
     }
+    useLayoutEffect(() => {
+        fetchData()
+    }, [currentPage, pageSize])
+
+    const handlePageChange = (page, pageSize) => {
+        setCurrentPage(page - 1);
+        setPageSize(pageSize)
+    }
 
     return (
         <>
@@ -104,6 +124,14 @@ const JobFairListEvaluateContainer = () => {
                     )
                 }
             }}/>
+            <Pagination
+                total={totalRecord}
+                onChange={(page, pageSize) => handlePageChange(page, pageSize)}
+                showSizeChanger
+                showQuickJumper
+                showTotal={total => `Total ${total} items`}
+                pageSizeOptions={[5, 10, 15, 20]}
+            />,
         </>
     );
 };

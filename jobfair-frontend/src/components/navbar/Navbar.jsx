@@ -21,7 +21,7 @@ export const CompanyManagerMenu = [
         <Link to="/company/employee-management">Employee Management</Link>
     </Menu.Item>,
     <Menu.Item key="manager-register-jobfair">
-        <Link to="/company/register-job-fair">Register to job fair</Link>
+        <Link to="/company-register-jobfair/">Register to job fair</Link>
     </Menu.Item>,
     <Menu.Item key="map">
         <Link to="/map">Map</Link>

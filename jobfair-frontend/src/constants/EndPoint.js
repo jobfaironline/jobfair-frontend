@@ -18,3 +18,5 @@ export const ENDPOINT_GET_ACCOUNT_BY_ID = '/api/v1/accounts'
 export const ENDPOINT_JOB_CONTROLLER = '/api/v1/job'
 export const ENDPOINT_GET_LAYOUT_BY_JOB_FAIR_ID = '/api/v1/job-fairs/for-3d-map'
 export const ENDPOINT_GET_COMPANY_BOOTH_LATEST_VERSION_LAYOUT = '/api/v1/company-booth-layout/latest'
+export const ENDPOINT_CREATE_DRAFT_REGISTRATION = '/api/v1/job-fair/company-registration/draft';
+export const ENDPOINT_SUBMIT_REGISTRATION = '/api/v1/job-fair/company-registration/submit'
