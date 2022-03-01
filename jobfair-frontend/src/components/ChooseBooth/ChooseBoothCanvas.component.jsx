@@ -52,21 +52,21 @@ export const ChooseBoothCanvas = (props) => {
     }
 
 
-    const cursorStyle = hoverRef === undefined ? "default" : "pointer";
     return (
         <Fragment>
             <Modal title="Confirm booth" visible={modalState.isVisible} onOk={handleOk} onCancel={handleCancel}>
                 Are you sure?
             </Modal>
-            <Canvas dpr={[1, 2]} camera={{fov: 50}} style={{width: '100%', height: '850px', cursor: cursorStyle}}>
+            <Canvas dpr={[1, 2]} camera={{fov: 50}} style={{width: '100%', height: '850px', cursor: hoverRef === undefined ? "default" : "pointer"}}>
                 <OrbitControls/>
                 <Stage preset="rembrandt" intensity={0.4} environment="city"
                        contactShadow={false}>
                     <group dispose={null}>
                         {mesh.children.map(childMesh => {
-                            if (childMesh.name.includes('company') && boothData[childMesh.name] !== undefined) {
-                                const id = boothData[childMesh.name].id;
+                            if (childMesh.name.includes('company')) {
+                                const id = boothData[childMesh.name]?.id;
                                 return <ChooseBoothGroundMesh key={childMesh.uuid} mesh={childMesh}
+                                                              isAvailable={boothData[childMesh.name] !== undefined}
                                                               onPointerOver={onCompanyGroundPointerOver}
                                                               onPointerLeave={onCompanyGroundPointerOut}
                                                               onClick={() => onClick(id)}
@@ -83,7 +83,7 @@ export const ChooseBoothCanvas = (props) => {
                     </group>
                 </Stage>
                 <EffectComposer multisampling={8} autoClear={false}>
-                    <Outline selection={hoverRef} edgeStrength={100} width={500} hiddenEdgeColor={"green"}
+                    <Outline selection={hoverRef} edgeStrength={100} width={1000} hiddenEdgeColor={"green"}
                              visibleEdgeColor={"green"}/>
                 </EffectComposer>
             </Canvas>

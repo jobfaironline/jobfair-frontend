@@ -17,9 +17,7 @@ const SideBarDecoratedBooth = ({selectedItemRef, onClick}) => {
 
     const loadFile = {
         beforeUpload: file => {
-            const isPNG = file.type === 'image/png'
-            const isJPG = file.type === 'image/jpg'
-            if (!isPNG && !isJPG) {
+            if (info.file.type !== 'image/png' || info.file.type !== 'image/jpg' || info.file.type !== 'video/mp4') {
                 message.error(`${file.name} is not a png file`)
             }
             return false;
@@ -268,7 +266,7 @@ const SideBarDecoratedBooth = ({selectedItemRef, onClick}) => {
                 </div>
                 <Upload {...loadFile}> <Button icon={<UploadOutlined/>}>Upload Mockup Image</Button> </Upload>
 
-                <Button onClick={onClick}>Download Model</Button>
+                <Button onClick={onClick}>Save</Button>
                 {/*<Button onClick={handleOnChangeMaterialVideo}>Mockup video</Button>*/}
             </div>
         </>

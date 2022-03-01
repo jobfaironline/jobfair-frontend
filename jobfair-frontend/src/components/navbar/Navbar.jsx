@@ -9,7 +9,7 @@ export const AttendantMenu = [
         <Link to="/attendant/profile">Attendant Profile</Link>
     </Menu.Item>,
     <Menu.Item key="map">
-        <Link to="/map/aa887cc1-240a-41de-99b4-5ffe26075279">Map</Link>
+        <Link to="/map/83fcb7d3-6d88-45d9-ad86-9314de41743d">Map</Link>
     </Menu.Item>
 ]
 
@@ -24,7 +24,7 @@ export const CompanyManagerMenu = [
         <Link to="/company/register-job-fair">Register to job fair</Link>
     </Menu.Item>,
     <Menu.Item key="map">
-        <Link to="/map/aa887cc1-240a-41de-99b4-5ffe26075279">Map</Link>
+        <Link to="/map/83fcb7d3-6d88-45d9-ad86-9314de41743d">Map</Link>
     </Menu.Item>
 ]
 
@@ -33,7 +33,7 @@ export const CompanyEmployeeMenu = [
         <Link to="/employee/company-profile">Company profile</Link>
     </Menu.Item>,
     <Menu.Item key="map">
-        <Link to="/map/aa887cc1-240a-41de-99b4-5ffe26075279">Map</Link>
+        <Link to="/map/83fcb7d3-6d88-45d9-ad86-9314de41743d">Map</Link>
     </Menu.Item>
 ]
 

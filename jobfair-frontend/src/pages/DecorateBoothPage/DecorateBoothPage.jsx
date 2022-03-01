@@ -2,7 +2,7 @@ import React, {useRef, useState} from 'react'
 import {Canvas} from '@react-three/fiber'
 import {Model} from './components/model/Final_booth_model'
 import {OrbitControls, Stage, useGLTF} from '@react-three/drei'
-import {ToastContainer} from 'react-toastify'
+import {toast, ToastContainer} from 'react-toastify'
 import Menu from './components/Menu/ItemListMenu'
 import {EffectComposer, Outline} from '@react-three/postprocessing'
 import {ModeConstant} from '../../constants/AppConst'
@@ -11,6 +11,7 @@ import {initialSampleItems} from "./data/SampleDateItem";
 import SideBarDecoratedBooth from "./components/SideBarDecoratedBooth/SideBarDecoratedBooth.component";
 import {useParams} from "react-router-dom";
 import {saveDecoratedBooth} from "../../services/boothPurchaseService";
+import {notify} from "../../utils/toastutil";
 
 const DecorateBoothPage = () => {
   const {companyBoothId} = useParams();
@@ -54,7 +55,6 @@ const DecorateBoothPage = () => {
   }
 
   const onClick = async () => {
-    console.log(companyBoothId);
     let sceneNode = ref.current.parent;
     while (sceneNode.type !== 'Scene'){
       sceneNode = sceneNode.parent;
@@ -70,6 +70,8 @@ const DecorateBoothPage = () => {
     formData.append("companyBoothId", companyBoothId)
     formData.append("file", glbData)
     saveDecoratedBooth(formData);
+    notify(2, "Save successfully")
+
     //downloadModel(sceneNodeCopy);
 
   }
