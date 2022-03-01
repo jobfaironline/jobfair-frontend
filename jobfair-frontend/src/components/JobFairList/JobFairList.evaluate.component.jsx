@@ -77,7 +77,10 @@ const JobFairListEvaluateComponent = ({data, extra}) => {
     const finalColumns = extra ? [...defaultColumns, extra] : [...defaultColumns]
     return (
         <>
-            <Table columns={finalColumns} dataSource={data} pagination={{pageSize: 8}}/>
+            <Table columns={finalColumns} dataSource={data}
+                   // pagination={{pageSize: 8}}
+                    pagination={false}
+            />
         </>
     );
 };

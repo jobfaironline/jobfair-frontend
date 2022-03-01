@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import ApprovalRegistrationComponent
     from "../../components/ApprovalRegistration/components/ApprovalRegistration.component";
-import {Button, Form, Input, notification, Popover, Radio, Space} from "antd";
+import {Button, Form, Input, notification, Pagination, Popover, Radio, Space} from "antd";
 import {useParams} from "react-router-dom";
 import {evaluateJobFairRegistrationAPI, getRegistrationByJobFairId} from "../../services/jobfairService";
 import {convertToDateString} from "../../utils/common";
@@ -15,14 +15,20 @@ const ApprovalRegistrationContainer = () => {
     const [data, setData] = useState([]);
     const [regisId, setRegisId] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    //paging state
+    const [totalRecord, setTotalRecord] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
 
     const {jobFairId} = useParams();
 
     const fetchData = async () => {
-        getRegistrationByJobFairId(jobFairId)
+        getRegistrationByJobFairId(jobFairId, currentPage, pageSize, 'createDate', 'DESC')
             .then(res => {
-                const {data} = res;
-                const result = data.map((item, index) => {
+                console.log(res.data)
+                const totalRecord = res.data.totalElements;
+                setTotalRecord(totalRecord)
+                const result = res.data.content.map((item, index) => {
                     return {
                         ...item,
                         createDate: convertToDateString(item.createDate).split('T')[0],
@@ -30,14 +36,14 @@ const ApprovalRegistrationContainer = () => {
                     }
                 })
                 setData([...result])
-                notification['success'] ({
+                notification['success']({
                     message: `All registration has been loaded`,
                     description: `with job fair ID: ${jobFairId}`,
-                    duration: 2,
+                    duration: 1,
                 })
             })
             .catch(err => {
-                notification['error'] ({
+                notification['error']({
                     message: `Not found company registration by job fair ID: ${jobFairId}`,
                     description: `${err}`,
                     duration: 2,
@@ -48,11 +54,15 @@ const ApprovalRegistrationContainer = () => {
         fetchData()
     }, [])
 
+    useLayoutEffect(() => {
+        fetchData()
+    }, [currentPage, pageSize])
+
 
     const onFinish = (values) => {
         evaluateJobFairRegistrationAPI(values)
             .then((res) => {
-                notification['success'] ({
+                notification['success']({
                     message: `Submit evaluation successfully`,
                     description: `Your evaluation has been submitted`,
                     duration: 2,
@@ -61,12 +71,21 @@ const ApprovalRegistrationContainer = () => {
                 fetchData();
             })
             .catch((e) => {
-                notification['error'] ({
+                notification['error']({
                     message: `Submit evaluation failed`,
                     description: `There is problem while submitting, try again later`,
                     duration: 2,
                 })
             })
+    }
+
+    const handlePageChange = (page, pageSize) => {
+        console.log('page', page, 'page size: ', pageSize)
+        if (page === 1) {
+            setCurrentPage(0);
+        }
+        setCurrentPage(page - 1);
+        setPageSize(pageSize)
     }
 
     const modalProps = {
@@ -96,7 +115,9 @@ const ApprovalRegistrationContainer = () => {
                                 }}>
                                     View detail
                                 </a>
-                                {record.status === 'PENDING' ? <EvaluationFormComponent onFinish={onFinish} id={record.id} name='companyRegistrationId'/>
+                                {record.status === 'PENDING' ?
+                                    <EvaluationFormComponent onFinish={onFinish} id={record.id}
+                                                             name='companyRegistrationId'/>
 
                                     : null}
                             </Space>
@@ -104,6 +125,14 @@ const ApprovalRegistrationContainer = () => {
                     }
                 }}
             />
+            <Pagination
+                total={totalRecord}
+                onChange={(page, pageSize) => handlePageChange(page, pageSize)}
+                showSizeChanger
+                showQuickJumper
+                showTotal={total => `Total ${total} items`}
+                pageSizeOptions={[5, 10, 15, 20]}
+            />,
         </>
     )
 };
