@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Canvas} from '@react-three/fiber'
 import {Model} from './components/model/Final_booth_model'
 import {Stage, useGLTF} from '@react-three/drei'
@@ -6,13 +6,14 @@ import {ToastContainer} from 'react-toastify'
 import Menu from './components/Menu/ItemListMenu'
 import {EffectComposer, Outline} from '@react-three/postprocessing'
 import {ModeConstant} from '../../constants/AppConst'
-import {parseModel} from "../../utils/glbModelUtil";
+import {fixTextureOffset, loadModel, parseModel} from "../../utils/glbModelUtil";
 import {initialSampleItems} from "./data/SampleDateItem";
 import SideBarDecoratedBooth from "./components/SideBarDecoratedBooth/SideBarDecoratedBooth.component";
 import {useParams} from "react-router-dom";
 import {saveDecoratedBooth} from "../../services/boothPurchaseService";
 import {notify} from "../../utils/toastutil";
 import {CameraControls} from "../../components/ThreeJSBaseComponent/CameraControls.component";
+import {getCompanyBoothLatestLayout} from "../../services/companyBoothService";
 
 const DecorateBoothPage = () => {
     const {companyBoothId} = useParams();
@@ -22,20 +23,23 @@ const DecorateBoothPage = () => {
     const [mode, setMode] = useState(ModeConstant.SELECT)
     const [selectedItemRef, setSelectedItemRef] = useState()
     const [hoverItemRef, setHoverItemRef] = useState()
+    const [modelItems, setModelItems] = useState([])
+
     const ref = useRef()
-    //parse file and get items
-    const {
-        nodes
-    } = useGLTF('https://d3polnwtp0nqe6.cloudfront.net/Booth/bf78dec0-98b3-41f7-bca0-72e2c65abcfb')
-    const result = []
-    for (const mesh in nodes) {
-        if (nodes[mesh].parent?.name === 'Scene') result.push(nodes[mesh])
-    }
-    for (const mesh of result) {
-        if (mesh.material.map !== null) {
-            mesh.material.map.center.set(0.5, 0.5)
+
+
+    useEffect(async () => {
+        const response = await getCompanyBoothLatestLayout(companyBoothId);
+        const url = response.data.url;
+        //parse file and get items
+        const glb = await loadModel(url);
+        const result = glb.scene.children;
+        for (const mesh of result) {
+            fixTextureOffset(mesh);
         }
-    }
+        setModelItems(result);
+    },
+        [])
 
     const selected = () => {
         const result = []
@@ -79,7 +83,7 @@ const DecorateBoothPage = () => {
 
     }
 
-    const [modelItems, setModelItems] = useState(result)
+    if (modelItems.length === 0 ) return null;
     return (
         <>
             <div style={{display: 'flex'}}>
@@ -90,10 +94,7 @@ const DecorateBoothPage = () => {
                     />
                 </div>
                 <Canvas dpr={[1, 2]} camera={{fov: 50}} style={{width: '100%', height: '850px'}}>
-                    {/*<OrbitControls enabled={!isDragging} enableZoom={true}
-                         maxPolarAngle={Math.PI/2 - Math.PI/10}
-                         minPolarAngle={0}
-                         maxDistance={1000}/>*/}
+
                     <CameraControls enabled={!isDragging}/>
                     <Stage preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
                         <Model
