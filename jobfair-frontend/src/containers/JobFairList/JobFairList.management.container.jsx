@@ -13,7 +13,7 @@ const JobFairListManagementContainer = props => {
     const [data, setData] = useState([]);
     //paging state
     const [pageNumber, setPageNumber] = useState(0);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(100);
 
     const [searchResult, setSearchResult] = useState([]);
     const [count, setCount] = useState(0);

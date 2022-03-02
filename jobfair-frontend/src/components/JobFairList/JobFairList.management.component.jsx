@@ -37,7 +37,7 @@ const JobFairListManagementComponent = (props) => {
             <InfiniteScroll
                 dataLength={data.length}
                 next={loadMoreData}
-                hasMore={data.length < 50}
+                // hasMore={data.length < 50}
                 loader={<Skeleton avatar paragraph={{rows: 1}} active/>}
                 endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                 scrollableTarget="scrollableDiv"
