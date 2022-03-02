@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { loadModel } from '../../utils/glbModelUtil'
+import {fixTextureOffset, loadModel} from '../../utils/glbModelUtil'
 import * as THREE from 'three'
 import JobFairParkMapComponent from '../../components/JobFairParkMap/JobFairParkMap.component'
 import { getLayoutInformationForJobFairPark } from '../../services/jobfairService'
@@ -25,7 +25,6 @@ const getBootMesh = async (position, foundationBox, url, companyBoothId) => {
   sceneMesh.companyBoothId = companyBoothId
   return sceneMesh
 }
-
 const JobFairParkMapContainer = props => {
   const history = useHistory()
   const { jobFairId } = props
@@ -86,6 +85,9 @@ const JobFairParkMapContainer = props => {
       newBoothMeshesPromise.push(boothMesh)
     }
     const meshes = await Promise.all(newBoothMeshesPromise)
+    meshes.forEach(mesh => fixTextureOffset(mesh));
+
+
 
     //GET data from BE
     setState({
