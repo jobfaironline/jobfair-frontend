@@ -8,8 +8,7 @@ const JobFairListManagementComponent = (props) => {
     const { Title, Paragraph, Text, Link } = Typography;
     const { Option } = Select;
 
-    const {data, handleRedirect, loadMoreData, handleFilterByStatus, searchResult} = props;
-    console.log('search result:',searchResult )
+    const {data, handleRedirect, loadMoreData, handleFilterByStatus, searchResult, getCompanyBoothId} = props;
 
     return (
         <div
@@ -74,12 +73,12 @@ const JobFairListManagementComponent = (props) => {
                                         : null}
                                     {item.status === 'DECORATE_BOOTH'
                                         ? (<Tooltip title="You chose a booth in this event. Decorate it now" color="geekblue">
-                                            <Button type="primary">Decorate booth</Button>
+                                            <Button type="primary" onClick={() => getCompanyBoothId(item.id)}>Decorate booth</Button>
                                         </Tooltip>)
                                         : null}
                                     {item.status === 'CHOOSE_BOOTH'
                                         ? (<Tooltip title="You registration has been approved. Now you can choose booth" color="blue">
-                                            <Button type="primary" onClick={() => handleRedirect(`/choose-booth/${item.id}`)}>Decorate booth</Button>
+                                            <Button type="primary" onClick={() => handleRedirect(`/choose-booth/${item.id}`)}>Choose booth</Button>
                                         </Tooltip>)
                                         : null}
                                 </Space>

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useHistory} from 'react-router-dom'
 import JobFairListManagementComponent from "../../components/JobFairList/JobFairList.management.component";
-import {getAllJobFairAPI, getJobFairPlanForCompany} from "../../services/jobfairService";
+import {getAllJobFairAPI, getCompanyBoothByJobFairId, getJobFairPlanForCompany} from "../../services/jobfairService";
 import {convertToDateString} from "../../utils/common";
 import {notification} from "antd";
 
@@ -46,6 +46,17 @@ const JobFairListManagementContainer = props => {
             })
     }
 
+    const getCompanyBoothId = (jobFairId) => {
+        getCompanyBoothByJobFairId(jobFairId)
+            .then(res => {
+                const result = res.data[0]?.id
+                handleRedirect(`/decorate-booth/${result}`);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     const handleFilterByStatus = (statusArr) => {
         //status is an array: ["APPROVE", "REGISTRABLE"]
         const result = data.filter(item => statusArr.some(st => st === item.status))
@@ -68,6 +79,7 @@ const JobFairListManagementContainer = props => {
                 loadMoreData={loadMoreData}
                 handleFilterByStatus={handleFilterByStatus}
                 searchResult={searchResult}
+                getCompanyBoothId={getCompanyBoothId}
             />
         </>
     )

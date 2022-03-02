@@ -23,5 +23,6 @@ export const ENDPOINT_CREATE_DRAFT_REGISTRATION = '/api/v1/job-fair/company-regi
 export const ENDPOINT_SUBMIT_REGISTRATION = '/api/v1/job-fair/company-registration/submit'
 export const ENDPOINT_GET_LAYOUT_AND_AVAILABLE_SLOT_BY_JOB_FAIR_ID = '/api/v1/layouts/job-fair/available-slot'
 export const ENDPOINT_GET_LATEST_APPROVE_REGISTRATION = '/api/v1/job-fair/company-registration/latest-approve'
+export const ENDPOINT_GET_COMPANY_BOOTH_BY_JOB_FAIR_ID = '/api/v1/company-booth'
 export const ENDPOINT_PURCHASE_BOOTH = '/api/v1/purchase-booth'
 export const ENDPOINT_BOOTH_LAYOUT = '/api/v1/company-booth-layout'
