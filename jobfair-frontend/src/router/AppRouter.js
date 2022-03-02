@@ -10,7 +10,6 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
 import FAQPage from "../pages/FAQPage/FAQPage";
-import JobFairPackPage from "../pages/JobFairPackPage/JobFairPackPage";
 import UserPage from "../pages/UserPage/UserPage";
 import ContractsPage from "../pages/ContractsPage/ContractsPage";
 import JobFairsPage from "../pages/JobFairsPage/JobFairsPage";
@@ -27,11 +26,9 @@ import CompanyProfile from "../pages/ProfilePage/Company/CompanyProfilePage";
 import ApprovalRegistrationPage from "../pages/ApprovalRegistrationPage/ApprovalRegistration.page";
 import AdminRouter from "./AdminRouter";
 import StaffRouter from "./StaffRouter";
-import ResultSuccessComponent from "../components/Result/ResultSuccess.component";
-import ResultFailedComponent from "../components/Result/ResultFailed.component";
-import ResultSuccessPage from "../pages/ResultPage/ResultSuccessPage";
-import ResultFailedPage from "../pages/ResultPage/ResultFailedPage";
-import ConfirmPage from "../pages/ConfirmPage/ConfirmPage";
+import {ChooseBoothPage} from "../pages/ChooseBoothPage/ChooseBoothPage";
+import {ResultSuccessPage} from "../pages/ResultPage/ResultSuccessPage";
+import DecorateBoothPage from "../pages/DecorateBoothPage/DecorateBoothPage";
 
 
 const AppRouter = () => {
@@ -73,17 +70,12 @@ const AppRouter = () => {
                 <Route path="/proceed-success" exact>
                     <ResultSuccessPage/>
                 </Route>
-                <Route path="/proceed-fail" exact>
-                    <ResultFailedPage/>
-                </Route>
-                <Route path="/confirm" exact>
-                    <ConfirmPage/>
-                </Route>
+
                 <Route path="/faq" exact>
                     <FAQPage/>
                 </Route>
-                <Route path="/JobFairPack" exact>
-                    <JobFairPackPage/>
+                <Route path="/decorate-booth/:companyBoothId" exact>
+                    <DecorateBoothPage/>
                 </Route>
                 <Route path="/user" exact>
                     <UserPage/>
@@ -97,6 +89,13 @@ const AppRouter = () => {
                 <Route path="/job-fair" exact>
                     <JobFairListPage/>
                 </Route>
+                <Route path='/choose-booth/:jobFairId' exact>
+                    <ChooseBoothPage/>
+                </Route>
+                <Route path="/proceed-success" exact>
+                    <ResultSuccessPage/>
+                </Route>
+
                 <AttendantRouter key="/applied-job" component={<AppliedJobPage/>} path="/applied-job" exact/>
                 <CompanyManagerRouter
                     key="/company/employee-management"
