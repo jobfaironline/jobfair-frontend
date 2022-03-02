@@ -195,27 +195,6 @@ const JobfairRegistrationForm = () => {
                 >
                     {formList[current]}
                 </Form>
-
-                {/*{current === 3 && (*/}
-                {/*    <Result*/}
-                {/*        status="success"*/}
-                {/*        title="Submit is succeed!"*/}
-                {/*        extra={*/}
-                {/*            <>*/}
-                {/*                <Button*/}
-                {/*                    type="primary"*/}
-                {/*                    onClick={() => {*/}
-                {/*                        form.resetFields()*/}
-                {/*                        gotoStep(0)*/}
-                {/*                    }}*/}
-                {/*                >*/}
-                {/*                    Register to another job fair*/}
-                {/*                </Button>*/}
-                {/*                <Button>Check detail</Button>*/}
-                {/*            </>*/}
-                {/*        }*/}
-                {/*    />*/}
-                {/*)}*/}
             </div>
         </div>
     )

@@ -3,7 +3,7 @@ export const notify = (state, message) => {
   if (state === 2) {
     toast.success(message, {
       position: 'bottom-right',
-      autoClose: 5000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,

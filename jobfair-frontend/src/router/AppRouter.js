@@ -78,7 +78,7 @@ const AppRouter = () => {
                 <Route path="/faq" exact>
                     <FAQPage/>
                 </Route>
-                <Route path="/decorate-booth/:companyBoothId" exact>
+                <Route path="/decorate-booth/:companyBoothId/:jobFairId" exact>
                     <DecorateBoothPage/>
                 </Route>
                 <Route path="/user" exact>

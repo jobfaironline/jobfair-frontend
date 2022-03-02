@@ -50,7 +50,7 @@ const JobFairListManagementContainer = props => {
         getCompanyBoothByJobFairId(jobFairId)
             .then(res => {
                 const result = res.data[0]?.id
-                handleRedirect(`/decorate-booth/${result}`);
+                handleRedirect(`/decorate-booth/${result}/${jobFairId}`);
             })
             .catch(err => {
                 console.log(err)
