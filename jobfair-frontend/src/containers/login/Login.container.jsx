@@ -23,7 +23,18 @@ const LoginContainer = props => {
                     duration: 1,
                 })
                 dispatch(SigninHandler(res.data))
-                history.push("/map/aa887cc1-240a-41de-99b4-5ffe26075279")
+                switch(res.data.roles) {
+                    case 'COMPANY_EMPLOYEE':
+                    case 'COMPANY_MANAGER' :
+                        history.push("/jobfair-list")
+                        return;
+                    case 'ATTENDANT':
+                        history.push(`/map/fc271a03-cb11-469b-ae94-6873117b43d1`)
+                        return;
+                    case 'ADMIN':
+                        history.push('/job-fair')
+                        return;
+                }
             })
             .catch((err) => {
                 notification['error']({

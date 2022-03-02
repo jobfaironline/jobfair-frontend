@@ -61,9 +61,14 @@ const JobFairListManagementComponent = (props) => {
                                                 </Button>
                                             </Tooltip>)
                                         : null}
-                                    {item.status === 'APPROVE' || item.status === 'SUBMITTED'
+                                    {item.status === 'SUBMITTED'
                                         ? (<Tooltip title="You registration is still in progress. Please wait!" color="gold">
                                             <Button type="primary">Is evaluating</Button>
+                                            </Tooltip>)
+                                        : null}
+                                    {item.status === 'APPROVE'
+                                        ? (<Tooltip title="Your registration was approved!" color="gold">
+                                            <Button type="primary">Approved</Button>
                                             </Tooltip>)
                                         : null}
                                     {item.status === 'UNAVAILABLE'

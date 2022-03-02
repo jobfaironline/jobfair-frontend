@@ -31,12 +31,7 @@ export const ChooseBoothCanvas = (props) => {
             'boothId': modalState.boothId,
             'companyRegistrationId': registrationId,
         }).then(response => {
-            notification['success']({
-                message: `Purchase successfully`,
-                description: `${response.data}`,
-                duration: 2,
-            })
-            history.push(`/decorate-booth/${data.id}`);
+            history.push(`/decorate-booth/${response.data.id}/${jobFairId}`);
         })
             .catch(err => {
                 notification['error']({
