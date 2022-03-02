@@ -6,7 +6,6 @@ import {HomeOutlined, UnorderedListOutlined} from "@ant-design/icons";
 
 const ApprovalRegistrationPage = props => {
 
-
     return (
         <>
             <Divider orientation="center" plain>

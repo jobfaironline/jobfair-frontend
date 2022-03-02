@@ -11,24 +11,26 @@ const LoginContainer = props => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         const body = {
             email: values.email,
             password: values.password
         }
         signInAPI(body)
-                .then((res) => {
-                    notification['success']({
-                        message: `Login successfully.`,
-                    })
-                    dispatch(SigninHandler(res.data))
-                    history.push("/map/aa887cc1-240a-41de-99b4-5ffe26075279")
+            .then((res) => {
+                notification['success']({
+                    message: `Login successfully.`,
+                    duration: 1,
                 })
-                .catch((err) => {
-                    notification['error']({
-                        message: `Login failed - Invalid email or password.`,
-                    })
+                dispatch(SigninHandler(res.data))
+                history.push("/map/aa887cc1-240a-41de-99b4-5ffe26075279")
+            })
+            .catch((err) => {
+                notification['error']({
+                    message: `Login failed - Invalid email or password.`,
+                    duration: 1
                 })
+            })
     }
 
     return (
@@ -37,7 +39,6 @@ const LoginContainer = props => {
         </>
     );
 };
-
 
 
 export default LoginContainer;

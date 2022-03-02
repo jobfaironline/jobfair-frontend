@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { loadModel } from '../../utils/model_loader'
+import {fixTextureOffset, loadModel} from '../../utils/glbModelUtil'
 import * as THREE from 'three'
 import JobFairParkMapComponent from '../../components/JobFairParkMap/JobFairParkMap.component'
-import { getLayoutByJobFairId } from '../../services/jobfairService'
+import { getLayoutInformationForJobFairPark } from '../../services/jobfairService'
 import { useHistory } from 'react-router-dom'
 
 const getBootMesh = async (position, foundationBox, url, companyBoothId) => {
@@ -25,7 +25,6 @@ const getBootMesh = async (position, foundationBox, url, companyBoothId) => {
   sceneMesh.companyBoothId = companyBoothId
   return sceneMesh
 }
-
 const JobFairParkMapContainer = props => {
   const history = useHistory()
   const { jobFairId } = props
@@ -37,9 +36,9 @@ const JobFairParkMapContainer = props => {
   useEffect(async () => {
     //fetch this from BE
     //const url = 'https://d3polnwtp0nqe6.cloudfront.net/Layout/de3edad8-8dcb-4d49-bff1-7ea1b34afe7a';
-    const responseDate = await getLayoutByJobFairId(jobFairId).then(response => response.data)
-    const url = responseDate.jobFairLayoutUrl
-    const data = responseDate.booths
+    const responseData = await getLayoutInformationForJobFairPark(jobFairId).then(response => response.data)
+    const url = responseData.jobFairLayoutUrl
+    const data = responseData.booths
     //the bellow is the data format
     /*const data = [
             {
@@ -86,6 +85,9 @@ const JobFairParkMapContainer = props => {
       newBoothMeshesPromise.push(boothMesh)
     }
     const meshes = await Promise.all(newBoothMeshesPromise)
+    meshes.forEach(mesh => fixTextureOffset(mesh));
+
+
 
     //GET data from BE
     setState({
