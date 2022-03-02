@@ -27,7 +27,9 @@ const ChatBox = props => {
   const rtm = useSelector(state => state.agora.rtmClient)
   const userId = useSelector(state => state.authentication.user.userId)
   const channelId = useSelector(state => state.agora.channelId)
-
+  //handle button Chat
+  const [isShowChatBox, setIsShowChatBox] = useState(true)
+  const [isShowMinChatBox, setIsMinChatBox] = useState(`height: 550px`)
   async function initializeRtmClient(rtmClient, rtmToken, userId) {
     rtmClient.on('ConnectionStateChanged', (newState, reason) => {
       console.log('reason', reason)
@@ -103,43 +105,47 @@ const ChatBox = props => {
 
   return (
     <>
-      <div className={styles.chatBubble}>
-        <div className={styles.chatContainer}>
-          <div className={styles.chatHeader}>
-            <div className={styles.iconHeader}>
-              <ArrowsAltOutlined />
-              <MinusOutlined />
-              <CloseOutlined />
+      {isShowChatBox ? (
+        <div className={styles.chatBubble}>
+          <div className={styles.chatContainer}>
+            <div className={styles.chatHeader}>
+              <div className={styles.iconHeader}>
+                <ArrowsAltOutlined />
+                <MinusOutlined />
+                <CloseOutlined onClick={() => setIsShowChatBox(false)} />
+              </div>
+            </div>
+            <div className={styles.videoContainer}>
+              <VideoCall {...videoProps} />
+            </div>
+            <div className={styles.chatZone}>
+              <ChatField messageList={messageList} />
             </div>
           </div>
-          <div className={styles.videoContainer}>
-            <VideoCall {...videoProps} />
-          </div>
-          <div className={styles.chatZone}>
-            <ChatField messageList={messageList} />
+          <div className={styles.chatInput}>
+            <Form form={form} onFinish={onSubmit} disabled={!isChatReady}>
+              <Form.Item
+                name="message"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your message!'
+                  }
+                ]}
+              >
+                <Input
+                  autoFocus
+                  style={{ borderRadius: '5rem 5rem 5rem 5rem' }}
+                  placeholder="Type message..."
+                  suffix={<SendIcon />}
+                />
+              </Form.Item>
+            </Form>
           </div>
         </div>
-        <div className={styles.chatInput}>
-          <Form form={form} onFinish={onSubmit} disabled={!isChatReady}>
-            <Form.Item
-              name="message"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your message!'
-                }
-              ]}
-            >
-              <Input
-                autoFocus
-                style={{ borderRadius: '5rem 5rem 5rem 5rem' }}
-                placeholder="Type message..."
-                suffix={<SendIcon />}
-              />
-            </Form.Item>
-          </Form>
-        </div>
-      </div>
+      ) : (
+        <></>
+      )}
     </>
   )
 }
