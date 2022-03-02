@@ -25,8 +25,8 @@ export const ChooseBoothGroundMesh = (props) => {
             position={mesh.position}
             rotation={mesh.rotation}
             scale={mesh.scale}
-            castShadow={true}
-            receiveShadow={true}
+            castShadow
+            receiveShadow
             onPointerOver={_ => {
                 if (!isAvailable) return;
                 onPointerOver(ref)
