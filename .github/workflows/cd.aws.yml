@@ -17,12 +17,10 @@ jobs:
       node-version: '14'
    - name: Export .env file
      run: |
-          pwd
-          ls -a
-          cd jobfair-frontend/jobfair-frontend/
           touch .env
           echo ${{secrets.REACT_APP_API_URL}} >> .env
           echo ${{secrets.REACT_APP_AGORA_APP_ID}} >> .env
+     working-directory: ./jobfair-frontend
    - run: npm install
      working-directory: ./jobfair-frontend
    - run: npm run build
