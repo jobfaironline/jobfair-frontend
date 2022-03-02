@@ -11,8 +11,8 @@ export const BasicMesh = React.forwardRef(({ mesh }, ref) => {
             position={mesh.position}
             rotation={mesh.rotation}
             scale={mesh.scale}
-            castShadow={true}
-            receiveShadow={true}
+            castShadow
+            receiveShadow
         >
             {mesh.children.map(child => (
                 <BasicMesh key={child.uuid} mesh={child} />

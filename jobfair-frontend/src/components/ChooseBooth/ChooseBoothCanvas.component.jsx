@@ -4,12 +4,16 @@ import {Stage} from "@react-three/drei";
 import {EffectComposer, Outline} from "@react-three/postprocessing";
 import {ChooseBoothGroundMesh} from "./ChooseBoothGroundMesh.component";
 import {ArrowHelper} from "./ArrowHelper.component";
-import {Modal} from "antd";
+import {Modal, Select} from "antd";
 import {getLatestApproveRegistration} from "../../services/jobfairService";
 import {useHistory} from "react-router-dom";
 import {purchaseBooth} from "../../services/boothPurchaseService";
 import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
 import {CameraControls} from "../ThreeJSBaseComponent/CameraControls.component";
+import {SkyComponent, SkyType} from "../ThreeJSBaseComponent/Sky.component";
+import {SkyTypeSelect} from "../ThreeJSBaseComponent/SelectSkyType.component";
+
+
 
 export const ChooseBoothCanvas = (props) => {
     const {mesh, boothData, jobFairId} = props;
@@ -19,6 +23,7 @@ export const ChooseBoothCanvas = (props) => {
         isVisible: false,
         boothId: ""
     })
+    const [skyType, setSkyType] = useState(SkyType.Morning);
     const handleOk = async () => {
         let data = await getLatestApproveRegistration(jobFairId).then(response => response.data);
         const registrationId = data.id;
@@ -49,7 +54,10 @@ export const ChooseBoothCanvas = (props) => {
         setModalState(prevState => {
             return {...prevState, boothId: boothId, isVisible: true};
         });
+    }
 
+    const onChangeSkyType = (value) => {
+        setSkyType(value.value);
     }
 
 
@@ -58,9 +66,12 @@ export const ChooseBoothCanvas = (props) => {
             <Modal title="Confirm booth" visible={modalState.isVisible} onOk={handleOk} onCancel={handleCancel}>
                 Are you sure?
             </Modal>
-            <Canvas dpr={[1, 2]} camera={{fov: 50}}
-                    style={{width: '100%', height: '850px', cursor: hoverRef === undefined ? "default" : "pointer"}}>
+            <SkyTypeSelect onChange={onChangeSkyType}/>
+            <Canvas dpr={[1, 2]} camera={{fov: 50}} shadowMap
+                    style={{width: '100%', height: '970px', cursor: hoverRef === undefined ? "default" : "pointer"}}>
                 <CameraControls/>
+                <SkyComponent style={skyType}/>
+
                 <Stage preset="rembrandt" intensity={0.4} environment="city"
                        contactShadow={false}>
                     <group dispose={null}>
