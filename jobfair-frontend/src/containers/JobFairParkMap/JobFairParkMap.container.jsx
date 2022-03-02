@@ -96,7 +96,7 @@ const JobFairParkMapContainer = props => {
     })
   }, [])
 
-  if (state.mapMesh === null || state.boothMeshes.length === 0) {
+  if (state.mapMesh === null && state.boothMeshes.length === 0) {
     return null
   }
 

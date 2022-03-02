@@ -72,3 +72,13 @@ export const handleConvertRangePicker = data => {
   })
   return result
 }
+
+//convert enum status to string
+export const convertEnumToString = (data) => {
+  const arr = data.split('_') //['INTERN', 'SHIP', 'STUDENT']
+  const result = arr
+      .map(item => item.toString().toLowerCase())
+      .map(item => item[0].toUpperCase() + item.slice(1))
+      .join(' ');
+  return result;
+}

@@ -15,6 +15,12 @@ jobs:
    - uses: actions/setup-node@v2
      with:
       node-version: '14'
+   - name: Export .env file
+     run: |
+          touch .env
+          echo ${{secrets.REACT_APP_API_URL}} >> .env
+          echo ${{secrets.REACT_APP_AGORA_APP_ID}} >> .env
+     working-directory: ./jobfair-frontend
    - run: npm install
      working-directory: ./jobfair-frontend
    - run: npm run build
@@ -38,5 +44,5 @@ jobs:
       with:
        name: frontend
        path: build
-    - run: aws s3 sync ./build s3://job-fair-online-dev/frontend/
+    - run: aws s3 sync ./build s3://job-fair-online-frontend/
 

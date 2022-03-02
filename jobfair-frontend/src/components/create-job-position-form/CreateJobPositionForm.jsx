@@ -279,7 +279,7 @@ const CreateJobPositionForm = props => {
         label="Language for applications"
         required
         tooltip="This is required"
-        rules={JobPositionValidation.contactPerso}
+        rules={JobPositionValidation.contactPerson}
         name="preferredLanguage"
         style={{ width: 300 }}
       >

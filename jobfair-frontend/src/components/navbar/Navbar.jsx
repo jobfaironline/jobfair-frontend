@@ -21,19 +21,16 @@ export const CompanyManagerMenu = [
         <Link to="/company/employee-management">Employee Management</Link>
     </Menu.Item>,
     <Menu.Item key="manager-register-jobfair">
-        <Link to="/company/register-job-fair">Register to job fair</Link>
+        <Link to="/company-register-jobfair/">Register to job fair</Link>
     </Menu.Item>,
-    <Menu.Item key="map">
-        <Link to="/map/83fcb7d3-6d88-45d9-ad86-9314de41743d">Map</Link>
-    </Menu.Item>
 ]
 
 export const CompanyEmployeeMenu = [
     <Menu.Item key="company-profile">
         <Link to="/employee/company-profile">Company profile</Link>
     </Menu.Item>,
-    <Menu.Item key="map">
-        <Link to="/map/83fcb7d3-6d88-45d9-ad86-9314de41743d">Map</Link>
+    <Menu.Item key="manager-register-jobfair">
+        <Link to="/company-register-jobfair/">Register to job fair</Link>
     </Menu.Item>
 ]
 
@@ -81,17 +78,11 @@ const NavigationBar = () => {
                             <div className="logo">LOGO</div>
                         </Link>
                     </Menu.Item>
-                    <Menu.Item key="decorate-booth">
-                        <Link to="/decorate-booth">Decorate Booth</Link>
-                    </Menu.Item>
                     <Menu.Item key="contact">
                         <Link to="/contracts">Contact</Link>
                     </Menu.Item>
                     <Menu.Item key="faq">
                         <Link to="/faq">FAQ</Link>
-                    </Menu.Item>
-                    <Menu.Item key="choose-booth">
-                        <Link to="/choose-booth/83fcb7d3-6d88-45d9-ad86-9314de41743d">Choose Booth</Link>
                     </Menu.Item>
                     {
                         !role ? <Menu.Item key="login">

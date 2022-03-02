@@ -30,7 +30,7 @@ const JobPositionSubmodal = ({ visible, handleOk, handleCancel, form, onFinish }
   const finalHandleOk = async () => {
     setConfirmLoading(true)
     await handleOk()
-    setConfirmSLoading(false)
+    setConfirmLoading(false)
   }
 
   return (
