@@ -82,17 +82,20 @@ const PickJobPositionForm = props => {
                                                     name={[name, 'minSalary']}
                                                     rules={PickJobPositionFormValidation.minSalary(name)}
                                                 >
-                                                    <Input style={{width: 100, textAlign: 'center'}}
+                                                    <Input prefix="$" style={{width: 100, textAlign: 'center'}}
                                                            placeholder="Min salary"/>
                                                 </Form.Item>
                                                 <Input
                                                     className="site-input-split"
                                                     style={{
-                                                        width: 30,
-                                                        borderLeft: 0,
-                                                        borderRight: 0,
+                                                        width: 50,
+                                                        borderLeft: 1,
+                                                        borderRight: 1,
                                                         pointerEvents: 'none',
-                                                        marginTop: 32,
+                                                        marginTop: 30,
+                                                        marginRight: 32,
+                                                        marginLeft: 32,
+                                                        textAlign: 'center',
                                                     }}
                                                     placeholder="~"
                                                     disabled
@@ -104,6 +107,7 @@ const PickJobPositionForm = props => {
                                                     rules={PickJobPositionFormValidation.maxSalary(name)}
                                                 >
                                                     <Input
+                                                        prefix="$"
                                                         className="site-input-right"
                                                         style={{
                                                             width: 100,
@@ -128,7 +132,7 @@ const PickJobPositionForm = props => {
                                 <Form.Item>
                                     <Button type="dashed" onClick={() => handlePickJobPosition()} block
                                             icon={<PlusOutlined/>}>
-                                        Add field
+                                        Add job
                                     </Button>
                                 </Form.Item>
                             </>

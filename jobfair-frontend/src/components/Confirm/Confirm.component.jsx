@@ -6,8 +6,7 @@ const ConfirmComponent = props => {
     const {data, companyInfo} = props;
 
     const {Title, Paragraph, Text} = Typography;
-    console.log(data)
-    console.log(companyInfo)
+
     return (
         <>
             <div className="site-card-wrapper">

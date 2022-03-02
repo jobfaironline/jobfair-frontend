@@ -34,6 +34,9 @@ export const CompanyEmployeeMenu = [
     </Menu.Item>,
     <Menu.Item key="map">
         <Link to="/map/83fcb7d3-6d88-45d9-ad86-9314de41743d">Map</Link>
+    </Menu.Item>,
+    <Menu.Item key="manager-register-jobfair">
+        <Link to="/company-register-jobfair/">Register to job fair</Link>
     </Menu.Item>
 ]
 

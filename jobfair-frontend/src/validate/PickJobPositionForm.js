@@ -7,7 +7,9 @@ export const PickJobPositionFormValidation = {
             {pattern: /^\d+$/, message: 'Invalid number format'},
             ({getFieldValue}) => ({
             validator(_, value) {
-                if (!value || getFieldValue('jobPositions')[name].maxSalary < value) {
+                const minValue = parseInt(value);
+                const maxValue = parseInt(getFieldValue('jobPositions')[name].maxSalary);
+                if (!value || minValue > maxValue) {
                     return Promise.reject(new Error('Invalid min salary.'))
                 }
                 if (value <= 0) {
@@ -28,13 +30,15 @@ export const PickJobPositionFormValidation = {
             {pattern: /^\d+$/, message: 'Invalid number format'},
             ({getFieldValue}) => ({
                 validator(_, value) {
-                    if (!value || getFieldValue('jobPositions')[name].minSalary > value) {
+                    const maxValue = parseInt(value);
+                    const minValue = parseInt(getFieldValue('jobPositions')[name].minSalary);
+                    if (!value || maxValue < minValue) {
                         return Promise.reject(new Error('Invalid max salary.'))
                     }
-                    if (value <= 0) {
+                    if (maxValue <= 0) {
                         return Promise.reject(new Error('The minimum of salary is 1'))
                     }
-                    if (value > 99999) {
+                    if (maxValue > 99999) {
                         return Promise.reject(new Error('The maximum of salary is 99999'))
                     }
 
@@ -47,10 +51,11 @@ export const PickJobPositionFormValidation = {
         {pattern: /^\d+$/, message: 'Invalid number format'},
         () => ({
             validator(_, value) {
-                if (!value || value >= 10000) {
+                const numOfPosition = parseInt(value)
+                if (!value || numOfPosition >= 10000) {
                     return Promise.reject(new Error('The maximum of position is 10000'))
                 }
-                if (value <= 0) {
+                if (numOfPosition <= 0) {
                     return Promise.reject(new Error('The minimum of position is 1'))
                 }
 

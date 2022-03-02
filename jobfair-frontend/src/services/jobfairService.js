@@ -1,5 +1,9 @@
 import { CallAPI } from './axiosBase.js'
-import {ENDPOINT_GET_LATEST_APPROVE_REGISTRATION, ENDPOINT_GET_LAYOUT_FOR_JOB_FAIR_PARK} from '../constants/EndPoint'
+import {
+  ENDPOINT_GET_JOB_FAIR_PLAN_OF_COMPANY,
+  ENDPOINT_GET_LATEST_APPROVE_REGISTRATION,
+  ENDPOINT_GET_LAYOUT_FOR_JOB_FAIR_PARK
+} from '../constants/EndPoint'
 import {
   ENDPOINT_EVALUATE_JOB_FAIR_REGISTRATION,
   ENDPOINT_GET_REGISTRATIONS_BY_JOB_FAIR_ID,
@@ -16,4 +20,5 @@ export const evaluateJobFairRegistrationAPI = body =>
 export const evaluateJobFairPlanAPI = body =>
   CallAPI(`${ENDPOINT_JOB_FAIR}/evaluate`, 'POST', body)
 export const getLatestApproveRegistration = jobFairId => CallAPI(`${ENDPOINT_GET_LATEST_APPROVE_REGISTRATION}/${jobFairId}`, 'GET')
-
+export const getJobFairPlanForCompany = (pageNumber, pageSize) =>
+  CallAPI(`${ENDPOINT_GET_JOB_FAIR_PLAN_OF_COMPANY}?offset=${pageNumber}&pageSize=${pageSize}`)
