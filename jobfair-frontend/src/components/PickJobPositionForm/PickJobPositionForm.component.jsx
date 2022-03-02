@@ -1,13 +1,8 @@
-import React, {useEffect, useRef} from 'react'
-import {Form, Input, Button, Space} from 'antd'
+import React from 'react'
+import {Button, Form, Input, Space} from 'antd'
 import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons'
 import TextArea from 'antd/lib/input/TextArea'
-import {handleConvertRangePicker} from '../../utils/common'
-import {useState} from 'react'
 import {PickJobPositionFormValidation} from '../../validate/PickJobPositionForm'
-import {useDispatch} from 'react-redux'
-import {setJobPositions} from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
-import Item from 'antd/lib/list/Item'
 
 const data = [
     {
@@ -58,7 +53,7 @@ const PickJobPositionForm = props => {
                                                     <Input disabled placeholder="Job ID"/>
                                                 </Form.Item>
                                                 <Form.Item {...restField} name={[name, 'title']}
-                                                          label="Job Title">
+                                                           label="Job Title">
                                                     <Input placeholder="Job title" disabled/>
                                                 </Form.Item>
                                             </div>
@@ -85,7 +80,7 @@ const PickJobPositionForm = props => {
                                                     label="Min salary"
                                                     {...restField}
                                                     name={[name, 'minSalary']}
-                                                    rules={PickJobPositionFormValidation.minSalary}
+                                                    rules={PickJobPositionFormValidation.minSalary(name)}
                                                 >
                                                     <Input style={{width: 100, textAlign: 'center'}}
                                                            placeholder="Min salary"/>
@@ -106,7 +101,7 @@ const PickJobPositionForm = props => {
                                                     {...restField}
                                                     label="Max salary"
                                                     name={[name, 'maxSalary']}
-                                                    rules={PickJobPositionFormValidation.maxSalary}
+                                                    rules={PickJobPositionFormValidation.maxSalary(name)}
                                                 >
                                                     <Input
                                                         className="site-input-right"
@@ -124,7 +119,7 @@ const PickJobPositionForm = props => {
                                                 name={[name, 'numberOfPosition']}
                                                 rules={PickJobPositionFormValidation.numberOfPosition}
                                             >
-                                                <Input placeholder="Number of position" type="number" min="1" max="10000"/>
+                                                <Input placeholder="Number of position"/>
                                             </Form.Item>
                                         </div>
                                         <MinusCircleOutlined onClick={() => handleRemove(name, remove)}/>

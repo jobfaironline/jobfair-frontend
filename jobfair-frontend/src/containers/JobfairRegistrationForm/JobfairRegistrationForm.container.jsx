@@ -92,22 +92,17 @@ const JobfairRegistrationForm = () => {
                 })
             }
             console.log('body: ', body)
-            await dispatch(createDraftRegistration(body)).unwrap()
-                .then(res => {
-                    if (res !== null) {
-                        notification['success']({
-                            message: `Registration draft version has been submitted`,
-                            description: `Submitted successfully`,
-                            duration: 2,
-                        })
-                        //after submit success, push to success page
-                        history.push("/proceed-success")
-                    }
-                    else {
-                        console.log('error bitch')
-                    }
-                })
-                .catch(err => {
+                try{
+                    await dispatch(createDraftRegistration(body)).unwrap()
+                    notification['success']({
+                        message: `Registration draft version has been submitted`,
+                        description: `Submitted successfully`,
+                        duration: 2,
+                    })
+                    //after submit success, push to success page
+                    history.push("/proceed-success")
+                }
+                catch(err){
                     notification['error']({
                         message: `An error has occurred while submitting`,
                         description: `Submit failed. Server response: ${err}`,
@@ -115,7 +110,7 @@ const JobfairRegistrationForm = () => {
                     })
                     //else push to error page
                     history.push("/proceed-fail")
-                })
+                }
         },
         total: 3,
     })

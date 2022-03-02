@@ -18,9 +18,8 @@ const JobFairListEvaluateContainer = () => {
     const [pageSize, setPageSize] = useState(10);
 
     const fetchData = async () => {
-        getAllJobFairAPI(currentPage, pageSize, 'attendantRegisterStartTime', 'DESC')
+        getAllJobFairAPI(currentPage, pageSize, 'startTime', 'DESC')
             .then(res => {
-                console.log(res.data)
                 const totalRecord = res.data.totalElements;
                 setTotalRecord(totalRecord)
 
@@ -48,16 +47,6 @@ const JobFairListEvaluateContainer = () => {
                     description: `There is problem while fetching, try again later: ${err}`,
                     duration: 2
                 })
-            })
-    }
-
-    const getRegistrationByJobFairId = async (jobFairId) => {
-        getRegistrationByJobFairId(jobFairId)
-            .then(res => {
-                return res.data.length
-            })
-            .catch(e => {
-                console.log(e)
             })
     }
 

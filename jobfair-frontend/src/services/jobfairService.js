@@ -7,7 +7,7 @@ import {
 } from '../constants/EndPoint'
 
 export const getLayoutInformationForJobFairPark = jobFairId => CallAPI(ENDPOINT_GET_LAYOUT_FOR_JOB_FAIR_PARK + `/${jobFairId}`, 'GET')
-export const getAllJobFairAPI = () => CallAPI(ENDPOINT_JOB_FAIR, 'GET')
+export const getAllJobFairAPI = (pageNumber, pageSize, sortBy, direction) => CallAPI(`${ENDPOINT_JOB_FAIR}?direction=${direction}&offset=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`, 'GET')
 //page Number start from 0
 export const getRegistrationByJobFairId = (jobFairId, pageNumber, pageSize, sortBy, direction) =>
   CallAPI(`${ENDPOINT_GET_REGISTRATIONS_BY_JOB_FAIR_ID}/${jobFairId}?direction=${direction}&offset=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}`, 'GET')

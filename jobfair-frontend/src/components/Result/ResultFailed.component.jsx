@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button, Result, Typography} from "antd";
-import {useHistory} from "react-router-dom";
+import {Button, Result, Space, Typography} from "antd";
+import {Link, useHistory} from "react-router-dom";
 import {CloseCircleOutlined} from "@ant-design/icons";
 
 const ResultFailedComponent = () => {
@@ -31,8 +31,11 @@ const ResultFailedComponent = () => {
                         </Text>
                     </Paragraph>
                     <Paragraph>
-                        <CloseCircleOutlined className="site-result-demo-error-icon" /> Your account has been
-                        frozen. <a>Contact with admin&gt;</a>
+                        <Space>
+                            <CloseCircleOutlined className="site-result-demo-error-icon" />
+                            There is a registration still in evaluating process. Please wait at least 12 hours to resubmit another registration
+                            <Link to='/contacts'>Contact with admin &gt;&gt;</Link>
+                        </Space>
                     </Paragraph>
                 </div>
             </Result>,
