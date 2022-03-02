@@ -29,6 +29,7 @@ import StaffRouter from "./StaffRouter";
 import {ChooseBoothPage} from "../pages/ChooseBoothPage/ChooseBoothPage";
 import {ResultSuccessPage} from "../pages/ResultPage/ResultSuccessPage";
 import DecorateBoothPage from "../pages/DecorateBoothPage/DecorateBoothPage";
+import ResultFailedPage from "../pages/ResultPage/ResultFailedPage";
 
 
 const AppRouter = () => {
@@ -70,6 +71,9 @@ const AppRouter = () => {
                 <Route path="/proceed-success" exact>
                     <ResultSuccessPage/>
                 </Route>
+                <Route path="/proceed-fail" exact>
+                    <ResultFailedPage/>
+                </Route>
 
                 <Route path="/faq" exact>
                     <FAQPage/>
@@ -80,7 +84,7 @@ const AppRouter = () => {
                 <Route path="/user" exact>
                     <UserPage/>
                 </Route>
-                <Route path="/contracts" exact>
+                <Route path="/contacts" exact>
                     <ContractsPage/>
                 </Route>
                 <Route path="/jobfair-list" exact>

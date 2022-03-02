@@ -11,14 +11,13 @@ import { Form } from 'antd'
 import { useEffect } from 'react'
 
 const PickJobPositionFormContainer = props => {
+  const { jobPositions, form, onFinish } = props
+
   const jobPositionsInForm = useSelector(state => {
     return state?.registrationJobfairForm?.form?.body?.jobPositions
   })
 
   const dispatch = useDispatch()
-
-  //form hook for dynamic interact
-  const [form] = Form.useForm()
 
   useEffect(() => {
     form.setFieldsValue({
@@ -30,9 +29,6 @@ const PickJobPositionFormContainer = props => {
     dispatch(setJobPositionModalVisibility(true))
   }
 
-  const onFinish = values => {
-    console.log('Received values of form:', values)
-  }
 
   const handleRemove = (name, remove) => {
     remove(name)
