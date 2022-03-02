@@ -1,5 +1,5 @@
 import React, {useRef} from "react";
-import {ChildMesh} from "../../pages/DecorateBoothPage/components/model/Final_booth_model";
+import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
 
 export const ChooseBoothGroundMesh = (props) => {
     const {mesh, onPointerOver, onPointerLeave, onClick, isAvailable} = props;
@@ -27,18 +27,18 @@ export const ChooseBoothGroundMesh = (props) => {
             scale={mesh.scale}
             castShadow
             receiveShadow
-            onPointerOver={event => {
+            onPointerOver={_ => {
                 if (!isAvailable) return;
                 onPointerOver(ref)
             }}
-            onPointerLeave={event => {
+            onPointerLeave={_ => {
                 if (!isAvailable) return;
                 onPointerLeave(ref);
             }}
             onClick={isAvailable ? onClick : null}
         >
             {mesh.children.map(child => (
-                <ChildMesh mesh={child}/>
+                <BasicMesh mesh={child}/>
             ))}
         </mesh>
     )

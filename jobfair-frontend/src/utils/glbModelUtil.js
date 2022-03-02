@@ -110,3 +110,10 @@ export const calculatePositionWithBoundary = ({
     z: new_z
   }
 }
+
+export const fixTextureOffset = (mesh) => {
+  if (mesh?.material?.map !== null) {
+    mesh?.material?.map?.center.set(0.5, 0.5)
+  }
+  mesh.children.forEach(child => fixTextureOffset(child));
+}

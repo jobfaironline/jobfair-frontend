@@ -1,7 +1,7 @@
 import React, {useRef} from "react";
 import * as THREE from "three";
 import {useFrame} from "@react-three/fiber";
-import {ChildMesh} from "../../pages/DecorateBoothPage/components/model/Final_booth_model";
+import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
 
 export const ArrowHelper = (props) => {
     const {origin} = props;
@@ -20,5 +20,5 @@ export const ArrowHelper = (props) => {
             ref.current.rotateOnAxis(dir, delta)
         }
     })
-    return <ChildMesh ref={ref} mesh={arrowHelper}/>
+    return <BasicMesh ref={ref} mesh={arrowHelper}/>
 }

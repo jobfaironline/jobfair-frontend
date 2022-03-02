@@ -9,6 +9,7 @@ import {
   loadModel
 } from '../../../../utils/glbModelUtil'
 import { useThree } from '@react-three/fiber'
+import {BasicMesh} from "../../../../components/ThreeJSBaseComponent/ChildMesh.component";
 
 function ItemMesh({
   mesh,
@@ -17,14 +18,13 @@ function ItemMesh({
   mode,
   setSelectedItemRef,
   selectedItemRef,
-  hoverItemRef,
   setHoverItemRef,
 }) {
   const [position, setPosition] = useState(mesh.position)
   const itemRef = useRef()
 
   const bind = useDrag(
-    ({ offset: [x, y], event, active, dragging }) => {
+    ({event, active }) => {
       if (mode !== ModeConstant.SELECT) return
       if (selectedItemRef?.current.uuid !== itemRef.current.uuid) return
       if (active) {
@@ -66,26 +66,26 @@ function ItemMesh({
       geometry={mesh.geometry}
       material={mesh.material}
       position={position}
-      onClick={event => {
+      onClick={_ => {
         if (selectedItemRef?.current.uuid === mesh.uuid) {
           setSelectedItemRef(undefined)
         } else {
           setSelectedItemRef(itemRef)
         }
       }}
-      onPointerOver={event => {
+      onPointerOver={_ => {
         setHoverItemRef(itemRef)
       }}
-      onPointerLeave={event => {
+      onPointerLeave={_ => {
         setHoverItemRef(undefined)
       }}
       {...bind()}
       rotation={mesh.rotation}
       scale={mesh.scale}
-      castShadow
-      receiveShadow
+      castShadow={true}
+      receiveShadow={true}
     >
-      {mesh.children.map(child => <ChildMesh mesh={child} key={child.uuid}/>)}
+      {mesh.children.map(child => <BasicMesh mesh={child} key={child.uuid}/>)}
     </mesh>
   )
 }
@@ -136,34 +136,13 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
       position={mesh.position}
       rotation={mesh.rotation}
       scale={mesh.scale}
-      castShadow
-      receiveShadow
+      castShadow={true}
+      receiveShadow={true}
     >
-      {mesh.children.map(child => ChildMesh({ mesh: child }))}
+      {mesh.children.map(child => <BasicMesh mesh={child} key={child.uuid}/>)}
     </mesh>
   )
 }
-
-export const ChildMesh = React.forwardRef(({ mesh }, ref) => {
-  return (
-      <mesh
-          ref={ref}
-          name={mesh.name}
-          key={mesh.uuid}
-          geometry={mesh.geometry}
-          material={mesh.material}
-          position={mesh.position}
-          rotation={mesh.rotation}
-          scale={mesh.scale}
-          castShadow
-          receiveShadow
-      >
-        {mesh.children.map(child => (
-            <ChildMesh key={child.uuid} mesh={child} />
-        ))}
-      </mesh>
-  )
-})
 
 export const Model = React.forwardRef(
   (
@@ -216,7 +195,7 @@ export const Model = React.forwardRef(
           break
       }
     }
-    const onDocumentMouseMove = event => {}
+    const onDocumentMouseMove = _ => {}
     useEffect(() => {
       window.addEventListener('keydown', handleKeyDown)
       window.addEventListener('mousemove', onDocumentMouseMove, false)

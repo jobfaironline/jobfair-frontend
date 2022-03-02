@@ -1,14 +1,19 @@
 import React, {Fragment, useState} from "react";
 import {Canvas} from "@react-three/fiber";
-import {OrbitControls, Stage} from "@react-three/drei";
-import {ChildMesh} from "../../pages/DecorateBoothPage/components/model/Final_booth_model";
+import {Stage} from "@react-three/drei";
 import {EffectComposer, Outline} from "@react-three/postprocessing";
 import {ChooseBoothGroundMesh} from "./ChooseBoothGroundMesh.component";
 import {ArrowHelper} from "./ArrowHelper.component";
-import {Modal, notification} from "antd";
+import {Modal, notification, Select} from "antd";
 import {getLatestApproveRegistration} from "../../services/jobfairService";
 import {useHistory} from "react-router-dom";
 import {purchaseBooth} from "../../services/boothPurchaseService";
+import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
+import {CameraControls} from "../ThreeJSBaseComponent/CameraControls.component";
+import {SkyComponent, SkyType} from "../ThreeJSBaseComponent/Sky.component";
+import {SkyTypeSelect} from "../ThreeJSBaseComponent/SelectSkyType.component";
+
+
 
 export const ChooseBoothCanvas = (props) => {
     const {mesh, boothData, jobFairId} = props;
@@ -18,6 +23,7 @@ export const ChooseBoothCanvas = (props) => {
         isVisible: false,
         boothId: ""
     })
+    const [skyType, setSkyType] = useState(SkyType.Morning);
     const handleOk = async () => {
         let data = await getLatestApproveRegistration(jobFairId).then(response => response.data);
         const registrationId = data.id;
@@ -53,7 +59,7 @@ export const ChooseBoothCanvas = (props) => {
             setHoverRef(ref);
         }
     }
-    const onCompanyGroundPointerOut = (ref) => {
+    const onCompanyGroundPointerOut = () => {
         setHoverRef(undefined);
     }
 
@@ -61,7 +67,10 @@ export const ChooseBoothCanvas = (props) => {
         setModalState(prevState => {
             return {...prevState, boothId: boothId, isVisible: true};
         });
+    }
 
+    const onChangeSkyType = (value) => {
+        setSkyType(value.value);
     }
 
 
@@ -70,8 +79,12 @@ export const ChooseBoothCanvas = (props) => {
             <Modal title="Confirm booth" visible={modalState.isVisible} onOk={handleOk} onCancel={handleCancel}>
                 Are you sure?
             </Modal>
-            <Canvas dpr={[1, 2]} camera={{fov: 50}} style={{width: '100%', height: '850px', cursor: hoverRef === undefined ? "default" : "pointer"}}>
-                <OrbitControls/>
+            <SkyTypeSelect onChange={onChangeSkyType}/>
+            <Canvas dpr={[1, 2]} camera={{fov: 50}} shadowMap
+                    style={{width: '100%', height: '970px', cursor: hoverRef === undefined ? "default" : "pointer"}}>
+                <CameraControls/>
+                <SkyComponent style={skyType}/>
+
                 <Stage preset="rembrandt" intensity={0.4} environment="city"
                        contactShadow={false}>
                     <group dispose={null}>
@@ -85,10 +98,10 @@ export const ChooseBoothCanvas = (props) => {
                                                               onClick={() => onClick(id)}
                                 />
                             }
-                            return <ChildMesh key={childMesh.uuid} mesh={childMesh}/>
+                            return <BasicMesh key={childMesh.uuid} mesh={childMesh}/>
                         })}
                         {mesh.children.map(childMesh => {
-                            if (childMesh.name.includes('company')  && boothData[childMesh.name] !== undefined) {
+                            if (childMesh.name.includes('company') && boothData[childMesh.name] !== undefined) {
                                 return <ArrowHelper origin={childMesh.position}/>
                             }
                             return null;
