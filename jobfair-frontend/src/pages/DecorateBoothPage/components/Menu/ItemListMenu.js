@@ -4,12 +4,7 @@ import { Button } from 'antd'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import { ModeConstant } from '../../../../constants/AppConst'
 
-export default function ItemListMenu({
-  items,
-  selected,
-  setSelected,
-  setMode,
-}) {
+export default function ItemListMenu({ items, selected, setSelected, setMode }) {
   const isItemSelected = id => selected?.id === id
 
   const handleClick = id => () => {
@@ -61,7 +56,7 @@ function Card({ onClick, selected, title, itemId }) {
     <div
       onClick={onClick}
       style={{
-        width: '160px',
+        width: '160px'
       }}
       tabIndex={0}
     >
@@ -71,7 +66,7 @@ function Card({ onClick, selected, title, itemId }) {
       </div>
       <div
         style={{
-          height: '200px',
+          height: '160px'
         }}
       />
     </div>

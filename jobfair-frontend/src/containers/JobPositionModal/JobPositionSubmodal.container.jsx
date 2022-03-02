@@ -13,7 +13,7 @@ const JobPositionSubmodalContainer = () => {
   const dispatch = useDispatch()
 
   const handleOk = async () => {
-    await setTimeout(() => {
+    setTimeout(() => {
       form.submit()
       dispatch(setJobPositionSubmodalVisibility(false))
     }, 2000)

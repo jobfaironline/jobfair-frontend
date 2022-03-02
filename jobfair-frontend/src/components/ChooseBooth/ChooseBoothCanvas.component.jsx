@@ -4,7 +4,7 @@ import {Stage} from "@react-three/drei";
 import {EffectComposer, Outline} from "@react-three/postprocessing";
 import {ChooseBoothGroundMesh} from "./ChooseBoothGroundMesh.component";
 import {ArrowHelper} from "./ArrowHelper.component";
-import {Modal, Select} from "antd";
+import {Modal, notification, Select} from "antd";
 import {getLatestApproveRegistration} from "../../services/jobfairService";
 import {useHistory} from "react-router-dom";
 import {purchaseBooth} from "../../services/boothPurchaseService";
@@ -30,8 +30,21 @@ export const ChooseBoothCanvas = (props) => {
         data = await purchaseBooth({
             'boothId': modalState.boothId,
             'companyRegistrationId': registrationId,
-        }).then(response => response.data);
-        history.push(`/decorate-booth/${data.id}`);
+        }).then(response => {
+            notification['success']({
+                message: `Purchase successfully`,
+                description: `${response.data}`,
+                duration: 2,
+            })
+            history.push(`/decorate-booth/${data.id}`);
+        })
+            .catch(err => {
+                notification['error']({
+                    message: `Not found company registration by job fair ID: ${jobFairId}`,
+                    description: `${err}`,
+                    duration: 2,
+                })
+            })
     };
 
     const handleCancel = () => {

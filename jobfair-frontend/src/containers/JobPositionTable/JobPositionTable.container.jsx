@@ -27,8 +27,7 @@ const JobPositionTable = ({ extra }) => {
   }
 
   const handleGetDetail = jobPositionId => {
-    setDrawerVisibility(true)
-    setNeededJobPosition(jobPositionId)
+    console.log(jobPositionId)
   }
 
   return (

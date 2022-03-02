@@ -25,7 +25,7 @@ const ApprovalRegistrationContainer = () => {
     const fetchData = async () => {
         getRegistrationByJobFairId(jobFairId, currentPage, pageSize, 'createDate', 'DESC')
             .then(res => {
-                console.log(res.data)
+                // console.log(res.data)
                 const totalRecord = res.data.totalElements;
                 setTotalRecord(totalRecord)
                 const result = res.data.content.map((item, index) => {
@@ -80,10 +80,6 @@ const ApprovalRegistrationContainer = () => {
     }
 
     const handlePageChange = (page, pageSize) => {
-        console.log('page', page, 'page size: ', pageSize)
-        if (page === 1) {
-            setCurrentPage(0);
-        }
         setCurrentPage(page - 1);
         setPageSize(pageSize)
     }

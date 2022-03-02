@@ -14,11 +14,15 @@ export const ENDPOINT_GET_REGISTRATIONS_BY_JOB_FAIR_ID =
 export const ENDPOINT_JOB_FAIR = '/api/v1/job-fairs'
 export const ENDPOINT_EVALUATE_JOB_FAIR_REGISTRATION =
   '/api/v1/job-fair/company-registration/evaluate'
+export const ENDPOINT_GET_JOB_FAIR_PLAN_OF_COMPANY = '/api/v1/job-fairs/company'
 export const ENDPOINT_GET_ACCOUNT_BY_ID = '/api/v1/accounts'
 export const ENDPOINT_JOB_CONTROLLER = '/api/v1/job'
 export const ENDPOINT_GET_LAYOUT_FOR_JOB_FAIR_PARK = '/api/v1/job-fairs/for-3d-map'
 export const ENDPOINT_GET_COMPANY_BOOTH_LATEST_VERSION_LAYOUT = '/api/v1/company-booth-layout/latest'
+export const ENDPOINT_CREATE_DRAFT_REGISTRATION = '/api/v1/job-fair/company-registration/draft';
+export const ENDPOINT_SUBMIT_REGISTRATION = '/api/v1/job-fair/company-registration/submit'
 export const ENDPOINT_GET_LAYOUT_AND_AVAILABLE_SLOT_BY_JOB_FAIR_ID = '/api/v1/layouts/job-fair/available-slot'
 export const ENDPOINT_GET_LATEST_APPROVE_REGISTRATION = '/api/v1/job-fair/company-registration/latest-approve'
+export const ENDPOINT_GET_COMPANY_BOOTH_BY_JOB_FAIR_ID = '/api/v1/company-booth'
 export const ENDPOINT_PURCHASE_BOOTH = '/api/v1/purchase-booth'
 export const ENDPOINT_BOOTH_LAYOUT = '/api/v1/company-booth-layout'
