@@ -62,9 +62,8 @@ const AttendantJobFairPage = () => {
           <AttendantJobFairBoothContainer companyBoothId={companyBoothId} />
         </div>
         <div>
-          <ChatBox />
+          <ChatBox {...communicationProps} />
         </div>
-        {/* <CommunicationContainer {...communicationProps} /> */}
       </div>
     </Fragment>
   )
