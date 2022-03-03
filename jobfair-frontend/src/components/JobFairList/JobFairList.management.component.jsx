@@ -92,7 +92,7 @@ const JobFairListManagementComponent = (props) => {
                             <List.Item.Meta
                                 title={
                                     <div display="flex">
-                                        <h2 style={{marginBottom: '0.2rem'}}>{`Job fair Id: ${item['id']}`}</h2>
+                                        <h2 style={{marginBottom: '0.2rem'}}>{`Name: ${item['description']}`}</h2>
                                         {/*{item.status === 'UNAVAILABLE'? <Tag color="red">{item.status}</Tag> : null}*/}
                                         {/*{item.status === 'REGISTRABLE' ? <Tag color="green">{item.status}</Tag> : null}*/}
                                         {/*{item.status === 'SUBMITTED' ? <Tag color="gold">{item.status}</Tag> : null}*/}
