@@ -109,7 +109,7 @@ const VideoCall = props => {
       </div>
       <div className={styles.mainVideo}>
         {users.length > 0 ? (
-          <div>
+          <div style={{height: '100%'}}>
             {users.length > 0 &&
               users.map(user => {
                 if (user.videoTrack) {
