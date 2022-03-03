@@ -10,9 +10,15 @@ const JobFairListColumn = (getColumnSearchProps) => {
             ...getColumnSearchProps('id')
         },
         {
+            title: 'Description',
+            dataIndex: 'description',
+            key: 'description',
+            ...getColumnSearchProps('id')
+        },
+        {
             title: 'Start time',
             dataIndex: 'startTime',
-            key: 'phone',
+            key: 'startTime',
             ...getColumnSearchProps('startTime')
         },
         {
