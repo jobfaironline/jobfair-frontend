@@ -99,13 +99,9 @@ const DecorateBoothPage = () => {
                 </div>
                 <Canvas
                     dpr={[1, 2]}
-                    camera={{fov: 40, zoom: 1.2, filmOffset: selectedItemRef ? -10 : 0}}
+                    camera={{fov: 40, zoom: 1.2}}
                     style={{width: '100vw', height: showMenu ? '70vh' : '90vh'}}
                 >
-                    {/*<OrbitControls enabled={!isDragging} enableZoom={true}
-                         maxPolarAngle={Math.PI/2 - Math.PI/10}
-                         minPolarAngle={0}
-                         maxDistance={1000}/>*/}
                     <CameraControls enabled={!isDragging}/>
                     <Stage preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
                         <Model
@@ -139,6 +135,7 @@ const DecorateBoothPage = () => {
                         >
                             Add more component
                         </Button>
+                        <Button onClick={onClick} type="primary">Save</Button>
                         <Button type="primary"
                                 onClick={() => history.push(`/map/${jobFairId}`)}>
                             Review

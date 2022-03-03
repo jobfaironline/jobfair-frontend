@@ -257,7 +257,6 @@ const SideBarDecoratedBooth = ({ selectedItemRef, onClick }) => {
             <Button icon={<UploadOutlined />}>Upload Media</Button>{' '}
           </Upload>
 
-          <Button onClick={onClick}>Save</Button>
           {/*<Button onClick={handleOnChangeMaterialVideo}>Mockup video</Button>*/}
         </div>
       </div>

@@ -67,11 +67,7 @@ function ItemMesh({
       material={mesh.material}
       position={position}
       onClick={_ => {
-        if (selectedItemRef?.current.uuid === mesh.uuid) {
-          setSelectedItemRef(undefined)
-        } else {
-          setSelectedItemRef(itemRef)
-        }
+        setSelectedItemRef(itemRef)
       }}
       onPointerOver={_ => {
         setHoverItemRef(itemRef)
