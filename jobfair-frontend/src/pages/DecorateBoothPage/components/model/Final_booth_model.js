@@ -54,10 +54,6 @@ function ItemMesh({
     { pointerEvents: true }
   )
 
-  useEffect(() => {
-    itemRef.current.uuid = mesh.uuid
-    itemRef.current.name = mesh.name
-  })
   return (
     <mesh
       name={mesh.name}
@@ -208,6 +204,7 @@ export const Model = React.forwardRef(
           if (mesh === floorMesh) {
             return (
               <FloorMesh
+                key={mesh.uuid}
                 mesh={mesh}
                 selectedSampleItem={selectedSampleItem}
                 setModelItems={setModelItems}

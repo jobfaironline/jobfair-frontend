@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react'
 import {Canvas} from '@react-three/fiber'
 import {Model} from './components/model/Final_booth_model'
-import {Stage, useGLTF} from '@react-three/drei'
+import {OrbitControls, Stage, useGLTF} from '@react-three/drei'
 import {ToastContainer} from 'react-toastify'
 import Menu from './components/Menu/ItemListMenu'
 import {EffectComposer, Outline} from '@react-three/postprocessing'
