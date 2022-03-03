@@ -108,7 +108,7 @@ const NavigationBar = () => {
             ? extraMenu().map(item => {
                 return item
               })
-            : history.push('/auth/login')}
+            : null}
           {role ? <Button onClick={handleClick}>Logout</Button> : null}
         </Menu>
       </div>
