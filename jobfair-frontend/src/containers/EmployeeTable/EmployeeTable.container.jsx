@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import EmployeeTableComponent from '../../components/EmployeeTable/EmployeeTable.component'
 import EmployeeDrawer from '../../containers/EmployeeDrawer/EmployeeDrawer.container'
-import { deleteEmployeeAPI, getEmployeesAPI } from '../../services/companyEmployeeService'
+import {
+  deleteEmployeeAPI,
+  getEmployeesAPI
+} from '../../services/company-employee-controller/CompanyEmployeeControllerService'
 import { Space, notification, Popconfirm } from 'antd'
 import { useSelector } from 'react-redux'
 

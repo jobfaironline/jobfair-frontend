@@ -2,7 +2,7 @@ import { Tag } from 'antd'
 import { MailOutlined } from '@ant-design/icons'
 import CallIcon from '@mui/icons-material/Call'
 
-import { getAgoraRTCToken } from '../../../../../../services/agoraTokenService'
+import { getAgoraRTCToken } from '../../../../../../services/agora-token-controller/AgoraTokenControllerService'
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from 'react'
 
@@ -109,7 +109,7 @@ const VideoCall = props => {
       </div>
       <div className={styles.mainVideo}>
         {users.length > 0 ? (
-          <div style={{height: '100%'}}>
+          <div style={{ height: '100%' }}>
             {users.length > 0 &&
               users.map(user => {
                 if (user.videoTrack) {

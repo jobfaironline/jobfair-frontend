@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Form, notification } from 'antd'
 import JobPositionSubmodal from '../../components/JobPositionModal/JobPositionSubmodal.component'
 import { setJobPositionSubmodalVisibility } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
-import { createJobPositionsAPI } from '../../services/jobPositionsService'
+import { createJobPositionsAPI } from '../../services/job-controller/JobControllerService'
 import { fetchJobPositions } from '../../redux-flow/jobPositions/job-positions-action'
 
 const JobPositionSubmodalContainer = () => {

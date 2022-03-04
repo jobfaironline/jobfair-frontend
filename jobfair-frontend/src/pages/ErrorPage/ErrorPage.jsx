@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { Result, Button } from 'antd'
 import { useHistory } from 'react-router-dom'
+import { PATH } from '../../constants/Paths/Path'
 const ErrorPage = ({ code = 404 }) => {
   const history = useHistory()
   const subTitlte = useMemo(() => {
@@ -23,11 +24,11 @@ const ErrorPage = ({ code = 404 }) => {
           <Button
             className="main-button"
             onClick={() => {
-              history.push('/home')
+              history.push(PATH.HOME)
             }}
             type="primary"
           >
-             Back to Home
+            Back to Home
           </Button>
         }
       />

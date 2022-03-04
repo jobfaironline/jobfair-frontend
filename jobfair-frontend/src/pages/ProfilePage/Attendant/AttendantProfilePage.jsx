@@ -1,16 +1,14 @@
-import React from 'react';
-import AttendantProfileFormContainer from "../../../containers/AttendantProfileForm/AttendantProfileForm.container";
+import React from 'react'
+import AttendantProfileFormContainer from '../../../containers/AttendantProfileForm/AttendantProfileForm.container'
 
 const AttendantProfile = props => {
-    return (
-        <div>
-            <AttendantProfileFormContainer/>
-        </div>
-    );
-};
+  return (
+    <div>
+      <AttendantProfileFormContainer />
+    </div>
+  )
+}
 
-AttendantProfile.propTypes = {
-    
-};
+AttendantProfile.propTypes = {}
 
-export default AttendantProfile;
+export default AttendantProfile
