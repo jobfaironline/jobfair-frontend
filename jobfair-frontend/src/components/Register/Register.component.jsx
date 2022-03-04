@@ -88,7 +88,7 @@ const AttendantForm = () => {
           Register
         </Button>
       </Form.Item>
-      <Form.Item className="register">
+      <Form.Item className="login-text">
         <span>Already have an account?</span> <Button type="link">Login now!</Button>
       </Form.Item>
     </Form>
@@ -158,7 +158,7 @@ const CompanyForm = () => {
           Register
         </Button>
       </Form.Item>
-      <Form.Item className="register">
+      <Form.Item className="login-text">
         <span>Already have an account?</span> <Button type="link">Login now!</Button>
       </Form.Item>
     </Form>
