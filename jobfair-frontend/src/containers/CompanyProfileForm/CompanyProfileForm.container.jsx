@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Affix, Button, Form, notification, Spin } from 'antd'
 import {
-  getCompanyProfileAPIV2,
-  updateCompanyProfileAPIPOST
+  getCompanyProfileAPI,
+  updateCompanyProfileAPI
 } from '../../services/company-controller/CompanyControllerService'
 import CompanyProfileForm from '../../components/company-profile-form/CompanyProfileForm.component'
 
