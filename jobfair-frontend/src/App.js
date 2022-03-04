@@ -5,6 +5,7 @@ import store from './redux-flow/index'
 import 'antd/dist/antd.min.css'
 import './App.css'
 import AppRouter from './router/AppRouter'
+import 'animate.css'
 
 function App() {
   return (

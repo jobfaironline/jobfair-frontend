@@ -56,7 +56,7 @@ Navbar
 
 .Navbar .ant-menu li.ant-menu-item:before,
 .Navbar .ant-menu li.ant-menu-item:after {
-  content: "";
+  content: '';
   width: 1px;
   position: absolute;
   top: 2px;
@@ -71,8 +71,23 @@ home
 ----
 */
 .home {
-  background: url("assets/images/bg-hero.jpg") no-repeat;
+  background: url('assets/images/bg-hero.jpg') no-repeat;
   background-position: 50% 100%;
   background-size: cover;
   height: 100vh;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+}
+
+.page {
+  flex: 1;
 }

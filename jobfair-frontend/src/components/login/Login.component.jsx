@@ -1,51 +1,47 @@
-import React from 'react';
-import {Button, Checkbox, Divider, Form, Input, Layout} from "antd";
-import {Content, Footer, Header} from "antd/es/layout/layout";
+import React from 'react'
+import { Button, Checkbox, Divider, Form, Input, Layout, Typography } from 'antd'
+import { Content, Footer, Header } from 'antd/es/layout/layout'
+import './Login.styles.scss'
 
-const LoginComponent = ({onFinish, form}) => {
-    return (
-        <>
-            <Divider orientation="center" plain>
-                Job Fair Online - Login
-            </Divider>
-            <div style={{display: 'flex', flexDirection: 'column'}}>
-                <Form
-                    labelCol={{span: 8}}
-                    wrapperCol={{span: 8}}
-                    form={form}
-                    onFinish={onFinish}
-                    autoComplete="off"
-                >
-                    <Form.Item
-                        label="Email"
-                        name="email"
-                        hasFeedback
-                        rules={[{required: true, message: 'Please input your email!'}, {
-                            type: 'email',
-                            message: 'This field has invalid email format.'
-                        }]}
-                    >
-                        <Input/>
-                    </Form.Item>
-                    <Form.Item
-                        label="Password"
-                        name="password"
-                        hasFeedback
-                        rules={[{required: true, message: 'Please input your password!'}]}
-                    >
-                        <Input.Password/>
-                    </Form.Item>
-                    <Form.Item wrapperCol={{offset: 8, span: 16}}>
-                        <Button type="primary" htmlType="submit">
-                            Submit
-                        </Button>
-                        <a href="" style={{marginLeft: 20}}>Forgot password ?</a>
-                    </Form.Item>
-                </Form>
-            </div>
-        </>
-    );
-};
+const LoginComponent = ({ onFinish, form }) => {
+  return (
+    <>
+      <Divider orientation="center" plain>
+        <Typography.Title level={4}>Job Fair Online - Login</Typography.Title>
+      </Divider>
+      <div className="input-container">
+        <Form className="login-form" form={form} onFinish={onFinish} autoComplete="off">
+          <Form.Item
+            name="email"
+            hasFeedback
+            rules={[
+              { required: true, message: 'Please input your email!' },
+              {
+                type: 'email',
+                message: 'This field has invalid email format.'
+              }
+            ]}
+          >
+            <Input placeholder="Email" />
+          </Form.Item>
+          <Form.Item name="password" hasFeedback rules={[{ required: true, message: 'Please input your password!' }]}>
+            <Input.Password placeholder="Password" />
+          </Form.Item>
+          <Form.Item className="login">
+            <Button type="primary" htmlType="submit">
+              Login
+            </Button>
+          </Form.Item>
+          <Form.Item className="forgot-password">
+            <Button type="link">Forgot password?</Button>
+          </Form.Item>
+          <Form.Item className="register">
+            <span>Don't you have an account?</span> <Button type="link">Register</Button>
+          </Form.Item>
+        </Form>
+      </div>
+    </>
+  )
+}
 
-
-export default LoginComponent;
+export default LoginComponent
