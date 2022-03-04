@@ -97,20 +97,20 @@ const NavigationBar = () => {
             </Menu.Item>
           ) : null}
           {!role ? (
-            <Menu.Item key={PATH.REGISTER_PAGE}>
-              <Link to={PATH.REGISTER_PAGE}>Register</Link>
+            <Menu.Item key={PATH.FORGOT_PASSWORD_PAGE}>
+              <Link to={PATH.FORGOT_PASSWORD_PAGE}>Forget Password</Link>
             </Menu.Item>
           ) : null}
-          {role ? (
-            <Menu.Item key={PATH.CHANGE_PASSWORD_PAGE}>
-              <Link to={PATH.CHANGE_PASSWORD_PAGE}>Change Password</Link>
+          {!role ? (
+            <Menu.Item key={PATH.REGISTER_PAGE}>
+              <Link to={PATH.REGISTER_PAGE}>Register</Link>
             </Menu.Item>
           ) : null}
           {extraMenu()
             ? extraMenu().map(item => {
                 return item
               })
-            : history.push(PATH.LOGIN_PAGE)}
+            : null}
           {role ? <Button onClick={handleClick}>Logout</Button> : null}
         </Menu>
       </div>

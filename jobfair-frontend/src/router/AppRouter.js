@@ -27,6 +27,7 @@ import AppliedJobPage from '../pages/AppliedJobPage/AppliedJobPage'
 import CompanyEmployeeRouter from './components/CompanyEmployeeRouter'
 import AdminRouter from './components/AdminRouter'
 import StaffRouter from './components/StaffRouter'
+import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage'
 import {
   PATH_ATTENDANT,
   PATH,
@@ -64,8 +65,11 @@ const AppRouter = () => {
         <Route path={PATH.REGISTER_PAGE} exact>
           {!role ? <RegisterPage /> : <Redirect to={PATH.INDEX} />}
         </Route>
+        <Route path={PATH.FORGOT_PASSWORD_PAGE} exact>
+          {!role ? <ForgotPasswordPage /> : <Redirect to={PATH.INDEX} />}
+        </Route>
         <Route path={PATH.CHANGE_PASSWORD_PAGE} exact>
-          {role ? <ChangePasswordPage /> : <Redirect to={PATH.LOGIN_PAGE} />}
+          {!role ? <ChangePasswordPage /> : <Redirect to={PATH.LOGIN_PAGE} />}
         </Route>
         <Route path={PATH.RESULT_SUCCESS_PAGE} exact>
           <ResultSuccessPage />
