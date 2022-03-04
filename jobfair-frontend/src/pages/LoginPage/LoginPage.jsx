@@ -6,15 +6,20 @@ import { injectStyle } from 'react-toastify/dist/inject-style'
 import { notify } from '../../utils/toastutil'
 import { Form, notification } from 'antd'
 import LoginContainer from '../../containers/login/Login.container'
+import './LoginPage.styles.scss'
 
 if (typeof window !== 'undefined') {
   injectStyle()
 }
 const LoginPage = () => {
   return (
-    <>
-      <LoginContainer />
-    </>
+    <div className="page">
+      <div className="leftside-container">
+        <div className="login-container">
+          <LoginContainer />
+        </div>
+      </div>
+    </div>
   )
 }
 
