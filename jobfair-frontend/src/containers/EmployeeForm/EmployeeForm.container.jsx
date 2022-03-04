@@ -1,5 +1,5 @@
 import React from 'react'
-import { createEmployeesAPI } from '../../services/companyEmployeeService'
+import { createEmployeesAPI } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
 import { Form, notification } from 'antd'
 import EmployeeFormComponent from '../../components/EmployeeForm/EmployeeForm.component'
 import { useSelector } from 'react-redux'

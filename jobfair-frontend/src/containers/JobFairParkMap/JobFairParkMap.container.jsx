@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import {fixTextureOffset, loadModel} from '../../utils/glbModelUtil'
+import { fixTextureOffset, loadModel } from '../../utils/glbModelUtil'
 import * as THREE from 'three'
 import JobFairParkMapComponent from '../../components/JobFairParkMap/JobFairParkMap.component'
-import { getLayoutInformationForJobFairPark } from '../../services/jobfairService'
+import { getLayoutInformationForJobFairPark } from '../../services/job-fair-controller/JobFairConTrollerService'
 import { useHistory } from 'react-router-dom'
-
+import { PATH } from '../../constants/Paths/Path'
 const getBootMesh = async (position, foundationBox, url, companyBoothId) => {
   const gltf = await loadModel(url)
   const { x, y, z } = position
@@ -85,9 +85,7 @@ const JobFairParkMapContainer = props => {
       newBoothMeshesPromise.push(boothMesh)
     }
     const meshes = await Promise.all(newBoothMeshesPromise)
-    meshes.forEach(mesh => fixTextureOffset(mesh));
-
-
+    meshes.forEach(mesh => fixTextureOffset(mesh))
 
     //GET data from BE
     setState({
@@ -101,7 +99,7 @@ const JobFairParkMapContainer = props => {
   }
 
   const clickHandle = companyBoothId => {
-    history.push(`/jobfair/attendant/${companyBoothId}`)
+    history.push(`${PATH.ATTENDANT_JOB_FAIR_PATH}${companyBoothId}`)
   }
 
   return <JobFairParkMapComponent mapMesh={state.mapMesh} boothMeshes={state.boothMeshes} onClick={clickHandle} />
