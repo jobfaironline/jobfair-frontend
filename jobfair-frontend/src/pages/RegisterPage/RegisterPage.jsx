@@ -4,8 +4,8 @@ import { companySchema } from '../../schema/register.company.schema'
 import { attendantSchema } from '../../schema/register.attendant.schema'
 import Form from '../../components/react-hook-form/form/Form'
 import TextInput from '../../components/react-hook-form/input/TextInput/TextInput'
-import { registerAttendantAPI } from '../../services/userService'
-import { registerCompanyAPI } from '../../services/userService'
+import { registerAttendantAPI } from '../../services/attendant-controller/AttendantControllerService'
+import { registerCompanyAPI } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
 const RegisterPage = () => {
   const { TabPane } = Tabs
   const [errorRes, setErrorRes] = useState()
@@ -13,19 +13,19 @@ const RegisterPage = () => {
     registerAttendantAPI({
       email: values.email,
       lastname: values.attendantName,
-      password: values.password,
+      password: values.password
     })
-      .then((data) => {})
-      .catch((err) => {})
+      .then(data => {})
+      .catch(err => {})
   }
   const handleOnSubmitCompany = (values, actions) => {
     registerCompanyAPI({
       email: values.email,
       lastname: values.attendantName,
-      password: values.password,
+      password: values.password
     })
-      .then((data) => {})
-      .catch((err) => {})
+      .then(data => {})
+      .catch(err => {})
   }
   return (
     <Tabs defaultActiveKey="1">
@@ -34,11 +34,7 @@ const RegisterPage = () => {
           <TextInput name="attendantName" label="Attendant's Name" />
           <TextInput name="email" label="Email" />
           <TextInput name="password" type="password" label="Password" />
-          <TextInput
-            name="confirmPassword"
-            type="password"
-            label="Re-Password"
-          />
+          <TextInput name="confirmPassword" type="password" label="Re-Password" />
           <br></br>
           <button>Submit</button>
         </Form>
@@ -48,11 +44,7 @@ const RegisterPage = () => {
           <TextInput name="companyName" label="Company Name" />
           <TextInput name="email" label="Email" />
           <TextInput name="password" type="password" label="Password" />
-          <TextInput
-            name="confirmPassword"
-            type="password"
-            label="Re-Password"
-          />
+          <TextInput name="confirmPassword" type="password" label="Re-Password" />
           <br></br>
           <button>Submit</button>
         </Form>

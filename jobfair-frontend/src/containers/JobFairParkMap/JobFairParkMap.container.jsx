@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import {fixTextureOffset, loadModel} from '../../utils/glbModelUtil'
+import { fixTextureOffset, loadModel } from '../../utils/glbModelUtil'
 import * as THREE from 'three'
 import JobFairParkMapComponent from '../../components/JobFairParkMap/JobFairParkMap.component'
-import { getLayoutInformationForJobFairPark } from '../../services/jobfairService'
+import { getLayoutInformationForJobFairPark } from '../../services/job-fair-controller/JobFairConTrollerService'
 import { useHistory } from 'react-router-dom'
 
 const getBootMesh = async (position, foundationBox, url, companyBoothId) => {
@@ -85,9 +85,7 @@ const JobFairParkMapContainer = props => {
       newBoothMeshesPromise.push(boothMesh)
     }
     const meshes = await Promise.all(newBoothMeshesPromise)
-    meshes.forEach(mesh => fixTextureOffset(mesh));
-
-
+    meshes.forEach(mesh => fixTextureOffset(mesh))
 
     //GET data from BE
     setState({
