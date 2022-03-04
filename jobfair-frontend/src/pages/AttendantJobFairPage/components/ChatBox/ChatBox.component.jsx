@@ -6,7 +6,7 @@ import ChatField from './components/ChatField/ChatField.component'
 import VideoCall from './components/VideoCall/VideoCall.component'
 import AgoraRTC from 'agora-rtc-react'
 import SendIcon from '@mui/icons-material/Send'
-import { getAgoraRTMToken } from '../../../../services/agoraTokenService'
+import { getAgoraRTMToken } from '../../../../services/agora-token-controller/AgoraTokenControllerService'
 import { useSelector } from 'react-redux'
 import { Form, Button } from 'antd'
 class Message {
