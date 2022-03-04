@@ -12,12 +12,7 @@ const ChangePasswordComponent = ({ onFinish, form }) => {
             label="otp"
             name="otp"
             hasFeedback
-            rules={[
-              { required: true, message: 'Please input your otp code!' },
-              {
-                message: 'This field has invalid email format.'
-              }
-            ]}
+            rules={[{ required: true, message: 'Please input your otp code!' }]}
           >
             <Input />
           </Form.Item>
