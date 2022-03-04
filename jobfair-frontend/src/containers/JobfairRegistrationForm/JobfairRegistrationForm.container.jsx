@@ -10,7 +10,7 @@ import { getCompanyProfileAPI } from '../../services/company-controller/CompanyC
 import TextArea from 'antd/es/input/TextArea'
 import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
 import ConfirmContainer from '../Confirm/Confirm.container'
-
+import { PATH } from '../../constants/Paths/Path'
 const { Step } = Steps
 const JobfairRegistrationForm = () => {
   //please pass this form into component or USE REDUX TO STORE FORM HOOK
@@ -90,7 +90,7 @@ const JobfairRegistrationForm = () => {
           duration: 2
         })
         //after submit success, push to success page
-        history.push('/proceed-success')
+        history.push(PATH.PROCESSED_SUCCESS)
       } catch (err) {
         notification['error']({
           message: `An error has occurred while submitting`,
@@ -98,7 +98,7 @@ const JobfairRegistrationForm = () => {
           duration: 2
         })
         //else push to error page
-        history.push('/proceed-fail')
+        history.push(PATH.PROCESSED_FAIL)
       }
     },
     total: 3

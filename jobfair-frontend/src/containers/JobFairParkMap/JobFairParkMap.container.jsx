@@ -4,7 +4,7 @@ import * as THREE from 'three'
 import JobFairParkMapComponent from '../../components/JobFairParkMap/JobFairParkMap.component'
 import { getLayoutInformationForJobFairPark } from '../../services/job-fair-controller/JobFairConTrollerService'
 import { useHistory } from 'react-router-dom'
-
+import { PATH } from '../../constants/Paths/Path'
 const getBootMesh = async (position, foundationBox, url, companyBoothId) => {
   const gltf = await loadModel(url)
   const { x, y, z } = position
@@ -99,7 +99,7 @@ const JobFairParkMapContainer = props => {
   }
 
   const clickHandle = companyBoothId => {
-    history.push(`/jobfair/attendant/${companyBoothId}`)
+    history.push(`${PATH.ATTENDANT_JOB_FAIR_PATH}${companyBoothId}`)
   }
 
   return <JobFairParkMapComponent mapMesh={state.mapMesh} boothMeshes={state.boothMeshes} onClick={clickHandle} />

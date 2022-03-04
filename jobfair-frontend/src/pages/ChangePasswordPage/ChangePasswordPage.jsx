@@ -7,7 +7,7 @@ import { injectStyle } from 'react-toastify/dist/inject-style'
 import { notify } from '../../utils/toastutil'
 import Form from '../../components/react-hook-form/form/Form'
 import { useHistory } from 'react-router-dom'
-
+import { PATH } from '../../constants/Paths/Path'
 if (typeof window !== 'undefined') {
   injectStyle()
 }
@@ -24,7 +24,7 @@ const ChangePasswordPage = () => {
         if (res.status === 200) {
           notify(2, 'Change password successfully!')
           // dispatch(resetPasswordHandler(res.data));
-          history.push('/auth/login')
+          history.push(PATH.LOGIN_PAGE)
         }
       })
       .catch(err => {

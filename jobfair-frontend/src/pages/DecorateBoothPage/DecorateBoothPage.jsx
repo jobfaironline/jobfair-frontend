@@ -17,7 +17,7 @@ import {
   saveDecoratedBooth
 } from '../../services/company-booth-layout-controller/CompanyBoothLayoutControllerService'
 import { Affix, Button, Space } from 'antd'
-
+import { PATH } from '../../constants/Paths/Path'
 const DecorateBoothPage = () => {
   const { companyBoothId, jobFairId } = useParams()
   const [isDragging, setIsDragging] = useState(false)
@@ -132,7 +132,7 @@ const DecorateBoothPage = () => {
             <Button onClick={onClick} type="primary">
               Save
             </Button>
-            <Button type="primary" onClick={() => history.push(`/map/${jobFairId}`)}>
+            <Button type="primary" onClick={() => history.push(`${PATH.MAP}${jobFairId}`)}>
               Review
             </Button>
           </Space>

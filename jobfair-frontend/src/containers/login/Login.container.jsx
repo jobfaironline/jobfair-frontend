@@ -5,7 +5,7 @@ import { signInAPI } from '../../services/auth-controller/AuthControllerService'
 import { useDispatch } from 'react-redux'
 import { SigninHandler } from '../../redux-flow/authentication/authentication-action'
 import { useHistory } from 'react-router-dom'
-
+import { PATH } from '../../constants/Paths/Path'
 const LoginContainer = props => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
@@ -26,13 +26,13 @@ const LoginContainer = props => {
         switch (res.data.roles) {
           case 'COMPANY_EMPLOYEE':
           case 'COMPANY_MANAGER':
-            history.push('/jobfair-list')
+            history.push(PATH.JOB_FAIRS_PAGE)
             return
           case 'ATTENDANT':
-            history.push(`/map/fc271a03-cb11-469b-ae94-6873117b43d1`)
+            history.push(`${PATH.MAP}fc271a03-cb11-469b-ae94-6873117b43d1`)
             return
           case 'ADMIN':
-            history.push('/job-fair')
+            history.push(PATH.JOB_FAIR_LIST_PAGE)
             return
         }
       })

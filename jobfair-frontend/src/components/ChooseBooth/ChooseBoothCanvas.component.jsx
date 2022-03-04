@@ -12,7 +12,7 @@ import { BasicMesh } from '../ThreeJSBaseComponent/ChildMesh.component'
 import { CameraControls } from '../ThreeJSBaseComponent/CameraControls.component'
 import { SkyComponent, SkyType } from '../ThreeJSBaseComponent/Sky.component'
 import { SkyTypeSelect } from '../ThreeJSBaseComponent/SelectSkyType.component'
-
+import { PATH } from '../../constants/Paths/Path'
 export const ChooseBoothCanvas = props => {
   const { mesh, boothData, jobFairId } = props
   const history = useHistory()
@@ -30,7 +30,7 @@ export const ChooseBoothCanvas = props => {
       companyRegistrationId: registrationId
     })
       .then(response => {
-        history.push(`/decorate-booth/${response.data.id}/${jobFairId}`)
+        history.push(`${PATH.DECORATE_BOOTH_PATH}${response.data.id}/${jobFairId}`)
       })
       .catch(err => {
         notification['error']({

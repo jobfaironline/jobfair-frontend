@@ -4,7 +4,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Route, Redirect } from 'react-router-dom'
 import ErrorPage from '../../pages/ErrorPage/ErrorPage'
-
+import { PATH } from '../../constants/Paths/Path'
 const StaffRouter = ({ component: Component, ...rest }) => {
   const { user, isAuthUser } = useSelector(state => state.authentication)
   const resultComponent = props => {
@@ -20,7 +20,7 @@ const StaffRouter = ({ component: Component, ...rest }) => {
 
     if (!isAuthUser) {
       //check if current user not login send back to login Page
-      return <Redirect to="/auth/login" />
+      return <Redirect to={PATH.LOGIN_PAGE} />
     }
   }
   return <Route {...rest} render={props => resultComponent(props)} />

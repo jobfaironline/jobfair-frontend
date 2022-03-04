@@ -7,7 +7,7 @@ import { convertToDateString } from '../../utils/common'
 import { notification } from 'antd'
 
 const approvedJobFairId = 'a50a9875-93aa-4605-8afd-29923d3310fe'
-
+import { PATH } from '../../constants/Paths/Path'
 const JobFairListManagementContainer = props => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
@@ -49,7 +49,7 @@ const JobFairListManagementContainer = props => {
     getCompanyBoothByJobFairId(jobFairId)
       .then(res => {
         const result = res.data[0]?.id
-        handleRedirect(`/decorate-booth/${result}/${jobFairId}`)
+        handleRedirect(`${PATH.DECORATE_BOOTH_PATH}${result}/${jobFairId}`)
       })
       .catch(err => {
         console.log(err)
