@@ -1,7 +1,6 @@
 import React from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {useSelector} from "react-redux";
-import NavigationBar from "../components/navbar/Navbar";
 import HomePage from "../pages/HomePage";
 import JobFairParkPage from "../pages/JobFairParkPage/JobFairParkPage";
 import AttendantJobFairPage from "../pages/AttendantJobFairPage/AttendantJobFairPage";
@@ -30,6 +29,8 @@ import {ChooseBoothPage} from "../pages/ChooseBoothPage/ChooseBoothPage";
 import {ResultSuccessPage} from "../pages/ResultPage/ResultSuccessPage";
 import DecorateBoothPage from "../pages/DecorateBoothPage/DecorateBoothPage";
 import ResultFailedPage from "../pages/ResultPage/ResultFailedPage";
+import NavigationBar from "../components/Navbar/Navbar";
+import JobPositionPage from "../pages/JobPositionPage/JobPositionPage";
 
 
 const AppRouter = () => {
@@ -117,6 +118,12 @@ const AppRouter = () => {
                     key="/company/register-job-fair"
                     component={() => <RegisterJobFairForm/>}
                     path="/company/register-job-fair"
+                    exact
+                />
+                <CompanyManagerRouter
+                    key="/company/job-position-management"
+                    component={() => <JobPositionPage/>}
+                    path="/company/job-position-management"
                     exact
                 />
                 <AttendantRouter
