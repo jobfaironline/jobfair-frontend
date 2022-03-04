@@ -1,6 +1,11 @@
 import React from 'react'
-import { Button, Checkbox, Divider, Form, Input, Layout } from 'antd'
-const ChangePasswordComponent = ({ onFinish, form }) => {
+import { Button, Checkbox, Divider, Form, Input, Layout, InputNumber } from 'antd'
+import Typography from '@mui/material/Typography'
+import ReactCodeInput from 'react-code-input'
+const ChangePasswordComponent = ({ onFinish, form, email, setOtpCode }) => {
+  const handlePinChange = otp => {
+    setOtpCode(otp)
+  }
   return (
     <>
       <Divider orientation="center" plain>
@@ -8,14 +13,34 @@ const ChangePasswordComponent = ({ onFinish, form }) => {
       </Divider>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Form labelCol={{ span: 8 }} wrapperCol={{ span: 8 }} form={form} onFinish={onFinish} autoComplete="off">
-          <Form.Item
-            label="otp"
-            name="otp"
-            hasFeedback
-            rules={[{ required: true, message: 'Please input your otp code!' }]}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
           >
-            <Input />
-          </Form.Item>
+            <Typography variant="h6" gutterBottom component="div">
+              OTP Code:
+            </Typography>
+            <ReactCodeInput id="pinCode" type="text" fields={6} onChange={handlePinChange} />
+          </div>
+          {!email ? (
+            <Form.Item
+              label="Email"
+              name="email"
+              hasFeedback
+              rules={[
+                { required: true, message: 'Please input your email!' },
+                {
+                  type: 'email',
+                  message: 'This field has invalid email format.'
+                }
+              ]}
+            >
+              <Input />
+            </Form.Item>
+          ) : null}
           <Form.Item
             label="newPassword"
             name="newPassword"
