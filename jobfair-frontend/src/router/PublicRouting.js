@@ -15,6 +15,7 @@ import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage'
 import { ResultSuccessPage } from '../pages/ResultPage/ResultSuccessPage'
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage'
 import ResultFailedPage from '../pages/ResultPage/ResultFailedPage'
+import HomePage from '../pages/HomePage'
 import { PATH } from '../constants/Paths/Path'
 const PublicRouting = prop => {
   const { role } = prop
