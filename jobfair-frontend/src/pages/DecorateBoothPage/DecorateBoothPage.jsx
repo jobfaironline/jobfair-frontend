@@ -12,8 +12,11 @@ const DecorateBoothPage = () => {
             dispatch(decorateBoothAction.reset({}));
         }
     });
-    return <DecorateBoothContainer companyBoothId={companyBoothId} jobFairId={jobFairId}/>
-
+    return (
+        <div className={"page"}>
+            <DecorateBoothContainer companyBoothId={companyBoothId} jobFairId={jobFairId}/>
+        </div>
+    )
 }
 
 export default DecorateBoothPage

@@ -27,7 +27,6 @@ import AppliedJobPage from '../pages/AppliedJobPage/AppliedJobPage'
 import CompanyEmployeeRouter from './components/CompanyEmployeeRouter'
 import AdminRouter from './components/AdminRouter'
 import StaffRouter from './components/StaffRouter'
-import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
 import {
   PATH_ATTENDANT,
   PATH,
