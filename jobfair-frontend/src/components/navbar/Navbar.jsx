@@ -1,8 +1,11 @@
 import React from 'react'
-import { Button, Menu } from 'antd'
+import { Button, Dropdown, Menu, Typography, Avatar } from 'antd'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutHandler } from '../../redux-flow/authentication/authentication-action'
+import { UserOutlined } from '@ant-design/icons'
+import './Navbar.styles.scss'
+
 import {
   PATH,
   PATH_ADMIN,
@@ -76,22 +79,26 @@ const NavigationBar = () => {
   const handleClick = () => {
     dispatch(logoutHandler())
   }
+
+  const handleRedirect = path => history.push(path)
   return (
-    <div className="container-fluid">
+    <div className="navbar-container container-fluid">
       <div className="Navbar">
-        <Menu mode="horizontal">
-          <Menu.Item key={PATH.INDEX}>
-            <Link to={PATH.INDEX}>
-              <div className="logo">LOGO</div>
-            </Link>
-          </Menu.Item>
+        <Link to={PATH.INDEX} className="logo">
+          <div>
+            <Typography.Title level={2} style={{ marginBottom: 0, padding: '0 1.5rem', color: '#FFF' }}>
+              Jobhub
+            </Typography.Title>
+          </div>
+        </Link>
+        <Menu className="menu" mode="horizontal">
           <Menu.Item key={PATH.CONTRACTS_PAGE}>
             <Link to={PATH.CONTRACTS_PAGE}>Contact</Link>
           </Menu.Item>
           <Menu.Item key={PATH.FAQ_PAGE}>
             <Link to={PATH.FAQ_PAGE}>FAQ</Link>
           </Menu.Item>
-          {!role ? (
+          {/* {!role ? (
             <Menu.Item key={PATH.LOGIN_PAGE}>
               <Link to={PATH.LOGIN_PAGE}>Log In</Link>
             </Menu.Item>
@@ -100,20 +107,64 @@ const NavigationBar = () => {
             <Menu.Item key={PATH.REGISTER_PAGE}>
               <Link to={PATH.REGISTER_PAGE}>Register</Link>
             </Menu.Item>
-          ) : null}
-          {role ? (
-            <Menu.Item key={PATH.CHANGE_PASSWORD_PAGE}>
-              <Link to={PATH.CHANGE_PASSWORD_PAGE}>Change Password</Link>
-            </Menu.Item>
-          ) : null}
+          ) : null} }*/}
           {extraMenu()
             ? extraMenu().map(item => {
                 return item
               })
             : history.push(PATH.LOGIN_PAGE)}
-          {role ? <Button onClick={handleClick}>Logout</Button> : null}
+          {/* {role ? <Button onClick={handleClick}>Logout</Button> : null} */}
         </Menu>
+        {!role ? <AuthenticationButtonGroups handleRedirect={handleRedirect} /> : null}
+        {role ? <AvatarMenu logoutFunction={handleClick} handleRedirect={handleRedirect} /> : null}
       </div>
+    </div>
+  )
+}
+
+const AuthenticationButtonGroups = ({ handleRedirect }) => {
+  return (
+    <div style={{ display: 'flex', position: 'absolute', right: 0 }}>
+      <Button
+        size="large"
+        shape="round"
+        onClick={() => handleRedirect(PATH.LOGIN_PAGE)}
+        style={{ margin: '0 0.5rem', width: '7rem' }}
+      >
+        Login
+      </Button>
+      <Button
+        size="large"
+        shape="round"
+        onClick={() => handleRedirect(PATH.REGISTER_PAGE)}
+        style={{ margin: '0 0.5rem', width: '7rem' }}
+      >
+        Sign up
+      </Button>
+    </div>
+  )
+}
+
+const AvatarMenu = ({ logoutFunction, handleRedirect }) => {
+  const menu = (
+    <Menu
+      onClick={e => {
+        console.log(e)
+        if (e.key === 'LOGOUT') logoutFunction()
+        else if (e.key === 'CHANGE_PASSWORD_PAGE') handleRedirect(PATH[e.key])
+      }}
+      style={{ zIndex: 10000000 }}
+    >
+      <Menu.Item key="CHANGE_PASSWORD_PAGE">Change password</Menu.Item>
+      <Menu.Item key="LOGOUT">Logout</Menu.Item>
+    </Menu>
+  )
+
+  return (
+    <div style={{ zIndex: 10000000, padding: '0 1rem' }}>
+      <Dropdown overlay={menu} placement="bottomRight">
+        <Avatar size={45} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+      </Dropdown>
     </div>
   )
 }

@@ -1,0 +1,40 @@
+.navbar-container {
+  background-color: #1890ff;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.Navbar {
+  flex: 1;
+  display: flex;
+  padding: 0;
+  align-items: center;
+}
+
+.menu {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.ant-menu-horizontal > .ant-menu-item {
+  a {
+    font-weight: 400;
+    font-size: 1rem;
+    color: #fff;
+  }
+  :hover {
+    font-weight: 500;
+    color: #fff !important;
+  }
+}
+
+.logo {
+  width: fit-content;
+  position: absolute;
+}
