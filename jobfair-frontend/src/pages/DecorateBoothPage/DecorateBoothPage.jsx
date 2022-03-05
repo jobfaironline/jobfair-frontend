@@ -63,7 +63,6 @@ const DecorateBoothCanvas = React.forwardRef((props, ref) => {
     const {modelItems, handleAdd} = props
     const ContextBridge = useContextBridge(ReactReduxContext)
     const {hoverItem, selectedItem, mode} = useSelector(state => state.decorateBooth)
-    console.log(modelItems);
 
     const calculateOutlineMesh = () => {
         const result = []
@@ -99,11 +98,10 @@ const DecorateBoothCanvas = React.forwardRef((props, ref) => {
 
                 <EffectComposer multisampling={8} autoClear={false}>
                     <Outline
-                        blur
                         selection={calculateOutlineMesh()}
-                        selectionLayer={100}
                         visibleEdgeColor="yellow"
-                        edgeStrength={1000}
+                        hiddenEdgeColor="yellow"
+                        edgeStrength={100}
                         width={1000}/>
                 </EffectComposer>
             </ContextBridge>

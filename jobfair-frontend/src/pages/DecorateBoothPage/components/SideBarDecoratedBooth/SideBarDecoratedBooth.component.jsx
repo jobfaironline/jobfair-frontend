@@ -85,7 +85,6 @@ const SideBarDecoratedBooth = (props) => {
       screenMesh.geometry.boundingBox.getSize(localSize);
       const screenSize = new THREE.Vector3(scale.x * localSize.x, scale.y * localSize.y, scale.z * localSize.z)
 
-      debugger;
       //calculate which dimension is the length and which dimension is the width
       let width
       if (screenSize.x > screenSize.z) {

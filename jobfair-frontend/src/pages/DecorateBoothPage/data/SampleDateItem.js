@@ -4,7 +4,7 @@ export const initialSampleItems = [
     name: 'Banner',
     description: 'Banner',
     thumblnailUrl: '',
-    url: 'https://d3polnwtp0nqe6.cloudfront.net/SampleItem/banner.glb'
+    url: 'https://d3polnwtp0nqe6.cloudfront.net/SampleItem/banner1.glb'
   },
   {
     id: 2,
