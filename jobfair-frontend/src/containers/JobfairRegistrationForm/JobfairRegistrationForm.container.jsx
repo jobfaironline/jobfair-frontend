@@ -1,6 +1,5 @@
 import { Button, Form, notification, Steps } from 'antd'
 import React, { useEffect, useState } from 'react'
-import PickJobPositionFormContainer from '../PickJobPositionForm/PickJobPositionForm.container'
 import { useStepsForm } from 'sunflower-antd'
 import CompanyProfileForm from '../../components/company-profile-form/CompanyProfileForm.component'
 import { useHistory, useParams } from 'react-router-dom'
@@ -10,6 +9,7 @@ import { getCompanyProfileAPI } from '../../services/company-controller/CompanyC
 import TextArea from 'antd/es/input/TextArea'
 import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
 import ConfirmContainer from '../Confirm/Confirm.container'
+import JobfairRegistrationFormComponent from '../../components/JobfairRegistrationForm/JobfairRegistrationForm.component'
 import { PATH } from '../../constants/Paths/Path'
 import { setFormBody } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
 const { Step } = Steps
@@ -127,31 +127,40 @@ const JobfairRegistrationForm = () => {
     //   </Form.Item>
     // </>,
 
-    <>
-      <Form.Item
-        label="Company registration description"
-        required
-        tooltip="This is required"
-        rules={CompanyProfileValidation.description}
-        name="description"
-      >
-        <TextArea showCount maxLength={3000} placeholder="Company registration description" style={{ width: 300 }} />
-      </Form.Item>
-      <PickJobPositionFormContainer form={form} onFinish={onFinish} />
-      <Form.Item>
-        <Button
-          onClick={() => {
-            gotoStep(current + 1)
-            dispatch(setFormBody(form.getFieldsValue()))
-          }}
-        >
-          Next
-        </Button>
-      </Form.Item>
-      <Form.Item>
-        <Button onClick={() => gotoStep(current - 1)}>Prev</Button>
-      </Form.Item>
-    </>,
+    <JobfairRegistrationFormComponent
+      form={form}
+      onPickJobFinish={onFinish}
+      nextStep={() => {
+        gotoStep(current + 1)
+        dispatch(setFormBody(form.getFieldsValue()))
+      }}
+      preStep={() => gotoStep(current - 1)}
+    />,
+    // <>
+    //   <Form.Item
+    //     label="Company registration description"
+    //     required
+    //     tooltip="This is required"
+    //     rules={CompanyProfileValidation.description}
+    //     name="description"
+    //   >
+    //     <TextArea showCount maxLength={3000} placeholder="Company registration description" style={{ width: 300 }} />
+    //   </Form.Item>
+    //   <PickJobPositionFormContainer form={form} onFinish={onFinish} />
+    //   <Form.Item>
+    //     <Button
+    //       onClick={() => {
+    //         gotoStep(current + 1)
+    //         dispatch(setFormBody(form.getFieldsValue()))
+    //       }}
+    //     >
+    //       Next
+    //     </Button>
+    //   </Form.Item>
+    //   <Form.Item>
+    //     <Button onClick={() => gotoStep(current - 1)}>Prev</Button>
+    //   </Form.Item>
+    // </>,
     <>
       <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
       <Form.Item>
@@ -186,7 +195,7 @@ const JobfairRegistrationForm = () => {
     <div>
       <Steps {...stepsProps}>
         {/* <Step title="Confirm company profile" /> */}
-        <Step title="Company's jobfair informationn" />
+        <Step title="Jobfair registration form" />
         <Step title="Confirm registration" />
       </Steps>
 
