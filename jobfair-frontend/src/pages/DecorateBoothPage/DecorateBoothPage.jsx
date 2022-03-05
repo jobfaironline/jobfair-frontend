@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Canvas} from '@react-three/fiber'
+import {Canvas, useThree} from '@react-three/fiber'
 import {FloorMesh, ItemMesh} from './components/model/Final_booth_model'
 import {Stage, useContextBridge, Stats} from '@react-three/drei'
 import Menu from './components/Menu/ItemListMenu'
@@ -74,19 +74,18 @@ const DecorateBoothCanvas = React.forwardRef((props, ref) => {
         }
         return result.length === 0 ? null : result
     }
-
     const floorMesh = modelItems.filter(mesh => mesh.name === 'sand')[0]
 
     return (
         <Canvas
             dpr={[1, 2]}
-            camera={{fov: 40, zoom: 1.2}}
+            camera={{fov: 40, zoom: 1.2, position: [-1, 1, -1]}}
             style={{width: '100vw', height: mode === ModeConstant.ADD ? '70vh' : '90vh'}}
         >
             <ContextBridge>
                 <CameraControls enabled={mode !== ModeConstant.DRAGGING}/>
-                <Stage preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
-                    <group dispose={null} ref={ref} >
+                <Stage adjustCamera={false} preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
+                    <group dispose={null} >
                         {modelItems.map(mesh => {
                             if (mesh === floorMesh) {
                                 return <FloorMesh key={mesh.uuid} mesh={mesh} handleAdd={handleAdd}/>
@@ -95,6 +94,7 @@ const DecorateBoothCanvas = React.forwardRef((props, ref) => {
                         })}
                     </group>
                 </Stage>
+
                 <EffectComposer multisampling={8} autoClear={false}>
                     <Outline
                         blur
