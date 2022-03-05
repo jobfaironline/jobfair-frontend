@@ -3,8 +3,13 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter'
 import * as THREE from 'three'
+import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
 
 const loader = new GLTFLoader()
+const dracoLoader = new DRACOLoader();
+loader.setDRACOLoader( dracoLoader );
+
+
 const exporter = new GLTFExporter()
 
 export async function loadModel(url) {

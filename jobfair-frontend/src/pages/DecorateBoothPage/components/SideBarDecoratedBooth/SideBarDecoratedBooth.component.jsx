@@ -58,9 +58,9 @@ const SideBarDecoratedBooth = (props) => {
 
       const screenMesh = selectedItem?.clone(false)
       screenMesh.clear()
-      const geoBox = new THREE.Box3().setFromObject(screenMesh)
 
       //check if screenMesh is a plane
+
       if (
         screenMesh.geometry.boundingBox.max.x - screenMesh.geometry.boundingBox.min.x === 0 ||
         screenMesh.geometry.boundingBox.max.y - screenMesh.geometry.boundingBox.min.y === 0 ||
@@ -80,9 +80,12 @@ const SideBarDecoratedBooth = (props) => {
 
 
       //get screenSize
-      const screenSize = new THREE.Vector3()
-      geoBox.getSize(screenSize)
+      const scale = screenMesh.scale
+      const localSize = new THREE.Vector3();
+      screenMesh.geometry.boundingBox.getSize(localSize);
+      const screenSize = new THREE.Vector3(scale.x * localSize.x, scale.y * localSize.y, scale.z * localSize.z)
 
+      debugger;
       //calculate which dimension is the length and which dimension is the width
       let width
       if (screenSize.x > screenSize.z) {
@@ -99,7 +102,11 @@ const SideBarDecoratedBooth = (props) => {
       plane.name = IMAGE_PLANE_NAME
       //rotate plane to face the screen direction
       if (screenSize.x > screenSize.z) {
+        const myAxis = new THREE.Vector3(0, 0, 1)
+        plane.rotateOnAxis(myAxis, THREE.Math.degToRad(180))
+
         plane.position.setZ(-screenSize.z / 2 / screenMesh.scale.z - 0.05)
+
       } else {
         let myAxis = new THREE.Vector3(0, 1, 0)
         plane.rotateOnAxis(myAxis, THREE.Math.degToRad(90))
@@ -165,7 +172,6 @@ const SideBarDecoratedBooth = (props) => {
   }
 
   const handleOnChangeColor = color => {
-    console.log(color);
     if (selectedItem === undefined) {
       return
     }
