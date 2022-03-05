@@ -4,9 +4,9 @@ import {ReactReduxContext, useSelector} from "react-redux";
 import {ModeConstant} from "../../constants/AppConst";
 import {Canvas} from "@react-three/fiber";
 import {CameraControls} from "../ThreeJSBaseComponent/CameraControls.component";
-import {ItemMesh} from "./ItemMesh.component";
 import {EffectComposer, Outline} from "@react-three/postprocessing";
-import {FloorMesh} from "./FloorMesh.component";
+import {ItemMeshContainer} from "../../containers/DecorateBooth/ItemMesh.container";
+import {FloorMeshContainer} from "../../containers/DecorateBooth/FloorMesh.container";
 
 export const DecorateBoothCanvas = React.forwardRef((props, ref) => {
     const {modelItems, handleAdd} = props
@@ -38,9 +38,9 @@ export const DecorateBoothCanvas = React.forwardRef((props, ref) => {
                     <group dispose={null} ref={ref}>
                         {modelItems.map(mesh => {
                             if (mesh === floorMesh) {
-                                return <FloorMesh key={mesh.uuid} mesh={mesh} handleAdd={handleAdd}/>
+                                return <FloorMeshContainer key={mesh.uuid} mesh={mesh} handleAdd={handleAdd}/>
                             }
-                            return <ItemMesh key={mesh.uuid} mesh={mesh} floorMesh={floorMesh}/>
+                            return <ItemMeshContainer key={mesh.uuid} mesh={mesh} floorMesh={floorMesh}/>
                         })}
                     </group>
                 </Stage>
