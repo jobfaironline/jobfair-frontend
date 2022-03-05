@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Canvas, useThree} from '@react-three/fiber'
 import {FloorMesh, ItemMesh} from './components/model/Final_booth_model'
 import {Stage, useContextBridge, Stats} from '@react-three/drei'
@@ -85,7 +85,7 @@ const DecorateBoothCanvas = React.forwardRef((props, ref) => {
             <ContextBridge>
                 <CameraControls enabled={mode !== ModeConstant.DRAGGING}/>
                 <Stage adjustCamera={false} preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
-                    <group dispose={null} >
+                    <group dispose={null} ref={ref}>
                         {modelItems.map(mesh => {
                             if (mesh === floorMesh) {
                                 return <FloorMesh key={mesh.uuid} mesh={mesh} handleAdd={handleAdd}/>
@@ -116,6 +116,7 @@ const DecorateBoothContainer = (props) => {
     const dispatch = useDispatch();
     const {mode, selectedItem} = useSelector(state => state.decorateBooth)
     const [modelItems, setModelItems] = useState([]);
+    const canvasRef = useRef();
 
     useEffect(async () => {
         let url = 'https://d3polnwtp0nqe6.cloudfront.net/Booth/bf78dec0-98b3-41f7-bca0-72e2c65abcfb'
@@ -141,13 +142,13 @@ const DecorateBoothContainer = (props) => {
     })
 
     const saveHandle = async () => {
-        let sceneNode = ref.current.parent
+        let sceneNode = canvasRef.current.parent
         while (sceneNode.type !== 'Scene') {
             sceneNode = sceneNode.parent
         }
         const sceneNodeCopy = sceneNode.clone(false)
         sceneNodeCopy.clear()
-        const copyNode = ref.current.children.map(mesh => mesh.clone())
+        const copyNode = canvasRef.current.children.map(mesh => mesh.clone())
         copyNode.forEach(mesh => sceneNodeCopy.children.push(mesh))
         sceneNodeCopy.name = 'Scene'
 
@@ -241,7 +242,7 @@ const DecorateBoothContainer = (props) => {
             <Stats/>
             <div style={{display: 'flex', maxHeight: mode === ModeConstant.ADD ? '70vh' : '90vh'}}>
                 <SideBarDecoratedBooth {...sideBarProps}/>
-                <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd}/>
+                <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd} ref={canvasRef}/>
             </div>
 
             <ControlFooter {...controlFooterProps}/>

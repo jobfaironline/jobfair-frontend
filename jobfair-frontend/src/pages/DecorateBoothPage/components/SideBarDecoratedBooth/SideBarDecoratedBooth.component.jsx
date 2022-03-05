@@ -53,6 +53,7 @@ const SideBarDecoratedBooth = (props) => {
         const base64Url = await getBase64(info.file)
         texture = new THREE.TextureLoader().load(base64Url)
       }
+      texture.flipY = false
 
       const screenMesh = selectedItem?.clone(false)
       screenMesh.clear()
@@ -67,13 +68,15 @@ const SideBarDecoratedBooth = (props) => {
         texture.center.x = 0.5
         texture.center.y = 0.5
         texture.center.set(0.5, 0.5)
-        texture.rotation = -Math.PI / 2
+        texture.rotation = Math.PI / 2
+
         const newMaterial = selectedItem?.material.clone()
         newMaterial.size = THREE.DoubleSide
         newMaterial.map = texture
         selectedItem.material = newMaterial
         return
       }
+
 
       //get screenSize
       const screenSize = new THREE.Vector3()
@@ -97,8 +100,11 @@ const SideBarDecoratedBooth = (props) => {
       if (screenSize.x > screenSize.z) {
         plane.position.setZ(-screenSize.z / 2 / screenMesh.scale.z - 0.05)
       } else {
-        const myAxis = new THREE.Vector3(0, 1, 0)
+        let myAxis = new THREE.Vector3(0, 1, 0)
         plane.rotateOnAxis(myAxis, THREE.Math.degToRad(90))
+        myAxis = new THREE.Vector3(0, 0, 1)
+        plane.rotateOnAxis(myAxis, THREE.Math.degToRad(180))
+
         plane.position.setX(-screenSize.x / 2 / screenMesh.scale.x - 0.05)
       }
 

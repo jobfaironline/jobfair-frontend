@@ -4,7 +4,7 @@ import {
   ENDPOINT_GET_COMPANY_BOOTH_LATEST_VERSION_LAYOUT
 } from '../../constants/Endpoints/company-booth-layout-controller/CompanyBoothLayoutControllerEndpoint'
 
-export const saveDecoratedBooth = formData =>
+export const saveDecoratedBooth = async formData =>
   CallAPI(
     `${ENDPOINT_BOOTH_LAYOUT}`,
     'POST',
