@@ -11,6 +11,7 @@ import TextArea from 'antd/es/input/TextArea'
 import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
 import ConfirmContainer from '../Confirm/Confirm.container'
 import { PATH } from '../../constants/Paths/Path'
+import { setFormBody } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
 const { Step } = Steps
 const JobfairRegistrationForm = () => {
   //please pass this form into component or USE REDUX TO STORE FORM HOOK
@@ -138,7 +139,14 @@ const JobfairRegistrationForm = () => {
       </Form.Item>
       <PickJobPositionFormContainer form={form} onFinish={onFinish} />
       <Form.Item>
-        <Button onClick={() => gotoStep(current + 1)}>Next</Button>
+        <Button
+          onClick={() => {
+            gotoStep(current + 1)
+            dispatch(setFormBody(form.getFieldsValue()))
+          }}
+        >
+          Next
+        </Button>
       </Form.Item>
       <Form.Item>
         <Button onClick={() => gotoStep(current - 1)}>Prev</Button>
@@ -171,6 +179,8 @@ const JobfairRegistrationForm = () => {
   const onChange = values => {
     console.log(values)
   }
+
+  console.log(form.getFieldsValue())
 
   return (
     <div>
