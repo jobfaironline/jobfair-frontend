@@ -2,25 +2,10 @@ import React from 'react'
 import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu'
 import { Button } from 'antd'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
-import { ModeConstant } from '../../../../constants/AppConst'
-import {useDispatch, useSelector} from "react-redux";
-import {decorateBoothAction} from "../../../../redux-flow/decorateBooth/decorate-booth-slice";
 
-export default function ItemListMenu({ items }) {
-  const dispatch = useDispatch();
-  const selected = useSelector(state => state.decorateBooth.selectedSampleItem)
-
-  const isItemSelected = id => selected?.id === id
-
-  const handleClick = id => () => {
-    if (selected.id === id){
-      dispatch(decorateBoothAction.setMode(ModeConstant.SELECT));
-      dispatch(decorateBoothAction.setSelectedSampleItem({}));
-      return;
-    }
-    dispatch(decorateBoothAction.setMode(ModeConstant.ADD));
-    dispatch(decorateBoothAction.setSelectedSampleItem(items.filter(item => item.id === id)[0]));
-  }
+export const SampleItemMenu = (props) => {
+  const {items, onItemClick, selectedItemId} = props
+  const isItemSelected = id => selectedItemId === id
 
   return (
     <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
@@ -29,7 +14,7 @@ export default function ItemListMenu({ items }) {
           itemId={item.id}
           title={item.name}
           key={item.id}
-          onClick={handleClick(item.id)}
+          onClick={onItemClick(item.id)}
           selected={isItemSelected(item.id)}
         />
       ))}

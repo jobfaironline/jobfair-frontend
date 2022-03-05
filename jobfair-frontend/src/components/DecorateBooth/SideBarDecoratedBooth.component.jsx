@@ -7,7 +7,7 @@ import {DeleteOutlined, LeftOutlined, RightOutlined, UploadOutlined} from '@ant-
 import { Button, Descriptions, InputNumber, message, Select, Slider, Upload } from 'antd'
 import { SketchPicker } from 'react-color'
 import * as THREE from 'three'
-import { getBase64 } from '../../../../utils/common'
+import { getBase64 } from '../../utils/common'
 import './SideBarDecoratedBooth.style.scss'
 import {useSelector} from "react-redux";
 
