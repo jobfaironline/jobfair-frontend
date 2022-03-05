@@ -17,7 +17,6 @@ import {notify} from "../../utils/toastutil";
 import {ModeConstant} from "../../constants/AppConst";
 import {decorateBoothAction} from "../../redux-flow/decorateBooth/decorate-booth-slice";
 import {PATH} from "../../constants/Paths/Path";
-import * as THREE from "three";
 import {Stats} from "@react-three/drei";
 import SideBarDecoratedBooth from "../../components/DecorateBooth/SideBarDecoratedBooth.component";
 import {DecorateBoothCanvas} from "../../components/DecorateBooth/DecorateBoothCanavas.component";
