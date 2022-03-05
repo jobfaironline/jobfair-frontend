@@ -6,7 +6,7 @@ import JobFairParkMapContainer from "../../containers/JobFairParkMap/JobFairPark
 
 const JobFairParkPage = (props) => {
     const {jobFairId} = useParams();
-    return (<div>
+    return (<div className={"page"}>
         <JobFairParkMapContainer jobFairId={jobFairId}/>
         <ToastContainer/>
     </div>)

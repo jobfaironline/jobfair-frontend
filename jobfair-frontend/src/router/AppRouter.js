@@ -27,7 +27,6 @@ import AppliedJobPage from '../pages/AppliedJobPage/AppliedJobPage'
 import CompanyEmployeeRouter from './components/CompanyEmployeeRouter'
 import AdminRouter from './components/AdminRouter'
 import StaffRouter from './components/StaffRouter'
-import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
 import {
   PATH_ATTENDANT,
   PATH,
@@ -36,6 +35,9 @@ import {
   PATH_COMPANY_MANAGER,
   PATH_STAFF
 } from '../constants/Paths/Path'
+import EmployeeManagementPage from "../pages/EmployeeManagementPage/EmployeeManagementPage";
+import EmployeeRegisterPage from "../pages/EmployeeRegisterPage/EmployeeRegisterPage";
+import RegisterJobFairForm from "../components/register-job-fair-form/RegisterJobFairForm";
 const AppRouter = () => {
   const role = useSelector(state => state.authentication?.user?.roles)
   return (

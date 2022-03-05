@@ -3,8 +3,13 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter'
 import * as THREE from 'three'
+import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
 
 const loader = new GLTFLoader()
+const dracoLoader = new DRACOLoader();
+loader.setDRACOLoader( dracoLoader );
+
+
 const exporter = new GLTFExporter()
 
 export async function loadModel(url) {
@@ -116,4 +121,23 @@ export const fixTextureOffset = (mesh) => {
     mesh?.material?.map?.center.set(0.5, 0.5)
   }
   mesh.children.forEach(child => fixTextureOffset(child));
+}
+
+export const rotateModelLeft = (mesh, angleInDegree) =>{
+  const myAxis = new THREE.Vector3(0, 1, 0)
+  mesh.rotateOnWorldAxis(myAxis, THREE.Math.degToRad(angleInDegree))
+}
+
+
+export const rotateModelRight = (mesh, angleInDegree) =>{
+  const myAxis = new THREE.Vector3(0, 1, 0)
+  mesh.rotateOnWorldAxis(myAxis, -THREE.Math.degToRad(angleInDegree))
+}
+
+export const moveModelUp = (mesh, distance) => {
+  mesh.position.set(mesh.position.x, mesh.position.y + distance, mesh.position.z)
+}
+
+export const moveModelDown = (mesh, distance) => {
+  mesh.position.set(mesh.position.x, mesh.position.y - distance, mesh.position.z)
 }

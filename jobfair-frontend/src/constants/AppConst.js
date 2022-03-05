@@ -36,5 +36,6 @@ export const USER_STORAGE = 'user'
 export const ModeConstant = {
   SELECT: 0,
   ADD: 1,
-  DELETE: 2
+  DELETE: 2,
+  DRAGGING: 3
 }

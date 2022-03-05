@@ -2,30 +2,19 @@ import React from 'react'
 import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu'
 import { Button } from 'antd'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
-import { ModeConstant } from '../../../../constants/AppConst'
 
-export default function ItemListMenu({ items, selected, setSelected, setMode }) {
-  const isItemSelected = id => selected?.id === id
-
-  const handleClick = id => () => {
-    setSelected(prevSelected => {
-      if (prevSelected.id === id) {
-        setMode(ModeConstant.SELECT)
-        return {}
-      }
-      setMode(ModeConstant.ADD)
-      return items.filter(item => item.id === id)[0]
-    })
-  }
+export const SampleItemMenu = (props) => {
+  const {items, onItemClick, selectedItemId} = props
+  const isItemSelected = id => selectedItemId === id
 
   return (
     <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
       {items.map(item => (
         <Card
-          itemId={item.id} // NOTE: itemId is required for track items
+          itemId={item.id}
           title={item.name}
           key={item.id}
-          onClick={handleClick(item.id)}
+          onClick={onItemClick(item.id)}
           selected={isItemSelected(item.id)}
         />
       ))}
