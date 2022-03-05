@@ -1,7 +1,7 @@
-import React, {useEffect, useReducer, useRef, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Canvas} from '@react-three/fiber'
-import {Model} from './components/model/Final_booth_model'
-import {Stage, useContextBridge} from '@react-three/drei'
+import {FloorMesh, ItemMesh} from './components/model/Final_booth_model'
+import {Stage, useContextBridge, Stats} from '@react-three/drei'
 import Menu from './components/Menu/ItemListMenu'
 import {EffectComposer, Outline} from '@react-three/postprocessing'
 import {ModeConstant} from '../../constants/AppConst'
@@ -17,7 +17,7 @@ import {
 } from '../../services/company-booth-layout-controller/CompanyBoothLayoutControllerService'
 import {Affix, Button, Space} from 'antd'
 import {PATH} from '../../constants/Paths/Path'
-import {ReactReduxContext, useDispatch, useSelector, useStore} from "react-redux";
+import {ReactReduxContext, useDispatch, useSelector} from "react-redux";
 import {decorateBoothAction} from "../../redux-flow/decorateBooth/decorate-booth-slice";
 import * as THREE from "three";
 
@@ -59,6 +59,7 @@ const ControlFooter = (props) => {
 }
 
 const DecorateBoothCanvas = React.forwardRef((props, ref) => {
+    const {modelItems, handleAdd} = props
     const ContextBridge = useContextBridge(ReactReduxContext)
     const {hoverItem, selectedItem, mode} = useSelector(state => state.decorateBooth)
 
@@ -74,6 +75,8 @@ const DecorateBoothCanvas = React.forwardRef((props, ref) => {
         return result.length === 0 ? null : result
     }
 
+    const floorMesh = modelItems.filter(mesh => mesh.name === 'sand')[0]
+
     return (
         <Canvas
             dpr={[1, 2]}
@@ -83,7 +86,14 @@ const DecorateBoothCanvas = React.forwardRef((props, ref) => {
             <ContextBridge>
                 <CameraControls enabled={mode !== ModeConstant.DRAGGING}/>
                 <Stage preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
-                    <Model ref={ref}/>
+                    <group dispose={null} ref={ref} >
+                        {modelItems.map(mesh => {
+                            if (mesh === floorMesh) {
+                                return <FloorMesh key={mesh.uuid} mesh={mesh} handleAdd={handleAdd}/>
+                            }
+                            return <ItemMesh key={mesh.uuid} mesh={mesh} floorMesh={floorMesh}/>
+                        })}
+                    </group>
                 </Stage>
                 <EffectComposer multisampling={8} autoClear={false}>
                     <Outline
@@ -104,8 +114,8 @@ const DecorateBoothContainer = (props) => {
 
     const history = useHistory()
     const dispatch = useDispatch();
-    const {mode, modelItems, selectedItem} = useSelector(state => state.decorateBooth)
-    const ref = useRef()
+    const {mode, selectedItem} = useSelector(state => state.decorateBooth)
+    const [modelItems, setModelItems] = useState([]);
 
     useEffect(async () => {
         let url = 'https://d3polnwtp0nqe6.cloudfront.net/Booth/bf78dec0-98b3-41f7-bca0-72e2c65abcfb'
@@ -120,7 +130,7 @@ const DecorateBoothContainer = (props) => {
         for (const mesh of result) {
             fixTextureOffset(mesh)
         }
-        dispatch(decorateBoothAction.setModelItems(result))
+        setModelItems(result);
     }, [])
 
     useEffect(() => {
@@ -180,7 +190,16 @@ const DecorateBoothContainer = (props) => {
     }
 
     const handleDelete = _ => {
-        dispatch(decorateBoothAction.deleteModelItem(selectedItem?.uuid));
+        setModelItems(prevState => {
+            const result = prevState.filter(itemMesh => itemMesh.uuid !== selectedItem.uuid);
+            return result;
+        })
+    }
+
+    const handleAdd = mesh => {
+        setModelItems(prevState => {
+            return [...prevState, mesh];
+        })
     }
 
     const handleKeyDown = event => {
@@ -216,13 +235,13 @@ const DecorateBoothContainer = (props) => {
     const sideBarProps = {handleOnRotationLeft, handleOnRotationRight, handleDelete}
 
 
-
     if (modelItems.length === 0) return null
     return (
         <>
+            <Stats/>
             <div style={{display: 'flex', maxHeight: mode === ModeConstant.ADD ? '70vh' : '90vh'}}>
                 <SideBarDecoratedBooth {...sideBarProps}/>
-                <DecorateBoothCanvas ref={ref}/>
+                <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd}/>
             </div>
 
             <ControlFooter {...controlFooterProps}/>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useDrag } from 'react-use-gesture'
 import * as THREE from 'three'
 import { ModeConstant } from '../../../../constants/AppConst'
@@ -12,7 +12,7 @@ import {BasicMesh} from "../../../../components/ThreeJSBaseComponent/ChildMesh.c
 import {decorateBoothAction} from "../../../../redux-flow/decorateBooth/decorate-booth-slice";
 import {useDispatch, useSelector} from "react-redux";
 
-function ItemMesh({
+export function ItemMesh({
   mesh,
   floorMesh,
 }) {
@@ -48,9 +48,10 @@ function ItemMesh({
         })
         setPosition([x, y, z])
       }
-      if (active){
+      if (active && mode !== ModeConstant.DRAGGING ){
         dispatch(decorateBoothAction.setMode(ModeConstant.DRAGGING))
-      } else {
+      }
+      if (!active && mode === ModeConstant.DRAGGING){
         dispatch(decorateBoothAction.setMode(ModeConstant.SELECT))
       }
     },
@@ -88,10 +89,9 @@ function ItemMesh({
   )
 }
 
-function FloorMesh({ mesh }) {
+export function FloorMesh({ mesh, handleAdd }) {
   const mode =  useSelector(state => state.decorateBooth.mode)
   const selectedSampleItem = useSelector(state => state.decorateBooth.selectedSampleItem)
-  const dispatch = useDispatch()
   const onPlaneClick = async e => {
     if (mode !== ModeConstant.ADD) return
     if (selectedSampleItem.id === undefined) {
@@ -123,7 +123,7 @@ function FloorMesh({ mesh }) {
     })
     itemMesh.position.set(x, y, z)
 
-    dispatch(decorateBoothAction.addModelItem(gltf.scene.children[0]))
+    handleAdd(itemMesh);
 
   }
   return (
@@ -144,32 +144,3 @@ function FloorMesh({ mesh }) {
     </mesh>
   )
 }
-
-export const Model = React.forwardRef((props, ref) => {
-  const modelItems = useSelector(state => state.decorateBooth.modelItems)
-
-    const floorMesh = modelItems.filter(mesh => mesh.name === 'sand')[0]
-    return (
-      <group dispose={null} ref={ref} >
-        {modelItems.map(mesh => {
-          if (mesh === floorMesh) {
-            return (
-              <FloorMesh
-                key={mesh.uuid}
-                mesh={mesh}
-              />
-            )
-          }
-          return (
-            <ItemMesh
-              key={mesh.uuid}
-              mesh={mesh}
-              floorMesh={floorMesh}
-            />
-          )
-        })}
-      </group>
-    )
-  }
-)
-
