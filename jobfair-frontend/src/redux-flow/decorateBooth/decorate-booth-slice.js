@@ -5,25 +5,25 @@ const decorateBoothSlice = createSlice({
     name: 'decorateBooth',
     initialState: {
         mode: ModeConstant.SELECT,
-        selectedItemRef: undefined,
-        hoverItemRef: undefined,
+        selectedItem: undefined,
         selectedSampleItem: {},
-        modelItems: []
+        modelItems: [],
+        hoverItem: undefined,
     },
     reducers: {
         setMode: (state, action) => {
             const mode = action.payload;
             switch (mode) {
                 case ModeConstant.ADD:
-                    return {...state, selectedItemRef: undefined, mode: mode}
+                    return {...state, selectedItem: undefined, mode: mode}
             }
             return {...state, mode}
         },
-        setSelectedItemRef: (state, action) => {
-            return {...state, selectedItemRef: action.payload}
+        setSelectedItem: (state, action) => {
+            return {...state, selectedItem: action.payload}
         },
-        setHoverItemRef: (state, action) => {
-            return {...state, hoverItemRef: action.payload}
+        setHoverItem: (state, action) => {
+            return {...state, hoverItem: action.payload}
         },
         setSelectedSampleItem: (state, action) => {
             return {...state, selectedSampleItem: action.payload}
@@ -37,11 +37,7 @@ const decorateBoothSlice = createSlice({
         deleteModelItem: (state, action) => {
             const uuid = action.payload
             const result = state.modelItems.filter(itemMesh => itemMesh.uuid !== uuid);
-            state.selectedItemRef = undefined
-            state.hoverItemRef = undefined
-            state.modelItems = result
-            //return {...state, selectedItemRef: undefined, hoverItemRef: undefined, modelItems: result}
-
+            return {...state, selectedItem: undefined, hoverItem: undefined, modelItems: result}
         }
     }
 })

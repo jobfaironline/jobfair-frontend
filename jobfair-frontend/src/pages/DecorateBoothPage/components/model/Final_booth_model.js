@@ -16,7 +16,7 @@ function ItemMesh({
   mesh,
   floorMesh,
 }) {
-  const selectedItemRef = useSelector(state => state.decorateBooth.selectedItemRef)
+  const selectedItem = useSelector(state => state.decorateBooth.selectedItem)
   const mode =  useSelector(state => state.decorateBooth.mode)
 
   const [position, setPosition] = useState(mesh.position)
@@ -25,7 +25,7 @@ function ItemMesh({
   const bind = useDrag(
     ({event, active }) => {
       if (mode !== ModeConstant.SELECT && mode !== ModeConstant.DRAGGING) return
-      if (selectedItemRef?.current.uuid !== itemRef.current.uuid) return
+      if (selectedItem?.uuid !== itemRef.current.uuid) return
       if (active) {
         //get intersection point between click coordinate and plane coordinate
         const planeIntersectPoint = new THREE.Vector3()
@@ -68,13 +68,14 @@ function ItemMesh({
       position={position}
       onClick={_ => {
         if (mode === ModeConstant.ADD) return;
-        dispatch(decorateBoothAction.setSelectedItemRef(itemRef))
+        dispatch(decorateBoothAction.setSelectedItem(itemRef.current))
       }}
       onPointerOver={_ => {
-        dispatch(decorateBoothAction.setHoverItemRef(itemRef))
+        dispatch(decorateBoothAction.setHoverItem(itemRef.current))
       }}
       onPointerLeave={_ => {
-        dispatch(decorateBoothAction.setHoverItemRef(undefined))
+        dispatch(decorateBoothAction.setHoverItem(undefined))
+
       }}
       {...bind()}
       rotation={mesh.rotation}

@@ -60,14 +60,13 @@ const ControlFooter = (props) => {
 
 const DecorateBoothPage = () => {
     const {companyBoothId, jobFairId} = useParams()
-    const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
 
     const history = useHistory()
     const dispatch = useDispatch();
 
-    const hoverItemRef = useSelector(state => state.decorateBooth.hoverItemRef)
-    const selectedItemRef = useSelector(state => state.decorateBooth.selectedItemRef)
+    const hoverItem = useSelector(state => state.decorateBooth.hoverItem)
+    const selectedItem = useSelector(state => state.decorateBooth.selectedItem)
     const mode = useSelector(state => state.decorateBooth.mode)
     const modelItems = useSelector(state => state.decorateBooth.modelItems)
 
@@ -100,14 +99,12 @@ const DecorateBoothPage = () => {
 
     const calculateOutlineMesh = () => {
         const result = []
-        if (hoverItemRef !== undefined) {
-            result.push(hoverItemRef)
-            //outlineRef.current?.selection.add(hoverItemRef);
+        if (hoverItem  !== undefined) {
+            result.push(hoverItem)
         }
         if (mode !== ModeConstant.SELECT) return result
-        if (selectedItemRef !== undefined) {
-            result.push(selectedItemRef)
-            //outlineRef.current?.selection.add(selectedItemRef);
+        if (selectedItem !== undefined) {
+            result.push(selectedItem)
         }
         //outlineRef.current?.selection.set(result);
         return result.length === 0 ? null : result
@@ -147,35 +144,34 @@ const DecorateBoothPage = () => {
     }
 
     const handleOnRotationLeft = _ => {
-        if (selectedItemRef?.current === undefined) {
+        if (selectedItem === undefined) {
             return
         }
         const myAxis = new THREE.Vector3(0, 1, 0)
-        selectedItemRef.current.rotateOnWorldAxis(myAxis, THREE.Math.degToRad(10))
+        selectedItem.rotateOnWorldAxis(myAxis, THREE.Math.degToRad(10))
     }
 
     const handleOnRotationRight = _ => {
-        if (selectedItemRef?.current === undefined) {
+        if (selectedItem === undefined) {
             return
         }
         const myAxis = new THREE.Vector3(0, 1, 0)
-        selectedItemRef.current.rotateOnWorldAxis(myAxis, -THREE.Math.degToRad(10))
+        selectedItem.rotateOnWorldAxis(myAxis, -THREE.Math.degToRad(10))
     }
 
 
     const handleDelete = _ => {
 
-        const result = modelItems.filter(itemMesh => itemMesh.uuid !== selectedItemRef?.current?.uuid).map(mesh => mesh.clone());
-        dispatch(decorateBoothAction.setHoverItemRef(undefined))
-        dispatch(decorateBoothAction.setSelectedItemRef(undefined))
-        dispatch(decorateBoothAction.setModelItems(result));
+        dispatch(decorateBoothAction.deleteModelItem(selectedItem?.uuid));
     }
 
+
+
     const handleKeyDown = event => {
-        if (selectedItemRef?.current === undefined) {
+        if (selectedItem === undefined) {
             return
         }
-        const mesh = selectedItemRef.current
+        const mesh = selectedItem
         switch (event.keyCode) {
             case 37: //KEY LEFT
                 event.preventDefault()

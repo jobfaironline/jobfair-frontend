@@ -17,7 +17,7 @@ const SideBarDecoratedBooth = (props) => {
   const {handleOnRotationLeft, handleOnRotationRight, handleDelete} = props;
 
   const vidElementRef = useRef({})
-  const selectedItemRef = useSelector(state => state.decorateBooth.selectedItemRef)
+  const selectedItem = useSelector(state => state.decorateBooth.selectedItem)
 
 
   const loadFile = {
@@ -29,7 +29,7 @@ const SideBarDecoratedBooth = (props) => {
     },
     onChange: async info => {
       if (info.file.type !== 'image/png' || info.file.type !== 'image/jpg' || info.file.type !== 'video/mp4')
-        if (selectedItemRef?.current === undefined) {
+        if (selectedItem === undefined) {
           return
         }
       let texture
@@ -43,7 +43,7 @@ const SideBarDecoratedBooth = (props) => {
         vid.muted = true
         vid.play()
         texture = new THREE.VideoTexture(vid)
-        const meshName = selectedItemRef?.current?.name
+        const meshName = selectedItem?.name
         vidElementRef.current[meshName] = vid
         reader.onload = function (e) {
           vid.src = e.target.result
@@ -54,7 +54,7 @@ const SideBarDecoratedBooth = (props) => {
         texture = new THREE.TextureLoader().load(base64Url)
       }
 
-      const screenMesh = selectedItemRef?.current?.clone(false)
+      const screenMesh = selectedItem?.clone(false)
       screenMesh.clear()
       const geoBox = new THREE.Box3().setFromObject(screenMesh)
 
@@ -68,10 +68,10 @@ const SideBarDecoratedBooth = (props) => {
         texture.center.y = 0.5
         texture.center.set(0.5, 0.5)
         texture.rotation = -Math.PI / 2
-        const newMaterial = selectedItemRef?.current?.material.clone()
+        const newMaterial = selectedItem?.material.clone()
         newMaterial.size = THREE.DoubleSide
         newMaterial.map = texture
-        selectedItemRef.current.material = newMaterial
+        selectedItem.material = newMaterial
         return
       }
 
@@ -102,29 +102,29 @@ const SideBarDecoratedBooth = (props) => {
         plane.position.setX(-screenSize.x / 2 / screenMesh.scale.x - 0.05)
       }
 
-      const prevPlane = selectedItemRef?.current?.getObjectByName(IMAGE_PLANE_NAME)
+      const prevPlane = selectedItem?.getObjectByName(IMAGE_PLANE_NAME)
       if (prevPlane !== undefined) {
-        selectedItemRef?.current?.remove(prevPlane)
+        selectedItem?.remove(prevPlane)
       }
-      selectedItemRef?.current?.add(plane)
+      selectedItem?.add(plane)
     },
     showUploadList: false
   }
 
   const [currentSelectedColor, setCurrentSelectedColor] = useState(
-    selectedItemRef?.current?.material.color.getHexString()
+    selectedItem?.material.color.getHexString()
   )
   const [positionState, setPositionState] = useState({
-    x: selectedItemRef?.current?.position.x ?? 0,
-    y: selectedItemRef?.current?.position.y ?? 0,
-    z: selectedItemRef?.current?.position.z ?? 0
+    x: selectedItem?.position.x ?? 0,
+    y: selectedItem?.position.y ?? 0,
+    z: selectedItem?.position.z ?? 0
   })
 
   const handleOnchangePositionX = value => {
-    if (selectedItemRef?.current === undefined) {
+    if (selectedItem === undefined) {
       return
     }
-    selectedItemRef.current.position.setX(value)
+    selectedItem.position.setX(value)
     setPositionState(prevState => {
       return {
         ...prevState,
@@ -133,10 +133,10 @@ const SideBarDecoratedBooth = (props) => {
     })
   }
   const handleOnchangePositionY = value => {
-    if (selectedItemRef?.current === undefined) {
+    if (selectedItem === undefined) {
       return
     }
-    selectedItemRef.current.position.setY(value)
+    selectedItem.position.setY(value)
     setPositionState(prevState => {
       return {
         ...prevState,
@@ -145,10 +145,10 @@ const SideBarDecoratedBooth = (props) => {
     })
   }
   const handleOnchangePositionZ = value => {
-    if (selectedItemRef?.current === undefined) {
+    if (selectedItem === undefined) {
       return
     }
-    selectedItemRef.current.position.setZ(value)
+    selectedItem.position.setZ(value)
     setPositionState(prevState => {
       return {
         ...prevState,
@@ -159,14 +159,14 @@ const SideBarDecoratedBooth = (props) => {
 
   const handleOnChangeColor = color => {
     setCurrentSelectedColor(color)
-    if (selectedItemRef?.current === undefined) {
+    if (selectedItem === undefined) {
       return
     }
-    const newMaterial = selectedItemRef.current.material.clone()
+    const newMaterial = selectedItem.material.clone()
     newMaterial.color.set(color.hex)
     newMaterial.transparent = true
-    selectedItemRef.current.material = newMaterial
-    for (const childMesh of selectedItemRef.current.children) {
+    selectedItem.material = newMaterial
+    for (const childMesh of selectedItem.children) {
       if (childMesh.name === IMAGE_PLANE_NAME) {
         continue
       }
@@ -174,7 +174,7 @@ const SideBarDecoratedBooth = (props) => {
     }
   }
 
-  if (!selectedItemRef?.current) {
+  if (!selectedItem) {
     return <></>
   }
 
@@ -187,7 +187,7 @@ const SideBarDecoratedBooth = (props) => {
                 <Divider/> */}
         <div style={{ padding: '1rem' }}>
           <p>
-            Component: <a>{selectedItemRef?.current.name}</a>
+            Component: <a>{selectedItem?.name}</a>
           </p>
         </div>
         <Divider />
@@ -200,7 +200,7 @@ const SideBarDecoratedBooth = (props) => {
               <InputNumber
                 min={-10}
                 max={360}
-                value={selectedItemRef?.current.position.z ?? 0}
+                value={selectedItem?.position.z ?? 0}
                 precision={3}
                 bordered={false}
                 onChange={handleOnchangePositionZ}
@@ -210,7 +210,7 @@ const SideBarDecoratedBooth = (props) => {
               <InputNumber
                 min={-10}
                 max={360}
-                value={selectedItemRef?.current.position.x ?? 0}
+                value={selectedItem?.position.x ?? 0}
                 precision={3}
                 bordered={false}
                 onChange={handleOnchangePositionX}
@@ -220,7 +220,7 @@ const SideBarDecoratedBooth = (props) => {
               <InputNumber
                 min={-10}
                 max={360}
-                value={selectedItemRef?.current.position.y ?? 0}
+                value={selectedItem?.position.y ?? 0}
                 precision={3}
                 bordered={false}
                 onChange={handleOnchangePositionY}
@@ -263,7 +263,7 @@ const SideBarDecoratedBooth = (props) => {
       >
         <Descriptions.Item>
           <SketchPicker
-            color={selectedItemRef?.current.material.color.getHexString()}
+            color={selectedItem?.material.color.getHexString()}
             onChangeComplete={handleOnChangeColor}
           />
         </Descriptions.Item>
