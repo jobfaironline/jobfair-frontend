@@ -54,6 +54,7 @@ const SideBarDecoratedBooth = (props) => {
         texture = new THREE.TextureLoader().load(base64Url)
       }
       texture.flipY = false
+      texture.encoding = THREE.sRGBEncoding
 
       const screenMesh = selectedItem?.clone(false)
       screenMesh.clear()
@@ -164,7 +165,7 @@ const SideBarDecoratedBooth = (props) => {
   }
 
   const handleOnChangeColor = color => {
-    setCurrentSelectedColor(color)
+    console.log(color);
     if (selectedItem === undefined) {
       return
     }
@@ -178,6 +179,8 @@ const SideBarDecoratedBooth = (props) => {
       }
       childMesh.material = newMaterial
     }
+    setCurrentSelectedColor(color)
+
   }
 
   if (!selectedItem) {

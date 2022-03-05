@@ -5,7 +5,7 @@ import {Stage, useContextBridge, Stats} from '@react-three/drei'
 import Menu from './components/Menu/ItemListMenu'
 import {EffectComposer, Outline} from '@react-three/postprocessing'
 import {ModeConstant} from '../../constants/AppConst'
-import {fixTextureOffset, loadModel, parseModel} from '../../utils/glbModelUtil'
+import {downloadModel, fixTextureOffset, loadModel, parseModel} from '../../utils/glbModelUtil'
 import {initialSampleItems} from './data/SampleDateItem'
 import SideBarDecoratedBooth from './components/SideBarDecoratedBooth/SideBarDecoratedBooth.component'
 import {useHistory, useParams} from 'react-router-dom'
@@ -20,6 +20,7 @@ import {PATH} from '../../constants/Paths/Path'
 import {ReactReduxContext, useDispatch, useSelector} from "react-redux";
 import {decorateBoothAction} from "../../redux-flow/decorateBooth/decorate-booth-slice";
 import * as THREE from "three";
+import {ToastContainer} from "react-toastify";
 
 const SlideMenu = (props) => {
     const {} = props;
@@ -62,6 +63,7 @@ const DecorateBoothCanvas = React.forwardRef((props, ref) => {
     const {modelItems, handleAdd} = props
     const ContextBridge = useContextBridge(ReactReduxContext)
     const {hoverItem, selectedItem, mode} = useSelector(state => state.decorateBooth)
+    console.log(modelItems);
 
     const calculateOutlineMesh = () => {
         const result = []
@@ -156,7 +158,7 @@ const DecorateBoothContainer = (props) => {
         const formData = new FormData()
         formData.append('companyBoothId', companyBoothId)
         formData.append('file', glbData)
-        saveDecoratedBooth(formData)
+        await saveDecoratedBooth(formData)
         notify(2, 'Save successfully')
 
     }
@@ -247,6 +249,7 @@ const DecorateBoothContainer = (props) => {
 
             <ControlFooter {...controlFooterProps}/>
             <SlideMenu/>
+            <ToastContainer/>
         </>
     )
 
