@@ -58,21 +58,54 @@ const ControlFooter = (props) => {
     )
 }
 
-const DecorateBoothPage = () => {
-    const {companyBoothId, jobFairId} = useParams()
+const DecorateBoothCanvas = React.forwardRef((props, ref) => {
+    const ContextBridge = useContextBridge(ReactReduxContext)
+    const {hoverItem, selectedItem, mode} = useSelector(state => state.decorateBooth)
 
+    const calculateOutlineMesh = () => {
+        const result = []
+        if (hoverItem  !== undefined) {
+            result.push(hoverItem)
+        }
+        if (mode !== ModeConstant.SELECT) return result
+        if (selectedItem !== undefined) {
+            result.push(selectedItem)
+        }
+        return result.length === 0 ? null : result
+    }
+
+    return (
+        <Canvas
+            dpr={[1, 2]}
+            camera={{fov: 40, zoom: 1.2}}
+            style={{width: '100vw', height: mode === ModeConstant.ADD ? '70vh' : '90vh'}}
+        >
+            <ContextBridge>
+                <CameraControls enabled={mode !== ModeConstant.DRAGGING}/>
+                <Stage preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
+                    <Model ref={ref}/>
+                </Stage>
+                <EffectComposer multisampling={8} autoClear={false}>
+                    <Outline
+                        blur
+                        selection={calculateOutlineMesh()}
+                        selectionLayer={100}
+                        visibleEdgeColor="yellow"
+                        edgeStrength={1000}
+                        width={1000}/>
+                </EffectComposer>
+            </ContextBridge>
+        </Canvas>
+    )
+})
+
+const DecorateBoothContainer = (props) => {
+    const {companyBoothId, jobFairId} = props;
 
     const history = useHistory()
     const dispatch = useDispatch();
-
-    const hoverItem = useSelector(state => state.decorateBooth.hoverItem)
-    const selectedItem = useSelector(state => state.decorateBooth.selectedItem)
-    const mode = useSelector(state => state.decorateBooth.mode)
-    const modelItems = useSelector(state => state.decorateBooth.modelItems)
-
+    const {mode, modelItems, selectedItem} = useSelector(state => state.decorateBooth)
     const ref = useRef()
-    const outlineRef = useRef();
-    const ContextBridge = useContextBridge(ReactReduxContext)
 
     useEffect(async () => {
         let url = 'https://d3polnwtp0nqe6.cloudfront.net/Booth/bf78dec0-98b3-41f7-bca0-72e2c65abcfb'
@@ -96,19 +129,6 @@ const DecorateBoothPage = () => {
             window.removeEventListener('keydown', handleKeyDown)
         }
     })
-
-    const calculateOutlineMesh = () => {
-        const result = []
-        if (hoverItem  !== undefined) {
-            result.push(hoverItem)
-        }
-        if (mode !== ModeConstant.SELECT) return result
-        if (selectedItem !== undefined) {
-            result.push(selectedItem)
-        }
-        //outlineRef.current?.selection.set(result);
-        return result.length === 0 ? null : result
-    }
 
     const saveHandle = async () => {
         let sceneNode = ref.current.parent
@@ -159,13 +179,9 @@ const DecorateBoothPage = () => {
         selectedItem.rotateOnWorldAxis(myAxis, -THREE.Math.degToRad(10))
     }
 
-
     const handleDelete = _ => {
-
         dispatch(decorateBoothAction.deleteModelItem(selectedItem?.uuid));
     }
-
-
 
     const handleKeyDown = event => {
         if (selectedItem === undefined) {
@@ -196,47 +212,38 @@ const DecorateBoothPage = () => {
         }
     }
 
-
-
-    if (modelItems.length === 0) return null
-
-    const menuProps = {};
     const controlFooterProps = {addMoreComponentHandle, saveHandle, reviewHandle}
     const sideBarProps = {handleOnRotationLeft, handleOnRotationRight, handleDelete}
 
+
+
+    if (modelItems.length === 0) return null
     return (
         <>
             <div style={{display: 'flex', maxHeight: mode === ModeConstant.ADD ? '70vh' : '90vh'}}>
                 <SideBarDecoratedBooth {...sideBarProps}/>
-                <Canvas
-                    dpr={[1, 2]}
-                    camera={{fov: 40, zoom: 1.2}}
-                    style={{width: '100vw', height: mode === ModeConstant.ADD ? '70vh' : '90vh'}}
-                >
-                    <ContextBridge>
-                        <CameraControls enabled={mode !== ModeConstant.DRAGGING}/>
-                        <Stage preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
-                            <Model ref={ref}/>
-                        </Stage>
-                        <EffectComposer multisampling={8} autoClear={false}>
-                            <Outline
-                                    ref={outlineRef}
-                                    blur
-                                     selection={calculateOutlineMesh()}
-                                     selectionLayer={100}
-                                     visibleEdgeColor="yellow"
-                                     edgeStrength={1000}
-                                     width={1000}/>
-                        </EffectComposer>
-                    </ContextBridge>
-
-                </Canvas>
+                <DecorateBoothCanvas ref={ref}/>
             </div>
 
             <ControlFooter {...controlFooterProps}/>
-            <SlideMenu {...menuProps}/>
+            <SlideMenu/>
         </>
     )
+
+}
+
+const DecorateBoothPage = () => {
+    const {companyBoothId, jobFairId} = useParams()
+    const dispatch = useDispatch();
+    useEffect(() => {
+        return () => {
+            dispatch(decorateBoothAction.reset({}));
+        }
+    });
+
+
+    return <DecorateBoothContainer companyBoothId={companyBoothId} jobFairId={jobFairId}/>
+
 }
 
 export default DecorateBoothPage

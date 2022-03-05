@@ -38,6 +38,15 @@ const decorateBoothSlice = createSlice({
             const uuid = action.payload
             const result = state.modelItems.filter(itemMesh => itemMesh.uuid !== uuid);
             return {...state, selectedItem: undefined, hoverItem: undefined, modelItems: result}
+        },
+        reset: (state, action) => {
+            return {
+                mode: ModeConstant.SELECT,
+                selectedItem: undefined,
+                selectedSampleItem: {},
+                modelItems: [],
+                hoverItem: undefined,
+            }
         }
     }
 })
