@@ -5,7 +5,14 @@ import {
     getCompanyBoothLatestLayout,
     saveDecoratedBooth
 } from "../../services/company-booth-layout-controller/CompanyBoothLayoutControllerService";
-import {fixTextureOffset, loadModel, parseModel} from "../../utils/glbModelUtil";
+import {
+    fixTextureOffset,
+    loadModel, moveModelDown,
+    moveModelUp,
+    parseModel,
+    rotateModelLeft,
+    rotateModelRight
+} from "../../utils/glbModelUtil";
 import {notify} from "../../utils/toastutil";
 import {ModeConstant} from "../../constants/AppConst";
 import {decorateBoothAction} from "../../redux-flow/decorateBooth/decorate-booth-slice";
@@ -88,16 +95,14 @@ export const DecorateBoothContainer = (props) => {
         if (selectedItem === undefined) {
             return
         }
-        const myAxis = new THREE.Vector3(0, 1, 0)
-        selectedItem.rotateOnWorldAxis(myAxis, THREE.Math.degToRad(10))
+        rotateModelLeft(selectedItem, 10);
     }
 
     const handleOnRotationRight = _ => {
         if (selectedItem === undefined) {
             return
         }
-        const myAxis = new THREE.Vector3(0, 1, 0)
-        selectedItem.rotateOnWorldAxis(myAxis, -THREE.Math.degToRad(10))
+        rotateModelRight(selectedItem, 10);
     }
 
     const handleDelete = _ => {
@@ -117,7 +122,6 @@ export const DecorateBoothContainer = (props) => {
         if (selectedItem === undefined) {
             return
         }
-        const mesh = selectedItem
         switch (event.keyCode) {
             case 37: //KEY LEFT
                 event.preventDefault()
@@ -125,7 +129,7 @@ export const DecorateBoothContainer = (props) => {
                 break
             case 38: //KEY UP
                 event.preventDefault()
-                mesh.position.set(mesh.position.x, mesh.position.y + 0.1, mesh.position.z)
+                moveModelUp(selectedItem, 0.1)
                 break
             case 39: //KEY RIGHT
                 event.preventDefault()
@@ -133,7 +137,7 @@ export const DecorateBoothContainer = (props) => {
                 break
             case 40: //KEY DOWN
                 event.preventDefault()
-                mesh.position.set(mesh.position.x, mesh.position.y - 0.1, mesh.position.z)
+                moveModelDown(selectedItem, 0.1)
                 break
             case 46: //KEY DEL
                 event.preventDefault()

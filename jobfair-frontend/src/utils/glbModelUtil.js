@@ -122,3 +122,22 @@ export const fixTextureOffset = (mesh) => {
   }
   mesh.children.forEach(child => fixTextureOffset(child));
 }
+
+export const rotateModelLeft = (mesh, angleInDegree) =>{
+  const myAxis = new THREE.Vector3(0, 1, 0)
+  mesh.rotateOnWorldAxis(myAxis, THREE.Math.degToRad(angleInDegree))
+}
+
+
+export const rotateModelRight = (mesh, angleInDegree) =>{
+  const myAxis = new THREE.Vector3(0, 1, 0)
+  mesh.rotateOnWorldAxis(myAxis, -THREE.Math.degToRad(angleInDegree))
+}
+
+export const moveModelUp = (mesh, distance) => {
+  mesh.position.set(mesh.position.x, mesh.position.y + distance, mesh.position.z)
+}
+
+export const moveModelDown = (mesh, distance) => {
+  mesh.position.set(mesh.position.x, mesh.position.y - distance, mesh.position.z)
+}
