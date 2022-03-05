@@ -3,17 +3,22 @@
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import { useEffect, useRef, useState } from 'react'
-import { LeftOutlined, RightOutlined, UploadOutlined } from '@ant-design/icons'
+import {DeleteOutlined, LeftOutlined, RightOutlined, UploadOutlined} from '@ant-design/icons'
 import { Button, Descriptions, InputNumber, message, Select, Slider, Upload } from 'antd'
 import { SketchPicker } from 'react-color'
 import * as THREE from 'three'
 import { getBase64 } from '../../../../utils/common'
 import './SideBarDecoratedBooth.style.scss'
+import {useSelector} from "react-redux";
 
 const IMAGE_PLANE_NAME = 'image-plane'
 
-const SideBarDecoratedBooth = ({ selectedItemRef, onClick }) => {
+const SideBarDecoratedBooth = (props) => {
+  const {handleOnRotationLeft, handleOnRotationRight, handleDelete} = props;
+
   const vidElementRef = useRef({})
+  const selectedItemRef = useSelector(state => state.decorateBooth.selectedItemRef)
+
 
   const loadFile = {
     beforeUpload: file => {
@@ -38,7 +43,7 @@ const SideBarDecoratedBooth = ({ selectedItemRef, onClick }) => {
         vid.muted = true
         vid.play()
         texture = new THREE.VideoTexture(vid)
-        const meshName = selectedItemRef.current.name
+        const meshName = selectedItemRef?.current?.name
         vidElementRef.current[meshName] = vid
         reader.onload = function (e) {
           vid.src = e.target.result
@@ -49,7 +54,7 @@ const SideBarDecoratedBooth = ({ selectedItemRef, onClick }) => {
         texture = new THREE.TextureLoader().load(base64Url)
       }
 
-      const screenMesh = selectedItemRef.current.clone(false)
+      const screenMesh = selectedItemRef?.current?.clone(false)
       screenMesh.clear()
       const geoBox = new THREE.Box3().setFromObject(screenMesh)
 
@@ -63,7 +68,7 @@ const SideBarDecoratedBooth = ({ selectedItemRef, onClick }) => {
         texture.center.y = 0.5
         texture.center.set(0.5, 0.5)
         texture.rotation = -Math.PI / 2
-        const newMaterial = selectedItemRef.current.material.clone()
+        const newMaterial = selectedItemRef?.current?.material.clone()
         newMaterial.size = THREE.DoubleSide
         newMaterial.map = texture
         selectedItemRef.current.material = newMaterial
@@ -97,29 +102,29 @@ const SideBarDecoratedBooth = ({ selectedItemRef, onClick }) => {
         plane.position.setX(-screenSize.x / 2 / screenMesh.scale.x - 0.05)
       }
 
-      const prevPlane = selectedItemRef.current.getObjectByName(IMAGE_PLANE_NAME)
+      const prevPlane = selectedItemRef?.current?.getObjectByName(IMAGE_PLANE_NAME)
       if (prevPlane !== undefined) {
-        selectedItemRef.current.remove(prevPlane)
+        selectedItemRef?.current?.remove(prevPlane)
       }
-      selectedItemRef.current.add(plane)
+      selectedItemRef?.current?.add(plane)
     },
     showUploadList: false
   }
 
   const [currentSelectedColor, setCurrentSelectedColor] = useState(
-    selectedItemRef?.current.material.color.getHexString()
+    selectedItemRef?.current?.material.color.getHexString()
   )
   const [positionState, setPositionState] = useState({
-    x: selectedItemRef?.current.position.x ?? 0,
-    y: selectedItemRef?.current.position.y ?? 0,
-    z: selectedItemRef?.current.position.z ?? 0
+    x: selectedItemRef?.current?.position.x ?? 0,
+    y: selectedItemRef?.current?.position.y ?? 0,
+    z: selectedItemRef?.current?.position.z ?? 0
   })
 
   const handleOnchangePositionX = value => {
     if (selectedItemRef?.current === undefined) {
       return
     }
-    selectedItemRef?.current.position.setX(value)
+    selectedItemRef.current.position.setX(value)
     setPositionState(prevState => {
       return {
         ...prevState,
@@ -131,7 +136,7 @@ const SideBarDecoratedBooth = ({ selectedItemRef, onClick }) => {
     if (selectedItemRef?.current === undefined) {
       return
     }
-    selectedItemRef?.current.position.setY(value)
+    selectedItemRef.current.position.setY(value)
     setPositionState(prevState => {
       return {
         ...prevState,
@@ -143,7 +148,7 @@ const SideBarDecoratedBooth = ({ selectedItemRef, onClick }) => {
     if (selectedItemRef?.current === undefined) {
       return
     }
-    selectedItemRef?.current.position.setZ(value)
+    selectedItemRef.current.position.setZ(value)
     setPositionState(prevState => {
       return {
         ...prevState,
@@ -151,20 +156,7 @@ const SideBarDecoratedBooth = ({ selectedItemRef, onClick }) => {
       }
     })
   }
-  const handleOnRotationLeft = value => {
-    if (selectedItemRef?.current === undefined) {
-      return
-    }
-    const myAxis = new THREE.Vector3(0, 1, 0)
-    selectedItemRef.current.rotateOnWorldAxis(myAxis, THREE.Math.degToRad(10))
-  }
-  const handleOnRotationRight = value => {
-    if (selectedItemRef?.current === undefined) {
-      return
-    }
-    const myAxis = new THREE.Vector3(0, 1, 0)
-    selectedItemRef.current.rotateOnWorldAxis(myAxis, -THREE.Math.degToRad(10))
-  }
+
   const handleOnChangeColor = color => {
     setCurrentSelectedColor(color)
     if (selectedItemRef?.current === undefined) {
@@ -182,7 +174,7 @@ const SideBarDecoratedBooth = ({ selectedItemRef, onClick }) => {
     }
   }
 
-  if (!selectedItemRef) {
+  if (!selectedItemRef?.current) {
     return <></>
   }
 
@@ -253,11 +245,12 @@ const SideBarDecoratedBooth = ({ selectedItemRef, onClick }) => {
         </div>
         <div style={{ margin: '1rem 0' }}>
           <Upload {...loadFile}>
-            {' '}
             <Button icon={<UploadOutlined />}>Upload Media</Button>{' '}
           </Upload>
+          <Button icon={<DeleteOutlined />} onClick={handleDelete}>
+            Delete item
+          </Button>
 
-          {/*<Button onClick={handleOnChangeMaterialVideo}>Mockup video</Button>*/}
         </div>
       </div>
       <Descriptions

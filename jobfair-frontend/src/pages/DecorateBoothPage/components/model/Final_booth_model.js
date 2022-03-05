@@ -8,24 +8,23 @@ import {
   calculatePositionWithBoundary,
   loadModel
 } from '../../../../utils/glbModelUtil'
-import { useThree } from '@react-three/fiber'
 import {BasicMesh} from "../../../../components/ThreeJSBaseComponent/ChildMesh.component";
+import {decorateBoothAction} from "../../../../redux-flow/decorateBooth/decorate-booth-slice";
+import {useDispatch, useSelector} from "react-redux";
 
 function ItemMesh({
   mesh,
-  setIsDragging,
   floorMesh,
-  mode,
-  setSelectedItemRef,
-  selectedItemRef,
-  setHoverItemRef,
 }) {
+  const selectedItemRef = useSelector(state => state.decorateBooth.selectedItemRef)
+  const mode =  useSelector(state => state.decorateBooth.mode)
+
   const [position, setPosition] = useState(mesh.position)
   const itemRef = useRef()
-
+  const dispatch = useDispatch();
   const bind = useDrag(
     ({event, active }) => {
-      if (mode !== ModeConstant.SELECT) return
+      if (mode !== ModeConstant.SELECT && mode !== ModeConstant.DRAGGING) return
       if (selectedItemRef?.current.uuid !== itemRef.current.uuid) return
       if (active) {
         //get intersection point between click coordinate and plane coordinate
@@ -49,7 +48,11 @@ function ItemMesh({
         })
         setPosition([x, y, z])
       }
-      setIsDragging(active)
+      if (active){
+        dispatch(decorateBoothAction.setMode(ModeConstant.DRAGGING))
+      } else {
+        dispatch(decorateBoothAction.setMode(ModeConstant.SELECT))
+      }
     },
     { pointerEvents: true }
   )
@@ -58,18 +61,20 @@ function ItemMesh({
     <mesh
       name={mesh.name}
       key={mesh.uuid}
+      uuid={mesh.uuid}
       ref={itemRef}
       geometry={mesh.geometry}
       material={mesh.material}
       position={position}
       onClick={_ => {
-        setSelectedItemRef(itemRef)
+        if (mode === ModeConstant.ADD) return;
+        dispatch(decorateBoothAction.setSelectedItemRef(itemRef))
       }}
       onPointerOver={_ => {
-        setHoverItemRef(itemRef)
+        dispatch(decorateBoothAction.setHoverItemRef(itemRef))
       }}
       onPointerLeave={_ => {
-        setHoverItemRef(undefined)
+        dispatch(decorateBoothAction.setHoverItemRef(undefined))
       }}
       {...bind()}
       rotation={mesh.rotation}
@@ -82,7 +87,10 @@ function ItemMesh({
   )
 }
 
-function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
+function FloorMesh({ mesh }) {
+  const mode =  useSelector(state => state.decorateBooth.mode)
+  const selectedSampleItem = useSelector(state => state.decorateBooth.selectedSampleItem)
+  const dispatch = useDispatch()
   const onPlaneClick = async e => {
     if (mode !== ModeConstant.ADD) return
     if (selectedSampleItem.id === undefined) {
@@ -114,15 +122,15 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
     })
     itemMesh.position.set(x, y, z)
 
-    setModelItems(prevState => {
-      return [...prevState, gltf.scene.children[0]]
-    })
+    dispatch(decorateBoothAction.addModelItem(gltf.scene.children[0]))
+
   }
   return (
     <mesh
       name={mesh.name}
       onClick={onPlaneClick}
       key={mesh.uuid}
+      uuid={mesh.uuid}
       geometry={mesh.geometry}
       material={mesh.material}
       position={mesh.position}
@@ -136,66 +144,8 @@ function FloorMesh({ mesh, selectedSampleItem, setModelItems, mode }) {
   )
 }
 
-export const Model = React.forwardRef(
-  (
-    {
-      setIsDragging,
-      selectedSampleItem,
-      modelItems,
-      setModelItems,
-      mode,
-      setModes,
-      setSelectedItemRef,
-      selectedItemRef,
-      hoverItemRef,
-      setHoverItemRef,
-    },
-    ref
-  ) => {
-    const { scene } = useThree()
-    const handleKeyDown = event => {
-      if (selectedItemRef?.current === undefined) {
-        return
-      }
-      const mesh = scene.getObjectByProperty('uuid', selectedItemRef.current.uuid)
-      let myAxis
-      switch (event.keyCode) {
-        case 37: //KEY LEFT
-          event.preventDefault()
-          myAxis = new THREE.Vector3(0, 1, 0)
-          mesh.rotateOnWorldAxis(myAxis, THREE.Math.degToRad(10))
-          break
-        case 38: //KEY UP
-          event.preventDefault()
-          mesh.position.set(mesh.position.x, mesh.position.y + 0.1, mesh.position.z)
-          break
-        case 39: //KEY RIGHT
-          event.preventDefault()
-          myAxis = new THREE.Vector3(0, 1, 0)
-          mesh.rotateOnWorldAxis(myAxis, -THREE.Math.degToRad(10))
-          break
-        case 40: //KEY DOWN
-          event.preventDefault()
-          mesh.position.set(mesh.position.x, mesh.position.y - 0.1, mesh.position.z)
-          break
-        case 46: //KEY DEL
-          event.preventDefault()
-          setModelItems(prevState => {
-            setSelectedItemRef(undefined)
-            return prevState.filter(itemMesh => itemMesh.uuid !== selectedItemRef.current.uuid)
-          })
-          break
-      }
-    }
-    const onDocumentMouseMove = _ => {}
-    useEffect(() => {
-      window.addEventListener('keydown', handleKeyDown)
-      window.addEventListener('mousemove', onDocumentMouseMove, false)
-      return () => {
-        window.removeEventListener('keydown', handleKeyDown)
-        window.removeEventListener('mousemove', onDocumentMouseMove)
-      }
-    }, [selectedItemRef])
+export const Model = React.forwardRef((props, ref) => {
+  const modelItems = useSelector(state => state.decorateBooth.modelItems)
 
     const floorMesh = modelItems.filter(mesh => mesh.name === 'sand')[0]
     return (
@@ -206,9 +156,6 @@ export const Model = React.forwardRef(
               <FloorMesh
                 key={mesh.uuid}
                 mesh={mesh}
-                selectedSampleItem={selectedSampleItem}
-                setModelItems={setModelItems}
-                mode={mode}
               />
             )
           }
@@ -216,13 +163,7 @@ export const Model = React.forwardRef(
             <ItemMesh
               key={mesh.uuid}
               mesh={mesh}
-              setIsDragging={setIsDragging}
               floorMesh={floorMesh}
-              mode={mode}
-              setSelectedItemRef={setSelectedItemRef}
-              selectedItemRef={selectedItemRef}
-              hoverItemRef={hoverItemRef}
-              setHoverItemRef={setHoverItemRef}
             />
           )
         })}

@@ -6,6 +6,7 @@ export const BasicMesh = React.forwardRef(({ mesh }, ref) => {
             ref={ref}
             name={mesh.name}
             key={mesh.uuid}
+            uuid={mesh.uuid}
             geometry={mesh.geometry}
             material={mesh.material}
             position={mesh.position}
