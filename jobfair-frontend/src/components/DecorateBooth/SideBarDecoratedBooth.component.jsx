@@ -10,8 +10,9 @@ import * as THREE from 'three'
 import { getBase64 } from '../../utils/common'
 import './SideBarDecoratedBooth.style.scss'
 import {useSelector} from "react-redux";
+import {notify} from "../../utils/toastutil";
+import {IMAGE_PLANE_NAME} from "../../constants/DecorateBoothConstant"
 
-const IMAGE_PLANE_NAME = 'image-plane'
 
 const SideBarDecoratedBooth = (props) => {
   const {handleOnRotationLeft, handleOnRotationRight, handleDelete} = props;
@@ -22,16 +23,16 @@ const SideBarDecoratedBooth = (props) => {
 
   const loadFile = {
     beforeUpload: file => {
-      if (info.file.type !== 'image/png' || info.file.type !== 'image/jpg' || info.file.type !== 'video/mp4') {
-        message.error(`${file.name} is not a png file`)
-      }
       return false
     },
     onChange: async info => {
-      if (info.file.type !== 'image/png' || info.file.type !== 'image/jpg' || info.file.type !== 'video/mp4')
-        if (selectedItem === undefined) {
-          return
-        }
+      if (info.file.type !== 'image/png' && info.file.type !== 'image/jpeg' && info.file.type !== 'video/mp4'){
+        notify(0,`Upload file must be png, jpg or mp4`)
+        return;
+      }
+      if (selectedItem === undefined) {
+        return
+      }
       let texture
       if (info.file.type === 'video/mp4') {
         const vid = document.createElement('video')
