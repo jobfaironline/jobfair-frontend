@@ -38,47 +38,9 @@ const JobFairParkMapContainer = props => {
   })
 
   useEffect(async () => {
-    //fetch this from BE
     const responseData = await getLayoutInformationForJobFairPark(jobFairId).then(response => response.data)
     const url = responseData.jobFairLayoutUrl
     const data = responseData.booths
-    //the bellow is the data format
-    /*const data = [
-            {
-                position: {x: 19.592493057250977, y: 2.200000047683716, z: 15.210623741149902},
-                slotName: "company00",
-                boothUrl: 'https://d3polnwtp0nqe6.cloudfront.net/Booth/bf78dec0-98b3-41f7-bca0-72e2c65abcfb',
-                companyBoothId: "123",
-            },
-            {
-                position: {x: -30.822830200195312, y: 2.200000047683716, z: -15.00773811340332},
-                slotName: "company01",
-                boothUrl: 'https://d3polnwtp0nqe6.cloudfront.net/Booth/bf78dec0-98b3-41f7-bca0-72e2c65abcfb',
-                companyBoothId: "1234",
-                companyBoothLayoutVideos: [
-                  {
-                    "id": "065aad8b-3974-445a-9331-cd32b70e2433",
-                    "url": "https://d3polnwtp0nqe6.cloudfront.net/BoothVideo/065aad8b-3974-445a-9331-cd32b70e2433",
-                    "itemName": "banner01",
-                    "companyBoothLayoutId": "3c35dd82-42fb-48e8-8afd-da198616f541"
-                  },
-                  {
-                    "id": "0f64578a-3a60-47f4-96a5-69ff40e3dbb1",
-                    "url": "https://d3polnwtp0nqe6.cloudfront.net/BoothVideo/0f64578a-3a60-47f4-96a5-69ff40e3dbb1",
-                    "itemName": "main_board",
-                    "companyBoothLayoutId": "3c35dd82-42fb-48e8-8afd-da198616f541"
-                  }
-               ]
-            },
-            {
-                position: {x: -16.091472625732422, y: 2.200000047683716, z: 13.914505958557129},
-                slotName: "company02",
-                boothUrl: 'https://d3polnwtp0nqe6.cloudfront.net/Booth/bf78dec0-98b3-41f7-bca0-72e2c65abcfb',
-                companyBoothId: "12345",
-            },
-
-        ];*/
-
     const glb = await loadModel(url)
 
     const transformData = {}
@@ -107,7 +69,6 @@ const JobFairParkMapContainer = props => {
     }
     const meshes = await Promise.all(newBoothMeshesPromise)
 
-    //GET data from BE
     setState({
       boothMeshes: meshes,
       mapMesh: glb.scene

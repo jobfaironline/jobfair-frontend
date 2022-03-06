@@ -19,12 +19,12 @@ import {ModeConstant} from "../../constants/AppConst";
 import {decorateBoothAction} from "../../redux-flow/decorateBooth/decorate-booth-slice";
 import {PATH} from "../../constants/Paths/Path";
 import {Stats} from "@react-three/drei";
-import SideBarDecoratedBooth from "../../components/DecorateBooth/SideBarDecoratedBooth.component";
 import {DecorateBoothCanvas} from "../../components/DecorateBooth/DecorateBoothCanavas.component";
 import {ControlButtonGroup} from "../../components/DecorateBooth/ControlButtonGroup.component";
 import {SampleItemMenuContainer} from "./SampleItemMenu.container";
 import {ToastContainer} from "react-toastify";
 import {GENERIC_BOOTH_LAYOUT_URL} from "../../constants/DecorateBoothConstant";
+import {DecoratedBoothSideBarContainer} from "./DecorateBoothSideBar.container";
 
 export const DecorateBoothContainer = (props) => {
     const {companyBoothId, jobFairId} = props;
@@ -198,7 +198,7 @@ export const DecorateBoothContainer = (props) => {
         <>
             <Stats/>
             <div style={{display: 'flex', maxHeight: mode === ModeConstant.ADD ? '70vh' : '90vh'}}>
-                <SideBarDecoratedBooth {...sideBarProps}/>
+                <DecoratedBoothSideBarContainer {...sideBarProps}/>
                 <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd} ref={meshGroupRef}/>
             </div>
 
