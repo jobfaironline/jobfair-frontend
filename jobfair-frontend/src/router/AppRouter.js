@@ -36,9 +36,9 @@ import {
   PATH_COMPANY_MANAGER,
   PATH_STAFF
 } from '../constants/Paths/Path'
-import EmployeeManagementPage from "../pages/EmployeeManagementPage/EmployeeManagementPage";
-import EmployeeRegisterPage from "../pages/EmployeeRegisterPage/EmployeeRegisterPage";
-import RegisterJobFairForm from "../components/register-job-fair-form/RegisterJobFairForm";
+import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
+import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
+import RegisterJobFairForm from '../components/register-job-fair-form/RegisterJobFairForm'
 const AppRouter = () => {
   const role = useSelector(state => state.authentication?.user?.roles)
   return (
@@ -72,7 +72,7 @@ const AppRouter = () => {
           {!role ? <ForgotPasswordPage /> : <Redirect to={PATH.INDEX} />}
         </Route>
         <Route path={PATH.CHANGE_PASSWORD_PAGE} exact>
-          {!role ? <ChangePasswordPage /> : <Redirect to={PATH.LOGIN_PAGE} />}
+          <ChangePasswordPage />
         </Route>
         <Route path={PATH.RESULT_SUCCESS_PAGE} exact>
           <ResultSuccessPage />

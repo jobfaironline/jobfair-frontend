@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Checkbox, Divider, Form, Input, Layout } from 'antd'
 import { ForgetPasswordValidation } from '../../validate/ForgetPasswordValidation'
+import { PATH } from '../../constants/Paths/Path'
 import './ForgotPassword.scss'
 const ForgotPasswordComponent = ({ onFinish, form }) => {
   return (
@@ -19,7 +20,7 @@ const ForgotPasswordComponent = ({ onFinish, form }) => {
             <Button type="primary" htmlType="submit" className="button">
               Submit
             </Button>
-            <a href="/accounts/changepassword" style={{ marginLeft: 20 }}>
+            <a href={PATH.CHANGE_PASSWORD_PAGE} style={{ marginLeft: 20 }}>
               Already have OTP? Change password now!
             </a>
           </Form.Item>
