@@ -66,7 +66,6 @@ const JobfairRegistrationForm = () => {
 
   const { form, current, gotoStep, stepsProps, formProps, submit, formLoading } = useStepsForm({
     async submit(values) {
-      console.log('values: ', values)
       const body = {
         description: values.description,
         jobFairId: jobfairId,
@@ -74,7 +73,7 @@ const JobfairRegistrationForm = () => {
           const result = {
             description: item.description,
             jobPositionId: item.id,
-            maxSalary: item.maxSalary,
+            maxSalary: item.maxSalary ? item.maxSalary : item.minSalary + 1, //TODO: will fix later when api is finished
             minSalary: item.minSalary,
             numOfPosition: item.numberOfPosition,
             requirements: item.requirement
@@ -82,7 +81,6 @@ const JobfairRegistrationForm = () => {
           return result
         })
       }
-      console.log('body: ', body)
       try {
         await dispatch(createDraftRegistration(body)).unwrap()
         notification['success']({
@@ -106,9 +104,7 @@ const JobfairRegistrationForm = () => {
     // total: 3
   })
 
-  const onFinish = values => {
-    console.log('submitted: ', values)
-  }
+  const onFinish = values => {}
 
   const formList = [
     <JobfairRegistrationFormComponent
@@ -122,33 +118,37 @@ const JobfairRegistrationForm = () => {
     />,
     <>
       <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
-      <Form.Item>
-        <Button
-          style={{ marginRight: 10 }}
-          type="primary"
-          loading={formLoading}
-          onClick={() => {
-            submit().then(result => {
-              if (result === 'ok') {
-                gotoStep(current + 1)
-              }
-            })
-          }}
-        >
-          Submit
-        </Button>
-      </Form.Item>
-      <Form.Item>
-        <Button onClick={() => gotoStep(current - 1)}>Prev</Button>
-      </Form.Item>
+      <div className="step-buttons">
+        <div className="pre-step-button">
+          <Form.Item>
+            <Button size="large" type="primary" onClick={() => gotoStep(current - 1)}>
+              Prev
+            </Button>
+          </Form.Item>
+        </div>
+        <div className="next-step-button">
+          <Form.Item>
+            <Button
+              size="large"
+              type="primary"
+              loading={formLoading}
+              onClick={() => {
+                submit().then(result => {
+                  if (result === 'ok') {
+                    gotoStep(current + 1)
+                  }
+                })
+              }}
+            >
+              Submit
+            </Button>
+          </Form.Item>
+        </div>
+      </div>
     </>
   ]
 
-  const onChange = values => {
-    console.log(values)
-  }
-
-  console.log(form.getFieldsValue())
+  const onChange = values => {}
 
   return (
     <div>
@@ -165,7 +165,6 @@ const JobfairRegistrationForm = () => {
           onFinish={submit}
           onValuesChange={e => onChange(e)}
           requiredMark="required"
-          style={{ maxWidth: 1500 }}
           autoComplete="off"
         >
           {formList[current]}

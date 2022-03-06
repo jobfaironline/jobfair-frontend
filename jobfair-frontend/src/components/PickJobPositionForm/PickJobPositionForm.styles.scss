@@ -1,0 +1,16 @@
+.job-position-input-container {
+  flex: 1;
+}
+
+.job-position-row-container {
+  display: flex;
+
+  > div {
+    width: fit-content;
+    flex: auto 1;
+  }
+}
+
+.ant-anchor-link-title {
+  font-size: 0.95rem;
+}
