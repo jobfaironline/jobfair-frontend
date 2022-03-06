@@ -78,6 +78,7 @@ const NavigationBar = () => {
   }
   const handleClick = () => {
     dispatch(logoutHandler())
+    history.push(PATH.INDEX)
   }
 
   const handleRedirect = path => history.push(path)
@@ -112,7 +113,7 @@ const NavigationBar = () => {
             ? extraMenu().map(item => {
                 return item
               })
-            : history.push(PATH.LOGIN_PAGE)}
+            : null}
           {/* {role ? <Button onClick={handleClick}>Logout</Button> : null} */}
         </Menu>
         {!role ? <AuthenticationButtonGroups handleRedirect={handleRedirect} /> : null}
@@ -146,12 +147,12 @@ const AuthenticationButtonGroups = ({ handleRedirect }) => {
 }
 
 const AvatarMenu = ({ logoutFunction, handleRedirect }) => {
+  const history = useHistory()
   const menu = (
     <Menu
       onClick={e => {
-        console.log(e)
         if (e.key === 'LOGOUT') logoutFunction()
-        else if (e.key === 'CHANGE_PASSWORD_PAGE') handleRedirect(PATH[e.key])
+        else if (e.key === 'CHANGE_PASSWORD_PAGE') history.push(PATH.CHANGE_PASSWORD_PAGE)
       }}
       style={{ zIndex: 10000000 }}
     >

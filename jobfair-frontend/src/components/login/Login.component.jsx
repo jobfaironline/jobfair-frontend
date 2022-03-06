@@ -1,9 +1,12 @@
 import React from 'react'
 import { Button, Checkbox, Divider, Form, Input, Layout, Typography } from 'antd'
+import { useHistory } from 'react-router-dom'
 import { Content, Footer, Header } from 'antd/es/layout/layout'
+import { PATH } from '../../constants/Paths/Path'
 import './Login.styles.scss'
 
 const LoginComponent = ({ onFinish, form }) => {
+  const history = useHistory()
   return (
     <>
       <Divider orientation="center" plain>
@@ -33,7 +36,9 @@ const LoginComponent = ({ onFinish, form }) => {
             </Button>
           </Form.Item>
           <Form.Item className="forgot-password">
-            <Button type="link">Forgot password?</Button>
+            <Button type="link" onClick={() => history.push(PATH.FORGOT_PASSWORD_PAGE)}>
+              Forgot password?
+            </Button>
           </Form.Item>
           <Form.Item className="register">
             <span>Don't you have an account?</span> <Button type="link">Register</Button>
