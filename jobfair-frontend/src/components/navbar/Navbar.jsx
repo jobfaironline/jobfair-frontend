@@ -149,7 +149,6 @@ const AvatarMenu = ({ logoutFunction, handleRedirect }) => {
   const menu = (
     <Menu
       onClick={e => {
-        console.log(e)
         if (e.key === 'LOGOUT') logoutFunction()
         else if (e.key === 'CHANGE_PASSWORD_PAGE') handleRedirect(PATH[e.key])
       }}

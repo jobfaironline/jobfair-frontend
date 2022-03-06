@@ -16,7 +16,6 @@ const ChangePasswordContainer = () => {
       newPassword: values.newPassword,
       confirmPassword: values.confirmPassword
     }
-    console.log(body)
     resetPasswordAPI(body)
       .then(res => {
         notification['success']({
@@ -33,9 +32,9 @@ const ChangePasswordContainer = () => {
       })
   }
   return (
-    <>
+    <div className="page">
       <ChangePasswordComponent form={form} onFinish={onFinish} email={location?.state?.email} setOtpCode={setOtpCode} />
-    </>
+    </div>
   )
 }
 export default ChangePasswordContainer

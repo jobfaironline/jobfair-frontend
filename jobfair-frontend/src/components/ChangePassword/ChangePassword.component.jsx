@@ -2,12 +2,14 @@ import React from 'react'
 import { Button, Checkbox, Divider, Form, Input, Layout, InputNumber } from 'antd'
 import Typography from '@mui/material/Typography'
 import ReactCodeInput from 'react-code-input'
+import { ChangePasswordValidation } from '../../validate/ChangePasswordValidation'
+import './ChangePassword.scss'
 const ChangePasswordComponent = ({ onFinish, form, email, setOtpCode }) => {
   const handlePinChange = otp => {
     setOtpCode(otp)
   }
   return (
-    <>
+    <div className="container">
       <Divider orientation="center" plain>
         Reset Password Page
       </Divider>
@@ -26,45 +28,29 @@ const ChangePasswordComponent = ({ onFinish, form, email, setOtpCode }) => {
             <ReactCodeInput id="pinCode" type="text" fields={6} onChange={handlePinChange} />
           </div>
           {!email ? (
-            <Form.Item
-              label="Email"
-              name="email"
-              hasFeedback
-              rules={[
-                { required: true, message: 'Please input your email!' },
-                {
-                  type: 'email',
-                  message: 'This field has invalid email format.'
-                }
-              ]}
-            >
+            <Form.Item label="Email" name="email" hasFeedback rules={ChangePasswordValidation.email}>
               <Input />
             </Form.Item>
           ) : null}
-          <Form.Item
-            label="newPassword"
-            name="newPassword"
-            hasFeedback
-            rules={[{ required: true, message: 'Please input your new password!' }]}
-          >
+          <Form.Item label="newPassword" name="newPassword" hasFeedback rules={ChangePasswordValidation.newPassword}>
             <Input.Password />
           </Form.Item>
           <Form.Item
             label="confirmPassword"
             name="confirmPassword"
             hasFeedback
-            rules={[{ required: true, message: 'Please input your confirm password!' }]}
+            rules={ChangePasswordValidation.rePassword}
           >
             <Input.Password />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" className="button">
               Submit
             </Button>
           </Form.Item>
         </Form>
       </div>
-    </>
+    </div>
   )
 }
 export default ChangePasswordComponent
