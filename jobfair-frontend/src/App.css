@@ -1,3 +1,11 @@
+* {
+  padding: 0;
+
+  margin: 0;
+
+  border: none;
+}
+
 body {
   font-size: 16px;
   line-height: 1.6;
@@ -75,12 +83,6 @@ home
   background-position: 50% 100%;
   background-size: cover;
   height: 100vh;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
 }
 
 #root {
