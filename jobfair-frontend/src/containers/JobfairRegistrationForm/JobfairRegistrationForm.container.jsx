@@ -111,22 +111,6 @@ const JobfairRegistrationForm = () => {
   }
 
   const formList = [
-    // <>
-    //   <CompanyProfileForm noStyle={true} data={companyInfo} form={companyForm} editable={false} />
-    //   <Form.Item
-    //     label="Company registration description"
-    //     required
-    //     tooltip="This is required"
-    //     rules={CompanyProfileValidation.description}
-    //     name="description"
-    //   >
-    //     <TextArea showCount maxLength={3000} placeholder="Company registration description" style={{ width: 300 }} />
-    //   </Form.Item>
-    //   <Form.Item>
-    //     <Button onClick={() => gotoStep(current + 1)}>Next</Button>
-    //   </Form.Item>
-    // </>,
-
     <JobfairRegistrationFormComponent
       form={form}
       onPickJobFinish={onFinish}
@@ -136,31 +120,6 @@ const JobfairRegistrationForm = () => {
       }}
       preStep={() => gotoStep(current - 1)}
     />,
-    // <>
-    //   <Form.Item
-    //     label="Company registration description"
-    //     required
-    //     tooltip="This is required"
-    //     rules={CompanyProfileValidation.description}
-    //     name="description"
-    //   >
-    //     <TextArea showCount maxLength={3000} placeholder="Company registration description" style={{ width: 300 }} />
-    //   </Form.Item>
-    //   <PickJobPositionFormContainer form={form} onFinish={onFinish} />
-    //   <Form.Item>
-    //     <Button
-    //       onClick={() => {
-    //         gotoStep(current + 1)
-    //         dispatch(setFormBody(form.getFieldsValue()))
-    //       }}
-    //     >
-    //       Next
-    //     </Button>
-    //   </Form.Item>
-    //   <Form.Item>
-    //     <Button onClick={() => gotoStep(current - 1)}>Prev</Button>
-    //   </Form.Item>
-    // </>,
     <>
       <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
       <Form.Item>

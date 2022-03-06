@@ -4,6 +4,7 @@ import { createDraftRegistration } from './registration-jobfair-form-action'
 const registrationJobFairFormSlice = createSlice({
   name: 'registrationJobfairForm',
   initialState: {
+    formHook: null,
     jobPositionModalVisibility: false,
     jobPositionSubmodalVisibility: false,
     form: {
@@ -37,6 +38,9 @@ const registrationJobFairFormSlice = createSlice({
     }
   },
   reducers: {
+    setFormHook: (state, action) => {
+      state.formHook = action.payload
+    },
     setFormDescription: (state, action) => {
       state.form.body.description = action.payload
     },

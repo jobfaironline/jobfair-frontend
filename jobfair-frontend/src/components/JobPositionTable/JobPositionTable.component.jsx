@@ -4,14 +4,8 @@ import { Space, Table, Input, Button } from 'antd'
 import Highlighter from 'react-highlight-words'
 import SearchOutlined from '@ant-design/icons/SearchOutlined'
 import JobPositionTableColumn from './JobPositionTable.column'
-import {
-  setFormBody,
-  setJobPositions
-} from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
 
-const FormTable = ({ jobPositionsInForm, extra, data }) => {
+const FormTable = ({ extra, data, ...otherTableProps }) => {
   //search function
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchedColumn] = useState('')
@@ -75,40 +69,6 @@ const FormTable = ({ jobPositionsInForm, extra, data }) => {
         text
       )
   })
-  ///////////////////////////
-
-  const dispatch = useDispatch()
-  const [selectedRowKeys, setSelectedRowKeys] = useState([])
-  const modalVisible = useSelector(state => state.registrationJobfairForm?.jobPositionModalVisibility)
-
-  useEffect(() => {
-    const mappedRows = jobPositionsInForm.map(item => item.key)
-    if (modalVisible) setSelectedRowKeys(mappedRows)
-  }, [modalVisible])
-
-  //handle pick button
-  const start = () => {
-    const mappedData = []
-    for (const item of data) {
-      if (selectedRowKeys.includes(item.key)) {
-        mappedData.push(item)
-      }
-    }
-    dispatch(setJobPositions(mappedData))
-  }
-
-  const rowSelection = {
-    selectedRowKeys: selectedRowKeys,
-    onChange: (selectedRowKeys, selectedRows) => {
-      setSelectedRowKeys(selectedRowKeys)
-    },
-    getCheckboxProps: record => ({
-      disabled: record.name === 'Disabled User',
-      // Column configuration not to be checked
-      name: record.name
-    })
-  }
-  //
 
   const defaultColumns = JobPositionTableColumn(getColumnSearchProps)
 
@@ -116,10 +76,7 @@ const FormTable = ({ jobPositionsInForm, extra, data }) => {
 
   return (
     <Fragment>
-      <Button type="primary" onClick={start}>
-        Pick
-      </Button>
-      <Table rowSelection={{ ...rowSelection }} columns={finalColumns} dataSource={data} pagination={{ pageSize: 8 }} />
+      <Table columns={finalColumns} dataSource={data} pagination={{ pageSize: 8 }} {...otherTableProps} />
     </Fragment>
   )
 }

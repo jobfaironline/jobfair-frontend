@@ -7,7 +7,6 @@ import {
 } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
 
 const JobPositionModalContainer = props => {
-  const { setFinalSelectedJob } = props
   const dispatch = useDispatch()
 
   const visible = useSelector(state => state?.registrationJobfairForm?.jobPositionModalVisibility)
@@ -22,18 +21,9 @@ const JobPositionModalContainer = props => {
     dispatch(setJobPositionModalVisibility(false))
   }
 
-  const handleCreateOnClick = () => {
-    dispatch(setJobPositionSubmodalVisibility(true))
-  }
   return (
     <>
-      <JobPositionModal
-        visible={visible}
-        setFinalSelectedJob={setFinalSelectedJob}
-        handleOk={handleOk}
-        handleCancel={handleCancel}
-        handleCreateOnClick={handleCreateOnClick}
-      />
+      <JobPositionModal visible={visible} handleOk={handleOk} handleCancel={handleCancel} />
     </>
   )
 }
