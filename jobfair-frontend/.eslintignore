@@ -7,7 +7,7 @@
 /src/pages/FAQPage/FAQPage.jsx
 /src/pages/JobFairPackPage/JobFairPackPage.jsx
 /src/pages/JobFairPackPage/components/Menu/JobFairPackPage.js
-/src/pages/JobFairPackPage/components/model/Final_booth_model.js
+/src/pages/JobFairPackPage/components/model/ItemMesh.component.jsx
 /src/pages/LoginPage/LoginPage.jsx
 /src/pages/ProfilePage/Attendant/AttendantInfoPaper/AttendantInfoPaper.jsx
 /src/pages/ProfilePage/Attendant/BasicInfoPaper/BasicInfoPaper.jsx

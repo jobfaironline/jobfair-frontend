@@ -53,19 +53,19 @@ const AttendantJobFairPage = () => {
   }
 
   return (
-    <Fragment>
-      <div className={styles.container}>
-        <div className={styles.sideBar}>
-          <SideBar />
-        </div>
-        <div className={styles.booth}>
-          <AttendantJobFairBoothContainer companyBoothId={companyBoothId} />
-        </div>
-        <div>
-          <ChatBox {...communicationProps} />
+      <div className={"page"}>
+        <div className={styles.container}>
+          <div className={styles.sideBar}>
+            <SideBar />
+          </div>
+          <div className={styles.booth}>
+            <AttendantJobFairBoothContainer companyBoothId={companyBoothId} />
+          </div>
+          <div>
+            <ChatBox {...communicationProps} />
+          </div>
         </div>
       </div>
-    </Fragment>
   )
 }
 

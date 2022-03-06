@@ -1,10 +1,12 @@
+import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
 import React from "react";
 
-export const BasicMesh = React.forwardRef(({ mesh }, ref) => {
+export const FloorMesh = (props) => {
+    const {onPlaneClick, mesh} = props
     return (
         <mesh
-            ref={ref}
             name={mesh.name}
+            onClick={onPlaneClick}
             key={mesh.uuid}
             uuid={mesh.uuid}
             geometry={mesh.geometry}
@@ -15,9 +17,7 @@ export const BasicMesh = React.forwardRef(({ mesh }, ref) => {
             castShadow
             receiveShadow
         >
-            {mesh.children.map(child => (
-                <BasicMesh key={child.uuid} mesh={child} />
-            ))}
+            {mesh.children.map(child => <BasicMesh mesh={child} key={child.uuid}/>)}
         </mesh>
     )
-})
+}
