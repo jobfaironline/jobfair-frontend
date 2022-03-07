@@ -69,9 +69,14 @@ const JobPositionTable = ({ selectable, extra }) => {
         rowSelection={selectable ? { ...rowSelection } : null}
       />
       {selectable ? (
-        <Button type="primary" onClick={chooseJobPositions}>
-          Choose
-        </Button>
+        <Popconfirm
+          title="Are you sure to choose these jobs?"
+          onConfirm={chooseJobPositions}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button type="primary">Choose</Button>
+        </Popconfirm>
       ) : null}
     </div>
   )

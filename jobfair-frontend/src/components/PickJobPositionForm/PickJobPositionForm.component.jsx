@@ -37,31 +37,16 @@ const PickJobPositionForm = props => {
                     <div>
                       <Divider></Divider>
                       <Typography.Title level={3}>{`Job position ${key + 1}`}</Typography.Title>
+                      <Divider style={{ width: '10rem', minWidth: 0, margin: '0.5rem' }}></Divider>
                       <div id={`${key}-job-position`} key={key} style={{ width: '100%', display: 'flex' }}>
                         <div className="job-position-input-container ">
                           <div className="job-position-row-container">
-                            <Form.Item {...restField} name={[name, 'title']} label="Job Title">
-                              <Input placeholder="Job title" disabled />
-                            </Form.Item>
-                          </div>
-                          <div className="job-position-row-container ">
-                            <Form.Item
-                              label="Description"
-                              {...restField}
-                              name={[name, 'description']}
-                              rules={PickJobPositionFormValidation.description}
-                            >
-                              <TextArea autoSize={{ minRows: 4 }} placeholder="Description" />
-                            </Form.Item>
-                          </div>
-                          <div className="job-position-row-container ">
-                            <Form.Item
-                              label="Requirement"
-                              {...restField}
-                              name={[name, 'requirement']}
-                              rules={PickJobPositionFormValidation.requirement}
-                            >
-                              <TextArea autoSize={{ minRows: 4 }} placeholder="Requirement" />
+                            <Typography.Title level={4}>{`Job's title: ${
+                              form.getFieldsValue().jobPositions[key]?.title
+                            }`}</Typography.Title>
+
+                            <Form.Item {...restField} name={[name, 'title']} style={{ display: 'none' }}>
+                              <Input type="hidden" placeholder="Job title" disabled />
                             </Form.Item>
                           </div>
                           <div className="job-position-row-container ">
@@ -118,11 +103,6 @@ const PickJobPositionForm = props => {
             )
           }}
         </Form.List>
-        {/*<Form.Item>*/}
-        {/*    <Button type="primary" htmlType="submit">*/}
-        {/*        Submit*/}
-        {/*    </Button>*/}
-        {/*</Form.Item>*/}
       </Form>
     </>
   )

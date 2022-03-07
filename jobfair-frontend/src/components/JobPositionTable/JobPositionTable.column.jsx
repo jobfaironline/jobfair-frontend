@@ -20,8 +20,8 @@ const JobPositionTableColumn = getColumnSearchProps => {
       dataIndex: 'title',
       key: 'title',
       ...getColumnSearchProps('title'),
-      onFilter: (value, record) => record.fullName.indexOf(value) === 0,
-      sorter: (a, b) => a.fullName.localeCompare(b.fullName),
+      onFilter: (value, record) => record.title.indexOf(value) === 0,
+      sorter: (a, b) => a.title.localeCompare(b.title),
       sortDirections: ['descend']
     },
     {

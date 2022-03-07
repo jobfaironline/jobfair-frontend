@@ -1,4 +1,4 @@
-import { Button, Form, notification, Steps } from 'antd'
+import { Button, Form, notification, Popconfirm, Steps } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useStepsForm } from 'sunflower-antd'
 import CompanyProfileForm from '../../components/company-profile-form/CompanyProfileForm.component'
@@ -71,12 +71,10 @@ const JobfairRegistrationForm = () => {
         jobFairId: jobfairId,
         jobPositions: values.jobPositions.map(item => {
           const result = {
-            description: item.description,
             jobPositionId: item.id,
-            maxSalary: item.maxSalary ? item.maxSalary : item.minSalary + 1, //TODO: will fix later when api is finished
+            maxSalary: item.maxSalary,
             minSalary: item.minSalary,
-            numOfPosition: item.numberOfPosition,
-            requirements: item.requirement
+            numOfPosition: item.numberOfPosition
           }
           return result
         })
@@ -128,20 +126,24 @@ const JobfairRegistrationForm = () => {
         </div>
         <div className="next-step-button">
           <Form.Item>
-            <Button
-              size="large"
-              type="primary"
-              loading={formLoading}
-              onClick={() => {
-                submit().then(result => {
-                  if (result === 'ok') {
-                    gotoStep(current + 1)
-                  }
-                })
-              }}
-            >
-              Submit
-            </Button>
+            <div className="submit-registration-popconfirm">
+              <Popconfirm
+                title="Are you sure to submit this form?"
+                onConfirm={() => {
+                  submit().then(result => {
+                    if (result === 'ok') {
+                      gotoStep(current + 1)
+                    }
+                  })
+                }}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button size="large" type="primary" loading={formLoading}>
+                  Submit
+                </Button>
+              </Popconfirm>
+            </div>
           </Form.Item>
         </div>
       </div>
