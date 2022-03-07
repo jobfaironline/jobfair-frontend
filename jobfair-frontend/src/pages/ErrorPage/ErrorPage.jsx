@@ -7,9 +7,9 @@ const ErrorPage = ({ code = 404 }) => {
   const subTitlte = useMemo(() => {
     switch (code) {
       case 403:
-        return 'Sorry, you are not authorized to access this page.'
+        return 'Sorry, You can not access this page.'
       case 404:
-        return 'Sorry, the page you visit does not exist.'
+        return 'Sorry, The page you visit does not exist.'
       default:
         return 'Sorry, something went wrong.'
     }
