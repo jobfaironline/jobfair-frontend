@@ -7,6 +7,7 @@ export const PATH = {
   JOB_FAIR_REGISTRATION_PAGE: '/company-register-jobfair/',
   LOGIN_PAGE: '/auth/login',
   REGISTER_PAGE: '/auth/register',
+  FORGOT_PASSWORD_PAGE: '/accounts/forgot-password',
   CHANGE_PASSWORD_PAGE: '/accounts/changepassword',
   RESULT_SUCCESS_PAGE: '/proceed-success',
   RESULT_FAILED_PAGE: '/proceed-fail',
