@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter'
 import * as THREE from 'three'
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
+import {IMAGE_PLANE_NAME} from "../constants/DecorateBoothConstant";
 
 const loader = new GLTFLoader()
 const dracoLoader = new DRACOLoader();
@@ -116,6 +117,31 @@ export const calculatePositionWithBoundary = ({
   }
 }
 
+export const addVideoTexture = (mesh, videoData) => {
+  if (Object.keys(videoData).includes(mesh.name)){
+    const imagePlane = mesh.children.filter(child => child.name.includes(IMAGE_PLANE_NAME))[0];
+    const vid = document.createElement('video')
+    vid.crossOrigin = 'Anonymous'
+    vid.loop = true
+    vid.muted = true
+    vid.src = videoData[mesh.name]
+    vid.play()
+    const texture = new THREE.VideoTexture(vid)
+    texture.flipY = false
+    texture.encoding = THREE.sRGBEncoding
+    if (imagePlane !== undefined){
+      const newMaterial = imagePlane.material.clone();
+      newMaterial.map = texture
+      imagePlane.material = newMaterial
+    } else {
+      texture.rotation = Math.PI / 2
+      const newMaterial = mesh.material.clone();
+      newMaterial.map = texture
+      mesh.material = newMaterial
+    }
+  }
+}
+
 export const fixTextureOffset = (mesh) => {
   if (mesh?.material?.map !== null) {
     mesh?.material?.map?.center.set(0.5, 0.5)
@@ -140,4 +166,39 @@ export const moveModelUp = (mesh, distance) => {
 
 export const moveModelDown = (mesh, distance) => {
   mesh.position.set(mesh.position.x, mesh.position.y - distance, mesh.position.z)
+}
+
+export const extractTexture = (mesh, meshName) => {
+  let result = []
+  if (mesh.material.map !== null && mesh.material.map.isVideoTexture){
+    result.push({texture: mesh.material.map, meshName: meshName})
+    const newMaterial = mesh.material.clone();
+    newMaterial.map = null
+    mesh.material = newMaterial
+  }
+
+  for (const child of mesh.children){
+    result = [...result, ...extractTexture(child, meshName)]
+  }
+  return result;
+}
+
+export const b64toBlob = async (b64Data, contentType='', sliceSize=512) => {
+  const byteCharacters = atob(b64Data);
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    byteArrays.push(byteArray);
+  }
+
+  const blob = new Blob(byteArrays, {type: contentType});
+  return blob;
 }
