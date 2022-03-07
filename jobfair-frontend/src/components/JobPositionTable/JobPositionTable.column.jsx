@@ -31,7 +31,7 @@ const JobPositionTableColumn = getColumnSearchProps => {
       ...getColumnSearchProps('jobType')
     },
     {
-      title: 'level',
+      title: 'Job level',
       dataIndex: 'level',
       key: 'level',
       ...getColumnSearchProps('level')

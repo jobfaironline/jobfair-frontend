@@ -16,11 +16,13 @@ const JobPositionSubmodalContainer = () => {
     setTimeout(() => {
       form.submit()
       dispatch(setJobPositionSubmodalVisibility(false))
-    }, 2000)
+      dispatch(fetchJobPositions())
+    }, 1000)
   }
 
   const handleCancel = () => {
     dispatch(setJobPositionSubmodalVisibility(false))
+    dispatch(fetchJobPositions())
   }
 
   const onFinish = values => {
@@ -31,15 +33,16 @@ const JobPositionSubmodalContainer = () => {
       .then(res => {
         notification['success']({
           message: `Create job position data successfully`,
-          description: `Yay`
+          description: `😘 😘 😘`
         })
         form.resetFields()
+        dispatch(setJobPositionSubmodalVisibility(false))
         dispatch(fetchJobPositions())
       })
       .catch(e => {
         notification['error']({
           message: `Create job position data failed`,
-          description: `try again later`
+          description: `Error detail: ${err}`
         })
       })
   }

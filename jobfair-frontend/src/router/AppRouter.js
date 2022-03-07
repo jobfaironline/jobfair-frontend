@@ -1,7 +1,6 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import NavigationBar from '../components/navbar/Navbar'
 import AttendantRouter from './components/AttendantRouter'
 import AttendantProfile from '../pages/ProfilePage/Attendant/AttendantProfilePage'
 import CompanyManagerRouter from './components/CompanyManagerRouter'
@@ -38,6 +37,10 @@ import {
 import EmployeeManagementPage from "../pages/EmployeeManagementPage/EmployeeManagementPage";
 import EmployeeRegisterPage from "../pages/EmployeeRegisterPage/EmployeeRegisterPage";
 import RegisterJobFairForm from "../components/register-job-fair-form/RegisterJobFairForm";
+import JobPositionPage from "../pages/JobPositionPage/JobPositionPage";
+import NavigationBar from "../components/navbar/Navbar";
+import JobPositionDetailPage from "../pages/JobPositionPage/JobPositionDetailPage";
+import CreateJobPositionPage from "../pages/JobPositionPage/CreateJobPositionPage";
 const AppRouter = () => {
   const role = useSelector(state => state.authentication?.user?.roles)
   return (
@@ -142,6 +145,24 @@ const AppRouter = () => {
           component={() => <CompanyProfile />}
           path={PATH_COMPANY_MANAGER.COMPANY_PROFILE}
           exact
+        />
+        <CompanyManagerRouter
+          key={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT}
+          component={() => <JobPositionPage />}
+          path={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT}
+          exact
+        />
+        <CompanyManagerRouter
+            key={PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL}
+            component={() => <JobPositionDetailPage />}
+            path={PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL}
+            exact
+        />
+        <CompanyManagerRouter
+            key={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION}
+            component={() => <CreateJobPositionPage />}
+            path={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION}
+            exact
         />
         <AdminRouter
           key={PATH_ADMIN.APPROVAL_REGISTRATION_PAGE}
