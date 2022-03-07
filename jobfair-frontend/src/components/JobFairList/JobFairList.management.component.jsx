@@ -4,72 +4,13 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { JOB_FAIR_PLAN_COMPANY_STATUS } from '../../constants/JobFairConst'
 import { PATH } from '../../constants/Paths/Path'
 import {COMPANY_JOB_FAIR_STATUS} from "../../constants/CompanyJobFairStatus";
+import CompanyJobFairActionButton from "./CompanyJobFairActionButton.component";
 
 const JobFairListManagementComponent = props => {
   const { Title, Paragraph, Text, Link } = Typography
   const { Option } = Select
 
   const { data, handleRedirect, loadMoreData, handleFilterByStatus, searchResult, getCompanyBoothId } = props
-
-  const generateButton = (status) => {
-      switch (status){
-          case COMPANY_JOB_FAIR_STATUS.REGISTRABLE:
-              return (
-                  <Tooltip title="This event is open. Register now" color="green">
-                      <Button
-                          type="primary"
-                          onClick={() => handleRedirect(`${PATH.JOB_FAIR_REGISTRATION_PAGE}${item.id}`)}
-                      >
-                          Register now
-                      </Button>
-                  </Tooltip>
-              )
-          case COMPANY_JOB_FAIR_STATUS.SUBMITTED:
-              return (
-                  <Tooltip title="You registration is still in progress. Please wait!" color="gold">
-                      <Button type="primary">Is evaluating</Button>
-                  </Tooltip>
-              )
-          case COMPANY_JOB_FAIR_STATUS.APPROVE:
-              return (
-                  <Tooltip title="Your registration was approved!" color="gold">
-                      <Button type="primary">Approved</Button>
-                  </Tooltip>
-              )
-          case COMPANY_JOB_FAIR_STATUS.UNAVAILABLE:
-              return (
-                  <Tooltip title="This event was delayed. Please comeback later." color="red">
-                      <Button type="primary" disabled>
-                          Suspended
-                      </Button>
-                  </Tooltip>
-              )
-          case COMPANY_JOB_FAIR_STATUS.DECORATE_BOOTH:
-              return (
-                  <Tooltip title="You chose a booth in this event. Decorate it now" color="geekblue">
-                      <Button type="primary" onClick={() => getCompanyBoothId(item.id)}>
-                          Decorate booth
-                      </Button>
-                  </Tooltip>
-              )
-          case COMPANY_JOB_FAIR_STATUS.CHOOSE_BOOTH:
-              return (
-                  <Tooltip title="You registration has been approved. Now you can choose booth" color="blue">
-                      <Button type="primary" onClick={() => handleRedirect(`${PATH.CHOOSE_BOOTH_PATH}${item.id}`)}>
-                          Choose booth
-                      </Button>
-                  </Tooltip>
-              )
-          default:
-              return (
-                  <Tooltip title="Other status" color="blue">
-                      <Button type="primary" onClick={() => {}}>
-                          {status}
-                      </Button>
-                  </Tooltip>
-              )
-      }
-  }
 
   return (
     <div
@@ -109,11 +50,11 @@ const JobFairListManagementComponent = props => {
             <List.Item
               key={item.id}
               actions={[
-                <Space>
+                <Space>J
                   <Button type="link" onClick={() => {}} style={{ padding: '0.2rem 0', border: '0' }}>
                     More details
                   </Button>
-                    {generateButton(item.status)}
+                  <CompanyJobFairActionButton getCompanyBoothId={getCompanyBoothId} item={item} handleRedirect={handleRedirect}/>
                 </Space>
               ]}
             >
