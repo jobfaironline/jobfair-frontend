@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Divider, Form, Input, Radio, Select, Switch, Typography} from 'antd'
+import {Button, Divider, Form, Input, Radio, Select, Switch, Typography} from 'antd'
 import {JOB_POSITION_MODEL} from '../../default_models/CreateJobPositionModel/JobPositionModel'
 import {
     IsRequiredLetterConst,
@@ -13,6 +13,7 @@ import {
 import TextArea from 'antd/es/input/TextArea'
 import {JobPositionValidation} from '../../validate/CreateJobPositionValidation'
 import {CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories} from '../../constants/CompanyProfileConstant'
+const {Option, OptGroup} = Select
 
 const CreateJobPositionForm = props => {
     const [totalSelect, setTotalSelect] = useState(0)
@@ -20,9 +21,8 @@ const CreateJobPositionForm = props => {
     const [isShowSalary, setIsShowSalary] = useState(JOB_POSITION_MODEL.isShowSalary)
     const [isRequiredLetter, setIsRequiredLetter] = useState(JOB_POSITION_MODEL.isRequiredLetter)
     const [isShowContactPerson, setIsShowContactPerson] = useState(JOB_POSITION_MODEL.isShowContactPerson)
-    const [form] = Form.useForm()
 
-    const {Option, OptGroup} = Select
+    const {form , onFinish} = props
 
     const handleOnChangeForm = values => {
         console.log('changing: ', values)
@@ -32,104 +32,106 @@ const CreateJobPositionForm = props => {
 
     return (
         <>
-            <Form.Item label="Job title" name="title" required tooltip="This is required"
-                       rules={JobPositionValidation.title}>
-                <Input placeholder="Job title" style={{width: 300}}/>
-            </Form.Item>
-            <Form.Item label="Job level" required tooltip="This is required" name="level">
-                <Select
-                    style={{width: 150}}
-                    showSearch
-                    onChange={value => {
-                    }}
-                    filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    onSearch={value => console.log(value)}
+            <Form onFinish={onFinish} form={form}>
+
+                <Form.Item label="Job title" name="title" required tooltip="This is required"
+                           rules={JobPositionValidation.title}>
+                    <Input placeholder="Job title" style={{width: 300}}/>
+                </Form.Item>
+                <Form.Item label="Job level" required tooltip="This is required" name="level">
+                    <Select
+                        style={{width: 150}}
+                        showSearch
+                        onChange={value => {
+                        }}
+                        filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        onSearch={value => console.log(value)}
+                    >
+                        {JobLevelConst.map(item => (
+                            <Option value={item.value}>{item.label}</Option>
+                        ))}
+                    </Select>
+                </Form.Item>
+                <Form.Item
+                    label="Job type"
+                    required
+                    tooltip="This is required"
+                    // rules={CompanyProfileValidation.email}
+                    name="jobType"
                 >
-                    {JobLevelConst.map(item => (
-                        <Option value={item.value}>{item.label}</Option>
-                    ))}
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Job type"
-                required
-                tooltip="This is required"
-                // rules={CompanyProfileValidation.email}
-                name="jobType"
-            >
-                <Select
-                    style={{width: 150}}
-                    showSearch
-                    onChange={value => {
-                        console.log(`selected: ${value}`)
-                    }}
-                    filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                    onSearch={value => {
-                    }}
+                    <Select
+                        style={{width: 150}}
+                        showSearch
+                        onChange={value => {
+                            console.log(`selected: ${value}`)
+                        }}
+                        filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        onSearch={value => {
+                        }}
+                    >
+                        {JobTypeConst.map(item => (
+                            <Option value={item.value}>{item.label}</Option>
+                        ))}
+                    </Select>
+                </Form.Item>
+                <Form.Item
+                    label="Job category"
+                    required
+                    tooltip="This is required"
+                    // rules={CompanyProfileValidation.phone}
+                    name="subCategoryIds"
                 >
-                    {JobTypeConst.map(item => (
-                        <Option value={item.value}>{item.label}</Option>
-                    ))}
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Job category"
-                required
-                tooltip="This is required"
-                // rules={CompanyProfileValidation.phone}
-                name="subCategoryIds"
-            >
-                <Select
-                    style={{width: 250}}
-                    mode="multiple"
-                    onChange={value => {
-                        //value is a array
-                        if (value.length > NUM_OF_SIZE_MAXIMUM) {
-                            value.pop()
-                        }
-                        setTotalSelect(value.length)
-                    }}
-                    showSearch
-                    dropdownRender={menu => (
-                        <>
-                            {menu}
-                            <Divider style={{margin: '8px 0'}}/>
-                            <Text type={totalSelect > 3 ? 'danger' : 'success'}>
-                                {totalSelect > 3
-                                    ? null
-                                    : `You can select ${NUM_OF_SIZE_MAXIMUM} items only. (${NUM_OF_SIZE_MAXIMUM - totalSelect} left)`}
-                            </Text>
-                        </>
-                    )}
+                    <Select
+                        style={{width: 250}}
+                        mode="multiple"
+                        onChange={value => {
+                            //value is a array
+                            if (value.length > NUM_OF_SIZE_MAXIMUM) {
+                                value.pop()
+                            }
+                            setTotalSelect(value.length)
+                        }}
+                        showSearch
+                        dropdownRender={menu => (
+                            <>
+                                {menu}
+                                <Divider style={{margin: '8px 0'}}/>
+                                <Text type={totalSelect > 3 ? 'danger' : 'success'}>
+                                    {totalSelect > 3
+                                        ? null
+                                        : `You can select ${NUM_OF_SIZE_MAXIMUM} items only. (${NUM_OF_SIZE_MAXIMUM - totalSelect} left)`}
+                                </Text>
+                            </>
+                        )}
+                    >
+                        {CategoriesConst.map(category => (
+                            <OptGroup label={category.label}>
+                                {SubCategories.filter(item => item.category_id === category.value).map(item => (
+                                    <Option value={item.value}>{item.label}</Option>
+                                ))}
+                            </OptGroup>
+                        ))}
+                    </Select>
+                </Form.Item>
+                <Form.Item
+                    label="Description"
+                    required
+                    tooltip="This is required"
+                    rules={JobPositionValidation.description}
+                    name="description"
                 >
-                    {CategoriesConst.map(category => (
-                        <OptGroup label={category.label}>
-                            {SubCategories.filter(item => item.category_id === category.value).map(item => (
-                                <Option value={item.value}>{item.label}</Option>
-                            ))}
-                        </OptGroup>
-                    ))}
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Description"
-                required
-                tooltip="This is required"
-                rules={JobPositionValidation.description}
-                name="description"
-            >
-                <TextArea placeholder="Description" style={{width: 300}} showCount maxLength={3000}/>
-            </Form.Item>
-            <Form.Item
-                label="Requirements"
-                required
-                tooltip="This is required"
-                rules={JobPositionValidation.requirements}
-                name="requirements"
-            >
-                <TextArea placeholder="Requirements" style={{width: 300}} showCount maxLength={3000}/>
-            </Form.Item>
-            {/* <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <TextArea placeholder="Description" style={{width: 300}} showCount maxLength={3000}/>
+                </Form.Item>
+                <Form.Item
+                    label="Requirements"
+                    required
+                    tooltip="This is required"
+                    rules={JobPositionValidation.requirements}
+                    name="requirements"
+                >
+                    <TextArea placeholder="Requirements" style={{width: 300}} showCount maxLength={3000}/>
+                </Form.Item>
+                {/* <div style={{ display: 'flex', flexDirection: 'row' }}>
         <Form.Item label="Min salary" required tooltip="This is required" name="minSalary" style={{ width: 300 }}>
           <Select
             style={{ width: 150 }}
@@ -178,44 +180,44 @@ const CreateJobPositionForm = props => {
           <Switch checked={isShowSalary} onChange={() => setIsShowSalary(!isShowSalary)} />
         </Form.Item>
       </div> */}
-            <Form.Item
-                label="Skill tags"
-                required
-                tooltip="This is required"
-                // rules={CompanyProfileValidation.phone}
-                name="skillTagIds"
-            >
-                <Select
-                    style={{width: 200}}
-                    mode="multiple"
-                    onChange={value => {
-                        //value is a array
-                        if (value.length > NUM_OF_SKILL_TAGS) {
-                            value.pop()
-                        }
-                        setTotalSkillTags(value.length)
-                    }}
-                    onSearch={value => {
-                        console.log(value)
-                    }}
-                    dropdownRender={menu => (
-                        <>
-                            {menu}
-                            <Divider style={{margin: '8px 0'}}/>
-                            <Text type={totalSkillTags > 3 ? 'danger' : 'success'}>
-                                {totalSkillTags > 5
-                                    ? null
-                                    : `You can select ${NUM_OF_SKILL_TAGS} items only. (${NUM_OF_SKILL_TAGS - totalSkillTags} left)`}
-                            </Text>
-                        </>
-                    )}
+                <Form.Item
+                    label="Skill tags"
+                    required
+                    tooltip="This is required"
+                    // rules={CompanyProfileValidation.phone}
+                    name="skillTagIds"
                 >
-                    {SkillTagsConst.map(item => (
-                        <Option value={item.id}>{item.name}</Option>
-                    ))}
-                </Select>
-            </Form.Item>
-            {/* <Form.Item
+                    <Select
+                        style={{width: 200}}
+                        mode="multiple"
+                        onChange={value => {
+                            //value is a array
+                            if (value.length > NUM_OF_SKILL_TAGS) {
+                                value.pop()
+                            }
+                            setTotalSkillTags(value.length)
+                        }}
+                        onSearch={value => {
+                            console.log(value)
+                        }}
+                        dropdownRender={menu => (
+                            <>
+                                {menu}
+                                <Divider style={{margin: '8px 0'}}/>
+                                <Text type={totalSkillTags > 3 ? 'danger' : 'success'}>
+                                    {totalSkillTags > 5
+                                        ? null
+                                        : `You can select ${NUM_OF_SKILL_TAGS} items only. (${NUM_OF_SKILL_TAGS - totalSkillTags} left)`}
+                                </Text>
+                            </>
+                        )}
+                    >
+                        {SkillTagsConst.map(item => (
+                            <Option value={item.id}>{item.name}</Option>
+                        ))}
+                    </Select>
+                </Form.Item>
+                {/* <Form.Item
         label="Required the cover letter ?"
         required
         tooltip="This is required"
@@ -250,16 +252,16 @@ const CreateJobPositionForm = props => {
           ))}
         </Select>
       </Form.Item> */}
-            <Form.Item
-                label="Contact person"
-                required
-                tooltip="This is required"
-                rules={JobPositionValidation.contactPerson}
-                name="contactPersonName"
-            >
-                <Input placeholder="Contact person name" style={{width: 250}}/>
-            </Form.Item>
-            {/* <Form.Item
+                <Form.Item
+                    label="Contact person"
+                    required
+                    tooltip="This is required"
+                    rules={JobPositionValidation.contactPerson}
+                    name="contactPersonName"
+                >
+                    <Input placeholder="Contact person name" style={{width: 250}}/>
+                </Form.Item>
+                {/* <Form.Item
           label="Show in job ads"
           required
           tooltip="This is required"
@@ -268,50 +270,54 @@ const CreateJobPositionForm = props => {
         >
           <Switch checked={isShowContactPerson} onChange={() => setIsShowContactPerson(!isShowContactPerson)} />
         </Form.Item> */}
-            <Form.Item
-                label="Language"
-                name={'preferredLanguage'}
-                hasFeedback
-            >
-                <Select
-                    showSearch
-                    style={{width: 250}}
-                    placeholder="Search to Select"
-                    optionFilterProp="children"
-                    filterOption={(input, option) =>
-                        option.children
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                    }
-                    filterSort={(optionA, optionB) =>
-                        optionA.children
-                            .toLowerCase()
-                            .localeCompare(optionB.children.toLowerCase())
-                    }
+                <Form.Item
+                    label="Language"
+                    name={'preferredLanguage'}
+                    hasFeedback
                 >
-                    {LanguageConst.map(item => (
-                        <Option value={item.value}>{item.value}</Option>
-                    ))}
-                </Select>
-            </Form.Item>
-            <Form.Item
-                label="Location for applications"
-                required
-                tooltip="This is required"
-                rules={JobPositionValidation.contactPerson}
-                name="locationId"
-            >
-                <Input placeholder="Location" style={{width: 200}}/>
-            </Form.Item>
-            <Form.Item
-                label="Email for applications"
-                required
-                tooltip="This is required"
-                rules={JobPositionValidation.email}
-                name="contactEmail"
-            >
-                <Input placeholder="Email for receiving applications" style={{width: 320}}/>
-            </Form.Item>
+                    <Select
+                        showSearch
+                        style={{width: 250}}
+                        placeholder="Search to Select"
+                        optionFilterProp="children"
+                        filterOption={(input, option) =>
+                            option.children
+                                .toLowerCase()
+                                .indexOf(input.toLowerCase()) >= 0
+                        }
+                        filterSort={(optionA, optionB) =>
+                            optionA.children
+                                .toLowerCase()
+                                .localeCompare(optionB.children.toLowerCase())
+                        }
+                    >
+                        {LanguageConst.map(item => (
+                            <Option value={item.value}>{item.value}</Option>
+                        ))}
+                    </Select>
+                </Form.Item>
+                <Form.Item
+                    label="Location for applications"
+                    required
+                    tooltip="This is required"
+                    rules={JobPositionValidation.contactPerson}
+                    name="locationId"
+                >
+                    <Input placeholder="Location" style={{width: 200}}/>
+                </Form.Item>
+                <Form.Item
+                    label="Email for applications"
+                    required
+                    tooltip="This is required"
+                    rules={JobPositionValidation.email}
+                    name="contactEmail"
+                >
+                    <Input placeholder="Email for receiving applications" style={{width: 320}}/>
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit">Submit</Button>
+                </Form.Item>
+            </Form>
         </>
     )
     // return (

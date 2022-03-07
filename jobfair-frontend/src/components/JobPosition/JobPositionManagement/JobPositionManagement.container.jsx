@@ -14,6 +14,7 @@ import {useDispatch} from "react-redux";
 import JobPositionSubmodalContainer from "../../../containers/JobPositionModal/JobPositionSubmodal.container";
 import {PATH_COMPANY_MANAGER} from "../../../constants/Paths/Path";
 import {useHistory} from "react-router-dom";
+import PaginationComponent from "../../PaginationComponent/Pagination.component";
 
 const JobPositionManagementContainer = props => {
     const [data, setData] = useState([])
@@ -33,45 +34,32 @@ const JobPositionManagementContainer = props => {
                     const totalRecord = res.data.totalElements
                     setTotalRecord(totalRecord)
                     setData([...res.data.content]);
-                    console.log('success', res.data)
                 }
             ).catch(err => {
-            console.log('err: ', err)
+            notification['error']({
+                message: `Error: ${err}`,
+            })
         })
     }
-
-    useEffect(() => {
-        fetchData()
-    }, [])
 
     useLayoutEffect(() => {
         fetchData()
     }, [currentPage, pageSize])
 
     const handlePageChange = (page, pageSize) => {
-        setCurrentPage(page - 1)
+        if (page > 0) {
+            setCurrentPage(page - 1)
+        } else {
+            setCurrentPage(page)
+        }
         setPageSize(pageSize)
     }
 
-    // const handleViewDetailModal = (id) => {
-    //     setModalVisible(true)
-    //     setJobPosition(() => {
-    //         return data.find(item => item.id === id)
-    //     })
-    // }
 
     const handleCreateOnClick = () => {
-        // dispatch(setJobPositionSubmodalVisibility(true))
         history.push(PATH_COMPANY_MANAGER.CREATE_JOB_POSITION)
     }
 
-    // const modalProps = {
-    //     jobPosition: jobPosition,
-    //     visible: modalVisible,
-    //     setModalVisible: setModalVisible,
-    //     onFinish: onFinish,
-    //     handleDelete: handleDelete
-    // }
 
     const handleViewDetailPage = (id) => {
         history.push(PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL, {
@@ -105,14 +93,7 @@ const JobPositionManagementContainer = props => {
                     }}
                 />
                 <Space>
-                    <Pagination
-                        total={totalRecord}
-                        onChange={(page, pageSize) => handlePageChange(page, pageSize)}
-                        showSizeChanger
-                        showQuickJumper
-                        showTotal={total => `Total ${total} items`}
-                        pageSizeOptions={[5, 10, 15, 20]}
-                    />
+                    <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={totalRecord}/>
                     <Button type="primary" onClick={() => handleCreateOnClick()}>
                         Create job position
                     </Button>

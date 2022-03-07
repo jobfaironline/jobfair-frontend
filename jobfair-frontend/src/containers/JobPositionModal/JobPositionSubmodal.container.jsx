@@ -13,11 +13,9 @@ const JobPositionSubmodalContainer = () => {
   const dispatch = useDispatch()
 
   const handleOk = async () => {
-    setTimeout(() => {
-      form.submit()
-      dispatch(setJobPositionSubmodalVisibility(false))
-      dispatch(fetchJobPositions())
-    }, 1000)
+    form.submit()
+    dispatch(setJobPositionSubmodalVisibility(false))
+    dispatch(fetchJobPositions())
   }
 
   const handleCancel = () => {
@@ -42,7 +40,7 @@ const JobPositionSubmodalContainer = () => {
       .catch(e => {
         notification['error']({
           message: `Create job position data failed`,
-          description: `Error detail: ${err}`
+          description: `Error detail: ${e}`
         })
       })
   }

@@ -7,9 +7,10 @@ import {CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories} from "../../constan
 import Text from "antd/es/typography/Text";
 import {useHistory} from "react-router-dom";
 
+const {Option, OptGroup} = Select
+
 const JobPositionDetailComponent = ({data, form, onFinish, handleDelete}) => {
 
-    const {Option, OptGroup} = Select
     const [totalSelect, setTotalSelect] = useState(0);
     const history = useHistory();
 

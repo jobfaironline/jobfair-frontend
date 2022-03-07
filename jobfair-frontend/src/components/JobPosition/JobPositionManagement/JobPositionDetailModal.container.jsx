@@ -24,9 +24,6 @@ const JobPositionDetailModalContainer = props => {
         form.setFieldsValue({...jobPosition})
     }
 
-    useEffect(() => {
-        init();
-    },[])
 
     const handleOk = () => {
         setModalVisible(false)

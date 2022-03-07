@@ -17,7 +17,6 @@ const CreateJobPositionContainer = () => {
 
 
     const onFinish = (values) => {
-        console.log(values)
         createJobPositionsAPI({
             ...values,
             companyId: companyId
@@ -39,13 +38,7 @@ const CreateJobPositionContainer = () => {
 
     return (
         <div className="page">
-            <Form onFinish={onFinish}  form={form}>
-                <CreateJobPositionForm/>
-                <Form.Item>
-                    <Button type="primary" htmlType="submit">Submit</Button>
-                </Form.Item>
-                    <Button onClick={() => history.goBack()}>Back</Button>
-            </Form>
+            <CreateJobPositionForm form={form} onFinish={onFinish}/>
         </div>
     );
 };

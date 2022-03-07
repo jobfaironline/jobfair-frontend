@@ -49,9 +49,6 @@ const JobPositionDetailContainer = () => {
         form.setFieldsValue({...jobPosition})
     }
 
-    useEffect(() => {
-        init();
-    },[])
 
     useEffect(() => {
         init();
