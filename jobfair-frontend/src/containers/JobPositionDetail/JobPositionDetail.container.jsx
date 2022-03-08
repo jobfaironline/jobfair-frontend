@@ -39,8 +39,6 @@ const JobPositionDetailContainer = () => {
                 notification['success']({
                     message: `Update job position successfully`,
                 })
-                //after update success, go back
-                history.goBack()
             }).catch(err => {
             notification['error']({
                 message: `Update job position failed`,

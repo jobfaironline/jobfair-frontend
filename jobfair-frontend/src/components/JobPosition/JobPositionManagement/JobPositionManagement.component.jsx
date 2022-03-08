@@ -86,7 +86,7 @@ const JobPositionManagementComponent = (props) => {
     return (
         <>
             <Table columns={finalColumns} dataSource={defaultData}
-                   pagination={false}
+                   pagination={false} sticky
             />
         </>
     );
