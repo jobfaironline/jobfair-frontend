@@ -43,7 +43,7 @@ const JobFairListManagementComponent = props => {
         scrollableTarget="scrollableDiv"
       >
         <List
-          dataSource={searchResult.length !== 0 ? searchResult : data}
+          dataSource={searchResult?.length !== 0 ? searchResult : data}
           renderItem={item => (
             <List.Item
               key={item.id}

@@ -3,19 +3,6 @@ import { Tag } from 'antd'
 const JobPositionTableColumn = getColumnSearchProps => {
   return [
     {
-      title: 'No',
-      dataIndex: 'no',
-      key: 'no',
-      render(text, record) {
-        return {
-          props: {
-            style: { textAlign: 'end', width: '5px' }
-          },
-          children: text
-        }
-      }
-    },
-    {
       title: 'Job title',
       dataIndex: 'title',
       key: 'title',
@@ -31,7 +18,7 @@ const JobPositionTableColumn = getColumnSearchProps => {
       ...getColumnSearchProps('jobType')
     },
     {
-      title: 'level',
+      title: 'Job level',
       dataIndex: 'level',
       key: 'level',
       ...getColumnSearchProps('level')
