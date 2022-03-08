@@ -3,9 +3,10 @@ import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useRef, useState} from "react";
 import {
     getCompanyBoothLatestLayout,
-    saveDecoratedBooth
+    saveDecoratedBooth, saveLayoutVideoWithFile, saveLayoutVideoWithUrl
 } from "../../services/company-booth-layout-controller/CompanyBoothLayoutControllerService";
 import {
+    addVideoTexture, b64toBlob, extractTexture,
     fixTextureOffset,
     loadModel, moveModelDown,
     moveModelUp,
@@ -18,12 +19,12 @@ import {ModeConstant} from "../../constants/AppConst";
 import {decorateBoothAction} from "../../redux-flow/decorateBooth/decorate-booth-slice";
 import {PATH} from "../../constants/Paths/Path";
 import {Stats} from "@react-three/drei";
-import SideBarDecoratedBooth from "../../components/DecorateBooth/SideBarDecoratedBooth.component";
 import {DecorateBoothCanvas} from "../../components/DecorateBooth/DecorateBoothCanavas.component";
 import {ControlButtonGroup} from "../../components/DecorateBooth/ControlButtonGroup.component";
 import {SampleItemMenuContainer} from "./SampleItemMenu.container";
 import {ToastContainer} from "react-toastify";
 import {GENERIC_BOOTH_LAYOUT_URL} from "../../constants/DecorateBoothConstant";
+import {DecoratedBoothSideBarContainer} from "./DecorateBoothSideBar.container";
 
 export const DecorateBoothContainer = (props) => {
     const {companyBoothId, jobFairId} = props;
@@ -36,16 +37,22 @@ export const DecorateBoothContainer = (props) => {
 
     useEffect(async () => {
         let url = GENERIC_BOOTH_LAYOUT_URL
+        const companyBoothLayoutVideos = {}
         try {
             const response = await getCompanyBoothLatestLayout(companyBoothId)
             url = response.data.url
+            response.data.companyBoothLayoutVideos?.forEach(data => {
+                companyBoothLayoutVideos[data.itemName] = data.url;
+            })
         } catch (err) {
         }
         //parse file and get items
         const glb = await loadModel(url)
         const result = glb.scene.children
         for (const mesh of result) {
+            addVideoTexture(mesh, companyBoothLayoutVideos)
             fixTextureOffset(mesh)
+
         }
         setModelItems(result);
     }, [])
@@ -57,24 +64,61 @@ export const DecorateBoothContainer = (props) => {
         }
     })
 
+    const uploadVideo = (textureObj, layoutId, itemName) => {
+        return new Promise(async resolve => {
+            if (textureObj.texture.image.src.substring(0, 4) !== "data"){
+                saveLayoutVideoWithUrl({
+                    layoutId: layoutId,
+                    itemName: itemName,
+                    url: textureObj.texture.image.src
+                })
+            } else {
+                const b64data = textureObj.texture.image.src.substring(15+7);
+
+                const blob = await b64toBlob(b64data, 'video/mp4');
+                const formData = new FormData()
+                formData.append('layoutId', layoutId)
+                formData.append('file', blob)
+                formData.append('itemName', itemName)
+                saveLayoutVideoWithFile(formData)
+            }
+            resolve();
+        })
+
+    }
+
     const saveHandle = async () => {
         let sceneNode = meshGroupRef.current.parent
         while (sceneNode.type !== 'Scene') {
             sceneNode = sceneNode.parent
         }
         const sceneNodeCopy = sceneNode.clone(false)
+        sceneNodeCopy.name = 'Scene'
         sceneNodeCopy.clear()
         const copyNode = meshGroupRef.current.children.map(mesh => mesh.clone())
-        copyNode.forEach(mesh => sceneNodeCopy.children.push(mesh))
-        sceneNodeCopy.name = 'Scene'
 
+        //extract video texture and push children to copyNode
+        let textureList = []
+        copyNode.forEach(mesh => {
+            sceneNodeCopy.children.push(mesh)
+            textureList =  [...textureList, ...extractTexture(mesh, mesh.name)]
+        })
+
+        //upload model layout
         const glbData = await parseModel(sceneNodeCopy)
         const formData = new FormData()
         formData.append('companyBoothId', companyBoothId)
         formData.append('file', glbData)
-        await saveDecoratedBooth(formData)
-        notify(2, 'Save successfully')
+        const response = await saveDecoratedBooth(formData);
 
+        //upload video
+        const videoUploadPromises = [];
+        for (const textureObj of textureList){
+            const promise = uploadVideo(textureObj, response.data.id, textureObj.meshName)
+            videoUploadPromises.push(promise);
+        }
+        await Promise.all(videoUploadPromises);
+        notify(2, 'Save successfully')
     }
 
     const addMoreComponentHandle = async => {
@@ -154,7 +198,7 @@ export const DecorateBoothContainer = (props) => {
         <>
             <Stats/>
             <div style={{display: 'flex', maxHeight: mode === ModeConstant.ADD ? '70vh' : '90vh'}}>
-                <SideBarDecoratedBooth {...sideBarProps}/>
+                <DecoratedBoothSideBarContainer {...sideBarProps}/>
                 <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd} ref={meshGroupRef}/>
             </div>
 
