@@ -15,7 +15,25 @@ export const JobPositionValidation = {
       message: 'This field is required'
     },
   ],
+  jobType: [
+    {
+      required: true,
+      message: 'This field is required'
+    },
+  ],
   language: [
+    {
+      required: true,
+      message: 'This field is required'
+    },
+  ],
+  skillTags: [
+    {
+      required: true,
+      message: 'This field is required'
+    },
+  ],
+  jobCategory: [
     {
       required: true,
       message: 'This field is required'

@@ -24,10 +24,6 @@ const CreateJobPositionForm = props => {
 
     const {form , onFinish} = props
 
-    const handleOnChangeForm = values => {
-        console.log('changing: ', values)
-    }
-
     const {Text} = Typography
 
     return (
@@ -38,14 +34,14 @@ const CreateJobPositionForm = props => {
                            rules={JobPositionValidation.title}>
                     <Input placeholder="Job title" style={{width: 300}}/>
                 </Form.Item>
-                <Form.Item label="Job level" required tooltip="This is required" name="level">
+                <Form.Item label="Job level" required tooltip="This is required" name="level"  rules={JobPositionValidation.jobLevel}>
                     <Select
                         style={{width: 150}}
                         showSearch
                         onChange={value => {
                         }}
                         filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                        onSearch={value => console.log(value)}
+                        onSearch={value => {}}
                     >
                         {JobLevelConst.map(item => (
                             <Option value={item.value}>{item.label}</Option>
@@ -56,14 +52,14 @@ const CreateJobPositionForm = props => {
                     label="Job type"
                     required
                     tooltip="This is required"
-                    // rules={CompanyProfileValidation.email}
+                    rules={JobPositionValidation.jobType}
                     name="jobType"
                 >
                     <Select
                         style={{width: 150}}
                         showSearch
                         onChange={value => {
-                            console.log(`selected: ${value}`)
+
                         }}
                         filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                         onSearch={value => {
@@ -78,7 +74,7 @@ const CreateJobPositionForm = props => {
                     label="Job category"
                     required
                     tooltip="This is required"
-                    // rules={CompanyProfileValidation.phone}
+                    rules={JobPositionValidation.jobCategory}
                     name="subCategoryIds"
                 >
                     <Select
@@ -184,7 +180,7 @@ const CreateJobPositionForm = props => {
                     label="Skill tags"
                     required
                     tooltip="This is required"
-                    // rules={CompanyProfileValidation.phone}
+                    rules={JobPositionValidation.skillTags}
                     name="skillTagIds"
                 >
                     <Select
@@ -198,7 +194,7 @@ const CreateJobPositionForm = props => {
                             setTotalSkillTags(value.length)
                         }}
                         onSearch={value => {
-                            console.log(value)
+
                         }}
                         dropdownRender={menu => (
                             <>
@@ -273,7 +269,8 @@ const CreateJobPositionForm = props => {
                 <Form.Item
                     label="Language"
                     name={'preferredLanguage'}
-                    hasFeedback
+                    required
+                    rules={JobPositionValidation.language}
                 >
                     <Select
                         showSearch

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Card, Divider, Form, Input, Modal, Popconfirm, Select, Space} from "antd";
-import {JobLevelConst, LanguageConst} from "../../constants/JobPositionConst";
+import {JobLevelConst, LanguageConst, NUM_OF_SKILL_TAGS, SkillTagsConst} from "../../constants/JobPositionConst";
 import {CompanyProfileValidation} from "../../validate/CompanyProfileValidation";
 import {InfoCircleOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import {CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories} from "../../constants/CompanyProfileConstant";
@@ -13,6 +13,7 @@ const {Option, OptGroup} = Select
 const JobPositionDetailComponent = ({data, form, onFinish, handleDelete}) => {
 
     const [totalSelect, setTotalSelect] = useState(0);
+    const [totalSkillTags, setTotalSkillTags] = useState(0)
     const history = useHistory();
 
     return (
@@ -109,7 +110,7 @@ const JobPositionDetailComponent = ({data, form, onFinish, handleDelete}) => {
                         label="Contact person name"
                         name={'contactPersonName'}
                         hasFeedback
-                        rules={CompanyProfileValidation.name}
+                        rules={JobPositionValidation.contactPerson}
                     >
                         <Input placeholder="Contact person name" style={{width: 200}}/>
                     </Form.Item>
@@ -120,6 +121,7 @@ const JobPositionDetailComponent = ({data, form, onFinish, handleDelete}) => {
                             title: 'You can select maximum 3 items',
                             icon: <InfoCircleOutlined/>,
                         }}
+                        rules={JobPositionValidation.jobCategory}
                     >
                         <Select
                             style={{width: 300}}
@@ -160,55 +162,44 @@ const JobPositionDetailComponent = ({data, form, onFinish, handleDelete}) => {
                             ))}
                         </Select>
                     </Form.Item>
-                </Card>
-                <Space size="large">
-                    <Card
-                        title="Skills"
-                        style={{width: 750}}
-                        headStyle={{fontWeight: 700, fontSize: 24}}
+                    <Form.Item
+                        label="Skill tags"
+                        required
+                        tooltip="This is required"
+                        rules={JobPositionValidation.skillTags}
+                        name="skillTagIds"
                     >
-                        <Form.List name="skillTagIds" label="Skills">
-                            {(fields, {add, remove}) => {
-                                return (
-                                    <>
-                                        {fields.map(({key, name, ...restField}) => {
-                                            return (
-                                                <div key={key} style={{display: 'flex', flexDirection: 'row'}}>
-                                                    <div
-                                                        style={{display: 'flex', flexDirection: 'column'}}
-                                                    >
-                                                        <Form.Item
-                                                            {...restField}
-                                                            label="Name"
-                                                            name={[name, 'name']}
-                                                            hasFeedback
-                                                            rules={CompanyProfileValidation.name}
-                                                            style={{width: 250}}
-                                                        >
-                                                            <Input placeholder="Name"/>
-                                                        </Form.Item>
-                                                    </div>
-                                                    <MinusCircleOutlined onClick={() => remove(name)}/>
-                                                </div>
-                                            )
-                                        })}
-                                        <Form.Item>
-                                            <Button
-                                                type="dashed"
-                                                onClick={() => add()}
-                                                block
-                                                icon={<PlusOutlined/>}
-                                                style={{width: '35%'}}
-                                            >
-                                                Add new skill
-                                            </Button>
-                                        </Form.Item>
-                                    </>
-                                )
+                        <Select
+                            style={{width: 200}}
+                            mode="multiple"
+                            onChange={value => {
+                                //value is a array
+                                if (value.length > NUM_OF_SKILL_TAGS) {
+                                    value.pop()
+                                }
+                                setTotalSkillTags(value.length)
                             }}
-                        </Form.List>
-                    </Card>
-                </Space>
+                            onSearch={value => {
+
+                            }}
+                            dropdownRender={menu => (
+                                <>
+                                    {menu}
+                                    <Divider style={{margin: '8px 0'}}/>
+                                    <Text type={totalSkillTags > 3 ? 'danger' : 'success'}>
+                                        {totalSkillTags > 5
+                                            ? null
+                                            : `You can select ${NUM_OF_SKILL_TAGS} items only. (${NUM_OF_SKILL_TAGS - totalSkillTags} left)`}
+                                    </Text>
+                                </>
+                            )}
+                        >
+                            {SkillTagsConst.map(item => (
+                                <Option value={item.id}>{item.name}</Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                </Card>
                 <Space>
                     <Form.Item>
                         <Button type="primary" htmlType="submit">

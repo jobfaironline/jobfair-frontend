@@ -33,7 +33,6 @@ const JobPositionDetailContainer = () => {
     }
 
     const onFinish = (values) => {
-        values['skillTagIds'] = values['skillTagIds']?.map(item => item.id)
         values['subCategoryIds'] = values['subCategoriesIds']
         updateJobPositionAPI(values, values.id)
             .then(res => {
@@ -51,7 +50,7 @@ const JobPositionDetailContainer = () => {
     }
 
     const init = () => {
-        jobPosition['skillTagIds'] = jobPosition['skillTagDTOS']
+        jobPosition['skillTagIds'] = jobPosition['skillTagDTOS']?.map(item => item.id)
         jobPosition['subCategoriesIds'] = jobPosition['subCategoryDTOs']?.map(item => item.id)
         form.setFieldsValue({...jobPosition})
     }
