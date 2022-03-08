@@ -6,16 +6,22 @@ import { setJobPositionSubmodalVisibility } from '../../redux-flow/registration-
 import { createJobPositionsAPI } from '../../services/job-controller/JobControllerService'
 import { fetchJobPositions } from '../../redux-flow/jobPositions/job-positions-action'
 
-const JobPositionSubmodalContainer = jobPositionId => {
+const JobPositionSubmodalContainer = ({ jobPositionId }) => {
   const [visible, setVisible] = useState(false)
+  const [data, setData] = useState(null)
+
+  console.log(jobPositionId)
 
   const dispatch = useDispatch()
 
   const jobPositions = useSelector(state => {
-    return state?.jobPositions?.data
+    return state?.jobPosition?.data
   })
 
+  console.log(data)
+
   useEffect(() => {
+    setData(jobPositions?.filter(item => item.id == jobPositionId)[0])
     setVisible(true)
   }, [jobPositionId])
 
@@ -23,13 +29,7 @@ const JobPositionSubmodalContainer = jobPositionId => {
     setVisible(false)
   }
 
-  return (
-    <JobPositionSubmodal
-      visible={visible}
-      handleCancel={handleCancel}
-      data={jobPositions?.filter(item => item.id == jobPositionId)[0]}
-    />
-  )
+  return <JobPositionSubmodal visible={visible} handleCancel={handleCancel} data={data} />
 }
 
 export default JobPositionSubmodalContainer

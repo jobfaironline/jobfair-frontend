@@ -1,6 +1,9 @@
 import React from 'react'
 import { Modal, Button } from 'antd'
 import { Card, Col, Divider, Row, Space, Tag, Typography, Anchor, Spin } from 'antd'
+import { convertEnumToString } from '../../utils/common'
+import './JobPositionSubmodal.styles.scss'
+const { Title, Paragraph, Text } = Typography
 
 const validateMessages = {
   required: '${label} is required!',
@@ -31,14 +34,14 @@ const JobPositionSubmodal = ({ visible, data, handleCancel }) => {
 
   return (
     <Modal
-      width={800}
+      wrapClassName="detail-modal"
       title="Create job position"
       visible={visible}
       confirmLoading={confirmLoading}
       onCancel={handleCancel}
       footer={null}
     >
-      <div>
+      <div style={{ height: '100%' }}>
         <div key="no" style={{ marginBottom: '0.8rem' }}>
           <Text strong style={{ fontSize: '1.6rem' }}>{`Job position: ${data.title}`}</Text>
         </div>
