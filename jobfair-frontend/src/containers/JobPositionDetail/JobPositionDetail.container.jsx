@@ -3,7 +3,7 @@ import {Form, notification} from "antd";
 import JobPositionDetailModalComponent
     from "../../components/JobPosition/JobPositionManagement/JobPositionDetailModal.component";
 import JobPositionDetailComponent from "../../components/JobPositionDetail/JobPositionDetail.component";
-import {useLocation} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 import {deleteJobPositionAPI, updateJobPositionAPI} from "../../services/job-controller/JobControllerService";
 
 const JobPositionDetailContainer = () => {
@@ -12,6 +12,7 @@ const JobPositionDetailContainer = () => {
     const jobPosition = location.state.jobPosition;
 
     const [form] = Form.useForm();
+    const history = useHistory();
 
     const handleDelete = (id) => {
         deleteJobPositionAPI(id)
@@ -19,6 +20,9 @@ const JobPositionDetailContainer = () => {
                 notification['success']({
                     message: `Delete job position successfully`,
                 })
+                //after delete success, push back to list page
+                history.goBack()
+
             })
             .catch(err => {
                 notification['error']({
@@ -30,11 +34,14 @@ const JobPositionDetailContainer = () => {
 
     const onFinish = (values) => {
         values['skillTagIds'] = values['skillTagIds']?.map(item => item.id)
+        values['subCategoryIds'] = values['subCategoriesIds']
         updateJobPositionAPI(values, values.id)
             .then(res => {
                 notification['success']({
                     message: `Update job position successfully`,
                 })
+                //after update success, go back
+                history.goBack()
             }).catch(err => {
             notification['error']({
                 message: `Update job position failed`,

@@ -9,6 +9,18 @@ export const JobPositionValidation = {
       message: 'This field has max length is 100 characters'
     }
   ],
+  jobLevel: [
+    {
+      required: true,
+      message: 'This field is required'
+    },
+  ],
+  language: [
+    {
+      required: true,
+      message: 'This field is required'
+    },
+  ],
   description: [
     {
       required: true,
@@ -47,6 +59,10 @@ export const JobPositionValidation = {
     {
       max: 322,
       message: 'This field has max length is 322 characters'
-    }
+    },
+    {
+      type: 'email',
+      message: 'The input is not valid E-mail!'
+    },
   ]
 }

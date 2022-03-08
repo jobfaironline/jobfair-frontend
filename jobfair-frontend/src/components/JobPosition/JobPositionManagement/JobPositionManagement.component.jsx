@@ -3,12 +3,20 @@ import {Button, Divider, Input, Space, Spin, Table} from "antd";
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import Highlighter from "react-highlight-words";
 import JobPositionTableColumn from "../../JobPositionTable/JobPositionTable.column";
+import {convertEnumToString} from "../../../utils/common";
 
 const JobPositionManagementComponent = (props) => {
     const [searchText, setSearchText] = useState('')
     const [searchedColumn, setSearchedColumn] = useState('')
 
     const {data, extra} = props
+    const defaultData = data.map(item => {
+        return {
+            ...item,
+            jobType: convertEnumToString(item?.jobType),
+            level: convertEnumToString(item?.level)
+        }
+    })
 
     if (data === undefined || data === null || Object.keys(data).length === 0) {
         return <Spin size="large"/>
@@ -77,7 +85,7 @@ const JobPositionManagementComponent = (props) => {
     const finalColumns = extra ? [...defaultColumns, extra] : [...defaultColumns]
     return (
         <>
-            <Table columns={finalColumns} dataSource={data}
+            <Table columns={finalColumns} dataSource={defaultData}
                    pagination={false}
             />
         </>

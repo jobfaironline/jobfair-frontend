@@ -6,6 +6,7 @@ import {InfoCircleOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design
 import {CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories} from "../../constants/CompanyProfileConstant";
 import Text from "antd/es/typography/Text";
 import {useHistory} from "react-router-dom";
+import {JobPositionValidation} from "../../validate/CreateJobPositionValidation";
 
 const {Option, OptGroup} = Select
 
@@ -38,7 +39,7 @@ const JobPositionDetailComponent = ({data, form, onFinish, handleDelete}) => {
                         label="Title"
                         name={'title'}
                         hasFeedback
-                        // rules={AttendantProfileValidation.account.email}
+                        rules={JobPositionValidation.title}
                     >
                         <Input placeholder="Title" style={{width: 200}}/>
                     </Form.Item>
@@ -46,6 +47,7 @@ const JobPositionDetailComponent = ({data, form, onFinish, handleDelete}) => {
                         label="Job level"
                         name={'level'}
                         hasFeedback
+                        rules={JobPositionValidation.jobLevel}
                     >
                         <Select
                             showSearch
@@ -69,17 +71,10 @@ const JobPositionDetailComponent = ({data, form, onFinish, handleDelete}) => {
                         </Select>
                     </Form.Item>
                     <Form.Item
-                        label="Job level"
-                        name={'level'}
-                        hasFeedback
-                        // rules={AttendantProfileValidation.account.email}
-                    >
-                        <Input placeholder="Title" style={{width: 200}}/>
-                    </Form.Item>
-                    <Form.Item
                         label="Language"
                         name={'language'}
                         hasFeedback
+                        rules={JobPositionValidation.language}
                     >
                         <Select
                             showSearch
@@ -106,7 +101,7 @@ const JobPositionDetailComponent = ({data, form, onFinish, handleDelete}) => {
                         label="Contact email"
                         name={'contactEmail'}
                         hasFeedback
-                        rules={CompanyProfileValidation.email}
+                        rules={JobPositionValidation.email}
                     >
                         <Input placeholder="Contact email" style={{width: 200}}/>
                     </Form.Item>

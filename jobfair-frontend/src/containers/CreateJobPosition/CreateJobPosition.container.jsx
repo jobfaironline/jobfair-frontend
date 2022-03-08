@@ -27,6 +27,7 @@ const CreateJobPositionContainer = () => {
                     description: `😘 😘 😘`
                 })
                 form.resetFields()
+                history.goBack()
             })
             .catch(e => {
                 notification['error']({
