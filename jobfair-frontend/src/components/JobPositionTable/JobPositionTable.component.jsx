@@ -1,14 +1,27 @@
 import React, { Fragment, useState } from 'react'
 // import { defaultColumns, editableColumns } from './columns-type';
-import { Space, Table, Input, Button } from 'antd'
+import { Space, Table, Input, Button, Spin } from 'antd'
 import Highlighter from 'react-highlight-words'
 import SearchOutlined from '@ant-design/icons/SearchOutlined'
 import JobPositionTableColumn from './JobPositionTable.column'
+import { convertEnumToString } from '../../utils/common'
 
 const FormTable = ({ extra, data, ...otherTableProps }) => {
   //search function
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchedColumn] = useState('')
+
+  const defaultData = data.map(item => {
+    return {
+      ...item,
+      jobType: convertEnumToString(item?.jobType),
+      level: convertEnumToString(item?.level)
+    }
+  })
+
+  if (data === undefined || data === null || Object.keys(data).length === 0) {
+    return <Spin size="large" />
+  }
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm()
@@ -76,7 +89,7 @@ const FormTable = ({ extra, data, ...otherTableProps }) => {
 
   return (
     <Fragment>
-      <Table columns={finalColumns} dataSource={data} pagination={{ pageSize: 8 }} {...otherTableProps} />
+      <Table columns={finalColumns} dataSource={defaultData} pagination={false} {...otherTableProps} />
     </Fragment>
   )
 }

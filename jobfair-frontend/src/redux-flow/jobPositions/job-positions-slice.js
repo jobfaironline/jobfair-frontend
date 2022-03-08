@@ -13,6 +13,7 @@ const jobPositionsSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(fetchJobPositions.fulfilled, (state, action) => {
       if (!action.payload.content) state.data = []
+      state.totalRecord = action.payload.totalElements
       state.data = action.payload.content.map(item => {
         return {
           key: item.id,

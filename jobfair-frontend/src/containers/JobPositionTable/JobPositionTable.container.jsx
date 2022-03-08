@@ -9,8 +9,22 @@ import {
   setJobPositionModalVisibility,
   setJobPositions
 } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
+import JobPositionSubmodal from '../../components/JobPositionModal/JobPositionSubmodal.component'
+import JobPositionSubmodalContainer from '../JobPositionModal/JobPositionSubmodal.container'
+import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
 
-const JobPositionTable = ({ selectable, extra }) => {
+const JobPositionTable = ({ selectable }) => {
+  //pagination
+  const [currentPage, setCurrentPage] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+  //
+
+  const totalRecord = useSelector(state => {
+    return state?.jobPosition?.totalRecord
+  })
+
+  const [neededJobPosition, setNeededJobPosition] = useState(null)
+
   const jobPositionData = useSelector(state => {
     return state?.jobPosition.data
   })
@@ -53,21 +67,52 @@ const JobPositionTable = ({ selectable, extra }) => {
     })
   }
 
-  const fetchData = async () => {
-    dispatch(fetchJobPositions())
+  const handleGetDetail = jobPositionId => {
+    setNeededJobPosition(jobPositionId)
+  }
+
+  const fetchData = async (currentPage, pageSize) => {
+    dispatch(fetchJobPositions({ currentPage, pageSize }))
   }
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData(currentPage, pageSize)
+  }, [currentPage, pageSize])
+
+  const handlePageChange = (page, pageSize) => {
+    if (page > 0) {
+      setCurrentPage(page - 1)
+    } else {
+      setCurrentPage(page)
+    }
+    setPageSize(pageSize)
+  }
 
   return (
     <div>
+      <JobPositionSubmodalContainer jobPositionId={neededJobPosition} />
       <JobPositionTableComponent
         data={jobPositionData}
         editable
-        extra={extra}
+        extra={{
+          title: 'Actions',
+          key: 'action',
+          render: (text, record) => {
+            return (
+              <Space size="middle">
+                <a
+                  onClick={() => {
+                    handleGetDetail(record.id)
+                  }}
+                >
+                  Detail
+                </a>
+              </Space>
+            )
+          }
+        }}
         rowSelection={selectable ? { ...rowSelection } : null}
       />
+      <PaginationComponent data={jobPositionData} handlePageChange={handlePageChange} totalRecord={totalRecord} />
       {selectable ? (
         <Popconfirm
           title="Are you sure to choose these jobs?"

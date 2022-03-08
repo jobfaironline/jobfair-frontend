@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import JobPositionModal from '../../components/JobPositionModal/JobPositionModal.component'
+import JobPositionSubmodal from '../../components/JobPositionModal/JobPositionSubmodal.component'
 import {
   setJobPositionModalVisibility,
   setJobPositionSubmodalVisibility

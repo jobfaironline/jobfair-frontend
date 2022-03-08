@@ -1,8 +1,6 @@
 import React from 'react'
-import { Space, Tag } from 'antd'
 import { Modal, Button } from 'antd'
-import { Form, Input, InputNumber } from 'antd'
-import CreateJobPositionForm from '../create-job-position-form/CreateJobPositionForm'
+import { Card, Col, Divider, Row, Space, Tag, Typography, Anchor, Spin } from 'antd'
 
 const validateMessages = {
   required: '${label} is required!',
@@ -24,13 +22,11 @@ const layout = {
   }
 }
 
-const JobPositionSubmodal = ({ visible, handleOk, handleCancel, form, onFinish }) => {
+const JobPositionSubmodal = ({ visible, data, handleCancel }) => {
   const [confirmLoading, setConfirmLoading] = React.useState(false)
 
-  const finalHandleOk = async () => {
-    setConfirmLoading(true)
-    await handleOk()
-    setConfirmLoading(false)
+  if (!data) {
+    return null
   }
 
   return (
@@ -38,19 +34,130 @@ const JobPositionSubmodal = ({ visible, handleOk, handleCancel, form, onFinish }
       width={800}
       title="Create job position"
       visible={visible}
-      onOk={finalHandleOk}
       confirmLoading={confirmLoading}
       onCancel={handleCancel}
       footer={null}
     >
-      <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages} form={form}>
-        <CreateJobPositionForm form={form} />
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-          <Button type="primary" onClick={() => form.submit()}>
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+      <div>
+        <div key="no" style={{ marginBottom: '0.8rem' }}>
+          <Text strong style={{ fontSize: '1.6rem' }}>{`Job position: ${data.title}`}</Text>
+        </div>
+        <div style={{ marginLeft: '1rem' }}>
+          <div className="sub-title" style={{ marginBottom: '0.2rem' }}>
+            <Text strong style={{ fontSize: '1.4rem' }}>
+              General information
+            </Text>
+          </div>
+          <Col style={{ marginLeft: '1rem' }}>
+            <div key="language">
+              <Space>
+                <Text strong>Prefer language: </Text>
+                <Text>{data.language}</Text>
+              </Space>
+            </div>
+            <div key="skills">
+              <Space>
+                <Text strong>Required skills: </Text>
+                {data.skillTagDTOS.map(skill => {
+                  return (
+                    <Tag color="blue" style={{ fontSize: '0.9rem', padding: '0.1rem 0.3rem' }}>
+                      {skill.name}
+                    </Tag>
+                  )
+                })}
+              </Space>
+            </div>
+            <div key="category">
+              <Space>
+                <Text strong>Category: </Text>
+                {data.subCategoryDTOs.map(category => {
+                  return (
+                    <Tag color="blue" style={{ fontSize: '0.9rem', padding: '0.1rem 0.3rem' }}>
+                      {category.name}
+                    </Tag>
+                  )
+                })}
+              </Space>
+            </div>
+            <Row gutter={[100, 0]}>
+              <Col span={8} key="level">
+                <Space>
+                  <Text strong>Job level: </Text>
+                  <Text>{convertEnumToString(data.level)}</Text>
+                </Space>
+              </Col>
+              <Col span={12} key="type">
+                <Space>
+                  <Text strong>Job type: </Text>
+                  <Text>{convertEnumToString(data.jobType)}</Text>
+                </Space>
+              </Col>
+            </Row>
+            <Row gutter={[100, 0]}>
+              <Col span={8}>
+                <div key="contact-name">
+                  <Space>
+                    <Text strong>Contact:</Text>
+                    <Text>{data.contactPersonName}</Text>
+                  </Space>
+                </div>
+              </Col>
+              <Col span={12}>
+                <div key="contact-email">
+                  <Space>
+                    <Text strong>Contact:</Text>
+                    <Text>{data.contactEmail}</Text>
+                  </Space>
+                </div>
+              </Col>
+            </Row>
+          </Col>
+        </div>
+        <div style={{ marginLeft: '1rem' }}>
+          <div className="sub-title" style={{ marginBottom: '0.2rem' }}>
+            <Text strong style={{ fontSize: '1.4rem' }}>
+              Specific jobfair's information
+            </Text>
+          </div>
+          <div style={{ marginLeft: '1rem' }}>
+            <div key="description">
+              <Space>
+                <Text strong>Job description: </Text>
+                <Text>{data.description}</Text>
+              </Space>
+            </div>
+            <div key="requirement">
+              <Space>
+                <Text strong>Job requirement: </Text>
+                <Text>{data.requirement}</Text>
+              </Space>
+            </div>
+            <Row gutter={[100, 0]}>
+              <Col span={8} key="salary-range">
+                <Space>
+                  <Text strong>Min salary: </Text>
+                  <Text>{data.minSalary}</Text>
+                  {data.maxSalary ? (
+                    <>
+                      <Text>~</Text>
+                      <Text strong>Max salary: </Text>
+                      <Text>{data.maxSalary}</Text>
+                    </>
+                  ) : null}
+                </Space>
+              </Col>
+              <Col span={12} key="numOfPosition">
+                <Space>
+                  <Text strong>Available position:</Text>
+                  <Text>{data.numberOfPosition} slot(s)</Text>
+                </Space>
+              </Col>
+            </Row>
+          </div>
+        </div>
+
+        <Divider />
+      </div>
     </Modal>
   )
 }

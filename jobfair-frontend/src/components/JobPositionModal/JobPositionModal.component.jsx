@@ -12,10 +12,6 @@ const JobPositionModal = ({ visible, handleOk, handleCancel }) => {
     setConfirmLoading(false)
   }
 
-  const handleGetDetail = jobPositionId => {
-    console.log(jobPositionId)
-  }
-
   return (
     <>
       <Modal
@@ -27,26 +23,7 @@ const JobPositionModal = ({ visible, handleOk, handleCancel }) => {
         onCancel={handleCancel}
         footer={null}
       >
-        <JobPositionTable
-          selectable
-          extra={{
-            title: 'Actions',
-            key: 'action',
-            render: (text, record) => {
-              return (
-                <Space size="middle">
-                  <a
-                    onClick={() => {
-                      handleGetDetail(record.id)
-                    }}
-                  >
-                    Detail
-                  </a>
-                </Space>
-              )
-            }
-          }}
-        />
+        <JobPositionTable selectable />
       </Modal>
     </>
   )
