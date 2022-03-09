@@ -24,3 +24,14 @@ export const getAllJobFairAPI = (pageNumber, pageSize, sortBy, direction) =>
         }
     )
 export const evaluateJobFairPlanAPI = body => CallAPI(`${ENDPOINT_JOB_FAIR}/evaluate`, 'POST', body)
+
+export const getJobFairForAdmin = (filterStatus, offset, pageSize) => CallAPI(
+    `${ENDPOINT_JOB_FAIR}/admin`,
+    'GET',
+    {},
+    {
+        filterStatus: filterStatus,
+        offset: offset,
+        pageSize: pageSize
+    }
+)

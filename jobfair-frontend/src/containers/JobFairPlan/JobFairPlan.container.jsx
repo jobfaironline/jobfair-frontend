@@ -21,7 +21,6 @@ const JobFairPlanContainer = () => {
             .then(res => {
                 const totalRecord = res.data.totalElements
                 setTotalRecord(totalRecord)
-                console.log(res.data.content)
                 const dataSet = res.data.content.map(item => {
                     return {
                         ...item,

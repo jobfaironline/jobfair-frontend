@@ -39,3 +39,15 @@ export const JOB_FAIR_PLAN_STATUS = {
     "PENDING": "PENDING",
     "REJECT": "REJECT"
 }
+
+export const JOB_FAIR_FOR_ADMIN_STATUS = [
+    "ATTENDANT_REGISTER",
+    "CLOSED",
+    "COMPANY_BUY_BOOTH",
+    "COMPANY_REGISTER",
+    "HAPPENING",
+    "NOT_YET",
+    "PROCESSING",
+    "UNAVAILABLE",
+]
+

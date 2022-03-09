@@ -41,11 +41,7 @@ import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegister
 import RegisterJobFairForm from '../components/register-job-fair-form/RegisterJobFairForm'
 import JobFairDetailPage from "../pages/JobFairDetailPage/JobFairDetailPage";
 import JobFairPlanPage from "../pages/JobFairPlanPage/JobFairPlanPage";
-import EmployeeManagementPage from "../pages/EmployeeManagementPage/EmployeeManagementPage";
-import EmployeeRegisterPage from "../pages/EmployeeRegisterPage/EmployeeRegisterPage";
-import RegisterJobFairForm from "../components/register-job-fair-form/RegisterJobFairForm";
 import JobPositionPage from "../pages/JobPositionPage/JobPositionPage";
-import NavigationBar from "../components/navbar/Navbar";
 import JobPositionDetailPage from "../pages/JobPositionPage/JobPositionDetailPage";
 import CreateJobPositionPage from "../pages/JobPositionPage/CreateJobPositionPage";
 const AppRouter = () => {

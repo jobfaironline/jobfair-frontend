@@ -1,17 +1,24 @@
 import React, {useState} from 'react';
-import {Button, Input, Space, Spin, Table} from "antd";
+import {convertEnumToString} from "../../utils/common";
+import {Button, Empty, Image, Input, Space, Spin, Table} from "antd";
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import Highlighter from "react-highlight-words";
-import JobFairListColumn from "../JobFairList/JobFairList.column";
+import JobPositionTableColumn from "../JobPositionTable/JobPositionTable.column";
+import JobFairForAdminColumn from "./JobFairForAdmin.column";
 
-const JobFairPlanComponent = ({data, extra}) => {
-
+const JobFairForAdminComponent = (props) => {
     const [searchText, setSearchText] = useState('')
     const [searchedColumn, setSearchedColumn] = useState('')
 
+    const {data, extra} = props
 
-    if (data === undefined || data === null || Object.keys(data).length === 0) {
+
+    if (data === undefined || data === null) {
         return <Spin size="large"/>
+    }
+
+    if (Object.keys(data).length === 0) {
+        return <Empty/>
     }
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -72,17 +79,29 @@ const JobFairPlanComponent = ({data, extra}) => {
             ) : (text)
     })
 
-    const defaultColumns = JobFairListColumn(getColumnSearchProps)
+    const defaultColumns = JobFairForAdminColumn(getColumnSearchProps)
 
     const finalColumns = extra ? [...defaultColumns, extra] : [...defaultColumns]
     return (
         <>
-            <Table columns={finalColumns} dataSource={data}
-                    pagination={false}
+            <Table columns={finalColumns}
+                   dataSource={data}
+                   pagination={false}
                    scroll={{ y: 240 }}
+                   expandable={{
+                       expandedRowRender: record =>
+                           <Image
+                               width={200}
+                               src="https://d3polnwtp0nqe6.cloudfront.net/DecorateItems/898e23ec-0049-41b4-bd02-01a8c52ff703?x-oss-process=image/blur,r_50,s_50/quality,q_1/resize,m_mfit,h_200,w_200"
+                               preview={{
+                                   src: 'https://d3polnwtp0nqe6.cloudfront.net/DecorateItems/898e23ec-0049-41b4-bd02-01a8c52ff703',
+                               }}
+                           />,
+                       rowExpandable: record => record.thumbnail !== '',
+                   }}
             />
         </>
     );
 };
 
-export default JobFairPlanComponent;
+export default JobFairForAdminComponent;

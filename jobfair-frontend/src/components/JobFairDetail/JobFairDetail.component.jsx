@@ -8,7 +8,9 @@ import {convertEnumToString} from "../../utils/common";
 const {Text} = Typography
 
 
-const JobFairDetailComponent = ({data, onFinish}) => {
+const JobFairDetailComponent = (props) => {
+
+    const {data, onFinish, totalRegistration, totalBooth, totalApproval} = props
 
     const handleButton = (status) => {
         if (status === undefined) {
@@ -17,7 +19,9 @@ const JobFairDetailComponent = ({data, onFinish}) => {
         switch (status) {
             case JOB_FAIR_PLAN_STATUS.PENDING:
                 return (
-                    <EvaluationFormComponent onFinish={onFinish} id={data.id} name="jobFairId"/>
+                    <>
+                        <EvaluationFormComponent onFinish={onFinish} id={data.id} name="jobFairId"/>
+                    </>
                 )
             case JOB_FAIR_PLAN_STATUS.APPROVE:
                 return (
@@ -31,24 +35,30 @@ const JobFairDetailComponent = ({data, onFinish}) => {
             return;
         }
         switch (status) {
-            case JOB_FAIR_PLAN_STATUS.PENDING: return (
-                <Tag color="blue">{convertEnumToString(status)}</Tag>
-            )
-            case JOB_FAIR_PLAN_STATUS.APPROVE: return (
-                <Tag color="green">{convertEnumToString(status)}</Tag>
-            )
-            case JOB_FAIR_PLAN_STATUS.DRAFT: return (
-                <Tag color="gold">{convertEnumToString(status)}</Tag>
-            )
-            case JOB_FAIR_PLAN_STATUS.REJECT: return (
-                <Tag color="red">{convertEnumToString(status)}</Tag>
-            )
-            case JOB_FAIR_PLAN_STATUS.DELETED: return (
-                <Tag color="volcano">{convertEnumToString(status)}</Tag>
-            )
-            default: return (
-                <Tag color="orange">{convertEnumToString(status)}</Tag>
-            )
+            case JOB_FAIR_PLAN_STATUS.PENDING:
+                return (
+                    <Tag color="blue">{convertEnumToString(status)}</Tag>
+                )
+            case JOB_FAIR_PLAN_STATUS.APPROVE:
+                return (
+                    <Tag color="green">{convertEnumToString(status)}</Tag>
+                )
+            case JOB_FAIR_PLAN_STATUS.DRAFT:
+                return (
+                    <Tag color="gold">{convertEnumToString(status)}</Tag>
+                )
+            case JOB_FAIR_PLAN_STATUS.REJECT:
+                return (
+                    <Tag color="red">{convertEnumToString(status)}</Tag>
+                )
+            case JOB_FAIR_PLAN_STATUS.DELETED:
+                return (
+                    <Tag color="volcano">{convertEnumToString(status)}</Tag>
+                )
+            default:
+                return (
+                    <Tag color="orange">{convertEnumToString(status)}</Tag>
+                )
         }
     }
 
@@ -62,8 +72,8 @@ const JobFairDetailComponent = ({data, onFinish}) => {
                     <Space size="middle" direction="vertical">
                         <Row>
                             <Col span={24}>
-                                <Text strong>ID: </Text>
-                                <Text italic>{data.id}</Text>
+                                <Text strong>Job fair name: </Text>
+                                <Text italic>{data.name}</Text>
                             </Col>
                             <Col span={24}>
                                 <Text strong>Description: </Text>
@@ -108,14 +118,40 @@ const JobFairDetailComponent = ({data, onFinish}) => {
                         </Row>
                         <Row>
                             <Col span={24}>
+                                <Text strong>Estimated number of participants: </Text>
+                                <Text italic>{data.estimateParticipant}</Text>
+                            </Col>
+                            <Col span={24}>
+                                <Text strong>Target company: </Text>
+                                <Text italic>{data.targetCompany}</Text>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={16}>
+                                <Text strong>Target attendant: </Text>
+                                <Text italic>{data.targetAttendant}</Text>
+                            </Col>
+                            <Col span={16}>
+                                <Text strong>Total approval company registrations: </Text>
+                                <Text italic>{totalApproval}</Text>
+                            </Col>
+                            <Col span={16}>
+                                <Text strong>Total company registrations: </Text>
+                                <Text italic>{totalRegistration}</Text>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={24}>
+                                <Text strong>Total booths: </Text>
+                                <Text italic>{totalBooth} slot(s)</Text>
+                            </Col>
+                            <Col span={24}>
                                 <Text strong>Status: </Text>
                                 {handleStatusTag(data.status)}
                             </Col>
                         </Row>
                     </Space>
-                    <Divider style={{width: 700 }}>
-                        <Text strong>Evaluate this job fair</Text>
-                    </Divider>
+
                     <Space>
                         {handleButton(data.status)}
                     </Space>
