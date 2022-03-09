@@ -7,6 +7,8 @@ import * as THREE from "three"
 import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
 import {Modal} from "antd";
 import {EffectComposer, Outline} from "@react-three/postprocessing";
+import Nearby from "nearby-js/Nearby"
+import {throttle} from "throttle-debounce";
 
 
 
@@ -224,7 +226,7 @@ function getBase64Image(img) {
 }
 
 const ModelController = props => {
-    const { center, boothMesh, modalRef} = props;
+    const { center, boothMesh, modalRef, setNearItem, sceneMeshRef, nearby} = props;
     const isMoving = useRef(false);
     const model = useLoader(FBXLoader, 'https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx')
     const newModel = useLoader(FBXLoader, "https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx")
@@ -250,7 +252,6 @@ const ModelController = props => {
             child.material.side = THREE.FrontSide
         }
     })
-
 
     const onKeyPress = e => {
         if (e.keyCode === 101){
@@ -286,8 +287,24 @@ const ModelController = props => {
         target: model,
     });
 
-    useFrame((state, delta) => {
+    const a = throttle(0.1, function () {
+        var result = nearby.query(model.position.x, model.position.y, model.position.z);
+        let nearestObjectId;
+        for (var object of result.keys()){
+            nearestObjectId = object.id;
+            break;
+        }
+        console.log(nearestObjectId)
+        if (nearestObjectId !== undefined){
+            const mesh = sceneMeshRef.current.getObjectByProperty("uuid", nearestObjectId)
+            setNearItem(mesh);
+        } else {
+            setNearItem(undefined);
+        }
+    });
 
+    useFrame((state, delta) => {
+        a();
         _controls.Update(delta*0.5)
         mixer?.update(delta)
         thirdPersonCamera.Update(delta);
@@ -314,29 +331,50 @@ export const CompanyBoothCanvasComponent = (props) => {
 
     //const model = useLoader(FBXLoader, 'https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx')
     //const newModel = useLoader(FBXLoader, "https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx")
+    const [nearItem, setNearItem] = useState();
     const sceneMeshRef = useRef()
+    var sceneWidth = 1000, sceneHeight = 1000, sceneDepth = 1000;
+    var binSize = 1;
+// Creates a world centered in (0, 0, 0) of size (1000x1000x1000)
+// The world is splitted into cubes of (50x50x50).
+    var nearby = new Nearby(sceneWidth, sceneHeight, sceneDepth, binSize);
+
+    boothMesh.children.forEach(child => {
+        if (child.name === "sand") return;
+        const a = new THREE.Vector3();
+        child.geometry.boundingBox.getSize(a)
+        var box = nearby.createBox(
+            child.position.x, child.position.y, child.position.z,
+            a.x, a.y, a.z
+        );
+        var objectID = child.uuid;
+        var object = nearby.createObject(objectID, box);
+
+        nearby.insert(object)
+    });
+
 
     return (
         <div style={{width: '100%', height: '100vh'}}>
             <Canvas
                 dpr={[1, 2]}
-                camera={{fov: 45, zoom: 2, position: [-10, 10, -10]}}
+                camera={{fov: 45, zoom: 2}}
                 style={{width: '100%', height: '100vh'}}
             >
                 <CameraControls/>
 
                 <Stage adjustCamera={false} preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
                     <BasicMesh ref={sceneMeshRef} mesh={boothMesh}/>
-                    <ModelController center={center} boothMesh={boothMesh} modalRef={modalRef} />
+                    <ModelController center={center} boothMesh={boothMesh} modalRef={modalRef} setNearItem={setNearItem} sceneMeshRef={sceneMeshRef} nearby={nearby}/>
                 </Stage>
-                {/*<EffectComposer multisampling={8} autoClear={false}>
+                <EffectComposer multisampling={8} autoClear={false}>
                     <Outline
                         selection={nearItem}
                         visibleEdgeColor="yellow"
                         hiddenEdgeColor="yellow"
                         edgeStrength={100}
                         width={1000}/>
-                </EffectComposer>*/}
+                </EffectComposer>
             </Canvas>
         </div>
 
