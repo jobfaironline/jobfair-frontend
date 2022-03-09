@@ -19,7 +19,6 @@ const JobFairDetailContainer = () => {
     const [totalApproval, setTotalApproval] = useState(0);
     const [totalBooth, setTotalBooth] = useState(0);
 
-    console.log(jobFair)
 
     const getTotalCompanyRegistrationOfJobFair = async () => {
         //need API for getting company registrations have status APPROVE by jobfairId

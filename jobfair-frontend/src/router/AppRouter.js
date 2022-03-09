@@ -44,6 +44,7 @@ import JobFairPlanPage from "../pages/JobFairPlanPage/JobFairPlanPage";
 import JobPositionPage from "../pages/JobPositionPage/JobPositionPage";
 import JobPositionDetailPage from "../pages/JobPositionPage/JobPositionDetailPage";
 import CreateJobPositionPage from "../pages/JobPositionPage/CreateJobPositionPage";
+import CompanyRegistrationDetailPage from "../pages/CompanyRegistrationDetailPage/CompanyRegistrationDetailPage";
 const AppRouter = () => {
   const role = useSelector(state => state.authentication?.user?.roles)
   return (
@@ -186,6 +187,12 @@ const AppRouter = () => {
           key={PATH_ADMIN.JOB_FAIR_PLAN_LIST}
           component={() => <JobFairPlanPage />}
           path={PATH_ADMIN.JOB_FAIR_PLAN_LIST}
+          exact
+        />
+        <AdminRouter
+          key={PATH_ADMIN.COMPANY_REGISTRATION_DETAIL}
+          component={() => <CompanyRegistrationDetailPage />}
+          path={PATH_ADMIN.COMPANY_REGISTRATION_DETAIL}
           exact
         />
         <StaffRouter

@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Card, Col, Divider, Row, Space, Tag, Typography} from "antd";
 import EvaluationFormComponent from "../EvaluationForm/EvaluationForm.component";
 import {Link, useHistory} from "react-router-dom";
-import {JOB_FAIR_PLAN_STATUS} from "../../constants/JobFairConst";
+import {JOB_FAIR_FOR_ADMIN_STATUS, JOB_FAIR_PLAN_STATUS} from "../../constants/JobFairConst";
 import {convertEnumToString} from "../../utils/common";
 
 const {Text} = Typography
@@ -23,7 +23,7 @@ const JobFairDetailComponent = (props) => {
                         <EvaluationFormComponent onFinish={onFinish} id={data.id} name="jobFairId"/>
                     </>
                 )
-            case JOB_FAIR_PLAN_STATUS.APPROVE:
+            case JOB_FAIR_FOR_ADMIN_STATUS.COMPANY_REGISTER:
                 return (
                     <Link to={`/approval-registration/${data.id}`}>Evaluate registrations</Link>
                 )

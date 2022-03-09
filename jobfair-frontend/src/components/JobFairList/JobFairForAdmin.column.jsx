@@ -42,6 +42,34 @@ const JobFairForAdminColumn = (getColumnSearchProps) => {
                     text: 'Closed',
                     value: 'CLOSED'
                 },
+                {
+                    text: 'Happening',
+                    value: 'HAPPENING'
+                },
+                {
+                    text: 'Attendant register',
+                    value: 'ATTENDANT_REGISTER'
+                },
+                {
+                    text: 'Company buy booth',
+                    value: 'COMPANY_BUY_BOOTH'
+                },
+                {
+                    text: 'Company register',
+                    value: 'COMPANY_REGISTER'
+                },
+                {
+                    text: 'Not yet',
+                    value: 'NOT_YET'
+                },
+                {
+                    text: 'Processing',
+                    value: 'PROCESSING'
+                },
+                {
+                    text: 'Unavailable',
+                    value: 'UNAVAILABLE'
+                },
             ],
             onFilter: (value, record) => {
                 return record.status === value
@@ -49,12 +77,6 @@ const JobFairForAdminColumn = (getColumnSearchProps) => {
             render: status => {
                 let objStatus
                 switch (status) {
-                    case 'CLOSED':
-                        objStatus = {
-                            color: 'red',
-                            message: 'Closed'
-                        }
-                        break
                     default:
                         objStatus = {
                             color: 'green',

@@ -1,6 +1,6 @@
 import React, {useLayoutEffect, useState} from 'react';
 import {useHistory} from "react-router-dom";
-import {getJobFairForAdmin} from "../../services/job-fair-controller/JobFairConTrollerService";
+import {getJobFairIncomingForAdmin} from "../../services/job-fair-controller/JobFairConTrollerService";
 import {convertEnumToString, convertToDateString} from "../../utils/common";
 import {notification, Select, Space} from "antd";
 import {JOB_FAIR_FOR_ADMIN_STATUS} from "../../constants/JobFairConst";
@@ -19,11 +19,10 @@ const JobFairIncomingContainer = () => {
     const [pageSize, setPageSize] = useState(10)
     //
     const history = useHistory()
-    const [filterStatus, setFilterStatus] = useState('NOT_YET')
 
 
     const fetchData = async () => {
-        getJobFairForAdmin(filterStatus, currentPage, pageSize)
+        getJobFairIncomingForAdmin(currentPage, pageSize)
             .then(res => {
                     const totalRecord = res.data.totalElements
                     setTotalRecord(totalRecord)
@@ -34,7 +33,7 @@ const JobFairIncomingContainer = () => {
                             companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime).split('T')[0],
                             companyRegisterEndTime: convertToDateString(item.jobFair.companyRegisterEndTime).split('T')[0],
                             companyBuyBoothStartTime: convertToDateString(item.jobFair.companyBuyBoothStartTime).split('T')[0],
-                            companyBuyBoothEndTime:  convertToDateString(item.jobFair.companyBuyBoothEndTime).split('T')[0],
+                            companyBuyBoothEndTime: convertToDateString(item.jobFair.companyBuyBoothEndTime).split('T')[0],
                             attendantRegisterStartTime: convertToDateString(item.jobFair.attendantRegisterStartTime).split('T')[0],
                             startTime: convertToDateString(item.jobFair.startTime).split('T')[0],
                             endTime: convertToDateString(item.jobFair.endTime).split('T')[0],
@@ -58,7 +57,7 @@ const JobFairIncomingContainer = () => {
 
     useLayoutEffect(() => {
         fetchData()
-    }, [currentPage, pageSize, filterStatus])
+    }, [currentPage, pageSize])
 
     const handlePageChange = (page, pageSize) => {
         if (page > 0) {
@@ -77,16 +76,6 @@ const JobFairIncomingContainer = () => {
 
     return (
         <>
-            <Select
-                style={{width: 240}}
-                defaultValue='NOT_YET'
-                onChange={(value) => setFilterStatus(value)}
-            >
-                {JOB_FAIR_FOR_ADMIN_STATUS
-                    .filter(item => item === 'NOT_YET')
-                    .map(item => (<Option value={item}>{convertEnumToString(item)}</Option>))}
-
-            </Select>
             <JobFairForAdminComponent
                 data={data}
                 editable

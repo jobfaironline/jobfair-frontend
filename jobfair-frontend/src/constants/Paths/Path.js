@@ -29,7 +29,8 @@ export const PATH = {
 export const PATH_ADMIN = {
   APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId',
   JOB_FAIR_DETAIL_PAGE: '/job-fair-detail',
-  JOB_FAIR_PLAN_LIST: '/job-fair-plan-list'
+  JOB_FAIR_PLAN_LIST: '/job-fair-plan-list',
+  COMPANY_REGISTRATION_DETAIL: '/company-registration-detail'
 }
 export const PATH_ATTENDANT = {
   ATTENDANT_PROFILE_PAGE: `/attendant/profile`,

@@ -1,6 +1,9 @@
 import React, {useLayoutEffect, useState} from 'react';
 import {useHistory} from "react-router-dom";
-import {getJobFairForAdmin} from "../../services/job-fair-controller/JobFairConTrollerService";
+import {
+    getJobFairForAdmin,
+    getJobFairHappeningForAdmin
+} from "../../services/job-fair-controller/JobFairConTrollerService";
 import {convertEnumToString, convertToDateString} from "../../utils/common";
 import {notification, Select, Space} from "antd";
 import {JOB_FAIR_FOR_ADMIN_STATUS} from "../../constants/JobFairConst";
@@ -18,10 +21,9 @@ const JobFairHappeningContainer = () => {
     const [pageSize, setPageSize] = useState(10)
     //
     const history = useHistory()
-    const [filterStatus, setFilterStatus] = useState('HAPPENING')
 
     const fetchData = async () => {
-        getJobFairForAdmin(filterStatus, currentPage, pageSize)
+        getJobFairHappeningForAdmin(currentPage, pageSize)
             .then(res => {
                     const totalRecord = res.data.totalElements
                     setTotalRecord(totalRecord)
@@ -56,7 +58,7 @@ const JobFairHappeningContainer = () => {
 
     useLayoutEffect(() => {
         fetchData()
-    }, [currentPage, pageSize, filterStatus])
+    }, [currentPage, pageSize])
 
     const handlePageChange = (page, pageSize) => {
         if (page > 0) {
@@ -76,20 +78,6 @@ const JobFairHappeningContainer = () => {
 
     return (
         <>
-            <Select
-                style={{width: 240}}
-                defaultValue='HAPPENING'
-                onChange={(value) => setFilterStatus(value)}
-            >
-                {JOB_FAIR_FOR_ADMIN_STATUS
-                    .filter(item => item === 'HAPPENING'
-                        || item === 'COMPANY_BUY_BOOTH'
-                        || item === 'ATTENDANT_REGISTER'
-                        || item === 'COMPANY_REGISTER'
-                        || item === 'PROCESSING'
-                    )
-                    .map(item => (<Option value={item}>{convertEnumToString(item)}</Option>))}
-            </Select>
             <JobFairForAdminComponent
                 data={data}
                 editable

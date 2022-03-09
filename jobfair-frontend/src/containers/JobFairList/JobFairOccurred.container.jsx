@@ -1,9 +1,12 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import JobFairForAdminComponent from "../../components/JobFairList/JobFairForAdmin.component";
 import {useHistory} from "react-router-dom";
 import {getJobPositionsAPI} from "../../services/job-controller/JobControllerService";
 import {Button, notification, Select, Space} from "antd";
-import {getJobFairForAdmin} from "../../services/job-fair-controller/JobFairConTrollerService";
+import {
+    getJobFairForAdmin,
+    getJobFairOccurredForAdmin
+} from "../../services/job-fair-controller/JobFairConTrollerService";
 import {JOB_FAIR_FOR_ADMIN_STATUS} from "../../constants/JobFairConst";
 import PaginationComponent from "../../components/PaginationComponent/Pagination.component";
 import {PATH_ADMIN, PATH_COMPANY_MANAGER} from "../../constants/Paths/Path";
@@ -19,11 +22,11 @@ const JobFairOccurredContainer = () => {
     const [pageSize, setPageSize] = useState(10)
     //
     const history = useHistory()
-    const [filterStatus, setFilterStatus] = useState('CLOSED')
+    const [filterStatus, setFilterStatus] = useState('')
 
 
     const fetchData = async () => {
-        getJobFairForAdmin(filterStatus, currentPage, pageSize)
+        getJobFairOccurredForAdmin(currentPage, pageSize)
             .then(res => {
                     const totalRecord = res.data.totalElements
                     setTotalRecord(totalRecord)
@@ -58,7 +61,7 @@ const JobFairOccurredContainer = () => {
 
     useLayoutEffect(() => {
         fetchData()
-    }, [currentPage, pageSize, filterStatus])
+    }, [currentPage, pageSize])
 
     const handlePageChange = (page, pageSize) => {
         if (page > 0) {
@@ -77,16 +80,6 @@ const JobFairOccurredContainer = () => {
 
     return (
         <>
-            <Select
-                style={{width: 240}}
-                defaultValue='CLOSED'
-                onChange={(value) => setFilterStatus(value)}
-            >
-                {JOB_FAIR_FOR_ADMIN_STATUS
-                    .filter(item => item === 'CLOSED' || item === 'UNAVAILABLE')
-                    .map(item => (<Option value={item}>{convertEnumToString(item)}</Option>))}
-
-            </Select>
             <JobFairForAdminComponent
                 data={data}
                 editable
