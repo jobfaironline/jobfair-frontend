@@ -39,6 +39,8 @@ import {
 import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
 import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
 import RegisterJobFairForm from '../components/register-job-fair-form/RegisterJobFairForm'
+import JobFairDetailPage from "../pages/JobFairDetailPage/JobFairDetailPage";
+import JobFairPlanPage from "../pages/JobFairPlanPage/JobFairPlanPage";
 const AppRouter = () => {
   const role = useSelector(state => state.authentication?.user?.roles)
   return (
@@ -153,11 +155,29 @@ const AppRouter = () => {
           path={PATH_ADMIN.APPROVAL_REGISTRATION_PAGE}
           exact
         />
+        <AdminRouter
+          key={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
+          component={() => <JobFairDetailPage />}
+          path={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
+          exact
+        />
+        <AdminRouter
+          key={PATH_ADMIN.JOB_FAIR_PLAN_LIST}
+          component={() => <JobFairPlanPage />}
+          path={PATH_ADMIN.JOB_FAIR_PLAN_LIST}
+          exact
+        />
         <StaffRouter
           key={PATH_STAFF.APPROVAL_REGISTRATION_PAGE}
           component={() => <ApprovalRegistrationPage />}
           path={PATH_STAFF.APPROVAL_REGISTRATION_PAGE}
           exact
+        />
+        <StaffRouter
+            key={PATH_STAFF.JOB_FAIR_DETAIL_PAGE}
+            component={() => <JobFairDetailPage />}
+            path={PATH_STAFF.JOB_FAIR_DETAIL_PAGE}
+            exact
         />
       </Switch>
     </>

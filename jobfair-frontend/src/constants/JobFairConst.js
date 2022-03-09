@@ -30,3 +30,12 @@ export const JOB_FAIR_PLAN_COMPANY_STATUS = [
         color: "red"
     },
 ]
+
+export const JOB_FAIR_PLAN_STATUS = {
+    "APPROVE": "APPROVE",
+    "CANCEL": "CANCEL",
+    "DELETED": "DELETED",
+    "DRAFT": "DRAFT",
+    "PENDING": "PENDING",
+    "REJECT": "REJECT"
+}

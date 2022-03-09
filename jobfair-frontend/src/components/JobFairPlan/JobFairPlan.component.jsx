@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {Button, Input, Space, Spin, Table} from "antd";
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import Highlighter from "react-highlight-words";
-import JobFairListColumn from "./JobFairList.column";
+import JobFairListColumn from "../JobFairList/JobFairList.column";
 
-const JobFairListEvaluateComponent = ({data, extra}) => {
+const JobFairPlanComponent = ({data, extra}) => {
 
     const [searchText, setSearchText] = useState('')
     const [searchedColumn, setSearchedColumn] = useState('')
@@ -85,4 +85,4 @@ const JobFairListEvaluateComponent = ({data, extra}) => {
     );
 };
 
-export default JobFairListEvaluateComponent;
+export default JobFairPlanComponent;

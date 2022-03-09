@@ -4,28 +4,28 @@ import {Tag} from "antd";
 const JobFairListColumn = (getColumnSearchProps) => {
     return [
         {
-            title: 'Job fair ID',
-            dataIndex: 'id',
-            key: 'id',
-            ...getColumnSearchProps('id')
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            ...getColumnSearchProps('name')
         },
         {
-            title: 'Description',
-            dataIndex: 'description',
-            key: 'description',
-            ...getColumnSearchProps('id')
+            title: 'Company register start time',
+            dataIndex: 'companyRegisterStartTime',
+            key: 'companyRegisterStartTime',
+            ...getColumnSearchProps('companyRegisterStartTime')
+        },
+        {
+            title: 'Attendant register start time',
+            dataIndex: 'attendantRegisterStartTime',
+            key: 'attendantRegisterStartTime',
+            ...getColumnSearchProps('attendantRegisterStartTime')
         },
         {
             title: 'Start time',
             dataIndex: 'startTime',
             key: 'startTime',
             ...getColumnSearchProps('startTime')
-        },
-        {
-            title: 'End time',
-            dataIndex: 'endTime',
-            key: 'endTime',
-            ...getColumnSearchProps('endTime')
         },
         {
             title: 'Status',
@@ -45,7 +45,7 @@ const JobFairListColumn = (getColumnSearchProps) => {
                     value: 'DELETED'
                 },
                 {
-                    text: 'Canceled',
+                    text: 'Cancel',
                     value: 'CANCEL'
                 },
                 {
@@ -90,7 +90,7 @@ const JobFairListColumn = (getColumnSearchProps) => {
                     case 'CANCEL':
                         objStatus = {
                             color: 'volcano',
-                            message: 'Canceled'
+                            message: 'Cancel'
                         }
                         break
                     default:

@@ -27,7 +27,9 @@ export const PATH = {
   PROCESSED_SUCCESS: ''
 }
 export const PATH_ADMIN = {
-  APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId'
+  APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId',
+  JOB_FAIR_DETAIL_PAGE: '/job-fair-detail',
+  JOB_FAIR_PLAN_LIST: '/job-fair-plan-list'
 }
 export const PATH_ATTENDANT = {
   ATTENDANT_PROFILE_PAGE: `/attendant/profile`,
@@ -46,5 +48,6 @@ export const PATH_COMPANY_MANAGER = {
   MANAGER_REGISTER_JOBFAIR: '/company-register-jobfair/'
 }
 export const PATH_STAFF = {
-  APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId'
+  APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId',
+  JOB_FAIR_DETAIL_PAGE: '/job-fair-detail'
 }
