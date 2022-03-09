@@ -1,7 +1,6 @@
-import { Button, Form, notification, Steps } from 'antd'
+import { Button, Form, notification, Popconfirm, Steps } from 'antd'
 import React, { useEffect, useState } from 'react'
-import PickJobPositionFormContainer from '../PickJobPositionForm/PickJobPositionForm.container'
-import { useStepsForm } from 'sunflower-antd'
+import { useForm, useStepsForm } from 'sunflower-antd'
 import CompanyProfileForm from '../../components/company-profile-form/CompanyProfileForm.component'
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,7 +9,9 @@ import { getCompanyProfileAPI } from '../../services/company-controller/CompanyC
 import TextArea from 'antd/es/input/TextArea'
 import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
 import ConfirmContainer from '../Confirm/Confirm.container'
+import JobfairRegistrationFormComponent from '../../components/JobfairRegistrationForm/JobfairRegistrationForm.component'
 import { PATH } from '../../constants/Paths/Path'
+import { setFormBody } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
 const { Step } = Steps
 const JobfairRegistrationForm = () => {
   //please pass this form into component or USE REDUX TO STORE FORM HOOK
@@ -20,7 +21,7 @@ const JobfairRegistrationForm = () => {
   const companyId = useSelector(state => state.authentication.user.companyId)
   const [companyInfo, setCompanyInfo] = useState({})
   const [companyForm] = Form.useForm()
-  const [pickJobForm] = Form.useForm()
+  const [currentStep, setCurrentStep] = useState(0)
   const history = useHistory()
 
   const getCompanyProfile = async () => {
@@ -63,110 +64,47 @@ const JobfairRegistrationForm = () => {
     companyForm.setFieldsValue({ ...companyInfo })
   }, [companyInfo, companyForm])
 
-  const { form, current, gotoStep, stepsProps, formProps, submit, formLoading } = useStepsForm({
-    async submit(values) {
-      console.log('values: ', values)
-      const body = {
-        description: values.description,
-        jobFairId: jobfairId,
-        jobPositions: values.jobPositions.map(item => {
-          const result = {
-            description: item.description,
-            jobPositionId: item.id,
-            maxSalary: item.maxSalary,
-            minSalary: item.minSalary,
-            numOfPosition: item.numberOfPosition,
-            requirements: item.requirement
-          }
-          return result
-        })
-      }
-      console.log('body: ', body)
-      try {
-        await dispatch(createDraftRegistration(body)).unwrap()
-        notification['success']({
-          message: `Registration draft version has been submitted`,
-          description: `Submitted successfully`,
-          duration: 2
-        })
-        //after submit success, push to success page
-        history.push(PATH.PROCESSED_SUCCESS)
-      } catch (err) {
-        notification['error']({
-          message: `An error has occurred while submitting`,
-          description: `Submit failed. Server response: ${err}`,
-          duration: 2
-        })
-        //else push to error page
-        history.push(PATH.PROCESSED_FAIL)
-      }
-    },
-    total: 3
-  })
+  const [form] = Form.useForm()
 
-  const onFinish = values => {
-    console.log('submitted: ', values)
-  }
-
-  const formList = [
-    <>
-      <CompanyProfileForm noStyle={true} data={companyInfo} form={companyForm} editable={false} />
-      <Form.Item
-        label="Company registration description"
-        required
-        tooltip="This is required"
-        rules={CompanyProfileValidation.description}
-        name="description"
-      >
-        <TextArea showCount maxLength={3000} placeholder="Company registration description" style={{ width: 300 }} />
-      </Form.Item>
-      <Form.Item>
-        <Button onClick={() => gotoStep(current + 1)}>Next</Button>
-      </Form.Item>
-    </>,
-
-    <>
-      <PickJobPositionFormContainer form={form} onFinish={onFinish} />
-      <Form.Item>
-        <Button onClick={() => gotoStep(current + 1)}>Next</Button>
-      </Form.Item>
-      <Form.Item>
-        <Button onClick={() => gotoStep(current - 1)}>Prev</Button>
-      </Form.Item>
-    </>,
-    <>
-      <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
-      <Form.Item>
-        <Button
-          style={{ marginRight: 10 }}
-          type="primary"
-          loading={formLoading}
-          onClick={() => {
-            submit().then(result => {
-              if (result === 'ok') {
-                gotoStep(current + 1)
-              }
-            })
-          }}
-        >
-          Submit
-        </Button>
-      </Form.Item>
-      <Form.Item>
-        <Button onClick={() => gotoStep(current - 1)}>Prev</Button>
-      </Form.Item>
-    </>
-  ]
-
-  const onChange = values => {
-    console.log(values)
+  const onSubmit = async values => {
+    const body = {
+      description: values.description,
+      jobFairId: jobfairId,
+      jobPositions: values.jobPositions.map(item => {
+        const result = {
+          jobPositionId: item.id,
+          maxSalary: item.maxSalary,
+          minSalary: item.minSalary,
+          numOfPosition: item.numberOfPosition
+        }
+        return result
+      })
+    }
+    try {
+      await dispatch(createDraftRegistration(body)).unwrap()
+      notification['success']({
+        message: `Registration draft version has been submitted`,
+        description: `Submitted successfully`,
+        duration: 2
+      })
+      //after submit success, push to success page
+      history.push(PATH.PROCESSED_SUCCESS)
+    } catch (err) {
+      notification['error']({
+        message: `An error has occurred while submitting`,
+        description: `Submit failed. Server response: ${err}`,
+        duration: 2
+      })
+      //else push to error page
+      history.push(PATH.PROCESSED_FAIL)
+    }
   }
 
   return (
     <div>
-      <Steps {...stepsProps}>
-        <Step title="Confirm company profile" />
-        <Step title="Pick job position" />
+      <Steps current={currentStep}>
+        {/* <Step title="Confirm company profile" /> */}
+        <Step title="Jobfair registration form" />
         <Step title="Confirm registration" />
       </Steps>
 
@@ -174,13 +112,60 @@ const JobfairRegistrationForm = () => {
         <Form
           form={form}
           layout="vertical"
-          onFinish={submit}
           onValuesChange={e => onChange(e)}
           requiredMark="required"
-          style={{ maxWidth: 1500 }}
           autoComplete="off"
         >
-          {formList[current]}
+          <div style={{ display: currentStep == 0 ? 'block' : 'none' }}>
+            <JobfairRegistrationFormComponent
+              form={form}
+              onPickJobFinish={() => {}}
+              nextStep={() => {
+                form.validateFields().then(res => {
+                  setCurrentStep(currentStep + 1)
+                  dispatch(setFormBody(form.getFieldsValue()))
+                })
+              }}
+            />
+          </div>
+          {currentStep == 1 ? (
+            <div style={{ display: currentStep == 1 ? 'block' : 'none' }}>
+              <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
+              <div className="step-buttons">
+                <div className="pre-step-button">
+                  <Form.Item>
+                    <Button
+                      size="large"
+                      type="primary"
+                      onClick={() => {
+                        setCurrentStep(currentStep - 1)
+                      }}
+                    >
+                      Prev
+                    </Button>
+                  </Form.Item>
+                </div>
+                <div className="next-step-button">
+                  <Form.Item>
+                    <div className="submit-registration-popconfirm">
+                      <Popconfirm
+                        title="Are you sure to submit this form?"
+                        onConfirm={() => {
+                          onSubmit(form.getFieldsValue(true))
+                        }}
+                        okText="Yes"
+                        cancelText="No"
+                      >
+                        <Button size="large" type="primary">
+                          Submit
+                        </Button>
+                      </Popconfirm>
+                    </div>
+                  </Form.Item>
+                </div>
+              </div>
+            </div>
+          ) : null}
         </Form>
       </div>
     </div>

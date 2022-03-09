@@ -1,25 +1,6 @@
-.leftside-container {
-  flex: 1;
-  margin-top: 80px;
-  min-width: 500px;
-  width: 40vw;
+.login-page {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #fff;
-}
-
-.rightside-container {
-  width: 60vw;
   overflow: hidden;
-  background: #c33764; /* fallback colour. Make sure this is just one solid colour. */
-  background: -webkit-linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8));
-  background: linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8)); /* The least supported option. */
-
-  img {
-    object-fit: cover;
-    opacity: 0.4;
-  }
 }
 
 .login-container {

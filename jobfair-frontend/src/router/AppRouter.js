@@ -125,7 +125,7 @@ const AppRouter = () => {
           path={PATH_ATTENDANT.ATTENDANT_PROFILE_PAGE}
           exact
         />
-         <AttendantRouter
+        <AttendantRouter
           key={PATH_ATTENDANT.ATTENDANT_JOBFAIRL_LIST_PAGE}
           component={() => <JobFairAttendantListPage />}
           path={PATH_ATTENDANT.ATTENDANT_JOBFAIRL_LIST_PAGE}

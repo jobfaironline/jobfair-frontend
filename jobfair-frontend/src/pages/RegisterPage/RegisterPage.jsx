@@ -10,7 +10,7 @@ import RegisterComponent from '../../components/Register/Register.component'
 
 const RegisterPage = () => {
   return (
-    <div className="page">
+    <div className="page register-page">
       <div style={{ display: 'flex' }}>
         <div className="leftside-container">
           <div className="login-container animate__fadeInDown">

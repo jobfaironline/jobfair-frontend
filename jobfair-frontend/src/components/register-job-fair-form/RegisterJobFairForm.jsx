@@ -10,7 +10,7 @@ const { Step } = Steps
 
 const layout = {
   labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
+  wrapperCol: { span: 16 }
 }
 
 export default SunflowerForm => {
@@ -24,21 +24,12 @@ export default SunflowerForm => {
     console.log('submitted: ', values)
   }
 
-  const {
-    form,
-    current,
-    gotoStep,
-    stepsProps,
-    formProps,
-    submit,
-    formLoading,
-  } = useStepsForm({
+  const { form, current, gotoStep, stepsProps, formProps, submit, formLoading } = useStepsForm({
     async submit(values) {
-      console.log(values)
       await new Promise(r => setTimeout(r, 1000))
       return 'ok'
     },
-    total: 3,
+    total: 3
   })
 
   const formList = [
@@ -68,7 +59,7 @@ export default SunflowerForm => {
         </Button>
         <Button onClick={() => gotoStep(current - 1)}>Prev</Button>
       </Form.Item>
-    </>,
+    </>
   ]
 
   return (
