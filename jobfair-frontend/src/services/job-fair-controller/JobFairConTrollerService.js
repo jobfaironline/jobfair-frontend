@@ -1,8 +1,9 @@
 import {CallAPI} from '../axiosBase'
 import {
-    ENDPOINT_GET_JOB_FAIR_PLAN_OF_COMPANY,
-    ENDPOINT_GET_LAYOUT_FOR_JOB_FAIR_PARK,
-    ENDPOINT_JOB_FAIR
+  ENDPOINT_GET_JOB_FAIR_PLAN_OF_COMPANY,
+  ENDPOINT_GET_LAYOUT_FOR_JOB_FAIR_PARK,
+  ENDPOINT_JOB_FAIR,
+  ENDPOINT_GET_JOB_FAIR_FOR_ATTENDANT
 } from '../../constants/Endpoints/job-fair-controller/JobFairConTrollerEndpoint'
 import {JOB_FAIR_FOR_ADMIN_STATUS} from "../../constants/JobFairConst";
 
@@ -25,6 +26,8 @@ export const getAllJobFairAPI = (pageNumber, pageSize, sortBy, direction) =>
         }
     )
 export const evaluateJobFairPlanAPI = body => CallAPI(`${ENDPOINT_JOB_FAIR}/evaluate`, 'POST', body)
+export const getJobFairForAttendant = (filterStatus, offset, pageSize) =>
+  CallAPI(`${ENDPOINT_GET_JOB_FAIR_FOR_ATTENDANT}?filterStatus=${filterStatus}&offset=${offset}&pageSize=${pageSize}`)
 
 export const getJobFairOccurredForAdmin = (offset, pageSize) => CallAPI(
     `${ENDPOINT_JOB_FAIR}/admin?filterStatus=${JOB_FAIR_FOR_ADMIN_STATUS.CLOSED}&filterStatus=${JOB_FAIR_FOR_ADMIN_STATUS.UNAVAILABLE}`,

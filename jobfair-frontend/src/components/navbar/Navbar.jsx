@@ -20,6 +20,9 @@ export const AttendantMenu = [
   </Menu.Item>,
   <Menu.Item key={PATH.MAP}>
     <Link to="/map/83fcb7d3-6d88-45d9-ad86-9314de41743d">Map</Link>
+  </Menu.Item>,
+  <Menu.Item key={PATH_ATTENDANT.ATTENDANT_JOBFAIRL_LIST_PAGE}>
+    <Link to={PATH_ATTENDANT.ATTENDANT_JOBFAIRL_LIST_PAGE}>List JobFair</Link>
   </Menu.Item>
 ]
 

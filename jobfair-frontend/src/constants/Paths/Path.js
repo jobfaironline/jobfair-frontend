@@ -34,6 +34,7 @@ export const PATH_ADMIN = {
 }
 export const PATH_ATTENDANT = {
   ATTENDANT_PROFILE_PAGE: `/attendant/profile`,
+  ATTENDANT_JOBFAIRL_LIST_PAGE: '/attendant/jobfair-list',
   APPLIED_JOB_PAGE: '/applied-job',
   ATTENDANT_PROFILE: ''
 }
