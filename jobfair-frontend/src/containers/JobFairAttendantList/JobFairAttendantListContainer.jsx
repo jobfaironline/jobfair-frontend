@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import JobFairListManagementComponent from '../../components/JobFairList/JobFairList.management.component'
+import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
 import { getJobFairForAttendant } from '../../services/job-fair-controller/JobFairConTrollerService'
-import { Pagination } from 'antd'
 const JobFairAttendantListContainer = () => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
@@ -21,12 +21,11 @@ const JobFairAttendantListContainer = () => {
     setLoading(true)
     getJobFairForAttendant(searchResult, count, pageSize)
       .then(res => {
-        console.log(res.data)
         setCount(count + 1)
         setTotalPage(res.totalPage)
         const result = res.data.content.map(item => {
           return {
-            description: item.description,
+            description: item?.jobFair.description,
             id: item.id,
             status: item.status
           }
@@ -52,11 +51,17 @@ const JobFairAttendantListContainer = () => {
   // }
 
   const handleFilterByStatus = statusArr => {
-    //status is an array: ["APPROVE", "REGISTRABLE"]
     const result = data.filter(item => statusArr.some(st => st === item.status))
     setSearchResult([...result])
   }
-
+  const handlePageChange = (page, pageSize) => {
+    if (page > 0) {
+      setCurrentPage(page - 1)
+    } else {
+      setCurrentPage(page)
+    }
+    setPageSize(pageSize)
+  }
   const handleRedirect = link => {
     history.push(link)
   }
@@ -74,7 +79,7 @@ const JobFairAttendantListContainer = () => {
         searchResult={searchResult}
         // getCompanyBoothId={getCompanyBoothId}
       />
-      <Pagination defaultCurrent={1} total={totalPage} />
+      <PaginationComponent handlePageChange={handlePageChange} totalRecord={totalPage} />
     </div>
   )
 }

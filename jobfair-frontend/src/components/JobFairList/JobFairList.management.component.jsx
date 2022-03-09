@@ -83,14 +83,14 @@ const JobFairListManagementComponent = props => {
             >
               <List.Item.Meta
                 title={
-                  <div display="flex">
+                  <div display="flex" style={{ width: '300px' }}>
                     <h2 style={{ marginBottom: '0.2rem' }}>{`Name: ${item['description']}`}</h2>
                   </div>
                 }
                 description={
                   <div display="flex">
-                    <h4>{`Description: ${item['description']}`}</h4>
-                    <Carousel autoplay>
+                    <h4 style={{ width: '300px', textAlign: 'right' }}>{`Description: ${item['description']}`}</h4>
+                    <Carousel autoplay style={{ width: '300px' }}>
                       {listImage.map(image => (
                         <div style={contentStyle}>
                           <JobFairListManagementImageComponent key={image.id} urlImage={image.urlImage} />
