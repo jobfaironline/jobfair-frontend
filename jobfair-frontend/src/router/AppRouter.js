@@ -27,6 +27,13 @@ import CompanyEmployeeRouter from './components/CompanyEmployeeRouter'
 import AdminRouter from './components/AdminRouter'
 import StaffRouter from './components/StaffRouter'
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage'
+import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
+import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
+import RegisterJobFairForm from '../components/register-job-fair-form/RegisterJobFairForm'
+import JobPositionPage from '../pages/JobPositionPage/JobPositionPage'
+import NavigationBar from '../components/navbar/Navbar'
+import JobPositionDetailPage from '../pages/JobPositionPage/JobPositionDetailPage'
+import CreateJobPositionPage from '../pages/JobPositionPage/CreateJobPositionPage'
 import {
   PATH_ATTENDANT,
   PATH,
@@ -35,13 +42,8 @@ import {
   PATH_COMPANY_MANAGER,
   PATH_STAFF
 } from '../constants/Paths/Path'
-import EmployeeManagementPage from "../pages/EmployeeManagementPage/EmployeeManagementPage";
-import EmployeeRegisterPage from "../pages/EmployeeRegisterPage/EmployeeRegisterPage";
-import RegisterJobFairForm from "../components/register-job-fair-form/RegisterJobFairForm";
-import JobPositionPage from "../pages/JobPositionPage/JobPositionPage";
-import NavigationBar from "../components/navbar/Navbar";
-import JobPositionDetailPage from "../pages/JobPositionPage/JobPositionDetailPage";
-import CreateJobPositionPage from "../pages/JobPositionPage/CreateJobPositionPage";
+import JobFairAttendantListPage from '../pages/JobFairAttendantListPage/JobFairAttendantListPage'
+
 const AppRouter = () => {
   const role = useSelector(state => state.authentication?.user?.roles)
   return (
@@ -120,6 +122,12 @@ const AppRouter = () => {
           path={PATH_ATTENDANT.ATTENDANT_PROFILE_PAGE}
           exact
         />
+         <AttendantRouter
+          key={PATH_ATTENDANT.ATTENDANT_JOBFAIRL_LIST_PAGE}
+          component={() => <JobFairAttendantListPage />}
+          path={PATH_ATTENDANT.ATTENDANT_JOBFAIRL_LIST_PAGE}
+          exact
+        />
         <CompanyEmployeeRouter
           key={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}
           component={() => <CompanyProfile />}
@@ -157,16 +165,16 @@ const AppRouter = () => {
           exact
         />
         <CompanyManagerRouter
-            key={PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL}
-            component={() => <JobPositionDetailPage />}
-            path={PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL}
-            exact
+          key={PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL}
+          component={() => <JobPositionDetailPage />}
+          path={PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL}
+          exact
         />
         <CompanyManagerRouter
-            key={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION}
-            component={() => <CreateJobPositionPage />}
-            path={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION}
-            exact
+          key={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION}
+          component={() => <CreateJobPositionPage />}
+          path={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION}
+          exact
         />
         <AdminRouter
           key={PATH_ADMIN.APPROVAL_REGISTRATION_PAGE}
