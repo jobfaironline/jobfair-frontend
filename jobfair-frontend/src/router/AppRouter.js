@@ -27,8 +27,6 @@ import CompanyEmployeeRouter from './components/CompanyEmployeeRouter'
 import AdminRouter from './components/AdminRouter'
 import StaffRouter from './components/StaffRouter'
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage'
-import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
-import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
 import RegisterJobFairForm from '../components/register-job-fair-form/RegisterJobFairForm'
 import JobPositionPage from '../pages/JobPositionPage/JobPositionPage'
 import NavigationBar from '../components/navbar/Navbar'
@@ -42,6 +40,11 @@ import {
   PATH_COMPANY_MANAGER,
   PATH_STAFF
 } from '../constants/Paths/Path'
+import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
+import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
+import JobFairDetailPage from "../pages/JobFairDetailPage/JobFairDetailPage";
+import JobFairPlanPage from "../pages/JobFairPlanPage/JobFairPlanPage";
+import CompanyRegistrationDetailPage from "../pages/CompanyRegistrationDetailPage/CompanyRegistrationDetailPage";
 import JobFairAttendantListPage from '../pages/JobFairAttendantListPage/JobFairAttendantListPage'
 
 const AppRouter = () => {
@@ -182,11 +185,35 @@ const AppRouter = () => {
           path={PATH_ADMIN.APPROVAL_REGISTRATION_PAGE}
           exact
         />
+        <AdminRouter
+          key={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
+          component={() => <JobFairDetailPage />}
+          path={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
+          exact
+        />
+        <AdminRouter
+          key={PATH_ADMIN.JOB_FAIR_PLAN_LIST}
+          component={() => <JobFairPlanPage />}
+          path={PATH_ADMIN.JOB_FAIR_PLAN_LIST}
+          exact
+        />
+        <AdminRouter
+          key={PATH_ADMIN.COMPANY_REGISTRATION_DETAIL}
+          component={() => <CompanyRegistrationDetailPage />}
+          path={PATH_ADMIN.COMPANY_REGISTRATION_DETAIL}
+          exact
+        />
         <StaffRouter
           key={PATH_STAFF.APPROVAL_REGISTRATION_PAGE}
           component={() => <ApprovalRegistrationPage />}
           path={PATH_STAFF.APPROVAL_REGISTRATION_PAGE}
           exact
+        />
+        <StaffRouter
+            key={PATH_STAFF.JOB_FAIR_DETAIL_PAGE}
+            component={() => <JobFairDetailPage />}
+            path={PATH_STAFF.JOB_FAIR_DETAIL_PAGE}
+            exact
         />
       </Switch>
     </>

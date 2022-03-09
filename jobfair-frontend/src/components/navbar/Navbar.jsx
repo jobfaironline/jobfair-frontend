@@ -53,7 +53,11 @@ export const CompanyEmployeeMenu = [
 export const AdminMenu = [
   <Menu.Item key={PATH.JOB_FAIR_LIST_PAGE}>
     <Link to={PATH.JOB_FAIR_LIST_PAGE}>Job fair list</Link>
+  </Menu.Item>,
+  <Menu.Item key={PATH_ADMIN.JOB_FAIR_PLAN_LIST}>
+    <Link to={PATH_ADMIN.JOB_FAIR_PLAN_LIST}>Job fair plan list</Link>
   </Menu.Item>
+
 ]
 
 export const StaffMenu = [

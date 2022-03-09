@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import {addVideoTexture, fixTextureOffset, loadModel} from '../../utils/glbModelUtil'
-import { CompanyBoothCanvasComponent } from '../../components/AttendantJobFair/CompanyBoothCanvas.component'
+import {
+  CompanyBoothCanvasComponent,
+  CompanyBoothCanvasContainer
+} from '../../components/AttendantJobFair/CompanyBoothCanvas.component'
 import { getCompanyBoothLatestLayout } from '../../services/company-booth-layout-controller/CompanyBoothLayoutControllerService'
 
 export const AttendantJobFairBoothContainer = props => {
@@ -21,5 +24,5 @@ export const AttendantJobFairBoothContainer = props => {
     setBoothMesh(glb.scene)
   }, [])
   if (boothMesh === null) return null
-  return <CompanyBoothCanvasComponent boothMesh={boothMesh} />
+  return <CompanyBoothCanvasContainer boothMesh={boothMesh} />
 }

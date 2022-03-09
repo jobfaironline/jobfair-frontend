@@ -9,6 +9,7 @@ import { AttendantJobFairBoothContainer } from '../../containers/AttendantJobFai
 import SideBar from './components/SideBar/SideBar.component'
 import styles from './AttendantJobFairPage.module.scss'
 import ChatBox from './components/ChatBox/ChatBox.component'
+import {Stats} from "@react-three/drei";
 const config = {
   mode: 'rtc',
   codec: 'vp8'
@@ -59,11 +60,12 @@ const AttendantJobFairPage = () => {
             <SideBar />
           </div>
           <div className={styles.booth}>
+            <Stats/>
             <AttendantJobFairBoothContainer companyBoothId={companyBoothId} />
           </div>
-          <div>
-            <ChatBox {...communicationProps} />
-          </div>
+            {/*<div>
+              <ChatBox {...communicationProps} />
+            </div>*/}
         </div>
       </div>
   )
