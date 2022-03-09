@@ -9,9 +9,11 @@ import {
 } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
 import { Form } from 'antd'
 import { useEffect } from 'react'
+import {fetchJobPositions} from "../../redux-flow/jobPositions/job-positions-action";
+import {getJobPositionsAPI} from "../../services/job-controller/JobControllerService";
 
 const PickJobPositionFormContainer = props => {
-  const { jobPositions, form, onFinish } = props
+  const {form, onFinish } = props
 
   const jobPositionsInForm = useSelector(state => {
     return state?.registrationJobfairForm?.form?.body?.jobPositions
