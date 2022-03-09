@@ -39,6 +39,7 @@ import {
 import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
 import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
 import RegisterJobFairForm from '../components/register-job-fair-form/RegisterJobFairForm'
+import JobFairAttendantListPage from '../pages/JobFairAttendantListPage/JobFairAttendantListPage'
 const AppRouter = () => {
   const role = useSelector(state => state.authentication?.user?.roles)
   return (
@@ -115,6 +116,12 @@ const AppRouter = () => {
           key={PATH_ATTENDANT.ATTENDANT_PROFILE_PAGE}
           component={() => <AttendantProfile />}
           path={PATH_ATTENDANT.ATTENDANT_PROFILE_PAGE}
+          exact
+        />
+        <AttendantRouter
+          key={PATH_ATTENDANT.ATTENDANT_JOBFAIRL_LIST_PAGE}
+          component={() => <JobFairAttendantListPage/>}
+          path={PATH_ATTENDANT.ATTENDANT_JOBFAIRL_LIST_PAGE}
           exact
         />
         <CompanyEmployeeRouter

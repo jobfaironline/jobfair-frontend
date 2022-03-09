@@ -1,17 +1,36 @@
 import React from 'react'
-import { Button, Divider, List, Select, Skeleton, Space, Tag, Tooltip, Typography } from 'antd'
+import { Button, Divider, List, Select, Skeleton, Space, Tag, Tooltip, Typography, Carousel, Image } from 'antd'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { JOB_FAIR_PLAN_COMPANY_STATUS } from '../../constants/JobFairConst'
 import { PATH } from '../../constants/Paths/Path'
-import {COMPANY_JOB_FAIR_STATUS} from "../../constants/CompanyJobFairStatus";
-import CompanyJobFairActionButton from "./CompanyJobFairActionButton.component";
-
+import { COMPANY_JOB_FAIR_STATUS } from '../../constants/CompanyJobFairStatus'
+import CompanyJobFairActionButton from './CompanyJobFairActionButton.component'
+import JobFairListManagementImageComponent from './components/JobFairList.management.image.component'
+const listImage = [
+  {
+    id: 1,
+    urlImage: '/jobfair-pic1.jpg'
+  },
+  {
+    id: 2,
+    urlImage: '/jobfair-pic2.jpg'
+  },
+  {
+    id: 3,
+    urlImage: '/jobfair-pic3.jpg'
+  }
+]
 const JobFairListManagementComponent = props => {
   const { Title, Paragraph, Text, Link } = Typography
   const { Option } = Select
-
   const { data, handleRedirect, loadMoreData, handleFilterByStatus, searchResult, getCompanyBoothId } = props
-
+  const contentStyle = {
+    height: '200px',
+    color: '#fff',
+    lineHeight: '200px',
+    textAlign: 'center',
+    background: '#364d79'
+  }
   return (
     <div
       id="scrollableDiv"
@@ -50,11 +69,15 @@ const JobFairListManagementComponent = props => {
             <List.Item
               key={item.id}
               actions={[
-                <Space>J
+                <Space>
                   <Button type="link" onClick={() => {}} style={{ padding: '0.2rem 0', border: '0' }}>
                     More details
                   </Button>
-                  <CompanyJobFairActionButton getCompanyBoothId={getCompanyBoothId} item={item} handleRedirect={handleRedirect}/>
+                  <CompanyJobFairActionButton
+                    getCompanyBoothId={getCompanyBoothId}
+                    item={item}
+                    handleRedirect={handleRedirect}
+                  />
                 </Space>
               ]}
             >
@@ -67,6 +90,13 @@ const JobFairListManagementComponent = props => {
                 description={
                   <div display="flex">
                     <h4>{`Description: ${item['description']}`}</h4>
+                    <Carousel autoplay>
+                      {listImage.map(image => (
+                        <div style={contentStyle}>
+                          <JobFairListManagementImageComponent key={image.id} urlImage={image.urlImage} />
+                        </div>
+                      ))}
+                    </Carousel>
                   </div>
                 }
               />
