@@ -19,12 +19,9 @@ const JobfairRegistrationPage = () => {
     else history.push(PATH.JOB_FAIRS_PAGE)
   }, [jobfairId])
 
-  useEffect(
-    () => () => {
-      dispatch(resetForm())
-    },
-    []
-  )
+  useEffect(() => () => {
+    dispatch(resetForm())
+  })
 
   return (
     <div className="page">

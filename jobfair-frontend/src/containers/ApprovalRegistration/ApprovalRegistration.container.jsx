@@ -26,7 +26,6 @@ const ApprovalRegistrationContainer = () => {
   const fetchData = async () => {
     getRegistrationByJobFairId(jobFairId, currentPage, pageSize, 'createDate', 'DESC')
       .then(res => {
-        // console.log(res.data)
         const totalRecord = res.data.totalElements
         setTotalRecord(totalRecord)
         const result = res.data.content.map((item, index) => {

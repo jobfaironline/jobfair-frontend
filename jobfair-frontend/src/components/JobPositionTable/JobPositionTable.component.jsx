@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 // import { defaultColumns, editableColumns } from './columns-type';
-import { Space, Table, Input, Button, Spin } from 'antd'
+import { Space, Table, Input, Button, Spin, Typography, Divider } from 'antd'
 import Highlighter from 'react-highlight-words'
 import SearchOutlined from '@ant-design/icons/SearchOutlined'
 import JobPositionTableColumn from './JobPositionTable.column'

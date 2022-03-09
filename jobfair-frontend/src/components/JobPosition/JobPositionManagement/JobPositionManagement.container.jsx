@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { Button, notification, Pagination, Space } from 'antd'
+import { Button, notification, Pagination, Space, Divider, Typography } from 'antd'
 import {
   deleteJobPositionAPI,
   getJobPositionsAPI,
@@ -29,7 +29,15 @@ const JobPositionManagementContainer = props => {
       .then(res => {
         const totalRecord = res.data.totalElements
         setTotalRecord(totalRecord)
-        setData([...res.data.content])
+        setData([
+          ...res.data.content.map((item, index) => {
+            return {
+              key: item.id,
+              no: index + res.data.number * 10 + 1,
+              ...item
+            }
+          })
+        ])
       })
       .catch(err => {
         notification['error']({
@@ -62,9 +70,21 @@ const JobPositionManagementContainer = props => {
   }
 
   return (
-    <>
+    <div style={{}}>
       {/*<JobPositionDetailModalContainer {...modalProps} />*/}
       {/*<JobPositionSubmodalContainer/>*/}
+
+      <Space style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+        <Typography.Title level={2} style={{ marginBottom: '0rem' }}>
+          Job positions
+        </Typography.Title>
+        <Space>
+          <Button type="primary" onClick={() => handleCreateOnClick()}>
+            Create job position
+          </Button>
+        </Space>
+      </Space>
+
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <JobPositionTable
           data={data}
@@ -86,14 +106,11 @@ const JobPositionManagementContainer = props => {
             }
           }}
         />
-        <Space>
+        <Space style={{ margin: '1rem 0', display: 'flex', justifyContent: 'end' }}>
           <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={totalRecord} />
-          <Button type="primary" onClick={() => handleCreateOnClick()}>
-            Create job position
-          </Button>
         </Space>
       </div>
-    </>
+    </div>
   )
 }
 

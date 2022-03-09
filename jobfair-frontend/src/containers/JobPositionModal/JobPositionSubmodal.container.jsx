@@ -10,15 +10,11 @@ const JobPositionSubmodalContainer = ({ jobPositionId }) => {
   const [visible, setVisible] = useState(false)
   const [data, setData] = useState(null)
 
-  console.log(jobPositionId)
-
   const dispatch = useDispatch()
 
   const jobPositions = useSelector(state => {
     return state?.jobPosition?.data
   })
-
-  console.log(data)
 
   useEffect(() => {
     setData(jobPositions?.filter(item => item.id == jobPositionId)[0])

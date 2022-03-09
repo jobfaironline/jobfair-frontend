@@ -98,57 +98,11 @@ const JobfairRegistrationForm = () => {
         history.push(PATH.PROCESSED_FAIL)
       }
     },
-    total: 2
+    total: 3
     // total: 3
   })
 
   const onFinish = values => {}
-
-  const formList = [
-    <JobfairRegistrationFormComponent
-      form={form}
-      onPickJobFinish={onFinish}
-      nextStep={() => {
-        gotoStep(current + 1)
-        dispatch(setFormBody(form.getFieldsValue()))
-      }}
-      preStep={() => gotoStep(current - 1)}
-    />,
-    <>
-      <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
-      <div className="step-buttons">
-        <div className="pre-step-button">
-          <Form.Item>
-            <Button size="large" type="primary" onClick={() => gotoStep(current - 1)}>
-              Prev
-            </Button>
-          </Form.Item>
-        </div>
-        <div className="next-step-button">
-          <Form.Item>
-            <div className="submit-registration-popconfirm">
-              <Popconfirm
-                title="Are you sure to submit this form?"
-                onConfirm={() => {
-                  submit().then(result => {
-                    if (result === 'ok') {
-                      gotoStep(current + 1)
-                    }
-                  })
-                }}
-                okText="Yes"
-                cancelText="No"
-              >
-                <Button size="large" type="primary" loading={formLoading}>
-                  Submit
-                </Button>
-              </Popconfirm>
-            </div>
-          </Form.Item>
-        </div>
-      </div>
-    </>
-  ]
 
   const onChange = values => {}
 
@@ -169,7 +123,58 @@ const JobfairRegistrationForm = () => {
           requiredMark="required"
           autoComplete="off"
         >
-          {formList[current]}
+          <div style={{ display: current == 0 ? 'block' : 'none' }}>
+            <JobfairRegistrationFormComponent
+              form={form}
+              onPickJobFinish={onFinish}
+              nextStep={() => {
+                gotoStep(current + 1)
+                dispatch(setFormBody(form.getFieldsValue()))
+              }}
+            />
+          </div>
+          {current == 1 ? (
+            <div style={{ display: current == 1 ? 'block' : 'none' }}>
+              <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
+              <div className="step-buttons">
+                <div className="pre-step-button">
+                  <Form.Item>
+                    <Button
+                      size="large"
+                      type="primary"
+                      onClick={() => {
+                        gotoStep(current - 1)
+                      }}
+                    >
+                      Prev
+                    </Button>
+                  </Form.Item>
+                </div>
+                <div className="next-step-button">
+                  <Form.Item>
+                    <div className="submit-registration-popconfirm">
+                      <Popconfirm
+                        title="Are you sure to submit this form?"
+                        onConfirm={() => {
+                          submit().then(result => {
+                            if (result === 'ok') {
+                              gotoStep(current + 1)
+                            }
+                          })
+                        }}
+                        okText="Yes"
+                        cancelText="No"
+                      >
+                        <Button size="large" type="primary" loading={formLoading}>
+                          Submit
+                        </Button>
+                      </Popconfirm>
+                    </div>
+                  </Form.Item>
+                </div>
+              </div>
+            </div>
+          ) : null}
         </Form>
       </div>
     </div>

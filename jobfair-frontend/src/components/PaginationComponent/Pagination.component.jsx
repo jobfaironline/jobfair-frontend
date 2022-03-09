@@ -2,7 +2,6 @@ import React from 'react'
 import { Pagination } from 'antd'
 
 const PaginationComponent = ({ handlePageChange, totalRecord }) => {
-  console.log(totalRecord)
   return (
     <>
       <Pagination

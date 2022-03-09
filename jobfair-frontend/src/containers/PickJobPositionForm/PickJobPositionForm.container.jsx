@@ -14,6 +14,15 @@ import { ConsoleSqlOutlined } from '@ant-design/icons'
 const PickJobPositionFormContainer = props => {
   const { form, onFinish } = props
 
+  const FormInRedux = useSelector(state => state?.registrationJobfairForm?.form?.body)
+
+  if (Object.keys(form.getFieldsValue()).length == 0) {
+    form.setFieldsValue({
+      description: FormInRedux.description,
+      jobPositions: FormInRedux.jobPositions
+    })
+  }
+
   const jobPositionsInRedux = useSelector(state => {
     return state?.registrationJobfairForm?.form?.body?.jobPositions
   })

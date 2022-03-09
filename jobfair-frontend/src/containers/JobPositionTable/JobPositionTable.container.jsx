@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useLayoutEffect } from 'react'
 import JobPositionTableComponent from '../../components/JobPositionTable/JobPositionTable.component'
 import { Space, notification, Popconfirm, Button } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
@@ -32,6 +32,7 @@ const JobPositionTable = ({ selectable }) => {
   const jobPositionsInForm = useSelector(state => {
     return state?.registrationJobfairForm?.form?.body?.jobPositions
   })
+
   const dispatch = useDispatch()
 
   //select table logic
@@ -51,6 +52,7 @@ const JobPositionTable = ({ selectable }) => {
         mappedData.push(item)
       }
     }
+
     dispatch(setJobPositions(mappedData))
     dispatch(setJobPositionModalVisibility(false))
   }
@@ -74,7 +76,8 @@ const JobPositionTable = ({ selectable }) => {
   const fetchData = async (currentPage, pageSize) => {
     dispatch(fetchJobPositions({ currentPage, pageSize }))
   }
-  useEffect(() => {
+
+  useLayoutEffect(() => {
     fetchData(currentPage, pageSize)
   }, [currentPage, pageSize])
 
@@ -112,7 +115,9 @@ const JobPositionTable = ({ selectable }) => {
         }}
         rowSelection={selectable ? { ...rowSelection } : null}
       />
-      <PaginationComponent data={jobPositionData} handlePageChange={handlePageChange} totalRecord={totalRecord} />
+      <Space style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}>
+        <PaginationComponent data={jobPositionData} handlePageChange={handlePageChange} totalRecord={totalRecord} />
+      </Space>
       {selectable ? (
         <Popconfirm
           title="Are you sure to choose these jobs?"
@@ -120,7 +125,9 @@ const JobPositionTable = ({ selectable }) => {
           okText="Yes"
           cancelText="No"
         >
-          <Button type="primary">Choose</Button>
+          <Button style={{ width: '100%' }} type="primary">
+            Choose
+          </Button>
         </Popconfirm>
       ) : null}
     </div>
