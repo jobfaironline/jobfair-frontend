@@ -2,35 +2,54 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PickJobPositionForm from '../../components/PickJobPositionForm/PickJobPositionForm.component'
 import JobPositionModal from '../../containers/JobPositionModal/JobPositionModal.container'
-import JobPositionSubmodal from '../../containers/JobPositionModal/JobPositionSubmodal.container'
+import JobPositionSubmodal from '../../components/JobPositionModal/JobPositionSubmodal.component'
 import {
   setJobPositionModalVisibility,
   setJobPositions
 } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
 import { Form } from 'antd'
 import { useEffect } from 'react'
-import {fetchJobPositions} from "../../redux-flow/jobPositions/job-positions-action";
-import {getJobPositionsAPI} from "../../services/job-controller/JobControllerService";
+import { ConsoleSqlOutlined } from '@ant-design/icons'
 
 const PickJobPositionFormContainer = props => {
-  const {form, onFinish } = props
+  const { form, onFinish } = props
 
-  const jobPositionsInForm = useSelector(state => {
+  const FormInRedux = useSelector(state => state?.registrationJobfairForm?.form?.body)
+
+  if (Object.keys(form.getFieldsValue()).length == 0) {
+    form.setFieldsValue({
+      description: FormInRedux.description,
+      jobPositions: FormInRedux.jobPositions
+    })
+  }
+
+  const jobPositionsInRedux = useSelector(state => {
     return state?.registrationJobfairForm?.form?.body?.jobPositions
   })
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    form.setFieldsValue({
-      jobPositions: jobPositionsInForm
+    const jobPositionsInForm = form?.getFieldsValue().jobPositions
+    const jobPositionsInFormKeys = {}
+    jobPositionsInForm?.forEach(jobPosition => {
+      jobPositionsInFormKeys[jobPosition.key] = jobPosition
     })
-  }, [jobPositionsInForm])
+    //This will map the old data with new picked data to keep the input data after refresh form
+    const mappedData = jobPositionsInRedux.map(jobPosition => {
+      if (jobPositionsInFormKeys[jobPosition.key]) {
+        return jobPositionsInFormKeys[jobPosition.key]
+      }
+      return jobPosition
+    })
+    form.setFieldsValue({
+      jobPositions: mappedData
+    })
+  }, [jobPositionsInRedux])
 
   const handlePickJobPosition = (name, add) => {
     dispatch(setJobPositionModalVisibility(true))
   }
-
 
   const handleRemove = (name, remove) => {
     remove(name)
@@ -40,10 +59,9 @@ const PickJobPositionFormContainer = props => {
 
   return (
     <>
-      <JobPositionSubmodal />
-      <JobPositionModal setFinalSelectedJob={jobPositionsInForm} />
+      <JobPositionModal setFinalSelectedJob={jobPositionsInRedux} />
       <PickJobPositionForm
-        jobPositions={jobPositionsInForm}
+        jobPositions={jobPositionsInRedux}
         handlePickJobPosition={handlePickJobPosition}
         form={form}
         onFinish={onFinish}

@@ -1,14 +1,12 @@
-import React from 'react';
-import ResultFailedContainer from "../../containers/Result/ResultFailed.container";
+import React from 'react'
+import ResultFailedContainer from '../../containers/Result/ResultFailed.container'
 
 const ResultFailedPage = props => {
-    return (
-        <>
-            <ResultFailedContainer/>
-        </>
-    );
-};
+  return (
+    <div className="page">
+      <ResultFailedContainer />
+    </div>
+  )
+}
 
-
-
-export default ResultFailedPage;
+export default ResultFailedPage

@@ -1,20 +1,19 @@
-import React from 'react';
-import {Pagination} from "antd";
+import React from 'react'
+import { Pagination } from 'antd'
 
-const PaginationComponent = ({handlePageChange, totalRecord}) => {
+const PaginationComponent = ({ handlePageChange, totalRecord }) => {
+  return (
+    <>
+      <Pagination
+        total={totalRecord}
+        onChange={(page, pageSize) => handlePageChange(page, pageSize)}
+        showSizeChanger
+        showQuickJumper
+        showTotal={total => `Total ${total} items`}
+        pageSizeOptions={[5, 10, 15, 20]}
+      />
+    </>
+  )
+}
 
-    return (
-        <>
-            <Pagination
-                total={totalRecord}
-                onChange={(page, pageSize) => handlePageChange(page, pageSize)}
-                showSizeChanger
-                showQuickJumper
-                showTotal={total => `Total ${total} items`}
-                pageSizeOptions={[5, 10, 15, 20]}
-            />
-        </>
-    );
-};
-
-export default PaginationComponent;
+export default PaginationComponent
