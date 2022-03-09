@@ -1,15 +1,19 @@
 import {Canvas, useFrame, useLoader, useThree} from "@react-three/fiber";
-import {OrbitControls, Stage, useAnimations, useFBX, useGLTF} from "@react-three/drei";
-import React, {useRef} from "react";
+import {Stage, Stats} from "@react-three/drei";
+import React, {useRef, useState} from "react";
 import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
 import {CameraControls} from "../ThreeJSBaseComponent/CameraControls.component";
 import * as THREE from "three"
 import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
+import {Modal} from "antd";
+import {EffectComposer, Outline} from "@react-three/postprocessing";
+
 
 
 class BasicCharacterControls {
     constructor(params) {
         this._Init(params);
+        this._onKeyPress = params.onKeyPress
     }
 
     _Init(params) {
@@ -26,11 +30,15 @@ class BasicCharacterControls {
 
         document.addEventListener('keydown', (e) => this._onKeyDown(e), false);
         document.addEventListener('keyup', (e) => this._onKeyUp(e), false);
+        document.addEventListener('keypress', (e) => this._onKeyPress(e), false);
     }
+
+
 
     _onKeyDown(event) {
         this._params.isMoving.current = true;
         switch (event.keyCode) {
+
             case 87: // w
                 this._move.forward = true;
                 break;
@@ -134,9 +142,9 @@ class BasicCharacterControls {
         if (this._move.right || this._move.forward || this._move.left || this._move.backward){
             if (this._move.backward){
                 this._params.animations.walk.timeScale  = -1;
-
+            } else {
+                this._params.animations.walk.timeScale  = 1;
             }
-            this._params.animations.walk.timeScale  = 1;
             this._params.animations.walk.crossFadeTo(this._params.animations.idle, 2, true);
             this._params.animations.walk.play();
 
@@ -175,10 +183,12 @@ class ThirdPersonCamera {
         const idealLookat = new THREE.Vector3(0, 0, 0);
         idealLookat.applyQuaternion(new THREE.Quaternion().setFromEuler(this._params.target.rotation));
         idealLookat.add(this._params.target.position);
+        idealLookat.y += 10
         return idealLookat;
     }
 
     Update(timeElapsed) {
+
         const idealOffset = this._CalculateIdealOffset();
         const idealLookat = this._CalculateIdealLookat();
 
@@ -194,8 +204,27 @@ class ThirdPersonCamera {
     }
 }
 
-const Model = props => {
-    const {center} = props;
+function getBase64Image(img) {
+    // Create an empty canvas element
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    // Copy the image contents to the canvas
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    // Get the data-URL formatted image
+    // Firefox supports PNG and JPEG. You could check img.src to
+    // guess the original format, but be aware the using "image/jpg"
+    // will re-encode the image.
+    var dataURL = canvas.toDataURL("image/png");
+
+    return dataURL;
+}
+
+const ModelController = props => {
+    const { center, boothMesh, modalRef} = props;
     const isMoving = useRef(false);
     const model = useLoader(FBXLoader, 'https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx')
     const newModel = useLoader(FBXLoader, "https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx")
@@ -222,11 +251,34 @@ const Model = props => {
         }
     })
 
+
+    const onKeyPress = e => {
+        if (e.keyCode === 101){
+            if (modalRef.current === false){
+                const mainBoard = boothMesh.children.filter(child => child.name === 'main_board')[0];
+                modalRef.current = true
+                const url = getBase64Image(mainBoard.children[1].material.map.image)//URL.createObjectURL( mainBoard.children[1].material.map.image.src );
+                const modal = Modal.info();
+                modal.update({
+                    title: 'Updated title',
+                    content: <img style={{width: "100%", maxHeight: "50vh"}} src={url}/>,
+                    onOk: () => {modalRef.current = false;},
+                    maskClosable: false,
+                    keyboard: false,
+                    width: 1000
+                });
+            }
+        }//e
+    }
+
+
+
     const params = {
         target: model,
         camera: camera,
         animations: animations,
-        isMoving: isMoving
+        isMoving: isMoving,
+        onKeyPress: onKeyPress
     }
     const _controls = new BasicCharacterControls(params);
     const thirdPersonCamera = new ThirdPersonCamera({
@@ -252,39 +304,41 @@ const Model = props => {
     )
 }
 
-function loadCharacter() {
-    const loader = new FBXLoader();
-    loader.load("./T-Pose.fbx", (fbx) => {
-        fbx.scale.setScalar(0.1);
-        fbx.traverse(c => c.castShadow = true);
-
-        const animationLoader = new FBXLoader();
-        animationLoader.load("./Walking.fbx", (anim) => {
-            const mixer = new THREE.AnimationMixer(fbx);
-            const idle = mixer.clipAction(anim.animation[0]);
-            idle.play();
-        });
-    });
-}
-
 export const CompanyBoothCanvasComponent = (props) => {
     const {boothMesh} = props;
     boothMesh.scale.setScalar(2);
     const floorMesh = boothMesh.children.filter(child => child.name === "sand")[0];
     const floorHeight = floorMesh.scale.y * Math.abs(floorMesh.geometry.boundingBox.max.y - floorMesh.geometry.boundingBox.min.y);
     const center = floorMesh.position.y + floorHeight / 2;
-    return (
-        <Canvas
-            dpr={[1, 2]}
-            camera={{fov: 45, position: [-10, 10, -10]}}
-            style={{width: '100%', height: '850px'}}
-        >
-            <CameraControls />
+    const modalRef = useRef(false);
 
-            <Stage adjustCamera={false} preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
-                <BasicMesh mesh={boothMesh}/>
-                <Model center={center}/>
-            </Stage>
-        </Canvas>
+    //const model = useLoader(FBXLoader, 'https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx')
+    //const newModel = useLoader(FBXLoader, "https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx")
+    const sceneMeshRef = useRef()
+
+    return (
+        <div style={{width: '100%', height: '100vh'}}>
+            <Canvas
+                dpr={[1, 2]}
+                camera={{fov: 45, zoom: 2, position: [-10, 10, -10]}}
+                style={{width: '100%', height: '100vh'}}
+            >
+                <CameraControls/>
+
+                <Stage adjustCamera={false} preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
+                    <BasicMesh ref={sceneMeshRef} mesh={boothMesh}/>
+                    <ModelController center={center} boothMesh={boothMesh} modalRef={modalRef} />
+                </Stage>
+                {/*<EffectComposer multisampling={8} autoClear={false}>
+                    <Outline
+                        selection={nearItem}
+                        visibleEdgeColor="yellow"
+                        hiddenEdgeColor="yellow"
+                        edgeStrength={100}
+                        width={1000}/>
+                </EffectComposer>*/}
+            </Canvas>
+        </div>
+
     )
 }
