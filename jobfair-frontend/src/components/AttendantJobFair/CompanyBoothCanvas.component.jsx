@@ -1,5 +1,5 @@
 import {Canvas, useFrame, useLoader, useThree} from "@react-three/fiber";
-import {Stage, Stats} from "@react-three/drei";
+import {OrbitControls, Stage, Stats} from "@react-three/drei";
 import React, {useEffect, useRef, useState} from "react";
 import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
 import {CameraControls} from "../ThreeJSBaseComponent/CameraControls.component";
@@ -37,7 +37,6 @@ class BasicCharacterControls {
 
 
     _onKeyDown(event) {
-        console.log('AAAAAAAAAAAA')
         this._params.isMoving.current = true;
         switch (event.keyCode) {
 
@@ -225,14 +224,7 @@ function getBase64Image(img) {
     return dataURL;
 }
 
-const Model = props => {
-    const {model} = props;
-    return (
-        <primitive
-            object={model}
-        />
-    )
-}
+
 
 const ModelController = props => {
     const {
@@ -243,20 +235,25 @@ const ModelController = props => {
         nearby,
         model,
         newModel,
+        cameraPositionRef,
+        cameraRef,
+        controls,
+        mixer,
+        cameraLookat
     } = props;
-    const isMoving = useRef(false);
     const {camera} = useThree();
+    cameraRef.current = camera;
 
 
 
 
-    const mixer = new THREE.AnimationMixer(model);
+    /*const mixer = new THREE.AnimationMixer(model);
     const animations = {
         'walk': mixer.clipAction(model.animations[0]),
         'idle': mixer.clipAction(newModel.animations[0])
     }
-    animations.idle.play();
-    const onKeyPress = e => {
+    animations.idle.play();*/
+    /*const onKeyPress = e => {
         if (nearItem === undefined) return;
         if (e.keyCode === 101){
             if (modalRef.current === false){
@@ -276,33 +273,22 @@ const ModelController = props => {
                 });
             }
         }//e
-    }
+    }*/
 
-    const params = {
+    /*const params = {
         target: model,
         camera: camera,
         animations: animations,
         isMoving: isMoving,
     }
-    const controls = new BasicCharacterControls(params);
+    const controls = new BasicCharacterControls(params);*/
     const thirdPersonCamera = new ThirdPersonCamera({
         camera: camera,
         target: model,
     });
 
 
-    useEffect(() => {
-        const keyDown = (e) => controls._onKeyDown(e);
-        const keyUp = (e) => controls._onKeyUp(e);
-        document.addEventListener('keydown', keyDown, false);
-        document.addEventListener('keyup', keyUp, false);
-        document.addEventListener('keypress', onKeyPress, false);
-        return () => {
-            document.removeEventListener('keydown', keyDown)
-            document.removeEventListener('keyup', keyUp)
-            document.removeEventListener('keypress', onKeyPress)
-        }
-    })
+
 
     const a = throttle(0.1, function () {
         const result = nearby.query(model.position.x, model.position.y, model.position.z);
@@ -324,8 +310,6 @@ const ModelController = props => {
         controls?.Update(delta*0.5)
         mixer?.update(delta)
         thirdPersonCamera?.Update(delta);
-
-
     })
 
     return  (
@@ -338,20 +322,29 @@ const ModelController = props => {
 }
 
 
-
-export const CompanyBoothCanvasComponent = (props) => {
+export const CompanyBoothCanvasContainer = (props) => {
     const {boothMesh} = props;
     boothMesh.scale.setScalar(2);
-    const floorMesh = boothMesh.children.filter(child => child.name === "sand")[0];
-    const floorHeight = floorMesh.scale.y * Math.abs(floorMesh.geometry.boundingBox.max.y - floorMesh.geometry.boundingBox.min.y);
-    const center = floorMesh.position.y + floorHeight / 2;
-    const modalRef = useRef(false);
-
+    const cameraPositionRef = useRef([-10, 10, -10]);
+    const cameraLookat = useRef(new THREE.Vector3(0, 0, 0))
     const [state, setState] = useState({
         model: undefined,
         newModel: undefined,
         nearby: undefined,
+        controls: undefined,
+        mixer: undefined,
+
     });
+    const floorMesh = boothMesh.children.filter(child => child.name === "sand")[0];
+    const floorHeight = floorMesh.scale.y * Math.abs(floorMesh.geometry.boundingBox.max.y - floorMesh.geometry.boundingBox.min.y);
+    const center = floorMesh.position.y + floorHeight / 2;
+    const cameraRef = useRef();
+    const isMoving = useRef(false);
+    const modalRef = useRef(false);
+    const [nearItem, setNearItem] = useState();
+
+
+
 
 
 
@@ -389,40 +382,104 @@ export const CompanyBoothCanvasComponent = (props) => {
 
             nearby.insert(object)
         });
+
+        const mixer = new THREE.AnimationMixer(model);
+        const animations = {
+            'walk': mixer.clipAction(model.animations[0]),
+            'idle': mixer.clipAction(newModel.animations[0])
+        }
+        animations.idle.play();
+
+        const params = {
+            target: model,
+            camera: cameraRef.current,
+            animations: animations,
+            isMoving: isMoving,
+        }
+        const controls = new BasicCharacterControls(params);
+
+
+
         setState(prevState => {
-            return {...prevState, model: model, newModel: newModel, nearby: nearby};
+            return {...prevState, model: model, newModel: newModel, nearby: nearby, controls: controls, mixer: mixer};
         })
     }, [])
 
+    const onKeyPress = e => {
+        if (nearItem === undefined) return;
+        if (e.keyCode === 101){
+            if (modalRef.current === false){
+                modalRef.current = true
+                const imagePlane = nearItem.children.filter(child => child.name.includes(IMAGE_PLANE_NAME))[0];
+                let url;
+                if (imagePlane !== undefined && imagePlane?.material.map !== null){
+                    url = getBase64Image(imagePlane.material.map.image);
+                }
+                const modal = Modal.info({
+                    title: 'Updated title',
+                    content: url ? <img style={{width: "100%", maxHeight: "50vh"}} src={url}/> : null,
+                    onOk: () => {modalRef.current = false;},
+                    maskClosable: false,
+                    keyboard: false,
+                    width: 1000
+                });
+            }
+        }//e
+    }
 
 
-    //const model = useLoader(FBXLoader, 'https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx')
-    //const newModel = useLoader(FBXLoader, "https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx")
-    const [nearItem, setNearItem] = useState();
-    const sceneMeshRef = useRef()
+    useEffect(() => {
+        const keyDown = (e) => state.controls._onKeyDown(e);
+        const keyUp = (e) => state.controls._onKeyUp(e);
+        document.addEventListener('keydown', keyDown, false);
+        document.addEventListener('keyup', keyUp, false);
+        document.addEventListener('keypress', onKeyPress, false);
+        return () => {
+            document.removeEventListener('keydown', keyDown)
+            document.removeEventListener('keyup', keyUp)
+            document.removeEventListener('keypress', onKeyPress)
+        }
+    })
+
 
 
     if (state.model === undefined || state.newModel === undefined) return null;
+
+    const cProps = {boothMesh, cameraPositionRef, nearby: state.nearby, model: state.model, newModel: state.newModel, cameraRef, controls: state.controls, mixer: state.mixer
+    , modalRef, setNearItem, nearItem, cameraLookat}
+    return <CompanyBoothCanvasComponent {...cProps} />
+}
+
+export const CompanyBoothCanvasComponent = (props) => {
+    const {boothMesh, cameraPositionRef, nearby, model, newModel, cameraRef, controls, mixer, modalRef, setNearItem, nearItem, cameraLookat} = props;
+    const sceneMeshRef = useRef()
 
     const modelProps = {
         boothMesh,
         modalRef,
         setNearItem,
         sceneMeshRef,
-        nearby: state.nearby,
-        model: state.model,
-        newModel: state.newModel,
-        nearItem
+        nearby,
+        model,
+        newModel,
+        nearItem,
+        cameraPositionRef,
+        cameraRef,
+        controls,
+        mixer,
+        cameraLookat
     }
+
 
     return (
         <div style={{width: '100%', height: '100vh'}}>
             <Canvas
                 dpr={[1, 2]}
-                camera={{fov: 45, zoom: 2}}
+                camera={{fov: 45, zoom: 2, position: [-10, 10, -10]}}
                 style={{width: '100%', height: '100vh'}}
             >
-                <CameraControls/>
+                <CameraControls />
+
 
                 <Stage adjustCamera={false} preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
                     <BasicMesh ref={sceneMeshRef} mesh={boothMesh}/>
