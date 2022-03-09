@@ -78,17 +78,18 @@ const JobPositionTable = ({ selectable }) => {
   }
 
   useLayoutEffect(() => {
-    fetchData(currentPage, pageSize)
-  }, [currentPage, pageSize])
+    fetchData(0, 5000)
+  }, [])
+  // }, [currentPage, pageSize])
 
-  const handlePageChange = (page, pageSize) => {
-    if (page > 0) {
-      setCurrentPage(page - 1)
-    } else {
-      setCurrentPage(page)
-    }
-    setPageSize(pageSize)
-  }
+  // const handlePageChange = (page, pageSize) => {
+  //   if (page > 0) {
+  //     setCurrentPage(page - 1)
+  //   } else {
+  //     setCurrentPage(page)
+  //   }
+  //   setPageSize(pageSize)
+  // }
 
   return (
     <div>
@@ -115,9 +116,9 @@ const JobPositionTable = ({ selectable }) => {
         }}
         rowSelection={selectable ? { ...rowSelection } : null}
       />
-      <Space style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}>
+      {/* <Space style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}>
         <PaginationComponent data={jobPositionData} handlePageChange={handlePageChange} totalRecord={totalRecord} />
-      </Space>
+      </Space> */}
       {selectable ? (
         <Popconfirm
           title="Are you sure to choose these jobs?"

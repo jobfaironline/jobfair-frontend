@@ -14,7 +14,7 @@ const ConfirmComponent = props => {
     <>
       <div style={{ position: 'fixed', left: '0.8rem', top: '200px' }}>
         <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Registration</Typography>
-        <Anchor targetOffset={300}>
+        <Anchor targetOffset={300} onClick={e => e.preventDefault()}>
           <Link href={`#company-information`} title="Company info" />
           {data.jobPositions.map((jobPosition, index) => {
             return <Link href={`#${index}-job-position`} title={`${index + 1}: ${jobPosition.title}`} />

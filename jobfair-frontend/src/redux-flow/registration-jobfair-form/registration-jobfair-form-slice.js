@@ -65,7 +65,7 @@ const registrationJobFairFormSlice = createSlice({
     setJobPositions: (state, action) => {
       const IdList = state.form.body.jobPositions.map(item => item.id)
       const differentElements = action.payload.filter(item => !IdList.includes(item.id))
-      state.form.body.jobPositions = [...state.form.body.jobPositions, ...differentElements]
+      state.form.body.jobPositions = action.payload
     },
     setFormBody: (state, action) => {
       state.form.body = {

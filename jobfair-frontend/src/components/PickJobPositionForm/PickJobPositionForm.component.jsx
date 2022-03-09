@@ -15,7 +15,7 @@ const PickJobPositionForm = props => {
         {jobPositions.length ? (
           <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Job Positions</Typography>
         ) : null}
-        <Anchor targetOffset={300}>
+        <Anchor targetOffset={300} onClick={e => e.preventDefault()}>
           {jobPositions.map((jobPosition, index) => {
             return <Link href={`#${index}-job-position`} title={`${index + 1}: ${jobPosition.title}`} />
           })}

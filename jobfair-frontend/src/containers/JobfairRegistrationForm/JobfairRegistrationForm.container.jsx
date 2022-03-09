@@ -1,6 +1,6 @@
 import { Button, Form, notification, Popconfirm, Steps } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { useStepsForm } from 'sunflower-antd'
+import { useForm, useStepsForm } from 'sunflower-antd'
 import CompanyProfileForm from '../../components/company-profile-form/CompanyProfileForm.component'
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,7 +21,7 @@ const JobfairRegistrationForm = () => {
   const companyId = useSelector(state => state.authentication.user.companyId)
   const [companyInfo, setCompanyInfo] = useState({})
   const [companyForm] = Form.useForm()
-  const [pickJobForm] = Form.useForm()
+  const [currentStep, setCurrentStep] = useState(0)
   const history = useHistory()
 
   const getCompanyProfile = async () => {
@@ -64,51 +64,45 @@ const JobfairRegistrationForm = () => {
     companyForm.setFieldsValue({ ...companyInfo })
   }, [companyInfo, companyForm])
 
-  const { form, current, gotoStep, stepsProps, formProps, submit, formLoading } = useStepsForm({
-    async submit(values) {
-      const body = {
-        description: values.description,
-        jobFairId: jobfairId,
-        jobPositions: values.jobPositions.map(item => {
-          const result = {
-            jobPositionId: item.id,
-            maxSalary: item.maxSalary,
-            minSalary: item.minSalary,
-            numOfPosition: item.numberOfPosition
-          }
-          return result
-        })
-      }
-      try {
-        await dispatch(createDraftRegistration(body)).unwrap()
-        notification['success']({
-          message: `Registration draft version has been submitted`,
-          description: `Submitted successfully`,
-          duration: 2
-        })
-        //after submit success, push to success page
-        history.push(PATH.PROCESSED_SUCCESS)
-      } catch (err) {
-        notification['error']({
-          message: `An error has occurred while submitting`,
-          description: `Submit failed. Server response: ${err}`,
-          duration: 2
-        })
-        //else push to error page
-        history.push(PATH.PROCESSED_FAIL)
-      }
-    },
-    total: 3
-    // total: 3
-  })
+  const [form] = Form.useForm()
 
-  const onFinish = values => {}
-
-  const onChange = values => {}
+  const onSubmit = async values => {
+    const body = {
+      description: values.description,
+      jobFairId: jobfairId,
+      jobPositions: values.jobPositions.map(item => {
+        const result = {
+          jobPositionId: item.id,
+          maxSalary: item.maxSalary,
+          minSalary: item.minSalary,
+          numOfPosition: item.numberOfPosition
+        }
+        return result
+      })
+    }
+    try {
+      await dispatch(createDraftRegistration(body)).unwrap()
+      notification['success']({
+        message: `Registration draft version has been submitted`,
+        description: `Submitted successfully`,
+        duration: 2
+      })
+      //after submit success, push to success page
+      history.push(PATH.PROCESSED_SUCCESS)
+    } catch (err) {
+      notification['error']({
+        message: `An error has occurred while submitting`,
+        description: `Submit failed. Server response: ${err}`,
+        duration: 2
+      })
+      //else push to error page
+      history.push(PATH.PROCESSED_FAIL)
+    }
+  }
 
   return (
     <div>
-      <Steps {...stepsProps}>
+      <Steps current={currentStep}>
         {/* <Step title="Confirm company profile" /> */}
         <Step title="Jobfair registration form" />
         <Step title="Confirm registration" />
@@ -118,23 +112,24 @@ const JobfairRegistrationForm = () => {
         <Form
           form={form}
           layout="vertical"
-          onFinish={submit}
           onValuesChange={e => onChange(e)}
           requiredMark="required"
           autoComplete="off"
         >
-          <div style={{ display: current == 0 ? 'block' : 'none' }}>
+          <div style={{ display: currentStep == 0 ? 'block' : 'none' }}>
             <JobfairRegistrationFormComponent
               form={form}
-              onPickJobFinish={onFinish}
+              onPickJobFinish={() => {}}
               nextStep={() => {
-                gotoStep(current + 1)
-                dispatch(setFormBody(form.getFieldsValue()))
+                form.validateFields().then(res => {
+                  setCurrentStep(currentStep + 1)
+                  dispatch(setFormBody(form.getFieldsValue()))
+                })
               }}
             />
           </div>
-          {current == 1 ? (
-            <div style={{ display: current == 1 ? 'block' : 'none' }}>
+          {currentStep == 1 ? (
+            <div style={{ display: currentStep == 1 ? 'block' : 'none' }}>
               <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
               <div className="step-buttons">
                 <div className="pre-step-button">
@@ -143,7 +138,7 @@ const JobfairRegistrationForm = () => {
                       size="large"
                       type="primary"
                       onClick={() => {
-                        gotoStep(current - 1)
+                        setCurrentStep(currentStep - 1)
                       }}
                     >
                       Prev
@@ -156,16 +151,12 @@ const JobfairRegistrationForm = () => {
                       <Popconfirm
                         title="Are you sure to submit this form?"
                         onConfirm={() => {
-                          submit().then(result => {
-                            if (result === 'ok') {
-                              gotoStep(current + 1)
-                            }
-                          })
+                          onSubmit(form.getFieldsValue(true))
                         }}
                         okText="Yes"
                         cancelText="No"
                       >
-                        <Button size="large" type="primary" loading={formLoading}>
+                        <Button size="large" type="primary">
                           Submit
                         </Button>
                       </Popconfirm>
