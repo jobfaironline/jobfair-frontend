@@ -44,7 +44,10 @@ export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_REGISTER_PAGE: '/company/employee-register',
   REGISTER_JOB_FAIR_FORM: '/company/register-job-fair',
   COMPANY_PROFILE: '/manager/company-profile',
-  MANAGER_REGISTER_JOBFAIR: '/company-register-jobfair/'
+  MANAGER_REGISTER_JOBFAIR: '/company-register-jobfair/',
+  JOB_POSITION_MANAGEMENT: '/company/job-position-management',
+  JOB_POSITION_DETAIL: '/company/job-position-detail',
+  CREATE_JOB_POSITION: '/company/create-job-position'
 }
 export const PATH_STAFF = {
   APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId'
