@@ -18,15 +18,6 @@ const ApprovalRegistrationColumn = getColumnSearchProps => {
             }
         },
         {
-            title: 'Registration ID',
-            dataIndex: 'id',
-            key: 'id',
-            ...getColumnSearchProps('id'),
-            onFilter: (value, record) => record.id.indexOf(value) === 0,
-            sorter: (a, b) => a.id.localeCompare(b.id),
-            sortDirections: ['descend']
-        },
-        {
             title: 'Create date',
             dataIndex: 'createDate',
             key: 'createDate',
@@ -90,6 +81,12 @@ const ApprovalRegistrationColumn = getColumnSearchProps => {
                         objStatus = {
                             color: 'volcano',
                             message: 'Cancel'
+                        }
+                        break
+                    case 'REQUEST_CHANGE':
+                        objStatus = {
+                            color: 'purple',
+                            message: 'Request change'
                         }
                         break
                     default:

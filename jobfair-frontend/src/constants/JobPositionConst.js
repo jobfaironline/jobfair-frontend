@@ -460,6 +460,10 @@ export const EvaluateConst = [
     name: 'Approve'
   },
   {
+    id: 'REQUEST_CHANGE',
+    name: 'Request change'
+  },
+  {
     id: 'REJECT',
     name: 'Reject'
   }
