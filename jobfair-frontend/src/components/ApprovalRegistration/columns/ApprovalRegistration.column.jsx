@@ -89,7 +89,7 @@ const ApprovalRegistrationColumn = getColumnSearchProps => {
                     case 'CANCEL':
                         objStatus = {
                             color: 'volcano',
-                            message: 'Canceled'
+                            message: 'Cancel'
                         }
                         break
                     default:

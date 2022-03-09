@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import ApprovalRegistrationComponent from '../../components/ApprovalRegistration/components/ApprovalRegistration.component'
 import { Button, Form, Input, notification, Pagination, Popover, Radio, Space } from 'antd'
-import { useParams } from 'react-router-dom'
+import {useHistory, useParams} from 'react-router-dom'
 import {
   evaluateJobFairRegistrationAPI,
   getRegistrationByJobFairId
@@ -11,6 +11,7 @@ import TextArea from 'antd/es/input/TextArea'
 import { EvaluateConst } from '../../constants/JobPositionConst'
 import CompanyRegistrationDetailModalContainer from '../../components/ApprovalRegistration/modal/CompanyRegistrationDetailModal.container'
 import EvaluationFormComponent from '../../components/EvaluationForm/EvaluationForm.component'
+import {PATH_ADMIN} from "../../constants/Paths/Path";
 
 const ApprovalRegistrationContainer = () => {
   const [data, setData] = useState([])
@@ -22,6 +23,7 @@ const ApprovalRegistrationContainer = () => {
   const [pageSize, setPageSize] = useState(10)
 
   const { jobFairId } = useParams()
+    const history = useHistory()
 
   const fetchData = async () => {
     getRegistrationByJobFairId(jobFairId, currentPage, pageSize, 'createDate', 'DESC')
@@ -51,33 +53,11 @@ const ApprovalRegistrationContainer = () => {
         })
       })
   }
-  useEffect(() => {
-    fetchData()
-  }, [])
 
   useLayoutEffect(() => {
     fetchData()
   }, [currentPage, pageSize])
 
-  const onFinish = values => {
-    evaluateJobFairRegistrationAPI(values)
-      .then(res => {
-        notification['success']({
-          message: `Submit evaluation successfully`,
-          description: `Your evaluation has been submitted`,
-          duration: 2
-        })
-
-        fetchData()
-      })
-      .catch(e => {
-        notification['error']({
-          message: `Submit evaluation failed`,
-          description: `There is problem while submitting, try again later`,
-          duration: 2
-        })
-      })
-  }
 
   const handlePageChange = (page, pageSize) => {
     setCurrentPage(page - 1)
@@ -91,9 +71,15 @@ const ApprovalRegistrationContainer = () => {
     registrationList: [...data]
   }
 
+  const handleViewDetail = (id) => {
+      history.push(PATH_ADMIN.COMPANY_REGISTRATION_DETAIL, {
+          companyRegistration: data.find(item => item.id === id)
+      })
+  }
+
   return (
     <>
-      <CompanyRegistrationDetailModalContainer {...modalProps} />
+      {/*<CompanyRegistrationDetailModalContainer {...modalProps} />*/}
       <ApprovalRegistrationComponent
         data={data}
         editable
@@ -105,15 +91,11 @@ const ApprovalRegistrationContainer = () => {
               <Space size="middle">
                 <a
                   onClick={() => {
-                    setModalVisible(true)
-                    setRegisId(record.id)
+                    handleViewDetail(record.id)
                   }}
                 >
                   View detail
                 </a>
-                {record.status === 'PENDING' ? (
-                  <EvaluationFormComponent onFinish={onFinish} id={record.id} name="companyRegistrationId" />
-                ) : null}
               </Space>
             )
           }
