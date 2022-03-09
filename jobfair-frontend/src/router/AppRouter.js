@@ -27,7 +27,6 @@ import CompanyEmployeeRouter from './components/CompanyEmployeeRouter'
 import AdminRouter from './components/AdminRouter'
 import StaffRouter from './components/StaffRouter'
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage'
-import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
 import RegisterJobFairForm from '../components/register-job-fair-form/RegisterJobFairForm'
 import JobPositionPage from '../pages/JobPositionPage/JobPositionPage'
 import NavigationBar from '../components/navbar/Navbar'
@@ -43,7 +42,6 @@ import {
 } from '../constants/Paths/Path'
 import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
 import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
-import RegisterJobFairForm from '../components/register-job-fair-form/RegisterJobFairForm'
 import JobFairDetailPage from "../pages/JobFairDetailPage/JobFairDetailPage";
 import JobFairPlanPage from "../pages/JobFairPlanPage/JobFairPlanPage";
 import CompanyRegistrationDetailPage from "../pages/CompanyRegistrationDetailPage/CompanyRegistrationDetailPage";
