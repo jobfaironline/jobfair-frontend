@@ -61,9 +61,9 @@ const AttendantJobFairPage = () => {
           <div className={styles.booth}>
             <AttendantJobFairBoothContainer companyBoothId={companyBoothId} />
           </div>
-          <div>
-            <ChatBox {...communicationProps} />
-          </div>
+            {/*<div>
+              <ChatBox {...communicationProps} />
+            </div>*/}
         </div>
       </div>
   )
