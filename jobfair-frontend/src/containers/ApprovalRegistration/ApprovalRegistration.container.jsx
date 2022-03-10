@@ -11,10 +11,7 @@ import {PATH_ADMIN} from "../../constants/Paths/Path";
 
 const ApprovalRegistrationContainer = () => {
     const [data, setData] = useState([])
-    const [regisId, setRegisId] = useState('')
-    const [modalVisible, setModalVisible] = useState(false)
     //paging state
-    const [totalRecord, setTotalRecord] = useState(0)
     const [currentPage, setCurrentPage] = useState(0)
     const [pageSize, setPageSize] = useState(10)
 
@@ -24,8 +21,6 @@ const ApprovalRegistrationContainer = () => {
     const fetchData = async () => {
         getRegistrationByJobFairId(jobFairId, currentPage, pageSize, 'createDate', 'DESC')
             .then(res => {
-                const totalRecord = res.data.totalElements
-                setTotalRecord(totalRecord)
                 const result = res.data.content.map((item, index) => {
                     return {
                         ...item,
@@ -55,16 +50,14 @@ const ApprovalRegistrationContainer = () => {
 
 
     const handlePageChange = (page, pageSize) => {
-        setCurrentPage(page - 1)
+        if (page > 0) {
+            setCurrentPage(page - 1)
+        } else {
+            setCurrentPage(page)
+        }
         setPageSize(pageSize)
     }
 
-    const modalProps = {
-        registrationId: regisId,
-        visible: modalVisible,
-        setModalVisible: setModalVisible,
-        registrationList: [...data]
-    }
 
     const handleViewDetail = (id) => {
         history.push(PATH_ADMIN.COMPANY_REGISTRATION_DETAIL, {
@@ -74,7 +67,6 @@ const ApprovalRegistrationContainer = () => {
 
     return (
         <>
-            {/*<CompanyRegistrationDetailModalContainer {...modalProps} />*/}
             <ApprovalRegistrationComponent
                 data={data}
                 editable
@@ -97,7 +89,7 @@ const ApprovalRegistrationContainer = () => {
                 }}
             />
             <Pagination
-                total={totalRecord}
+                total={data.length}
                 onChange={(page, pageSize) => handlePageChange(page, pageSize)}
                 showSizeChanger
                 showQuickJumper
