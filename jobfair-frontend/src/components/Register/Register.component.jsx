@@ -9,7 +9,7 @@ const { TabPane } = Tabs
 
 const RegisterComponent = ({ onFinish, form }) => {
   return (
-    <>
+    <div className="register-container">
       <Divider orientation="center" plain>
         <Typography.Title level={4}>Job Fair Online - Sign in</Typography.Title>
       </Divider>
@@ -21,7 +21,7 @@ const RegisterComponent = ({ onFinish, form }) => {
           <CompanyForm />
         </TabPane>
       </Tabs>
-    </>
+    </div>
   )
 }
 

@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {createDraftRegistration} from "./registration-jobfair-form-action";
+import { createDraftRegistration } from './registration-jobfair-form-action'
 
 const registrationJobFairFormSlice = createSlice({
   name: 'registrationJobfairForm',
   initialState: {
+    formHook: null,
     jobPositionModalVisibility: false,
     jobPositionSubmodalVisibility: false,
     form: {
@@ -16,29 +17,30 @@ const registrationJobFairFormSlice = createSlice({
     },
     createDraftResult: [],
     companyInfo: {
-      taxId: "",
-      name: "",
-      address: "",
-      phone: "",
-      email: "",
+      taxId: '',
+      name: '',
+      address: '',
+      phone: '',
+      email: '',
       employeeMaxNum: 0,
-      url: "",
-      status: "",
+      url: '',
+      status: '',
       sizeId: 0,
-      subCategoriesIds: [
-        0
-      ],
+      subCategoriesIds: [0],
       benefits: [
         {
           id: 0,
-          description: "",
-        },
+          description: ''
+        }
       ],
       // "companyLogoURL": "https://d3polnwtp0nqe6.cloudfront.net/default.png",
-      companyDescription: ""
+      companyDescription: ''
     }
   },
   reducers: {
+    setFormHook: (state, action) => {
+      state.formHook = action.payload
+    },
     setFormDescription: (state, action) => {
       state.form.body.description = action.payload
     },
@@ -61,7 +63,15 @@ const registrationJobFairFormSlice = createSlice({
       return { ...state, jobPositionModalVisibility: action.payload }
     },
     setJobPositions: (state, action) => {
+      const IdList = state.form.body.jobPositions.map(item => item.id)
+      const differentElements = action.payload.filter(item => !IdList.includes(item.id))
       state.form.body.jobPositions = action.payload
+    },
+    setFormBody: (state, action) => {
+      state.form.body = {
+        ...state.form.body,
+        ...action.payload
+      }
     },
     resetForm: (state, action) => {
       return {
@@ -80,7 +90,7 @@ const registrationJobFairFormSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(createDraftRegistration.fulfilled, (state, action) => {
-      return {...state, createDraftResult : action.payload}
+      return { ...state, createDraftResult: action.payload }
     })
   }
 })
@@ -92,6 +102,7 @@ export const {
   setJobPositions,
   resetForm,
   setFormJobFairRegistrationId,
-  setFormDescription
+  setFormDescription,
+  setFormBody
 } = registrationJobFairFormSlice.actions
 export default registrationJobFairFormSlice.reducer

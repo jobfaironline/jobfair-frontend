@@ -9,7 +9,7 @@ if (typeof window !== 'undefined') {
 }
 const LoginPage = () => {
   return (
-    <div className="page">
+    <div className="page login-page">
       <div style={{ display: 'flex' }}>
         <div className="leftside-container">
           <div className="login-container animate__fadeInDown">

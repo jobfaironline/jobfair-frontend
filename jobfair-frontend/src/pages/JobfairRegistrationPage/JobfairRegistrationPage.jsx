@@ -7,6 +7,7 @@ import {
   setFormJobFairRegistrationId
 } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
 import { PATH } from '../../constants/Paths/Path'
+import './JobfairRegistrationPage.styles.scss'
 const JobfairRegistrationPage = () => {
   const dispatch = useDispatch()
   const { jobfairId } = useParams()
@@ -17,18 +18,18 @@ const JobfairRegistrationPage = () => {
     else history.push(PATH.JOB_FAIRS_PAGE)
   }, [jobfairId])
 
-  useEffect(
-    () => () => {
-      dispatch(resetForm())
-    },
-    []
-  )
+  useEffect(() => () => {
+    dispatch(resetForm())
+  })
 
   return (
-    <Fragment>
-      {/* form container */}
-      <JobfairRegistrationForm />
-    </Fragment>
+    <div className="page">
+      <div className="jobfair-registration-page">
+        <div className="jobfair-registration-cotnainer">
+          <JobfairRegistrationForm />
+        </div>
+      </div>
+    </div>
   )
 }
 

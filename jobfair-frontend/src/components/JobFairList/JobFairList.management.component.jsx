@@ -20,6 +20,7 @@ const listImage = [
     urlImage: '/jobfair-pic3.jpg'
   }
 ]
+
 const JobFairListManagementComponent = props => {
   const { Title, Paragraph, Text, Link } = Typography
   const { Option } = Select
@@ -70,6 +71,13 @@ const JobFairListManagementComponent = props => {
               key={item.id}
               actions={[
                 <Space>
+                  {item.status == COMPANY_JOB_FAIR_STATUS.REJECT ? (
+                    <Space>
+                      <Typography style={{ color: '#DD0000' }}>
+                        Your recent registration has been rejected, please try again!
+                      </Typography>
+                    </Space>
+                  ) : null}
                   <Button type="link" onClick={() => {}} style={{ padding: '0.2rem 0', border: '0' }}>
                     More details
                   </Button>
