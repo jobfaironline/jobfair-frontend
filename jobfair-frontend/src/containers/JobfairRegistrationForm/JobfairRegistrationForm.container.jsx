@@ -88,7 +88,7 @@ const JobfairRegistrationForm = () => {
         duration: 2
       })
       //after submit success, push to success page
-      history.push(PATH.PROCESSED_SUCCESS)
+      history.push(PATH.JOB_FAIRS_PAGE)
     } catch (err) {
       notification['error']({
         message: `An error has occurred while submitting`,

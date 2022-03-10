@@ -33,11 +33,20 @@ const EvaluationFormComponent = ({onFinish, id, name}) => {
                         initialValue={'APPROVE'}
                     >
                         <Radio.Group>
-                            {EvaluateConst.map(item => (
-                                <Radio.Button value={item.id}>
-                                    {item.name}
-                                </Radio.Button>
-                            ))}
+                            <Radio.Button value={'APPROVE'}>
+                                Approve
+                            </Radio.Button>
+                            {/*<Radio.Button value={'REQUEST_CHANGE'} disabled>*/}
+                            {/*    Request change*/}
+                            {/*</Radio.Button>*/}
+                            <Radio.Button value={'REJECT'}>
+                                Reject
+                            </Radio.Button>
+                            {/*{EvaluateConst.map(item => (*/}
+                            {/*    <Radio.Button value={item.id}>*/}
+                            {/*        {item.name}*/}
+                            {/*    </Radio.Button>*/}
+                            {/*))}*/}
                         </Radio.Group>
                     </Form.Item>
                     <Form.Item>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Tag} from "antd";
+import {convertEnumToString} from "../../utils/common";
 
 const JobFairForAdminColumn = (getColumnSearchProps) => {
     return [
@@ -80,7 +81,7 @@ const JobFairForAdminColumn = (getColumnSearchProps) => {
                     default:
                         objStatus = {
                             color: 'green',
-                            message: status
+                            message: convertEnumToString(status)
                         }
                         break
                 }
