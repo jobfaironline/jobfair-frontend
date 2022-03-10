@@ -1,5 +1,5 @@
 import {Canvas, useFrame, useLoader, useThree} from "@react-three/fiber";
-import {OrbitControls, Stage, Stats} from "@react-three/drei";
+import {ContactShadows, FirstPersonControls, OrbitControls, PointerLockControls, Stage, Stats} from "@react-three/drei";
 import React, {useEffect, useRef, useState} from "react";
 import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
 import {CameraControls} from "../ThreeJSBaseComponent/CameraControls.component";
@@ -11,6 +11,7 @@ import Nearby from "nearby-js/Nearby"
 import {throttle} from "throttle-debounce";
 import {parseFBXModel} from "../../utils/fbxUtil";
 import {IMAGE_PLANE_NAME} from "../../constants/DecorateBoothConstant";
+import {SkyComponent, SkyType} from "../ThreeJSBaseComponent/Sky.component";
 
 
 
@@ -163,6 +164,134 @@ class BasicCharacterControls {
 
     }
 }
+
+
+class BasicCameraCharacterControls {
+    constructor(params) {
+        this._Init(params);
+    }
+
+    _Init(params) {
+        this._params = params;
+        this._move = {
+            forward: false,
+            backward: false,
+            left: false,
+            right: false,
+        };
+        this._decceleration = new THREE.Vector3(-0.0005, -0.0001, -20.0);
+        this._acceleration = new THREE.Vector3(1, 2, 200.0);
+        this._velocity = new THREE.Vector3(0, 0, 0);
+
+
+    }
+
+
+
+    _onKeyDown(event) {
+        switch (event.keyCode) {
+            case 87: // w
+                this._move.forward = true;
+                break;
+            case 65: // a
+                this._move.left = true;
+                break;
+            case 83: // s
+                this._move.backward = true;
+                break;
+            case 68:
+            case 231:// d
+                this._move.right = true;
+                break;
+            case 38: // up
+            case 37: // left
+            case 40: // down
+            case 39: // right
+                break;
+        }
+    }
+
+    _onKeyUp(event) {
+        switch(event.keyCode) {
+            case 87: // w
+                this._move.forward = false;
+                break;
+            case 65: // a
+                this._move.left = false;
+                break;
+            case 83: // s
+                this._move.backward = false;
+                break;
+            case 68: // d
+                this._move.right = false;
+                break;
+            case 38: // up
+            case 37: // left
+            case 40: // down
+            case 39: // right
+                break;
+        }
+    }
+
+    Update(timeInSeconds) {
+        const velocity = this._velocity;
+        const frameDecceleration = new THREE.Vector3(
+            velocity.x * this._decceleration.x,
+            velocity.y * this._decceleration.y,
+            velocity.z * this._decceleration.z
+        );
+        frameDecceleration.multiplyScalar(timeInSeconds);
+        frameDecceleration.z = Math.sign(frameDecceleration.z) * Math.min(
+            Math.abs(frameDecceleration.z), Math.abs(velocity.z));
+
+        velocity.add(frameDecceleration);
+
+        const controlObject = this._params.target;
+        const _Q = new THREE.Quaternion();
+        const _A = new THREE.Vector3();
+        const _R = controlObject.quaternion.clone();
+
+        if (this._move.forward) {
+            velocity.z += this._acceleration.z * timeInSeconds;
+        }
+        if (this._move.backward) {
+            velocity.z -= this._acceleration.z * timeInSeconds;
+        }
+        if (this._move.left) {
+            _A.set(0, 1, 0);
+            _Q.setFromAxisAngle(_A, Math.PI * timeInSeconds * this._acceleration.y);
+            _R.multiply(_Q);
+        }
+        if (this._move.right) {
+            _A.set(0, 1, 0);
+            _Q.setFromAxisAngle(_A, -Math.PI * timeInSeconds * this._acceleration.y);
+            _R.multiply(_Q);
+        }
+
+        controlObject.quaternion.copy(_R);
+
+        const oldPosition = new THREE.Vector3();
+        oldPosition.copy(controlObject.position);
+
+        const forward = new THREE.Vector3(0, 0, 1);
+        forward.applyQuaternion(controlObject.quaternion);
+        forward.normalize();
+
+        const sideways = new THREE.Vector3(1, 0, 0);
+        sideways.applyQuaternion(controlObject.quaternion);
+        sideways.normalize();
+
+        sideways.multiplyScalar(velocity.x * timeInSeconds);
+        forward.multiplyScalar(velocity.z * timeInSeconds);
+
+
+        controlObject.position.add(forward);
+        controlObject.position.add(sideways);
+        oldPosition.copy(controlObject.position);
+
+    }
+}
+
 
 class ThirdPersonCamera {
     constructor(params) {
@@ -344,10 +473,6 @@ export const CompanyBoothCanvasContainer = (props) => {
     const [nearItem, setNearItem] = useState();
 
 
-
-
-
-
     useEffect(async () => {
         const model = await parseFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx");
         model.scale.setScalar(0.07);
@@ -427,18 +552,7 @@ export const CompanyBoothCanvasContainer = (props) => {
     }
 
 
-    useEffect(() => {
-        const keyDown = (e) => state.controls._onKeyDown(e);
-        const keyUp = (e) => state.controls._onKeyUp(e);
-        document.addEventListener('keydown', keyDown, false);
-        document.addEventListener('keyup', keyUp, false);
-        document.addEventListener('keypress', onKeyPress, false);
-        return () => {
-            document.removeEventListener('keydown', keyDown)
-            document.removeEventListener('keyup', keyUp)
-            document.removeEventListener('keypress', onKeyPress)
-        }
-    })
+
 
 
 
@@ -447,6 +561,57 @@ export const CompanyBoothCanvasContainer = (props) => {
     const cProps = {boothMesh, cameraPositionRef, nearby: state.nearby, model: state.model, newModel: state.newModel, cameraRef, controls: state.controls, mixer: state.mixer
     , modalRef, setNearItem, nearItem, cameraLookat}
     return <CompanyBoothCanvasComponent {...cProps} />
+}
+
+const CustomCamera1 = (props) => {
+    /*const controlRef = useRef();
+    const {camera} = useThree();
+    let controls = {};
+    let player = {
+        height: 10,
+        turnSpeed: .1,
+        speed: .1,
+        jumpHeight: .2,
+        gravity: .01,
+        velocity: 0,
+        playerJumps: false
+    };
+
+
+    const control = new BasicCameraCharacterControls({target: camera})
+
+    document.addEventListener('keydown', control._onKeyDown);
+    document.addEventListener('keyup',  control._onKeyUp);
+   /!* function control() {
+        // Controls:Engine
+        if(controls[87]){ // w
+            camera.position.x -= Math.sin(camera.rotation.y) * player.speed;
+            camera.position.z -= -Math.cos(camera.rotation.y) * player.speed;
+        }
+        if(controls[83]){ // s
+            camera.position.x += Math.sin(camera.rotation.y) * player.speed;
+            camera.position.z += -Math.cos(camera.rotation.y) * player.speed;
+        }
+        if(controls[65]){ // a
+            camera.position.x += Math.sin(camera.rotation.y + Math.PI / 2) * player.speed;
+            camera.position.z += -Math.cos(camera.rotation.y + Math.PI / 2) * player.speed;
+        }
+        if(controls[68]){ // d
+            camera.position.x += Math.sin(camera.rotation.y - Math.PI / 2) * player.speed;
+            camera.position.z += -Math.cos(camera.rotation.y - Math.PI / 2) * player.speed;
+        }
+    }*!/
+
+    useFrame((state, delta) => {
+        //control.Update(delta)
+        //ixMovementUpdate();
+
+    })*/
+
+    document.addEventListener("onmousemove",e => console.log( e.clientX ))
+        return <PointerLockControls makeDefault
+        pointerSpeed={0.4}
+    />;
 }
 
 export const CompanyBoothCanvasComponent = (props) => {
@@ -468,22 +633,25 @@ export const CompanyBoothCanvasComponent = (props) => {
         mixer,
         cameraLookat
     }
-
+    console.log("AAAAAAAAAAAA")
 
     return (
         <div style={{width: '100%', height: '100vh'}}>
             <Canvas
                 dpr={[1, 2]}
-                camera={{fov: 45, zoom: 2, position: [-10, 10, -10]}}
+                camera={{fov: 45, position: [-10, 10, -10]}}
                 style={{width: '100%', height: '100vh'}}
             >
-                <CameraControls />
+                <CustomCamera1/>
+                <SkyComponent style={SkyType.Sunset}/>
 
 
-                <Stage adjustCamera={false} preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
+                <Stage adjustCamera={false}  preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
                     <BasicMesh ref={sceneMeshRef} mesh={boothMesh}/>
-                    <ModelController {...modelProps}/>
+                    {/*<ModelController {...modelProps}/>*/}
                 </Stage>
+                <ContactShadows frames={10} position={[0, -1.05, 0]} scale={10} blur={2} far={10} />
+
                 {/*<EffectComposer multisampling={8} autoClear={false}>*/}
                 {/*    <Outline*/}
                 {/*        selection={nearItem}*/}
