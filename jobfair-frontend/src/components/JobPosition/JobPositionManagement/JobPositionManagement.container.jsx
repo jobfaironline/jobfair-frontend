@@ -1,17 +1,18 @@
 import React, {useLayoutEffect, useState} from 'react'
-import {Button, notification, Space, Typography} from 'antd'
-import {getJobPositionsAPI} from '../../../services/job-controller/JobControllerService'
+import {Button, notification, Space, Typography, Upload} from 'antd'
+import {getJobPositionsAPI, uploadCSVFile} from '../../../services/job-controller/JobControllerService'
 import {useDispatch} from 'react-redux'
 import {PATH_COMPANY_MANAGER} from '../../../constants/Paths/Path'
 import {useHistory} from 'react-router-dom'
 import PaginationComponent from '../../PaginationComponent/Pagination.component'
 import JobPositionTable from '../../JobPositionTable/JobPositionTable.component'
-import UploadCsvFileContainer from "../../../containers/UploadCSVFile/UploadCSVFile.container";
+import {UploadOutlined} from "@ant-design/icons";
 
 const JobPositionManagementContainer = props => {
     const [data, setData] = useState([])
     const [jobPosition, setJobPosition] = useState({})
     const [modalVisible, setModalVisible] = useState(false)
+    const [forceRerenderState, setForceRerenderState] = useState(false);
     //pagination
     const [totalRecord, setTotalRecord] = useState(0)
     const [currentPage, setCurrentPage] = useState(0)
@@ -44,7 +45,7 @@ const JobPositionManagementContainer = props => {
 
     useLayoutEffect(() => {
         fetchData()
-    }, [currentPage, pageSize])
+    }, [currentPage, pageSize, forceRerenderState])
 
     const handlePageChange = (page, pageSize) => {
         if (page > 0) {
@@ -65,6 +66,39 @@ const JobPositionManagementContainer = props => {
         })
     }
 
+    const loadFile = {
+        name: 'file',
+        accept: '.csv',
+        beforeUpload: file => {
+            return false;
+        },
+        onChange: async (info) => {
+            if (info.file.type !== 'text/csv') {
+                notification['error']({
+                    message: `${info.file.name} is not csv`
+                })
+                return;
+            }
+            const formData = new FormData()
+            formData.append('file', info.file)
+            await uploadCSVFile(formData)
+            notification['success']({
+                message: `${info.file.name} upload successfully`
+            })
+            //force render to fetch data after upload
+            setForceRerenderState(prevState => !prevState)
+        },
+        showUploadList: false,
+        progress: {
+            strokeColor: {
+                '0%': '#108ee9',
+                '100%': '#87d068',
+            },
+            strokeWidth: 3,
+            format: percent => `${parseFloat(percent.toFixed(2))}%`,
+        },
+    }
+
     return (
         <div style={{}}>
             {/*<JobPositionDetailModalContainer {...modalProps} />*/}
@@ -78,7 +112,9 @@ const JobPositionManagementContainer = props => {
                     <Button type="primary" onClick={() => handleCreateOnClick()}>
                         Create job position
                     </Button>
-                    <UploadCsvFileContainer/>
+                    <Upload {...loadFile}>
+                        <Button icon={<UploadOutlined/>}>Upload CSV</Button>{' '}
+                    </Upload>
                 </Space>
             </Space>
 
