@@ -1,20 +1,12 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react'
-import {Button, notification, Pagination, Space, Divider, Typography, Upload, Form} from 'antd'
-import {
-    deleteJobPositionAPI,
-    getJobPositionsAPI,
-    updateJobPositionAPI, uploadCSVFile
-} from '../../../services/job-controller/JobControllerService'
-import {
-    setJobPositionSubmodalVisibility
-} from '../../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
+import React, {useLayoutEffect, useState} from 'react'
+import {Button, notification, Space, Typography} from 'antd'
+import {getJobPositionsAPI} from '../../../services/job-controller/JobControllerService'
 import {useDispatch} from 'react-redux'
 import {PATH_COMPANY_MANAGER} from '../../../constants/Paths/Path'
 import {useHistory} from 'react-router-dom'
 import PaginationComponent from '../../PaginationComponent/Pagination.component'
 import JobPositionTable from '../../JobPositionTable/JobPositionTable.component'
-import {UploadOutlined} from "@ant-design/icons";
-import UploadCsvFileComponent from "../../../containers/UploadCSVFile/UploadCSVFile.component";
+import UploadCsvFileContainer from "../../../containers/UploadCSVFile/UploadCSVFile.container";
 
 const JobPositionManagementContainer = props => {
     const [data, setData] = useState([])
@@ -86,7 +78,7 @@ const JobPositionManagementContainer = props => {
                     <Button type="primary" onClick={() => handleCreateOnClick()}>
                         Create job position
                     </Button>
-                    <UploadCsvFileComponent/>
+                    <UploadCsvFileContainer/>
                 </Space>
             </Space>
 
