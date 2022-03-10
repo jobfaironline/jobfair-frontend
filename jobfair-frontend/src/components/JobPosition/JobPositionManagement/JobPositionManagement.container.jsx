@@ -20,8 +20,6 @@ const JobPositionManagementContainer = props => {
     const [data, setData] = useState([])
     const [jobPosition, setJobPosition] = useState({})
     const [modalVisible, setModalVisible] = useState(false)
-    const [fileList, setFileList] = useState([])
-    const [file, setFile] = useState()
     //pagination
     const [totalRecord, setTotalRecord] = useState(0)
     const [currentPage, setCurrentPage] = useState(0)
