@@ -462,5 +462,9 @@ export const EvaluateConst = [
   {
     id: 'REJECT',
     name: 'Reject'
+  },
+  {
+    id: 'REQUEST_CHANGE',
+    name: 'Request change'
   }
 ]

@@ -13,6 +13,7 @@ const CompanyRegistrationDetailContainer = () => {
     const history = useHistory()
 
     const onFinish = values => {
+        debugger
         evaluateJobFairRegistrationAPI(values)
             .then(res => {
                 notification['success']({
