@@ -2,7 +2,9 @@ import React, { useMemo } from 'react'
 import { Result, Button } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { PATH } from '../../constants/Paths/Path'
+import { useSelector } from 'react-redux'
 const ErrorPage = ({ code = 404 }) => {
+  const { isAuthUser } = useSelector(state => state.authentication)
   const history = useHistory()
   const subTitlte = useMemo(() => {
     switch (code) {
@@ -15,24 +17,38 @@ const ErrorPage = ({ code = 404 }) => {
     }
   }, [code])
   return (
-    <>
+    <div className="page" style={{ marginTop: '10rem' }}>
       <Result
         status={code}
         title={code}
         subTitle={subTitlte}
-        extra={
+        extra={[
           <Button
             className="main-button"
             onClick={() => {
-              history.push(PATH.HOME)
+              history.push(PATH.INDEX)
             }}
-            type="primary"
+            type="default"
+            style={{ width: '10rem' }}
           >
             Back to Home
-          </Button>
-        }
+          </Button>,
+          !isAuthUser ? (
+            <Button
+              className="main-button"
+              onClick={() => {
+                history.push(PATH.LOGIN_PAGE)
+              }}
+              type="primary"
+              style={{ width: '10rem' }}
+              danger
+            >
+              Login now
+            </Button>
+          ) : null
+        ]}
       />
-    </>
+    </div>
   )
 }
 export default ErrorPage

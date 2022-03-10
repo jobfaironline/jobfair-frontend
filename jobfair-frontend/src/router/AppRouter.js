@@ -1,6 +1,5 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import AttendantRouter from './components/AttendantRouter'
 import AttendantProfile from '../pages/ProfilePage/Attendant/AttendantProfilePage'
 import CompanyManagerRouter from './components/CompanyManagerRouter'
@@ -32,6 +31,14 @@ import JobPositionPage from '../pages/JobPositionPage/JobPositionPage'
 import NavigationBar from '../components/navbar/Navbar'
 import JobPositionDetailPage from '../pages/JobPositionPage/JobPositionDetailPage'
 import CreateJobPositionPage from '../pages/JobPositionPage/CreateJobPositionPage'
+import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
+import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
+import JobFairDetailPage from '../pages/JobFairDetailPage/JobFairDetailPage'
+import JobFairPlanPage from '../pages/JobFairPlanPage/JobFairPlanPage'
+import CompanyRegistrationDetailPage from '../pages/CompanyRegistrationDetailPage/CompanyRegistrationDetailPage'
+import JobFairAttendantListPage from '../pages/JobFairAttendantListPage/JobFairAttendantListPage'
+import PublicRouter from './components/PublicRouter'
+import ErrorPage from '../pages/ErrorPage/ErrorPage'
 import {
   PATH_ATTENDANT,
   PATH,
@@ -40,15 +47,7 @@ import {
   PATH_COMPANY_MANAGER,
   PATH_STAFF
 } from '../constants/Paths/Path'
-import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
-import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
-import JobFairDetailPage from "../pages/JobFairDetailPage/JobFairDetailPage";
-import JobFairPlanPage from "../pages/JobFairPlanPage/JobFairPlanPage";
-import CompanyRegistrationDetailPage from "../pages/CompanyRegistrationDetailPage/CompanyRegistrationDetailPage";
-import JobFairAttendantListPage from '../pages/JobFairAttendantListPage/JobFairAttendantListPage'
-
 const AppRouter = () => {
-  const role = useSelector(state => state.authentication?.user?.roles)
   return (
     <>
       <NavigationBar />
@@ -69,16 +68,6 @@ const AppRouter = () => {
         <Route path={PATH.JOB_FAIR_REGISTRATION_PAGE} exact>
           <JobfairRegistrationPage />
         </Route>
-        <Route path={PATH.LOGIN_PAGE} exact>
-          {/*if user has already login, avoid them to login again*/}
-          {!role ? <LoginPage /> : <Redirect to={PATH.INDEX} />}
-        </Route>
-        <Route path={PATH.REGISTER_PAGE} exact>
-          {!role ? <RegisterPage /> : <Redirect to={PATH.INDEX} />}
-        </Route>
-        <Route path={PATH.FORGOT_PASSWORD_PAGE} exact>
-          {!role ? <ForgotPasswordPage /> : <Redirect to={PATH.INDEX} />}
-        </Route>
         <Route path={PATH.CHANGE_PASSWORD_PAGE} exact>
           <ChangePasswordPage />
         </Route>
@@ -88,7 +77,6 @@ const AppRouter = () => {
         <Route path={PATH.RESULT_FAILED_PAGE} exact>
           <ResultFailedPage />
         </Route>
-
         <Route path={PATH.FAQ_PAGE} exact>
           <FAQPage />
         </Route>
@@ -113,9 +101,17 @@ const AppRouter = () => {
         <Route path={PATH.RESULT_SUCCESS_PAGE} exact>
           <ResultSuccessPage />
         </Route>
+        <PublicRouter key={PATH.LOGIN_PAGE} component={() => <LoginPage />} path={PATH.LOGIN_PAGE} exact />
+        <PublicRouter key={PATH.REGISTER_PAGE} component={() => <RegisterPage />} path={PATH.REGISTER_PAGE} exact />
+        <PublicRouter
+          key={PATH.FORGOT_PASSWORD_PAGE}
+          component={() => <ForgotPasswordPage />}
+          path={PATH.FORGOT_PASSWORD_PAGE}
+          exact
+        />
         <AttendantRouter
           key={PATH_ATTENDANT.APPLIED_JOB_PAGE}
-          component={<AppliedJobPage />}
+          component={() => <AppliedJobPage />}
           path={PATH_ATTENDANT.APPLIED_JOB_PAGE}
           exact
         />
@@ -210,11 +206,12 @@ const AppRouter = () => {
           exact
         />
         <StaffRouter
-            key={PATH_STAFF.JOB_FAIR_DETAIL_PAGE}
-            component={() => <JobFairDetailPage />}
-            path={PATH_STAFF.JOB_FAIR_DETAIL_PAGE}
-            exact
+          key={PATH_STAFF.JOB_FAIR_DETAIL_PAGE}
+          component={() => <JobFairDetailPage />}
+          path={PATH_STAFF.JOB_FAIR_DETAIL_PAGE}
+          exact
         />
+        <Route path="*" component={() => <ErrorPage code={404} />} />
       </Switch>
     </>
   )
