@@ -8,7 +8,7 @@ export const RegistrableButton = props => {
   return (
     <Tooltip title="This event is open. Register now" color="green">
       <Button type="primary" onClick={onClick}>
-        Register now
+        REGISTER NOW
       </Button>
     </Tooltip>
   )
@@ -19,7 +19,7 @@ export const SubmittedButton = props => {
   return (
     <Tooltip title="You registration is still in progress. Please wait!" color="gold">
       <Button type="primary" onClick={onClick}>
-        Is evaluating
+        PENDING
       </Button>
     </Tooltip>
   )
@@ -30,7 +30,7 @@ export const ApproveButton = props => {
   return (
     <Tooltip title="Your registration was approved!" color="gold">
       <Button type="primary" onClick={onClick}>
-        Approved
+        APPROVED
       </Button>
     </Tooltip>
   )
@@ -41,7 +41,7 @@ export const UnavailableButton = props => {
   return (
     <Tooltip title="This event was delayed. Please comeback later." color="red">
       <Button type="primary" disabled onClick={onClick}>
-        Suspended
+        SUSPENDED
       </Button>
     </Tooltip>
   )
@@ -52,7 +52,7 @@ export const DecorateBoothButton = props => {
   return (
     <Tooltip title="You chose a booth in this event. Decorate it now" color="geekblue">
       <Button type="primary" onClick={onClick}>
-        Decorate booth
+        DECORATE BOOTH
       </Button>
     </Tooltip>
   )
@@ -63,7 +63,7 @@ export const ChooseBoothButton = props => {
   return (
     <Tooltip title="You registration has been approved. Now you can choose booth" color="blue">
       <Button type="primary" onClick={onClick}>
-        Choose booth
+        CHOOSE BOOTH
       </Button>
     </Tooltip>
   )

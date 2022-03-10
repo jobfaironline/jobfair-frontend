@@ -8,7 +8,6 @@ import {
 } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
 import { PATH } from '../../constants/Paths/Path'
 import './JobfairRegistrationPage.styles.scss'
-
 const JobfairRegistrationPage = () => {
   const dispatch = useDispatch()
   const { jobfairId } = useParams()

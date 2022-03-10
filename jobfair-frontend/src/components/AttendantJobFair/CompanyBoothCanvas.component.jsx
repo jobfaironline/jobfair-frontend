@@ -297,12 +297,12 @@ const ModelController = props => {
             nearestObjectId = object.id;
             break;
         }
-        if (nearestObjectId !== undefined){
-            const mesh = sceneMeshRef.current.getObjectByProperty("uuid", nearestObjectId)
-            setNearItem(mesh);
-        } else {
-            setNearItem(undefined);
-        }
+        // if (nearestObjectId !== undefined){
+        //     const mesh = sceneMeshRef.current.getObjectByProperty("uuid", nearestObjectId)
+        //     setNearItem(mesh);
+        // } else {
+        //     setNearItem(undefined);
+        // }
     });
 
     useFrame((state, delta) => {
@@ -406,11 +406,10 @@ export const CompanyBoothCanvasContainer = (props) => {
     }, [])
 
     const onKeyPress = e => {
-        if (nearItem === undefined) return;
         if (e.keyCode === 101){
             if (modalRef.current === false){
                 modalRef.current = true
-                const imagePlane = nearItem.children.filter(child => child.name.includes(IMAGE_PLANE_NAME))[0];
+                const imagePlane = boothMesh.children[3].children.filter(child => child.name.includes(IMAGE_PLANE_NAME))[0];
                 let url;
                 if (imagePlane !== undefined && imagePlane?.material.map !== null){
                     url = getBase64Image(imagePlane.material.map.image);
@@ -485,14 +484,14 @@ export const CompanyBoothCanvasComponent = (props) => {
                     <BasicMesh ref={sceneMeshRef} mesh={boothMesh}/>
                     <ModelController {...modelProps}/>
                 </Stage>
-                <EffectComposer multisampling={8} autoClear={false}>
-                    <Outline
-                        selection={nearItem}
-                        visibleEdgeColor="yellow"
-                        hiddenEdgeColor="yellow"
-                        edgeStrength={100}
-                        width={1000}/>
-                </EffectComposer>
+                {/*<EffectComposer multisampling={8} autoClear={false}>*/}
+                {/*    <Outline*/}
+                {/*        selection={nearItem}*/}
+                {/*        visibleEdgeColor="yellow"*/}
+                {/*        hiddenEdgeColor="yellow"*/}
+                {/*        edgeStrength={100}*/}
+                {/*        width={1000}/>*/}
+                {/*</EffectComposer>*/}
             </Canvas>
         </div>
 
