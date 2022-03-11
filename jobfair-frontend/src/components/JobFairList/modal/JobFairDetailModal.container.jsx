@@ -104,15 +104,15 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
           setTotalRegistration(totalRegistrations)
         })
         .catch(err => {
-          if (err.response.status === 404) {
-            notification['info']({
-              message: `No company has registered this job fair yet.`,
-            })
-          } else {
-            notification['error']({
-              message: `Error at get total booth: ${err}`
-            })
-          }
+          // if (err.response.status === 404) {
+          //   notification['info']({
+          //     message: `No company has registered this job fair yet.`,
+          //   })
+          // } else {
+          //   notification['error']({
+          //     message: `Error at get total booth: ${err}`
+          //   })
+          // }
         })
   }
 
@@ -124,15 +124,15 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
           setTotalBooth(totalBooth)
         })
         .catch(err => {
-          if (err.response.status === 404) {
-            notification['info']({
-              message: `No booth has been assigned for this job fair yet.`,
-            })
-          } else {
-            notification['error']({
-              message: `Error at get total booth: ${err}`
-            })
-          }
+          // if (err.response.status === 404) {
+          //   notification['info']({
+          //     message: `No booth has been assigned for this job fair yet.`,
+          //   })
+          // } else {
+          //   notification['error']({
+          //     message: `Error at get total booth: ${err}`
+          //   })
+          // }
         })
   }
 

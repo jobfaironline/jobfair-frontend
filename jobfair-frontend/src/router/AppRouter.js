@@ -184,6 +184,12 @@ const AppRouter = () => {
                     exact
                 />
                 <AdminRouter
+                    key={PATH_ADMIN.COMPANY_REGISTRATION_PAGE}
+                    component={() => <ApprovalRegistrationPage/>}
+                    path={PATH_ADMIN.COMPANY_REGISTRATION_PAGE}
+                    exact
+                />
+                <AdminRouter
                     key={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
                     component={() => <JobFairDetailPage/>}
                     path={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
