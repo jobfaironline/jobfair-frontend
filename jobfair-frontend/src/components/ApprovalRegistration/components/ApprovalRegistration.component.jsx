@@ -11,7 +11,6 @@ const ApprovalRegistrationComponent = ({data, extra}) => {
     const [searchedColumn, setSearchedColumn] = useState('')
     const history = useHistory();
 
-    console.log(data)
 
     if (data === undefined || data === null ) {
         return <Spin size="large"/>
