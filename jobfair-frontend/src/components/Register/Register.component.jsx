@@ -1,24 +1,22 @@
 import React from 'react'
-import { Button, Checkbox, Divider, Form, Input, Layout, Typography } from 'antd'
-import { Content, Footer, Header } from 'antd/es/layout/layout'
-import { Tabs } from 'antd'
+import {Button, Divider, Form, Input, Tabs, Typography} from 'antd'
 import './Register.styles.scss'
-import { useForm } from 'react-hook-form'
+import {PATH} from "../../constants/Paths/Path";
 
-const { TabPane } = Tabs
+const {TabPane} = Tabs
 
-const RegisterComponent = ({ onFinish, form }) => {
+const RegisterComponent = ({onFinish, form}) => {
   return (
     <div className="register-container">
       <Divider orientation="center" plain>
-        <Typography.Title level={4}>Job Fair Online - Sign in</Typography.Title>
+        <Typography.Title level={4}>Job Fair Online - Sign up</Typography.Title>
       </Divider>
       <Tabs defaultActiveKey="ATTENDANT" centered>
         <TabPane tab="ATTENDANT" key="ATTENDANT">
-          <AttendantForm />
+          <AttendantForm/>
         </TabPane>
         <TabPane tab="COMPANY" key="COMPANY">
-          <CompanyForm />
+          <CompanyForm/>
         </TabPane>
       </Tabs>
     </div>
@@ -29,9 +27,11 @@ const AttendantForm = () => {
   const [form] = Form.useForm()
 
   return (
-    <Form form={form} name="register" onFinish={() => {}} scrollToFirstError>
-      <Form.Item name="attendantName" rules={[{ required: true, message: 'Please input your name', whitespace: true }]}>
-        <Input placeholder="Your name" />
+    <Form form={form} name="register" onFinish={() => {
+    }} scrollToFirstError>
+      <Form.Item name="attendantName"
+                 rules={[{required: true, message: 'Please input your name', whitespace: true}]}>
+        <Input placeholder="Your name"/>
       </Form.Item>
       <Form.Item
         name="email"
@@ -46,7 +46,7 @@ const AttendantForm = () => {
           }
         ]}
       >
-        <Input placeholder="Email" />
+        <Input placeholder="Email"/>
       </Form.Item>
 
       <Form.Item
@@ -59,7 +59,7 @@ const AttendantForm = () => {
         ]}
         hasFeedback
       >
-        <Input.Password placeholder="Password" />
+        <Input.Password placeholder="Password"/>
       </Form.Item>
 
       <Form.Item
@@ -71,7 +71,7 @@ const AttendantForm = () => {
             required: true,
             message: 'Please confirm your password!'
           },
-          ({ getFieldValue }) => ({
+          ({getFieldValue}) => ({
             validator(_, value) {
               if (!value || getFieldValue('password') === value) {
                 return Promise.resolve()
@@ -81,7 +81,7 @@ const AttendantForm = () => {
           })
         ]}
       >
-        <Input.Password placeholder="Confirm password" />
+        <Input.Password placeholder="Confirm password"/>
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
@@ -89,7 +89,7 @@ const AttendantForm = () => {
         </Button>
       </Form.Item>
       <Form.Item className="login-text">
-        <span>Already have an account?</span> <Button type="link">Login now!</Button>
+        <span>Already have an account?</span> <Button type="link" href={PATH.LOGIN_PAGE}>Login now!</Button>
       </Form.Item>
     </Form>
   )
@@ -99,9 +99,11 @@ const CompanyForm = () => {
   const [form] = Form.useForm()
 
   return (
-    <Form form={form} name="register" onFinish={() => {}} scrollToFirstError>
-      <Form.Item name="companyName" rules={[{ required: true, message: 'Please input your name', whitespace: true }]}>
-        <Input placeholder="Your company name" />
+    <Form form={form} name="register" onFinish={() => {
+    }} scrollToFirstError>
+      <Form.Item name="companyName"
+                 rules={[{required: true, message: 'Please input your name', whitespace: true}]}>
+        <Input placeholder="Your company name"/>
       </Form.Item>
       <Form.Item
         name="email"
@@ -116,7 +118,7 @@ const CompanyForm = () => {
           }
         ]}
       >
-        <Input placeholder="Email" />
+        <Input placeholder="Email"/>
       </Form.Item>
 
       <Form.Item
@@ -129,7 +131,7 @@ const CompanyForm = () => {
         ]}
         hasFeedback
       >
-        <Input.Password placeholder="Password" />
+        <Input.Password placeholder="Password"/>
       </Form.Item>
 
       <Form.Item
@@ -141,7 +143,7 @@ const CompanyForm = () => {
             required: true,
             message: 'Please confirm your password!'
           },
-          ({ getFieldValue }) => ({
+          ({getFieldValue}) => ({
             validator(_, value) {
               if (!value || getFieldValue('password') === value) {
                 return Promise.resolve()
@@ -151,7 +153,7 @@ const CompanyForm = () => {
           })
         ]}
       >
-        <Input.Password placeholder="Confirm password" />
+        <Input.Password placeholder="Confirm password"/>
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">
@@ -159,7 +161,7 @@ const CompanyForm = () => {
         </Button>
       </Form.Item>
       <Form.Item className="login-text">
-        <span>Already have an account?</span> <Button type="link">Login now!</Button>
+        <span>Already have an account?</span> <Button type="link" href={PATH.LOGIN_PAGE}>Login now!</Button>
       </Form.Item>
     </Form>
   )

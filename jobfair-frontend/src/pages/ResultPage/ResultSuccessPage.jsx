@@ -1,6 +1,7 @@
-import { Button, Result } from 'antd'
-import { useHistory, useLocation } from 'react-router-dom'
-import { PATH } from '../../constants/Paths/Path'
+import {Button, Result} from 'antd'
+import {useHistory, useLocation} from 'react-router-dom'
+import {PATH} from '../../constants/Paths/Path'
+
 export const ResultSuccessPage = () => {
   const location = useLocation()
   const history = useHistory()

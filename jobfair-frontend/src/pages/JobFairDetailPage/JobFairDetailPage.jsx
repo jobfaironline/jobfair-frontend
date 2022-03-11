@@ -7,13 +7,13 @@ const {Text} = Typography;
 
 const JobFairDetailPage = () => {
 
-    const history = useHistory();
-    return (
-        <div className="page" style={{marginTop: 80}}>
-            <JobFairDetailContainer/>
-            <Button type="primary" onClick={() => history.goBack()}>Back</Button>
-        </div>
-    );
+  const history = useHistory();
+  return (
+    <div className="page" style={{marginTop: 80}}>
+      <JobFairDetailContainer/>
+      <Button type="primary" onClick={() => history.goBack()}>Back</Button>
+    </div>
+  );
 };
 
 export default JobFairDetailPage;

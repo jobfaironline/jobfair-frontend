@@ -1,23 +1,23 @@
 import React from 'react'
-import { Button, Card, Divider, Form, Input, Popconfirm, Select, Space } from 'antd'
-import { JobLevelConst, LanguageConst } from '../../../constants/JobPositionConst'
-import { CompanyProfileValidation } from '../../../validate/CompanyProfileValidation'
-import { InfoCircleOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import { CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories } from '../../../constants/CompanyProfileConstant'
+import {Button, Card, Divider, Form, Input, Popconfirm, Select, Space} from 'antd'
+import {JobLevelConst, LanguageConst} from '../../../constants/JobPositionConst'
+import {CompanyProfileValidation} from '../../../validate/CompanyProfileValidation'
+import {InfoCircleOutlined, MinusCircleOutlined, PlusOutlined} from '@ant-design/icons'
+import {CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories} from '../../../constants/CompanyProfileConstant'
 import Text from 'antd/es/typography/Text'
 
-const JobPositionDetailFormComponent = ({ form, onFinish }) => {
+const JobPositionDetailFormComponent = ({form, onFinish}) => {
   return (
     <Form
       form={form}
       onFinish={onFinish}
       requiredMark="required"
       autoComplete="off"
-      scrollToFirstError={{ block: 'center', behavior: 'smooth' }}
+      scrollToFirstError={{block: 'center', behavior: 'smooth'}}
     >
-      <Card title="Basic information" style={{ width: 750 }} headStyle={{ fontWeight: 700, fontSize: 24 }}>
+      <Card title="Basic information" style={{width: 750}} headStyle={{fontWeight: 700, fontSize: 24}}>
         <Form.Item noStyle name={'id'}>
-          <Input type="hidden" />
+          <Input type="hidden"/>
         </Form.Item>
         <Form.Item
           label="Title"
@@ -25,12 +25,12 @@ const JobPositionDetailFormComponent = ({ form, onFinish }) => {
           hasFeedback
           // rules={AttendantProfileValidation.account.email}
         >
-          <Input placeholder="Title" style={{ width: 200 }} />
+          <Input placeholder="Title" style={{width: 200}}/>
         </Form.Item>
         <Form.Item label="Job level" name={'level'} hasFeedback>
           <Select
             showSearch
-            style={{ width: 250 }}
+            style={{width: 250}}
             placeholder="Search to Select"
             optionFilterProp="children"
             filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
@@ -49,12 +49,12 @@ const JobPositionDetailFormComponent = ({ form, onFinish }) => {
           hasFeedback
           // rules={AttendantProfileValidation.account.email}
         >
-          <Input placeholder="Title" style={{ width: 200 }} />
+          <Input placeholder="Title" style={{width: 200}}/>
         </Form.Item>
         <Form.Item label="Language" name={'language'} hasFeedback>
           <Select
             showSearch
-            style={{ width: 250 }}
+            style={{width: 250}}
             placeholder="Search to Select"
             optionFilterProp="children"
             filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
@@ -68,7 +68,7 @@ const JobPositionDetailFormComponent = ({ form, onFinish }) => {
           </Select>
         </Form.Item>
         <Form.Item label="Contact email" name={'contactEmail'} hasFeedback rules={CompanyProfileValidation.email}>
-          <Input placeholder="Contact email" style={{ width: 200 }} />
+          <Input placeholder="Contact email" style={{width: 200}}/>
         </Form.Item>
         <Form.Item
           label="Contact person name"
@@ -76,18 +76,18 @@ const JobPositionDetailFormComponent = ({ form, onFinish }) => {
           hasFeedback
           rules={CompanyProfileValidation.name}
         >
-          <Input placeholder="Contact person name" style={{ width: 200 }} />
+          <Input placeholder="Contact person name" style={{width: 200}}/>
         </Form.Item>
         <Form.Item
           label="Company industry"
           name="subCategoriesIds"
           tooltip={{
             title: 'You can select maximum 3 items',
-            icon: <InfoCircleOutlined />
+            icon: <InfoCircleOutlined/>
           }}
         >
           <Select
-            style={{ width: 300 }}
+            style={{width: 300}}
             placeholder="Company industry"
             mode="multiple"
             onChange={value => {
@@ -103,7 +103,7 @@ const JobPositionDetailFormComponent = ({ form, onFinish }) => {
             dropdownRender={menu => (
               <>
                 {menu}
-                <Divider style={{ margin: '8px 0' }} />
+                <Divider style={{margin: '8px 0'}}/>
                 <Text type={totalSelect > 3 ? 'danger' : 'success'}>
                   {totalSelect > 3
                     ? null
@@ -124,32 +124,32 @@ const JobPositionDetailFormComponent = ({ form, onFinish }) => {
       </Card>
 
       <Space size="large">
-        <Card title="Skills" style={{ width: 750 }} headStyle={{ fontWeight: 700, fontSize: 24 }}>
+        <Card title="Skills" style={{width: 750}} headStyle={{fontWeight: 700, fontSize: 24}}>
           <Form.List name="skillTagIds" label="Skills">
-            {(fields, { add, remove }) => {
+            {(fields, {add, remove}) => {
               return (
                 <>
-                  {fields.map(({ key, name, ...restField }) => {
+                  {fields.map(({key, name, ...restField}) => {
                     return (
-                      <div key={key} style={{ display: 'flex', flexDirection: 'row' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <div key={key} style={{display: 'flex', flexDirection: 'row'}}>
+                        <div style={{display: 'flex', flexDirection: 'column'}}>
                           <Form.Item
                             {...restField}
                             label="Name"
                             name={[name, 'name']}
                             hasFeedback
                             rules={CompanyProfileValidation.name}
-                            style={{ width: 250 }}
+                            style={{width: 250}}
                           >
-                            <Input placeholder="Name" />
+                            <Input placeholder="Name"/>
                           </Form.Item>
                         </div>
-                        <MinusCircleOutlined onClick={() => remove(name)} />
+                        <MinusCircleOutlined onClick={() => remove(name)}/>
                       </div>
                     )
                   })}
                   <Form.Item>
-                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />} style={{ width: '35%' }}>
+                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined/>} style={{width: '35%'}}>
                       Add new skill
                     </Button>
                   </Form.Item>

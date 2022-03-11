@@ -1,5 +1,3 @@
-import { Tag } from 'antd'
-
 const JobPositionTableColumn = getColumnSearchProps => {
   return [
     {
@@ -9,7 +7,7 @@ const JobPositionTableColumn = getColumnSearchProps => {
       render(text, record) {
         return {
           props: {
-            style: { width: '3rem', textAlign: 'right' }
+            style: {width: '3rem', textAlign: 'right'}
           },
           children: <div>{text}</div>
         }

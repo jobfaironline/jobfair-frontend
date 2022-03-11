@@ -1,28 +1,27 @@
-import React, { useState } from 'react'
-import { Button, Card, Divider, Form, Input, Modal, Popconfirm, Select, Space, Typography } from 'antd'
-import { JobLevelConst, LanguageConst, NUM_OF_SKILL_TAGS, SkillTagsConst } from '../../constants/JobPositionConst'
-import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
-import { InfoCircleOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import { CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories } from '../../constants/CompanyProfileConstant'
+import React, {useState} from 'react'
+import {Button, Card, Divider, Form, Input, Popconfirm, Select} from 'antd'
+import {JobLevelConst, LanguageConst, NUM_OF_SKILL_TAGS, SkillTagsConst} from '../../constants/JobPositionConst'
+import {InfoCircleOutlined} from '@ant-design/icons'
+import {CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories} from '../../constants/CompanyProfileConstant'
 import Text from 'antd/es/typography/Text'
-import { useHistory } from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 import TextArea from 'antd/es/input/TextArea'
-import { JobPositionValidation } from '../../validate/CreateJobPositionValidation'
+import {JobPositionValidation} from '../../validate/CreateJobPositionValidation'
 
-const { Option, OptGroup } = Select
+const {Option, OptGroup} = Select
 
 const formItemLayout = {
   labelCol: {
-    xs: { span: 24 },
-    sm: { span: 6 }
+    xs: {span: 24},
+    sm: {span: 6}
   },
   wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 14 }
+    xs: {span: 24},
+    sm: {span: 14}
   }
 }
 
-const JobPositionDetailComponent = ({ data, form, onFinish, handleDelete }) => {
+const JobPositionDetailComponent = ({data, form, onFinish, handleDelete}) => {
   const [totalSelect, setTotalSelect] = useState(0)
   const [totalSkillTags, setTotalSkillTags] = useState(0)
   const history = useHistory()
@@ -35,18 +34,18 @@ const JobPositionDetailComponent = ({ data, form, onFinish, handleDelete }) => {
         requiredMark="required"
         autoComplete="off"
         {...formItemLayout}
-        scrollToFirstError={{ block: 'center', behavior: 'smooth' }}
+        scrollToFirstError={{block: 'center', behavior: 'smooth'}}
       >
         <Card
           title={`Job position's basic information`}
-          style={{ width: 750 }}
-          headStyle={{ fontWeight: 700, fontSize: 24 }}
+          style={{width: 750}}
+          headStyle={{fontWeight: 700, fontSize: 24}}
         >
           <Form.Item noStyle name={'id'}>
-            <Input type="hidden" />
+            <Input type="hidden"/>
           </Form.Item>
           <Form.Item label="Title" name={'title'} hasFeedback rules={JobPositionValidation.title}>
-            <Input placeholder="Title" />
+            <Input placeholder="Title"/>
           </Form.Item>
           <Form.Item label="Job level" name={'level'} rules={JobPositionValidation.jobLevel}>
             <Select
@@ -79,7 +78,7 @@ const JobPositionDetailComponent = ({ data, form, onFinish, handleDelete }) => {
             </Select>
           </Form.Item>
           <Form.Item label="Contact email" name={'contactEmail'} hasFeedback rules={JobPositionValidation.email}>
-            <Input placeholder="Contact email" />
+            <Input placeholder="Contact email"/>
           </Form.Item>
           <Form.Item
             label="Contact person name"
@@ -87,14 +86,14 @@ const JobPositionDetailComponent = ({ data, form, onFinish, handleDelete }) => {
             hasFeedback
             rules={JobPositionValidation.contactPerson}
           >
-            <Input placeholder="Contact person name" />
+            <Input placeholder="Contact person name"/>
           </Form.Item>
           <Form.Item
             label="Company industry"
             name="subCategoriesIds"
             tooltip={{
               title: 'You can select maximum 3 items',
-              icon: <InfoCircleOutlined />
+              icon: <InfoCircleOutlined/>
             }}
             rules={JobPositionValidation.jobCategory}
           >
@@ -114,7 +113,7 @@ const JobPositionDetailComponent = ({ data, form, onFinish, handleDelete }) => {
               dropdownRender={menu => (
                 <>
                   {menu}
-                  <Divider style={{ margin: '8px 0' }} />
+                  <Divider style={{margin: '8px 0'}}/>
                   <Text type={totalSelect > 3 ? 'danger' : 'success'}>
                     {totalSelect > 3
                       ? null
@@ -148,11 +147,12 @@ const JobPositionDetailComponent = ({ data, form, onFinish, handleDelete }) => {
                 }
                 setTotalSkillTags(value.length)
               }}
-              onSearch={value => {}}
+              onSearch={value => {
+              }}
               dropdownRender={menu => (
                 <>
                   {menu}
-                  <Divider style={{ margin: '8px 0' }} />
+                  <Divider style={{margin: '8px 0'}}/>
                   <Text type={totalSkillTags > 3 ? 'danger' : 'success'}>
                     {totalSkillTags > 5
                       ? null
@@ -173,7 +173,7 @@ const JobPositionDetailComponent = ({ data, form, onFinish, handleDelete }) => {
             rules={JobPositionValidation.description}
             name="description"
           >
-            <TextArea placeholder="Description" showCount maxLength={3000} autoSize={{ minRows: 5 }} />
+            <TextArea placeholder="Description" showCount maxLength={3000} autoSize={{minRows: 5}}/>
           </Form.Item>
           <Form.Item
             label="Requirements"
@@ -182,11 +182,11 @@ const JobPositionDetailComponent = ({ data, form, onFinish, handleDelete }) => {
             rules={JobPositionValidation.requirements}
             name="requirements"
           >
-            <TextArea placeholder="Requirements" showCount maxLength={3000} autoSize={{ minRows: 5 }} />
+            <TextArea placeholder="Requirements" showCount maxLength={3000} autoSize={{minRows: 5}}/>
           </Form.Item>
-          <Form.Item style={{ display: 'flex', justifyContent: 'end', height: 'fit-content' }}>
-            <div style={{ display: 'flex', justifyContent: 'end', height: 'fit-content' }}>
-              <Button type="primary" htmlType="submit" style={{ margin: '0 0.5rem' }}>
+          <Form.Item style={{display: 'flex', justifyContent: 'end', height: 'fit-content'}}>
+            <div style={{display: 'flex', justifyContent: 'end', height: 'fit-content'}}>
+              <Button type="primary" htmlType="submit" style={{margin: '0 0.5rem'}}>
                 Edit
               </Button>
               <Popconfirm
@@ -195,7 +195,7 @@ const JobPositionDetailComponent = ({ data, form, onFinish, handleDelete }) => {
                 okText="Yes"
                 cancelText="No"
               >
-                <Button style={{ margin: '0 0.5rem' }}>Delete</Button>
+                <Button style={{margin: '0 0.5rem'}}>Delete</Button>
               </Popconfirm>
             </div>
           </Form.Item>

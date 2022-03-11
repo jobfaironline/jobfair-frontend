@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { getBase64 } from '../../utils/common'
-import { PlusOutlined } from '@ant-design/icons'
-import { Form, Modal, Upload } from 'antd'
+import React, {Component} from 'react'
+import {getBase64} from '../../utils/common'
+import {PlusOutlined} from '@ant-design/icons'
+import {Form, Modal, Upload} from 'antd'
 
 class ImageUpload extends Component {
   state = {
@@ -30,7 +30,7 @@ class ImageUpload extends Component {
     ]
   }
 
-  handleCancel = () => this.setState({ previewVisible: false })
+  handleCancel = () => this.setState({previewVisible: false})
 
   handlePreview = async file => {
     if (!file.url && !file.preview) {
@@ -45,14 +45,14 @@ class ImageUpload extends Component {
     })
   }
 
-  handleChange = ({ fileList }) => this.setState({ fileList })
+  handleChange = ({fileList}) => this.setState({fileList})
 
   render() {
-    const { previewVisible, previewImage, fileList, previewTitle } = this.state
+    const {previewVisible, previewImage, fileList, previewTitle} = this.state
     const uploadButton = (
       <div>
-        <PlusOutlined />
-        <div style={{ marginTop: 8 }}>Upload</div>
+        <PlusOutlined/>
+        <div style={{marginTop: 8}}>Upload</div>
       </div>
     )
     return (
@@ -74,7 +74,7 @@ class ImageUpload extends Component {
           footer={null}
           onCancel={this.handleCancel}
         >
-          <img alt="example" style={{ width: '100%' }} src={previewImage} />
+          <img alt="example" style={{width: '100%'}} src={previewImage}/>
         </Modal>
       </>
     )

@@ -1,16 +1,15 @@
-import React, { useState } from 'react'
-import { useStepsForm } from 'sunflower-antd'
-import { Steps, Input, Button, Form, Result } from 'antd'
+import React, {useState} from 'react'
+import {useStepsForm} from 'sunflower-antd'
+import {Button, Form, Result, Steps} from 'antd'
 import CreateJobPositionForm from '../create-job-position-form/CreateJobPositionForm'
 import CompanyProfileForm from '../company-profile-form/CompanyProfileForm.component'
-import { benefitConst } from '../../constants/CompanyProfileConstant'
-import { JOB_POSITION_MODEL } from '../../default_models/CreateJobPositionModel/JobPositionModel'
+import {JOB_POSITION_MODEL} from '../../default_models/CreateJobPositionModel/JobPositionModel'
 
-const { Step } = Steps
+const {Step} = Steps
 
 const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 }
+  labelCol: {span: 8},
+  wrapperCol: {span: 16}
 }
 
 export default SunflowerForm => {
@@ -24,7 +23,7 @@ export default SunflowerForm => {
     console.log('submitted: ', values)
   }
 
-  const { form, current, gotoStep, stepsProps, formProps, submit, formLoading } = useStepsForm({
+  const {form, current, gotoStep, stepsProps, formProps, submit, formLoading} = useStepsForm({
     async submit(values) {
       await new Promise(r => setTimeout(r, 1000))
       return 'ok'
@@ -34,17 +33,17 @@ export default SunflowerForm => {
 
   const formList = [
     <>
-      <CreateJobPositionForm />
+      <CreateJobPositionForm/>
       <Form.Item>
         <Button onClick={() => gotoStep(current + 1)}>Next</Button>
       </Form.Item>
     </>,
 
     <>
-      <CompanyProfileForm />
+      <CompanyProfileForm/>
       <Form.Item>
         <Button
-          style={{ marginRight: 10 }}
+          style={{marginRight: 10}}
           type="primary"
           loading={formLoading}
           onClick={() => {
@@ -65,12 +64,12 @@ export default SunflowerForm => {
   return (
     <div>
       <Steps {...stepsProps}>
-        <Step title="Create job position" />
-        <Step title="Submit company profile" />
-        <Step title="Waiting for result" />
+        <Step title="Create job position"/>
+        <Step title="Submit company profile"/>
+        <Step title="Waiting for result"/>
       </Steps>
 
-      <div style={{ marginTop: 60 }}>
+      <div style={{marginTop: 60}}>
         <Form
           form={form}
           initialValues={data}
@@ -78,7 +77,7 @@ export default SunflowerForm => {
           onFinish={onFinish}
           onValuesChange={e => onChange(e)}
           requiredMark="required"
-          style={{ maxWidth: 1500 }}
+          style={{maxWidth: 1500}}
         >
           {formList[current]}
         </Form>

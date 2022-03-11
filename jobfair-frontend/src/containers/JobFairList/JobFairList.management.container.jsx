@@ -37,6 +37,7 @@ const JobFairListManagementContainer = props => {
           }
         })
         setData([...data, ...result])
+        setSearchResult([...data, ...result])
         setLoading(false)
       })
       .catch(err => {
@@ -66,6 +67,10 @@ const JobFairListManagementContainer = props => {
     history.push(link)
   }
 
+  const handleClearFilter = () => {
+      setSearchResult([...data])
+  }
+
   useEffect(() => {
     loadMoreData()
   }, [])
@@ -79,6 +84,7 @@ const JobFairListManagementContainer = props => {
         handleFilterByStatus={handleFilterByStatus}
         searchResult={searchResult}
         getCompanyBoothId={getCompanyBoothId}
+        handleClearFilter={handleClearFilter}
       />
     </>
   )

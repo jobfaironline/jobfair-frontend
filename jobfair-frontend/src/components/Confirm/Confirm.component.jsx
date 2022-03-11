@@ -1,23 +1,23 @@
 import React from 'react'
-import { Card, Col, Divider, Row, Space, Tag, Typography, Anchor } from 'antd'
-import { convertEnumToString } from '../../utils/common'
+import {Anchor, Card, Col, Divider, Row, Space, Tag, Typography} from 'antd'
+import {convertEnumToString} from '../../utils/common'
 import './Confirm.styles.scss'
 
-const { Link } = Anchor
+const {Link} = Anchor
 
 const ConfirmComponent = props => {
-  const { data, companyInfo } = props
+  const {data, companyInfo} = props
 
-  const { Title, Paragraph, Text } = Typography
+  const {Title, Paragraph, Text} = Typography
 
   return (
     <>
-      <div style={{ position: 'fixed', left: '0.8rem', top: '200px' }}>
-        <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Registration</Typography>
+      <div style={{position: 'fixed', left: '0.8rem', top: '200px'}}>
+        <Typography style={{fontSize: '1rem', paddingBottom: '0.3rem'}}>Registration</Typography>
         <Anchor targetOffset={300} onClick={e => e.preventDefault()}>
-          <Link href={`#company-information`} title="Company info" />
+          <Link href={`#company-information`} title="Company info"/>
           {data.jobPositions.map((jobPosition, index) => {
-            return <Link href={`#${index}-job-position`} title={`${index + 1}: ${jobPosition.title}`} />
+            return <Link href={`#${index}-job-position`} title={`${index + 1}: ${jobPosition.title}`}/>
           })}
         </Anchor>
       </div>
@@ -28,7 +28,7 @@ const ConfirmComponent = props => {
               <Card
                 title="Company Information"
                 bordered={false}
-                headStyle={{ fontSize: '2rem' }}
+                headStyle={{fontSize: '2rem'}}
                 className="company-info-card"
               >
                 <Typography>
@@ -83,23 +83,23 @@ const ConfirmComponent = props => {
               <Card
                 title="Job positions"
                 bordered={false}
-                headStyle={{ fontSize: '2rem' }}
+                headStyle={{fontSize: '2rem'}}
                 className="job-positions-info-card"
               >
                 <Typography>
                   <Paragraph>
                     {data.jobPositions.map((item, index) => (
                       <div id={`${index}-job-position`}>
-                        <div key="no" style={{ marginBottom: '0.8rem' }}>
-                          <Text strong style={{ fontSize: '1.6rem' }}>{`Job position ${index + 1}`}</Text>
+                        <div key="no" style={{marginBottom: '0.8rem'}}>
+                          <Text strong style={{fontSize: '1.6rem'}}>{`Job position ${index + 1}`}</Text>
                         </div>
-                        <div style={{ marginLeft: '1rem' }}>
-                          <div className="sub-title" style={{ marginBottom: '0.2rem' }}>
-                            <Text strong style={{ fontSize: '1.4rem' }}>
+                        <div style={{marginLeft: '1rem'}}>
+                          <div className="sub-title" style={{marginBottom: '0.2rem'}}>
+                            <Text strong style={{fontSize: '1.4rem'}}>
                               General information
                             </Text>
                           </div>
-                          <Col style={{ marginLeft: '1rem' }}>
+                          <Col style={{marginLeft: '1rem'}}>
                             <Row>
                               <div key="title">
                                 <Space>
@@ -119,7 +119,7 @@ const ConfirmComponent = props => {
                                 <Text strong>Required skills: </Text>
                                 {item.skillTagDTOS.map(skill => {
                                   return (
-                                    <Tag color="blue" style={{ fontSize: '0.9rem', padding: '0.1rem 0.3rem' }}>
+                                    <Tag color="blue" style={{fontSize: '0.9rem', padding: '0.1rem 0.3rem'}}>
                                       {skill.name}
                                     </Tag>
                                   )
@@ -131,7 +131,7 @@ const ConfirmComponent = props => {
                                 <Text strong>Category: </Text>
                                 {item.subCategoryDTOs.map(category => {
                                   return (
-                                    <Tag color="blue" style={{ fontSize: '0.9rem', padding: '0.1rem 0.3rem' }}>
+                                    <Tag color="blue" style={{fontSize: '0.9rem', padding: '0.1rem 0.3rem'}}>
                                       {category.name}
                                     </Tag>
                                   )
@@ -172,13 +172,13 @@ const ConfirmComponent = props => {
                             </Row>
                           </Col>
                         </div>
-                        <div style={{ marginLeft: '1rem' }}>
-                          <div className="sub-title" style={{ marginBottom: '0.2rem' }}>
-                            <Text strong style={{ fontSize: '1.4rem' }}>
+                        <div style={{marginLeft: '1rem'}}>
+                          <div className="sub-title" style={{marginBottom: '0.2rem'}}>
+                            <Text strong style={{fontSize: '1.4rem'}}>
                               Specific jobfair's information
                             </Text>
                           </div>
-                          <div style={{ marginLeft: '1rem' }}>
+                          <div style={{marginLeft: '1rem'}}>
                             <div key="description">
                               <Space>
                                 <Text strong>Job description: </Text>
@@ -215,7 +215,7 @@ const ConfirmComponent = props => {
                           </div>
                         </div>
 
-                        <Divider />
+                        <Divider/>
                       </div>
                     ))}
                   </Paragraph>

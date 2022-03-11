@@ -4,7 +4,7 @@ import JobFairListManagementContainer from '../../containers/JobFairList/JobFair
 const JobFairsPage = () => {
   return (
     <div className="page">
-      <JobFairListManagementContainer />
+      <JobFairListManagementContainer/>
     </div>
   )
 }

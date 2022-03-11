@@ -2,110 +2,110 @@ import React from 'react';
 import {Tag} from "antd";
 
 const JobFairListColumn = (getColumnSearchProps) => {
-    return [
+  return [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      ...getColumnSearchProps('name')
+    },
+    {
+      title: 'Company register start time',
+      dataIndex: 'companyRegisterStartTime',
+      key: 'companyRegisterStartTime',
+      ...getColumnSearchProps('companyRegisterStartTime')
+    },
+    {
+      title: 'Attendant register start time',
+      dataIndex: 'attendantRegisterStartTime',
+      key: 'attendantRegisterStartTime',
+      ...getColumnSearchProps('attendantRegisterStartTime')
+    },
+    {
+      title: 'Start time',
+      dataIndex: 'startTime',
+      key: 'startTime',
+      ...getColumnSearchProps('startTime')
+    },
+    {
+      title: 'Status',
+      key: 'status',
+      dataIndex: 'status',
+      filters: [
         {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            ...getColumnSearchProps('name')
+          text: 'Draft',
+          value: 'DRAFT'
         },
         {
-            title: 'Company register start time',
-            dataIndex: 'companyRegisterStartTime',
-            key: 'companyRegisterStartTime',
-            ...getColumnSearchProps('companyRegisterStartTime')
+          text: 'Pending',
+          value: 'PENDING'
         },
         {
-            title: 'Attendant register start time',
-            dataIndex: 'attendantRegisterStartTime',
-            key: 'attendantRegisterStartTime',
-            ...getColumnSearchProps('attendantRegisterStartTime')
+          text: 'Deleted',
+          value: 'DELETED'
         },
         {
-            title: 'Start time',
-            dataIndex: 'startTime',
-            key: 'startTime',
-            ...getColumnSearchProps('startTime')
+          text: 'Cancel',
+          value: 'CANCEL'
         },
         {
-            title: 'Status',
-            key: 'status',
-            dataIndex: 'status',
-            filters: [
-                {
-                    text: 'Draft',
-                    value: 'DRAFT'
-                },
-                {
-                    text: 'Pending',
-                    value: 'PENDING'
-                },
-                {
-                    text: 'Deleted',
-                    value: 'DELETED'
-                },
-                {
-                    text: 'Cancel',
-                    value: 'CANCEL'
-                },
-                {
-                    text: 'Approved',
-                    value: 'APPROVE'
-                },
-                {
-                    text: 'Rejected',
-                    value: 'REJECT'
-                }
-            ],
-            onFilter: (value, record) => {
-                return record.status === value
-            },
-            render: status => {
-                let objStatus
-                switch (status) {
-                    case 'APPROVE':
-                        objStatus = {
-                            color: 'green',
-                            message: 'Approved'
-                        }
-                        break
-                    case 'DRAFT':
-                        objStatus = {
-                            color: 'gold',
-                            message: 'Draft'
-                        }
-                        break
-                    case 'PENDING':
-                        objStatus = {
-                            color: 'blue',
-                            message: 'Pending'
-                        }
-                        break
-                    case 'DELETED':
-                        objStatus = {
-                            color: 'magenta',
-                            message: 'Deleted'
-                        }
-                        break
-                    case 'CANCEL':
-                        objStatus = {
-                            color: 'volcano',
-                            message: 'Cancel'
-                        }
-                        break
-                    default:
-                        objStatus = {
-                            color: 'red',
-                            message: 'Rejected'
-                        }
-                        break
-                }
-                return (
-                    <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
-                )
-            }
+          text: 'Approved',
+          value: 'APPROVE'
+        },
+        {
+          text: 'Rejected',
+          value: 'REJECT'
         }
-    ]
+      ],
+      onFilter: (value, record) => {
+        return record.status === value
+      },
+      render: status => {
+        let objStatus
+        switch (status) {
+          case 'APPROVE':
+            objStatus = {
+              color: 'green',
+              message: 'Approved'
+            }
+            break
+          case 'DRAFT':
+            objStatus = {
+              color: 'gold',
+              message: 'Draft'
+            }
+            break
+          case 'PENDING':
+            objStatus = {
+              color: 'blue',
+              message: 'Pending'
+            }
+            break
+          case 'DELETED':
+            objStatus = {
+              color: 'magenta',
+              message: 'Deleted'
+            }
+            break
+          case 'CANCEL':
+            objStatus = {
+              color: 'volcano',
+              message: 'Cancel'
+            }
+            break
+          default:
+            objStatus = {
+              color: 'red',
+              message: 'Rejected'
+            }
+            break
+        }
+        return (
+          <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
+        )
+      }
+    }
+  ]
 };
 
 export default JobFairListColumn;

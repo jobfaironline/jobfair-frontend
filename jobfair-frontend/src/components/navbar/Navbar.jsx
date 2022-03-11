@@ -1,19 +1,13 @@
 import React from 'react'
-import { Button, Dropdown, Menu, Typography, Avatar } from 'antd'
-import { Link, useHistory } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { logoutHandler } from '../../redux-flow/authentication/authentication-action'
-import { UserOutlined } from '@ant-design/icons'
+import {Avatar, Button, Dropdown, Menu, Typography} from 'antd'
+import {Link, useHistory} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import {logoutHandler} from '../../redux-flow/authentication/authentication-action'
+import {UserOutlined} from '@ant-design/icons'
 import './Navbar.styles.scss'
 
-import {
-  PATH,
-  PATH_ADMIN,
-  PATH_COMPANY_EMPLOYEE,
-  PATH_COMPANY_MANAGER,
-  PATH_ATTENDANT,
-  PATH_STAFF
-} from '../../constants/Paths/Path'
+import {PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER} from '../../constants/Paths/Path'
+
 export const AttendantMenu = [
   <Menu.Item key={PATH_ATTENDANT.ATTENDANT_PROFILE_PAGE}>
     <Link to={PATH_ATTENDANT.ATTENDANT_PROFILE_PAGE}>Attendant Profile</Link>
@@ -97,7 +91,7 @@ const NavigationBar = () => {
       <div className="Navbar">
         <Link to={PATH.INDEX} className="logo">
           <div>
-            <Typography.Title level={2} style={{ marginBottom: 0, padding: '0 1.5rem', color: '#FFF' }}>
+            <Typography.Title level={2} style={{marginBottom: 0, padding: '0 1.5rem', color: '#FFF'}}>
               Jobhub
             </Typography.Title>
           </div>
@@ -121,26 +115,26 @@ const NavigationBar = () => {
           ) : null} }*/}
           {extraMenu()
             ? extraMenu().map(item => {
-                return item
-              })
+              return item
+            })
             : null}
           {/* {role ? <Button onClick={handleClick}>Logout</Button> : null} */}
         </Menu>
-        {!role ? <AuthenticationButtonGroups handleRedirect={handleRedirect} /> : null}
-        {role ? <AvatarMenu logoutFunction={handleClick} handleRedirect={handleRedirect} /> : null}
+        {!role ? <AuthenticationButtonGroups handleRedirect={handleRedirect}/> : null}
+        {role ? <AvatarMenu logoutFunction={handleClick} handleRedirect={handleRedirect}/> : null}
       </div>
     </div>
   )
 }
 
-const AuthenticationButtonGroups = ({ handleRedirect }) => {
+const AuthenticationButtonGroups = ({handleRedirect}) => {
   return (
-    <div style={{ display: 'flex', position: 'absolute', right: 0 }}>
+    <div style={{display: 'flex', position: 'absolute', right: 0}}>
       <Button
         size="large"
         shape="round"
         onClick={() => handleRedirect(PATH.LOGIN_PAGE)}
-        style={{ margin: '0 0.5rem', width: '7rem' }}
+        style={{margin: '0 0.5rem', width: '7rem'}}
       >
         Login
       </Button>
@@ -148,7 +142,7 @@ const AuthenticationButtonGroups = ({ handleRedirect }) => {
         size="large"
         shape="round"
         onClick={() => handleRedirect(PATH.REGISTER_PAGE)}
-        style={{ margin: '0 0.5rem', width: '7rem' }}
+        style={{margin: '0 0.5rem', width: '7rem'}}
       >
         Sign up
       </Button>
@@ -156,7 +150,7 @@ const AuthenticationButtonGroups = ({ handleRedirect }) => {
   )
 }
 
-const AvatarMenu = ({ logoutFunction, handleRedirect }) => {
+const AvatarMenu = ({logoutFunction, handleRedirect}) => {
   const history = useHistory()
   const menu = (
     <Menu
@@ -164,7 +158,7 @@ const AvatarMenu = ({ logoutFunction, handleRedirect }) => {
         if (e.key === 'LOGOUT') logoutFunction()
         else if (e.key === 'CHANGE_PASSWORD_PAGE') history.push(PATH.CHANGE_PASSWORD_PAGE)
       }}
-      style={{ zIndex: 10000000 }}
+      style={{zIndex: 10000000}}
     >
       <Menu.Item key="CHANGE_PASSWORD_PAGE">Change password</Menu.Item>
       <Menu.Item key="LOGOUT">Logout</Menu.Item>
@@ -172,9 +166,9 @@ const AvatarMenu = ({ logoutFunction, handleRedirect }) => {
   )
 
   return (
-    <div style={{ zIndex: 10000000, padding: '0 1rem' }}>
+    <div style={{zIndex: 10000000, padding: '0 1rem'}}>
       <Dropdown overlay={menu} placement="bottomRight">
-        <Avatar size={45} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+        <Avatar size={45} style={{backgroundColor: '#87d068'}} icon={<UserOutlined/>}/>
       </Dropdown>
     </div>
   )

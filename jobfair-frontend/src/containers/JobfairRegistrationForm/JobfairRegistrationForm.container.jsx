@@ -1,22 +1,20 @@
-import { Button, Form, notification, Popconfirm, Steps } from 'antd'
-import React, { useEffect, useState } from 'react'
-import { useForm, useStepsForm } from 'sunflower-antd'
-import CompanyProfileForm from '../../components/company-profile-form/CompanyProfileForm.component'
-import { useHistory, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { createDraftRegistration } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-action'
-import { getCompanyProfileAPI } from '../../services/company-controller/CompanyControllerService'
-import TextArea from 'antd/es/input/TextArea'
-import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
+import {Button, Form, notification, Popconfirm, Steps} from 'antd'
+import React, {useEffect, useState} from 'react'
+import {useHistory, useParams} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import {createDraftRegistration} from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-action'
+import {getCompanyProfileAPI} from '../../services/company-controller/CompanyControllerService'
 import ConfirmContainer from '../Confirm/Confirm.container'
-import JobfairRegistrationFormComponent from '../../components/JobfairRegistrationForm/JobfairRegistrationForm.component'
-import { PATH } from '../../constants/Paths/Path'
-import { setFormBody } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
-const { Step } = Steps
+import JobfairRegistrationFormComponent
+  from '../../components/JobfairRegistrationForm/JobfairRegistrationForm.component'
+import {PATH} from '../../constants/Paths/Path'
+import {setFormBody} from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
+
+const {Step} = Steps
 const JobfairRegistrationForm = () => {
   //please pass this form into component or USE REDUX TO STORE FORM HOOK
 
-  const { jobfairId } = useParams()
+  const {jobfairId} = useParams()
   const dispatch = useDispatch()
   const companyId = useSelector(state => state.authentication.user.companyId)
   const [companyInfo, setCompanyInfo] = useState({})
@@ -45,7 +43,7 @@ const JobfairRegistrationForm = () => {
           subCategoriesIds: res.data.subCategoryDTOs.map(item => item.id),
           url: res.data.websiteUrl
         }
-        setCompanyInfo({ ...response })
+        setCompanyInfo({...response})
       })
       .catch(() => {
         notification['error']({
@@ -61,7 +59,7 @@ const JobfairRegistrationForm = () => {
   }, [])
 
   useEffect(() => {
-    companyForm.setFieldsValue({ ...companyInfo })
+    companyForm.setFieldsValue({...companyInfo})
   }, [companyInfo, companyForm])
 
   const [form] = Form.useForm()
@@ -88,7 +86,7 @@ const JobfairRegistrationForm = () => {
         duration: 2
       })
       //after submit success, push to success page
-      history.push(PATH.JOB_FAIRS_PAGE)
+      history.push(PATH.RESULT_SUCCESS_PAGE)
     } catch (err) {
       notification['error']({
         message: `An error has occurred while submitting`,
@@ -104,11 +102,11 @@ const JobfairRegistrationForm = () => {
     <div>
       <Steps current={currentStep}>
         {/* <Step title="Confirm company profile" /> */}
-        <Step title="Jobfair registration form" />
-        <Step title="Confirm registration" />
+        <Step title="Jobfair registration form"/>
+        <Step title="Confirm registration"/>
       </Steps>
 
-      <div style={{ marginTop: 60 }}>
+      <div style={{marginTop: 60}}>
         <Form
           form={form}
           layout="vertical"
@@ -116,10 +114,11 @@ const JobfairRegistrationForm = () => {
           requiredMark="required"
           autoComplete="off"
         >
-          <div style={{ display: currentStep == 0 ? 'block' : 'none' }}>
+          <div style={{display: currentStep == 0 ? 'block' : 'none'}}>
             <JobfairRegistrationFormComponent
               form={form}
-              onPickJobFinish={() => {}}
+              onPickJobFinish={() => {
+              }}
               nextStep={() => {
                 form.validateFields().then(res => {
                   setCurrentStep(currentStep + 1)
@@ -129,8 +128,8 @@ const JobfairRegistrationForm = () => {
             />
           </div>
           {currentStep == 1 ? (
-            <div style={{ display: currentStep == 1 ? 'block' : 'none' }}>
-              <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
+            <div style={{display: currentStep == 1 ? 'block' : 'none'}}>
+              <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo}/>
               <div className="step-buttons">
                 <div className="pre-step-button">
                   <Form.Item>

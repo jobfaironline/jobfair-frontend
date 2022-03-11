@@ -1,19 +1,15 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react'
+import React, {useEffect, useLayoutEffect, useState} from 'react'
 import JobPositionTableComponent from '../../components/JobPositionTable/JobPositionTable.component'
-import { Space, notification, Popconfirm, Button } from 'antd'
-import { useDispatch, useSelector } from 'react-redux'
-import { getJobPositionsAPI } from '../../services/job-controller/JobControllerService'
-import { fetchJobPositions } from '../../redux-flow/jobPositions/job-positions-action'
+import {Button, Popconfirm, Space} from 'antd'
+import {useDispatch, useSelector} from 'react-redux'
+import {fetchJobPositions} from '../../redux-flow/jobPositions/job-positions-action'
 import {
-  setFormBody,
   setJobPositionModalVisibility,
   setJobPositions
 } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
-import JobPositionSubmodal from '../../components/JobPositionModal/JobPositionSubmodal.component'
 import JobPositionSubmodalContainer from '../JobPositionModal/JobPositionSubmodal.container'
-import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
 
-const JobPositionTable = ({ selectable }) => {
+const JobPositionTable = ({selectable}) => {
   //pagination
   const [currentPage, setCurrentPage] = useState(0)
   const [pageSize, setPageSize] = useState(10)
@@ -74,7 +70,7 @@ const JobPositionTable = ({ selectable }) => {
   }
 
   const fetchData = async (currentPage, pageSize) => {
-    dispatch(fetchJobPositions({ currentPage, pageSize }))
+    dispatch(fetchJobPositions({currentPage, pageSize}))
   }
 
   useLayoutEffect(() => {
@@ -93,7 +89,7 @@ const JobPositionTable = ({ selectable }) => {
 
   return (
     <div>
-      <JobPositionSubmodalContainer jobPositionId={neededJobPosition} />
+      <JobPositionSubmodalContainer jobPositionId={neededJobPosition}/>
       <JobPositionTableComponent
         data={jobPositionData}
         editable
@@ -114,7 +110,7 @@ const JobPositionTable = ({ selectable }) => {
             )
           }
         }}
-        rowSelection={selectable ? { ...rowSelection } : null}
+        rowSelection={selectable ? {...rowSelection} : null}
       />
       {/* <Space style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}>
         <PaginationComponent data={jobPositionData} handlePageChange={handlePageChange} totalRecord={totalRecord} />
@@ -126,7 +122,7 @@ const JobPositionTable = ({ selectable }) => {
           okText="Yes"
           cancelText="No"
         >
-          <Button style={{ width: '100%' }} type="primary">
+          <Button style={{width: '100%'}} type="primary">
             Choose
           </Button>
         </Popconfirm>

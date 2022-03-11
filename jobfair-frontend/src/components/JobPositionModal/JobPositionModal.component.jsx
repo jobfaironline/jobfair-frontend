@@ -1,8 +1,8 @@
 import React from 'react'
-import { Button, Modal, Space } from 'antd'
+import {Modal} from 'antd'
 import JobPositionTable from '../../containers/JobPositionTable/JobPositionTable.container'
 
-const JobPositionModal = ({ visible, handleOk, handleCancel }) => {
+const JobPositionModal = ({visible, handleOk, handleCancel}) => {
   //modal
   const [confirmLoading, setConfirmLoading] = React.useState(false)
 
@@ -23,7 +23,7 @@ const JobPositionModal = ({ visible, handleOk, handleCancel }) => {
         onCancel={handleCancel}
         footer={null}
       >
-        <JobPositionTable selectable />
+        <JobPositionTable selectable/>
       </Modal>
     </>
   )

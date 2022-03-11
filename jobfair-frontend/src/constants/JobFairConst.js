@@ -16,18 +16,23 @@ export const JOB_FAIR_PLAN_COMPANY_STATUS = [
     },
     {
         value: "CHOOSE_BOOTH",
-        label: "Be able to choose booth",
+        label: "Choose booth",
         color: "blue"
     },
     {
         value: "DECORATE_BOOTH",
-        label: "Be able to decorate booth",
+        label: "Decorate booth",
         color: "geekblue"
     },
     {
         value: "UNAVAILABLE",
         label: "Unavailable",
         color: "red"
+    },
+    {
+        value: "HAPPENING",
+        label: "Happening",
+        color: "greek"
     },
 ]
 

@@ -1,11 +1,13 @@
 import React from 'react'
 import CreateJobPositionForm from '../../components/create-job-position-form/CreateJobPositionForm'
-import { Button, Form, notification } from 'antd'
-import { useHistory } from 'react-router-dom'
-import { createJobPositionsAPI } from '../../services/job-controller/JobControllerService'
-import { setJobPositionSubmodalVisibility } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
-import { fetchJobPositions } from '../../redux-flow/jobPositions/job-positions-action'
-import { useSelector } from 'react-redux'
+import {Button, Form, notification} from 'antd'
+import {useHistory} from 'react-router-dom'
+import {createJobPositionsAPI} from '../../services/job-controller/JobControllerService'
+import {
+  setJobPositionSubmodalVisibility
+} from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
+import {fetchJobPositions} from '../../redux-flow/jobPositions/job-positions-action'
+import {useSelector} from 'react-redux'
 
 const CreateJobPositionContainer = () => {
   const [form] = Form.useForm()
@@ -34,7 +36,7 @@ const CreateJobPositionContainer = () => {
       })
   }
 
-  return <CreateJobPositionForm form={form} onFinish={onFinish} />
+  return <CreateJobPositionForm form={form} onFinish={onFinish}/>
 }
 
 export default CreateJobPositionContainer

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import CompanyRegistrationDetailModalComponent from '../../ApprovalRegistration/modal/CompanyRegistrationDetailModal.component'
+import React, {useEffect, useState} from 'react'
 import JobFairDetailModalComponent from './JobFairDetailModal.component'
-import { getAccountByIdAPI } from '../../../services/account-controller/AccountControllerService'
-import { notification } from 'antd'
+import {getAccountByIdAPI} from '../../../services/account-controller/AccountControllerService'
+import {notification} from 'antd'
 
-const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVisible, jobFairList }) => {
+const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVisible, jobFairList}) => {
   const [jobFairDetail, setJobFairDetail] = useState({})
   const [creatorInfo, setCreatorInfo] = useState('')
 

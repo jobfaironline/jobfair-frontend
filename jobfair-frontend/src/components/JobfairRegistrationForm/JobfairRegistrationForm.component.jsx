@@ -1,11 +1,11 @@
 import React from 'react'
-import { Button, Form, Typography } from 'antd'
-import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
+import {Button, Form} from 'antd'
+import {CompanyProfileValidation} from '../../validate/CompanyProfileValidation'
 import TextArea from 'antd/es/input/TextArea'
 import PickJobPositionFormContainer from '../../containers/PickJobPositionForm/PickJobPositionForm.container'
 import './JobfairRegistrationForm.styles.scss'
 
-const JobfairRegistrationForm = ({ form, onPickJobFinish, nextStep, preStep }) => {
+const JobfairRegistrationForm = ({form, onPickJobFinish, nextStep, preStep}) => {
   return (
     <div className="jobfair-registration-form-container">
       <Form.Item
@@ -15,9 +15,9 @@ const JobfairRegistrationForm = ({ form, onPickJobFinish, nextStep, preStep }) =
         rules={CompanyProfileValidation.description}
         name="description"
       >
-        <TextArea autoSize={{ minRows: 5 }} showCount maxLength={3000} placeholder="Registration description" />
+        <TextArea autoSize={{minRows: 5}} showCount maxLength={3000} placeholder="Registration description"/>
       </Form.Item>
-      <PickJobPositionFormContainer form={form} onFinish={onPickJobFinish} />
+      <PickJobPositionFormContainer form={form} onFinish={onPickJobFinish}/>
       <div className="step-buttons">
         <div className="next-step-button">
           <Form.Item>

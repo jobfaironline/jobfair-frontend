@@ -1,28 +1,27 @@
-import React, { useState } from 'react'
-import { Button, Card, Divider, Form, Input, Radio, Select, Space, Switch, Typography } from 'antd'
-import { JOB_POSITION_MODEL } from '../../default_models/CreateJobPositionModel/JobPositionModel'
+import React, {useState} from 'react'
+import {Button, Card, Divider, Form, Input, Select, Space, Typography} from 'antd'
+import {JOB_POSITION_MODEL} from '../../default_models/CreateJobPositionModel/JobPositionModel'
 import {
-  IsRequiredLetterConst,
   JobLevelConst,
   JobTypeConst,
   LanguageConst,
   NUM_OF_SKILL_TAGS,
-  SalaryRangeConst,
   SkillTagsConst
 } from '../../constants/JobPositionConst'
 import TextArea from 'antd/es/input/TextArea'
-import { JobPositionValidation } from '../../validate/CreateJobPositionValidation'
-import { CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories } from '../../constants/CompanyProfileConstant'
-const { Option, OptGroup } = Select
+import {JobPositionValidation} from '../../validate/CreateJobPositionValidation'
+import {CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories} from '../../constants/CompanyProfileConstant'
+
+const {Option, OptGroup} = Select
 
 const formItemLayout = {
   labelCol: {
-    xs: { span: 25 },
-    sm: { span: 7 }
+    xs: {span: 25},
+    sm: {span: 7}
   },
   wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 14 }
+    xs: {span: 24},
+    sm: {span: 14}
   }
 }
 
@@ -33,14 +32,14 @@ const CreateJobPositionForm = props => {
   const [isRequiredLetter, setIsRequiredLetter] = useState(JOB_POSITION_MODEL.isRequiredLetter)
   const [isShowContactPerson, setIsShowContactPerson] = useState(JOB_POSITION_MODEL.isShowContactPerson)
 
-  const { form, onFinish } = props
+  const {form, onFinish} = props
 
-  const { Text } = Typography
+  const {Text} = Typography
 
   return (
-    <div style={{ width: '80%' }}>
+    <div style={{width: '80%'}}>
       <Form onFinish={onFinish} form={form} {...formItemLayout}>
-        <Card title={`Create job position application`} headStyle={{ fontWeight: 700, fontSize: 24 }}>
+        <Card title={`Create job position application`} headStyle={{fontWeight: 700, fontSize: 24}}>
           <Form.Item
             label="Job title"
             name="title"
@@ -48,7 +47,7 @@ const CreateJobPositionForm = props => {
             tooltip="This is required"
             rules={JobPositionValidation.title}
           >
-            <Input placeholder="Job title" />
+            <Input placeholder="Job title"/>
           </Form.Item>
           <Form.Item
             label="Job level"
@@ -59,9 +58,11 @@ const CreateJobPositionForm = props => {
           >
             <Select
               showSearch
-              onChange={value => {}}
+              onChange={value => {
+              }}
               filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-              onSearch={value => {}}
+              onSearch={value => {
+              }}
             >
               {JobLevelConst.map(item => (
                 <Option value={item.value}>{item.label}</Option>
@@ -77,9 +78,11 @@ const CreateJobPositionForm = props => {
           >
             <Select
               showSearch
-              onChange={value => {}}
+              onChange={value => {
+              }}
               filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-              onSearch={value => {}}
+              onSearch={value => {
+              }}
             >
               {JobTypeConst.map(item => (
                 <Option value={item.value}>{item.label}</Option>
@@ -106,7 +109,7 @@ const CreateJobPositionForm = props => {
               dropdownRender={menu => (
                 <>
                   {menu}
-                  <Divider style={{ margin: '8px 0' }} />
+                  <Divider style={{margin: '8px 0'}}/>
                   <Text type={totalSelect > 3 ? 'danger' : 'success'}>
                     {totalSelect > 3
                       ? null
@@ -131,7 +134,7 @@ const CreateJobPositionForm = props => {
             rules={JobPositionValidation.description}
             name="description"
           >
-            <TextArea placeholder="Description" showCount maxLength={3000} autoSize={{ minRows: 5 }} />
+            <TextArea placeholder="Description" showCount maxLength={3000} autoSize={{minRows: 5}}/>
           </Form.Item>
           <Form.Item
             label="Requirements"
@@ -140,7 +143,7 @@ const CreateJobPositionForm = props => {
             rules={JobPositionValidation.requirements}
             name="requirements"
           >
-            <TextArea placeholder="Requirements" showCount maxLength={3000} autoSize={{ minRows: 5 }} />
+            <TextArea placeholder="Requirements" showCount maxLength={3000} autoSize={{minRows: 5}}/>
           </Form.Item>
           <Form.Item
             label="Skill tags"
@@ -158,11 +161,12 @@ const CreateJobPositionForm = props => {
                 }
                 setTotalSkillTags(value.length)
               }}
-              onSearch={value => {}}
+              onSearch={value => {
+              }}
               dropdownRender={menu => (
                 <>
                   {menu}
-                  <Divider style={{ margin: '8px 0' }} />
+                  <Divider style={{margin: '8px 0'}}/>
                   <Text type={totalSkillTags > 3 ? 'danger' : 'success'}>
                     {totalSkillTags > 5
                       ? null
@@ -183,7 +187,7 @@ const CreateJobPositionForm = props => {
             rules={JobPositionValidation.contactPerson}
             name="contactPersonName"
           >
-            <Input placeholder="Contact person name" />
+            <Input placeholder="Contact person name"/>
           </Form.Item>
           <Form.Item label="Language" name={'preferredLanguage'} required rules={JobPositionValidation.language}>
             <Select
@@ -207,7 +211,7 @@ const CreateJobPositionForm = props => {
             rules={JobPositionValidation.contactPerson}
             name="locationId"
           >
-            <Input placeholder="Location" />
+            <Input placeholder="Location"/>
           </Form.Item>
           <Form.Item
             label="Email for applications"
@@ -216,11 +220,11 @@ const CreateJobPositionForm = props => {
             rules={JobPositionValidation.email}
             name="contactEmail"
           >
-            <Input placeholder="Email for receiving applications" />
+            <Input placeholder="Email for receiving applications"/>
           </Form.Item>
-          <Form.Item style={{ display: 'flex', justifyContent: 'end' }}>
-            <Space style={{ display: 'flex', justifyContent: 'end' }}>
-              <Button type="primary" htmlType="submit" style={{ margin: '0 3rem', width: '7rem' }}>
+          <Form.Item style={{display: 'flex', justifyContent: 'end'}}>
+            <Space style={{display: 'flex', justifyContent: 'end'}}>
+              <Button type="primary" htmlType="submit" style={{margin: '0 3rem', width: '7rem'}}>
                 Create
               </Button>
             </Space>

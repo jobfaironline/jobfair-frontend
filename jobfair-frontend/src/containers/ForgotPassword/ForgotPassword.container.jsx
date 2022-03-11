@@ -1,9 +1,10 @@
 import React from 'react'
-import { Form, notification } from 'antd'
+import {Form, notification} from 'antd'
 import ForgotPasswordComponent from '../../components/ForgotPassword/ForgotPassword.component'
-import { useHistory } from 'react-router-dom'
-import { forgotPasswordAPI } from '../../services/account-controller/AccountControllerService'
-import { PATH } from '../../constants/Paths/Path'
+import {useHistory} from 'react-router-dom'
+import {forgotPasswordAPI} from '../../services/account-controller/AccountControllerService'
+import {PATH} from '../../constants/Paths/Path'
+
 const ForgotPasswordContainer = () => {
   const [form] = Form.useForm()
   const history = useHistory()
@@ -17,7 +18,7 @@ const ForgotPasswordContainer = () => {
           message: `Your OTP Code has been sent in your email box.`,
           duration: 1
         })
-        history.push({ pathname: PATH.CHANGE_PASSWORD_PAGE, state: { email: body.email } })
+        history.push({pathname: PATH.CHANGE_PASSWORD_PAGE, state: {email: body.email}})
       })
       .catch(err => {
         notification['error']({
@@ -28,7 +29,7 @@ const ForgotPasswordContainer = () => {
   }
   return (
     <>
-      <ForgotPasswordComponent form={form} onFinish={onFinish} />
+      <ForgotPasswordComponent form={form} onFinish={onFinish}/>
     </>
   )
 }

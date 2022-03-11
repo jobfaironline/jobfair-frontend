@@ -4,7 +4,7 @@ import ResultFailedContainer from '../../containers/Result/ResultFailed.containe
 const ResultFailedPage = props => {
   return (
     <div className="page">
-      <ResultFailedContainer />
+      <ResultFailedContainer/>
     </div>
   )
 }
