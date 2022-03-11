@@ -51,7 +51,13 @@ const JobFairListManagementComponent = props => {
         allowClear
         style={{ width: '25%'}}
         placeholder="Filter by status"
-        onChange={value => handleFilterByStatus(value)}
+        onChange={value => {
+          if (value.length !== 0) {
+            handleFilterByStatus(value)
+          } else {
+            handleClearFilter()
+          }
+        }}
         onClear={() => handleClearFilter()}
       >
         {JOB_FAIR_PLAN_COMPANY_STATUS.map(item => (
@@ -67,7 +73,7 @@ const JobFairListManagementComponent = props => {
         scrollableTarget="scrollableDiv"
       >
         <List
-          dataSource={searchResult?.length !== 0 ? searchResult : data}
+          dataSource={ searchResult }
           renderItem={item => (
             <List.Item
               key={item.id}
