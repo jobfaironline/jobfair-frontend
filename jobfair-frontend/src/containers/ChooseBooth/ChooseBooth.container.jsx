@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { loadGLBModel } from '../../utils/threeJSUtil'
+import { loadGLBModel } from '../../utils/ThreeJS/threeJSUtil'
 import { ChooseBoothCanvas } from '../../components/ChooseBooth/ChooseBoothCanvas.component'
 import { getLayoutAndAvailableSlotByJobFairId } from '../../services/layout-controller/LayoutControllerService'
 

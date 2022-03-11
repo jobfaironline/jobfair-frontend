@@ -3,17 +3,22 @@ import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useRef, useState} from "react";
 import {
     getCompanyBoothLatestLayout,
-    saveDecoratedBooth, saveLayoutVideoWithFile, saveLayoutVideoWithUrl
+    saveDecoratedBooth,
+    saveLayoutVideoWithFile,
+    saveLayoutVideoWithUrl
 } from "../../services/company-booth-layout-controller/CompanyBoothLayoutControllerService";
 import {
-    addVideoTexture, b64toBlob, extractTexture,
+    addVideoTexture,
+    b64toBlob,
+    extractTexture,
     fixTextureOffset,
-    loadGLBModel, moveModelDown,
+    loadGLBModel,
+    moveModelDown,
     moveModelUp,
     parseModel,
     rotateModelLeft,
     rotateModelRight
-} from "../../utils/threeJSUtil";
+} from "../../utils/ThreeJS/threeJSUtil";
 import {notify} from "../../utils/toastutil";
 import {ModeConstant} from "../../constants/AppConst";
 import {decorateBoothAction} from "../../redux-flow/decorateBooth/decorate-booth-slice";
@@ -121,7 +126,7 @@ export const DecorateBoothContainer = (props) => {
         notify(2, 'Save successfully')
     }
 
-    const addMoreComponentHandle = async => {
+    const addMoreComponentHandle = () => {
         if (mode === ModeConstant.ADD){
             dispatch(decorateBoothAction.setMode(ModeConstant.SELECT));
         } else {
@@ -130,7 +135,7 @@ export const DecorateBoothContainer = (props) => {
         }
     }
 
-    const reviewHandle = async => {
+    const reviewHandle = () => {
         history.push(`${PATH.MAP}${jobFairId}`);
     }
 
@@ -150,8 +155,7 @@ export const DecorateBoothContainer = (props) => {
 
     const handleDelete = _ => {
         setModelItems(prevState => {
-            const result = prevState.filter(itemMesh => itemMesh.uuid !== selectedItem.uuid);
-            return result;
+            return prevState.filter(itemMesh => itemMesh.uuid !== selectedItem.uuid);
         })
     }
 

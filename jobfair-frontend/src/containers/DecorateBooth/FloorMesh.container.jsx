@@ -6,7 +6,7 @@ import {
     calculateMeshSize,
     calculatePositionWithBoundary,
     loadGLBModel
-} from "../../utils/threeJSUtil";
+} from "../../utils/ThreeJS/threeJSUtil";
 import React from "react";
 import {FloorMesh} from "../../components/DecorateBooth/FloorMesh.component";
 

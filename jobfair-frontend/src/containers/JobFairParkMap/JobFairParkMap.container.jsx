@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {addVideoTexture, fixTextureOffset, loadGLBModel} from '../../utils/threeJSUtil'
+import {addVideoTexture, fixTextureOffset, loadGLBModel} from '../../utils/ThreeJS/threeJSUtil'
 import * as THREE from 'three'
 import JobFairParkMapComponent from '../../components/JobFairParkMap/JobFairParkMap.component'
 import { getLayoutInformationForJobFairPark } from '../../services/job-fair-controller/JobFairConTrollerService'

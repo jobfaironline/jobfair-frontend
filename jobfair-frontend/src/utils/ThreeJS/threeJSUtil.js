@@ -2,7 +2,8 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 import {GLTFExporter} from 'three/examples/jsm/exporters/GLTFExporter'
 import * as THREE from 'three'
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
-import {IMAGE_PLANE_NAME} from "../constants/DecorateBoothConstant";
+import {IMAGE_PLANE_NAME} from "../../constants/DecorateBoothConstant";
+import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
 
 const loader = new GLTFLoader()
 const dracoLoader = new DRACOLoader();
@@ -187,6 +188,7 @@ export const b64toBlob = async (b64Data, contentType = '', sliceSize = 512) => {
 }
 
 export const loadFBXModel = async (url) => {
+  const loader = new FBXLoader();
   return new Promise((resolve, reject) => {
     loader.load(
       url,
