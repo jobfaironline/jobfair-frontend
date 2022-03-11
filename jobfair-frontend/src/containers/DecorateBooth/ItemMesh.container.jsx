@@ -3,7 +3,7 @@ import React, {useRef, useState} from "react";
 import {useDrag} from "react-use-gesture";
 import {ModeConstant} from "../../constants/AppConst";
 import * as THREE from "three";
-import {calculateMeshDimensionRange, calculateMeshSize, calculatePositionWithBoundary} from "../../utils/glbModelUtil";
+import {calculateMeshDimensionRange, calculateMeshSize, calculatePositionWithBoundary} from "../../utils/threeJSUtil";
 import {decorateBoothAction} from "../../redux-flow/decorateBooth/decorate-booth-slice";
 import {ItemMesh} from "../../components/DecorateBooth/ItemMesh.component";
 

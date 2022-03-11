@@ -1,18 +1,15 @@
-import {Canvas, useFrame, useLoader, useThree} from "@react-three/fiber";
-import {ContactShadows, FirstPersonControls, OrbitControls, PointerLockControls, Stage, Stats} from "@react-three/drei";
+import {Canvas, useFrame, useThree} from "@react-three/fiber";
+import {ContactShadows, PointerLockControls, Stage} from "@react-three/drei";
 import React, {useEffect, useRef, useState} from "react";
 import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
 import {CameraControls} from "../ThreeJSBaseComponent/CameraControls.component";
 import * as THREE from "three"
-import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
 import {Modal, Select} from "antd";
-import {EffectComposer, Outline} from "@react-three/postprocessing";
 import Nearby from "nearby-js/Nearby"
 import {throttle} from "throttle-debounce";
-import {parseFBXModel} from "../../utils/fbxUtil";
+import {getBase64Image, loadFBXModel} from "../../utils/threeJSUtil";
 import {IMAGE_PLANE_NAME} from "../../constants/DecorateBoothConstant";
 import {SkyComponent, SkyType} from "../ThreeJSBaseComponent/Sky.component";
-import {loadModel, parseModel} from "../../utils/glbModelUtil";
 
 const { Option } = Select;
 
@@ -207,27 +204,6 @@ class ThirdPersonCamera {
     }
 }
 
-function getBase64Image(img) {
-    // Create an empty canvas element
-    var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
-
-    // Copy the image contents to the canvas
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-
-    // Get the data-URL formatted image
-    // Firefox supports PNG and JPEG. You could check img.src to
-    // guess the original format, but be aware the using "image/jpg"
-    // will re-encode the image.
-    var dataURL = canvas.toDataURL("image/png");
-
-    return dataURL;
-}
-
-
-
 const ModelController = props => {
     const {
         nearItem,
@@ -251,6 +227,10 @@ const ModelController = props => {
         camera: camera,
         target: model,
     });
+
+    /*model.position.x = camera.position.x;
+    model.position.y = camera.position.y - 10;
+    model.position.z = camera.position.z;*/
 
 
 
@@ -286,7 +266,6 @@ const ModelController = props => {
 
 
 }
-
 
 export const CompanyBoothCanvasContainer = (props) => {
     const {boothMesh} = props;
@@ -327,7 +306,7 @@ export const CompanyBoothCanvasContainer = (props) => {
 
 
     useEffect(async () => {
-        const model = await parseFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx");
+        const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx");
         model.scale.setScalar(0.07);
 
 
@@ -337,7 +316,6 @@ export const CompanyBoothCanvasContainer = (props) => {
         boxModel.getSize(size)
 
 
-        debugger;
 
         model.children.forEach(child => {
             if (child.isMesh) {
@@ -346,8 +324,8 @@ export const CompanyBoothCanvasContainer = (props) => {
                 child.material.side = THREE.FrontSide
             }
         })
-        const newModel = await  parseFBXModel( "https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx");
-        const secondModel = await parseFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking4.fbx")
+        const newModel = await  loadFBXModel( "https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx");
+        const secondModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking4.fbx")
 
         const sceneWidth = 1000, sceneHeight = 1000, sceneDepth = 1000;
         const binSize = 1;
@@ -471,7 +449,6 @@ const FirstPersonView = (props) => {
     return <PointerLockControls ref={controlRef}
     pointerSpeed={0.4}/>;
 }
-
 
 export const ViewSelect = (props) => {
     const {onChange} = props;

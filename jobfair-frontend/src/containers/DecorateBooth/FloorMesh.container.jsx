@@ -5,8 +5,8 @@ import {
     calculateMeshDimensionRange,
     calculateMeshSize,
     calculatePositionWithBoundary,
-    loadModel
-} from "../../utils/glbModelUtil";
+    loadGLBModel
+} from "../../utils/threeJSUtil";
 import React from "react";
 import {FloorMesh} from "../../components/DecorateBooth/FloorMesh.component";
 
@@ -25,7 +25,7 @@ export const FloorMeshContainer = (props) => {
         e.ray.intersectPlane(floorPlane, planeIntersectPoint)
 
         //load new item mesh
-        const gltf = await loadModel(selectedSampleItem.url)
+        const gltf = await loadGLBModel(selectedSampleItem.url)
         const itemMesh = gltf.scene.children[0]
 
         //calculate new item position on plane

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { loadModel } from '../../utils/glbModelUtil'
+import { loadGLBModel } from '../../utils/threeJSUtil'
 import { ChooseBoothCanvas } from '../../components/ChooseBooth/ChooseBoothCanvas.component'
 import { getLayoutAndAvailableSlotByJobFairId } from '../../services/layout-controller/LayoutControllerService'
 
@@ -14,7 +14,7 @@ export const ChooseBoothPageContainer = props => {
     const data = await getLayoutAndAvailableSlotByJobFairId(jobFairId).then(response => response.data)
     const url = data.url
 
-    const glb = await loadModel(url)
+    const glb = await loadGLBModel(url)
     const boothData = {}
     for (const boothInfo of data.booths) {
       const { id, name, price, status } = boothInfo

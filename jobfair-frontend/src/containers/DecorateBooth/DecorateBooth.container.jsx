@@ -8,12 +8,12 @@ import {
 import {
     addVideoTexture, b64toBlob, extractTexture,
     fixTextureOffset,
-    loadModel, moveModelDown,
+    loadGLBModel, moveModelDown,
     moveModelUp,
     parseModel,
     rotateModelLeft,
     rotateModelRight
-} from "../../utils/glbModelUtil";
+} from "../../utils/threeJSUtil";
 import {notify} from "../../utils/toastutil";
 import {ModeConstant} from "../../constants/AppConst";
 import {decorateBoothAction} from "../../redux-flow/decorateBooth/decorate-booth-slice";
@@ -47,7 +47,7 @@ export const DecorateBoothContainer = (props) => {
         } catch (err) {
         }
         //parse file and get items
-        const glb = await loadModel(url)
+        const glb = await loadGLBModel(url)
         const result = glb.scene.children
         for (const mesh of result) {
             addVideoTexture(mesh, companyBoothLayoutVideos)

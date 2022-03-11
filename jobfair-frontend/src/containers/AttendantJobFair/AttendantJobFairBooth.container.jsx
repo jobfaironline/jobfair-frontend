@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {addVideoTexture, fixTextureOffset, loadModel} from '../../utils/glbModelUtil'
+import {addVideoTexture, fixTextureOffset, loadGLBModel} from '../../utils/threeJSUtil'
 import {
   CompanyBoothCanvasComponent,
   CompanyBoothCanvasContainer
@@ -16,7 +16,7 @@ export const AttendantJobFairBoothContainer = props => {
     response.data.companyBoothLayoutVideos?.forEach(data => {
       companyBoothLayoutVideos[data.itemName] = data.url;
     })
-    const glb = await loadModel(url)
+    const glb = await loadGLBModel(url)
     for (const mesh of glb.scene.children) {
       addVideoTexture(mesh, companyBoothLayoutVideos)
       fixTextureOffset(mesh)

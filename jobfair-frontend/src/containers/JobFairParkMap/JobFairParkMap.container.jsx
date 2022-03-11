@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import {addVideoTexture, fixTextureOffset, loadModel} from '../../utils/glbModelUtil'
+import {addVideoTexture, fixTextureOffset, loadGLBModel} from '../../utils/threeJSUtil'
 import * as THREE from 'three'
 import JobFairParkMapComponent from '../../components/JobFairParkMap/JobFairParkMap.component'
 import { getLayoutInformationForJobFairPark } from '../../services/job-fair-controller/JobFairConTrollerService'
 import { useHistory } from 'react-router-dom'
 import { PATH } from '../../constants/Paths/Path'
 const getBootMesh = async (position, foundationBox, url, companyBoothId, companyBoothLayoutVideos) => {
-  const gltf = await loadModel(url)
+  const gltf = await loadGLBModel(url)
   const { x, y, z } = position
   let sceneMesh = gltf.scene
   //set correct position
@@ -41,7 +41,7 @@ const JobFairParkMapContainer = props => {
     const responseData = await getLayoutInformationForJobFairPark(jobFairId).then(response => response.data)
     const url = responseData.jobFairLayoutUrl
     const data = responseData.booths
-    const glb = await loadModel(url)
+    const glb = await loadGLBModel(url)
 
     const transformData = {}
     data.forEach(element => {
