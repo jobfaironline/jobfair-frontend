@@ -113,7 +113,7 @@ const JobFairListEvaluateContainer = () => {
                                     <EvaluationFormComponent onFinish={onFinish} id={record.id} name="jobFairId"/>
                                 ) : null}
                                 {record.status === 'APPROVE' ? (
-                                    <Link to={`/approval-registration/${record.id}`}>Evaluate registrations</Link>
+                                    <Link to={`/approval-registration/${record.id}`}>View registrations</Link>
                                 ) : null}
                             </Space>
                         )

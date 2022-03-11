@@ -56,6 +56,9 @@ export const AdminMenu = [
   </Menu.Item>,
   <Menu.Item key={PATH_ADMIN.JOB_FAIR_PLAN_LIST}>
     <Link to={PATH_ADMIN.JOB_FAIR_PLAN_LIST}>Job fair plan list</Link>
+  </Menu.Item>,
+  <Menu.Item key={PATH_ADMIN.COMPANY_REGISTRATION_PAGE}>
+    <Link to={PATH_ADMIN.COMPANY_REGISTRATION_PAGE}>View company registration</Link>
   </Menu.Item>
 
 ]
