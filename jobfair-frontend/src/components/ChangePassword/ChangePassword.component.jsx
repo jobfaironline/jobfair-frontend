@@ -1,56 +1,52 @@
-import React from 'react'
-import { Button, Checkbox, Divider, Form, Input, Layout, InputNumber } from 'antd'
-import Typography from '@mui/material/Typography'
-import ReactCodeInput from 'react-code-input'
-import { ChangePasswordValidation } from '../../validate/ChangePasswordValidation'
-import './ChangePassword.scss'
-const ChangePasswordComponent = ({ onFinish, form, email, setOtpCode }) => {
-  const handlePinChange = otp => {
-    setOtpCode(otp)
-  }
+import React from 'react';
+import {Button, Form, Input} from "antd";
+import {ChangePasswordValidation} from "../../validate/ChangePasswordValidation";
+
+const ChangePasswordComponent = (props) => {
+
+  const {form, onFinish} = props
   return (
-    <div className="container">
-      <Divider orientation="center" plain>
-        Reset Password Page
-      </Divider>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Form labelCol={{ span: 8 }} wrapperCol={{ span: 8 }} form={form} onFinish={onFinish} autoComplete="off">
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
-            <Typography variant="h6" gutterBottom component="div">
-              OTP Code:
-            </Typography>
-            <ReactCodeInput id="pinCode" type="text" fields={6} onChange={handlePinChange} />
-          </div>
-          {!email ? (
-            <Form.Item label="Email" name="email" hasFeedback rules={ChangePasswordValidation.email}>
-              <Input />
-            </Form.Item>
-          ) : null}
-          <Form.Item label="newPassword" name="newPassword" hasFeedback rules={ChangePasswordValidation.newPassword}>
-            <Input.Password />
-          </Form.Item>
-          <Form.Item
-            label="confirmPassword"
-            name="confirmPassword"
-            hasFeedback
-            rules={ChangePasswordValidation.rePassword}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit" className="button">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+    <div className="input-container" style={{width: '75%', marginTop: '5%', marginLeft: '15%'}}>
+      <Form
+        labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}
+        form={form}
+        onFinish={onFinish}
+        requiredMark="required"
+        autoComplete="off"
+        scrollToFirstError={{block: 'center', behavior: 'smooth'}}
+      >
+        <Form.Item
+          label="Your old password"
+          name="oldPassword"
+          hasFeedback
+          rules={ChangePasswordValidation.oldPassword}
+        >
+          <Input.Password/>
+        </Form.Item>
+        <Form.Item
+          label="Your new password"
+          name="newPassword"
+          hasFeedback
+          rules={ChangePasswordValidation.newPassword}
+        >
+          <Input.Password/>
+        </Form.Item>
+        <Form.Item
+          label="Confirm your new password"
+          name="confirmPassword"
+          hasFeedback
+          rules={ChangePasswordValidation.rePassword}
+        >
+          <Input.Password/>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" style={{marginLeft: '100%'}}>
+            Change password
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
-  )
-}
-export default ChangePasswordComponent
+  );
+};
+
+export default ChangePasswordComponent;

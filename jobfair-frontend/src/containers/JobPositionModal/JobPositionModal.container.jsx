@@ -7,24 +7,10 @@ import {
   setJobPositionSubmodalVisibility
 } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
 
-const JobPositionModalContainer = props => {
-  const dispatch = useDispatch()
-
-  const visible = useSelector(state => state?.registrationJobfairForm?.jobPositionModalVisibility)
-
-  const handleOk = async () => {
-    await setTimeout(() => {
-      dispatch(setJobPositionModalVisibility(false))
-    }, 2000)
-  }
-
-  const handleCancel = () => {
-    dispatch(setJobPositionModalVisibility(false))
-  }
-
+const JobPositionModalContainer = ({ visible, handleCloseModal }) => {
   return (
     <>
-      <JobPositionModal visible={visible} handleOk={handleOk} handleCancel={handleCancel} />
+      <JobPositionModal visible={visible} handleCloseModal={handleCloseModal} />
     </>
   )
 }

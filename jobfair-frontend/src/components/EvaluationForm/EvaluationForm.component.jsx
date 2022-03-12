@@ -26,34 +26,25 @@ const EvaluationFormComponent = ({onFinish, id, name}) => {
                     >
                         <TextArea placeholder="Message"/>
                     </Form.Item>
-                    <Form.Item
-                        label="Status"
-                        name={'status'}
-                        hasFeedback
-                        initialValue={'APPROVE'}
-                    >
-                        <Radio.Group>
-                            <Radio.Button value={'APPROVE'}>
-                                Approve
-                            </Radio.Button>
-                            {/*<Radio.Button value={'REQUEST_CHANGE'} disabled>*/}
-                            {/*    Request change*/}
-                            {/*</Radio.Button>*/}
-                            <Radio.Button value={'REJECT'}>
-                                Reject
-                            </Radio.Button>
-                            {/*{EvaluateConst.map(item => (*/}
-                            {/*    <Radio.Button value={item.id}>*/}
-                            {/*        {item.name}*/}
-                            {/*    </Radio.Button>*/}
-                            {/*))}*/}
-                        </Radio.Group>
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Submit
-                        </Button>
-                    </Form.Item>
+
+                    <Space direction="horizontal">
+                        {EvaluateConst.map(item => (
+                            <div key={item.id}>
+                                <Form.Item name='status' noStyle>
+                                    <Input type="text" type="hidden"/>
+                                </Form.Item>
+                                <Button value={item.id} type="primary" htmlType="submit"
+                                    onClick={() => {
+                                        form.setFieldsValue({
+                                            ['status'] : item.id
+                                        })
+                                    }}
+                                >
+                                    {item.name}
+                                </Button>
+                            </div>
+                        ))}
+                    </Space>
                 </Space>
             </Form>
         </>
