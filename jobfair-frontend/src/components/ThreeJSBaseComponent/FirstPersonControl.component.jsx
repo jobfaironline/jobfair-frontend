@@ -7,8 +7,8 @@ import * as THREE from "three";
 
 
 export const FirstPersonControl = (props) => {
-  const {model, isChangeCamera} = props;
-  const {camera} = useThree();
+  const {model, isChangeCamera, collidableMeshListRef} = props;
+  const {camera, scene} = useThree();
   const controlRef = useRef();
   const speed = 0.1;
 
@@ -18,6 +18,11 @@ export const FirstPersonControl = (props) => {
 
 
   function control() {
+    const cameraOldPosition = new THREE.Vector3();
+    const modelOldPosition = new THREE.Vector3();
+    cameraOldPosition.copy(camera.position);
+    modelOldPosition.copy(model.position)
+
     if (input.keys.forward) {
       controlRef.current.moveForward(speed)
     }
@@ -30,6 +35,7 @@ export const FirstPersonControl = (props) => {
     if (input.keys.right) { // d
       controlRef.current.moveRight(speed)
     }
+
     //re-adjust model position
     model.position.x = camera.position.x;
     model.position.z = camera.position.z;
@@ -46,6 +52,54 @@ export const FirstPersonControl = (props) => {
     const _Q = new THREE.Quaternion().setFromAxisAngle(_A, angle);
     _R.multiply(_Q);
     model.quaternion.copy(_R);
+
+
+    //make model bouding box
+    const skeleton = new THREE.SkeletonHelper(model);
+    var bone_min = {x: Infinity, y: Infinity, z: Infinity};
+    var bone_max = {x: -Infinity, y: -Infinity, z: -Infinity};
+    for (var b = 0; b < skeleton.bones.length; b++) {
+      var child = skeleton.bones[b];
+      var position = new THREE.Vector3();
+      child.getWorldPosition(position);
+      if (position.x < bone_min.x) {
+        bone_min.x = position.x;
+      }
+      if (position.y < bone_min.y) {
+        bone_min.y = position.y;
+      }
+      if (position.z < bone_min.z) {
+        bone_min.z = position.z;
+      }
+      if (position.x > bone_max.x) {
+        bone_max.x = position.x;
+      }
+      if (position.y > bone_max.y) {
+        bone_max.y = position.y;
+      }
+      if (position.z > bone_max.z) {
+        bone_max.z = position.z;
+      }
+    }
+
+    bone_max.x += camera.position.x - (bone_max.x + bone_min.x) / 2;
+    bone_min.x += camera.position.x - (bone_max.x + bone_min.x) / 2;
+    bone_min.z += camera.position.z - (bone_max.z + bone_min.z) / 2;
+    bone_min.z += camera.position.z - (bone_max.z + bone_min.z) / 2;
+
+    const box = new THREE.Box3(new THREE.Vector3(bone_min.x, bone_min.y, bone_min.z), new THREE.Vector3(bone_max.x, bone_max.y, bone_max.z))
+    //check collision
+    if (collidableMeshListRef !== undefined) {
+      for (const child of collidableMeshListRef.current.children) {
+        if (child.name === "sand") continue
+        const childBox = new THREE.Box3().setFromObject(child);
+        if (box.intersectsBox(childBox)){
+          camera.position.copy(cameraOldPosition);
+          model.position.copy(modelOldPosition);
+          return;
+        }
+      }
+    }
 
   }
 

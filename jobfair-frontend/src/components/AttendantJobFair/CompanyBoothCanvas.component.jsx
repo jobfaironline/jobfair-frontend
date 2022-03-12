@@ -11,15 +11,14 @@ import {notification} from "antd";
 import {CVSubmitComponent} from "./CVSubmit.component";
 
 export const CompanyBoothCanvasComponent = (props) => {
-  const {boothMesh, nearby, model, characterControl, cameraRef} = props;
-  const sceneMeshRef = useRef()
+  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef} = props;
   const [view, setView] = useState(false);
   const cvSubmitRef = useRef()
 
   const [isDragOver, setIsDragOver] = useState(false);
   const isChangeCamera = useRef(true);
 
-  const modelProps = {nearby, model, characterControl, isChangeCamera}
+  const modelProps = {model, characterControl, isChangeCamera}
 
 
   const onChange = (value) => {
@@ -53,17 +52,19 @@ export const CompanyBoothCanvasComponent = (props) => {
         })}
       >
         <SkyComponent style={SkyType.Sunset}/>
-        {view ? <FirstPersonControl model={model} isChangeCamera={isChangeCamera}/> : <OrbitControls enableZoom={true}
+        {view ? <FirstPersonControl model={model} isChangeCamera={isChangeCamera} collidableMeshListRef={sceneMeshRef}/> : <OrbitControls enableZoom={true}
                                                                                                      maxPolarAngle={Math.PI / 2 - Math.PI / 10}
                                                                                                      minPolarAngle={0}
                                                                                                      maxDistance={100}/>}
         <Stage adjustCamera={false} preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
-          {boothMesh.children.map(child => {
-            if (child.name === "rostrum") {
-              return <CVSubmitComponent mesh={child} cvSubmitRef={cvSubmitRef}/>;
-            }
-            return <BasicMesh mesh={child}/>
-          })}
+          <group ref={sceneMeshRef}>
+            {boothMesh.children.map(child => {
+              if (child.name === "rostrum") {
+                return <CVSubmitComponent mesh={child} cvSubmitRef={cvSubmitRef}/>;
+              }
+              return <BasicMesh mesh={child}/>
+            })}
+          </group>
           {view ? null : <Character {...modelProps}/>}
         </Stage>
         <ContactShadows frames={10} position={[0, -1.05, 0]} scale={10} blur={2} far={10}/>

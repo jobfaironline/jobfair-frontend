@@ -9,14 +9,13 @@ import {
 import {CompanyBoothCanvasComponent} from '../../components/AttendantJobFair/CompanyBoothCanvas.component'
 import {getCompanyBoothLatestLayout} from '../../services/company-booth-layout-controller/CompanyBoothLayoutControllerService'
 import * as THREE from "three";
-import Nearby from "nearby-js/Nearby";
 import ThirdPersonCamera from "../../utils/ThreeJS/ThirdPersonCamera";
 import BasicCharacterControl from "../../utils/ThreeJS/BasicCharacterControl";
 
 
 class CharacterModel extends BasicCharacterControl {
-  constructor({animations, target, mixer, thirdPersonCamera}) {
-    super({animations, target, mixer, thirdPersonCamera});
+  constructor({animations, target, mixer, thirdPersonCamera, collidableMeshListRef}) {
+    super({animations, target, mixer, thirdPersonCamera, collidableMeshListRef});
     this.animations.idle.play();
   }
 
@@ -46,9 +45,9 @@ class CharacterModel extends BasicCharacterControl {
 export const AttendantJobFairBoothContainer = props => {
   const {companyBoothId} = props
   const cameraRef = useRef();
+  const sceneMeshRef = useRef();
   const [state, setState] = useState({
     model: undefined,
-    nearby: undefined,
     characterControl: undefined,
     boothMesh: undefined
   })
@@ -96,22 +95,6 @@ export const AttendantJobFairBoothContainer = props => {
       'walk': mixer.clipAction(walkingModel.animations[0]),
       'idle': mixer.clipAction(idleModel.animations[0])
     }
-    //initialize nearby object
-    const sceneWidth = 1000, sceneHeight = 1000, sceneDepth = 1000;
-    const binSize = 1;
-    const nearby = new Nearby(sceneWidth, sceneHeight, sceneDepth, binSize);
-    boothMesh.children.forEach(child => {
-      if (child.name === "sand") return;
-      const a = new THREE.Vector3();
-      child.geometry.boundingBox.getSize(a)
-      const box = nearby.createBox(
-        child.position.x, child.position.y, child.position.z,
-        a.x, a.y, a.z
-      );
-      const objectID = child.uuid;
-      const object = nearby.createObject(objectID, box);
-      nearby.insert(object)
-    });
 
     //initial character control
     const thirdPersonCamera = new ThirdPersonCamera({
@@ -123,7 +106,8 @@ export const AttendantJobFairBoothContainer = props => {
       target: model,
       animations: animations,
       mixer: mixer,
-      thirdPersonCamera: thirdPersonCamera
+      thirdPersonCamera: thirdPersonCamera,
+      collidableMeshListRef: sceneMeshRef
     }
     const characterControl = new CharacterModel({...params});
 
@@ -133,7 +117,6 @@ export const AttendantJobFairBoothContainer = props => {
         ...prevState,
         boothMesh: boothMesh,
         model: model,
-        nearby: nearby,
         characterControl: characterControl
       }
     })
@@ -142,10 +125,10 @@ export const AttendantJobFairBoothContainer = props => {
   if (state.boothMesh === undefined) return null;
   const cProps = {
     boothMesh: state.boothMesh,
-    nearby: state.nearby,
     model: state.model,
     characterControl: state.characterControl,
-    cameraRef
+    cameraRef,
+    sceneMeshRef
   }
   return <CompanyBoothCanvasComponent {...cProps}/>
 }
