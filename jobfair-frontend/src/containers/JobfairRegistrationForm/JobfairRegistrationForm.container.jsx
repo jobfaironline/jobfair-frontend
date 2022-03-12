@@ -100,8 +100,6 @@ const JobfairRegistrationForm = () => {
     companyForm.setFieldsValue({ ...companyInfo })
   }, [companyInfo, companyForm])
 
-  console.log(form.getFieldsValue()) //TODO: remove later
-
   return (
     <div>
       <Steps current={currentStep}>
@@ -164,73 +162,3 @@ const JobfairRegistrationForm = () => {
 }
 
 export default JobfairRegistrationForm
-
-// return (
-//   <div>
-//     <Steps current={currentStep}>
-//       <Step title="Jobfair registration form" />
-//       <Step title="Confirm registration" />
-//     </Steps>
-
-//     <div style={{ marginTop: 60 }}>
-//       <Form
-//         form={form}
-//         layout="vertical"
-//         onValuesChange={e => onChange(e)}
-//         requiredMark="required"
-//         autoComplete="off"
-//       >
-//         <div style={{ display: currentStep == 0 ? 'block' : 'none' }}>
-//           <JobfairRegistrationFormComponent
-//             form={form}
-//             onPickJobFinish={() => {}}
-//             nextStep={() => {
-//               form.validateFields().then(res => {
-//                 setCurrentStep(currentStep + 1)
-//                 dispatch(setFormBody(form.getFieldsValue()))
-//               })
-//             }}
-//           />
-//         </div>
-//         {currentStep == 1 ? (
-//           <div style={{ display: currentStep == 1 ? 'block' : 'none' }}>
-//             <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
-//             <div className="step-buttons">
-//               <div className="pre-step-button">
-//                 <Form.Item>
-//                   <Button
-//                     size="large"
-//                     type="primary"
-//                     onClick={() => {
-//                       setCurrentStep(currentStep - 1)
-//                     }}
-//                   >
-//                     Prev
-//                   </Button>
-//                 </Form.Item>
-//               </div>
-//               <div className="next-step-button">
-//                 <Form.Item>
-//                   <div className="submit-registration-popconfirm">
-//                     <Popconfirm
-//                       title="Are you sure to submit this form?"
-//                       onConfirm={() => {
-//                         onSubmit(form.getFieldsValue(true))
-//                       }}
-//                       okText="Yes"
-//                       cancelText="No"
-//                     >
-//                       <Button size="large" type="primary">
-//                         Submit
-//                       </Button>
-//                     </Popconfirm>
-//                   </div>
-//                 </Form.Item>
-//               </div>
-//             </div>
-//           </div>
-//         ) : null}
-//       </Form>
-//     </div>
-//   </div>
-// )

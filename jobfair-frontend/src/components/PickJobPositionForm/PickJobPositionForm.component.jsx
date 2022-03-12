@@ -9,7 +9,7 @@ import './PickJobPositionForm.styles.scss'
 const PickJobPositionForm = props => {
   const { handlePickJobPosition, form, handleRemove } = props
 
-  const jobPositions = form.getFieldsValue().jobPositions
+  const jobPositions = form.getFieldsValue().jobPositions //for anchor
 
   return (
     <>
@@ -33,17 +33,21 @@ const PickJobPositionForm = props => {
                 return (
                   <div>
                     <Divider></Divider>
-                    <Typography.Title level={3}>{`Job position ${key + 1}`}</Typography.Title>
-                    <Divider style={{ width: '10rem', minWidth: 0, margin: '0.5rem' }}></Divider>
                     <div id={`${key}-job-position`} key={key} style={{ width: '100%', display: 'flex' }}>
                       <div className="job-position-input-container ">
                         <div className="job-position-row-container">
-                          <Typography.Title level={4}>{`Job's title: ${
-                            form.getFieldsValue().jobPositions[key]?.title
-                          }`}</Typography.Title>
-
-                          <Form.Item {...restField} name={[name, 'title']} style={{ display: 'none' }}>
-                            <Input type="hidden" placeholder="Job title" disabled />
+                          <Typography style={{ fontSize: '1.5rem' }}>Job position's title: </Typography>
+                          <Form.Item {...restField} name={[name, 'title']}>
+                            <Input
+                              disabled
+                              style={{
+                                border: 'none',
+                                background: 'white',
+                                color: 'black',
+                                fontSize: '1.5rem',
+                                padding: '0 0 0 0.1rem'
+                              }}
+                            />
                           </Form.Item>
                         </div>
                         <div className="job-position-row-container ">

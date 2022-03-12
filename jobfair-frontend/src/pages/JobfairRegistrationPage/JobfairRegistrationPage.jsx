@@ -18,7 +18,7 @@ const JobfairRegistrationPage = () => {
     else history.push(PATH.JOB_FAIRS_PAGE)
   }, [jobfairId])
 
-  //TODO: remove later
+  //TODO: remove later when get all steps
   useEffect(() => () => {
     dispatch(resetForm())
   })
