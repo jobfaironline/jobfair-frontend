@@ -19,29 +19,34 @@ const ApprovalRegistrationContainer = () => {
     const history = useHistory()
 
     const fetchData = async () => {
-        getRegistrationByJobFairId(jobFairId, currentPage, pageSize, 'createDate', 'DESC')
-            .then(res => {
-                const result = res.data.content.map((item, index) => {
-                    return {
-                        ...item,
-                        createDate: convertToDateString(item.createDate).split('T')[0],
-                        no: index + 1
-                    }
+        if (jobFairId !== undefined) {
+            getRegistrationByJobFairId(jobFairId, currentPage, pageSize, 'createDate', 'DESC')
+                .then(res => {
+                    const result = res.data.content.map((item, index) => {
+                        return {
+                            ...item,
+                            createDate: convertToDateString(item.createDate),
+                            no: index + 1
+                        }
+                    })
+                    setData([...result])
+                    notification['success']({
+                        message: `All registration has been loaded`,
+                        description: `with job fair ID: ${jobFairId}`,
+                        duration: 1
+                    })
                 })
-                setData([...result])
-                notification['success']({
-                    message: `All registration has been loaded`,
-                    description: `with job fair ID: ${jobFairId}`,
-                    duration: 1
+                .catch(err => {
+                    notification['error']({
+                        message: `Not found company registration by job fair ID: ${jobFairId}`,
+                        description: `${err}`,
+                        duration: 2
+                    })
                 })
-            })
-            .catch(err => {
-                notification['error']({
-                    message: `Not found company registration by job fair ID: ${jobFairId}`,
-                    description: `${err}`,
-                    duration: 2
-                })
-            })
+        } else {
+            setData([])
+        }
+
     }
 
     useLayoutEffect(() => {

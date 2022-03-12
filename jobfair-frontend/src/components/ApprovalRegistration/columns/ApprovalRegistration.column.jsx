@@ -18,6 +18,18 @@ const ApprovalRegistrationColumn = getColumnSearchProps => {
             }
         },
         {
+            title: 'Company name',
+            dataIndex: 'companyName',
+            key: 'companyName',
+            ...getColumnSearchProps('companyName')
+        },
+        {
+            title: 'Job fair name',
+            dataIndex: 'jobFairName',
+            key: 'jobFairName',
+            ...getColumnSearchProps('jobFairName')
+        },
+        {
             title: 'Create date',
             dataIndex: 'createDate',
             key: 'createDate',

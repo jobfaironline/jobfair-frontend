@@ -9,7 +9,7 @@ const ApprovalRegistrationComponent = ({data, extra}) => {
 
     const [searchText, setSearchText] = useState('')
     const [searchedColumn, setSearchedColumn] = useState('')
-    const history = useHistory();
+
 
     if (data === undefined || data === null ) {
         return <Spin size="large"/>
@@ -19,7 +19,6 @@ const ApprovalRegistrationComponent = ({data, extra}) => {
         return (
             <>
                 <h1>This job fair hasn't been registered yet!!!</h1>
-                <a onClick={history.goBack}>Back</a>
                 <Empty/>
             </>
         )
@@ -94,7 +93,6 @@ const ApprovalRegistrationComponent = ({data, extra}) => {
                    // pagination={{ pageSize: 5 }}
                    pagination={false}
             />
-            <a onClick={history.goBack}>Back</a>
         </>
     )
 };

@@ -1,16 +1,21 @@
 import React from 'react';
 import ApprovalRegistrationContainer from "../../containers/ApprovalRegistration/ApprovalRegistration.container";
-import {Breadcrumb, Divider, Typography} from 'antd';
+import {Breadcrumb, Divider, PageHeader, Typography} from 'antd';
 import {HomeOutlined, UnorderedListOutlined} from "@ant-design/icons";
+import {useHistory} from "react-router-dom";
 
-const {Text} = Typography
+const {Text, Title} = Typography
 
 const ApprovalRegistrationPage = props => {
+    const history = useHistory()
     return (
         <div className="page" style={{marginTop: 80}}>
-            <Divider orientation="center" plain>
-                <Text strong>Evaluate company registration</Text>
-            </Divider>
+            <PageHeader
+                className="site-page-header"
+                onBack={() => history.goBack()}
+                title="Company registrations"
+                subTitle=""
+            />
             <ApprovalRegistrationContainer />
         </div>
     );

@@ -30,15 +30,7 @@ const JobFairDetailContainer = () => {
                 setTotalRegistration(totalRegistrations)
             })
             .catch(err => {
-                if (err.response.status === 404) {
-                    notification['info']({
-                        message: `No company has registered this job fair yet.`,
-                    })
-                } else {
-                    notification['error']({
-                        message: `Error at get total booth: ${err}`
-                    })
-                }
+                //
             })
     }
 

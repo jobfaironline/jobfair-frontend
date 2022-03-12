@@ -29,6 +29,7 @@ export const PATH = {
 }
 export const PATH_ADMIN = {
   APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId',
+  COMPANY_REGISTRATION_PAGE: '/approval-registration',
   JOB_FAIR_DETAIL_PAGE: '/job-fair-detail',
   JOB_FAIR_PLAN_LIST: '/job-fair-plan-list',
   COMPANY_REGISTRATION_DETAIL: '/company-registration-detail'
