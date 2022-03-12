@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react'
-import {Form, notification} from 'antd'
-import {useSelector} from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { Form, notification } from 'antd'
+import { useSelector } from 'react-redux'
 import {
   getAttendantDetailAPI,
   updateAttendantProfileAPI
 } from '../../services/attendant-controller/AttendantControllerService'
 import AttendantProfileFormComponent from '../../components/attendant-profile-form/AttendantProfileForm.component'
-import {convertToDateValue, handleConvertRangePicker} from '../../utils/common'
+import { convertToDateValue, handleConvertRangePicker } from '../../utils/common'
 
 const AttendantProfileFormContainer = () => {
   const [form] = Form.useForm()
@@ -71,7 +71,7 @@ const AttendantProfileFormContainer = () => {
 
   return (
     <>
-      <AttendantProfileFormComponent form={form} onFinish={onFinish} data={data}/>
+      <AttendantProfileFormComponent form={form} onFinish={onFinish} data={data} />
     </>
   )
 }
