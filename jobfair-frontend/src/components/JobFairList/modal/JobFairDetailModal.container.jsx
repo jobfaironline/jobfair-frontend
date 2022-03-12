@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import CompanyRegistrationDetailModalComponent from '../../ApprovalRegistration/modal/CompanyRegistrationDetailModal.component'
+import React, {useEffect, useState} from 'react'
 import JobFairDetailModalComponent from './JobFairDetailModal.component'
-import { getAccountByIdAPI } from '../../../services/account-controller/AccountControllerService'
-import { notification } from 'antd'
+import {getAccountByIdAPI} from '../../../services/account-controller/AccountControllerService'
+import {notification} from 'antd'
 import {evaluateJobFairPlanAPI} from "../../../services/job-fair-controller/JobFairConTrollerService";
 import {
   getRegistrationByJobFairId
 } from "../../../services/company-registration-controller/CompanyRegistrationControllerService";
 import {CompanyRegistrationStatus} from "../../../constants/CompanyRegistrationConst";
 import {getLayoutDetail} from "../../../services/layout-controller/LayoutControllerService";
-import {convertEnumToString, mapperJobFairDetail} from "../../../utils/common";
+import {convertEnumToString} from "../../../utils/common";
+import {mapperJobFairDetail} from "../../../utils/mapperJobFairDetail";
 
-const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVisible, jobFairList }) => {
+const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVisible, jobFairList}) => {
   const [jobFairDetail, setJobFairDetail] = useState({})
   const [creatorInfo, setCreatorInfo] = useState('')
-  const [totalApproval,setTotalApproval] = useState(0)
-  const [totalRegistration,setTotalRegistration] = useState(0)
+  const [totalApproval, setTotalApproval] = useState(0)
+  const [totalRegistration, setTotalRegistration] = useState(0)
   const [totalBooth, setTotalBooth] = useState(0)
 
   const fetchData = async () => {
@@ -49,19 +49,19 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
 
   const onFinish = values => {
     evaluateJobFairPlanAPI(values)
-        .then(res => {
-          notification['success']({
-            message: `Your evaluation has been submitted`,
-            description: `Evaluate job fair plan successfully`
-          })
-          history.goBack()
+      .then(res => {
+        notification['success']({
+          message: `Your evaluation has been submitted`,
+          description: `Evaluate job fair plan successfully`
         })
-        .catch(err => {
-          notification['error']({
-            message: `An error occurred while submitting`,
-            description: `Evaluate job fair plan failed - ${err}`
-          })
+        history.goBack()
+      })
+      .catch(err => {
+        notification['error']({
+          message: `An error occurred while submitting`,
+          description: `Evaluate job fair plan failed - ${err}`
         })
+      })
   }
 
   const componentProps = {
@@ -79,35 +79,35 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
   const getTotalCompanyRegistrationOfJobFair = async () => {
     //need API for getting company registrations have status APPROVE by jobfairId
     getRegistrationByJobFairId(jobFairId, 0, 5000, 'createDate', 'DESC')
-        .then(res => {
-          const approvalRegistrations = res.data.content.filter(item => item.status === CompanyRegistrationStatus.APPROVE).length
-          setTotalApproval(approvalRegistrations)
-          const totalRegistrations = res.data.totalElements
-          setTotalRegistration(totalRegistrations)
-        })
-        .catch(err => {
-          //
-        })
+      .then(res => {
+        const approvalRegistrations = res.data.content.filter(item => item.status === CompanyRegistrationStatus.APPROVE).length
+        setTotalApproval(approvalRegistrations)
+        const totalRegistrations = res.data.totalElements
+        setTotalRegistration(totalRegistrations)
+      })
+      .catch(err => {
+        //
+      })
   }
 
   const getTotalBoothOfJobFair = () => {
     //get total booth by layoutId
     getLayoutDetail(jobFairDetail?.layoutId)
-        .then(res => {
-          const totalBooth = res.data.booths.length
-          setTotalBooth(totalBooth)
-        })
-        .catch(err => {
-          // if (err.response.status === 404) {
-          //   notification['info']({
-          //     message: `No booth has been assigned for this job fair yet.`,
-          //   })
-          // } else {
-          //   notification['error']({
-          //     message: `Error at get total booth: ${err}`
-          //   })
-          // }
-        })
+      .then(res => {
+        const totalBooth = res.data.booths.length
+        setTotalBooth(totalBooth)
+      })
+      .catch(err => {
+        // if (err.response.status === 404) {
+        //   notification['info']({
+        //     message: `No booth has been assigned for this job fair yet.`,
+        //   })
+        // } else {
+        //   notification['error']({
+        //     message: `Error at get total booth: ${err}`
+        //   })
+        // }
+      })
   }
 
   return (
