@@ -1,20 +1,23 @@
-import React, { Fragment, useState } from 'react'
-import { Canvas } from '@react-three/fiber'
-import { Stage } from '@react-three/drei'
-import { EffectComposer, Outline } from '@react-three/postprocessing'
-import { ChooseBoothGroundMesh } from './ChooseBoothGroundMesh.component'
-import { ArrowHelper } from './ArrowHelper.component'
-import { Modal, notification, Select } from 'antd'
-import { getLatestApproveRegistration } from '../../services/company-registration-controller/CompanyRegistrationControllerService'
-import { useHistory } from 'react-router-dom'
-import { purchaseBooth } from '../../services/company-buy-booth-controller/CompanyBuyBoothControllerService'
-import { BasicMesh } from '../ThreeJSBaseComponent/ChildMesh.component'
-import { CameraControls } from '../ThreeJSBaseComponent/CameraControls.component'
-import { SkyComponent, SkyType } from '../ThreeJSBaseComponent/Sky.component'
-import { SkyTypeSelect } from '../ThreeJSBaseComponent/SelectSkyType.component'
-import { PATH } from '../../constants/Paths/Path'
+import React, {Fragment, useState} from 'react'
+import {Canvas} from '@react-three/fiber'
+import {Stage} from '@react-three/drei'
+import {EffectComposer, Outline} from '@react-three/postprocessing'
+import {ChooseBoothGroundMesh} from './ChooseBoothGroundMesh.component'
+import {ArrowHelper} from './ArrowHelper.component'
+import {Modal, notification} from 'antd'
+import {
+  getLatestApproveRegistration
+} from '../../services/company-registration-controller/CompanyRegistrationControllerService'
+import {useHistory} from 'react-router-dom'
+import {purchaseBooth} from '../../services/company-buy-booth-controller/CompanyBuyBoothControllerService'
+import {BasicMesh} from '../ThreeJSBaseComponent/ChildMesh.component'
+import {CameraControls} from '../ThreeJSBaseComponent/CameraControls.component'
+import {SkyComponent, SkyType} from '../ThreeJSBaseComponent/Sky.component'
+import {SkyTypeSelect} from '../ThreeJSBaseComponent/SelectSkyType.component'
+import {PATH} from '../../constants/Paths/Path'
+
 export const ChooseBoothCanvas = props => {
-  const { mesh, boothData, jobFairId } = props
+  const {mesh, boothData, jobFairId} = props
   const history = useHistory()
   const [hoverRef, setHoverRef] = useState()
   const [modalState, setModalState] = useState({
@@ -43,7 +46,7 @@ export const ChooseBoothCanvas = props => {
 
   const handleCancel = () => {
     setModalState(prevState => {
-      return { ...prevState, boothId: '', isVisible: false }
+      return {...prevState, boothId: '', isVisible: false}
     })
   }
 
@@ -58,7 +61,7 @@ export const ChooseBoothCanvas = props => {
 
   const onClick = boothId => {
     setModalState(prevState => {
-      return { ...prevState, boothId: boothId, isVisible: true }
+      return {...prevState, boothId: boothId, isVisible: true}
     })
   }
 
@@ -71,15 +74,15 @@ export const ChooseBoothCanvas = props => {
       <Modal title="Confirm booth" visible={modalState.isVisible} onOk={handleOk} onCancel={handleCancel}>
         Are you sure?
       </Modal>
-      <SkyTypeSelect onChange={onChangeSkyType} />
+      <SkyTypeSelect onChange={onChangeSkyType}/>
       <Canvas
         dpr={[1, 2]}
-        camera={{ fov: 50 }}
+        camera={{fov: 50}}
         shadowMap
-        style={{ width: '100%', height: '970px', cursor: hoverRef === undefined ? 'default' : 'pointer' }}
+        style={{width: '100%', height: '970px', cursor: hoverRef === undefined ? 'default' : 'pointer'}}
       >
-        <CameraControls />
-        <SkyComponent style={skyType} />
+        <CameraControls/>
+        <SkyComponent style={skyType}/>
 
         <Stage preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
           <group dispose={null}>
@@ -97,11 +100,11 @@ export const ChooseBoothCanvas = props => {
                   />
                 )
               }
-              return <BasicMesh key={childMesh.uuid} mesh={childMesh} />
+              return <BasicMesh key={childMesh.uuid} mesh={childMesh}/>
             })}
             {mesh.children.map(childMesh => {
               if (childMesh.name.includes('company') && boothData[childMesh.name] !== undefined) {
-                return <ArrowHelper origin={childMesh.position} />
+                return <ArrowHelper origin={childMesh.position}/>
               }
               return null
             })}

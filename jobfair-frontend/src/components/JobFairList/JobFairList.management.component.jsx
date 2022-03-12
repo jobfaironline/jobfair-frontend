@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Divider, List, Select, Skeleton, Space, Tag, Tooltip, Typography, Carousel, Image } from 'antd'
+import {Button, Divider, List, Select, Skeleton, Space, Tag, Tooltip, Typography, Carousel, Image, Empty} from 'antd'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { JOB_FAIR_PLAN_COMPANY_STATUS } from '../../constants/JobFairConst'
 import { PATH } from '../../constants/Paths/Path'
@@ -24,7 +24,7 @@ const listImage = [
 const JobFairListManagementComponent = props => {
   const { Title, Paragraph, Text, Link } = Typography
   const { Option } = Select
-  const { data, handleRedirect, loadMoreData, handleFilterByStatus, searchResult, getCompanyBoothId } = props
+  const { data, handleRedirect, loadMoreData, handleFilterByStatus, searchResult, getCompanyBoothId, handleClearFilter } = props
   const contentStyle = {
     height: '200px',
     color: '#fff',
@@ -32,6 +32,7 @@ const JobFairListManagementComponent = props => {
     textAlign: 'center',
     background: '#364d79'
   }
+
   return (
     <div
       id="scrollableDiv"
@@ -48,9 +49,16 @@ const JobFairListManagementComponent = props => {
       <Select
         mode="multiple"
         allowClear
-        style={{ width: '100%' }}
+        style={{ width: '25%'}}
         placeholder="Filter by status"
-        onChange={value => handleFilterByStatus(value)}
+        onChange={value => {
+          if (value.length !== 0) {
+            handleFilterByStatus(value)
+          } else {
+            handleClearFilter()
+          }
+        }}
+        onClear={() => handleClearFilter()}
       >
         {JOB_FAIR_PLAN_COMPANY_STATUS.map(item => (
           <Option value={item.value}>{item.label}</Option>
@@ -65,7 +73,7 @@ const JobFairListManagementComponent = props => {
         scrollableTarget="scrollableDiv"
       >
         <List
-          dataSource={searchResult?.length !== 0 ? searchResult : data}
+          dataSource={ searchResult }
           renderItem={item => (
             <List.Item
               key={item.id}

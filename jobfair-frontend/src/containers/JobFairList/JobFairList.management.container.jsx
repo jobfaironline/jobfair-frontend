@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import {useHistory} from 'react-router-dom'
 import JobFairListManagementComponent from '../../components/JobFairList/JobFairList.management.component'
-import { getAllJobFairAPI, getJobFairPlanForCompany } from '../../services/job-fair-controller/JobFairConTrollerService'
-import { getCompanyBoothByJobFairId } from '../../services/company-booth-controller/CompanyBoothControllerService'
-import { convertToDateString } from '../../utils/common'
-import { notification } from 'antd'
+import {getJobFairPlanForCompany} from '../../services/job-fair-controller/JobFairConTrollerService'
+import {getCompanyBoothByJobFairId} from '../../services/company-booth-controller/CompanyBoothControllerService'
+import {PATH} from '../../constants/Paths/Path'
 
 const approvedJobFairId = 'a50a9875-93aa-4605-8afd-29923d3310fe'
-import { PATH } from '../../constants/Paths/Path'
+
 const JobFairListManagementContainer = props => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
@@ -27,7 +26,6 @@ const JobFairListManagementContainer = props => {
     setLoading(true)
     getJobFairPlanForCompany(count, pageSize)
       .then(res => {
-        console.log(res.data)
         setCount(count + 1)
         const result = res.data.content.map(item => {
           return {
@@ -37,6 +35,7 @@ const JobFairListManagementContainer = props => {
           }
         })
         setData([...data, ...result])
+        setSearchResult([...data, ...result])
         setLoading(false)
       })
       .catch(err => {
@@ -58,12 +57,19 @@ const JobFairListManagementContainer = props => {
 
   const handleFilterByStatus = statusArr => {
     //status is an array: ["APPROVE", "REGISTRABLE"]
+    console.log('filter arr: ', statusArr)
     const result = data.filter(item => statusArr.some(st => st === item.status))
+    console.log('result: ', result)
     setSearchResult([...result])
   }
 
   const handleRedirect = link => {
     history.push(link)
+  }
+
+  const handleClearFilter = () => {
+    console.log('aaa')
+    setSearchResult([...data])
   }
 
   useEffect(() => {
@@ -79,6 +85,7 @@ const JobFairListManagementContainer = props => {
         handleFilterByStatus={handleFilterByStatus}
         searchResult={searchResult}
         getCompanyBoothId={getCompanyBoothId}
+        handleClearFilter={handleClearFilter}
       />
     </>
   )
