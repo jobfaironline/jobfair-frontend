@@ -13,6 +13,15 @@ export const ChangePasswordValidation = {
       message: 'This field is not valid E-mail!'
     }
   ],
-  newPassword: [{ required: true, message: 'Please input your new password!' }],
-  rePassword: [{ required: true, message: 'Please input your confirm password!' }]
+  oldPassword: [{required: true, message: 'Please input your new password!'}],
+  newPassword: [{required: true, message: 'Please input your new password!'}],
+  rePassword: [{required: true, message: 'Please input your confirm password!'},
+    ({ getFieldValue }) => ({
+    validator(_, value) {
+      if (!value || getFieldValue('newPassword') === value) {
+        return Promise.resolve()
+      }
+      return Promise.reject(new Error('Your confirm password does not match'))
+    }
+  })]
 }

@@ -6,9 +6,9 @@ import { getJobFairForAttendant } from '../../services/job-fair-controller/JobFa
 const JobFairAttendantListContainer = () => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
-  const [pageNumber, setPageNumber] = useState(0)
+  //paging
   const [pageSize, setPageSize] = useState(100)
-  const [totalPage, setTotalPage] = useState(0)
+  const [currentPage, setCurrentPage] = useState(0);
   const [searchResult, setSearchResult] = useState([])
   const [count, setCount] = useState(0)
 
@@ -19,10 +19,9 @@ const JobFairAttendantListContainer = () => {
       return
     }
     setLoading(true)
-    getJobFairForAttendant(searchResult, count, pageSize)
+    getJobFairForAttendant('',currentPage, pageSize)
       .then(res => {
         setCount(count + 1)
-        setTotalPage(res.totalPage)
         const result = res.data.content.map(item => {
           return {
             description: item?.jobFair.description,
@@ -31,6 +30,7 @@ const JobFairAttendantListContainer = () => {
           }
         })
         setData([...data, ...result])
+        setSearchResult([...data, ...result])
         setLoading(false)
       })
       .catch(err => {
@@ -69,6 +69,11 @@ const JobFairAttendantListContainer = () => {
   useEffect(() => {
     loadMoreData()
   }, [])
+
+  const handleClearFilter = () => {
+    setSearchResult([...data])
+  }
+
   return (
     <div>
       <JobFairListManagementComponent
@@ -77,9 +82,10 @@ const JobFairAttendantListContainer = () => {
         loadMoreData={loadMoreData}
         handleFilterByStatus={handleFilterByStatus}
         searchResult={searchResult}
+        handleClearFilter={handleClearFilter}
         // getCompanyBoothId={getCompanyBoothId}
       />
-      <PaginationComponent handlePageChange={handlePageChange} totalRecord={totalPage} />
+      <PaginationComponent handlePageChange={handlePageChange} totalRecord={data.length} />
     </div>
   )
 }

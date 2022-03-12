@@ -12,7 +12,7 @@ import UserPage from '../pages/UserPage/UserPage'
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage'
 import FAQPage from '../pages/FAQPage/FAQPage'
 import ResultFailedPage from '../pages/ResultPage/ResultFailedPage'
-import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
+import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage'
 import RegisterPage from '../pages/RegisterPage/RegisterPage'
 import LoginPage from '../pages/LoginPage/LoginPage'
 import JobFairParkPage from '../pages/JobFairParkPage/JobFairParkPage'
@@ -47,6 +47,7 @@ import {
   PATH_COMPANY_MANAGER,
   PATH_STAFF
 } from '../constants/Paths/Path'
+import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
 
 const AppRouter = () => {
   return (
@@ -68,6 +69,9 @@ const AppRouter = () => {
         </Route>
         <Route path={PATH.JOB_FAIR_REGISTRATION_PAGE} exact>
           <JobfairRegistrationPage/>
+        </Route>
+        <Route path={PATH.RESET_PASSWORD_PAGE} exact>
+          <ResetPasswordPage/>
         </Route>
         <Route path={PATH.CHANGE_PASSWORD_PAGE} exact>
           <ChangePasswordPage/>

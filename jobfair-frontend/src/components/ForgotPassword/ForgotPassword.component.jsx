@@ -20,8 +20,8 @@ const ForgotPasswordComponent = ({ onFinish, form }) => {
             <Button type="primary" htmlType="submit" className="button">
               Submit
             </Button>
-            <a href={PATH.CHANGE_PASSWORD_PAGE} style={{ marginLeft: 20 }}>
-              Already have OTP? Change password now!
+            <a href={PATH.RESET_PASSWORD_PAGE} style={{ marginLeft: 20 }}>
+              Already have OTP? Reset password now!
             </a>
           </Form.Item>
         </Form>

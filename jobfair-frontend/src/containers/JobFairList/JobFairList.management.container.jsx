@@ -11,7 +11,7 @@ const JobFairListManagementContainer = props => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
   //paging state
-  const [pageNumber, setPageNumber] = useState(0)
+  const [currentPage, setCurrentPage] = useState(0)
   const [pageSize, setPageSize] = useState(100)
 
   const [searchResult, setSearchResult] = useState([])
@@ -24,7 +24,7 @@ const JobFairListManagementContainer = props => {
       return
     }
     setLoading(true)
-    getJobFairPlanForCompany(count, pageSize)
+    getJobFairPlanForCompany('',currentPage, pageSize)
       .then(res => {
         setCount(count + 1)
         const result = res.data.content.map(item => {
@@ -39,7 +39,6 @@ const JobFairListManagementContainer = props => {
         setLoading(false)
       })
       .catch(err => {
-        console.log(err)
         setLoading(false)
       })
   }
@@ -51,15 +50,13 @@ const JobFairListManagementContainer = props => {
         handleRedirect(`${PATH.DECORATE_BOOTH_PATH}${result}/${jobFairId}`)
       })
       .catch(err => {
-        console.log(err)
+
       })
   }
 
   const handleFilterByStatus = statusArr => {
     //status is an array: ["APPROVE", "REGISTRABLE"]
-    console.log('filter arr: ', statusArr)
     const result = data.filter(item => statusArr.some(st => st === item.status))
-    console.log('result: ', result)
     setSearchResult([...result])
   }
 
@@ -68,7 +65,6 @@ const JobFairListManagementContainer = props => {
   }
 
   const handleClearFilter = () => {
-    console.log('aaa')
     setSearchResult([...data])
   }
 

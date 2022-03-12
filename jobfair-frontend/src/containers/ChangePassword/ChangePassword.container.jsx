@@ -1,40 +1,35 @@
-import React, { useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
-import { Form, notification } from 'antd'
-import { resetPasswordAPI } from '../../services/reset-password-controller/ResetPasswordControllerService'
-import { PATH } from '../../constants/Paths/Path'
-import ChangePasswordComponent from '../../components/ChangePassword/ChangePassword.component'
+import React from 'react';
+import ChangePasswordComponent from "../../components/ChangePassword/ChangePassword.component";
+import {Form, notification} from "antd";
+import {changePasswordAPI} from "../../services/account-controller/AccountControllerService";
+
 const ChangePasswordContainer = () => {
-  const [otpCode, setOtpCode] = useState()
-  const location = useLocation()
+
   const [form] = Form.useForm()
-  const history = useHistory()
-  const onFinish = async values => {
+
+  const onFinish = values => {
     const body = {
-      email: values?.email ? values.email : location?.state?.email,
-      otp: otpCode,
       newPassword: values.newPassword,
-      confirmPassword: values.confirmPassword
+      oldPassword: values.oldPassword
     }
-    resetPasswordAPI(body)
+    changePasswordAPI(body)
       .then(res => {
         notification['success']({
-          message: `Your password has been change!.`,
-          duration: 1
+          message: `Change password successfully`
         })
-        history.push(PATH.LOGIN_PAGE)
       })
       .catch(err => {
         notification['error']({
-          message: `Error - ${err.response.data.message}`,
-          duration: 1
+          message: `Oops! - ${err.response.data.message}`
         })
       })
   }
+
   return (
-    <div className="page">
-      <ChangePasswordComponent form={form} onFinish={onFinish} email={location?.state?.email} setOtpCode={setOtpCode} />
-    </div>
-  )
-}
-export default ChangePasswordContainer
+    <>
+      <ChangePasswordComponent form={form} onFinish={onFinish}/>
+    </>
+  );
+};
+
+export default ChangePasswordContainer;
