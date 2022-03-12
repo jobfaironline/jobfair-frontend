@@ -1,60 +1,42 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import JobPositionTableComponent from '../../components/JobPositionTable/JobPositionTable.component'
 import { Space, notification, Popconfirm, Button } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getJobPositionsAPI } from '../../services/job-controller/JobControllerService'
 import { fetchJobPositions } from '../../redux-flow/jobPositions/job-positions-action'
-import {
-  setFormBody,
-  setJobPositionModalVisibility,
-  setJobPositions
-} from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
-import JobPositionSubmodal from '../../components/JobPositionModal/JobPositionSubmodal.component'
 import JobPositionSubmodalContainer from '../JobPositionModal/JobPositionSubmodal.container'
 import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
 
-const JobPositionTable = ({ selectable }) => {
-  //pagination
-  const [currentPage, setCurrentPage] = useState(0)
-  const [pageSize, setPageSize] = useState(10)
-  //
+const PickJobPositionTable = ({ selectable, form }) => {
+  console.log(form.getFieldsValue())
 
-  const totalRecord = useSelector(state => {
-    return state?.jobPosition?.totalRecord
-  })
-
-  const [neededJobPosition, setNeededJobPosition] = useState(null)
+  const [neededJobPositionDetail, setNeededJobPositionDetail] = useState(null)
+  const [modalVisible, setModalVisibile] = useState(false)
 
   const jobPositionData = useSelector(state => {
     return state?.jobPosition.data
   })
 
-  const jobPositionsInForm = useSelector(state => {
-    return state?.registrationJobfairForm?.form?.body?.jobPositions
-  })
-
   const dispatch = useDispatch()
 
   //select table logic
-  const [selectedRowKeys, setSelectedRowKeys] = useState([])
-  const modalVisible = useSelector(state => state.registrationJobfairForm?.jobPositionModalVisibility)
+  const [initialSelectedValues, setInitialSelectedValues] = useState(() =>
+    form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions.map(item => item.key)] : []
+  )
+  const [selectedRowKeys, setSelectedRowKeys] = useState(() => [...initialSelectedValues])
 
-  useEffect(() => {
-    const mappedRows = jobPositionsInForm.map(item => item.key)
-    if (modalVisible) setSelectedRowKeys(mappedRows)
-  }, [modalVisible])
-
-  //handle pick button
+  //handle choose job button
   const chooseJobPositions = () => {
     const mappedData = []
     for (const item of jobPositionData) {
-      if (selectedRowKeys.includes(item.key)) {
+      if (selectedRowKeys.includes(item.key) && !initialSelectedValues.includes(item.key)) {
         mappedData.push(item)
       }
     }
 
-    dispatch(setJobPositions(mappedData))
-    dispatch(setJobPositionModalVisibility(false))
+    const currentJobPositionsInForm = form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions] : []
+    form.setFieldsValue({ ...form.getFieldsValue(), jobPositions: [...currentJobPositionsInForm, ...mappedData] })
+    setInitialSelectedValues(selectedRowKeys)
   }
 
   const rowSelection = {
@@ -63,14 +45,15 @@ const JobPositionTable = ({ selectable }) => {
       setSelectedRowKeys(selectedRowKeys)
     },
     getCheckboxProps: record => ({
-      disabled: record.name === 'Disabled User',
+      disabled: initialSelectedValues.includes(record.key),
       // Column configuration not to be checked
       name: record.name
     })
   }
 
   const handleGetDetail = jobPositionId => {
-    setNeededJobPosition(jobPositionId)
+    setNeededJobPositionDetail(jobPositionId)
+    setModalVisibile(true)
   }
 
   const fetchData = async (currentPage, pageSize) => {
@@ -80,20 +63,14 @@ const JobPositionTable = ({ selectable }) => {
   useLayoutEffect(() => {
     fetchData(0, 5000)
   }, [])
-  // }, [currentPage, pageSize])
-
-  // const handlePageChange = (page, pageSize) => {
-  //   if (page > 0) {
-  //     setCurrentPage(page - 1)
-  //   } else {
-  //     setCurrentPage(page)
-  //   }
-  //   setPageSize(pageSize)
-  // }
 
   return (
     <div>
-      <JobPositionSubmodalContainer jobPositionId={neededJobPosition} />
+      <JobPositionSubmodalContainer
+        jobPositionId={neededJobPositionDetail}
+        visible={modalVisible}
+        handleCloseModal={() => setModalVisibile(false)}
+      />
       <JobPositionTableComponent
         data={jobPositionData}
         editable
@@ -120,19 +97,12 @@ const JobPositionTable = ({ selectable }) => {
         <PaginationComponent data={jobPositionData} handlePageChange={handlePageChange} totalRecord={totalRecord} />
       </Space> */}
       {selectable ? (
-        <Popconfirm
-          title="Are you sure to choose these jobs?"
-          onConfirm={chooseJobPositions}
-          okText="Yes"
-          cancelText="No"
-        >
-          <Button style={{ width: '100%' }} type="primary">
-            Choose
-          </Button>
-        </Popconfirm>
+        <Button style={{ width: '100%' }} type="primary" onClick={chooseJobPositions}>
+          Choose
+        </Button>
       ) : null}
     </div>
   )
 }
 
-export default JobPositionTable
+export default PickJobPositionTable
