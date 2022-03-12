@@ -98,15 +98,7 @@ const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVis
         setTotalBooth(totalBooth)
       })
       .catch(err => {
-        // if (err.response.status === 404) {
-        //   notification['info']({
-        //     message: `No booth has been assigned for this job fair yet.`,
-        //   })
-        // } else {
-        //   notification['error']({
-        //     message: `Error at get total booth: ${err}`
-        //   })
-        // }
+
       })
   }
 
