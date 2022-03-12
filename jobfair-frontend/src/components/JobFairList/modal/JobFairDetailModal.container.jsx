@@ -9,7 +9,7 @@ import {
 } from "../../../services/company-registration-controller/CompanyRegistrationControllerService";
 import {CompanyRegistrationStatus} from "../../../constants/CompanyRegistrationConst";
 import {getLayoutDetail} from "../../../services/layout-controller/LayoutControllerService";
-import {convertEnumToString} from "../../../utils/common";
+import {convertEnumToString, mapperJobFairDetail} from "../../../utils/common";
 
 const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVisible, jobFairList }) => {
   const [jobFairDetail, setJobFairDetail] = useState({})
@@ -65,25 +65,7 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
   }
 
   const componentProps = {
-    data: {
-      attendantRegisterStartTime: jobFairDetail?.attendantRegisterStartTime,
-      companyBuyBoothEndTime: jobFairDetail?.companyBuyBoothEndTime,
-      companyBuyBoothStartTime: jobFairDetail?.companyBuyBoothStartTime,
-      companyRegisterEndTime: jobFairDetail?.companyRegisterEndTime,
-      companyRegisterStartTime: jobFairDetail?.companyRegisterStartTime,
-      creatorInfo: creatorInfo,
-      description: jobFairDetail?.description,
-      endTime: jobFairDetail?.endTime,
-      id: jobFairDetail?.id,
-      layoutId: jobFairDetail?.layoutId,
-      startTime: jobFairDetail?.startTime,
-      status: jobFairDetail?.status,
-      name: jobFairDetail?.name,
-      estimateParticipant: jobFairDetail?.estimateParticipant,
-      targetCompany: jobFairDetail?.targetCompany,
-      targetAttendant: jobFairDetail?.targetAttendant,
-
-    },
+    data: mapperJobFairDetail(jobFairDetail, creatorInfo),
     visible: visible,
     onOk: onOk,
     onCancel: onCancel,
@@ -104,15 +86,7 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
           setTotalRegistration(totalRegistrations)
         })
         .catch(err => {
-          // if (err.response.status === 404) {
-          //   notification['info']({
-          //     message: `No company has registered this job fair yet.`,
-          //   })
-          // } else {
-          //   notification['error']({
-          //     message: `Error at get total booth: ${err}`
-          //   })
-          // }
+          //
         })
   }
 

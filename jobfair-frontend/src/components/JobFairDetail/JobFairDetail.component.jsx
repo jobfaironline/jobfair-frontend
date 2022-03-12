@@ -92,7 +92,7 @@ const JobFairDetailComponent = (props) => {
                         </Row>
                         <Row>
                             <Col span={24}>
-                                <Text strong>Attendant register start time: </Text>
+                                <Text strong>Attendant register time: </Text>
                                 <Text italic>{data.attendantRegisterStartTime}</Text>
                             </Col>
                         </Row>

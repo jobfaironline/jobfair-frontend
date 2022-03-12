@@ -1,7 +1,7 @@
 import React, {useLayoutEffect, useState} from 'react';
 import {Link, useHistory} from "react-router-dom";
 import {getJobFairIncomingForAdmin} from "../../services/job-fair-controller/JobFairConTrollerService";
-import {convertEnumToString, convertToDateString} from "../../utils/common";
+import {convertEnumToString, convertToDateString, mapperResponseJobFairForAdmin} from "../../utils/common";
 import {notification, Select, Space, Tooltip} from "antd";
 import {JOB_FAIR_FOR_ADMIN_STATUS} from "../../constants/JobFairConst";
 import JobFairForAdminComponent from "../../components/JobFairList/JobFairForAdmin.component";
@@ -29,27 +29,7 @@ const JobFairIncomingContainer = () => {
     const fetchData = async () => {
         getJobFairIncomingForAdmin(currentPage, pageSize)
             .then(res => {
-                    const result = res.data.content.map((item, index) => {
-                        return {
-                            no: index,
-                            id: item.jobFair.id,
-                            companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime),
-                            companyRegisterEndTime: convertToDateString(item.jobFair.companyRegisterEndTime),
-                            companyBuyBoothStartTime: convertToDateString(item.jobFair.companyBuyBoothStartTime),
-                            companyBuyBoothEndTime: convertToDateString(item.jobFair.companyBuyBoothEndTime),
-                            attendantRegisterStartTime: convertToDateString(item.jobFair.attendantRegisterStartTime),
-                            startTime: convertToDateString(item.jobFair.startTime),
-                            endTime: convertToDateString(item.jobFair.endTime),
-                            description: item.jobFair.description,
-                            layoutId: item.jobFair.layoutId,
-                            name: item.jobFair.name,
-                            creatorId: item.jobFair.creatorId,
-                            estimateParticipant: item.jobFair.estimateParticipant,
-                            targetCompany: item.jobFair.targetCompany,
-                            targetAttendant: item.jobFair.targetAttendant,
-                            status: item.status
-                        }
-                    })
+                    const result = mapperResponseJobFairForAdmin(res)
                     setData([...result]);
                 }
             ).catch(err => {

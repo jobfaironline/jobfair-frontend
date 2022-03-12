@@ -88,17 +88,6 @@ const JobFairForAdminComponent = (props) => {
                    dataSource={data}
                    pagination={false}
                    scroll={{ y: 240 }}
-                   expandable={{
-                       expandedRowRender: record =>
-                           <Image
-                               width={200}
-                               src="https://d3polnwtp0nqe6.cloudfront.net/DecorateItems/898e23ec-0049-41b4-bd02-01a8c52ff703?x-oss-process=image/blur,r_50,s_50/quality,q_1/resize,m_mfit,h_200,w_200"
-                               preview={{
-                                   src: 'https://d3polnwtp0nqe6.cloudfront.net/DecorateItems/898e23ec-0049-41b4-bd02-01a8c52ff703',
-                               }}
-                           />,
-                       rowExpandable: record => record.thumbnail !== '',
-                   }}
             />
         </>
     );

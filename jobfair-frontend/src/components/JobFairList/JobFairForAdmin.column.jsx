@@ -34,7 +34,7 @@ const JobFairForAdminColumn = (getColumnSearchProps) => {
             ],
         },
         {
-            title: 'Attendant register start time',
+            title: 'Attendant register time',
             dataIndex: 'attendantRegisterStartTime',
             key: 'attendantRegisterStartTime',
             ...getColumnSearchProps('attendantRegisterStartTime')

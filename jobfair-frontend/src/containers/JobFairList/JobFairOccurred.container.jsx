@@ -5,7 +5,7 @@ import {notification, Select, Space, Tooltip} from "antd";
 import {getJobFairOccurredForAdmin} from "../../services/job-fair-controller/JobFairConTrollerService";
 import PaginationComponent from "../../components/PaginationComponent/Pagination.component";
 import {PATH_ADMIN} from "../../constants/Paths/Path";
-import {convertToDateString} from "../../utils/common";
+import {convertToDateString, mapperResponseJobFairForAdmin} from "../../utils/common";
 import {MoreOutlined} from "@ant-design/icons";
 import ViewRegistrationButton from "../../components/ViewRegistrationButton/ViewRegistrationButton";
 import JobFairDetailModalContainer from "../../components/JobFairList/modal/JobFairDetailModal.container";
@@ -27,27 +27,7 @@ const JobFairOccurredContainer = () => {
     const fetchData = async () => {
         getJobFairOccurredForAdmin(currentPage, pageSize)
             .then(res => {
-                    const result = res.data.content.map((item, index) => {
-                        return {
-                            no: index,
-                            id: item.jobFair.id,
-                            companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime),
-                            companyRegisterEndTime: convertToDateString(item.jobFair.companyRegisterEndTime),
-                            companyBuyBoothStartTime: convertToDateString(item.jobFair.companyBuyBoothStartTime),
-                            companyBuyBoothEndTime: convertToDateString(item.jobFair.companyBuyBoothEndTime),
-                            attendantRegisterStartTime: convertToDateString(item.jobFair.attendantRegisterStartTime),
-                            startTime: convertToDateString(item.jobFair.startTime),
-                            endTime: convertToDateString(item.jobFair.endTime),
-                            description: item.jobFair.description,
-                            layoutId: item.jobFair.layoutId,
-                            creatorId: item.jobFair.creatorId,
-                            name: item.jobFair.name,
-                            estimateParticipant: item.jobFair.estimateParticipant,
-                            targetCompany: item.jobFair.targetCompany,
-                            targetAttendant: item.jobFair.targetAttendant,
-                            status: item.status
-                        }
-                    })
+                    const result = mapperResponseJobFairForAdmin(res)
                     setData([...result]);
                 }
             ).catch(err => {
