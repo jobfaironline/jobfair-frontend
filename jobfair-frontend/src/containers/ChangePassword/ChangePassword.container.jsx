@@ -1,10 +1,9 @@
-import React, {useState} from 'react'
-import {useHistory, useLocation} from 'react-router-dom'
-import {Form, notification} from 'antd'
-import {resetPasswordAPI} from '../../services/reset-password-controller/ResetPasswordControllerService'
-import {PATH} from '../../constants/Paths/Path'
+import React, { useState } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
+import { Form, notification } from 'antd'
+import { resetPasswordAPI } from '../../services/reset-password-controller/ResetPasswordControllerService'
+import { PATH } from '../../constants/Paths/Path'
 import ChangePasswordComponent from '../../components/ChangePassword/ChangePassword.component'
-
 const ChangePasswordContainer = () => {
   const [otpCode, setOtpCode] = useState()
   const location = useLocation()
@@ -33,7 +32,9 @@ const ChangePasswordContainer = () => {
       })
   }
   return (
-    <ChangePasswordComponent form={form} onFinish={onFinish} email={location?.state?.email} setOtpCode={setOtpCode}/>
+    <div className="page">
+      <ChangePasswordComponent form={form} onFinish={onFinish} email={location?.state?.email} setOtpCode={setOtpCode} />
+    </div>
   )
 }
 export default ChangePasswordContainer

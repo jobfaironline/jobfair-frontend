@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import EmployeeTableComponent from '../../components/EmployeeTable/EmployeeTable.component'
 import EmployeeDrawer from '../../containers/EmployeeDrawer/EmployeeDrawer.container'
 import {
   deleteEmployeeAPI,
   getEmployeesAPI
 } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
-import {Space, notification, Popconfirm} from 'antd'
-import {useSelector} from 'react-redux'
+import { Space, notification, Popconfirm } from 'antd'
+import { useSelector } from 'react-redux'
 
-const EmployeeTable = ({extra}) => {
+const EmployeeTable = ({ extra }) => {
   const [employeeData, setEmployeeData] = useState([])
   const [drawerVisibility, setDrawerVisibility] = useState(false)
   const [neededEmployee, setNeededEmployee] = useState(null)
@@ -17,10 +17,10 @@ const EmployeeTable = ({extra}) => {
   const fetchData = async () => {
     getEmployeesAPI(companyId)
       .then(res => {
-        const {data} = res
+        const { data } = res
 
         const newValues = data.map((employee, index) => {
-          const {firstname, middlename, lastname} = employee.account
+          const { firstname, middlename, lastname } = employee.account
           const fullName = firstname + ' ' + (middlename ? middlename + ' ' : '') + lastname
 
           return {

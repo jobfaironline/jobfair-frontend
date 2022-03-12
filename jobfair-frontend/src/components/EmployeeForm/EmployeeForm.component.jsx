@@ -1,9 +1,9 @@
-import React from 'react'
-import {Button, Form, Input, Popconfirm, Select} from 'antd'
-import {EmployeeRegisterValidation} from '../../validate/EmployeeRegisterValidation'
-import {formItemLayout, tailFormItemLayout} from './EmployeeForm.style'
+import React, { useState } from 'react'
+import { Select, Button, Form, Input, Popconfirm } from 'antd'
+import { EmployeeRegisterValidation } from '../../validate/EmployeeRegisterValidation'
+import { tailFormItemLayout, formItemLayout } from './EmployeeForm.style'
 
-const {Option} = Select
+const { Option } = Select
 
 const genderType = [
   {
@@ -16,11 +16,11 @@ const genderType = [
   }
 ]
 
-const EmployeeForm = ({form, onFinish}) => {
+const EmployeeForm = ({ form, onFinish }) => {
   return (
     <Form {...formItemLayout} form={form} name="register" onFinish={onFinish} scrollToFirstError>
       <Form.Item name="email" label="E-mail" rules={EmployeeRegisterValidation.email}>
-        <Input/>
+        <Input />
       </Form.Item>
 
       <Form.Item
@@ -29,7 +29,7 @@ const EmployeeForm = ({form, onFinish}) => {
         tooltip="What do you want others to call you?"
         rules={EmployeeRegisterValidation.firstName}
       >
-        <Input/>
+        <Input />
       </Form.Item>
 
       <Form.Item
@@ -38,7 +38,7 @@ const EmployeeForm = ({form, onFinish}) => {
         tooltip="What do you want others to call you?"
         rules={EmployeeRegisterValidation.middleName}
       >
-        <Input/>
+        <Input />
       </Form.Item>
 
       <Form.Item
@@ -47,7 +47,7 @@ const EmployeeForm = ({form, onFinish}) => {
         tooltip="What do you want others to call you?"
         rules={EmployeeRegisterValidation.lastName}
       >
-        <Input/>
+        <Input />
       </Form.Item>
 
       <Form.Item name="phone" label="Phone Number" rules={EmployeeRegisterValidation.phone}>

@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
-import {Button, Divider, Form, Input, message, Select, Tooltip, Typography} from 'antd'
-import {CopyOutlined, GiftOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusOutlined} from '@ant-design/icons'
+import React, { useEffect, useState } from 'react'
+import { Form, Input, Button, Radio, Tooltip, Select, Divider, Typography, Space, AutoComplete, message } from 'antd'
+import { CopyOutlined, GiftOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import {
   benefitConst,
   CategoriesConst,
@@ -9,19 +9,24 @@ import {
   SubCategories
 } from '../../constants/CompanyProfileConstant'
 import ImageUpload from '../image-upload/ImageUpload'
-import {CompanyProfileValidation} from '../../validate/CompanyProfileValidation'
+import {
+  CompanyProfileValidation,
+  MAX_LENGTH_VALIDATOR,
+  REQUIRED_VALIDATOR
+} from '../../validate/CompanyProfileValidation'
+import { COMPANY_DEFAULT_MODEL } from '../../default_models/CompanyProfileModel'
 import TextArea from 'antd/es/input/TextArea'
 
-const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
+const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
   //state
   const [totalSelect, setTotalSelect] = useState(0)
   const [benefitId, setBenefitId] = useState(0)
   const [url, setUrl] = useState(urlValue)
 
   //
-  const {Option, OptGroup} = Select
+  const { Option, OptGroup } = Select
 
-  const {Text} = Typography
+  const { Text } = Typography
 
   return (
     <>
@@ -33,7 +38,7 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
         tooltip="This is required"
         rules={editable ? CompanyProfileValidation.name : []}
       >
-        {noStyle ? <Text>{data.name}</Text> : <Input placeholder="Company name" style={{width: 300}}/>}
+        {noStyle ? <Text>{data.name}</Text> : <Input placeholder="Company name" style={{ width: 300 }} />}
       </Form.Item>
       <Form.Item
         shouldUpdate
@@ -43,7 +48,7 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
         rules={editable ? CompanyProfileValidation.email : []}
         name="email"
       >
-        {noStyle ? <Text>{data.email}</Text> : <Input placeholder="Company email" style={{width: 250}}/>}
+        {noStyle ? <Text>{data.email}</Text> : <Input placeholder="Company email" style={{ width: 250 }} />}
       </Form.Item>
       <Form.Item
         shouldUpdate
@@ -52,19 +57,19 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
         hasFeedback
         rules={editable ? CompanyProfileValidation.phone : []}
       >
-        {noStyle ? <Text>{data.phone}</Text> : <Input placeholder="Company phone" style={{width: 250}}/>}
+        {noStyle ? <Text>{data.phone}</Text> : <Input placeholder="Company phone" style={{ width: 250 }} />}
       </Form.Item>
       <Form.Item
         shouldUpdate
         label="Company Address"
         tooltip={{
           title: 'This is optional',
-          icon: <InfoCircleOutlined/>
+          icon: <InfoCircleOutlined />
         }}
         name="address"
         rules={editable ? CompanyProfileValidation.address : []}
       >
-        {noStyle ? <Text>{data.address}</Text> : <Input placeholder="Company address" style={{width: 350}}/>}
+        {noStyle ? <Text>{data.address}</Text> : <Input placeholder="Company address" style={{ width: 350 }} />}
       </Form.Item>
       <Form.Item
         shouldUpdate
@@ -74,7 +79,7 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
         rules={editable ? CompanyProfileValidation.taxId : []}
         name="taxId"
       >
-        {noStyle ? <Text>{data.taxId}</Text> : <Input placeholder="Company Tax ID" style={{width: 300}}/>}
+        {noStyle ? <Text>{data.taxId}</Text> : <Input placeholder="Company Tax ID" style={{ width: 300 }} />}
       </Form.Item>
       <Form.Item
         shouldUpdate
@@ -87,7 +92,7 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
         {noStyle ? (
           <Text>{data.companyDescription}</Text>
         ) : (
-          <TextArea showCount maxLength={3000} placeholder="Company description" style={{width: 300}}/>
+          <TextArea showCount maxLength={3000} placeholder="Company description" style={{ width: 300 }} />
         )}
       </Form.Item>
       <div className="site-input-group-wrapper">
@@ -95,7 +100,7 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
           label="Company URL"
           tooltip={{
             title: 'This is optional',
-            icon: <InfoCircleOutlined/>
+            icon: <InfoCircleOutlined />
           }}
         >
           <Input.Group compact>
@@ -104,13 +109,13 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
               noStyle
               name="url"
               rules={editable ? CompanyProfileValidation.url : []}
-              style={{display: 'inline-block', width: 'calc(50% - 8px)'}}
+              style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
             >
               {noStyle ? (
                 <Text>{data.url}</Text>
               ) : (
                 <Input
-                  style={{width: 'calc( 60% - 200px)'}}
+                  style={{ width: 'calc( 60% - 200px)' }}
                   defaultValue={url}
                   onChange={e => setUrl(e.target.value)}
                 />
@@ -127,7 +132,7 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
                       message.error(`An error occurred, ${err}`)
                     })
                 }}
-                icon={<CopyOutlined/>}
+                icon={<CopyOutlined />}
               />
             </Tooltip>
           </Input.Group>
@@ -139,12 +144,12 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
         name="sizeId"
         tooltip={{
           title: 'This is optional',
-          icon: <InfoCircleOutlined/>
+          icon: <InfoCircleOutlined />
         }}
       >
         <Select
           hidden={noStyle}
-          style={{width: 150}}
+          style={{ width: 150 }}
           onChange={value => {
             console.log(`size selected: ${value}`)
           }}
@@ -161,12 +166,12 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
         name="subCategoriesIds"
         tooltip={{
           title: 'You can select maximum 3 items',
-          icon: <InfoCircleOutlined/>
+          icon: <InfoCircleOutlined />
         }}
       >
         <Select
           hidden={noStyle}
-          style={{width: 300}}
+          style={{ width: 300 }}
           placeholder="Company industry"
           mode="multiple"
           onChange={value => {
@@ -182,7 +187,7 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
           dropdownRender={menu => (
             <>
               {menu}
-              <Divider style={{margin: '8px 0'}}/>
+              <Divider style={{ margin: '8px 0' }} />
               <Text type={totalSelect > 3 ? 'danger' : 'success'}>
                 {totalSelect > 3
                   ? null
@@ -201,18 +206,18 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
         </Select>
       </Form.Item>
       <Form.List name="benefits" noStyle={noStyle}>
-        {(fields, {add, remove}) => {
+        {(fields, { add, remove }) => {
           return (
             <>
-              {fields.map(({key, name, ...restField}) => {
+              {fields.map(({ key, name, ...restField }) => {
                 return (
-                  <div key={key} style={{display: 'flex', flexDirection: 'row'}}>
+                  <div key={key} style={{ display: 'flex', flexDirection: 'row' }}>
                     <Form.Item
                       noStyle={noStyle}
                       {...restField}
                       label="Benefit type"
                       name={[name, 'id']}
-                      style={{width: 150}}
+                      style={{ width: 150 }}
                     >
                       <Select
                         hidden={noStyle}
@@ -223,7 +228,7 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
                       >
                         {benefitConst.map(item => (
                           <Option value={item.value}>
-                            <GiftOutlined/>
+                            <GiftOutlined />
                             {item.label}
                           </Option>
                         ))}
@@ -235,22 +240,22 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
                       name={[name, 'description']}
                       label="Description"
                       rules={editable ? CompanyProfileValidation.description : []}
-                      style={{width: 400}}
+                      style={{ width: 400 }}
                     >
-                      <TextArea hidden={noStyle} placeholder="Description" showCount maxLength={3000}/>
+                      <TextArea hidden={noStyle} placeholder="Description" showCount maxLength={3000} />
                     </Form.Item>
-                    {noStyle !== true ? <MinusCircleOutlined onClick={() => remove(name)}/> : null}
+                    {noStyle !== true ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
                   </div>
                 )
               })}
               <Form.Item noStyle={noStyle}>
                 <Button
                   hidden={noStyle}
-                  style={{width: '30%'}}
+                  style={{ width: '30%' }}
                   type="dashed"
                   onClick={() => add()}
                   block
-                  icon={<PlusOutlined/>}
+                  icon={<PlusOutlined />}
                 >
                   Add field
                 </Button>
@@ -265,10 +270,10 @@ const CompanyProfileForm = ({urlValue, noStyle, data, editable}) => {
         name="mediaUrls"
         tooltip={{
           title: 'This is optional',
-          icon: <InfoCircleOutlined/>
+          icon: <InfoCircleOutlined />
         }}
       >
-        {noStyle !== true ? <ImageUpload/> : null}
+        {noStyle !== true ? <ImageUpload /> : null}
       </Form.Item>
     </>
   )

@@ -1,14 +1,13 @@
 import React from 'react'
 import Mesh from './Mesh'
-
 const MeshFamily = props => {
-  const {meshData} = props
+  const { meshData } = props
   return (
     <>
-      <Mesh prop={meshData}/>;
+      <Mesh prop={meshData} />;
       {meshData.childres &&
         meshData.childres.map((mesh, index) => (
-          <MeshFamily key={index} meshData={mesh}/>
+          <MeshFamily key={index} meshData={mesh} />
         ))}
     </>
   )

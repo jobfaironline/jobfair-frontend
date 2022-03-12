@@ -1,7 +1,8 @@
 import React from 'react'
-import {Button, Result} from 'antd'
-import {useHistory} from 'react-router-dom'
-import {PATH} from '../../constants/Paths/Path'
+import { Button, Result, Typography } from 'antd'
+import { useHistory } from 'react-router-dom'
+import { CloseCircleOutlined } from '@ant-design/icons'
+import { PATH } from '../../constants/Paths/Path'
 
 const ResultSuccessComponent = () => {
   const history = useHistory()

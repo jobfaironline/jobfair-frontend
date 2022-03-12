@@ -1,12 +1,11 @@
 import React from 'react'
-import {Form, notification} from 'antd'
+import { Form, notification } from 'antd'
 import LoginComponent from '../../components/login/Login.component'
-import {signInAPI} from '../../services/auth-controller/AuthControllerService'
-import {useDispatch} from 'react-redux'
-import {SigninHandler} from '../../redux-flow/authentication/authentication-action'
-import {useHistory} from 'react-router-dom'
-import {PATH} from '../../constants/Paths/Path'
-
+import { signInAPI } from '../../services/auth-controller/AuthControllerService'
+import { useDispatch } from 'react-redux'
+import { SigninHandler } from '../../redux-flow/authentication/authentication-action'
+import { useHistory } from 'react-router-dom'
+import { PATH } from '../../constants/Paths/Path'
 const LoginContainer = props => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
@@ -47,7 +46,7 @@ const LoginContainer = props => {
 
   return (
     <>
-      <LoginComponent form={form} onFinish={onFinish}/>
+      <LoginComponent form={form} onFinish={onFinish} />
     </>
   )
 }

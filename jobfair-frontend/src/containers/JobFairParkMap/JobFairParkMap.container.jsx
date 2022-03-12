@@ -1,14 +1,13 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import {addVideoTexture, fixTextureOffset, loadModel} from '../../utils/glbModelUtil'
 import * as THREE from 'three'
 import JobFairParkMapComponent from '../../components/JobFairParkMap/JobFairParkMap.component'
-import {getLayoutInformationForJobFairPark} from '../../services/job-fair-controller/JobFairConTrollerService'
-import {useHistory} from 'react-router-dom'
-import {PATH} from '../../constants/Paths/Path'
-
+import { getLayoutInformationForJobFairPark } from '../../services/job-fair-controller/JobFairConTrollerService'
+import { useHistory } from 'react-router-dom'
+import { PATH } from '../../constants/Paths/Path'
 const getBootMesh = async (position, foundationBox, url, companyBoothId, companyBoothLayoutVideos) => {
   const gltf = await loadModel(url)
-  const {x, y, z} = position
+  const { x, y, z } = position
   let sceneMesh = gltf.scene
   //set correct position
   sceneMesh.position.set(x, y, z)
@@ -24,7 +23,7 @@ const getBootMesh = async (position, foundationBox, url, companyBoothId, company
   const scale = Math.max(foundationSize.x / meshSize.x, foundationSize.z / meshSize.z)
   sceneMesh.scale.setScalar(scale)
   sceneMesh.companyBoothId = companyBoothId
-  for (const mesh of sceneMesh.children) {
+  for (const mesh of sceneMesh.children){
     addVideoTexture(mesh, companyBoothLayoutVideos)
     fixTextureOffset(mesh)
   }
@@ -32,7 +31,7 @@ const getBootMesh = async (position, foundationBox, url, companyBoothId, company
 }
 const JobFairParkMapContainer = props => {
   const history = useHistory()
-  const {jobFairId} = props
+  const { jobFairId } = props
   const [state, setState] = useState({
     boothMeshes: [],
     mapMesh: null
@@ -84,7 +83,7 @@ const JobFairParkMapContainer = props => {
     history.push(`${PATH.ATTENDANT_JOB_FAIR_PATH}${companyBoothId}`)
   }
 
-  return <JobFairParkMapComponent mapMesh={state.mapMesh} boothMeshes={state.boothMeshes} onClick={clickHandle}/>
+  return <JobFairParkMapComponent mapMesh={state.mapMesh} boothMeshes={state.boothMeshes} onClick={clickHandle} />
 }
 
 export default JobFairParkMapContainer

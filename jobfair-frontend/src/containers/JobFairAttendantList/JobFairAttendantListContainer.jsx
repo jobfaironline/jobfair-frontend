@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from 'react'
-import {useHistory} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import JobFairListManagementComponent from '../../components/JobFairList/JobFairList.management.component'
 import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
-import {getJobFairForAttendant} from '../../services/job-fair-controller/JobFairConTrollerService'
-
+import { getJobFairForAttendant } from '../../services/job-fair-controller/JobFairConTrollerService'
 const JobFairAttendantListContainer = () => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
@@ -80,7 +79,7 @@ const JobFairAttendantListContainer = () => {
         searchResult={searchResult}
         // getCompanyBoothId={getCompanyBoothId}
       />
-      <PaginationComponent handlePageChange={handlePageChange} totalRecord={totalPage}/>
+      <PaginationComponent handlePageChange={handlePageChange} totalRecord={totalPage} />
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
-import {ScrollMenu, VisibilityContext} from 'react-horizontal-scrolling-menu'
-import {Button} from 'antd'
-import {LeftOutlined, RightOutlined} from '@ant-design/icons'
+import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu'
+import { Button } from 'antd'
+import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 
 export const SampleItemMenu = (props) => {
   const {items, onItemClick, selectedItemId} = props
@@ -23,24 +23,24 @@ export const SampleItemMenu = (props) => {
 }
 
 function LeftArrow() {
-  const {isFirstItemVisible, scrollPrev} = React.useContext(VisibilityContext)
+  const { isFirstItemVisible, scrollPrev } = React.useContext(VisibilityContext)
   return (
     <Button disabled={isFirstItemVisible} onClick={() => scrollPrev()}>
-      <LeftOutlined/>
+      <LeftOutlined />
     </Button>
   )
 }
 
 function RightArrow() {
-  const {isLastItemVisible, scrollNext} = React.useContext(VisibilityContext)
+  const { isLastItemVisible, scrollNext } = React.useContext(VisibilityContext)
   return (
     <Button disabled={isLastItemVisible} onClick={() => scrollNext()}>
-      <RightOutlined/>
+      <RightOutlined />
     </Button>
   )
 }
 
-function Card({onClick, selected, title, itemId}) {
+function Card({ onClick, selected, title, itemId }) {
   return (
     <div
       onClick={onClick}

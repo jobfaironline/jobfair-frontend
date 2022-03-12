@@ -2,12 +2,13 @@ import React from 'react';
 import ResultSuccessComponent from "../../components/Result/ResultSuccess.component";
 
 const ResultSuccessContainer = props => {
-  return (
-    <>
-      <ResultSuccessComponent/>
-    </>
-  );
+    return (
+        <>
+            <ResultSuccessComponent/>
+        </>
+    );
 };
+
 
 
 export default ResultSuccessContainer;

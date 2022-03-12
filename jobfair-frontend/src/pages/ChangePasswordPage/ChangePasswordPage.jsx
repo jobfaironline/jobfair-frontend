@@ -3,9 +3,9 @@ import ChangePasswordContainer from '../../containers/ChangePassword/ChangePassw
 
 const ChangePasswordPage = () => {
   return (
-    <div className="page" style={{marginTop: 80}}>
-      <ChangePasswordContainer/>
-    </div>
+    <>
+      <ChangePasswordContainer />
+    </>
   )
 }
 

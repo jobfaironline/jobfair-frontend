@@ -1,9 +1,9 @@
 import React from 'react'
-import {Col, Divider, Modal, Row, Space, Tag, Typography} from 'antd'
-import {convertEnumToString} from '../../utils/common'
+import { Modal, Button } from 'antd'
+import { Card, Col, Divider, Row, Space, Tag, Typography, Anchor, Spin } from 'antd'
+import { convertEnumToString } from '../../utils/common'
 import './JobPositionSubmodal.styles.scss'
-
-const {Title, Paragraph, Text} = Typography
+const { Title, Paragraph, Text } = Typography
 
 const validateMessages = {
   required: '${label} is required!',
@@ -25,7 +25,7 @@ const layout = {
   }
 }
 
-const JobPositionSubmodal = ({visible, data, handleCancel}) => {
+const JobPositionSubmodal = ({ visible, data, handleCancel }) => {
   const [confirmLoading, setConfirmLoading] = React.useState(false)
 
   if (!data) {
@@ -41,17 +41,17 @@ const JobPositionSubmodal = ({visible, data, handleCancel}) => {
       onCancel={handleCancel}
       footer={null}
     >
-      <div style={{height: '100%'}}>
-        <div key="no" style={{marginBottom: '0.8rem'}}>
-          <Text strong style={{fontSize: '1.6rem'}}>{`Job position: ${data.title}`}</Text>
+      <div style={{ height: '100%' }}>
+        <div key="no" style={{ marginBottom: '0.8rem' }}>
+          <Text strong style={{ fontSize: '1.6rem' }}>{`Job position: ${data.title}`}</Text>
         </div>
-        <div style={{marginLeft: '1rem'}}>
-          <div className="sub-title" style={{marginBottom: '0.2rem'}}>
-            <Text strong style={{fontSize: '1.4rem'}}>
+        <div style={{ marginLeft: '1rem' }}>
+          <div className="sub-title" style={{ marginBottom: '0.2rem' }}>
+            <Text strong style={{ fontSize: '1.4rem' }}>
               General information
             </Text>
           </div>
-          <Col style={{marginLeft: '1rem'}}>
+          <Col style={{ marginLeft: '1rem' }}>
             <div key="language">
               <Space>
                 <Text strong>Prefer language: </Text>
@@ -63,7 +63,7 @@ const JobPositionSubmodal = ({visible, data, handleCancel}) => {
                 <Text strong>Required skills: </Text>
                 {data.skillTagDTOS.map(skill => {
                   return (
-                    <Tag color="blue" style={{fontSize: '0.9rem', padding: '0.1rem 0.3rem'}}>
+                    <Tag color="blue" style={{ fontSize: '0.9rem', padding: '0.1rem 0.3rem' }}>
                       {skill.name}
                     </Tag>
                   )
@@ -75,7 +75,7 @@ const JobPositionSubmodal = ({visible, data, handleCancel}) => {
                 <Text strong>Category: </Text>
                 {data.subCategoryDTOs.map(category => {
                   return (
-                    <Tag color="blue" style={{fontSize: '0.9rem', padding: '0.1rem 0.3rem'}}>
+                    <Tag color="blue" style={{ fontSize: '0.9rem', padding: '0.1rem 0.3rem' }}>
                       {category.name}
                     </Tag>
                   )
@@ -116,13 +116,13 @@ const JobPositionSubmodal = ({visible, data, handleCancel}) => {
             </Row>
           </Col>
         </div>
-        <div style={{marginLeft: '1rem'}}>
-          <div className="sub-title" style={{marginBottom: '0.2rem'}}>
-            <Text strong style={{fontSize: '1.4rem'}}>
+        <div style={{ marginLeft: '1rem' }}>
+          <div className="sub-title" style={{ marginBottom: '0.2rem' }}>
+            <Text strong style={{ fontSize: '1.4rem' }}>
               Specific jobfair's information
             </Text>
           </div>
-          <div style={{marginLeft: '1rem'}}>
+          <div style={{ marginLeft: '1rem' }}>
             <div key="description">
               <Space>
                 <Text strong>Job description: </Text>
@@ -159,7 +159,7 @@ const JobPositionSubmodal = ({visible, data, handleCancel}) => {
           </div>
         </div>
 
-        <Divider/>
+        <Divider />
       </div>
     </Modal>
   )

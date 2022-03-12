@@ -1,4 +1,4 @@
-import {Tag} from 'antd'
+import { Tag } from 'antd'
 
 const EmployeeTableColumn = getColumnSearchProps => {
   return [
@@ -9,7 +9,7 @@ const EmployeeTableColumn = getColumnSearchProps => {
       render(text, record) {
         return {
           props: {
-            style: {textAlign: 'end', width: '5px'}
+            style: { textAlign: 'end', width: '5px' }
           },
           children: text
         }

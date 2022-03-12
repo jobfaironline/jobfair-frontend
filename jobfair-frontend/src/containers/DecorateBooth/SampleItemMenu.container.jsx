@@ -6,34 +6,34 @@ import {SampleItemMenu} from "../../components/DecorateBooth/SampleItemMenu.comp
 import axios from "axios";
 
 export const SampleItemMenuContainer = (props) => {
-  const dispatch = useDispatch();
-  const {selectedSampleItem, mode} = useSelector(state => state.decorateBooth)
+    const dispatch = useDispatch();
+    const {selectedSampleItem, mode} = useSelector(state => state.decorateBooth)
 
-  const [sampleItems, setSampleItems] = useState([]);
+    const [sampleItems, setSampleItems] = useState([]);
 
-  useEffect(async () => {
-    const response = await axios('/fakeData/fake-sample-items-data.json')
-    const data = response.data
-    setSampleItems(data);
-  }, [])
+    useEffect(async () => {
+        const response = await axios('/fakeData/fake-sample-items-data.json')
+        const data = response.data
+        setSampleItems(data);
+    }, [])
 
-  const onItemClick = id => () => {
-    if (selectedSampleItem.id === id) {
-      dispatch(decorateBoothAction.setMode(ModeConstant.SELECT));
-      dispatch(decorateBoothAction.setSelectedSampleItem({}));
-      return;
+    const onItemClick = id => () => {
+        if (selectedSampleItem.id === id){
+            dispatch(decorateBoothAction.setMode(ModeConstant.SELECT));
+            dispatch(decorateBoothAction.setSelectedSampleItem({}));
+            return;
+        }
+        dispatch(decorateBoothAction.setMode(ModeConstant.ADD));
+        dispatch(decorateBoothAction.setSelectedSampleItem(sampleItems.filter(item => item.id === id)[0]));
     }
-    dispatch(decorateBoothAction.setMode(ModeConstant.ADD));
-    dispatch(decorateBoothAction.setSelectedSampleItem(sampleItems.filter(item => item.id === id)[0]));
-  }
 
 
-  const sampleItemMenuProps = {items: sampleItems, onItemClick, selectedItemId: selectedSampleItem?.id}
+    const sampleItemMenuProps = {items: sampleItems, onItemClick, selectedItemId: selectedSampleItem?.id}
 
-  if (sampleItems.length === 0) return null;
-  return (
-    <div style={{display: mode === ModeConstant.ADD ? 'block' : 'none'}}>
-      <SampleItemMenu {...sampleItemMenuProps}/>
-    </div>
-  )
+    if (sampleItems.length === 0) return null;
+    return (
+        <div style={{display: mode === ModeConstant.ADD ? 'block' : 'none'}}>
+            <SampleItemMenu {...sampleItemMenuProps}/>
+        </div>
+    )
 }

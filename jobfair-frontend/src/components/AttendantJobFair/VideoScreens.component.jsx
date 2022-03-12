@@ -1,8 +1,8 @@
-import {AgoraVideoPlayer} from 'agora-rtc-react'
+import { AgoraVideoPlayer } from 'agora-rtc-react'
 import React from 'react'
 
 export const VideoScreens = props => {
-  const {muteState, users, cameraTrack, cameraReady} = props
+  const { muteState, users, cameraTrack, cameraReady } = props
   return (
     <div>
       <div
@@ -20,16 +20,16 @@ export const VideoScreens = props => {
         {/* AgoraVideoPlayer component takes in the video track to render the stream,
             you can pass in other props that get passed to the rendered div */}
         {cameraReady && !muteState.video ? (
-          <AgoraVideoPlayer style={{height: '95%', width: '95%'}} className="vid" videoTrack={cameraTrack}/>
+          <AgoraVideoPlayer style={{ height: '95%', width: '95%' }} className="vid" videoTrack={cameraTrack} />
         ) : (
-          <div style={{height: '95%', width: '95%', backgroundColor: 'yellow'}}/>
+          <div style={{ height: '95%', width: '95%', backgroundColor: 'yellow' }} />
         )}
         {users.length > 0 &&
           users.map(user => {
             if (user.videoTrack) {
               return (
                 <AgoraVideoPlayer
-                  style={{height: '95%', width: '95%'}}
+                  style={{ height: '95%', width: '95%' }}
                   className="vid"
                   videoTrack={user.videoTrack}
                   key={user.uid}

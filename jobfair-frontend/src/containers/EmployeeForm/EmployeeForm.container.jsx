@@ -1,8 +1,8 @@
 import React from 'react'
-import {createEmployeesAPI} from '../../services/company-employee-controller/CompanyEmployeeControllerService'
-import {Form, notification} from 'antd'
+import { createEmployeesAPI } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
+import { Form, notification } from 'antd'
 import EmployeeFormComponent from '../../components/EmployeeForm/EmployeeForm.component'
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const EmployeeForm = () => {
   const [form] = Form.useForm()
@@ -35,7 +35,7 @@ const EmployeeForm = () => {
 
   return (
     <>
-      <EmployeeFormComponent form={form} onFinish={onFinish}/>
+      <EmployeeFormComponent form={form} onFinish={onFinish} />
     </>
   )
 }

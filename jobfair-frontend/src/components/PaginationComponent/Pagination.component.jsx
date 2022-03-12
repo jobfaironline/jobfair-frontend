@@ -1,7 +1,7 @@
 import React from 'react'
-import {Pagination} from 'antd'
+import { Pagination } from 'antd'
 
-const PaginationComponent = ({handlePageChange, totalRecord}) => {
+const PaginationComponent = ({ handlePageChange, totalRecord }) => {
   return (
     <>
       <Pagination

@@ -9,142 +9,142 @@ import JobPositionTable from '../../JobPositionTable/JobPositionTable.component'
 import {UploadOutlined} from "@ant-design/icons";
 
 const JobPositionManagementContainer = props => {
-  const [data, setData] = useState([])
-  const [jobPosition, setJobPosition] = useState({})
-  const [modalVisible, setModalVisible] = useState(false)
-  const [forceRerenderState, setForceRerenderState] = useState(false);
-  //pagination
-  const [totalRecord, setTotalRecord] = useState(0)
-  const [currentPage, setCurrentPage] = useState(0)
-  const [pageSize, setPageSize] = useState(10)
-  //
-  const dispatch = useDispatch()
-  const history = useHistory()
+    const [data, setData] = useState([])
+    const [jobPosition, setJobPosition] = useState({})
+    const [modalVisible, setModalVisible] = useState(false)
+    const [forceRerenderState, setForceRerenderState] = useState(false);
+    //pagination
+    const [totalRecord, setTotalRecord] = useState(0)
+    const [currentPage, setCurrentPage] = useState(0)
+    const [pageSize, setPageSize] = useState(10)
+    //
+    const dispatch = useDispatch()
+    const history = useHistory()
 
-  const fetchData = async () => {
-    getJobPositionsAPI('ASC', currentPage, pageSize, 'title')
-      .then(res => {
-        const totalRecord = res.data.totalElements
-        setTotalRecord(totalRecord)
-        setData([
-          ...res.data.content.map((item, index) => {
-            return {
-              key: item.id,
-              no: index + res.data.number * 10 + 1,
-              ...item
-            }
-          })
-        ])
-      })
-      .catch(err => {
-        notification['error']({
-          message: `Error: ${err}`
-        })
-      })
-  }
-
-  useLayoutEffect(() => {
-    fetchData()
-  }, [currentPage, pageSize, forceRerenderState])
-
-  const handlePageChange = (page, pageSize) => {
-    if (page > 0) {
-      setCurrentPage(page - 1)
-    } else {
-      setCurrentPage(page)
+    const fetchData = async () => {
+        getJobPositionsAPI('ASC', currentPage, pageSize, 'title')
+            .then(res => {
+                const totalRecord = res.data.totalElements
+                setTotalRecord(totalRecord)
+                setData([
+                    ...res.data.content.map((item, index) => {
+                        return {
+                            key: item.id,
+                            no: index + res.data.number * 10 + 1,
+                            ...item
+                        }
+                    })
+                ])
+            })
+            .catch(err => {
+                notification['error']({
+                    message: `Error: ${err}`
+                })
+            })
     }
-    setPageSize(pageSize)
-  }
 
-  const handleCreateOnClick = () => {
-    history.push(PATH_COMPANY_MANAGER.CREATE_JOB_POSITION)
-  }
+    useLayoutEffect(() => {
+        fetchData()
+    }, [currentPage, pageSize, forceRerenderState])
 
-  const handleViewDetailPage = id => {
-    history.push(PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL, {
-      jobPosition: data.find(item => item.id === id)
-    })
-  }
+    const handlePageChange = (page, pageSize) => {
+        if (page > 0) {
+            setCurrentPage(page - 1)
+        } else {
+            setCurrentPage(page)
+        }
+        setPageSize(pageSize)
+    }
 
-  const loadFile = {
-    name: 'file',
-    accept: '.csv',
-    beforeUpload: file => {
-      return false;
-    },
-    onChange: async (info) => {
-      if (info.file.type !== 'text/csv') {
-        notification['error']({
-          message: `${info.file.name} is not csv`
+    const handleCreateOnClick = () => {
+        history.push(PATH_COMPANY_MANAGER.CREATE_JOB_POSITION)
+    }
+
+    const handleViewDetailPage = id => {
+        history.push(PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL, {
+            jobPosition: data.find(item => item.id === id)
         })
-        return;
-      }
-      const formData = new FormData()
-      formData.append('file', info.file)
-      await uploadCSVFile(formData)
-      notification['success']({
-        message: `${info.file.name} upload successfully`
-      })
-      //force render to fetch data after upload
-      setForceRerenderState(prevState => !prevState)
-    },
-    showUploadList: false,
-    progress: {
-      strokeColor: {
-        '0%': '#108ee9',
-        '100%': '#87d068',
-      },
-      strokeWidth: 3,
-      format: percent => `${parseFloat(percent.toFixed(2))}%`,
-    },
-  }
+    }
 
-  return (
-    <div style={{}}>
-      {/*<JobPositionDetailModalContainer {...modalProps} />*/}
-      {/*<JobPositionSubmodalContainer/>*/}
-
-      <Space style={{display: 'flex', justifyContent: 'space-between', marginBottom: '1rem'}}>
-        <Typography.Title level={2} style={{marginBottom: '0rem'}}>
-          Job positions
-        </Typography.Title>
-        <Space>
-          <Button type="primary" onClick={() => handleCreateOnClick()}>
-            Create job position
-          </Button>
-          <Upload {...loadFile}>
-            <Button icon={<UploadOutlined/>}>Upload CSV</Button>{' '}
-          </Upload>
-        </Space>
-      </Space>
-
-      <div style={{display: 'flex', flexDirection: 'column'}}>
-        <JobPositionTable
-          data={data}
-          editable
-          extra={{
-            title: 'Actions',
-            key: 'action',
-            render: (text, record) => {
-              return (
-                <Space size="middle">
-                  <a
-                    // onClick={() => handleViewDetailModal(record.id)}
-                    onClick={() => handleViewDetailPage(record.id)}
-                  >
-                    View detail
-                  </a>
-                </Space>
-              )
+    const loadFile = {
+        name: 'file',
+        accept: '.csv',
+        beforeUpload: file => {
+            return false;
+        },
+        onChange: async (info) => {
+            if (info.file.type !== 'text/csv') {
+                notification['error']({
+                    message: `${info.file.name} is not csv`
+                })
+                return;
             }
-          }}
-        />
-        <Space style={{margin: '1rem 0', display: 'flex', justifyContent: 'end'}}>
-          <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={totalRecord}/>
-        </Space>
-      </div>
-    </div>
-  )
+            const formData = new FormData()
+            formData.append('file', info.file)
+            await uploadCSVFile(formData)
+            notification['success']({
+                message: `${info.file.name} upload successfully`
+            })
+            //force render to fetch data after upload
+            setForceRerenderState(prevState => !prevState)
+        },
+        showUploadList: false,
+        progress: {
+            strokeColor: {
+                '0%': '#108ee9',
+                '100%': '#87d068',
+            },
+            strokeWidth: 3,
+            format: percent => `${parseFloat(percent.toFixed(2))}%`,
+        },
+    }
+
+    return (
+        <div style={{}}>
+            {/*<JobPositionDetailModalContainer {...modalProps} />*/}
+            {/*<JobPositionSubmodalContainer/>*/}
+
+            <Space style={{display: 'flex', justifyContent: 'space-between', marginBottom: '1rem'}}>
+                <Typography.Title level={2} style={{marginBottom: '0rem'}}>
+                    Job positions
+                </Typography.Title>
+                <Space>
+                    <Button type="primary" onClick={() => handleCreateOnClick()}>
+                        Create job position
+                    </Button>
+                    <Upload {...loadFile}>
+                        <Button icon={<UploadOutlined/>}>Upload CSV</Button>{' '}
+                    </Upload>
+                </Space>
+            </Space>
+
+            <div style={{display: 'flex', flexDirection: 'column'}}>
+                <JobPositionTable
+                    data={data}
+                    editable
+                    extra={{
+                        title: 'Actions',
+                        key: 'action',
+                        render: (text, record) => {
+                            return (
+                                <Space size="middle">
+                                    <a
+                                        // onClick={() => handleViewDetailModal(record.id)}
+                                        onClick={() => handleViewDetailPage(record.id)}
+                                    >
+                                        View detail
+                                    </a>
+                                </Space>
+                            )
+                        }
+                    }}
+                />
+                <Space style={{margin: '1rem 0', display: 'flex', justifyContent: 'end'}}>
+                    <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={totalRecord}/>
+                </Space>
+            </div>
+        </div>
+    )
 }
 
 export default JobPositionManagementContainer

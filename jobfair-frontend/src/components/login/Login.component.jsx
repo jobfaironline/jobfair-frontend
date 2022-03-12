@@ -1,10 +1,11 @@
 import React from 'react'
-import {Button, Divider, Form, Input, Space, Typography} from 'antd'
-import {useHistory} from 'react-router-dom'
-import {PATH} from '../../constants/Paths/Path'
+import { Button, Checkbox, Divider, Form, Input, Layout, Typography } from 'antd'
+import { useHistory } from 'react-router-dom'
+import { Content, Footer, Header } from 'antd/es/layout/layout'
+import { PATH } from '../../constants/Paths/Path'
 import './Login.styles.scss'
 
-const LoginComponent = ({onFinish, form}) => {
+const LoginComponent = ({ onFinish, form }) => {
   const history = useHistory()
   return (
     <>
@@ -17,32 +18,30 @@ const LoginComponent = ({onFinish, form}) => {
             name="email"
             hasFeedback
             rules={[
-              {required: true, message: 'Please input your email!'},
+              { required: true, message: 'Please input your email!' },
               {
                 type: 'email',
                 message: 'This field has invalid email format.'
               }
             ]}
           >
-            <Input placeholder="Email"/>
+            <Input placeholder="Email" />
           </Form.Item>
-          <Form.Item name="password" hasFeedback rules={[{required: true, message: 'Please input your password!'}]}>
-            <Input.Password placeholder="Password"/>
+          <Form.Item name="password" hasFeedback rules={[{ required: true, message: 'Please input your password!' }]}>
+            <Input.Password placeholder="Password" />
           </Form.Item>
-          <Space>
-            <Form.Item className="login">
-              <Button type="primary" htmlType="submit">
-                Login
-              </Button>
-            </Form.Item>
-            <Form.Item className="forgot-password">
-              <Button type="link" onClick={() => history.push(PATH.FORGOT_PASSWORD_PAGE)}>
-                Forgot password?
-              </Button>
-            </Form.Item>
-          </Space>
+          <Form.Item className="login">
+            <Button type="primary" htmlType="submit">
+              Login
+            </Button>
+          </Form.Item>
+          <Form.Item className="forgot-password">
+            <Button type="link" onClick={() => history.push(PATH.FORGOT_PASSWORD_PAGE)}>
+              Forgot password?
+            </Button>
+          </Form.Item>
           <Form.Item className="register">
-            <span>Don't you have an account?</span> <Button type="link" href={PATH.REGISTER_PAGE}>Register</Button>
+            <span>Don't you have an account?</span> <Button type="link">Register</Button>
           </Form.Item>
         </Form>
       </div>

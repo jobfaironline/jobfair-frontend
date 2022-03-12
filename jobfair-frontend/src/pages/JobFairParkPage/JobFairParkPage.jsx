@@ -5,11 +5,11 @@ import JobFairParkMapContainer from "../../containers/JobFairParkMap/JobFairPark
 
 
 const JobFairParkPage = (props) => {
-  const {jobFairId} = useParams();
-  return (<div className={"page"}>
-    <JobFairParkMapContainer jobFairId={jobFairId}/>
-    <ToastContainer/>
-  </div>)
+    const {jobFairId} = useParams();
+    return (<div className={"page"}>
+        <JobFairParkMapContainer jobFairId={jobFairId}/>
+        <ToastContainer/>
+    </div>)
 }
 
 export default JobFairParkPage;

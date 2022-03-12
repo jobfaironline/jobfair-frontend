@@ -2,17 +2,17 @@ import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useRef, useState} from "react";
 import {
-  getCompanyBoothLatestLayout,
-  saveDecoratedBooth, saveLayoutVideoWithFile, saveLayoutVideoWithUrl
+    getCompanyBoothLatestLayout,
+    saveDecoratedBooth, saveLayoutVideoWithFile, saveLayoutVideoWithUrl
 } from "../../services/company-booth-layout-controller/CompanyBoothLayoutControllerService";
 import {
-  addVideoTexture, b64toBlob, extractTexture,
-  fixTextureOffset,
-  loadModel, moveModelDown,
-  moveModelUp,
-  parseModel,
-  rotateModelLeft,
-  rotateModelRight
+    addVideoTexture, b64toBlob, extractTexture,
+    fixTextureOffset,
+    loadModel, moveModelDown,
+    moveModelUp,
+    parseModel,
+    rotateModelLeft,
+    rotateModelRight
 } from "../../utils/glbModelUtil";
 import {notify} from "../../utils/toastutil";
 import {ModeConstant} from "../../constants/AppConst";
@@ -27,185 +27,185 @@ import {GENERIC_BOOTH_LAYOUT_URL} from "../../constants/DecorateBoothConstant";
 import {DecoratedBoothSideBarContainer} from "./DecorateBoothSideBar.container";
 
 export const DecorateBoothContainer = (props) => {
-  const {companyBoothId, jobFairId} = props;
+    const {companyBoothId, jobFairId} = props;
 
-  const history = useHistory()
-  const dispatch = useDispatch();
-  const {mode, selectedItem} = useSelector(state => state.decorateBooth)
-  const [modelItems, setModelItems] = useState([]);
-  const meshGroupRef = useRef();
+    const history = useHistory()
+    const dispatch = useDispatch();
+    const {mode, selectedItem} = useSelector(state => state.decorateBooth)
+    const [modelItems, setModelItems] = useState([]);
+    const meshGroupRef = useRef();
 
-  useEffect(async () => {
-    let url = GENERIC_BOOTH_LAYOUT_URL
-    const companyBoothLayoutVideos = {}
-    try {
-      const response = await getCompanyBoothLatestLayout(companyBoothId)
-      url = response.data.url
-      response.data.companyBoothLayoutVideos?.forEach(data => {
-        companyBoothLayoutVideos[data.itemName] = data.url;
-      })
-    } catch (err) {
-    }
-    //parse file and get items
-    const glb = await loadModel(url)
-    const result = glb.scene.children
-    for (const mesh of result) {
-      addVideoTexture(mesh, companyBoothLayoutVideos)
-      fixTextureOffset(mesh)
+    useEffect(async () => {
+        let url = GENERIC_BOOTH_LAYOUT_URL
+        const companyBoothLayoutVideos = {}
+        try {
+            const response = await getCompanyBoothLatestLayout(companyBoothId)
+            url = response.data.url
+            response.data.companyBoothLayoutVideos?.forEach(data => {
+                companyBoothLayoutVideos[data.itemName] = data.url;
+            })
+        } catch (err) {
+        }
+        //parse file and get items
+        const glb = await loadModel(url)
+        const result = glb.scene.children
+        for (const mesh of result) {
+            addVideoTexture(mesh, companyBoothLayoutVideos)
+            fixTextureOffset(mesh)
 
-    }
-    setModelItems(result);
-  }, [])
+        }
+        setModelItems(result);
+    }, [])
 
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown)
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  })
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown)
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+        }
+    })
 
-  const uploadVideo = (textureObj, layoutId, itemName) => {
-    return new Promise(async resolve => {
-      if (textureObj.texture.image.src.substring(0, 4) !== "data") {
-        saveLayoutVideoWithUrl({
-          layoutId: layoutId,
-          itemName: itemName,
-          url: textureObj.texture.image.src
+    const uploadVideo = (textureObj, layoutId, itemName) => {
+        return new Promise(async resolve => {
+            if (textureObj.texture.image.src.substring(0, 4) !== "data"){
+                saveLayoutVideoWithUrl({
+                    layoutId: layoutId,
+                    itemName: itemName,
+                    url: textureObj.texture.image.src
+                })
+            } else {
+                const b64data = textureObj.texture.image.src.substring(15+7);
+
+                const blob = await b64toBlob(b64data, 'video/mp4');
+                const formData = new FormData()
+                formData.append('layoutId', layoutId)
+                formData.append('file', blob)
+                formData.append('itemName', itemName)
+                saveLayoutVideoWithFile(formData)
+            }
+            resolve();
         })
-      } else {
-        const b64data = textureObj.texture.image.src.substring(15 + 7);
 
-        const blob = await b64toBlob(b64data, 'video/mp4');
+    }
+
+    const saveHandle = async () => {
+        let sceneNode = meshGroupRef.current.parent
+        while (sceneNode.type !== 'Scene') {
+            sceneNode = sceneNode.parent
+        }
+        const sceneNodeCopy = sceneNode.clone(false)
+        sceneNodeCopy.name = 'Scene'
+        sceneNodeCopy.clear()
+        const copyNode = meshGroupRef.current.children.map(mesh => mesh.clone())
+
+        //extract video texture and push children to copyNode
+        let textureList = []
+        copyNode.forEach(mesh => {
+            sceneNodeCopy.children.push(mesh)
+            textureList =  [...textureList, ...extractTexture(mesh, mesh.name)]
+        })
+
+        //upload model layout
+        const glbData = await parseModel(sceneNodeCopy)
         const formData = new FormData()
-        formData.append('layoutId', layoutId)
-        formData.append('file', blob)
-        formData.append('itemName', itemName)
-        saveLayoutVideoWithFile(formData)
-      }
-      resolve();
-    })
+        formData.append('companyBoothId', companyBoothId)
+        formData.append('file', glbData)
+        const response = await saveDecoratedBooth(formData);
 
-  }
-
-  const saveHandle = async () => {
-    let sceneNode = meshGroupRef.current.parent
-    while (sceneNode.type !== 'Scene') {
-      sceneNode = sceneNode.parent
+        //upload video
+        const videoUploadPromises = [];
+        for (const textureObj of textureList){
+            const promise = uploadVideo(textureObj, response.data.id, textureObj.meshName)
+            videoUploadPromises.push(promise);
+        }
+        await Promise.all(videoUploadPromises);
+        notify(2, 'Save successfully')
     }
-    const sceneNodeCopy = sceneNode.clone(false)
-    sceneNodeCopy.name = 'Scene'
-    sceneNodeCopy.clear()
-    const copyNode = meshGroupRef.current.children.map(mesh => mesh.clone())
 
-    //extract video texture and push children to copyNode
-    let textureList = []
-    copyNode.forEach(mesh => {
-      sceneNodeCopy.children.push(mesh)
-      textureList = [...textureList, ...extractTexture(mesh, mesh.name)]
-    })
+    const addMoreComponentHandle = async => {
+        if (mode === ModeConstant.ADD){
+            dispatch(decorateBoothAction.setMode(ModeConstant.SELECT));
+        } else {
+            dispatch(decorateBoothAction.setMode(ModeConstant.ADD));
 
-    //upload model layout
-    const glbData = await parseModel(sceneNodeCopy)
-    const formData = new FormData()
-    formData.append('companyBoothId', companyBoothId)
-    formData.append('file', glbData)
-    const response = await saveDecoratedBooth(formData);
-
-    //upload video
-    const videoUploadPromises = [];
-    for (const textureObj of textureList) {
-      const promise = uploadVideo(textureObj, response.data.id, textureObj.meshName)
-      videoUploadPromises.push(promise);
+        }
     }
-    await Promise.all(videoUploadPromises);
-    notify(2, 'Save successfully')
-  }
 
-  const addMoreComponentHandle = async => {
-    if (mode === ModeConstant.ADD) {
-      dispatch(decorateBoothAction.setMode(ModeConstant.SELECT));
-    } else {
-      dispatch(decorateBoothAction.setMode(ModeConstant.ADD));
-
+    const reviewHandle = async => {
+        history.push(`${PATH.MAP}${jobFairId}`);
     }
-  }
 
-  const reviewHandle = async => {
-    history.push(`${PATH.MAP}${jobFairId}`);
-  }
-
-  const handleOnRotationLeft = _ => {
-    if (selectedItem === undefined) {
-      return
+    const handleOnRotationLeft = _ => {
+        if (selectedItem === undefined) {
+            return
+        }
+        rotateModelLeft(selectedItem, 10);
     }
-    rotateModelLeft(selectedItem, 10);
-  }
 
-  const handleOnRotationRight = _ => {
-    if (selectedItem === undefined) {
-      return
+    const handleOnRotationRight = _ => {
+        if (selectedItem === undefined) {
+            return
+        }
+        rotateModelRight(selectedItem, 10);
     }
-    rotateModelRight(selectedItem, 10);
-  }
 
-  const handleDelete = _ => {
-    setModelItems(prevState => {
-      const result = prevState.filter(itemMesh => itemMesh.uuid !== selectedItem.uuid);
-      return result;
-    })
-  }
-
-  const handleAdd = mesh => {
-    setModelItems(prevState => {
-      return [...prevState, mesh];
-    })
-  }
-
-  const handleKeyDown = event => {
-    if (selectedItem === undefined) {
-      return
+    const handleDelete = _ => {
+        setModelItems(prevState => {
+            const result = prevState.filter(itemMesh => itemMesh.uuid !== selectedItem.uuid);
+            return result;
+        })
     }
-    switch (event.keyCode) {
-      case 37: //KEY LEFT
-        event.preventDefault()
-        handleOnRotationLeft()
-        break
-      case 38: //KEY UP
-        event.preventDefault()
-        moveModelUp(selectedItem, 0.1)
-        break
-      case 39: //KEY RIGHT
-        event.preventDefault()
-        handleOnRotationRight()
-        break
-      case 40: //KEY DOWN
-        event.preventDefault()
-        moveModelDown(selectedItem, 0.1)
-        break
-      case 46: //KEY DEL
-        event.preventDefault()
-        handleDelete()
-        break
+
+    const handleAdd = mesh => {
+        setModelItems(prevState => {
+            return [...prevState, mesh];
+        })
     }
-  }
 
-  const controlButtonsProps = {addMoreComponentHandle, saveHandle, reviewHandle}
-  const sideBarProps = {handleOnRotationLeft, handleOnRotationRight, handleDelete}
+    const handleKeyDown = event => {
+        if (selectedItem === undefined) {
+            return
+        }
+        switch (event.keyCode) {
+            case 37: //KEY LEFT
+                event.preventDefault()
+                handleOnRotationLeft()
+                break
+            case 38: //KEY UP
+                event.preventDefault()
+                moveModelUp(selectedItem, 0.1)
+                break
+            case 39: //KEY RIGHT
+                event.preventDefault()
+                handleOnRotationRight()
+                break
+            case 40: //KEY DOWN
+                event.preventDefault()
+                moveModelDown(selectedItem, 0.1)
+                break
+            case 46: //KEY DEL
+                event.preventDefault()
+                handleDelete()
+                break
+        }
+    }
+
+    const controlButtonsProps = {addMoreComponentHandle, saveHandle, reviewHandle}
+    const sideBarProps = {handleOnRotationLeft, handleOnRotationRight, handleDelete}
 
 
-  if (modelItems.length === 0) return null
-  return (
-    <>
-      <Stats/>
-      <div style={{display: 'flex', maxHeight: mode === ModeConstant.ADD ? '70vh' : '90vh'}}>
-        <DecoratedBoothSideBarContainer {...sideBarProps}/>
-        <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd} ref={meshGroupRef}/>
-      </div>
+    if (modelItems.length === 0) return null
+    return (
+        <>
+            <Stats/>
+            <div style={{display: 'flex', maxHeight: mode === ModeConstant.ADD ? '70vh' : '90vh'}}>
+                <DecoratedBoothSideBarContainer {...sideBarProps}/>
+                <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd} ref={meshGroupRef}/>
+            </div>
 
-      <ControlButtonGroup {...controlButtonsProps}/>
-      <SampleItemMenuContainer/>
-      <ToastContainer/>
-    </>
-  )
+            <ControlButtonGroup {...controlButtonsProps}/>
+            <SampleItemMenuContainer/>
+            <ToastContainer/>
+        </>
+    )
 
 }
