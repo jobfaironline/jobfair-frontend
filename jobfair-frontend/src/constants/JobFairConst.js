@@ -16,12 +16,12 @@ export const JOB_FAIR_PLAN_COMPANY_STATUS = [
     },
     {
         value: "CHOOSE_BOOTH",
-        label: "Be able to choose booth",
+        label: "Choose booth",
         color: "blue"
     },
     {
         value: "DECORATE_BOOTH",
-        label: "Be able to decorate booth",
+        label: "Decorate booth",
         color: "geekblue"
     },
     {
@@ -29,6 +29,43 @@ export const JOB_FAIR_PLAN_COMPANY_STATUS = [
         label: "Unavailable",
         color: "red"
     },
+    {
+        value: "HAPPENING",
+        label: "Happening",
+        color: "red"
+    },
+    {
+        value: "PENDING",
+        label: "Pending",
+        color: "red"
+    }
+]
+
+export const JOB_FAIR_FOR_ATTENDANT_STATUS = [
+    {
+        value: "ATTENDED",
+        label: "Attended"
+    },
+    {
+        value: "CLOSED",
+        label: "Closed"
+    },
+    {
+        value: "HAPPENING",
+        label: "Happening"
+    },
+    {
+        value: "REGISTERED",
+        label: "Registered"
+    },
+    {
+        value: "REGISTRABLE",
+        label: "Registrable"
+    },
+    {
+        value: "UNAVAILABLE",
+        label: "Unavailable"
+    }
 ]
 
 export const JOB_FAIR_PLAN_STATUS = {
