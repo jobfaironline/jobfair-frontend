@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Button, Form, Input, Space, Anchor, Typography, Divider } from 'antd'
+import { Button, Form, Input, Space, Anchor, Typography, Divider, Popconfirm } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import TextArea from 'antd/lib/input/TextArea'
 import { PickJobPositionFormValidation } from '../../validate/PickJobPositionForm'
@@ -45,12 +45,21 @@ const PickJobPositionForm = props => {
                                 background: 'white',
                                 color: 'black',
                                 fontSize: '1.5rem',
-                                padding: '0 0 0 0.1rem'
+                                padding: '0 0 0 0.2rem'
                               }}
                             />
                           </Form.Item>
                         </div>
                         <div className="job-position-row-container ">
+                          <Form.Item
+                            label="Number of position"
+                            {...restField}
+                            name={[name, 'numberOfPosition']}
+                            rules={PickJobPositionFormValidation.numberOfPosition}
+                            style={{ maxWidth: '14rem', width: '14rem' }}
+                          >
+                            <Input placeholder="Number of position" style={{ width: '12rem' }} />
+                          </Form.Item>
                           <div style={{ width: 'fit-content', flex: 'none' }}>
                             <Input.Group compact>
                               <Form.Item
@@ -79,18 +88,17 @@ const PickJobPositionForm = props => {
                               </Form.Item>
                             </Input.Group>
                           </div>
-                          <Form.Item
-                            label="Number of position"
-                            {...restField}
-                            name={[name, 'numberOfPosition']}
-                            rules={PickJobPositionFormValidation.numberOfPosition}
-                            style={{ marginLeft: '2rem' }}
-                          >
-                            <Input placeholder="Number of position" style={{ width: '12rem' }} />
-                          </Form.Item>
                         </div>
                       </div>
-                      <MinusCircleOutlined onClick={() => handleRemove(name, remove)} />
+                      <Popconfirm
+                        placement="rightTop"
+                        title="Are you sure to remove this job position?"
+                        onConfirm={() => handleRemove(name, remove)}
+                        okText="Yes"
+                        cancelText="No"
+                      >
+                        <MinusCircleOutlined />
+                      </Popconfirm>
                     </div>
                   </div>
                 )
