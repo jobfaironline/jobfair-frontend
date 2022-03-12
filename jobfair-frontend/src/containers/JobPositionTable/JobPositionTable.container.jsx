@@ -1,15 +1,9 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import JobPositionTableComponent from '../../components/JobPositionTable/JobPositionTable.component'
 import { Space, notification, Popconfirm, Button } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getJobPositionsAPI } from '../../services/job-controller/JobControllerService'
 import { fetchJobPositions } from '../../redux-flow/jobPositions/job-positions-action'
-import {
-  setFormBody,
-  setJobPositionModalVisibility,
-  setJobPositions
-} from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
-import JobPositionSubmodal from '../../components/JobPositionModal/JobPositionSubmodal.component'
 import JobPositionSubmodalContainer from '../JobPositionModal/JobPositionSubmodal.container'
 import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
 
@@ -69,8 +63,6 @@ const PickJobPositionTable = ({ selectable, form }) => {
   useLayoutEffect(() => {
     fetchData(0, 5000)
   }, [])
-
-  console.log(modalVisible)
 
   return (
     <div>
