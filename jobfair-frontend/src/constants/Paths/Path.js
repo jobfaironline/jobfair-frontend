@@ -8,7 +8,8 @@ export const PATH = {
   LOGIN_PAGE: '/auth/login',
   REGISTER_PAGE: '/auth/register',
   FORGOT_PASSWORD_PAGE: '/accounts/forgot-password',
-  CHANGE_PASSWORD_PAGE: '/accounts/changepassword',
+  CHANGE_PASSWORD_PAGE: '/accounts/change-password',
+  RESET_PASSWORD_PAGE: '/accounts/reset-password',
   RESULT_SUCCESS_PAGE: '/proceed-success',
   RESULT_FAILED_PAGE: '/proceed-fail',
   FAQ_PAGE: '/faq',
@@ -28,6 +29,7 @@ export const PATH = {
 }
 export const PATH_ADMIN = {
   APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId',
+  COMPANY_REGISTRATION_PAGE: '/approval-registration',
   JOB_FAIR_DETAIL_PAGE: '/job-fair-detail',
   JOB_FAIR_PLAN_LIST: '/job-fair-plan-list',
   COMPANY_REGISTRATION_DETAIL: '/company-registration-detail'

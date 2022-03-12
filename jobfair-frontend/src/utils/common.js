@@ -40,8 +40,7 @@ export const getBase64 = file => {
 }
 
 export const convertToDateString = dateValue => {
-  const date = new Date(dateValue)
-  return date.toISOString()
+  return new Date(dateValue).toISOString().replace(/T.*/,'').split('-').reverse().join('-')
 }
 
 export const convertToDateValue = dateString => {
@@ -82,3 +81,5 @@ export const convertEnumToString = (data) => {
       .join(' ');
   return result;
 }
+
+//

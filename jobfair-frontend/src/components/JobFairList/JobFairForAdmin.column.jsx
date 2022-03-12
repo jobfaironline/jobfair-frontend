@@ -17,22 +17,44 @@ const JobFairForAdminColumn = (getColumnSearchProps) => {
             ...getColumnSearchProps('name')
         },
         {
-            title: 'Company register start time',
-            dataIndex: 'companyRegisterStartTime',
-            key: 'companyRegisterStartTime',
-            ...getColumnSearchProps('companyRegisterStartTime')
+            title: 'Company register',
+            children: [
+                {
+                    title: 'Start time',
+                    dataIndex: 'companyRegisterStartTime',
+                    key: 'companyRegisterStartTime',
+                    ...getColumnSearchProps('companyRegisterStartTime')
+                },
+                {
+                    title: 'End time',
+                    dataIndex: 'companyRegisterEndTime',
+                    key: 'companyRegisterEndTime',
+                    ...getColumnSearchProps('companyRegisterEndTime')
+                }
+            ],
         },
         {
-            title: 'Attendant register start time',
+            title: 'Attendant register time',
             dataIndex: 'attendantRegisterStartTime',
             key: 'attendantRegisterStartTime',
             ...getColumnSearchProps('attendantRegisterStartTime')
         },
         {
-            title: 'Start time',
-            dataIndex: 'startTime',
-            key: 'startTime',
-            ...getColumnSearchProps('startTime')
+            title: 'Job fair',
+            children: [
+                {
+                    title: 'Start time',
+                    dataIndex: 'startTime',
+                    key: 'startTime',
+                    ...getColumnSearchProps('startTime')
+                },
+                {
+                    title: 'End time',
+                    dataIndex: 'endTime',
+                    key: 'endTime',
+                    ...getColumnSearchProps('endTime')
+                }
+            ],
         },
         {
             title: 'Status',

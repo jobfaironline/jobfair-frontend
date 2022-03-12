@@ -25,7 +25,7 @@ const JobFairDetailComponent = (props) => {
                 )
             case JOB_FAIR_FOR_ADMIN_STATUS.COMPANY_REGISTER:
                 return (
-                    <Link to={`/approval-registration/${data.id}`}>Evaluate registrations</Link>
+                    <Link to={`/approval-registration/${data.id}`}>View registrations</Link>
                 )
         }
     }
@@ -67,7 +67,7 @@ const JobFairDetailComponent = (props) => {
     return (
         <>
             <Card title="Job fair detail" bordered={true} headStyle={{textAlign: 'center'}}
-                  style={{width: 750, marginLeft: 300, marginTop: 80}}>
+                  style={{width: 450}}>
                 <Space direction="vertical">
                     <Space size="middle" direction="vertical">
                         <Row>
@@ -92,7 +92,7 @@ const JobFairDetailComponent = (props) => {
                         </Row>
                         <Row>
                             <Col span={24}>
-                                <Text strong>Attendant register start time: </Text>
+                                <Text strong>Attendant register time: </Text>
                                 <Text italic>{data.attendantRegisterStartTime}</Text>
                             </Col>
                         </Row>

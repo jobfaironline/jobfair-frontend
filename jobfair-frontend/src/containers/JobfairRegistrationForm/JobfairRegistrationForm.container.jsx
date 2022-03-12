@@ -14,15 +14,16 @@ import { PATH } from '../../constants/Paths/Path'
 import { setFormBody } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
 const { Step } = Steps
 const JobfairRegistrationForm = () => {
-  //please pass this form into component or USE REDUX TO STORE FORM HOOK
-
   const { jobfairId } = useParams()
   const dispatch = useDispatch()
-  const companyId = useSelector(state => state.authentication.user.companyId)
-  const [companyInfo, setCompanyInfo] = useState({})
-  const [companyForm] = Form.useForm()
-  const [currentStep, setCurrentStep] = useState(0)
   const history = useHistory()
+  const [form] = Form.useForm() //form for registration
+  const companyId = useSelector(state => state.authentication.user.companyId)
+  const [companyInfo, setCompanyInfo] = useState({}) //TODO: check this later with Bao Huynh new code to remove
+  const [companyForm] = Form.useForm() //TODO: check this later with Bao Huynh new code to remove
+
+  //management step
+  const [currentStep, setCurrentStep] = useState(0)
 
   const getCompanyProfile = async () => {
     getCompanyProfileAPI(companyId)
@@ -56,16 +57,6 @@ const JobfairRegistrationForm = () => {
       })
   }
 
-  useEffect(() => {
-    getCompanyProfile()
-  }, [])
-
-  useEffect(() => {
-    companyForm.setFieldsValue({ ...companyInfo })
-  }, [companyInfo, companyForm])
-
-  const [form] = Form.useForm()
-
   const onSubmit = async values => {
     const body = {
       description: values.description,
@@ -88,7 +79,7 @@ const JobfairRegistrationForm = () => {
         duration: 2
       })
       //after submit success, push to success page
-      history.push(PATH.JOB_FAIRS_PAGE)
+      history.push(PATH.PROCESSED_SUCCESS)
     } catch (err) {
       notification['error']({
         message: `An error has occurred while submitting`,
@@ -100,73 +91,71 @@ const JobfairRegistrationForm = () => {
     }
   }
 
+  useEffect(() => {
+    getCompanyProfile()
+  }, [])
+
+  useEffect(() => {
+    //TODO: check this again with Bao Huynh code
+    companyForm.setFieldsValue({ ...companyInfo })
+  }, [companyInfo, companyForm])
+
   return (
     <div>
       <Steps current={currentStep}>
-        {/* <Step title="Confirm company profile" /> */}
         <Step title="Jobfair registration form" />
         <Step title="Confirm registration" />
       </Steps>
 
       <div style={{ marginTop: 60 }}>
-        <Form
-          form={form}
-          layout="vertical"
-          onValuesChange={e => onChange(e)}
-          requiredMark="required"
-          autoComplete="off"
-        >
-          <div style={{ display: currentStep == 0 ? 'block' : 'none' }}>
-            <JobfairRegistrationFormComponent
-              form={form}
-              onPickJobFinish={() => {}}
-              nextStep={() => {
-                form.validateFields().then(res => {
-                  setCurrentStep(currentStep + 1)
-                  dispatch(setFormBody(form.getFieldsValue()))
-                })
-              }}
-            />
-          </div>
-          {currentStep == 1 ? (
-            <div style={{ display: currentStep == 1 ? 'block' : 'none' }}>
-              <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
-              <div className="step-buttons">
-                <div className="pre-step-button">
-                  <Form.Item>
-                    <Button
-                      size="large"
-                      type="primary"
-                      onClick={() => {
-                        setCurrentStep(currentStep - 1)
+        <div style={{ display: currentStep == 0 ? 'block' : 'none' }}>
+          <JobfairRegistrationFormComponent
+            form={form}
+            nextStep={() => {
+              form.validateFields().then(res => {
+                setCurrentStep(currentStep + 1)
+              })
+            }}
+          />
+        </div>
+        {currentStep == 1 ? (
+          <div style={{ display: currentStep == 1 ? 'block' : 'none' }}>
+            <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
+            <div className="step-buttons">
+              <div className="pre-step-button">
+                <Form.Item>
+                  <Button
+                    size="large"
+                    type="primary"
+                    onClick={() => {
+                      setCurrentStep(currentStep - 1)
+                    }}
+                  >
+                    Prev
+                  </Button>
+                </Form.Item>
+              </div>
+              <div className="next-step-button">
+                <Form.Item>
+                  <div className="submit-registration-popconfirm">
+                    <Popconfirm
+                      title="Are you sure to submit this form?"
+                      onConfirm={() => {
+                        onSubmit(form.getFieldsValue(true))
                       }}
+                      okText="Yes"
+                      cancelText="No"
                     >
-                      Prev
-                    </Button>
-                  </Form.Item>
-                </div>
-                <div className="next-step-button">
-                  <Form.Item>
-                    <div className="submit-registration-popconfirm">
-                      <Popconfirm
-                        title="Are you sure to submit this form?"
-                        onConfirm={() => {
-                          onSubmit(form.getFieldsValue(true))
-                        }}
-                        okText="Yes"
-                        cancelText="No"
-                      >
-                        <Button size="large" type="primary">
-                          Submit
-                        </Button>
-                      </Popconfirm>
-                    </div>
-                  </Form.Item>
-                </div>
+                      <Button size="large" type="primary">
+                        Submit
+                      </Button>
+                    </Popconfirm>
+                  </div>
+                </Form.Item>
               </div>
             </div>
-          ) : null}
-        </Form>
+          </div>
+        ) : null}
       </div>
     </div>
   )

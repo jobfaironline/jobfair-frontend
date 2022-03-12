@@ -1,29 +1,19 @@
 import React from 'react'
 import { Button, Modal, Space } from 'antd'
-import JobPositionTable from '../../containers/JobPositionTable/JobPositionTable.container'
+import PickJobPositionTableContainer from '../../containers/JobPositionTable/JobPositionTable.container'
 
-const JobPositionModal = ({ visible, handleOk, handleCancel }) => {
-  //modal
-  const [confirmLoading, setConfirmLoading] = React.useState(false)
-
-  const finalHandleOk = async () => {
-    setConfirmLoading(true)
-    await handleOk()
-    setConfirmLoading(false)
-  }
-
+const JobPositionModal = ({ visible, handleCloseModal, form }) => {
   return (
     <>
       <Modal
         width={800}
         title="Choose job position"
         visible={visible}
-        onOk={finalHandleOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
+        onCancel={handleCloseModal}
         footer={null}
+        destroyOnClose
       >
-        <JobPositionTable selectable />
+        <PickJobPositionTableContainer form={form} selectable />
       </Modal>
     </>
   )
