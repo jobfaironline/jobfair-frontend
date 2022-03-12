@@ -1,0 +1,42 @@
+.panel {
+  background-color: rgba(0, 0, 0, .1);
+  position: absolute;
+  right: 5vw;
+  z-index: 1000;
+  top: 20vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 5px;
+
+  h1 {
+    color: white;
+  }
+
+  .characterContainer {
+    display: flex;
+    justify-content: center;
+
+    img {
+      height: 300px;
+    }
+  }
+
+  .itemRow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 4px;
+    grid-row-gap: 4px;
+  }
+
+  .itemBox {
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    border-radius: 5px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

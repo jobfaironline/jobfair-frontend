@@ -7,7 +7,7 @@ import * as THREE from "three";
 
 
 export const FirstPersonControl = (props) => {
-  const {model} = props;
+  const {model, isChangeCamera} = props;
   const {camera} = useThree();
   const controlRef = useRef();
   const speed = 0.1;
@@ -49,14 +49,18 @@ export const FirstPersonControl = (props) => {
 
   }
 
-  const modelSize = calculateMeshSize(model);
-  camera.position.y = model.position.y + modelSize.height;
-  camera.position.x = model.position.x
-  camera.position.z = model.position.z
+  if (isChangeCamera.current){
+    const modelSize = calculateMeshSize(model);
+    camera.position.y = model.position.y + modelSize.height;
+    camera.position.x = model.position.x
+    camera.position.z = model.position.z
 
 
-  camera.rotation.copy(model.rotation)
-  camera.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI)
+    camera.rotation.copy(model.rotation)
+    camera.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI)
+  }
+
+
 
 
 

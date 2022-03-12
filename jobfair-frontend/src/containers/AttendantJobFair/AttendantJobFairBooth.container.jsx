@@ -71,15 +71,13 @@ export const AttendantJobFairBoothContainer = props => {
   useEffect(async () => {
 
     const boothMesh = await getBoothMesh(companyBoothId);
-    boothMesh.scale.setScalar(2);
 
     const floorMesh = boothMesh.children.filter(child => child.name === "sand")[0];
-    const floorHeight = floorMesh.scale.y * Math.abs(floorMesh.geometry.boundingBox.max.y - floorMesh.geometry.boundingBox.min.y);
-    const center = floorMesh.position.y + floorHeight / 2;
+    const floorHeight = calculateMeshSize(floorMesh).height
     //load model
     const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx");
-    model.scale.setScalar(0.07);
-    model.position.setY(center * 2)
+    model.scale.setScalar(0.07 / 2);
+    //model.position.setY(center * 2)
     model.children.forEach(child => {
       if (child.isMesh) {
         child.castShadow = true
@@ -87,6 +85,8 @@ export const AttendantJobFairBoothContainer = props => {
         child.material.side = THREE.FrontSide
       }
     })
+    model.position.setY(floorMesh.position.y + floorHeight / 2)
+
     const modelSize = calculateMeshSize(model);
     //load animation
     const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx");
