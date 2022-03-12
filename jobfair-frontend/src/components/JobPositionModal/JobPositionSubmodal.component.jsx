@@ -26,8 +26,6 @@ const layout = {
 }
 
 const JobPositionSubmodal = ({ visible, data, handleCancel }) => {
-  const [confirmLoading, setConfirmLoading] = React.useState(false)
-
   if (!data) {
     return null
   }
@@ -37,9 +35,9 @@ const JobPositionSubmodal = ({ visible, data, handleCancel }) => {
       wrapClassName="detail-modal"
       title="Create job position"
       visible={visible}
-      confirmLoading={confirmLoading}
       onCancel={handleCancel}
       footer={null}
+      destroyOnClose
     >
       <div style={{ height: '100%' }}>
         <div key="no" style={{ marginBottom: '0.8rem' }}>
