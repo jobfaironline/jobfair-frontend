@@ -5,12 +5,12 @@ import {notification, Select, Space, Tooltip} from "antd";
 import {getJobFairOccurredForAdmin} from "../../services/job-fair-controller/JobFairConTrollerService";
 import PaginationComponent from "../../components/PaginationComponent/Pagination.component";
 import {PATH_ADMIN} from "../../constants/Paths/Path";
-import {convertToDateString, mapperResponseJobFairForAdmin} from "../../utils/common";
+import {convertToDateString} from "../../utils/common";
 import {MoreOutlined} from "@ant-design/icons";
 import ViewRegistrationButton from "../../components/ViewRegistrationButton/ViewRegistrationButton";
 import JobFairDetailModalContainer from "../../components/JobFairList/modal/JobFairDetailModal.container";
+import {mapperResponseJobFairForAdmin} from "../../utils/mapperJobFairDetail";
 
-const {Option} = Select;
 
 const JobFairOccurredContainer = () => {
     const [data, setData] = useState([])
