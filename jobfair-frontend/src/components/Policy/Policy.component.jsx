@@ -3,12 +3,8 @@ import { Card, Typography } from 'antd'
 const PolicyComponent = () => {
   const { Title, Text } = Typography
   return (
-    <div  style={{textAlign: 'justify'}}>
-      <Card
-        title={<Title level={4}>TERMS OF USE OF THE SERVICE WITH CANDIDATES</Title>}
-        bordered={true}
-        style={{ width: 1000 }}
-      >
+    <div style={{ textAlign: 'justify' }}>
+      <Card title={<Title level={4}>TERMS OF USE OF THE SERVICE WITH CANDIDATES</Title>} bordered={true}>
         <Title level={3}>1. GENERAL TERMS</Title>
         <Text>
           By accessing or using the JobHub.vn website, the services, or any application provided by JobHub.,JSC

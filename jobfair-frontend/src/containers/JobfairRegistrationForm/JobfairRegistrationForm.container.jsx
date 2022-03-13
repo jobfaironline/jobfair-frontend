@@ -1,62 +1,32 @@
-import { Button, Form, notification, Popconfirm, Steps } from 'antd'
+import { Button, Checkbox, Form, notification, Popconfirm, Steps } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useForm, useStepsForm } from 'sunflower-antd'
 import CompanyProfileForm from '../../components/company-profile-form/CompanyProfileForm.component'
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { createDraftRegistration } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-action'
 import { getCompanyProfileAPI } from '../../services/company-controller/CompanyControllerService'
 import TextArea from 'antd/es/input/TextArea'
 import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
 import ConfirmContainer from '../Confirm/Confirm.container'
 import JobfairRegistrationFormComponent from '../../components/JobfairRegistrationForm/JobfairRegistrationForm.component'
 import { PATH } from '../../constants/Paths/Path'
-import { setFormBody } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
+import PolicyComponent from '../../components/Policy/Policy.component'
 import JobFairDetailCompanyContainer from '../JobFairDetail/JobFairDetail.company.container'
+import {
+  createDraftRegistrationAPI,
+  submitRegistrationAPI
+} from '../../services/company-registration-controller/CompanyRegistrationControllerService'
 const { Step } = Steps
 const JobfairRegistrationForm = () => {
   const { jobfairId } = useParams()
-  const dispatch = useDispatch()
   const history = useHistory()
   const [form] = Form.useForm() //form for registration
   const companyId = useSelector(state => state.authentication.user.companyId)
-  const [companyInfo, setCompanyInfo] = useState({}) //TODO: check this later with Bao Huynh new code to remove
-  const [companyForm] = Form.useForm() //TODO: check this later with Bao Huynh new code to remove
+  const [agreeStatus, setAgreeStatus] = useState(false)
+  const [companyInfo, setCompanyInfo] = useState({})
 
   //management step
   const [currentStep, setCurrentStep] = useState(0)
-
-  const getCompanyProfile = async () => {
-    getCompanyProfileAPI(companyId)
-      .then(res => {
-        notification['success']({
-          message: `Fetch company profile successfully`,
-          description: `For company with ${companyId}`,
-          duration: 2
-        })
-        const response = {
-          ...res.data,
-          benefits: res.data.companyBenefitDTOS.map(item => {
-            return {
-              ...item,
-              id: item.benefitDTO.id,
-              description: item.benefitDTO.description
-            }
-          }),
-          mediaUrls: res.data.mediaDTOS,
-          subCategoriesIds: res.data.subCategoryDTOs.map(item => item.id),
-          url: res.data.websiteUrl
-        }
-        setCompanyInfo({ ...response })
-      })
-      .catch(() => {
-        notification['error']({
-          message: `Fetch company profile failed`,
-          description: `Failed for company with ${companyId}`,
-          duration: 2
-        })
-      })
-  }
 
   const onSubmit = async values => {
     const body = {
@@ -72,95 +42,202 @@ const JobfairRegistrationForm = () => {
         return result
       })
     }
-    try {
-      await dispatch(createDraftRegistration(body)).unwrap()
-      notification['success']({
-        message: `Registration draft version has been submitted`,
-        description: `Submitted successfully`,
-        duration: 2
-      })
-      //after submit success, push to success page
-      history.push(PATH.PROCESSED_SUCCESS)
-    } catch (err) {
-      notification['error']({
-        message: `An error has occurred while submitting`,
-        description: `Submit failed. Server response: ${err}`,
-        duration: 2
-      })
-      //else push to error page
-      history.push(PATH.PROCESSED_FAIL)
+    const companyRegistrationId = await onCreateDraft(body)
+    if (companyRegistrationId) {
+      await submitRegistration(
+        companyRegistrationId,
+        () => history.push(PATH.PROCESSED_SUCCESS),
+        () => history.push(PATH.PROCESSED_FAIL)
+      )
+    }
+  }
+
+  const stepComponentList = [
+    <>
+      <div style={{ width: '70%', margin: '3rem auto' }}>
+        <JobFairDetailCompanyContainer id={jobfairId} />
+      </div>
+    </>,
+    <>
+      <PolicyComponent />
+      <Checkbox checked={agreeStatus} onChange={e => setAgreeStatus(e.target.checked)}>
+        I have read and accept the Job fair Policy
+      </Checkbox>
+    </>,
+    <JobfairRegistrationFormComponent form={form} />,
+    <>
+      <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
+    </>
+  ]
+
+  const nextStepButtonActions = step => {
+    switch (step) {
+      case 3:
+        return () => {
+          onSubmit(form.getFieldsValue(true))
+        }
+      case 2:
+        return () => {
+          form
+            .validateFields()
+            .then(res => {
+              setCurrentStep(currentStep + 1)
+            })
+            .catch(err => {
+              const errorsArray = form.getFieldsError()
+              for (const error of errorsArray) {
+                if (error.errors.length > 0) {
+                  form.scrollToField(error.name, { behavior: 'smooth', block: 'center' })
+                  break
+                }
+              }
+            })
+        }
+      default:
+        return () => setCurrentStep(currentStep + 1)
     }
   }
 
   useEffect(() => {
-    getCompanyProfile()
+    getCompanyProfile(companyId, setCompanyInfo)
   }, [])
-
-  useEffect(() => {
-    //TODO: check this again with Bao Huynh code
-    companyForm.setFieldsValue({ ...companyInfo })
-  }, [companyInfo, companyForm])
 
   return (
     <div>
-      <Steps current={currentStep}>
-        <Step title="Jobfair registration form" />
-        <Step title="Confirm registration" />
-      </Steps>
-
-      <div style={{ marginTop: 60 }}>
-        <div style={{ display: currentStep == 0 ? 'block' : 'none' }}>
-          <JobfairRegistrationFormComponent
-            form={form}
-            nextStep={() => {
-              form.validateFields().then(res => {
-                setCurrentStep(currentStep + 1)
-              })
-            }}
-          />
-        </div>
-        {currentStep == 1 ? (
-          <div style={{ display: currentStep == 1 ? 'block' : 'none' }}>
-            <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
-            <div className="step-buttons">
-              <div className="pre-step-button">
-                <Form.Item>
+      <div className="jobfair-registration-form-container" style={{ background: '#FFF' }}>
+        <Steps
+          current={currentStep}
+          style={{
+            marginBottom: '3rem',
+            position: 'sticky',
+            top: '80px',
+            background: '#FFF',
+            zIndex: '1000',
+            padding: '1rem'
+          }}
+        >
+          <Step title="Job fair's details" />
+          <Step title="Our policy" />
+          <Step title="Jobfair registration form" />
+          <Step title="Confirm registration" />
+        </Steps>
+        {stepComponentList[currentStep]}
+        <div className="step-buttons">
+          {currentStep != 0 ? (
+            <div className="pre-step-button">
+              <Form.Item>
+                <Button
+                  size="large"
+                  type="primary"
+                  onClick={() => {
+                    setCurrentStep(currentStep - 1)
+                  }}
+                >
+                  Prev
+                </Button>
+              </Form.Item>
+            </div>
+          ) : null}
+          <div className="next-step-button">
+            <Form.Item>
+              <div className="submit-registration-popconfirm">
+                {currentStep == 3 ? (
+                  <Popconfirm
+                    title="Are you sure to submit this form?"
+                    onConfirm={nextStepButtonActions(currentStep)}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <Button size="large" type="primary">
+                      Register
+                    </Button>
+                  </Popconfirm>
+                ) : (
                   <Button
                     size="large"
                     type="primary"
-                    onClick={() => {
-                      setCurrentStep(currentStep - 1)
-                    }}
+                    onClick={nextStepButtonActions(currentStep)}
+                    disabled={currentStep == 1 && !agreeStatus}
                   >
-                    Prev
+                    Next
                   </Button>
-                </Form.Item>
+                )}
               </div>
-              <div className="next-step-button">
-                <Form.Item>
-                  <div className="submit-registration-popconfirm">
-                    <Popconfirm
-                      title="Are you sure to submit this form?"
-                      onConfirm={() => {
-                        onSubmit(form.getFieldsValue(true))
-                      }}
-                      okText="Yes"
-                      cancelText="No"
-                    >
-                      <Button size="large" type="primary">
-                        Register
-                      </Button>
-                    </Popconfirm>
-                  </div>
-                </Form.Item>
-              </div>
-            </div>
+            </Form.Item>
           </div>
-        ) : null}
+        </div>
       </div>
-      <JobFairDetailCompanyContainer id={jobfairId} />
     </div>
   )
+}
+
+const getCompanyProfile = async (companyId, setCompanyInfo) => {
+  getCompanyProfileAPI(companyId)
+    .then(res => {
+      notification['success']({
+        message: `Fetch company profile successfully`,
+        description: `For company with ${companyId}`,
+        duration: 2
+      })
+      const response = {
+        ...res.data,
+        benefits: res.data.companyBenefitDTOS.map(item => {
+          return {
+            ...item,
+            id: item.benefitDTO.id,
+            description: item.benefitDTO.description
+          }
+        }),
+        mediaUrls: res.data.mediaDTOS,
+        subCategoriesIds: res.data.subCategoryDTOs.map(item => item.id),
+        url: res.data.websiteUrl
+      }
+      setCompanyInfo({ ...response })
+    })
+    .catch(() => {
+      notification['error']({
+        message: `Fetch company profile failed`,
+        description: `Failed for company with ${companyId}`,
+        duration: 2
+      })
+    })
+}
+
+const submitRegistration = async (companyRegistrationId, successCallback, failedCallback) => {
+  try {
+    const res = await submitRegistrationAPI(companyRegistrationId)
+    notification['success']({
+      message: `Registration draft version has been submitted`,
+      description: `Submitted successfully`,
+      duration: 2
+    })
+    successCallback()
+  } catch (err) {
+    notification['error']({
+      message: `An error has occurred while create draft`,
+      description: `Create draft failed. Server response: ${err}`,
+      duration: 2
+    })
+    failedCallback()
+  }
+}
+
+const onCreateDraft = async body => {
+  try {
+    const res = await createDraftRegistrationAPI(body)
+    notification['success']({
+      message: `Registration draft version has been created`,
+      description: `Created draft successfully`,
+      duration: 2
+    })
+    return res.data.companyRegistrationId
+  } catch (err) {
+    notification['error']({
+      message: `An error has occurred while create draft`,
+      description: `Create draft failed. Server response: ${err}`,
+      duration: 2
+    })
+  }
 }
 
 export default JobfairRegistrationForm

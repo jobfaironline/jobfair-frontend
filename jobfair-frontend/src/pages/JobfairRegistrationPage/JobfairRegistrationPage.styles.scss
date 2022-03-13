@@ -1,11 +1,17 @@
 .jobfair-registration-page {
   display: flex;
   height: 100%;
+
+  .ant-btn-primary:focus {
+    color: #fff;
+    background-color: #1890ff;
+    border-color: #1890ff;
+  }
 }
 
 .jobfair-registration-cotnainer {
   width: 100%;
-  padding: 2rem 4rem;
+  margin: 2rem 4rem;
 }
 
 .step-buttons {
