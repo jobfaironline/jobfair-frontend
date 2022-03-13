@@ -12,7 +12,7 @@ import {mapperResponseJobFairForAdmin} from "../../utils/mapperJobFairDetail";
 
 const {Option} = Select;
 
-const JobFairHappeningContainer = () => {
+const JobFairHappeningContainer = ({key}) => {
   const [data, setData] = useState([])
   //pagination
   const [currentPage, setCurrentPage] = useState(0)
@@ -26,7 +26,12 @@ const JobFairHappeningContainer = () => {
   const fetchData = async () => {
     getJobFairHappeningForAdmin(currentPage, pageSize)
       .then(res => {
-          const result = mapperResponseJobFairForAdmin(res)
+        const result = mapperResponseJobFairForAdmin(res).map(item => {
+          return {
+            ...item,
+            key: 'HAPPENING'
+          }
+        })
           setData([...result]);
         }
       ).catch(err => {

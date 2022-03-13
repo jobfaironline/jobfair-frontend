@@ -1,4 +1,4 @@
-import { CallAPI } from '../axiosBase'
+import {CallAPI} from '../axiosBase'
 import {
   ENDPOINT_GET_JOB_FAIR_PLAN_OF_COMPANY,
   ENDPOINT_GET_LAYOUT_FOR_JOB_FAIR_PARK,
@@ -69,14 +69,14 @@ export const getJobFairHappeningForAdmin = (offset, pageSize) =>
     }
   )
 
-export const getJobFairIncomingForAdmin = (offset, pageSize) =>
-  CallAPI(
-    `${ENDPOINT_JOB_FAIR}/admin?filterStatus=${JOB_FAIR_FOR_ADMIN_STATUS.NOT_YET}`,
-    'GET',
-    {},
-    {
-      offset: offset,
-      pageSize: pageSize
-    }
-  )
+export const getJobFairIncomingForAdmin = (offset, pageSize) => CallAPI(
+  `${ENDPOINT_JOB_FAIR}/admin?filterStatus=${JOB_FAIR_FOR_ADMIN_STATUS.NOT_YET}`,
+  'GET',
+  {},
+  {
+    offset: offset,
+    pageSize: pageSize
+  }
+)
+
 export const getJobFairPlanById = id => CallAPI(`${ENDPOINT_JOB_FAIR}/${id}`, 'GET')

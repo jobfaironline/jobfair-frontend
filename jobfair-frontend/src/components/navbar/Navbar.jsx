@@ -33,8 +33,8 @@ export const CompanyManagerMenu = [
   <Menu.Item key={PATH_COMPANY_EMPLOYEE.COMPANY_EMPLOYEE_MANAGEMENT}>
     <Link to={PATH_COMPANY_EMPLOYEE.COMPANY_EMPLOYEE_MANAGEMENT}>Employee Management</Link>
   </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_MANAGER.MANAGER_REGISTER_JOBFAIR}>
-    <Link to={PATH_COMPANY_MANAGER.MANAGER_REGISTER_JOBFAIR}>Register to job fair</Link>
+  <Menu.Item key={PATH.JOB_FAIRS_PAGE}>
+    <Link to={PATH.JOB_FAIRS_PAGE}>Register to job fair</Link>
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT}>
     <Link to={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT}>Job Position Management</Link>
@@ -60,7 +60,6 @@ export const AdminMenu = [
   <Menu.Item key={PATH_ADMIN.COMPANY_REGISTRATION_PAGE}>
     <Link to={PATH_ADMIN.COMPANY_REGISTRATION_PAGE}>View company registration</Link>
   </Menu.Item>
-
 ]
 
 export const StaffMenu = [
