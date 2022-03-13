@@ -12,6 +12,8 @@ const ConfirmComponent = props => {
 
   const { Title, Paragraph, Text } = Typography
 
+  console.log(data)
+
   return (
     <>
       <div style={{ position: 'fixed', left: '0.8rem', top: '200px' }}>
@@ -202,18 +204,22 @@ const ConfirmComponent = props => {
                                     </Space>
                                   </div>
                                 </Col>
+                              </Row>
+                              <Row>
                                 <Col>
-                                  <div key="description">
-                                    <Space align="start" direction="vertical">
-                                      <Text strong>Description: </Text>
-                                      <Text>{item.description}</Text>
-                                    </Space>
-                                  </div>
-                                  <div key="requirement" style={{ marginTop: '1rem' }}>
-                                    <Space align="start" direction="vertical">
-                                      <Text strong>Requirements: </Text>
-                                      <Text>{item.requirements}</Text>
-                                    </Space>
+                                  <div>
+                                    <div key="description">
+                                      <Space align="start" direction="vertical">
+                                        <Text strong>Job description: </Text>
+                                        <Text>{item.description}</Text>
+                                      </Space>
+                                    </div>
+                                    <div key="requirement">
+                                      <Space align="start" direction="vertical">
+                                        <Text strong>Job requirements: </Text>
+                                        <Text>{item.requirements}</Text>
+                                      </Space>
+                                    </div>
                                   </div>
                                 </Col>
                               </Row>

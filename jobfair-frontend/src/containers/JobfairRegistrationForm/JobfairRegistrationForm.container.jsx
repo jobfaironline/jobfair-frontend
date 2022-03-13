@@ -1,4 +1,4 @@
-import { Button, Form, notification, Popconfirm, Steps } from 'antd'
+import { Button, Checkbox, Form, notification, Popconfirm, Steps } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useForm, useStepsForm } from 'sunflower-antd'
 import CompanyProfileForm from '../../components/company-profile-form/CompanyProfileForm.component'
@@ -12,6 +12,7 @@ import ConfirmContainer from '../Confirm/Confirm.container'
 import JobfairRegistrationFormComponent from '../../components/JobfairRegistrationForm/JobfairRegistrationForm.component'
 import { PATH } from '../../constants/Paths/Path'
 import { setFormBody } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
+import PolicyComponent from '../../components/Policy/Policy.component'
 import JobFairDetailCompanyContainer from '../JobFairDetail/JobFairDetail.company.container'
 const { Step } = Steps
 const JobfairRegistrationForm = () => {
@@ -20,6 +21,7 @@ const JobfairRegistrationForm = () => {
   const history = useHistory()
   const [form] = Form.useForm() //form for registration
   const companyId = useSelector(state => state.authentication.user.companyId)
+  const [agreeStatus, setAgreeStatus] = useState(false)
   const [companyInfo, setCompanyInfo] = useState({}) //TODO: check this later with Bao Huynh new code to remove
   const [companyForm] = Form.useForm() //TODO: check this later with Bao Huynh new code to remove
 
@@ -101,64 +103,98 @@ const JobfairRegistrationForm = () => {
     companyForm.setFieldsValue({ ...companyInfo })
   }, [companyInfo, companyForm])
 
+  const stepComponentList = [
+    <>
+      <div className="jobfair-registration-form-container">
+        <JobFairDetailCompanyContainer id={jobfairId} />
+      </div>
+    </>,
+    <>
+      <div className="jobfair-registration-form-container">
+        <PolicyComponent />
+        <Checkbox checked={agreeStatus} onChange={e => setAgreeStatus(e.target.checked)}>
+          I have read and accept the Job fair Policy
+        </Checkbox>
+      </div>
+    </>,
+    <div className="jobfair-registration-form-container">
+      <JobfairRegistrationFormComponent form={form} />
+    </div>,
+    <>
+      <div className="jobfair-registration-form-container">
+        <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
+      </div>
+    </>
+  ]
+
+  const nextStepButtonActions = step => {
+    switch (step) {
+      case 3:
+        return () => {
+          onSubmit(form.getFieldsValue(true))
+        }
+      case 2:
+        return () => {
+          form.validateFields().then(res => {
+            setCurrentStep(currentStep + 1)
+          })
+        }
+      default:
+        return () => setCurrentStep(currentStep + 1)
+    }
+  }
+
   return (
     <div>
-      <Steps current={currentStep}>
+      <Steps current={currentStep} style={{ marginBottom: '3rem' }}>
+        <Step title="Job fair's details" />
+        <Step title="Our policy" />
         <Step title="Jobfair registration form" />
         <Step title="Confirm registration" />
       </Steps>
-
-      <div style={{ marginTop: 60 }}>
-        <div style={{ display: currentStep == 0 ? 'block' : 'none' }}>
-          <JobfairRegistrationFormComponent
-            form={form}
-            nextStep={() => {
-              form.validateFields().then(res => {
-                setCurrentStep(currentStep + 1)
-              })
-            }}
-          />
+      {stepComponentList[currentStep]}
+      <div className="step-buttons">
+        <div className="pre-step-button">
+          <Form.Item>
+            <Button
+              size="large"
+              type="primary"
+              onClick={() => {
+                setCurrentStep(currentStep - 1)
+              }}
+            >
+              Prev
+            </Button>
+          </Form.Item>
         </div>
-        {currentStep == 1 ? (
-          <div style={{ display: currentStep == 1 ? 'block' : 'none' }}>
-            <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
-            <div className="step-buttons">
-              <div className="pre-step-button">
-                <Form.Item>
-                  <Button
-                    size="large"
-                    type="primary"
-                    onClick={() => {
-                      setCurrentStep(currentStep - 1)
-                    }}
-                  >
-                    Prev
+        <div className="next-step-button">
+          <Form.Item>
+            <div className="submit-registration-popconfirm">
+              {currentStep == 3 ? (
+                <Popconfirm
+                  title="Are you sure to submit this form?"
+                  onConfirm={nextStepButtonActions(currentStep)}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Button size="large" type="primary">
+                    Register
                   </Button>
-                </Form.Item>
-              </div>
-              <div className="next-step-button">
-                <Form.Item>
-                  <div className="submit-registration-popconfirm">
-                    <Popconfirm
-                      title="Are you sure to submit this form?"
-                      onConfirm={() => {
-                        onSubmit(form.getFieldsValue(true))
-                      }}
-                      okText="Yes"
-                      cancelText="No"
-                    >
-                      <Button size="large" type="primary">
-                        Register
-                      </Button>
-                    </Popconfirm>
-                  </div>
-                </Form.Item>
-              </div>
+                </Popconfirm>
+              ) : (
+                <Button
+                  size="large"
+                  type="primary"
+                  onClick={nextStepButtonActions(currentStep)}
+                  disabled={currentStep == 1 && !agreeStatus}
+                >
+                  Next
+                </Button>
+              )}
             </div>
-          </div>
-        ) : null}
+          </Form.Item>
+        </div>
       </div>
-      <JobFairDetailCompanyContainer id={jobfairId} />
     </div>
   )
 }

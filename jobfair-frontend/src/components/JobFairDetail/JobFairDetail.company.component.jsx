@@ -20,7 +20,7 @@ const JobFairDetailCompanyComponent = props => {
       case JOB_FAIR_PLAN_STATUS.DRAFT:
         return <Tag color="gold">{convertEnumToString(status)}</Tag>
       case JOB_FAIR_PLAN_STATUS.REJECT:
-        ;<Card title="Job fair detail" bordered={true} headStyle={{ textAlign: 'center' }} style={{ width: 450 }}>
+        ;<Card title="Job fair detail" bordered={true} headStyle={{ textAlign: 'center' }}>
           <Space direction="vertical">
             <Space size="middle" direction="vertical">
               <Row>
@@ -97,7 +97,7 @@ const JobFairDetailCompanyComponent = props => {
   return (
     <>
       {data ? (
-        <Card title="Job fair detail" bordered={true} headStyle={{ textAlign: 'center' }} style={{ width: 450 }}>
+        <Card title="Job fair detail" bordered={true} headStyle={{ textAlign: 'center' }}>
           <Space direction="vertical">
             <Space size="middle" direction="vertical">
               <Row>
