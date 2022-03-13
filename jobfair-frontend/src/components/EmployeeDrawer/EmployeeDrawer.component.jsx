@@ -9,6 +9,16 @@ const DescriptionItem = ({ title, content }) => (
   </div>
 )
 
+const mappingRole = {
+  COMPANY_EMPLOYEE: 'Company employee',
+  COMPANY_MANAGER: 'Company manager'
+}
+
+const mappingGender = {
+  FEMALE: 'Female',
+  MALE: 'Male'
+}
+
 const EmployeeDrawer = ({ visible, onClose, data }) => {
   if (!data || Object.keys(data).length === 0) {
     return null
@@ -39,10 +49,10 @@ const EmployeeDrawer = ({ visible, onClose, data }) => {
         </Row>
         <Row>
           <Col span={12}>
-            <DescriptionItem title="Gender" content={data.account.gender} />
+            <DescriptionItem title="Gender" content={mappingGender[data.account.gender]} />
           </Col>
           <Col span={12}>
-            <DescriptionItem title="Role" content={data.account.role} />
+            <DescriptionItem title="Role" content={mappingRole[data.account.role]} />
           </Col>
         </Row>
         <Divider />

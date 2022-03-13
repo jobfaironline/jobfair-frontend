@@ -8,14 +8,10 @@ const EmployeeManagementPage = () => {
 
   return (
     <div className="page">
-      <div style={{ padding: '3rem 1rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-          <div>
-            <Typography.Title level={2} style={{ marginBottom: 0 }}>
-              Employees table
-            </Typography.Title>
-          </div>
-          <div style={{ flex: 1, display: 'flex', justifyContent: 'end' }}>
+      <div style={{ padding: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Typography.Title level={2}>Employee management</Typography.Title>
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'end', alignItems: 'center' }}>
             <Button type="primary" onClick={() => history.push(PATH_COMPANY_MANAGER.EMPLOYEE_REGISTER_PAGE)}>
               Create employee account
             </Button>

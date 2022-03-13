@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Select, Button, Form, Input, Popconfirm } from 'antd'
+import { Select, Button, Form, Input, Popconfirm, Card } from 'antd'
 import { EmployeeRegisterValidation } from '../../validate/EmployeeRegisterValidation'
 import { tailFormItemLayout, formItemLayout } from './EmployeeForm.style'
 
@@ -18,62 +18,82 @@ const genderType = [
 
 const EmployeeForm = ({ form, onFinish }) => {
   return (
-    <Form {...formItemLayout} form={form} name="register" onFinish={onFinish} scrollToFirstError>
-      <Form.Item name="email" label="E-mail" rules={EmployeeRegisterValidation.email}>
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        name="firstName"
-        label="First name"
-        tooltip="What do you want others to call you?"
-        rules={EmployeeRegisterValidation.firstName}
+    <Card title="Create employee account form" style={{ width: '40%', margin: '3rem auto' }}>
+      <Form
+        {...formItemLayout}
+        form={form}
+        name="register"
+        onFinish={onFinish}
+        scrollToFirstError
+        layout="vertical"
+        labelCol={21}
+        wrapperCol={21}
       >
-        <Input />
-      </Form.Item>
+        <Form.Item name="email" label="E-mail" rules={EmployeeRegisterValidation.email}>
+          <Input placeholder="Enter your email" />
+        </Form.Item>
 
-      <Form.Item
-        name="middleName"
-        label="Middle name"
-        tooltip="What do you want others to call you?"
-        rules={EmployeeRegisterValidation.middleName}
-      >
-        <Input />
-      </Form.Item>
+        <Form.Item
+          name="firstName"
+          label="First name"
+          tooltip="What do you want others to call you?"
+          rules={EmployeeRegisterValidation.firstName}
+          style={{ display: 'inline-block', width: '30%', marginRight: '1rem' }}
+        >
+          <Input placeholder="Enter your first name" />
+        </Form.Item>
 
-      <Form.Item
-        name="lastName"
-        label="Last name"
-        tooltip="What do you want others to call you?"
-        rules={EmployeeRegisterValidation.lastName}
-      >
-        <Input />
-      </Form.Item>
+        <Form.Item
+          name="middleName"
+          label="Middle name"
+          tooltip="What do you want others to call you?"
+          rules={EmployeeRegisterValidation.middleName}
+          style={{ display: 'inline-block', width: '30%', marginRight: '1rem' }}
+        >
+          <Input placeholder="Enter your middle name" />
+        </Form.Item>
 
-      <Form.Item name="phone" label="Phone Number" rules={EmployeeRegisterValidation.phone}>
-        <Input
-          style={{
-            width: '100%'
-          }}
-        />
-      </Form.Item>
+        <Form.Item
+          name="lastName"
+          label="Last name"
+          tooltip="What do you want others to call you?"
+          rules={EmployeeRegisterValidation.lastName}
+          style={{ display: 'inline-block', width: '30%', marginRight: '1rem' }}
+        >
+          <Input placeholder="Enter your last name" />
+        </Form.Item>
 
-      <Form.Item name="gender" label="Gender" rules={EmployeeRegisterValidation.gender}>
-        <Select defaultValue="MALE" placeholder="select your gender">
-          {genderType.map(gender => {
-            return <Option value={gender.value}>{gender.title}</Option>
-          })}
-        </Select>
-      </Form.Item>
+        <Form.Item
+          name="phone"
+          label="Phone Number"
+          rules={EmployeeRegisterValidation.phone}
+          style={{ display: 'inline-block', width: '45%', marginRight: '1rem' }}
+        >
+          <Input placeholder="Enter your phone number" />
+        </Form.Item>
 
-      <Form.Item {...tailFormItemLayout}>
-        <Popconfirm title="Are you sure？" okText="Yes" cancelText="No" onConfirm={() => form.submit()}>
-          <Button type="primary" htmlType="submit">
-            Register
-          </Button>
-        </Popconfirm>
-      </Form.Item>
-    </Form>
+        <Form.Item
+          name="gender"
+          label="Gender"
+          rules={EmployeeRegisterValidation.gender}
+          style={{ display: 'inline-block', width: '20%' }}
+        >
+          <Select defaultValue="MALE" placeholder="select your gender">
+            {genderType.map(gender => {
+              return <Option value={gender.value}>{gender.title}</Option>
+            })}
+          </Select>
+        </Form.Item>
+
+        <Form.Item wrapperCol={{ offset: 21 }}>
+          <Popconfirm title="Are you sure？" okText="Yes" cancelText="No" onConfirm={() => form.submit()}>
+            <Button type="primary" htmlType="submit">
+              Register
+            </Button>
+          </Popconfirm>
+        </Form.Item>
+      </Form>
+    </Card>
   )
 }
 

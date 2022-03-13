@@ -5,7 +5,7 @@ import {
   deleteEmployeeAPI,
   getEmployeesAPI
 } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
-import { Space, notification, Popconfirm } from 'antd'
+import { Space, notification, Popconfirm, Button } from 'antd'
 import { useSelector } from 'react-redux'
 
 const EmployeeTable = ({ extra }) => {
@@ -70,11 +70,13 @@ const EmployeeTable = ({ extra }) => {
 
   return (
     <div>
-      <EmployeeDrawer
-        drawerVisibility={drawerVisibility}
-        setDrawerVisibility={setDrawerVisibility}
-        employeeId={neededEmployee}
-      />
+      {neededEmployee != null ? (
+        <EmployeeDrawer
+          drawerVisibility={drawerVisibility}
+          setDrawerVisibility={setDrawerVisibility}
+          employeeId={neededEmployee}
+        />
+      ) : null}
       <EmployeeTableComponent
         employeeData={employeeData}
         editable
@@ -99,7 +101,9 @@ const EmployeeTable = ({ extra }) => {
                     handleDelete(record.id)
                   }}
                 >
-                  <a href="#">Delete</a>
+                  <Button type="link" disabled={record.status == 'INACTIVE'}>
+                    Delete
+                  </Button>
                 </Popconfirm>
               </Space>
             )
