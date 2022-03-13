@@ -209,13 +209,13 @@ const ConfirmComponent = props => {
                                 <Col>
                                   <div>
                                     <div key="description">
-                                      <Space align="start" direction="vertical">
+                                      <Space align="start" direction="vertical" size={0}>
                                         <Text strong>Job description: </Text>
                                         <Text>{item.description}</Text>
                                       </Space>
                                     </div>
                                     <div key="requirement">
-                                      <Space align="start" direction="vertical">
+                                      <Space align="start" direction="vertical" size={0}>
                                         <Text strong>Job requirements: </Text>
                                         <Text>{item.requirements}</Text>
                                       </Space>
