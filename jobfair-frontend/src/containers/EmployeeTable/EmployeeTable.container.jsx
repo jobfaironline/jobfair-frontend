@@ -70,11 +70,13 @@ const EmployeeTable = ({ extra }) => {
 
   return (
     <div>
-      <EmployeeDrawer
-        drawerVisibility={drawerVisibility}
-        setDrawerVisibility={setDrawerVisibility}
-        employeeId={neededEmployee}
-      />
+      {neededEmployee != null ? (
+        <EmployeeDrawer
+          drawerVisibility={drawerVisibility}
+          setDrawerVisibility={setDrawerVisibility}
+          employeeId={neededEmployee}
+        />
+      ) : null}
       <EmployeeTableComponent
         employeeData={employeeData}
         editable
