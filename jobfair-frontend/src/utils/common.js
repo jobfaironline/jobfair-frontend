@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment'
 
 export const contains = (list, listCurrent) => {
   var result = false
@@ -40,22 +40,24 @@ export const getBase64 = file => {
 }
 
 export const convertToDateString = dateValue => {
-  const date = new Date(dateValue)
-  return date.toISOString()
+  return new Date(dateValue).toISOString().replace(/T.*/,'').split('-').reverse().join('-')
 }
 
 export const convertToDateValue = dateString => {
   return Date.parse(dateString)
 }
 
-export const convertToMoment = (data) => {
-  const result =  data.map(item => {
+export const convertToMoment = data => {
+  const result = data.map(item => {
     return {
       ...item,
-      range : [moment(convertToDateString(item.fromDate)), moment(convertToDateString(item.toDate))]
+      range: [
+        moment(convertToDateString(item.fromDate)),
+        moment(convertToDateString(item.toDate))
+      ]
     }
   })
-  return result;
+  return result
 }
 
 //attendantProfileForm.container.jsx
@@ -64,8 +66,20 @@ export const handleConvertRangePicker = data => {
     return {
       ...item,
       fromDate: convertToDateValue(item.range[0].format()),
-      toDate: convertToDateValue(item.range[1].format()),
+      toDate: convertToDateValue(item.range[1].format())
     }
   })
   return result
 }
+
+//convert enum status to string
+export const convertEnumToString = (data) => {
+  const arr = data.split('_') //['INTERN', 'SHIP', 'STUDENT']
+  const result = arr
+      .map(item => item.toString().toLowerCase())
+      .map(item => item[0].toUpperCase() + item.slice(1))
+      .join(' ');
+  return result;
+}
+
+//

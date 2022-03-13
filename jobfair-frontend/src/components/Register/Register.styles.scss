@@ -1,0 +1,31 @@
+.input-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.register,
+.login,
+.forgot-password {
+  margin-bottom: 0.2rem;
+}
+
+.register-container {
+  .ant-btn {
+    width: 100%;
+  }
+  .input-container .ant-col-rtl .login-form-forgot {
+    float: left;
+  }
+}
+
+.login-text {
+  text-align: center;
+  height: fit-content;
+  .ant-btn {
+    display: inline;
+    width: auto;
+    flex: 1;
+    padding: 0;
+  }
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { getEmployeesAPI } from '../../services/companyEmployeeService'
+import { getEmployeesAPI } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
 import { useSelector } from 'react-redux'
 import { notification, Spin } from 'antd'
 import EmployeeDrawerComponent from '../../components/EmployeeDrawer/EmployeeDrawer.component'

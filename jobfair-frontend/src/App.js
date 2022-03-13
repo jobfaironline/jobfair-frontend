@@ -5,15 +5,19 @@ import store from './redux-flow/index'
 import 'antd/dist/antd.min.css'
 import './App.css'
 import AppRouter from './router/AppRouter'
+import ErrorHandlerComponent from './components/ErrorHandler/ErrorHandler.component'
+import 'animate.css'
 
 function App() {
   return (
     <BrowserRouter>
-      <Provider store={store}>
-        <Suspense fallback="loading">
-          <AppRouter />
-        </Suspense>
-      </Provider>
+      <ErrorHandlerComponent>
+        <Provider store={store}>
+          <Suspense fallback="loading">
+            <AppRouter />
+          </Suspense>
+        </Provider>
+      </ErrorHandlerComponent>
     </BrowserRouter>
   )
 }

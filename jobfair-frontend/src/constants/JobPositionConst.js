@@ -453,3 +453,18 @@ export const LanguageConst = [
     value: 'Zulu'
   }
 ]
+
+export const EvaluateConst = [
+  {
+    id: 'APPROVE',
+    name: 'Approve'
+  },
+  {
+    id: 'REJECT',
+    name: 'Reject'
+  },
+  {
+    id: 'REQUEST_CHANGE',
+    name: 'Request change'
+  }
+]

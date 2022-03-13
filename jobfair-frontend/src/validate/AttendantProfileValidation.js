@@ -1,7 +1,6 @@
-import { DateFormat, MinimumDateOfBirth, REGEX_EMAIL } from '../constants/ApplicationConst'
+import { MinimumDateOfBirth } from '../constants/ApplicationConst'
 import { PHONE_REGEX } from '../constants/RegexConstant'
 import moment from 'moment'
-import { convertToDateString } from '../utils/common'
 
 export const AttendantProfileValidation = {
   account: {

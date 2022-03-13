@@ -1,3 +1,11 @@
+* {
+  padding: 0;
+
+  margin: 0;
+
+  border: none;
+}
+
 body {
   font-size: 16px;
   line-height: 1.6;
@@ -56,7 +64,7 @@ Navbar
 
 .Navbar .ant-menu li.ant-menu-item:before,
 .Navbar .ant-menu li.ant-menu-item:after {
-  content: "";
+  content: '';
   width: 1px;
   position: absolute;
   top: 2px;
@@ -71,8 +79,41 @@ home
 ----
 */
 .home {
-  background: url("assets/images/bg-hero.jpg") no-repeat;
+  background: url('assets/images/bg-hero.jpg') no-repeat;
   background-position: 50% 100%;
   background-size: cover;
   height: 100vh;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+}
+
+.page {
+  flex: 1;
+  padding-top: 80px; /*change this when navbar height is changed */
+}
+
+.leftside-container {
+  flex: 1;
+  min-width: 500px;
+  width: 40vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.rightside-container {
+  width: 60vw;
+  overflow: hidden;
+  background: #c33764; /* fallback colour. Make sure this is just one solid colour. */
+  background: -webkit-linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8));
+  background: linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8)); /* The least supported option. */
+}
+
+.rightside-container img {
+  object-fit: contain;
+  opacity: 0.4;
 }
