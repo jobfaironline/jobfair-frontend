@@ -12,6 +12,7 @@ import ConfirmContainer from '../Confirm/Confirm.container'
 import JobfairRegistrationFormComponent from '../../components/JobfairRegistrationForm/JobfairRegistrationForm.component'
 import { PATH } from '../../constants/Paths/Path'
 import { setFormBody } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
+import JobFairDetailCompanyContainer from '../JobFairDetail/JobFairDetail.company.container'
 const { Step } = Steps
 const JobfairRegistrationForm = () => {
   const { jobfairId } = useParams()
@@ -147,7 +148,7 @@ const JobfairRegistrationForm = () => {
                       cancelText="No"
                     >
                       <Button size="large" type="primary">
-                        Submit
+                        Register
                       </Button>
                     </Popconfirm>
                   </div>
@@ -157,6 +158,7 @@ const JobfairRegistrationForm = () => {
           </div>
         ) : null}
       </div>
+      <JobFairDetailCompanyContainer id={jobfairId} />
     </div>
   )
 }
