@@ -10,7 +10,6 @@ const ApprovalRegistrationComponent = ({data, extra}) => {
     const [searchText, setSearchText] = useState('')
     const [searchedColumn, setSearchedColumn] = useState('')
 
-
     if (data === undefined || data === null ) {
         return <Spin size="large"/>
     }

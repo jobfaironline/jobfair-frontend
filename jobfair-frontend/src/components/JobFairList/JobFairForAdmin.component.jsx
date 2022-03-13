@@ -94,6 +94,7 @@ const JobFairForAdminComponent = (props) => {
              dataSource={data}
              pagination={false}
              scroll={{y: 240}}
+             bordered={true}
       />
     </>
   );

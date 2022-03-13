@@ -1,7 +1,7 @@
 import React from 'react';
 import {Tag} from "antd";
 
-const ApprovalRegistrationColumn = getColumnSearchProps => {
+const ApprovalRegistrationColumn = (getColumnSearchProps) => {
     return [
         {
             title: 'No',
@@ -22,12 +22,6 @@ const ApprovalRegistrationColumn = getColumnSearchProps => {
             dataIndex: 'companyName',
             key: 'companyName',
             ...getColumnSearchProps('companyName')
-        },
-        {
-            title: 'Job fair name',
-            dataIndex: 'jobFairName',
-            key: 'jobFairName',
-            ...getColumnSearchProps('jobFairName')
         },
         {
             title: 'Create date',

@@ -66,3 +66,10 @@ export const getJobFairIncomingForAdmin = (offset, pageSize) => CallAPI(
     pageSize: pageSize
   }
 )
+
+export const getJobFairDetailAPI = (id) => CallAPI(
+  `${ENDPOINT_JOB_FAIR}/${id}`,
+  'GET',
+  {},
+  {}
+)
