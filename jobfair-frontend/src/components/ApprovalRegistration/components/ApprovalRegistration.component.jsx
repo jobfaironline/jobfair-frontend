@@ -5,7 +5,7 @@ import Highlighter from "react-highlight-words";
 import ApprovalRegistrationColumn from "../columns/ApprovalRegistration.column";
 import {useHistory} from "react-router-dom";
 
-const ApprovalRegistrationComponent = ({data, extra}) => {
+const ApprovalRegistrationComponent = ({data, extra, jobFairId}) => {
 
     const [searchText, setSearchText] = useState('')
     const [searchedColumn, setSearchedColumn] = useState('')
@@ -82,7 +82,7 @@ const ApprovalRegistrationComponent = ({data, extra}) => {
         ) : (text)
     })
 
-    const defaultColumns = ApprovalRegistrationColumn(getColumnSearchProps)
+    const defaultColumns = ApprovalRegistrationColumn(getColumnSearchProps, jobFairId)
 
     const finalColumns = extra ? [...defaultColumns, extra] : [...defaultColumns]
 

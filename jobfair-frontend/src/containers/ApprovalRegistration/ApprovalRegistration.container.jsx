@@ -77,6 +77,7 @@ const ApprovalRegistrationContainer = () => {
     <>
       <ApprovalRegistrationComponent
         data={data}
+        jobFairId={jobFairId}
         editable
         extra={{
           title: 'Actions',
