@@ -1,8 +1,10 @@
 import React from 'react';
 import {Tag} from "antd";
 import {convertEnumToString} from "../../utils/common";
+import {handleFilterStatus} from "../../utils/filterJobFairByStatus";
 
-const JobFairForAdminColumn = (getColumnSearchProps) => {
+const JobFairForAdminColumn = (getColumnSearchProps, key) => {
+
     return [
         {
             title: 'No.',
@@ -60,40 +62,7 @@ const JobFairForAdminColumn = (getColumnSearchProps) => {
             title: 'Status',
             key: 'status',
             dataIndex: 'status',
-            filters: [
-                {
-                    text: 'Closed',
-                    value: 'CLOSED'
-                },
-                {
-                    text: 'Happening',
-                    value: 'HAPPENING'
-                },
-                {
-                    text: 'Attendant register',
-                    value: 'ATTENDANT_REGISTER'
-                },
-                {
-                    text: 'Company buy booth',
-                    value: 'COMPANY_BUY_BOOTH'
-                },
-                {
-                    text: 'Company register',
-                    value: 'COMPANY_REGISTER'
-                },
-                {
-                    text: 'Not yet',
-                    value: 'NOT_YET'
-                },
-                {
-                    text: 'Processing',
-                    value: 'PROCESSING'
-                },
-                {
-                    text: 'Unavailable',
-                    value: 'UNAVAILABLE'
-                },
-            ],
+            filters: handleFilterStatus(key),
             onFilter: (value, record) => {
                 return record.status === value
             },

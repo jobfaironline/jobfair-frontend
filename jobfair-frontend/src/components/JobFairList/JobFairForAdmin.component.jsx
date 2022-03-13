@@ -8,7 +8,15 @@ const JobFairForAdminComponent = (props) => {
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchedColumn] = useState('')
 
+  const handleGetStatus = (data) => {
+    return data.find(item => item.key !== undefined)
+  }
   const {data, extra} = props
+  const result = handleGetStatus(data)
+  let key = ''
+  if (result !== undefined) {
+     key = result.key
+  }
 
 
   if (data === undefined || data === null) {
@@ -77,7 +85,7 @@ const JobFairForAdminComponent = (props) => {
       ) : (text)
   })
 
-  const defaultColumns = JobFairForAdminColumn(getColumnSearchProps)
+  const defaultColumns = JobFairForAdminColumn(getColumnSearchProps, key)
 
   const finalColumns = extra ? [...defaultColumns, extra] : [...defaultColumns]
   return (
@@ -86,6 +94,7 @@ const JobFairForAdminComponent = (props) => {
              dataSource={data}
              pagination={false}
              scroll={{y: 240}}
+             bordered={true}
       />
     </>
   );
