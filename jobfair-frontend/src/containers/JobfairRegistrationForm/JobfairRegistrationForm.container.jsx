@@ -230,7 +230,6 @@ const onCreateDraft = async body => {
       description: `Created draft successfully`,
       duration: 2
     })
-    console.log(res)
     return res.data.companyRegistrationId
   } catch (err) {
     notification['error']({
