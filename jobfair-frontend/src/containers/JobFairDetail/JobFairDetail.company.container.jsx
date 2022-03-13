@@ -7,7 +7,6 @@ const JobFairDetailCompanyContainer = props => {
   const getJobFairDetail = async () => {
     getJobFairPlanById(id)
       .then(res => {
-        console.log(res.data)
         setJobFairDetailData(res.data)
       })
       .catch(err => {

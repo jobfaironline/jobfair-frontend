@@ -16,17 +16,13 @@ const AnchorComponent = props => {
         {isOpen ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </Button>
 
-      <Drawer
-        anchor={'left'}
-        open={isOpen}
-        onClose={() => handleOnOpenMenu(false)}
-      >
+      <Drawer anchor={'left'} open={isOpen} onClose={() => handleOnOpenMenu(false)}>
         {
           <div style={{ padding: '10px', marginTop: '10px' }}>
             <Anchor targetOffset={300} onClick={e => e.preventDefault()}>
               <Link href={href} title={title} />
               {listData.map((jobPosition, index) => {
-                return <Link href={`#p${index}`} title={`${index}: ${jobPosition.title}`} />
+                return <Link href={`#p${index + 1}`} title={`${index + 1}: ${jobPosition.title}`} />
               })}
             </Anchor>
           </div>

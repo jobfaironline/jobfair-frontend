@@ -20,6 +20,71 @@ const JobFairDetailCompanyComponent = props => {
       case JOB_FAIR_PLAN_STATUS.DRAFT:
         return <Tag color="gold">{convertEnumToString(status)}</Tag>
       case JOB_FAIR_PLAN_STATUS.REJECT:
+        ;<Card title="Job fair detail" bordered={true} headStyle={{ textAlign: 'center' }} style={{ width: 450 }}>
+          <Space direction="vertical">
+            <Space size="middle" direction="vertical">
+              <Row>
+                <Col span={24}>
+                  <Text strong>Job fair name: </Text>
+                  <Text italic>{data?.name}</Text>
+                </Col>
+                <Col span={24}>
+                  <Text strong>Description: </Text>
+                  <Text italic>{data?.description}</Text>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <Text strong>Status: </Text>
+                  {handleStatusTag(data?.status)}
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <Text strong>Job fair time: </Text>
+                  <Text italic>
+                    {convertToDateString(data?.startTime)} {'->'}
+                    {convertToDateString(data?.endTime)}
+                  </Text>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <Text strong>Company register time: </Text>
+                  <Text italic>
+                    {convertToDateString(data?.companyRegisterStartTime)} {'->'}
+                    {convertToDateString(data?.companyRegisterEndTime)}
+                  </Text>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <Text strong>Company buy booth time: </Text>
+                  <Text italic>
+                    {convertToDateString(data?.companyBuyBoothStartTime)} {'->'}
+                    {convertToDateString(data?.companyBuyBoothEndTime)}
+                  </Text>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <Text strong>Estimated number of participants: </Text>
+                  <Text italic>{data?.estimateParticipant}</Text>
+                </Col>
+                <Col span={24}>
+                  <Text strong>Target company: </Text>
+                  <Text italic>{data?.targetCompany}</Text>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={16}>
+                  <Text strong>Target attendant: </Text>
+                  <Text italic>{data?.targetAttendant}</Text>
+                </Col>
+              </Row>
+            </Space>
+          </Space>
+        </Card>
         return <Tag color="red">{convertEnumToString(status)}</Tag>
       case JOB_FAIR_PLAN_STATUS.DELETED:
         return <Tag color="volcano">{convertEnumToString(status)}</Tag>
@@ -53,38 +118,32 @@ const JobFairDetailCompanyComponent = props => {
               </Row>
               <Row>
                 <Col span={24}>
-                  <Text strong>Job fair start time: </Text>
-                  <Text italic>{convertToDateString(data?.startTime)}</Text>
-                </Col>
-                <Col span={24}>
-                  <Text strong>Job fair end time: </Text>
-                  <Text italic>{convertToDateString(data?.endTime)}</Text>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={24}>
-                  <Text strong>Attendant register time: </Text>
-                  <Text italic>{convertToDateString(data?.attendantRegisterStartTime)}</Text>
+                  <Text strong>Job fair time: </Text>
+                  <Text italic>
+                    {convertToDateString(data?.startTime)}
+                    {' -> '}
+                    {convertToDateString(data?.endTime)}
+                  </Text>
                 </Col>
               </Row>
               <Row>
                 <Col span={24}>
-                  <Text strong>Company register start time: </Text>
-                  <Text italic>{convertToDateString(data?.companyRegisterStartTime)}</Text>
-                </Col>
-                <Col span={24}>
-                  <Text strong>Company register end time: </Text>
-                  <Text italic>{convertToDateString(data?.companyRegisterEndTime)}</Text>
+                  <Text strong>Company register time: </Text>
+                  <Text italic>
+                    {convertToDateString(data?.companyRegisterStartTime)}
+                    {' -> '}
+                    {convertToDateString(data?.companyRegisterEndTime)}
+                  </Text>
                 </Col>
               </Row>
               <Row>
                 <Col span={24}>
-                  <Text strong>Company buy booth start time: </Text>
-                  <Text italic>{convertToDateString(data?.companyBuyBoothStartTime)}</Text>
-                </Col>
-                <Col span={24}>
-                  <Text strong>Company buy booth end time: </Text>
-                  <Text italic>{convertToDateString(data?.companyBuyBoothEndTime)}</Text>
+                  <Text strong>Company buy booth time: </Text>
+                  <Text italic>
+                    {convertToDateString(data?.companyBuyBoothStartTime)}
+                    {' -> '}
+                    {convertToDateString(data?.companyBuyBoothEndTime)}
+                  </Text>
                 </Col>
               </Row>
               <Row>

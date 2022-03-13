@@ -148,7 +148,7 @@ const JobfairRegistrationForm = () => {
                       cancelText="No"
                     >
                       <Button size="large" type="primary">
-                        Submit
+                        Register
                       </Button>
                     </Popconfirm>
                   </div>

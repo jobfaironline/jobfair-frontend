@@ -16,7 +16,7 @@ const ConfirmComponent = props => {
     <>
       <div style={{ position: 'fixed', left: '0.8rem', top: '200px' }}>
         <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Registration</Typography>
-        <AnchorComponent listData={data.jobPositions} href={'#company-information'} title={'Company info'}/>
+        <AnchorComponent listData={data.jobPositions} href={'#company-information'} title={'Company info'} />
       </div>
       <div className="confirm-form-container">
         <div className="site-card-wrapper">
@@ -86,7 +86,7 @@ const ConfirmComponent = props => {
                 <Typography>
                   <Paragraph>
                     {data.jobPositions.map((item, index) => (
-                      <div id={`p${index}`}>
+                      <div id={`p${index + 1}`}>
                         <div key="no" style={{ marginBottom: '0.8rem' }}>
                           <Text strong style={{ fontSize: '1.6rem' }}>
                             Job position: {item.title}
@@ -98,26 +98,15 @@ const ConfirmComponent = props => {
                           </div>
                         </div>
                         <div style={{ marginLeft: '1rem' }}>
-                          <div className="sub-title" style={{ marginBottom: '0.2rem' }}>
-                            <Text strong style={{ fontSize: '1.4rem' }}>
-                              Specific jobfair's information
-                            </Text>
-                          </div>
                           <div style={{ marginLeft: '1rem' }}>
-                            <div key="description">
-                              <Space>
-                                <Text strong>Job description: </Text>
-                                <Text>{item.description}</Text>
-                              </Space>
-                            </div>
-                            <div key="requirement">
-                              <Space>
-                                <Text strong>Job requirement: </Text>
-                                <Text>{item.requirement}</Text>
-                              </Space>
-                            </div>
                             <Row gutter={[100, 0]}>
-                              <Col span={8} key="salary-range">
+                              <Col span={12} key="numOfPosition">
+                                <Space>
+                                  <Text strong>Available position:</Text>
+                                  <Text>{item.numberOfPosition} slot(s)</Text>
+                                </Space>
+                              </Col>
+                              <Col span={8} key="salary-range" style={{ marginLeft: '-20%' }}>
                                 <Space>
                                   <Text strong>Min salary: </Text>
                                   <Text>{item.minSalary}</Text>
@@ -128,12 +117,6 @@ const ConfirmComponent = props => {
                                       <Text>{item.maxSalary}</Text>
                                     </>
                                   ) : null}
-                                </Space>
-                              </Col>
-                              <Col span={12} key="numOfPosition">
-                                <Space>
-                                  <Text strong>Available position:</Text>
-                                  <Text>{item.numberOfPosition} slot(s)</Text>
                                 </Space>
                               </Col>
                             </Row>
@@ -162,30 +145,6 @@ const ConfirmComponent = props => {
                                   <Text>{item.language}</Text>
                                 </Space>
                               </div>
-                              <div key="skills">
-                                <Space>
-                                  <Text strong>Required skills: </Text>
-                                  {item.skillTagDTOS.map(skill => {
-                                    return (
-                                      <Tag color="blue" style={{ fontSize: '0.9rem', padding: '0.1rem 0.3rem' }}>
-                                        {skill.name}
-                                      </Tag>
-                                    )
-                                  })}
-                                </Space>
-                              </div>
-                              <div key="category">
-                                <Space>
-                                  <Text strong>Category: </Text>
-                                  {item.subCategoryDTOs.map(category => {
-                                    return (
-                                      <Tag color="blue" style={{ fontSize: '0.9rem', padding: '0.1rem 0.3rem' }}>
-                                        {category.name}
-                                      </Tag>
-                                    )
-                                  })}
-                                </Space>
-                              </div>
                               <Row gutter={[100, 0]}>
                                 <Col span={8} key="level">
                                   <Space>
@@ -204,7 +163,7 @@ const ConfirmComponent = props => {
                                 <Col span={8}>
                                   <div key="contact-name">
                                     <Space>
-                                      <Text strong>Contact:</Text>
+                                      <Text strong>Contact Person:</Text>
                                       <Text>{item.contactPersonName}</Text>
                                     </Space>
                                   </div>
@@ -212,8 +171,48 @@ const ConfirmComponent = props => {
                                 <Col span={12}>
                                   <div key="contact-email">
                                     <Space>
-                                      <Text strong>Contact:</Text>
+                                      <Text strong>Contact Email:</Text>
                                       <Text>{item.contactEmail}</Text>
+                                    </Space>
+                                  </div>
+                                </Col>
+                                <Col>
+                                  <div key="skills">
+                                    <Space>
+                                      <Text strong>Required skills: </Text>
+                                      {item.skillTagDTOS.map(skill => {
+                                        return (
+                                          <Tag color="blue" style={{ fontSize: '0.9rem', padding: '0.1rem 0.3rem' }}>
+                                            {skill.name}
+                                          </Tag>
+                                        )
+                                      })}
+                                    </Space>
+                                  </div>
+                                  <div key="category">
+                                    <Space>
+                                      <Text strong>Category: </Text>
+                                      {item.subCategoryDTOs.map(category => {
+                                        return (
+                                          <Tag color="blue" style={{ fontSize: '0.9rem', padding: '0.1rem 0.3rem' }}>
+                                            {category.name}
+                                          </Tag>
+                                        )
+                                      })}
+                                    </Space>
+                                  </div>
+                                </Col>
+                                <Col>
+                                  <div key="description">
+                                    <Space align="start" direction="vertical">
+                                      <Text strong>Description: </Text>
+                                      <Text>{item.description}</Text>
+                                    </Space>
+                                  </div>
+                                  <div key="requirement" style={{ marginTop: '1rem' }}>
+                                    <Space align="start" direction="vertical">
+                                      <Text strong>Requirements: </Text>
+                                      <Text>{item.requirements}</Text>
                                     </Space>
                                   </div>
                                 </Col>
