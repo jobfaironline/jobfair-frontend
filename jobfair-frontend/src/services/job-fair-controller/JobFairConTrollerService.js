@@ -79,11 +79,4 @@ export const getJobFairIncomingForAdmin = (offset, pageSize) => CallAPI(
   }
 )
 
-export const getJobFairDetailAPI = (id) => CallAPI(
-  `${ENDPOINT_JOB_FAIR}/${id}`,
-  'GET',
-  {},
-  {}
-)
-
 export const getJobFairPlanById = id => CallAPI(`${ENDPOINT_JOB_FAIR}/${id}`, 'GET')

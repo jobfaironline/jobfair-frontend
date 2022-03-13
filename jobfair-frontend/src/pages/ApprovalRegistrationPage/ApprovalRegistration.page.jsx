@@ -3,7 +3,7 @@ import ApprovalRegistrationContainer from "../../containers/ApprovalRegistration
 import {Breadcrumb, Divider, notification, PageHeader, Typography} from 'antd';
 import {HomeOutlined, UnorderedListOutlined} from "@ant-design/icons";
 import {useHistory, useParams} from "react-router-dom";
-import {getJobFairDetailAPI} from "../../services/job-fair-controller/JobFairConTrollerService";
+import {getJobFairPlanById} from "../../services/job-fair-controller/JobFairConTrollerService";
 
 const {Text, Title} = Typography
 
@@ -26,7 +26,7 @@ const ApprovalRegistrationPage = props => {
   }
 
   const getJobFairDetail = async (jobFairId) => {
-    getJobFairDetailAPI(jobFairId)
+    getJobFairPlanById(jobFairId)
       .then(res => {
         setJobFairDescription(res.data.description)
       }).catch(err => {
