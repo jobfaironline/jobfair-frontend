@@ -112,12 +112,6 @@ const JobFairDetailCompanyComponent = props => {
               </Row>
               <Row>
                 <Col span={24}>
-                  <Text strong>Status: </Text>
-                  {handleStatusTag(data?.status)}
-                </Col>
-              </Row>
-              <Row>
-                <Col span={24}>
                   <Text strong>Job fair time: </Text>
                   <Text italic>
                     {convertToDateString(data?.startTime)}

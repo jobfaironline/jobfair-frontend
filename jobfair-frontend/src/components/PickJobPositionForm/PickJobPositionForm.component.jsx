@@ -36,7 +36,7 @@ const PickJobPositionForm = props => {
                     <div id={`${key}-job-position`} key={key} style={{ width: '100%', display: 'flex' }}>
                       <div className="job-position-input-container ">
                         <div className="job-position-row-container">
-                          <Typography style={{ fontSize: '1.5rem' }}>Job position's title: </Typography>
+                          <Typography style={{ fontSize: '1.5rem' }}>Job position: </Typography>
                           <Form.Item {...restField} name={[name, 'title']}>
                             <Input
                               disabled

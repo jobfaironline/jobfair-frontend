@@ -23,7 +23,7 @@ const JobfairRegistrationForm = () => {
   const [form] = Form.useForm() //form for registration
   const companyId = useSelector(state => state.authentication.user.companyId)
   const [agreeStatus, setAgreeStatus] = useState(false)
-  const [companyInfo, setCompanyInfo] = useState({}) //TODO: check this later with Bao Huynh new code to remove
+  const [companyInfo, setCompanyInfo] = useState({})
 
   //management step
   const [currentStep, setCurrentStep] = useState(0)
@@ -54,25 +54,19 @@ const JobfairRegistrationForm = () => {
 
   const stepComponentList = [
     <>
-      <div className="jobfair-registration-form-container">
+      <div style={{ width: '70%', margin: '3rem auto' }}>
         <JobFairDetailCompanyContainer id={jobfairId} />
       </div>
     </>,
     <>
-      <div className="jobfair-registration-form-container">
-        <PolicyComponent />
-        <Checkbox checked={agreeStatus} onChange={e => setAgreeStatus(e.target.checked)}>
-          I have read and accept the Job fair Policy
-        </Checkbox>
-      </div>
+      <PolicyComponent />
+      <Checkbox checked={agreeStatus} onChange={e => setAgreeStatus(e.target.checked)}>
+        I have read and accept the Job fair Policy
+      </Checkbox>
     </>,
-    <div className="jobfair-registration-form-container">
-      <JobfairRegistrationFormComponent form={form} />
-    </div>,
+    <JobfairRegistrationFormComponent form={form} />,
     <>
-      <div className="jobfair-registration-form-container">
-        <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
-      </div>
+      <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
     </>
   ]
 
@@ -84,9 +78,20 @@ const JobfairRegistrationForm = () => {
         }
       case 2:
         return () => {
-          form.validateFields().then(res => {
-            setCurrentStep(currentStep + 1)
-          })
+          form
+            .validateFields()
+            .then(res => {
+              setCurrentStep(currentStep + 1)
+            })
+            .catch(err => {
+              const errorsArray = form.getFieldsError()
+              for (const error of errorsArray) {
+                if (error.errors.length > 0) {
+                  form.scrollToField(error.name, { behavior: 'smooth', block: 'center' })
+                  break
+                }
+              }
+            })
         }
       default:
         return () => setCurrentStep(currentStep + 1)
@@ -99,53 +104,67 @@ const JobfairRegistrationForm = () => {
 
   return (
     <div>
-      <Steps current={currentStep} style={{ marginBottom: '3rem' }}>
-        <Step title="Job fair's details" />
-        <Step title="Our policy" />
-        <Step title="Jobfair registration form" />
-        <Step title="Confirm registration" />
-      </Steps>
-      {stepComponentList[currentStep]}
-      <div className="step-buttons">
-        <div className="pre-step-button">
-          <Form.Item>
-            <Button
-              size="large"
-              type="primary"
-              onClick={() => {
-                setCurrentStep(currentStep - 1)
-              }}
-            >
-              Prev
-            </Button>
-          </Form.Item>
-        </div>
-        <div className="next-step-button">
-          <Form.Item>
-            <div className="submit-registration-popconfirm">
-              {currentStep == 3 ? (
-                <Popconfirm
-                  title="Are you sure to submit this form?"
-                  onConfirm={nextStepButtonActions(currentStep)}
-                  okText="Yes"
-                  cancelText="No"
-                >
-                  <Button size="large" type="primary">
-                    Register
-                  </Button>
-                </Popconfirm>
-              ) : (
+      <div className="jobfair-registration-form-container" style={{ background: '#FFF' }}>
+        <Steps
+          current={currentStep}
+          style={{
+            marginBottom: '3rem',
+            position: 'sticky',
+            top: '80px',
+            background: '#FFF',
+            zIndex: '1000',
+            padding: '1rem'
+          }}
+        >
+          <Step title="Job fair's details" />
+          <Step title="Our policy" />
+          <Step title="Jobfair registration form" />
+          <Step title="Confirm registration" />
+        </Steps>
+        {stepComponentList[currentStep]}
+        <div className="step-buttons">
+          {currentStep != 0 ? (
+            <div className="pre-step-button">
+              <Form.Item>
                 <Button
                   size="large"
                   type="primary"
-                  onClick={nextStepButtonActions(currentStep)}
-                  disabled={currentStep == 1 && !agreeStatus}
+                  onClick={() => {
+                    setCurrentStep(currentStep - 1)
+                  }}
                 >
-                  Next
+                  Prev
                 </Button>
-              )}
+              </Form.Item>
             </div>
-          </Form.Item>
+          ) : null}
+          <div className="next-step-button">
+            <Form.Item>
+              <div className="submit-registration-popconfirm">
+                {currentStep == 3 ? (
+                  <Popconfirm
+                    title="Are you sure to submit this form?"
+                    onConfirm={nextStepButtonActions(currentStep)}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <Button size="large" type="primary">
+                      Register
+                    </Button>
+                  </Popconfirm>
+                ) : (
+                  <Button
+                    size="large"
+                    type="primary"
+                    onClick={nextStepButtonActions(currentStep)}
+                    disabled={currentStep == 1 && !agreeStatus}
+                  >
+                    Next
+                  </Button>
+                )}
+              </div>
+            </Form.Item>
+          </div>
         </div>
       </div>
     </div>

@@ -1,10 +1,10 @@
 import React from 'react'
-import {Route, Switch} from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import AttendantRouter from './components/AttendantRouter'
 import AttendantProfile from '../pages/ProfilePage/Attendant/AttendantProfilePage'
 import CompanyManagerRouter from './components/CompanyManagerRouter'
-import {ResultSuccessPage} from '../pages/ResultPage/ResultSuccessPage'
-import {ChooseBoothPage} from '../pages/ChooseBoothPage/ChooseBoothPage'
+import { ResultSuccessPage } from '../pages/ResultPage/ResultSuccessPage'
+import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage'
 import JobFairListPage from '../pages/JobFairListPage/JobFairList.page'
 import JobFairsPage from '../pages/JobFairsPage/JobFairsPage'
 import ContractsPage from '../pages/ContractsPage/ContractsPage'
@@ -47,176 +47,175 @@ import {
   PATH_COMPANY_MANAGER,
   PATH_STAFF
 } from '../constants/Paths/Path'
-import ChangePasswordPage from "../pages/ChangePasswordPage/ChangePasswordPage";
+import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
 
 const AppRouter = () => {
   return (
     <>
-      <NavigationBar/>
+      <NavigationBar />
       <Switch>
         <Route path={PATH.INDEX} exact>
-          <HomePage/>
+          <HomePage />
         </Route>
         <Route path={PATH.JOB_FAIR_PARK_PAGE} exact>
-          <JobFairParkPage/>
+          <JobFairParkPage />
         </Route>
         <Route path={PATH.ATTENDANT_JOB_FAIR_PAGE} exact>
-          <AttendantJobFairPage/>
+          <AttendantJobFairPage />
         </Route>
-        {/* TODO: refactor later*/}
         <Route path={PATH.JOB_FAIR_REGISTRATION_PAGE_ID} exact>
-          <JobfairRegistrationPage/>
+          <JobfairRegistrationPage />
         </Route>
         <Route path={PATH.JOB_FAIR_REGISTRATION_PAGE} exact>
-          <JobfairRegistrationPage/>
+          <JobfairRegistrationPage />
         </Route>
         <Route path={PATH.RESET_PASSWORD_PAGE} exact>
-          <ResetPasswordPage/>
+          <ResetPasswordPage />
         </Route>
         <Route path={PATH.CHANGE_PASSWORD_PAGE} exact>
-          <ChangePasswordPage/>
+          <ChangePasswordPage />
         </Route>
         <Route path={PATH.RESULT_SUCCESS_PAGE} exact>
-          <ResultSuccessPage/>
+          <ResultSuccessPage />
         </Route>
         <Route path={PATH.RESULT_FAILED_PAGE} exact>
-          <ResultFailedPage/>
+          <ResultFailedPage />
         </Route>
         <Route path={PATH.FAQ_PAGE} exact>
-          <FAQPage/>
+          <FAQPage />
         </Route>
         <Route path={PATH.DECORATE_BOOTH_PAGE} exact>
-          <DecorateBoothPage/>
+          <DecorateBoothPage />
         </Route>
         <Route path={PATH.USER_PAGE} exact>
-          <UserPage/>
+          <UserPage />
         </Route>
         <Route path={PATH.CONTRACTS_PAGE} exact>
-          <ContractsPage/>
+          <ContractsPage />
         </Route>
         <Route path={PATH.JOB_FAIRS_PAGE} exact>
-          <JobFairsPage/>
+          <JobFairsPage />
         </Route>
         <Route path={PATH.JOB_FAIR_LIST_PAGE} exact>
-          <JobFairListPage/>
+          <JobFairListPage />
         </Route>
         <Route path={PATH.CHOOSE_BOOTH_PAGE} exact>
-          <ChooseBoothPage/>
+          <ChooseBoothPage />
         </Route>
         <Route path={PATH.RESULT_SUCCESS_PAGE} exact>
-          <ResultSuccessPage/>
+          <ResultSuccessPage />
         </Route>
-        <PublicRouter key={PATH.LOGIN_PAGE} component={() => <LoginPage/>} path={PATH.LOGIN_PAGE} exact/>
-        <PublicRouter key={PATH.REGISTER_PAGE} component={() => <RegisterPage/>} path={PATH.REGISTER_PAGE} exact/>
+        <PublicRouter key={PATH.LOGIN_PAGE} component={() => <LoginPage />} path={PATH.LOGIN_PAGE} exact />
+        <PublicRouter key={PATH.REGISTER_PAGE} component={() => <RegisterPage />} path={PATH.REGISTER_PAGE} exact />
         <PublicRouter
           key={PATH.FORGOT_PASSWORD_PAGE}
-          component={() => <ForgotPasswordPage/>}
+          component={() => <ForgotPasswordPage />}
           path={PATH.FORGOT_PASSWORD_PAGE}
           exact
         />
         <AttendantRouter
           key={PATH_ATTENDANT.APPLIED_JOB_PAGE}
-          component={() => <AppliedJobPage/>}
+          component={() => <AppliedJobPage />}
           path={PATH_ATTENDANT.APPLIED_JOB_PAGE}
           exact
         />
         <AttendantRouter
           key={PATH_ATTENDANT.ATTENDANT_PROFILE_PAGE}
-          component={() => <AttendantProfile/>}
+          component={() => <AttendantProfile />}
           path={PATH_ATTENDANT.ATTENDANT_PROFILE_PAGE}
           exact
         />
         <AttendantRouter
           key={PATH_ATTENDANT.ATTENDANT_JOBFAIRL_LIST_PAGE}
-          component={() => <JobFairAttendantListPage/>}
+          component={() => <JobFairAttendantListPage />}
           path={PATH_ATTENDANT.ATTENDANT_JOBFAIRL_LIST_PAGE}
           exact
         />
         <CompanyEmployeeRouter
           key={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}
-          component={() => <CompanyProfile/>}
+          component={() => <CompanyProfile />}
           path={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}
           exact
         />
         <CompanyManagerRouter
           key={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}
-          component={() => <EmployeeManagementPage/>}
+          component={() => <EmployeeManagementPage />}
           path={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}
           exact
         />
         <CompanyManagerRouter
           key={PATH_COMPANY_MANAGER.EMPLOYEE_REGISTER_PAGE}
-          component={() => <EmployeeRegisterPage/>}
+          component={() => <EmployeeRegisterPage />}
           path={PATH_COMPANY_MANAGER.EMPLOYEE_REGISTER_PAGE}
           exact
         />
         <CompanyManagerRouter
           key={PATH_COMPANY_MANAGER.REGISTER_JOB_FAIR_FORM}
-          component={() => <RegisterJobFairForm/>}
+          component={() => <RegisterJobFairForm />}
           path={PATH_COMPANY_MANAGER.REGISTER_JOB_FAIR_FORM}
           exact
         />
         <CompanyManagerRouter
           key={PATH_COMPANY_MANAGER.COMPANY_PROFILE}
-          component={() => <CompanyProfile/>}
+          component={() => <CompanyProfile />}
           path={PATH_COMPANY_MANAGER.COMPANY_PROFILE}
           exact
         />
         <CompanyManagerRouter
           key={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT}
-          component={() => <JobPositionPage/>}
+          component={() => <JobPositionPage />}
           path={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT}
           exact
         />
         <CompanyManagerRouter
           key={PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL}
-          component={() => <JobPositionDetailPage/>}
+          component={() => <JobPositionDetailPage />}
           path={PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL}
           exact
         />
         <CompanyManagerRouter
           key={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION}
-          component={() => <CreateJobPositionPage/>}
+          component={() => <CreateJobPositionPage />}
           path={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION}
           exact
         />
         <AdminRouter
           key={PATH_ADMIN.APPROVAL_REGISTRATION_PAGE}
-          component={() => <ApprovalRegistrationPage/>}
+          component={() => <ApprovalRegistrationPage />}
           path={PATH_ADMIN.APPROVAL_REGISTRATION_PAGE}
           exact
         />
         <AdminRouter
           key={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
-          component={() => <JobFairDetailPage/>}
+          component={() => <JobFairDetailPage />}
           path={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
           exact
         />
         <AdminRouter
           key={PATH_ADMIN.JOB_FAIR_PLAN_LIST}
-          component={() => <JobFairPlanPage/>}
+          component={() => <JobFairPlanPage />}
           path={PATH_ADMIN.JOB_FAIR_PLAN_LIST}
           exact
         />
         <AdminRouter
           key={PATH_ADMIN.COMPANY_REGISTRATION_DETAIL}
-          component={() => <CompanyRegistrationDetailPage/>}
+          component={() => <CompanyRegistrationDetailPage />}
           path={PATH_ADMIN.COMPANY_REGISTRATION_DETAIL}
           exact
         />
         <StaffRouter
           key={PATH_STAFF.APPROVAL_REGISTRATION_PAGE}
-          component={() => <ApprovalRegistrationPage/>}
+          component={() => <ApprovalRegistrationPage />}
           path={PATH_STAFF.APPROVAL_REGISTRATION_PAGE}
           exact
         />
         <StaffRouter
           key={PATH_STAFF.JOB_FAIR_DETAIL_PAGE}
-          component={() => <JobFairDetailPage/>}
+          component={() => <JobFairDetailPage />}
           path={PATH_STAFF.JOB_FAIR_DETAIL_PAGE}
           exact
         />
-        <Route path="*" component={() => <ErrorPage code={404}/>}/>
+        <Route path="*" component={() => <ErrorPage code={404} />} />
       </Switch>
     </>
   )
