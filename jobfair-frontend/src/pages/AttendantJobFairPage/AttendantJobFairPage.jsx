@@ -1,28 +1,28 @@
-import React, { Fragment, useEffect, useRef } from 'react'
+import React, {useEffect, useRef} from 'react'
 import RTMClient from '../../services/RTMClient'
-import { createClient } from 'agora-rtc-react'
-import { useHistory, useParams } from 'react-router-dom'
-import { CommunicationContainer } from '../../containers/AttendantJobFair/CommunicationPanel.container'
-import { useDispatch } from 'react-redux'
-import { agoraAction } from '../../redux-flow/agora/agora-slice'
-import { AttendantJobFairBoothContainer } from '../../containers/AttendantJobFair/AttendantJobFairBooth.container'
+import {createClient} from 'agora-rtc-react'
+import {useParams} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import {agoraAction} from '../../redux-flow/agora/agora-slice'
+import {AttendantJobFairBoothContainer} from '../../containers/AttendantJobFair/AttendantJobFairBooth.container'
 import SideBar from './components/SideBar/SideBar.component'
 import styles from './AttendantJobFairPage.module.scss'
-import ChatBox from './components/ChatBox/ChatBox.component'
 import {Stats} from "@react-three/drei";
+import {InventoryContainer} from "../../components/AttendantJobFair/Inventory.container";
+
 const config = {
   mode: 'rtc',
   codec: 'vp8'
 }
 
-const { REACT_APP_AGORA_APP_ID } = process.env
+const {REACT_APP_AGORA_APP_ID} = process.env
 
 const useClient = createClient(config)
 const rtm = new RTMClient()
 rtm.init(REACT_APP_AGORA_APP_ID)
 
 const AttendantJobFairPage = () => {
-  const { companyBoothId } = useParams()
+  const {companyBoothId} = useParams()
   //channelId is the booth's id
   const channelId = companyBoothId
   const audioTrackRef = useRef()
@@ -54,20 +54,22 @@ const AttendantJobFairPage = () => {
   }
 
   return (
-      <div className={"page"}>
-        <div className={styles.container}>
-          <div className={styles.sideBar}>
-            <SideBar />
-          </div>
-          <div className={styles.booth}>
-            <Stats/>
-            <AttendantJobFairBoothContainer companyBoothId={companyBoothId} />
-          </div>
-            {/*<div>
+    <div className={"page"} style={{overflow: "hidden"}}>
+      <div className={styles.container}>
+        <div className={styles.sideBar}>
+          <SideBar/>
+        </div>
+        <div className={styles.booth}>
+          <Stats/>
+          <AttendantJobFairBoothContainer companyBoothId={companyBoothId}/>
+          <InventoryContainer/>
+
+        </div>
+        {/*<div>
               <ChatBox {...communicationProps} />
             </div>*/}
-        </div>
       </div>
+    </div>
   )
 }
 
