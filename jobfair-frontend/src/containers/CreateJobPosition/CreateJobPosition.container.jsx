@@ -3,8 +3,6 @@ import CreateJobPositionForm from '../../components/create-job-position-form/Cre
 import { Button, Form, notification } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { createJobPositionsAPI } from '../../services/job-controller/JobControllerService'
-import { setJobPositionSubmodalVisibility } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
-import { fetchJobPositions } from '../../redux-flow/jobPositions/job-positions-action'
 import { useSelector } from 'react-redux'
 
 const CreateJobPositionContainer = () => {

@@ -4,61 +4,29 @@ import { useForm, useStepsForm } from 'sunflower-antd'
 import CompanyProfileForm from '../../components/company-profile-form/CompanyProfileForm.component'
 import { useHistory, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { createDraftRegistration } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-action'
 import { getCompanyProfileAPI } from '../../services/company-controller/CompanyControllerService'
 import TextArea from 'antd/es/input/TextArea'
 import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
 import ConfirmContainer from '../Confirm/Confirm.container'
 import JobfairRegistrationFormComponent from '../../components/JobfairRegistrationForm/JobfairRegistrationForm.component'
 import { PATH } from '../../constants/Paths/Path'
-import { setFormBody } from '../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice'
 import PolicyComponent from '../../components/Policy/Policy.component'
 import JobFairDetailCompanyContainer from '../JobFairDetail/JobFairDetail.company.container'
+import {
+  createDraftRegistrationAPI,
+  submitRegistrationAPI
+} from '../../services/company-registration-controller/CompanyRegistrationControllerService'
 const { Step } = Steps
 const JobfairRegistrationForm = () => {
   const { jobfairId } = useParams()
-  const dispatch = useDispatch()
   const history = useHistory()
   const [form] = Form.useForm() //form for registration
   const companyId = useSelector(state => state.authentication.user.companyId)
   const [agreeStatus, setAgreeStatus] = useState(false)
   const [companyInfo, setCompanyInfo] = useState({}) //TODO: check this later with Bao Huynh new code to remove
-  const [companyForm] = Form.useForm() //TODO: check this later with Bao Huynh new code to remove
 
   //management step
   const [currentStep, setCurrentStep] = useState(0)
-
-  const getCompanyProfile = async () => {
-    getCompanyProfileAPI(companyId)
-      .then(res => {
-        notification['success']({
-          message: `Fetch company profile successfully`,
-          description: `For company with ${companyId}`,
-          duration: 2
-        })
-        const response = {
-          ...res.data,
-          benefits: res.data.companyBenefitDTOS.map(item => {
-            return {
-              ...item,
-              id: item.benefitDTO.id,
-              description: item.benefitDTO.description
-            }
-          }),
-          mediaUrls: res.data.mediaDTOS,
-          subCategoriesIds: res.data.subCategoryDTOs.map(item => item.id),
-          url: res.data.websiteUrl
-        }
-        setCompanyInfo({ ...response })
-      })
-      .catch(() => {
-        notification['error']({
-          message: `Fetch company profile failed`,
-          description: `Failed for company with ${companyId}`,
-          duration: 2
-        })
-      })
-  }
 
   const onSubmit = async values => {
     const body = {
@@ -74,34 +42,15 @@ const JobfairRegistrationForm = () => {
         return result
       })
     }
-    try {
-      await dispatch(createDraftRegistration(body)).unwrap()
-      notification['success']({
-        message: `Registration draft version has been submitted`,
-        description: `Submitted successfully`,
-        duration: 2
-      })
-      //after submit success, push to success page
-      history.push(PATH.PROCESSED_SUCCESS)
-    } catch (err) {
-      notification['error']({
-        message: `An error has occurred while submitting`,
-        description: `Submit failed. Server response: ${err}`,
-        duration: 2
-      })
-      //else push to error page
-      history.push(PATH.PROCESSED_FAIL)
+    const companyRegistrationId = await onCreateDraft(body)
+    if (companyRegistrationId) {
+      await submitRegistration(
+        companyRegistrationId,
+        () => history.push(PATH.PROCESSED_SUCCESS),
+        () => history.push(PATH.PROCESSED_FAIL)
+      )
     }
   }
-
-  useEffect(() => {
-    getCompanyProfile()
-  }, [])
-
-  useEffect(() => {
-    //TODO: check this again with Bao Huynh code
-    companyForm.setFieldsValue({ ...companyInfo })
-  }, [companyInfo, companyForm])
 
   const stepComponentList = [
     <>
@@ -143,6 +92,10 @@ const JobfairRegistrationForm = () => {
         return () => setCurrentStep(currentStep + 1)
     }
   }
+
+  useEffect(() => {
+    getCompanyProfile(companyId, setCompanyInfo)
+  }, [])
 
   return (
     <div>
@@ -197,6 +150,76 @@ const JobfairRegistrationForm = () => {
       </div>
     </div>
   )
+}
+
+const getCompanyProfile = async (companyId, setCompanyInfo) => {
+  getCompanyProfileAPI(companyId)
+    .then(res => {
+      notification['success']({
+        message: `Fetch company profile successfully`,
+        description: `For company with ${companyId}`,
+        duration: 2
+      })
+      const response = {
+        ...res.data,
+        benefits: res.data.companyBenefitDTOS.map(item => {
+          return {
+            ...item,
+            id: item.benefitDTO.id,
+            description: item.benefitDTO.description
+          }
+        }),
+        mediaUrls: res.data.mediaDTOS,
+        subCategoriesIds: res.data.subCategoryDTOs.map(item => item.id),
+        url: res.data.websiteUrl
+      }
+      setCompanyInfo({ ...response })
+    })
+    .catch(() => {
+      notification['error']({
+        message: `Fetch company profile failed`,
+        description: `Failed for company with ${companyId}`,
+        duration: 2
+      })
+    })
+}
+
+const submitRegistration = async (companyRegistrationId, successCallback, failedCallback) => {
+  try {
+    const res = await submitRegistrationAPI(companyRegistrationId)
+    notification['success']({
+      message: `Registration draft version has been submitted`,
+      description: `Submitted successfully`,
+      duration: 2
+    })
+    successCallback()
+  } catch (err) {
+    notification['error']({
+      message: `An error has occurred while create draft`,
+      description: `Create draft failed. Server response: ${err}`,
+      duration: 2
+    })
+    failedCallback()
+  }
+}
+
+const onCreateDraft = async body => {
+  try {
+    const res = await createDraftRegistrationAPI(body)
+    notification['success']({
+      message: `Registration draft version has been created`,
+      description: `Created draft successfully`,
+      duration: 2
+    })
+    console.log(res)
+    return res.data.companyRegistrationId
+  } catch (err) {
+    notification['error']({
+      message: `An error has occurred while create draft`,
+      description: `Create draft failed. Server response: ${err}`,
+      duration: 2
+    })
+  }
 }
 
 export default JobfairRegistrationForm

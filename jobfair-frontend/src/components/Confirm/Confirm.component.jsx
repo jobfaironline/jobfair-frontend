@@ -12,8 +12,6 @@ const ConfirmComponent = props => {
 
   const { Title, Paragraph, Text } = Typography
 
-  console.log(data)
-
   return (
     <>
       <div style={{ position: 'fixed', left: '0.8rem', top: '200px' }}>
