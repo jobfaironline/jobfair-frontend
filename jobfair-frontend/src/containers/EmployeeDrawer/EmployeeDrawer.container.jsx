@@ -1,5 +1,8 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { getEmployeesAPI } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
+import {
+  getEmployeeByIdAPI,
+  getEmployeesAPI
+} from '../../services/company-employee-controller/CompanyEmployeeControllerService'
 import { useSelector } from 'react-redux'
 import { notification, Spin } from 'antd'
 import EmployeeDrawerComponent from '../../components/EmployeeDrawer/EmployeeDrawer.component'
@@ -10,13 +13,11 @@ const EmployeeDrawer = ({ employeeId, drawerVisibility, setDrawerVisibility }) =
   const [loading, setLoading] = useState(false)
 
   const fetchData = async () => {
-    getEmployeesAPI(companyId)
+    getEmployeeByIdAPI(employeeId)
       .then(res => {
         const { data } = res
 
-        const employee = data.filter(item => item.account.id === employeeId)[0]
-
-        setEmployeeData(employee)
+        setEmployeeData(data)
       })
       .catch(e => {
         notification['error']({
