@@ -1,5 +1,19 @@
 import React from 'react'
-import {Button, Divider, List, Select, Skeleton, Space, Tag, Tooltip, Typography, Carousel, Image, Empty} from 'antd'
+import {
+  Button,
+  Divider,
+  List,
+  Select,
+  Skeleton,
+  Space,
+  Tag,
+  Tooltip,
+  Typography,
+  Carousel,
+  Image,
+  Empty,
+  DatePicker
+} from 'antd'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import {JOB_FAIR_FOR_ATTENDANT_STATUS, JOB_FAIR_PLAN_COMPANY_STATUS} from '../../constants/JobFairConst'
 import {PATH} from '../../constants/Paths/Path'
@@ -7,6 +21,8 @@ import {COMPANY_JOB_FAIR_STATUS} from '../../constants/CompanyJobFairStatus'
 import CompanyJobFairActionButton from './CompanyJobFairActionButton.component'
 import JobFairListManagementImageComponent from './components/JobFairList.management.image.component'
 import {useSelector} from "react-redux";
+import {DateFormat} from "../../constants/ApplicationConst";
+import {handleGetStatus} from "../../utils/common";
 
 const listImage = [
   {
@@ -24,6 +40,8 @@ const listImage = [
 ]
 
 const {Option} = Select
+const { RangePicker } = DatePicker
+
 
 const handleOption = (role) => {
   if (role === undefined) {
@@ -32,9 +50,9 @@ const handleOption = (role) => {
   switch (role) {
     case 'COMPANY_MANAGER':
       return (
-        JOB_FAIR_PLAN_COMPANY_STATUS.map(item => (
+          JOB_FAIR_PLAN_COMPANY_STATUS.map(item => (
           <Option value={item.value}>{item.label}</Option>
-        ))
+          ))
       )
     default:
       return (
@@ -54,7 +72,8 @@ const JobFairListManagementComponent = props => {
     handleFilterByStatus,
     searchResult,
     getCompanyBoothId,
-    handleClearFilter
+    handleClearFilter,
+    handleViewDetail
   } = props
   const role = useSelector(state => state.authentication?.user?.roles)
   const contentStyle = {
@@ -63,6 +82,12 @@ const JobFairListManagementComponent = props => {
     lineHeight: '200px',
     textAlign: 'center',
     background: '#364d79'
+  }
+
+  const result = handleGetStatus(data)
+  let key = ''
+  if (result !== undefined) {
+    key = result.key
   }
 
   return (
@@ -75,9 +100,6 @@ const JobFairListManagementComponent = props => {
         border: '1px solid rgba(140, 140, 140, 0.35)'
       }}
     >
-      <Divider size="small" plain>
-        <Title>Job Fair List</Title>
-      </Divider>
       <Select
         mode="multiple"
         allowClear
@@ -117,6 +139,7 @@ const JobFairListManagementComponent = props => {
                     </Space>
                   ) : null}
                   <Button type="link" onClick={() => {
+                    handleViewDetail(item.id)
                   }} style={{padding: '0.2rem 0', border: '0'}}>
                     More details
                   </Button>

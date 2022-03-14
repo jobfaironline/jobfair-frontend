@@ -5,16 +5,25 @@ import {
   ENDPOINT_JOB_FAIR,
   ENDPOINT_GET_JOB_FAIR_FOR_ATTENDANT
 } from '../../constants/Endpoints/job-fair-controller/JobFairConTrollerEndpoint'
-import { JOB_FAIR_FOR_ADMIN_STATUS } from '../../constants/JobFairConst'
+import {JOB_FAIR_FOR_ADMIN_STATUS} from '../../constants/JobFairConst'
 
-export const getJobFairPlanForCompany = (filterStatus, pageNumber, pageSize) =>
+export const getAvailableJobFairForCompany = (pageNumber, pageSize) =>
   CallAPI(
-    `${ENDPOINT_GET_JOB_FAIR_PLAN_OF_COMPANY}`,
+    `${ENDPOINT_GET_JOB_FAIR_PLAN_OF_COMPANY}?filterStatus=HAPPENING&filterStatus=REGISTRABLE`,
     'GET',
     {},
     {
-      filterStatus: filterStatus,
-      pageNumber: pageNumber,
+      offset: pageNumber,
+      pageSize: pageSize
+    }
+  )
+export const getHistoricalJobFairForCompany = (pageNumber, pageSize) =>
+  CallAPI(
+    `${ENDPOINT_GET_JOB_FAIR_PLAN_OF_COMPANY}?filterStatus=APPROVE&filterStatus=ATTENDED&filterStatus=CHOOSE_BOOTH&filterStatus=CLOSED&filterStatus=DECORATE_BOOTH&filterStatus=REJECT&filterStatus=REQUEST_CHANGE&filterStatus=SUBMITTED`,
+    'GET',
+    {},
+    {
+      offset: pageNumber,
       pageSize: pageSize
     }
   )

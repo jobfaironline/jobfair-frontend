@@ -1,18 +1,19 @@
 import React, {useLayoutEffect, useState} from 'react';
 import {useHistory} from "react-router-dom";
-import {getJobFairHappeningForAdmin} from "../../services/job-fair-controller/JobFairConTrollerService";
+import {getJobFairIncomingForAdmin} from "../../../services/job-fair-controller/JobFairConTrollerService";
 import {notification, Select, Space, Tooltip} from "antd";
-import JobFairForAdminComponent from "../../components/JobFairList/JobFairForAdmin.component";
-import PaginationComponent from "../../components/PaginationComponent/Pagination.component";
-import {PATH_ADMIN} from "../../constants/Paths/Path";
+import JobFairForAdminComponent from "../../../components/JobFairList/JobFairForAdmin.component";
+import PaginationComponent from "../../../components/PaginationComponent/Pagination.component";
+import {PATH_ADMIN} from "../../../constants/Paths/Path";
 import {MoreOutlined} from "@ant-design/icons";
-import ViewRegistrationButton from "../../components/ViewRegistrationButton/ViewRegistrationButton";
-import JobFairDetailModalContainer from "../../components/JobFairList/modal/JobFairDetailModal.container";
-import {mapperResponseJobFairForAdmin} from "../../utils/mapperJobFairDetail";
+import ViewRegistrationButton from "../../../components/ViewRegistrationButton/ViewRegistrationButton";
+import JobFairDetailModalContainer from "../../../components/JobFairList/modal/JobFairDetailModal.container";
+import {mapperResponseJobFairForAdmin} from "../../../utils/mapperJobFairDetail";
 
 const {Option} = Select;
 
-const JobFairHappeningContainer = ({key}) => {
+
+const JobFairIncomingContainer = ({key}) => {
   const [data, setData] = useState([])
   //pagination
   const [currentPage, setCurrentPage] = useState(0)
@@ -23,15 +24,16 @@ const JobFairHappeningContainer = ({key}) => {
   const [modalVisible, setModalVisible] = useState(false)
   const history = useHistory()
 
+
   const fetchData = async () => {
-    getJobFairHappeningForAdmin(currentPage, pageSize)
+    getJobFairIncomingForAdmin(currentPage, pageSize)
       .then(res => {
-        const result = mapperResponseJobFairForAdmin(res).map(item => {
-          return {
-            ...item,
-            key: 'HAPPENING'
-          }
-        })
+          const result = mapperResponseJobFairForAdmin(res).map(item => {
+            return {
+              ...item,
+              key: 'NOT_YET'
+            }
+          })
           setData([...result]);
         }
       ).catch(err => {
@@ -106,4 +108,4 @@ const JobFairHappeningContainer = ({key}) => {
   );
 };
 
-export default JobFairHappeningContainer;
+export default JobFairIncomingContainer;
