@@ -54,6 +54,9 @@ const AppRouter = () => {
     <>
       <NavigationBar />
       <Switch>
+        <Route path={PATH.FINAL_ERROR_PAGE} exact>
+          <ErrorPage code={500} />
+        </Route>
         <Route path={PATH.INDEX} exact>
           <HomePage />
         </Route>
@@ -187,7 +190,7 @@ const AppRouter = () => {
         />
         <AdminRouter
           key={PATH_ADMIN.COMPANY_REGISTRATION_PAGE}
-          component={() => <ApprovalRegistrationPage/>}
+          component={() => <ApprovalRegistrationPage />}
           path={PATH_ADMIN.COMPANY_REGISTRATION_PAGE}
           exact
         />

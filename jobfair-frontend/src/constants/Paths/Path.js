@@ -25,7 +25,8 @@ export const PATH = {
   EMPLOYEE_MANAGEMENT: '/employee-management',
   MAP: '/map/',
   PROCESSED_FAIL: '/proceed-fail',
-  PROCESSED_SUCCESS: ''
+  PROCESSED_SUCCESS: '',
+  FINAL_ERROR_PAGE: '/error-500'
 }
 export const PATH_ADMIN = {
   APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId',
