@@ -5,7 +5,7 @@ import { signInAPI } from '../../services/auth-controller/AuthControllerService'
 import { useDispatch } from 'react-redux'
 import { SigninHandler } from '../../redux-flow/authentication/authentication-action'
 import { useHistory } from 'react-router-dom'
-import { PATH } from '../../constants/Paths/Path'
+import {PATH, PATH_ATTENDANT} from '../../constants/Paths/Path'
 const LoginContainer = props => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
@@ -29,7 +29,7 @@ const LoginContainer = props => {
             history.push(PATH.JOB_FAIRS_PAGE)
             return
           case 'ATTENDANT':
-            history.push(`${PATH.MAP}fc271a03-cb11-469b-ae94-6873117b43d1`)
+            history.push(PATH_ATTENDANT.ATTENDANT_JOB_FAIR_PAGE)
             return
           case 'ADMIN':
             history.push(PATH.JOB_FAIR_LIST_PAGE)

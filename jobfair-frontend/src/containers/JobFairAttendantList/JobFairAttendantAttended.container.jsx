@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import JobFairListManagementComponent from '../../components/JobFairList/JobFairList.management.component'
-import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
-import { getJobFairAvailableForAttendant } from '../../services/job-fair-controller/JobFairConTrollerService'
-import {PATH, PATH_ATTENDANT} from "../../constants/Paths/Path";
-const JobFairAttendantListContainer = (props) => {
+import React, {useEffect, useState} from 'react';
+import {useHistory} from "react-router-dom";
+import {
+  getJobFairAttendedForAttendant,
+  getJobFairAvailableForAttendant
+} from "../../services/job-fair-controller/JobFairConTrollerService";
+import JobFairListManagementComponent from "../../components/JobFairList/JobFairList.management.component";
+import PaginationComponent from "../../components/PaginationComponent/Pagination.component";
+import {PATH_ATTENDANT, PATH_COMPANY_MANAGER} from "../../constants/Paths/Path";
+
+const JobFairAttendantAttendedContainer = () => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
   //paging
@@ -20,7 +24,7 @@ const JobFairAttendantListContainer = (props) => {
       return
     }
     setLoading(true)
-    getJobFairAvailableForAttendant(currentPage, pageSize)
+    getJobFairAttendedForAttendant(currentPage, pageSize)
       .then(res => {
         setCount(count + 1)
         const result = res.data.content.map(item => {
@@ -81,10 +85,6 @@ const JobFairAttendantListContainer = (props) => {
     })
   }
 
-  const handleViewMap = (id) => {
-    history.push(`${PATH.MAP}${id}`)
-  }
-
   return (
     <div>
       <JobFairListManagementComponent
@@ -95,11 +95,11 @@ const JobFairAttendantListContainer = (props) => {
         searchResult={searchResult}
         handleClearFilter={handleClearFilter}
         handleViewDetail={handleViewDetail}
-        handleViewMap={handleViewMap}
         // getCompanyBoothId={getCompanyBoothId}
       />
-      <PaginationComponent handlePageChange={handlePageChange} totalRecord={data.length} />
+      <PaginationComponent handlePageChange={handlePageChange} totalRecord={data.length}/>
     </div>
   )
-}
-export default JobFairAttendantListContainer
+};
+
+export default JobFairAttendantAttendedContainer;

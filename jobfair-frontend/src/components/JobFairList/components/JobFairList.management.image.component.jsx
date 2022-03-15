@@ -4,7 +4,7 @@ const JobFairListManagementImageComponent = props => {
   const { urlImage } = props
   return (
     <>
-      <Image width={300} src={urlImage} />
+      <Image src={urlImage} height={260} width={450} />
     </>
   )
 }
