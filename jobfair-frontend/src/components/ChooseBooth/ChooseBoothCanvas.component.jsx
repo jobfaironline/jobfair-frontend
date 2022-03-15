@@ -99,13 +99,12 @@ export const ChooseBoothCanvas = props => {
       <SkyTypeSelect onChange={onChangeSkyType}/>
       <Canvas
         dpr={[1, 2]}
-        linear={true}
         shadowMap
         style={{width: '100%', height: '970px', cursor: hoverRef === undefined ? 'default' : 'pointer'}}
         camera={{far: 5000, fov: 50}}
       >
-        <ambientLight intensity={1.3} />
-        <directionalLight position={[0, 0, 5]} intensity={2.3} />
+        <ambientLight intensity={0.5} />
+        <directionalLight intensity={0.5} />
         <CameraControls/>
         <SkyComponent style={skyType}/>
 

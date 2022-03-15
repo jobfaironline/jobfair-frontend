@@ -9,11 +9,11 @@ export const ArrowHelper = (props) => {
     const dir = new THREE.Vector3(0, -1, 0);
     //normalize the direction vector (convert to vector of length 1)
     dir.normalize();
-    const length = 150;
+    const length = 20;
     const hex = 0x32a852;
 
     const arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
-    arrowHelper.position.setY(150);
+    arrowHelper.position.setY(23);
 
     return <BasicMesh ref={ref} mesh={arrowHelper}/>
 }
