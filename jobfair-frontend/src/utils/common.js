@@ -40,7 +40,7 @@ export const getBase64 = file => {
 }
 
 export const convertToDateString = dateValue => {
-  return new Date(dateValue).toISOString().replace(/T.*/,'').split('-').reverse().join('-')
+  return new Date(dateValue).toISOString().replace(/T.*/, '').split('-').reverse().join('-')
 }
 
 export const convertToDateValue = dateString => {
@@ -51,10 +51,7 @@ export const convertToMoment = data => {
   const result = data.map(item => {
     return {
       ...item,
-      range: [
-        moment(convertToDateString(item.fromDate)),
-        moment(convertToDateString(item.toDate))
-      ]
+      range: [moment(convertToDateString(item.fromDate)), moment(convertToDateString(item.toDate))]
     }
   })
   return result
@@ -73,13 +70,28 @@ export const handleConvertRangePicker = data => {
 }
 
 //convert enum status to string
-export const convertEnumToString = (data) => {
+export const convertEnumToString = data => {
   const arr = data.split('_') //['INTERN', 'SHIP', 'STUDENT']
   const result = arr
-      .map(item => item.toString().toLowerCase())
-      .map(item => item[0].toUpperCase() + item.slice(1))
-      .join(' ');
-  return result;
+    .map(item => item.toString().toLowerCase())
+    .map(item => item[0].toUpperCase() + item.slice(1))
+    .join(' ')
+  return result
 }
 
 //
+export const handleCreateListEmailFromListAccount = arr => {
+  let listEmail = []
+  arr.map(account => {
+    listEmail.push(account?.account.email)
+  })
+  return listEmail
+}
+export const handleCreateListNameFromListAccount = arr => {
+  let listName = []
+  arr.map(account => {
+    let name = `${account?.account.middlename} ${account?.account.lastname}`
+    listName.push(name)
+  })
+  return listName
+}

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Button, Card, Divider, Form, Input, Radio, Select, Space, Switch, Typography } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Button, Card, Divider, Form, Input, Radio, Select, Space, Switch, Typography, AutoComplete } from 'antd'
 import { JOB_POSITION_MODEL } from '../../default_models/CreateJobPositionModel/JobPositionModel'
 import {
   IsRequiredLetterConst,
@@ -13,8 +13,8 @@ import {
 import TextArea from 'antd/es/input/TextArea'
 import { JobPositionValidation } from '../../validate/CreateJobPositionValidation'
 import { CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories } from '../../constants/CompanyProfileConstant'
+import { useLocation } from 'react-router-dom'
 const { Option, OptGroup } = Select
-
 const formItemLayout = {
   labelCol: {
     xs: { span: 25 },
@@ -27,15 +27,48 @@ const formItemLayout = {
 }
 
 const CreateJobPositionForm = props => {
+  const location = useLocation()
+  const [listContactPersonSuggestion, setListContactPersonSuggestion] = useState()
+  const [listEmailSuggestion, setListEmailSuggestion] = useState()
   const [totalSelect, setTotalSelect] = useState(0)
   const [totalSkillTags, setTotalSkillTags] = useState(0)
   const [isShowSalary, setIsShowSalary] = useState(JOB_POSITION_MODEL.isShowSalary)
   const [isRequiredLetter, setIsRequiredLetter] = useState(JOB_POSITION_MODEL.isRequiredLetter)
   const [isShowContactPerson, setIsShowContactPerson] = useState(JOB_POSITION_MODEL.isShowContactPerson)
-
-  const { form, onFinish } = props
-
   const { Text } = Typography
+  const { form, onFinish } = props
+  const [resultNameSuggested, setResultNameSuggested] = useState([])
+  const [resultEmailSuggested, setResultEmailSuggested] = useState([])
+  useEffect(() => {
+    setListContactPersonSuggestion(location.state.listContactPersonSuggestion)
+    setListEmailSuggestion(location.state.listEmailSuggestion)
+  }, [location])
+  const handleAutoCompleteContactPerson = value => {
+    let res = []
+    if (!value) {
+      res = []
+    } else {
+      listContactPersonSuggestion.map(name => {
+        if (name.toLowerCase().includes(value.toLowerCase())) {
+          res.push(name)
+        }
+      })
+    }
+    setResultNameSuggested(res)
+  }
+  const handleAutoCompleteEmail = value => {
+    let res = []
+    if (!value || value.indexOf('@') >= 0) {
+      res = []
+    } else {
+      listEmailSuggestion.map(email => {
+        if (email.toLowerCase().includes(value.toLowerCase())) {
+          res.push(email)
+        }
+      })
+    }
+    setResultEmailSuggested(res)
+  }
 
   return (
     <div style={{ width: '80%' }}>
@@ -183,7 +216,19 @@ const CreateJobPositionForm = props => {
             rules={JobPositionValidation.contactPerson}
             name="contactPersonName"
           >
-            <Input placeholder="Contact person name" />
+            <AutoComplete
+              style={{
+                width: 200
+              }}
+              onSearch={handleAutoCompleteContactPerson}
+            >
+              {resultNameSuggested.map(name => (
+                <AutoComplete.Option key={name} value={name}>
+                  {name}
+                </AutoComplete.Option>
+              ))}
+              <Input placeholder="Contact person name" />
+            </AutoComplete>
           </Form.Item>
           <Form.Item label="Language" name={'preferredLanguage'} required rules={JobPositionValidation.language}>
             <Select
@@ -216,7 +261,19 @@ const CreateJobPositionForm = props => {
             rules={JobPositionValidation.email}
             name="contactEmail"
           >
-            <Input placeholder="Email for receiving applications" />
+            <AutoComplete
+              style={{
+                width: 200
+              }}
+              onSearch={handleAutoCompleteEmail}
+            >
+              {resultEmailSuggested.map(email => (
+                <AutoComplete.Option key={email} value={email}>
+                  {email}
+                </AutoComplete.Option>
+              ))}
+              <Input placeholder="Email for receiving applications" />
+            </AutoComplete>
           </Form.Item>
           <Form.Item style={{ display: 'flex', justifyContent: 'end' }}>
             <Space style={{ display: 'flex', justifyContent: 'end' }}>
