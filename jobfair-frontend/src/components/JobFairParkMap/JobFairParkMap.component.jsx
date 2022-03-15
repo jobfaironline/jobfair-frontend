@@ -38,16 +38,15 @@ const JobFairParkMapComponent = (props) => {
     return (
         <>
             <SkyTypeSelect onChange={onChangeSkyType}/>
-            <Canvas dpr={[1, 2]} camera={{fov: 50}} style={{width: '100%', height: '970px'}}>
+            <Canvas dpr={[1, 2]} camera={{far: 5000, fov: 50}} style={{width: '100%', height: '970px'}}>
                 <CameraControls/>
+                <ambientLight intensity={0.5} />
+                <directionalLight intensity={0.5} />
                 <SkyComponent style={skyType}/>
-                <Stage preset="rembrandt" intensity={0.4} environment="city"
-                       contactShadow={false}>
                     <group dispose={null}>
                         <BasicMesh mesh={mapMesh}/>
                         {boothMeshes.map(mesh => <BoothMesh key={mesh.uuid} mesh={mesh} onclick={onClick}/>)}
                     </group>
-                </Stage>
             </Canvas>
         </>
 
