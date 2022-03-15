@@ -48,6 +48,9 @@ const JobFairListAvailableContainer = props => {
       .catch(err => {
         setLoading(false)
       })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
 
@@ -80,7 +83,6 @@ const JobFairListAvailableContainer = props => {
   }
 
   const handleViewDetail = (id) => {
-    console.log(id)
     history.push(PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL, {
       jobFairId: id
     })
@@ -93,7 +95,7 @@ const JobFairListAvailableContainer = props => {
 
   useEffect(() => {
     loadMoreData()
-  }, [data])
+  }, [])
 
   return (
     <>

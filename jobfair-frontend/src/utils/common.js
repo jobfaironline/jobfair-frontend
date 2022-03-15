@@ -75,11 +75,10 @@ export const handleConvertRangePicker = data => {
 //range picker filter for available job fair
 export const handleJobFairRangePicker = arr => {
   //[{moment obj}, {moment obj}]
-  let result = {
+  return {
     fromTime: convertToDateValue(arr[0].format()),
     toTime: convertToDateValue(arr[1].format())
   }
-  return result;
 }
 
 //convert enum status to string

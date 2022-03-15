@@ -17,10 +17,6 @@ export const ResultSuccessPage = () => {
       <Result
         status="success"
         title="Register successfully"
-        subTitle={``}
-        extra={[
-
-        ]}
       >
         <div className="desc">
           <Paragraph>
