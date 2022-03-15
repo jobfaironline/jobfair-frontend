@@ -74,7 +74,7 @@ export const HappeningButton = props => {
   return (
     <Tooltip title="This job fair is happening. Join now !" color="lime">
       <Button type="primary" onClick={onClick}>
-        HAPPENING
+        JOIN NOW
       </Button>
     </Tooltip>
   )
