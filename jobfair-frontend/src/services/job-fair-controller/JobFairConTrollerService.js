@@ -44,13 +44,23 @@ export const getAllJobFairAPI = (pageNumber, pageSize, sortBy, direction) =>
     }
   )
 export const evaluateJobFairPlanAPI = body => CallAPI(`${ENDPOINT_JOB_FAIR}/evaluate`, 'POST', body)
-export const getJobFairForAttendant = (filterStatus, offset, pageSize) =>
+export const getJobFairAvailableForAttendant = (offset, pageSize) =>
   CallAPI(
-    `${ENDPOINT_GET_JOB_FAIR_FOR_ATTENDANT}`,
+    `${ENDPOINT_GET_JOB_FAIR_FOR_ATTENDANT}?filterStatus=HAPPENING&filterStatus=REGISTRABLE`,
     'GET',
     {},
     {
-      filterStatus: filterStatus,
+      offset: offset,
+      pageSize: pageSize
+    }
+  )
+
+export const getJobFairAttendedForAttendant = (offset, pageSize) =>
+  CallAPI(
+    `${ENDPOINT_GET_JOB_FAIR_FOR_ATTENDANT}?filterStatus=ATTENDED&filterStatus=CLOSED&filterStatus=REGISTERED`,
+    'GET',
+    {},
+    {
       offset: offset,
       pageSize: pageSize
     }

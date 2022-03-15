@@ -71,9 +71,6 @@ const JobFairListManagementComponent = props => {
         border: '1px solid rgba(140, 140, 140, 0.35)'
       }}
     >
-      <Divider size="small" plain>
-        <Title>Job Fair List</Title>
-      </Divider>
       <Select
         mode="multiple"
         allowClear
