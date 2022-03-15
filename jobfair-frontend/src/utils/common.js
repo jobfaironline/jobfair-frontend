@@ -95,3 +95,7 @@ export const handleCreateListNameFromListAccount = arr => {
   })
   return listName
 }
+//get status
+export const handleGetStatus = data => {
+  return data.find(item => item.key !== undefined)
+}
