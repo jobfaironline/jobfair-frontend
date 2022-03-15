@@ -1,13 +1,14 @@
-import React, {useEffect, useState} from 'react'
-import {useHistory} from 'react-router-dom'
-import JobFairListManagementComponent from '../../components/JobFairList/JobFairList.management.component'
-import {getJobFairPlanForCompany} from '../../services/job-fair-controller/JobFairConTrollerService'
-import {getCompanyBoothByJobFairId} from '../../services/company-booth-controller/CompanyBoothControllerService'
-import {PATH} from '../../constants/Paths/Path'
+import React, {useEffect, useState} from 'react';
+import {useHistory} from "react-router-dom";
+import {
+  getHistoricalJobFairForCompany,
+  getJobFairPlanForCompany
+} from "../../../services/job-fair-controller/JobFairConTrollerService";
+import {getCompanyBoothByJobFairId} from "../../../services/company-booth-controller/CompanyBoothControllerService";
+import {PATH, PATH_ADMIN, PATH_COMPANY_MANAGER} from "../../../constants/Paths/Path";
+import JobFairListManagementComponent from "../../../components/JobFairList/JobFairList.management.component";
 
-const approvedJobFairId = 'a50a9875-93aa-4605-8afd-29923d3310fe'
-
-const JobFairListManagementContainer = props => {
+const JobFairListHistoryContainer = () => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
   //paging state
@@ -24,14 +25,14 @@ const JobFairListManagementContainer = props => {
       return
     }
     setLoading(true)
-    getJobFairPlanForCompany('',currentPage, pageSize)
+    getHistoricalJobFairForCompany(currentPage, pageSize)
       .then(res => {
         setCount(count + 1)
         const result = res.data.content.map(item => {
           return {
             description: item.description,
             id: item.id,
-            status: item.status
+            status: item.status,
           }
         })
         setData([...data, ...result])
@@ -68,6 +69,12 @@ const JobFairListManagementContainer = props => {
     setSearchResult([...data])
   }
 
+  const handleViewDetail = (id) => {
+    history.push(PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL, {
+      jobFairId: id
+    })
+  }
+
   useEffect(() => {
     loadMoreData()
   }, [])
@@ -82,9 +89,10 @@ const JobFairListManagementContainer = props => {
         searchResult={searchResult}
         getCompanyBoothId={getCompanyBoothId}
         handleClearFilter={handleClearFilter}
+        handleViewDetail={handleViewDetail}
       />
     </>
   )
-}
+};
 
-export default JobFairListManagementContainer
+export default JobFairListHistoryContainer;

@@ -9,7 +9,7 @@ import TextArea from 'antd/es/input/TextArea'
 import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
 import ConfirmContainer from '../Confirm/Confirm.container'
 import JobfairRegistrationFormComponent from '../../components/JobfairRegistrationForm/JobfairRegistrationForm.component'
-import { PATH } from '../../constants/Paths/Path'
+import {PATH, PATH_COMPANY_MANAGER} from '../../constants/Paths/Path'
 import PolicyComponent from '../../components/Policy/Policy.component'
 import JobFairDetailCompanyContainer from '../JobFairDetail/JobFairDetail.company.container'
 import {
@@ -46,7 +46,9 @@ const JobfairRegistrationForm = () => {
     if (companyRegistrationId) {
       await submitRegistration(
         companyRegistrationId,
-        () => history.push(PATH.PROCESSED_SUCCESS),
+        () => {
+          history.push(PATH.RESULT_SUCCESS_PAGE)
+        },
         () => history.push(PATH.PROCESSED_FAIL)
       )
     }

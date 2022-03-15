@@ -48,6 +48,7 @@ import {
   PATH_STAFF
 } from '../constants/Paths/Path'
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
+import JobFairDetailCompanyPage from "../pages/JobFairDetailPage/JobFairDetailCompanyPage";
 
 const AppRouter = () => {
   return (
@@ -180,6 +181,12 @@ const AppRouter = () => {
           key={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION}
           component={() => <CreateJobPositionPage />}
           path={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION}
+          exact
+        />
+        <CompanyManagerRouter
+          key={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL}
+          component={() => <JobFairDetailCompanyPage />}
+          path={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL}
           exact
         />
         <AdminRouter

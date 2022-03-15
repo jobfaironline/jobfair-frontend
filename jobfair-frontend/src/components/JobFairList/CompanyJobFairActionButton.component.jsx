@@ -1,4 +1,4 @@
-import { Button, Tooltip } from 'antd'
+import {Button, notification, Tooltip} from 'antd'
 import { PATH } from '../../constants/Paths/Path'
 import React from 'react'
 import { COMPANY_JOB_FAIR_STATUS } from '../../constants/CompanyJobFairStatus'
@@ -69,6 +69,50 @@ export const ChooseBoothButton = props => {
   )
 }
 
+export const HappeningButton = props => {
+  const { onClick } = props
+  return (
+    <Tooltip title="This job fair is happening. Join now !" color="lime">
+      <Button type="primary" onClick={onClick}>
+        HAPPENING
+      </Button>
+    </Tooltip>
+  )
+}
+
+export const ClosedButton = props => {
+  const { onClick } = props
+  return (
+    <Tooltip title="This job fair was closed ! Thank you" color="gold">
+      <Button type="primary" onClick={onClick}>
+        CLOSED
+      </Button>
+    </Tooltip>
+  )
+}
+
+export const AttendedButton = props => {
+  const { onClick } = props
+  return (
+    <Tooltip title="🌼Thank you for joining this job fair. See ya🌼" color="cyan">
+      <Button type="primary" onClick={onClick}>
+        ATTENDED
+      </Button>
+    </Tooltip>
+  )
+}
+
+export const RequestChangeButton = props => {
+  const { onClick } = props
+  return (
+    <Tooltip title="Please edit your registration and submit again!" color="purple">
+      <Button type="primary" onClick={onClick}>
+        REQUEST CHANGE
+      </Button>
+    </Tooltip>
+  )
+}
+
 export const GenericButton = props => {
   const { onClick, status } = props
   return (
@@ -97,6 +141,14 @@ const CompanyJobFairActionButton = props => {
       return <DecorateBoothButton onClick={() => getCompanyBoothId(item.id)} />
     case COMPANY_JOB_FAIR_STATUS.CHOOSE_BOOTH:
       return <ChooseBoothButton onClick={() => handleRedirect(`${PATH.CHOOSE_BOOTH_PATH}${item.id}`)} />
+    case COMPANY_JOB_FAIR_STATUS.HAPPENING:
+      return <HappeningButton onClick={() => notification['success']({message: 'Happening job fair clicked'})} />
+    case COMPANY_JOB_FAIR_STATUS.CLOSED:
+      return <ClosedButton onClick={() => notification['success']({message: 'Closed!!'})}/>
+    case COMPANY_JOB_FAIR_STATUS.ATTENDED:
+      return <AttendedButton onClick={() => notification['success']({message: '💖'})}/>
+    case COMPANY_JOB_FAIR_STATUS.REQUEST_CHANGE:
+      return <RequestChangeButton onClick={() => notification['success']({message: 'Change your registration now'})}/>
     default:
       return <GenericButton status={item.status} />
   }

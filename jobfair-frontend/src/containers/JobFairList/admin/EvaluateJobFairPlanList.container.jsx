@@ -1,13 +1,13 @@
 import React, {useEffect, useLayoutEffect, useState} from 'react'
 import JobFairListEvaluateComponent from '../../components/JobFairList/JobFairList.evaluate.component'
-import {evaluateJobFairPlanAPI, getAllJobFairAPI} from '../../services/job-fair-controller/JobFairConTrollerService'
+import {evaluateJobFairPlanAPI, getAllJobFairAPI} from '../../../services/job-fair-controller/JobFairConTrollerService'
 import {notification, Pagination, Space} from 'antd'
-import {convertToDateString} from '../../utils/common'
+import {convertToDateString} from '../../../utils/common'
 import {Link} from 'react-router-dom'
-import JobFairDetailModalContainer from '../../components/JobFairList/modal/JobFairDetailModal.container'
-import EvaluationFormComponent from '../../components/EvaluationForm/EvaluationForm.component'
+import JobFairDetailModalContainer from '../../../components/JobFairList/modal/JobFairDetailModal.container'
+import EvaluationFormComponent from '../../../components/EvaluationForm/EvaluationForm.component'
 
-const JobFairListEvaluateContainer = () => {
+const EvaluateJobFairPlanListContainer = () => {
     const [data, setData] = useState([])
     const [jobFairId, setJobFairId] = useState('')
     const [creatorId, setCreatorId] = useState('')
@@ -133,4 +133,4 @@ const JobFairListEvaluateContainer = () => {
     )
 }
 
-export default JobFairListEvaluateContainer
+export default EvaluateJobFairPlanListContainer

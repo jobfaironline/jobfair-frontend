@@ -1,15 +1,15 @@
 import React, {useLayoutEffect, useState} from 'react';
-import JobFairForAdminComponent from "../../components/JobFairList/JobFairForAdmin.component";
+import JobFairForAdminComponent from "../../../components/JobFairList/JobFairForAdmin.component";
 import {useHistory} from "react-router-dom";
 import {notification, Select, Space, Tooltip} from "antd";
-import {getJobFairOccurredForAdmin} from "../../services/job-fair-controller/JobFairConTrollerService";
-import PaginationComponent from "../../components/PaginationComponent/Pagination.component";
-import {PATH_ADMIN} from "../../constants/Paths/Path";
-import {convertToDateString} from "../../utils/common";
+import {getJobFairOccurredForAdmin} from "../../../services/job-fair-controller/JobFairConTrollerService";
+import PaginationComponent from "../../../components/PaginationComponent/Pagination.component";
+import {PATH_ADMIN} from "../../../constants/Paths/Path";
+import {convertToDateString} from "../../../utils/common";
 import {MoreOutlined} from "@ant-design/icons";
-import ViewRegistrationButton from "../../components/ViewRegistrationButton/ViewRegistrationButton";
-import JobFairDetailModalContainer from "../../components/JobFairList/modal/JobFairDetailModal.container";
-import {mapperResponseJobFairForAdmin} from "../../utils/mapperJobFairDetail";
+import ViewRegistrationButton from "../../../components/ViewRegistrationButton/ViewRegistrationButton";
+import JobFairDetailModalContainer from "../../../components/JobFairList/modal/JobFairDetailModal.container";
+import {mapperResponseJobFairForAdmin} from "../../../utils/mapperJobFairDetail";
 
 
 const JobFairOccurredContainer = ({key}) => {
