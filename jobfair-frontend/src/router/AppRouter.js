@@ -48,6 +48,7 @@ import {
   PATH_STAFF
 } from '../constants/Paths/Path'
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
+import JobFairDetailCompanyPage from "../pages/JobFairDetailPage/JobFairDetailCompanyPage";
 
 const AppRouter = () => {
   return (
@@ -129,9 +130,15 @@ const AppRouter = () => {
           exact
         />
         <AttendantRouter
-          key={PATH_ATTENDANT.ATTENDANT_JOBFAIRL_LIST_PAGE}
+          key={PATH_ATTENDANT.ATTENDANT_JOB_FAIR_PAGE}
           component={() => <JobFairAttendantListPage />}
-          path={PATH_ATTENDANT.ATTENDANT_JOBFAIRL_LIST_PAGE}
+          path={PATH_ATTENDANT.ATTENDANT_JOB_FAIR_PAGE}
+          exact
+        />
+        <AttendantRouter
+          key={PATH_ATTENDANT.JOB_FAIR_DETAIL}
+          component={() => <JobFairDetailCompanyPage />}
+          path={PATH_ATTENDANT.JOB_FAIR_DETAIL}
           exact
         />
         <CompanyEmployeeRouter
@@ -180,6 +187,12 @@ const AppRouter = () => {
           key={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION}
           component={() => <CreateJobPositionPage />}
           path={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION}
+          exact
+        />
+        <CompanyManagerRouter
+          key={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL}
+          component={() => <JobFairDetailCompanyPage />}
+          path={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL}
           exact
         />
         <AdminRouter

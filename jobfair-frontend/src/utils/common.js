@@ -72,6 +72,15 @@ export const handleConvertRangePicker = data => {
   return result
 }
 
+//range picker filter for available job fair
+export const handleJobFairRangePicker = arr => {
+  //[{moment obj}, {moment obj}]
+  return {
+    fromTime: convertToDateValue(arr[0].format()),
+    toTime: convertToDateValue(arr[1].format())
+  }
+}
+
 //convert enum status to string
 export const convertEnumToString = (data) => {
   const arr = data.split('_') //['INTERN', 'SHIP', 'STUDENT']
@@ -82,4 +91,7 @@ export const convertEnumToString = (data) => {
   return result;
 }
 
-//
+//get status
+export const handleGetStatus = (data) => {
+  return data.find(item => item.key !== undefined)
+}

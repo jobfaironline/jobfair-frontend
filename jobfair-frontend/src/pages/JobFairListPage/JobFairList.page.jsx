@@ -1,9 +1,9 @@
 import React from 'react'
 import {Divider, Tabs, Typography} from 'antd'
 import {useSelector} from 'react-redux'
-import JobFairOccurredContainer from "../../containers/JobFairList/JobFairOccurred.container";
-import JobFairHappeningContainer from "../../containers/JobFairList/JobFairHappening.container";
-import JobFairIncomingContainer from "../../containers/JobFairList/JobFairIncoming.container";
+import JobFairOccurredContainer from "../../containers/JobFairList/admin/JobFairOccurred.container";
+import JobFairHappeningContainer from "../../containers/JobFairList/admin/JobFairHappening.container";
+import JobFairIncomingContainer from "../../containers/JobFairList/admin/JobFairIncoming.container";
 
 
 const {TabPane} = Tabs;

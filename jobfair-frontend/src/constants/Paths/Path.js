@@ -25,7 +25,7 @@ export const PATH = {
   EMPLOYEE_MANAGEMENT: '/employee-management',
   MAP: '/map/',
   PROCESSED_FAIL: '/proceed-fail',
-  PROCESSED_SUCCESS: '',
+  PROCESSED_SUCCESS: '/',
   FINAL_ERROR_PAGE: '/error-500'
 }
 export const PATH_ADMIN = {
@@ -37,9 +37,10 @@ export const PATH_ADMIN = {
 }
 export const PATH_ATTENDANT = {
   ATTENDANT_PROFILE_PAGE: `/attendant/profile`,
-  ATTENDANT_JOBFAIRL_LIST_PAGE: '/attendant/jobfair-list',
+  ATTENDANT_JOB_FAIR_PAGE: '/attendant/job-fair',
   APPLIED_JOB_PAGE: '/applied-job',
-  ATTENDANT_PROFILE: ''
+  ATTENDANT_PROFILE: '',
+  JOB_FAIR_DETAIL: '/attendant/job-fair-detail'
 }
 export const PATH_COMPANY_EMPLOYEE = {
   COMPANY_PROFILE_PAGE: '/employee/company-profile',
@@ -53,7 +54,8 @@ export const PATH_COMPANY_MANAGER = {
   MANAGER_REGISTER_JOBFAIR: '/company-register-jobfair/',
   JOB_POSITION_MANAGEMENT: '/company/job-position-management',
   JOB_POSITION_DETAIL: '/company/job-position-detail',
-  CREATE_JOB_POSITION: '/company/create-job-position'
+  CREATE_JOB_POSITION: '/company/create-job-position',
+  JOB_FAIR_DETAIL: '/company/job-fair-detail'
 }
 export const PATH_STAFF = {
   APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId',

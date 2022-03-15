@@ -3,14 +3,12 @@ import {Button, Empty, Input, Space, Spin, Table} from "antd";
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import Highlighter from "react-highlight-words";
 import JobFairForAdminColumn from "./JobFairForAdmin.column";
+import {handleGetStatus} from "../../utils/common";
 
 const JobFairForAdminComponent = (props) => {
   const [searchText, setSearchText] = useState('')
   const [searchedColumn, setSearchedColumn] = useState('')
 
-  const handleGetStatus = (data) => {
-    return data.find(item => item.key !== undefined)
-  }
   const {data, extra} = props
   const result = handleGetStatus(data)
   let key = ''
