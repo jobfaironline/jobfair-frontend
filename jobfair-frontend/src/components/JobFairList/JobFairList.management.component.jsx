@@ -50,7 +50,9 @@ const JobFairListManagementComponent = props => {
     handleFilterByStatus,
     searchResult,
     getCompanyBoothId,
-    handleClearFilter
+    handleClearFilter,
+    handleViewDetail,
+    handleViewMap
   } = props
   const role = useSelector(state => state.authentication?.user?.roles)
   const contentStyle = {
@@ -217,13 +219,14 @@ const JobFairListManagementComponent = props => {
                                 <BankTwoTone /> 300
                               </Tag>
                             ) : null}
-                            <InfoCircleTwoTone />
+                            <InfoCircleTwoTone onClick={() => handleViewDetail(item['id'])}/>
                           </div>
                           <div style={{ position: 'absolute', bottom: '1rem' }}>
                             <CompanyJobFairActionButton
                               getCompanyBoothId={getCompanyBoothId}
                               item={item}
                               handleRedirect={handleRedirect}
+                              handleViewMap={handleViewMap}
                             />
                           </div>
                         </div>

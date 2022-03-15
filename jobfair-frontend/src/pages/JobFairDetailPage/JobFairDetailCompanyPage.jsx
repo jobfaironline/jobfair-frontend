@@ -12,7 +12,7 @@ const JobFairDetailCompanyPage = () => {
     <div className="page" style={{marginTop: 50}}>
       <PageHeader
         className="site-page-header"
-        onBack={() => history.push(PATH.JOB_FAIRS_PAGE)}
+        onBack={() => history.goBack()}
         title="Job fair detail"
         subTitle=""
       />

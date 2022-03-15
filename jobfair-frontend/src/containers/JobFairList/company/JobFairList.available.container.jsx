@@ -80,9 +80,14 @@ const JobFairListAvailableContainer = props => {
   }
 
   const handleViewDetail = (id) => {
+    console.log(id)
     history.push(PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL, {
       jobFairId: id
     })
+  }
+
+  const handleViewMap = (id) => {
+    history.push(`${PATH.MAP}${id}`)
   }
 
 
@@ -101,6 +106,7 @@ const JobFairListAvailableContainer = props => {
         getCompanyBoothId={getCompanyBoothId}
         handleClearFilter={handleClearFilter}
         handleViewDetail={handleViewDetail}
+        handleViewMap={handleViewMap}
       />
     </>
   )

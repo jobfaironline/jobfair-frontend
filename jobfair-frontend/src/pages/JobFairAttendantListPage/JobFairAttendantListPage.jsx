@@ -8,18 +8,6 @@ const {TabPane} = Tabs
 const {Title} = Typography
 const JobFairAttendantListPage = () => {
 
-  const availableArr = [
-    "HAPPENING",
-    "REGISTRABLE"
-  ]
-
-  const historyArr = [
-    "ATTENDED",
-    "CLOSED",
-    "REGISTERED",
-    "UNAVAILABLE"
-  ]
-
   return (
     <div className="page">
       <Divider size="small" plain>

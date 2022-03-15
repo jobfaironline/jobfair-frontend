@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Col, Row, Space, Tag, Typography } from 'antd'
+import {Card, Col, Empty, Row, Space, Spin, Tag, Typography} from 'antd'
 import { useHistory } from 'react-router-dom'
 import { JOB_FAIR_PLAN_STATUS } from '../../constants/JobFairConst'
 import { convertEnumToString, convertToDateString } from '../../utils/common'
@@ -8,6 +8,12 @@ const { Text } = Typography
 
 const JobFairDetailCompanyComponent = props => {
   const { data } = props
+  if (data === undefined) {
+    return <Spin/>
+  }
+  if (data.length === 0) {
+    return <Empty/>
+  }
   const handleStatusTag = status => {
     if (status === undefined) {
       return
@@ -27,7 +33,6 @@ const JobFairDetailCompanyComponent = props => {
         return <Tag color="orange">{convertEnumToString(status)}</Tag>
     }
   }
-
   const history = useHistory()
   return (
     <>

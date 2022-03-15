@@ -125,7 +125,7 @@ export const GenericButton = props => {
 }
 
 const CompanyJobFairActionButton = props => {
-  const { getCompanyBoothId, item, handleRedirect } = props
+  const { getCompanyBoothId, item, handleRedirect, handleViewMap } = props
 
   switch (item.status) {
     case COMPANY_JOB_FAIR_STATUS.REGISTRABLE:
@@ -142,7 +142,7 @@ const CompanyJobFairActionButton = props => {
     case COMPANY_JOB_FAIR_STATUS.CHOOSE_BOOTH:
       return <ChooseBoothButton onClick={() => handleRedirect(`${PATH.CHOOSE_BOOTH_PATH}${item.id}`)} />
     case COMPANY_JOB_FAIR_STATUS.HAPPENING:
-      return <HappeningButton onClick={() => notification['success']({message: 'Happening job fair clicked'})} />
+      return <HappeningButton onClick={() => handleViewMap(item.id)} />
     case COMPANY_JOB_FAIR_STATUS.CLOSED:
       return <ClosedButton onClick={() => notification['success']({message: 'Closed!!'})}/>
     case COMPANY_JOB_FAIR_STATUS.ATTENDED:

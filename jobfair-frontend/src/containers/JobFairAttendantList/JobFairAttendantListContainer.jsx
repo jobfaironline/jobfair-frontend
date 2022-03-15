@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import JobFairListManagementComponent from '../../components/JobFairList/JobFairList.management.component'
 import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
 import { getJobFairAvailableForAttendant } from '../../services/job-fair-controller/JobFairConTrollerService'
+import {PATH, PATH_ATTENDANT} from "../../constants/Paths/Path";
 const JobFairAttendantListContainer = (props) => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
@@ -25,7 +26,7 @@ const JobFairAttendantListContainer = (props) => {
         const result = res.data.content.map(item => {
           return {
             description: item?.jobFair.description,
-            id: item.id,
+            id: item?.jobFair.id,
             status: item.status
           }
         })
@@ -74,6 +75,16 @@ const JobFairAttendantListContainer = (props) => {
     setSearchResult([...data])
   }
 
+  const handleViewDetail = (id) => {
+    history.push(PATH_ATTENDANT.JOB_FAIR_DETAIL, {
+      jobFairId: id
+    })
+  }
+
+  const handleViewMap = (id) => {
+    history.push(`${PATH.MAP}${id}`)
+  }
+
   return (
     <div>
       <JobFairListManagementComponent
@@ -83,6 +94,8 @@ const JobFairAttendantListContainer = (props) => {
         handleFilterByStatus={handleFilterByStatus}
         searchResult={searchResult}
         handleClearFilter={handleClearFilter}
+        handleViewDetail={handleViewDetail}
+        handleViewMap={handleViewMap}
         // getCompanyBoothId={getCompanyBoothId}
       />
       <PaginationComponent handlePageChange={handlePageChange} totalRecord={data.length} />

@@ -6,6 +6,7 @@ import {
 } from "../../services/job-fair-controller/JobFairConTrollerService";
 import JobFairListManagementComponent from "../../components/JobFairList/JobFairList.management.component";
 import PaginationComponent from "../../components/PaginationComponent/Pagination.component";
+import {PATH_ATTENDANT, PATH_COMPANY_MANAGER} from "../../constants/Paths/Path";
 
 const JobFairAttendantAttendedContainer = () => {
   const [loading, setLoading] = useState(false)
@@ -29,7 +30,7 @@ const JobFairAttendantAttendedContainer = () => {
         const result = res.data.content.map(item => {
           return {
             description: item?.jobFair.description,
-            id: item.id,
+            id: item?.jobFair.id,
             status: item.status
           }
         })
@@ -78,6 +79,12 @@ const JobFairAttendantAttendedContainer = () => {
     setSearchResult([...data])
   }
 
+  const handleViewDetail = (id) => {
+    history.push(PATH_ATTENDANT.JOB_FAIR_DETAIL, {
+      jobFairId: id
+    })
+  }
+
   return (
     <div>
       <JobFairListManagementComponent
@@ -87,6 +94,7 @@ const JobFairAttendantAttendedContainer = () => {
         handleFilterByStatus={handleFilterByStatus}
         searchResult={searchResult}
         handleClearFilter={handleClearFilter}
+        handleViewDetail={handleViewDetail}
         // getCompanyBoothId={getCompanyBoothId}
       />
       <PaginationComponent handlePageChange={handlePageChange} totalRecord={data.length}/>
