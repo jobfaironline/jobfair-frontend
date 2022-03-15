@@ -5,10 +5,9 @@ export const CameraControls = (props) => {
     const {enabled} = props;
     return (
         <OrbitControls enabled={enabled ?? true} enableZoom={true}
-                       minZoom={10}
                        minDistance={50}
                        maxPolarAngle={Math.PI / 2 - Math.PI / 10}
                        minPolarAngle={0}
-                       maxDistance={100}/>
+                       maxDistance={1000}/>
     )
 };

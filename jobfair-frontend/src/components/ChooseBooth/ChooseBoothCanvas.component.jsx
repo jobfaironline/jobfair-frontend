@@ -1,6 +1,6 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment, useState, Suspense } from 'react'
 import {Canvas} from '@react-three/fiber'
-import {Stage} from '@react-three/drei'
+import {Html, Stage, Stats, useProgress} from '@react-three/drei'
 import {EffectComposer, Outline} from '@react-three/postprocessing'
 import {ChooseBoothGroundMesh} from './ChooseBoothGroundMesh.component'
 import {ArrowHelper} from './ArrowHelper.component'
@@ -15,11 +15,20 @@ import {CameraControls} from '../ThreeJSBaseComponent/CameraControls.component'
 import {SkyComponent, SkyType} from '../ThreeJSBaseComponent/Sky.component'
 import {SkyTypeSelect} from '../ThreeJSBaseComponent/SelectSkyType.component'
 import {PATH} from '../../constants/Paths/Path'
+import {KernelSize, Resizer} from "postprocessing";
+
+
+function Loader() {
+  const { active, progress, errors, item, loaded, total } = useProgress()
+  console.log(progress)
+  return <Html center>{progress} % loaded</Html>
+}
 
 export const ChooseBoothCanvas = props => {
   const {mesh, boothData, jobFairId} = props
   const history = useHistory()
   const [hoverRef, setHoverRef] = useState()
+  const [selectionRef, setSelectionRef] = useState();
   const [modalState, setModalState] = useState({
     isVisible: false,
     boothId: ''
@@ -45,6 +54,7 @@ export const ChooseBoothCanvas = props => {
   }
 
   const handleCancel = () => {
+    setSelectionRef(undefined)
     setModalState(prevState => {
       return {...prevState, boothId: '', isVisible: false}
     })
@@ -59,7 +69,8 @@ export const ChooseBoothCanvas = props => {
     setHoverRef(undefined)
   }
 
-  const onClick = boothId => {
+  const onClick = (boothId, ref) => {
+    setSelectionRef(ref);
     setModalState(prevState => {
       return {...prevState, boothId: boothId, isVisible: true}
     })
@@ -69,6 +80,17 @@ export const ChooseBoothCanvas = props => {
     setSkyType(value.value)
   }
 
+  const calculateOutline = () => {
+    const result = [];
+    if (selectionRef !== undefined && selectionRef?.current !== undefined){
+      result.push(selectionRef);
+    }
+    if (hoverRef !== undefined && hoverRef?.current !== undefined){
+      result.push(hoverRef);
+    }
+    return result.length === 0 ? null : result
+    }
+
   return (
     <Fragment>
       <Modal title="Confirm booth" visible={modalState.isVisible} onOk={handleOk} onCancel={handleCancel}>
@@ -77,14 +99,16 @@ export const ChooseBoothCanvas = props => {
       <SkyTypeSelect onChange={onChangeSkyType}/>
       <Canvas
         dpr={[1, 2]}
-        camera={{fov: 50}}
+        linear={true}
         shadowMap
         style={{width: '100%', height: '970px', cursor: hoverRef === undefined ? 'default' : 'pointer'}}
+        camera={{far: 5000, fov: 50}}
       >
+        <ambientLight intensity={1.3} />
+        <directionalLight position={[0, 0, 5]} intensity={2.3} />
         <CameraControls/>
         <SkyComponent style={skyType}/>
 
-        <Stage preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
           <group dispose={null}>
             {mesh.children.map(childMesh => {
               if (childMesh.name.includes('company')) {
@@ -93,10 +117,11 @@ export const ChooseBoothCanvas = props => {
                   <ChooseBoothGroundMesh
                     key={childMesh.uuid}
                     mesh={childMesh}
+                    boothId={id}
                     isAvailable={boothData[childMesh.name] !== undefined}
                     onPointerOver={onCompanyGroundPointerOver}
                     onPointerLeave={onCompanyGroundPointerOut}
-                    onClick={() => onClick(id)}
+                    onClick={onClick}
                   />
                 )
               }
@@ -109,17 +134,19 @@ export const ChooseBoothCanvas = props => {
               return null
             })}
           </group>
-        </Stage>
         <EffectComposer multisampling={8} autoClear={false}>
           <Outline
-            selection={hoverRef}
-            edgeStrength={100}
-            width={1000}
-            hiddenEdgeColor={'green'}
-            visibleEdgeColor={'green'}
+            selection={calculateOutline()}
+            edgeStrength={10000}
+            width={Resizer.AUTO_SIZE} // render width
+            height={Resizer.AUTO_SIZE} // render height
+            kernelSize={KernelSize.LARGE} //
+            hiddenEdgeColor={0xffffff}
+            visibleEdgeColor={0x22090a}
           />
         </EffectComposer>
       </Canvas>
+      <Stats></Stats>
     </Fragment>
   )
 }
