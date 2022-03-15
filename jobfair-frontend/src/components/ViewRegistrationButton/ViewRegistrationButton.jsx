@@ -12,6 +12,9 @@ const ViewRegistrationButton = (props) => {
         return;
     }
     switch (status) {
+        case JOB_FAIR_FOR_ADMIN_STATUS.ATTENDANT_REGISTER:
+        case JOB_FAIR_FOR_ADMIN_STATUS.HAPPENING:
+        case JOB_FAIR_FOR_ADMIN_STATUS.COMPANY_BUY_BOOTH:
         case JOB_FAIR_FOR_ADMIN_STATUS.COMPANY_REGISTER:
             return (
                 <Tooltip placement="top" title='View registration'>
