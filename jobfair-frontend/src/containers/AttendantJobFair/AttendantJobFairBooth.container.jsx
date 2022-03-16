@@ -11,11 +11,14 @@ import {getCompanyBoothLatestLayout} from '../../services/company-booth-layout-c
 import * as THREE from "three";
 import ThirdPersonCamera from "../../utils/ThreeJS/ThirdPersonCamera";
 import BasicCharacterControl from "../../utils/ThreeJS/BasicCharacterControl";
+import {InventoryContainer} from "../../components/AttendantJobFair/Inventory.container";
+import {LoadingComponent} from "../../components/JobFairParkMap/Loading.component";
+import {Button, Modal} from "antd";
 
 
 class CharacterModel extends BasicCharacterControl {
-  constructor({animations, target, mixer, thirdPersonCamera, collidableMeshListRef}) {
-    super({animations, target, mixer, thirdPersonCamera, collidableMeshListRef});
+  constructor({animations, target, mixer, thirdPersonCamera, collidableMeshListRef, zoom}) {
+    super({animations, target, mixer, thirdPersonCamera, collidableMeshListRef, zoom});
     this.animations.idle.play();
   }
 
@@ -49,7 +52,7 @@ export const AttendantJobFairBoothContainer = props => {
   const [state, setState] = useState({
     model: undefined,
     characterControl: undefined,
-    boothMesh: undefined
+    boothMesh: undefined,
   })
 
   const getBoothMesh = async (companyBoothId) => {
@@ -74,8 +77,12 @@ export const AttendantJobFairBoothContainer = props => {
     const floorMesh = boothMesh.children.filter(child => child.name === "sand")[0];
     const floorHeight = calculateMeshSize(floorMesh).height
     //load model
-    const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx");
-    model.scale.setScalar(0.07 / 2);
+    const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx");
+    //const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx");
+
+    const boothSize = calculateMeshSize(boothMesh);
+
+    model.scale.setScalar((boothSize.width / 200) / 2.5);
     //model.position.setY(center * 2)
     model.children.forEach(child => {
       if (child.isMesh) {
@@ -88,8 +95,10 @@ export const AttendantJobFairBoothContainer = props => {
 
     const modelSize = calculateMeshSize(model);
     //load animation
-    const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx");
-    const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking4.fbx")
+   /* const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx");
+    const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking4.fbx")*/
+    const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx");
+    const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx")
     const mixer = new THREE.AnimationMixer(model);
     const animations = {
       'walk': mixer.clipAction(walkingModel.animations[0]),
@@ -101,15 +110,18 @@ export const AttendantJobFairBoothContainer = props => {
       cameraRef: cameraRef,
       target: model,
       height: modelSize.height,
+      zoom: (boothSize.width / 200) / 2.5
     });
     const params = {
       target: model,
       animations: animations,
       mixer: mixer,
       thirdPersonCamera: thirdPersonCamera,
-      collidableMeshListRef: sceneMeshRef
+      collidableMeshListRef: sceneMeshRef,
+      zoom: (boothSize.width / 200) / 2.5
     }
     const characterControl = new CharacterModel({...params});
+
 
 
     setState(prevState => {
@@ -122,13 +134,24 @@ export const AttendantJobFairBoothContainer = props => {
     })
 
   }, [])
-  if (state.boothMesh === undefined) return null;
+
+
+
+  if (state.boothMesh === undefined) return <LoadingComponent/>;
+  const boothSize = calculateMeshSize(state.boothMesh);
   const cProps = {
     boothMesh: state.boothMesh,
     model: state.model,
     characterControl: state.characterControl,
     cameraRef,
-    sceneMeshRef
+    sceneMeshRef,
+    zoom: (boothSize.width / 200) / 2.5
   }
-  return <CompanyBoothCanvasComponent {...cProps}/>
+  return (
+    <>
+
+      <InventoryContainer/>
+      <CompanyBoothCanvasComponent {...cProps}/>
+    </>
+  )
 }

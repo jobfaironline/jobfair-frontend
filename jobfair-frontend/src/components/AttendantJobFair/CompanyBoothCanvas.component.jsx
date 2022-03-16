@@ -11,7 +11,7 @@ import {notification} from "antd";
 import {CVSubmitComponent} from "./CVSubmit.component";
 
 export const CompanyBoothCanvasComponent = (props) => {
-  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef} = props;
+  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef, zoom} = props;
   const [view, setView] = useState(false);
   const cvSubmitRef = useRef()
 
@@ -25,6 +25,7 @@ export const CompanyBoothCanvasComponent = (props) => {
     isChangeCamera.current = true;
     setView(value.value === "First")
   }
+
 
   return (
     <div style={{width: '100%', height: '100vh'}}
@@ -45,7 +46,7 @@ export const CompanyBoothCanvasComponent = (props) => {
       <ViewSelect onChange={onChange}/>
       <Canvas
         dpr={[1, 2]}
-        camera={{fov: 45}}
+        camera={{fov: 45, zoom: 0.04 / zoom}}
         style={{width: '100%', height: '100vh'}}
         onCreated={(state => {
           cameraRef.current = state.camera
@@ -55,11 +56,11 @@ export const CompanyBoothCanvasComponent = (props) => {
         {view ? <FirstPersonControl model={model} isChangeCamera={isChangeCamera} collidableMeshListRef={sceneMeshRef}/> : <OrbitControls enableZoom={true}
                                                                                                      maxPolarAngle={Math.PI / 2 - Math.PI / 10}
                                                                                                      minPolarAngle={0}
-                                                                                                     maxDistance={100}/>}
+                                                                                                     />}
         <Stage adjustCamera={false} preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
           <group ref={sceneMeshRef}>
             {boothMesh.children.map(child => {
-              if (child.name === "rostrum") {
+              if (child.name === "rostrum" || child.name === "reception_desk") {
                 return <CVSubmitComponent mesh={child} cvSubmitRef={cvSubmitRef}/>;
               }
               return <BasicMesh mesh={child}/>

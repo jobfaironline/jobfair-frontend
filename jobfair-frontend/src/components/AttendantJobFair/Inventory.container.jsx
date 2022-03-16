@@ -6,7 +6,7 @@ import {InventoryButton} from "./InventoryButton.component";
 
 export const InventoryContainer = (props) => {
 
-  const [inventoryVisible, setInventoryVisible] = useState(true);
+  const [inventoryVisible, setInventoryVisible] = useState(false);
   const onClick = () => {
     setInventoryVisible(prevState => !prevState);
   }

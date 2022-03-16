@@ -5,6 +5,8 @@ import JobFairParkMapComponent from '../../components/JobFairParkMap/JobFairPark
 import { getLayoutInformationForJobFairPark } from '../../services/job-fair-controller/JobFairConTrollerService'
 import { useHistory } from 'react-router-dom'
 import { PATH } from '../../constants/Paths/Path'
+import ReactLoading from "react-loading";
+import {LoadingComponent} from "../../components/JobFairParkMap/Loading.component";
 const getBootMesh = async (position, foundationBox, url, companyBoothId, companyBoothLayoutVideos) => {
   const gltf = await loadGLBModel(url)
   const { x, y, z } = position
@@ -76,7 +78,9 @@ const JobFairParkMapContainer = props => {
   }, [])
 
   if (state.mapMesh === null && state.boothMeshes.length === 0) {
-    return null
+    return (
+      <LoadingComponent/>
+    )
   }
 
   const clickHandle = companyBoothId => {
