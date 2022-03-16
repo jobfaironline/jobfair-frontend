@@ -103,8 +103,6 @@ export const ChooseBoothCanvas = props => {
         style={{width: '100%', height: '970px', cursor: hoverRef === undefined ? 'default' : 'pointer'}}
         camera={{far: 5000, fov: 50}}
       >
-        <ambientLight intensity={0.5} />
-        <directionalLight intensity={0.5} />
         <CameraControls/>
         <SkyComponent style={skyType}/>
 
