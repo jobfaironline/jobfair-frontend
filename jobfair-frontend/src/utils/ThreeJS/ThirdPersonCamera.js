@@ -6,6 +6,7 @@ export default class ThirdPersonCamera {
     this._cameraRef = params.cameraRef;
     this._height = params.height;
     this._currentLookat = new THREE.Vector3();
+    this._zoom = params.zoom;
   }
 
   calculateIdealLookAt() {
@@ -22,7 +23,8 @@ export default class ThirdPersonCamera {
     const t = 1.0 - Math.pow(0.001, timeElapsed);
 
     this._currentLookat.lerp(idealLookAt, t);
-
     this._cameraRef?.current?.lookAt(this._currentLookat);
+    this._cameraRef.current.zoom = 0.04 / this._zoom;
+    this._cameraRef.current.updateProjectionMatrix();
   }
 }
