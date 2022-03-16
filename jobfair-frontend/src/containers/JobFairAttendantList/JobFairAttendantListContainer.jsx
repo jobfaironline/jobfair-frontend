@@ -4,6 +4,7 @@ import JobFairListManagementComponent from '../../components/JobFairList/JobFair
 import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
 import { getJobFairAvailableForAttendant } from '../../services/job-fair-controller/JobFairConTrollerService'
 import {PATH, PATH_ATTENDANT} from "../../constants/Paths/Path";
+import {convertToDateString} from "../../utils/common";
 const JobFairAttendantListContainer = (props) => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
@@ -25,9 +26,20 @@ const JobFairAttendantListContainer = (props) => {
         setCount(count + 1)
         const result = res.data.content.map(item => {
           return {
-            description: item?.jobFair.description,
-            id: item?.jobFair.id,
-            status: item.status
+            id: item.jobFair.id,
+            status: item.status,
+            companyId: item.companyId,
+            startTime: convertToDateString(item.jobFair.startTime),
+            endTime: convertToDateString(item.jobFair.endTime),
+            companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime),
+            attendantRegisterStartTime: convertToDateString(item.jobFair.attendantRegisterStartTime),
+            description: item.jobFair.description,
+            layoutId: item.jobFair.layoutId,
+            thumbnail: item.jobFair.thumbnail,
+            name: item.jobFair.name,
+            estimateParticipant: item.jobFair.estimateParticipant,
+            targetCompany: item.jobFair.targetCompany,
+            targetAttendant: item.jobFair.targetAttendant
           }
         })
         setData([...data, ...result])

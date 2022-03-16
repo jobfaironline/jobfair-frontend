@@ -14,7 +14,7 @@ const JobFairAttendantListPage = () => {
         <Title>Job Fair List</Title>
       </Divider>
       <Tabs defaultActiveKey="1" centered>
-        <TabPane tab={"Available to register"} key={1}>
+        <TabPane tab={"Happening job fairs"} key={1}>
           <JobFairAttendantListContainer/>
         </TabPane>
         <TabPane tab={"My job fair history"} key={2}>
