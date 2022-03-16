@@ -80,7 +80,6 @@ const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVis
 
   const getTotalCompanyRegistrationOfJobFair = async () => {
     if (jobFairId !== undefined) {
-      console.log(jobFairId)
       //need API for getting company registrations have status APPROVE by jobfairId
       getRegistrationByJobFairId(jobFairId, 0, 5000, 'createDate', 'DESC')
         .then(res => {

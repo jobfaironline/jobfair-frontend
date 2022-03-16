@@ -42,9 +42,7 @@ const JobPositionManagementContainer = props => {
         ])
       })
       .catch(err => {
-        notification['error']({
-          message: `Error: ${err}`
-        })
+//
       })
   }
   useEffect(() => {
@@ -54,10 +52,7 @@ const JobPositionManagementContainer = props => {
         setListEmailSuggestion(handleCreateListEmailFromListAccount(res.data))
       })
       .catch(e => {
-        notification['error']({
-          message: `get company employee error!`,
-          description: `Error detail: ${e}`
-        })
+//
       })
   }, [])
   useLayoutEffect(() => {
