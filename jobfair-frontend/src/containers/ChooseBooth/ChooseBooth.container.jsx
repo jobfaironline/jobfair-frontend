@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { loadGLBModel } from '../../utils/ThreeJS/threeJSUtil'
 import { ChooseBoothCanvas } from '../../components/ChooseBooth/ChooseBoothCanvas.component'
 import { getLayoutAndAvailableSlotByJobFairId } from '../../services/layout-controller/LayoutControllerService'
+import ReactLoading from "react-loading";
+
+
+
 
 export const ChooseBoothPageContainer = props => {
   const { jobFairId } = props
   const [state, setState] = useState({
     glbMesh: undefined,
-    boothData: []
+    boothData: [],
   })
 
   useEffect(async () => {
@@ -30,6 +34,13 @@ export const ChooseBoothPageContainer = props => {
     })
   }, [])
 
-  if (state.glbMesh === undefined || state.boothData.length === 0) return null
+  if (state.glbMesh === undefined || state.boothData.length === 0) return <div style={{width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center"}}>
+    <ReactLoading
+      type={"spin"}
+      color={"#1890ff"}
+      height={100}
+      width={100}
+    />
+  </div>
   return <ChooseBoothCanvas mesh={state.glbMesh} boothData={state.boothData} jobFairId={jobFairId} />
 }

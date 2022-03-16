@@ -2,7 +2,7 @@ import React, {useRef} from "react";
 import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
 
 export const ChooseBoothGroundMesh = (props) => {
-    const {mesh, onPointerOver, onPointerLeave, onClick, isAvailable} = props;
+    const {mesh, onPointerOver, onPointerLeave, onClick, isAvailable, boothId} = props;
     const ref = useRef();
     if (!isAvailable){
         const newMaterial = mesh.material.clone();
@@ -35,7 +35,9 @@ export const ChooseBoothGroundMesh = (props) => {
                 if (!isAvailable) return;
                 onPointerLeave(ref);
             }}
-            onClick={isAvailable ? onClick : null}
+            onClick={() => {
+                isAvailable ? onClick(boothId, ref) : null
+            }}
         >
             {mesh.children.map(child => (
                 <BasicMesh mesh={child}/>
