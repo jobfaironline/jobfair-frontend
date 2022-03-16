@@ -11,6 +11,8 @@ import {getCompanyBoothLatestLayout} from '../../services/company-booth-layout-c
 import * as THREE from "three";
 import ThirdPersonCamera from "../../utils/ThreeJS/ThirdPersonCamera";
 import BasicCharacterControl from "../../utils/ThreeJS/BasicCharacterControl";
+import {InventoryContainer} from "../../components/AttendantJobFair/Inventory.container";
+import {LoadingComponent} from "../../components/JobFairParkMap/Loading.component";
 
 
 class CharacterModel extends BasicCharacterControl {
@@ -122,7 +124,7 @@ export const AttendantJobFairBoothContainer = props => {
     })
 
   }, [])
-  if (state.boothMesh === undefined) return null;
+  if (state.boothMesh === undefined) return <LoadingComponent/>;
   const cProps = {
     boothMesh: state.boothMesh,
     model: state.model,
@@ -130,5 +132,10 @@ export const AttendantJobFairBoothContainer = props => {
     cameraRef,
     sceneMeshRef
   }
-  return <CompanyBoothCanvasComponent {...cProps}/>
+  return (
+    <>
+      <InventoryContainer/>
+      <CompanyBoothCanvasComponent {...cProps}/>
+    </>
+  )
 }

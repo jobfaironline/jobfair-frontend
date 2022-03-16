@@ -62,7 +62,6 @@ const AttendantJobFairPage = () => {
         <div className={styles.booth}>
           <Stats/>
           <AttendantJobFairBoothContainer companyBoothId={companyBoothId}/>
-          <InventoryContainer/>
 
         </div>
         {/*<div>
