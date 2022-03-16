@@ -223,14 +223,9 @@ const CreateJobPositionForm = props => {
             tooltip="This is required"
             rules={JobPositionValidation.contactPerson}
             name="contactPersonName"
-            style={{ display: 'inline-block', width: '45%', marginLeft: '1rem', marginRight: '1rem' }}
+            style={{ display: 'inline-block', width: '45%', marginLeft: '1rem', marginRight: '1.25rem' }}
           >
-            <AutoComplete
-              style={{
-                width: 200
-              }}
-              onSearch={handleAutoCompleteContactPerson}
-            >
+            <AutoComplete onSearch={handleAutoCompleteContactPerson}>
               {resultNameSuggested.map(name => (
                 <AutoComplete.Option key={name} value={name}>
                   {name}
@@ -245,14 +240,9 @@ const CreateJobPositionForm = props => {
             tooltip="This is required"
             rules={JobPositionValidation.email}
             name="contactEmail"
-            style={{ display: 'inline-block', width: '45%', marginLeft: '1rem', marginRight: '1rem' }}
+            style={{ display: 'inline-block', width: '45%', marginLeft: '1.25rem', marginRight: '1rem' }}
           >
-            <AutoComplete
-              style={{
-                width: 200
-              }}
-              onSearch={handleAutoCompleteEmail}
-            >
+            <AutoComplete onSearch={handleAutoCompleteEmail}>
               {resultEmailSuggested.map(email => (
                 <AutoComplete.Option key={email} value={email}>
                   {email}
