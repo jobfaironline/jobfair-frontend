@@ -89,7 +89,7 @@ export const FirstPersonControl = (props) => {
 
     const box = new THREE.Box3(new THREE.Vector3(bone_min.x, bone_min.y, bone_min.z), new THREE.Vector3(bone_max.x, bone_max.y, bone_max.z))
     //check collision
-    if (collidableMeshListRef !== undefined) {
+    /*if (collidableMeshListRef !== undefined) {
       for (const child of collidableMeshListRef.current.children) {
         if (child.name === "sand") continue
         const childBox = new THREE.Box3().setFromObject(child);
@@ -99,7 +99,7 @@ export const FirstPersonControl = (props) => {
           return;
         }
       }
-    }
+    }*/
 
   }
 
@@ -119,7 +119,11 @@ export const FirstPersonControl = (props) => {
 
 
 
-  useFrame(() => {
+  useFrame((state) => {
+    state.camera.zoom = 1
+    state.camera.updateProjectionMatrix();
+
+    console.log(state.camera.zoom);
     control();
   })
 

@@ -17,8 +17,8 @@ import {Button, Modal} from "antd";
 
 
 class CharacterModel extends BasicCharacterControl {
-  constructor({animations, target, mixer, thirdPersonCamera, collidableMeshListRef}) {
-    super({animations, target, mixer, thirdPersonCamera, collidableMeshListRef});
+  constructor({animations, target, mixer, thirdPersonCamera, collidableMeshListRef, zoom}) {
+    super({animations, target, mixer, thirdPersonCamera, collidableMeshListRef, zoom});
     this.animations.idle.play();
   }
 
@@ -80,7 +80,9 @@ export const AttendantJobFairBoothContainer = props => {
     const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx");
     //const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx");
 
-    model.scale.setScalar(0.07 / 2);
+    const boothSize = calculateMeshSize(boothMesh);
+
+    model.scale.setScalar((boothSize.width / 200) / 2.5);
     //model.position.setY(center * 2)
     model.children.forEach(child => {
       if (child.isMesh) {
@@ -108,13 +110,15 @@ export const AttendantJobFairBoothContainer = props => {
       cameraRef: cameraRef,
       target: model,
       height: modelSize.height,
+      zoom: (boothSize.width / 200) / 2.5
     });
     const params = {
       target: model,
       animations: animations,
       mixer: mixer,
       thirdPersonCamera: thirdPersonCamera,
-      collidableMeshListRef: sceneMeshRef
+      collidableMeshListRef: sceneMeshRef,
+      zoom: (boothSize.width / 200) / 2.5
     }
     const characterControl = new CharacterModel({...params});
 
@@ -134,12 +138,14 @@ export const AttendantJobFairBoothContainer = props => {
 
 
   if (state.boothMesh === undefined) return <LoadingComponent/>;
+  const boothSize = calculateMeshSize(state.boothMesh);
   const cProps = {
     boothMesh: state.boothMesh,
     model: state.model,
     characterControl: state.characterControl,
     cameraRef,
-    sceneMeshRef
+    sceneMeshRef,
+    zoom: (boothSize.width / 200) / 2.5
   }
   return (
     <>

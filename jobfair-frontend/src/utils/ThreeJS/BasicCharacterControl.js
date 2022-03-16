@@ -2,13 +2,13 @@ import * as THREE from "three";
 import BasicControlInput from "./BasicControlInput";
 
 export default class BasicCharacterControl {
-  constructor({animations, target, mixer, thirdPersonCamera, collidableMeshListRef}) {
+  constructor({animations, target, mixer, thirdPersonCamera, collidableMeshListRef, zoom}) {
     this.animations = animations;
     this.target = target;
     this.mixer = mixer;
     this.thirdPersonCamera = thirdPersonCamera;
     this._decceleration = new THREE.Vector3(-0.0005, -0.0001, -20.0);
-    this._acceleration = new THREE.Vector3(1, 2, 200.0);
+    this._acceleration = new THREE.Vector3(1, 2, 200.0 / (0.04 / zoom));
     this._velocity = new THREE.Vector3(0, 0, 0);
     this._input = new BasicControlInput();
     this.collidableMeshListRef = collidableMeshListRef;
@@ -121,9 +121,9 @@ export default class BasicCharacterControl {
     this.switchAnimation();
     this.mixer.update(timeInSeconds);
     this.thirdPersonCamera.Update(timeInSeconds);
-    if (this.checkTargetCollision(scene)){
+    /*if (this.checkTargetCollision(scene)){
       controlObject.position.copy(oldPosition)
-    }
+    }*/
 
   }
 }
