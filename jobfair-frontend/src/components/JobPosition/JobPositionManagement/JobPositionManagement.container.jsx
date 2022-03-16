@@ -35,11 +35,12 @@ const JobPositionManagementContainer = props => {
                         }
                     })
                 ])
+                notification['success']({
+                    message: 'All job positions have been loaded'
+                })
             })
             .catch(err => {
-                notification['error']({
-                    message: `Error: ${err}`
-                })
+                //
             })
     }
 
