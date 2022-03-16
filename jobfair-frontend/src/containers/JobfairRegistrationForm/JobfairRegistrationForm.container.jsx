@@ -196,11 +196,11 @@ const JobfairRegistrationForm = () => {
 const getCompanyProfile = async (companyId, setCompanyInfo) => {
   getCompanyProfileAPI(companyId)
     .then(res => {
-      notification['success']({
-        message: `Fetch company profile successfully`,
-        description: `For company with ${companyId}`,
-        duration: 2
-      })
+      // notification['success']({
+      //   message: `Fetch company profile successfully`,
+      //   description: `For company with ${companyId}`,
+      //   duration: 2
+      // })
       const response = {
         ...res.data,
         benefits: res.data.companyBenefitDTOS.map(item => {
@@ -228,11 +228,11 @@ const getCompanyProfile = async (companyId, setCompanyInfo) => {
 const submitRegistration = async (companyRegistrationId, successCallback, failedCallback) => {
   try {
     const res = await submitRegistrationAPI(companyRegistrationId)
-    notification['success']({
-      message: `Registration draft version has been submitted`,
-      description: `Submitted successfully`,
-      duration: 2
-    })
+    // notification['success']({
+    //   message: `Registration draft version has been submitted`,
+    //   description: `Submitted successfully`,
+    //   duration: 2
+    // })
     successCallback()
   } catch (err) {
     notification['error']({
@@ -247,11 +247,11 @@ const submitRegistration = async (companyRegistrationId, successCallback, failed
 const onCreateDraft = async body => {
   try {
     const res = await createDraftRegistrationAPI(body)
-    notification['success']({
-      message: `Registration draft version has been created`,
-      description: `Created draft successfully`,
-      duration: 2
-    })
+    // notification['success']({
+    //   message: `Registration draft version has been created`,
+    //   description: `Created draft successfully`,
+    //   duration: 2
+    // })
     return res.data.companyRegistrationId
   } catch (err) {
     notification['error']({
