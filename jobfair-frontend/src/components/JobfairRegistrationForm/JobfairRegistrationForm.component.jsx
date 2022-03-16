@@ -61,7 +61,7 @@ const JobfairRegistrationForm = ({ form , jobFairId}) => {
   // }, [])
   return (
     <>
-      {adminMessage.length !== 0 ?
+      {adminMessage?.length !== 0 ?
         (
           <div style={{marginBottom: 20}}>
             <Text strong>Admin request change content: </Text>
