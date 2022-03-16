@@ -19,18 +19,20 @@ const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVis
   const [totalBooth, setTotalBooth] = useState(0)
 
   const fetchData = async () => {
-    const jobFair = jobFairList?.find(item => item.id === jobFairId)
-    setJobFairDetail(jobFair)
-    //get creator name by creatorId
-    getAccountByIdAPI(creatorId)
-      .then(res => {
-        setCreatorInfo(
-          `Full name: ${res.data.firstname} ${res.data.middlename} ${res.data.lastname}. Role: ${convertEnumToString(res.data.role)}`
-        )
-      })
-      .catch(err => {
-        //
-      })
+    if (jobFairList !== undefined && jobFairId !== undefined && jobFairList.length > 0) {
+      const jobFair = jobFairList.find(item => item.id === jobFairId)
+      setJobFairDetail(jobFair)
+      //get creator name by creatorId
+      getAccountByIdAPI(creatorId)
+        .then(res => {
+          setCreatorInfo(
+            `Full name: ${res.data.firstname} ${res.data.middlename} ${res.data.lastname}. Role: ${convertEnumToString(res.data.role)}`
+          )
+        })
+        .catch(err => {
+          //
+        })
+    }
   }
 
   const onOk = () => {
@@ -45,7 +47,7 @@ const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVis
     fetchData()
     getTotalCompanyRegistrationOfJobFair()
     getTotalBoothOfJobFair()
-  }, [jobFairId])
+  }, [])
 
   const onFinish = values => {
     evaluateJobFairPlanAPI(values)
@@ -77,29 +79,34 @@ const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVis
 
 
   const getTotalCompanyRegistrationOfJobFair = async () => {
-    //need API for getting company registrations have status APPROVE by jobfairId
-    getRegistrationByJobFairId(jobFairId, 0, 5000, 'createDate', 'DESC')
-      .then(res => {
-        const approvalRegistrations = res.data.content.filter(item => item.status === CompanyRegistrationStatus.APPROVE).length
-        setTotalApproval(approvalRegistrations)
-        const totalRegistrations = res.data.totalElements
-        setTotalRegistration(totalRegistrations)
-      })
-      .catch(err => {
-        //
-      })
+    if (jobFairId !== undefined) {
+      console.log(jobFairId)
+      //need API for getting company registrations have status APPROVE by jobfairId
+      getRegistrationByJobFairId(jobFairId, 0, 5000, 'createDate', 'DESC')
+        .then(res => {
+          const approvalRegistrations = res.data.content.filter(item => item.status === CompanyRegistrationStatus.APPROVE).length
+          setTotalApproval(approvalRegistrations)
+          const totalRegistrations = res.data.totalElements
+          setTotalRegistration(totalRegistrations)
+        })
+        .catch(err => {
+          //
+        })
+    }
   }
 
-  const getTotalBoothOfJobFair = () => {
+  const getTotalBoothOfJobFair = async () => {
     //get total booth by layoutId
-    getLayoutDetail(jobFairDetail?.layoutId)
-      .then(res => {
-        const totalBooth = res.data.booths.length
-        setTotalBooth(totalBooth)
-      })
-      .catch(err => {
+    if (jobFairDetail !== null && jobFairDetail.layoutId !== undefined) {
+      getLayoutDetail(jobFairDetail.layoutId)
+        .then(res => {
+          const totalBooth = res.data.booths.length
+          setTotalBooth(totalBooth)
+        })
+        .catch(err => {
 
-      })
+        })
+    }
   }
 
   return (

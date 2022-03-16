@@ -53,7 +53,8 @@ const JobFairListManagementComponent = props => {
     getCompanyBoothId,
     handleClearFilter,
     handleViewDetail,
-    handleViewMap
+    handleViewMap,
+    handleRequestChange
   } = props
   const role = useSelector(state => state.authentication?.user?.roles)
   const contentStyle = {
@@ -133,7 +134,7 @@ const JobFairListManagementComponent = props => {
                       </Col>
                       <Col span={14}>
                         <div>
-                          <Title level={2}>{`${item['description']}`}</Title>
+                          <Title level={2}>{item.name}</Title>
                         </div>
                         <Row justify="space-between">
                           <Row justify="space-between" gutter={32}>
@@ -228,6 +229,7 @@ const JobFairListManagementComponent = props => {
                               item={item}
                               handleRedirect={handleRedirect}
                               handleViewMap={handleViewMap}
+                              handleRequestChange={handleRequestChange}
                             />
                           </div>
                         </div>

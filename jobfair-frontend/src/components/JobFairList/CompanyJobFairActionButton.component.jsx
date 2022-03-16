@@ -113,6 +113,17 @@ export const RequestChangeButton = props => {
   )
 }
 
+export const RejectButton = props => {
+  const { onClick } = props
+  return (
+    <Tooltip title="Sorry, your registration was rejected. Click to view the reason" color="red">
+      <Button type="primary" onClick={onClick}>
+        REJECT
+      </Button>
+    </Tooltip>
+  )
+}
+
 export const GenericButton = props => {
   const { onClick, status } = props
   return (
@@ -125,7 +136,7 @@ export const GenericButton = props => {
 }
 
 const CompanyJobFairActionButton = props => {
-  const { getCompanyBoothId, item, handleRedirect, handleViewMap } = props
+  const { getCompanyBoothId, item, handleRedirect, handleViewMap, handleRequestChange } = props
 
   switch (item.status) {
     case COMPANY_JOB_FAIR_STATUS.REGISTRABLE:
@@ -148,7 +159,7 @@ const CompanyJobFairActionButton = props => {
     case COMPANY_JOB_FAIR_STATUS.ATTENDED:
       return <AttendedButton onClick={() => notification['success']({message: '💖'})}/>
     case COMPANY_JOB_FAIR_STATUS.REQUEST_CHANGE:
-      return <RequestChangeButton onClick={() => notification['success']({message: 'Change your registration now'})}/>
+      return <RequestChangeButton onClick={() => handleRequestChange(item.id)}/>
     default:
       return <GenericButton status={item.status} />
   }

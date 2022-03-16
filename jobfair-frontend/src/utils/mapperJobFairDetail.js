@@ -25,7 +25,7 @@ export const mapperResponseJobFairForAdmin = (res) => {
   return res.data.content.map((item, index) => {
     return {
       no: index + 1,
-      id: item.jobFair.id,
+      id: item.jobFairId,
       companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime),
       companyRegisterEndTime: convertToDateString(item.jobFair.companyRegisterEndTime),
       companyBuyBoothStartTime: convertToDateString(item.jobFair.companyBuyBoothStartTime),
@@ -40,7 +40,9 @@ export const mapperResponseJobFairForAdmin = (res) => {
       estimateParticipant: item.jobFair.estimateParticipant,
       targetCompany: item.jobFair.targetCompany,
       targetAttendant: item.jobFair.targetAttendant,
-      status: item.status
+      createTime: convertToDateString(item.jobFair.createTime),
+      thumbnail: item.jobFair.thumbnail,
+      status: item.status,
     }
   })
 }
