@@ -157,6 +157,24 @@ const AuthenticationButtonGroups = ({ handleRedirect }) => {
 
 const AvatarMenu = ({ logoutFunction, handleRedirect }) => {
   const history = useHistory()
+  const name = useSelector(state => state.authentication.user.roles)
+
+  //TODO: remove later
+  const getUsername = () => {
+    switch (name) {
+      case 'ADMIN':
+        return 'Admin'
+      case 'COMPANY_MANAGER':
+        return 'Company manager'
+      case 'COMPANY_EMPLOYEE':
+        return 'Company employee'
+      case 'ATTENDANT':
+        return 'Attendant'
+    }
+  }
+
+  const username = getUsername(name)
+
   const menu = (
     <Menu
       onClick={e => {
@@ -171,7 +189,10 @@ const AvatarMenu = ({ logoutFunction, handleRedirect }) => {
   )
 
   return (
-    <div style={{ zIndex: 10000000, padding: '0 1rem' }}>
+    <div style={{ zIndex: 10000000, padding: '0 1rem', display: 'flex' }}>
+      <div style={{ display: 'flex', alignItems: 'center', padding: '0 1rem' }}>
+        <Typography style={{ color: '#fff' }}>{username}</Typography>
+      </div>
       <Dropdown overlay={menu} placement="bottomRight">
         <Avatar size={45} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
       </Dropdown>
