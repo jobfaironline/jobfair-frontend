@@ -68,7 +68,7 @@ const JobfairRegistrationForm = () => {
         I have read and accept the Job fair Policy
       </Checkbox>
     </>,
-    <JobfairRegistrationFormComponent form={form}/>,
+    <JobfairRegistrationFormComponent form={form} jobFairId={jobfairId}/>,
     <>
       <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo}/>
     </>
@@ -88,6 +88,9 @@ const JobfairRegistrationForm = () => {
               setCurrentStep(currentStep + 1)
             })
             .catch(err => {
+              // notification['error']({
+              //   message: 'job position must not be empty'
+              // })
               const errorsArray = form.getFieldsError()
               for (const error of errorsArray) {
                 if (error.errors.length > 0) {
@@ -169,7 +172,7 @@ const JobfairRegistrationForm = () => {
                         background: '#f5f5f5',
                         textShadow: 'none',
                         boxShadow: 'none'
-                    }}
+                      }}
                     >
                       Next
                     </Button> :

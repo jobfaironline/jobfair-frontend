@@ -188,21 +188,20 @@ const JobFairListManagementComponent = props => {
                               </Tag>
                             </Col>
                           </Row>
-                          <Col span={7}>
+                          <Col span={16}>
                             <Row justify='space-between'>
-                              <Col span={14}>
-                                <Title level={5} type="secondary">
-                                  Location
-                                </Title>
-                                <Text strong>Some where in saigon</Text>
-                              </Col>
                               <Col span={8}>
                                 <Title level={5} type="secondary">
                                   Register time
                                 </Title>
                                 <Tag color="green">
                                   <Text strong>
-                                    {item.companyRegisterStartTime}
+                                    {(isAuthUser && listRole.includes(COMPANY_MANAGER)) ?
+                                      item.companyRegisterStartTime : null
+                                    }
+                                    {(isAuthUser && listRole.includes(ATTENDANT)) ?
+                                      item.attendantRegisterStartTime : null
+                                    }
                                   </Text>
                                 </Tag>
                               </Col>
