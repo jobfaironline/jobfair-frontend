@@ -9,6 +9,7 @@ import JobFairListManagementImageComponent from './components/JobFairList.manage
 import { useSelector } from 'react-redux'
 import { InfoCircleTwoTone, UserOutlined, BankTwoTone } from '@ant-design/icons'
 import { COMPANY_EMPLOYEE, ATTENDANT, COMPANY_MANAGER } from '../../constants/RoleType'
+import {convertToDateString} from "../../utils/common";
 
 const listImage = [
   {
@@ -141,7 +142,9 @@ const JobFairListManagementComponent = props => {
                                 Start Date
                               </Title>
                               <Tag color="cyan">
-                                <Text strong>25/10/2022</Text>
+                                <Text strong>
+                                  {item.startTime}
+                                </Text>
                               </Tag>
                             </Col>
                             <Col span={12}>
@@ -149,7 +152,9 @@ const JobFairListManagementComponent = props => {
                                 End Date
                               </Title>
                               <Tag color="blue">
-                                <Text strong>25/10/2022</Text>
+                                <Text strong>
+                                  {item.endTime}
+                                </Text>
                               </Tag>
                             </Col>
                           </Row>
@@ -166,7 +171,9 @@ const JobFairListManagementComponent = props => {
                                   Register time
                                 </Title>
                                 <Tag color="green">
-                                  <Text strong>25/10/2022</Text>
+                                  <Text strong>
+                                    {item.companyRegisterStartTime}
+                                  </Text>
                                 </Tag>
                               </Col>
                             </Row>
@@ -187,13 +194,7 @@ const JobFairListManagementComponent = props => {
                               width={1000}
                               truncatedEndingComponent={'.'}
                             >
-                              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                              been the industry's standard dummy text ever since the 1500s, when an unknown printer took
-                              a galley of type and scrambled it to make a type specimen book. It has survived not only
-                              five centuries, but also the leap into electronic typesetting, remaining essentially
-                              unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
-                              Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
-                              PageMaker including versions of Lorem Ipsum.
+                              {item.description}
                             </ShowMoreText>
                           </Text>
                         </div>

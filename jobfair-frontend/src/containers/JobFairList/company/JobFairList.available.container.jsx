@@ -8,7 +8,7 @@ import {
 } from '../../../services/job-fair-controller/JobFairConTrollerService'
 import {getCompanyBoothByJobFairId} from '../../../services/company-booth-controller/CompanyBoothControllerService'
 import {PATH, PATH_ADMIN, PATH_COMPANY_MANAGER} from '../../../constants/Paths/Path'
-import {handleJobFairRangePicker} from "../../../utils/common";
+import {convertToDateString, handleJobFairRangePicker} from "../../../utils/common";
 import {notification} from "antd";
 
 const approvedJobFairId = 'a50a9875-93aa-4605-8afd-29923d3310fe'
@@ -36,9 +36,19 @@ const JobFairListAvailableContainer = props => {
         setCount(count + 1)
         const result = res.data.content.map(item => {
           return {
-            description: item.description,
-            id: item.id,
+            id: item.jobFair.id,
             status: item.status,
+            companyId: item.companyId,
+            startTime: convertToDateString(item.jobFair.startTime),
+            endTime: convertToDateString(item.jobFair.endTime),
+            companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime),
+            description: item.jobFair.description,
+            layoutId: item.jobFair.layoutId,
+            thumbnail: item.jobFair.thumbnail,
+            name: item.jobFair.name,
+            estimateParticipant: item.jobFair.estimateParticipant,
+            targetCompany: item.jobFair.targetCompany,
+            targetAttendant: item.jobFair.targetAttendant
           }
         })
         setData([...data, ...result])

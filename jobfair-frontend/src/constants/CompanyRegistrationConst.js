@@ -4,5 +4,6 @@ export const CompanyRegistrationStatus = {
     "PENDING" : "PENDING",
     "CANCEL" : "CANCEL",
     "APPROVE" : "APPROVE",
-    "REJECT" : "REJECT"
+    "REJECT" : "REJECT",
+    "REQUEST_CHANGE" : "REQUEST_CHANGE"
 }

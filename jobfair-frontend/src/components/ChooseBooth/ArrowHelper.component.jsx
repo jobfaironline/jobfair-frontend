@@ -13,12 +13,7 @@ export const ArrowHelper = (props) => {
     const hex = 0x32a852;
 
     const arrowHelper = new THREE.ArrowHelper(dir, origin, length, hex);
-    arrowHelper.position.setY(30);
+    arrowHelper.position.setY(23);
 
-    useFrame((state, delta) => {
-        if (ref?.current !== undefined && delta / 100){
-            ref.current.rotateOnAxis(dir, delta)
-        }
-    })
     return <BasicMesh ref={ref} mesh={arrowHelper}/>
 }
