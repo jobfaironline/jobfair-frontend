@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import RTMClient from '../../services/RTMClient'
 import {createClient} from 'agora-rtc-react'
 import {useParams} from 'react-router-dom'
@@ -8,7 +8,7 @@ import {AttendantJobFairBoothContainer} from '../../containers/AttendantJobFair/
 import SideBar from './components/SideBar/SideBar.component'
 import styles from './AttendantJobFairPage.module.scss'
 import {Stats} from "@react-three/drei";
-import {InventoryContainer} from "../../components/AttendantJobFair/Inventory.container";
+import {ControlTipsModalContainer} from "../../containers/AttendantJobFair/ControlTipsModal.container";
 
 const config = {
   mode: 'rtc',
@@ -20,6 +20,7 @@ const {REACT_APP_AGORA_APP_ID} = process.env
 const useClient = createClient(config)
 const rtm = new RTMClient()
 rtm.init(REACT_APP_AGORA_APP_ID)
+
 
 const AttendantJobFairPage = () => {
   const {companyBoothId} = useParams()
@@ -61,6 +62,7 @@ const AttendantJobFairPage = () => {
         </div>
         <div className={styles.booth}>
           <Stats/>
+          <ControlTipsModalContainer/>
           <AttendantJobFairBoothContainer companyBoothId={companyBoothId}/>
 
         </div>

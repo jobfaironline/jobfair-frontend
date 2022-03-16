@@ -13,6 +13,7 @@ import ThirdPersonCamera from "../../utils/ThreeJS/ThirdPersonCamera";
 import BasicCharacterControl from "../../utils/ThreeJS/BasicCharacterControl";
 import {InventoryContainer} from "../../components/AttendantJobFair/Inventory.container";
 import {LoadingComponent} from "../../components/JobFairParkMap/Loading.component";
+import {Button, Modal} from "antd";
 
 
 class CharacterModel extends BasicCharacterControl {
@@ -51,7 +52,7 @@ export const AttendantJobFairBoothContainer = props => {
   const [state, setState] = useState({
     model: undefined,
     characterControl: undefined,
-    boothMesh: undefined
+    boothMesh: undefined,
   })
 
   const getBoothMesh = async (companyBoothId) => {
@@ -76,7 +77,9 @@ export const AttendantJobFairBoothContainer = props => {
     const floorMesh = boothMesh.children.filter(child => child.name === "sand")[0];
     const floorHeight = calculateMeshSize(floorMesh).height
     //load model
-    const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx");
+    const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx");
+    //const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx");
+
     model.scale.setScalar(0.07 / 2);
     //model.position.setY(center * 2)
     model.children.forEach(child => {
@@ -90,8 +93,10 @@ export const AttendantJobFairBoothContainer = props => {
 
     const modelSize = calculateMeshSize(model);
     //load animation
-    const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx");
-    const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking4.fbx")
+   /* const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx");
+    const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking4.fbx")*/
+    const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx");
+    const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx")
     const mixer = new THREE.AnimationMixer(model);
     const animations = {
       'walk': mixer.clipAction(walkingModel.animations[0]),
@@ -114,6 +119,7 @@ export const AttendantJobFairBoothContainer = props => {
     const characterControl = new CharacterModel({...params});
 
 
+
     setState(prevState => {
       return {
         ...prevState,
@@ -124,6 +130,9 @@ export const AttendantJobFairBoothContainer = props => {
     })
 
   }, [])
+
+
+
   if (state.boothMesh === undefined) return <LoadingComponent/>;
   const cProps = {
     boothMesh: state.boothMesh,
@@ -134,6 +143,7 @@ export const AttendantJobFairBoothContainer = props => {
   }
   return (
     <>
+
       <InventoryContainer/>
       <CompanyBoothCanvasComponent {...cProps}/>
     </>
