@@ -30,6 +30,7 @@ import {SampleItemMenuContainer} from "./SampleItemMenu.container";
 import {ToastContainer} from "react-toastify";
 import {GENERIC_BOOTH_LAYOUT_URL} from "../../constants/DecorateBoothConstant";
 import {DecoratedBoothSideBarContainer} from "./DecorateBoothSideBar.container";
+import {LoadingComponent} from "../../components/JobFairParkMap/Loading.component";
 
 export const DecorateBoothContainer = (props) => {
     const {companyBoothId, jobFairId} = props;
@@ -197,7 +198,7 @@ export const DecorateBoothContainer = (props) => {
     const sideBarProps = {handleOnRotationLeft, handleOnRotationRight, handleDelete}
 
 
-    if (modelItems.length === 0) return null
+    if (modelItems.length === 0) return <LoadingComponent/>
     return (
         <>
             <Stats/>

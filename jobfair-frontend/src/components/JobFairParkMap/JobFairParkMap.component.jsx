@@ -5,14 +5,10 @@ import {CameraControls} from "../ThreeJSBaseComponent/CameraControls.component";
 import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
 import {SkyTypeSelect} from "../ThreeJSBaseComponent/SelectSkyType.component";
 import {SkyComponent, SkyType} from "../ThreeJSBaseComponent/Sky.component";
-import {BoxHelper} from "three";
 
 
 const BoothMesh = React.forwardRef((props, ref) => {
     const {mesh, onclick} = props;
-    const {scene} = useThree();
-    const boxHelper = new BoxHelper(mesh);
-    scene.add(boxHelper);
     return (
         <mesh
             name={mesh.name}
