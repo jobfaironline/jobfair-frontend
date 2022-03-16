@@ -58,7 +58,7 @@ export const Inventory = props => {
     <div className={"panel"} style={{visibility: visible ? "visible" : "hidden"}}>
       <h1>Inventory</h1>
       <div className={"characterContainer"}>
-        <img src={window.location.origin + "/icon/character.png"}/>
+        <img src={window.location.origin + "/icon/background.png"}/>
       </div>
       <div className={"itemRow"}>
         {
