@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 // import { defaultColumns, editableColumns } from './columns-type';
-import { Space, Table, Input, Button, Spin, Typography, Divider } from 'antd'
+import {Space, Table, Input, Button, Spin, Typography, Divider, Empty} from 'antd'
 import Highlighter from 'react-highlight-words'
 import SearchOutlined from '@ant-design/icons/SearchOutlined'
 import JobPositionTableColumn from './JobPositionTable.column'
@@ -19,8 +19,12 @@ const FormTable = ({ extra, data, ...otherTableProps }) => {
     }
   })
 
-  if (data === undefined || data === null || Object.keys(data).length === 0) {
+  if (data === undefined) {
     return <Spin size="large" />
+  }
+
+  if (Object.keys(data).length === 0) {
+    return <Empty />
   }
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {

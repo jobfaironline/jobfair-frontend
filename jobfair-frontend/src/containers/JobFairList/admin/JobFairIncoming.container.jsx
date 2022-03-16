@@ -17,17 +17,19 @@ const JobFairIncomingContainer = ({key}) => {
   const [data, setData] = useState([])
   //pagination
   const [currentPage, setCurrentPage] = useState(0)
-  const [pageSize, setPageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(5000)
   //modal
   const [jobFairId, setJobFairId] = useState('')
   const [creatorId, setCreatorId] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
+  const [totalElements, setTotalElements] = useState(0)
   const history = useHistory()
 
 
   const fetchData = async () => {
     getJobFairIncomingForAdmin(currentPage, pageSize)
       .then(res => {
+          setTotalElements(res.data.totalElements)
           const result = mapperResponseJobFairForAdmin(res).map(item => {
             return {
               ...item,
@@ -102,7 +104,7 @@ const JobFairIncomingContainer = ({key}) => {
         }}
       />
       <Space>
-        <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={data.length}/>
+        <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={totalElements}/>
       </Space>
     </>
   );

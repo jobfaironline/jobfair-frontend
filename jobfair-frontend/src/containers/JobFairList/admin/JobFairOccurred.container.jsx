@@ -17,6 +17,7 @@ const JobFairOccurredContainer = ({key}) => {
   //pagination
   const [currentPage, setCurrentPage] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  const [totalElements, setTotalElements] = useState(0)
   //modal
   const [jobFairId, setJobFairId] = useState('')
   const [creatorId, setCreatorId] = useState('')
@@ -27,7 +28,8 @@ const JobFairOccurredContainer = ({key}) => {
   const fetchData = async () => {
     getJobFairOccurredForAdmin(currentPage, pageSize)
       .then(res => {
-          const result = mapperResponseJobFairForAdmin(res).map(item => {
+        setTotalElements(res.data.totalElements)
+        const result = mapperResponseJobFairForAdmin(res).map(item => {
             return {
               ...item,
               key: 'TAKEN_PLACE'
@@ -104,7 +106,7 @@ const JobFairOccurredContainer = ({key}) => {
         }}
       />
       <Space>
-        <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={data.length}/>
+        <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={totalElements}/>
       </Space>
     </>
   );

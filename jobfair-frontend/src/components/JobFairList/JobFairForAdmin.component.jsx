@@ -91,7 +91,7 @@ const JobFairForAdminComponent = (props) => {
       <Table columns={finalColumns}
              dataSource={data}
              pagination={false}
-             scroll={{y: 240}}
+             scroll={{y: 400}}
              bordered={true}
       />
     </>

@@ -86,6 +86,10 @@ const JobFairListHistoryContainer = () => {
     })
   }
 
+  const handleRequestChange = (id) => {
+    history.push(`${PATH.JOB_FAIR_REGISTRATION_PAGE}${id}`)
+  }
+
   useEffect(() => {
     loadMoreData()
   }, [])
@@ -101,6 +105,7 @@ const JobFairListHistoryContainer = () => {
         getCompanyBoothId={getCompanyBoothId}
         handleClearFilter={handleClearFilter}
         handleViewDetail={handleViewDetail}
+        handleRequestChange={handleRequestChange}
       />
     </>
   )
