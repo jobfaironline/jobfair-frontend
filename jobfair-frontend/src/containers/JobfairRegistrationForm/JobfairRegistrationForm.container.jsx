@@ -228,11 +228,11 @@ const getCompanyProfile = async (companyId, setCompanyInfo) => {
 const submitRegistration = async (companyRegistrationId, successCallback, failedCallback) => {
   try {
     const res = await submitRegistrationAPI(companyRegistrationId)
-    // notification['success']({
-    //   message: `Registration draft version has been submitted`,
-    //   description: `Submitted successfully`,
-    //   duration: 2
-    // })
+    notification['success']({
+      message: `Registration draft version has been submitted`,
+      description: `Submitted successfully`,
+      duration: 2
+    })
     successCallback()
   } catch (err) {
     notification['error']({
