@@ -10,6 +10,7 @@ import {
 
 const JobfairRegistrationForm = ({ form , jobFairId}) => {
 
+  {/* TODO: fetch latest company registration*/}
   // const fetchData = async () => {
   //   if (jobFairId !== undefined) {
   //     getLatestCompanyRegistration(jobFairId)
