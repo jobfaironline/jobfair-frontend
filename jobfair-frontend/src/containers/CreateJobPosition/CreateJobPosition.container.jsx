@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CreateJobPositionForm from '../../components/create-job-position-form/CreateJobPositionForm'
 import { Button, Form, notification } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { createJobPositionsAPI } from '../../services/job-controller/JobControllerService'
+import { getEmployeesAPI } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
 import { useSelector } from 'react-redux'
 
 const CreateJobPositionContainer = () => {
   const [form] = Form.useForm()
   const history = useHistory()
-
   const companyId = useSelector(state => state?.authentication?.user?.companyId)
 
   const onFinish = values => {
@@ -30,7 +30,6 @@ const CreateJobPositionContainer = () => {
         })
       })
   }
-
   return <CreateJobPositionForm form={form} onFinish={onFinish} />
 }
 
