@@ -2,11 +2,26 @@ import React from 'react';
 import {Card, Col, Divider, Row, Space, Typography} from "antd";
 import {convertEnumToString} from "../../utils/common";
 import EvaluationFormComponent from "../EvaluationForm/EvaluationForm.component";
+import {CompanyRegistrationStatus} from "../../constants/CompanyRegistrationConst";
 
 const {Text} = Typography
 
 const CompanyRegistrationDetailComponent = (props) => {
   const {data, onFinish} = props
+
+  const handleEvaluation = (status) => {
+    switch (status) {
+      case CompanyRegistrationStatus.PENDING:
+        return (
+          <>
+            <Text strong>Evaluate this registration</Text>
+            <EvaluationFormComponent onFinish={onFinish} id={data.id} name="companyRegistrationId"/>
+          </>
+        )
+      default: return null
+    }
+  }
+
   return (
     <>
       <Card title="Company registration detail" bordered={true} headStyle={{textAlign: 'center'}}
@@ -96,12 +111,7 @@ const CompanyRegistrationDetailComponent = (props) => {
                 <Divider/>
               </div>
             ))}
-            {data.status === 'PENDING' ? (
-              <>
-                <Text strong>Evaluate this registration</Text>
-                <EvaluationFormComponent onFinish={onFinish} id={data.id} name="companyRegistrationId"/>
-              </>
-            ) : null}
+            {handleEvaluation(data.status)}
           </Space>
         </Space>
       </Card>

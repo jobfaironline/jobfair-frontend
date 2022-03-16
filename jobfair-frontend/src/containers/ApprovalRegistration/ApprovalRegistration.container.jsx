@@ -9,6 +9,7 @@ import {
 import {convertToDateString} from '../../utils/common'
 import {PATH_ADMIN} from "../../constants/Paths/Path";
 import {getCompanyProfileAPI} from "../../services/company-controller/CompanyControllerService";
+import {CompanyRegistrationStatus} from "../../constants/CompanyRegistrationConst";
 
 const ApprovalRegistrationContainer = () => {
   const [data, setData] = useState([])

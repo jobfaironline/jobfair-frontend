@@ -22,7 +22,7 @@ const JobPositionManagementContainer = props => {
     const history = useHistory()
 
     const fetchData = async () => {
-        getJobPositionsAPI('ASC', currentPage, pageSize, 'title')
+        getJobPositionsAPI('DESC', currentPage, pageSize, 'createdDate')
             .then(res => {
                 const totalRecord = res.data.totalElements
                 setTotalRecord(totalRecord)

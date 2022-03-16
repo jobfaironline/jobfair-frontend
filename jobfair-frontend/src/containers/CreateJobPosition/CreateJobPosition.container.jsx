@@ -19,7 +19,6 @@ const CreateJobPositionContainer = () => {
       .then(res => {
         notification['success']({
           message: `Create job position data successfully`,
-          description: `😘 😘 😘`
         })
         form.resetFields()
         history.goBack()
