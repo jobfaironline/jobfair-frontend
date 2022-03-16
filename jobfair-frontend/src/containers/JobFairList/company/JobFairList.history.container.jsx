@@ -87,7 +87,6 @@ const JobFairListHistoryContainer = () => {
   }
 
   const handleRequestChange = (id) => {
-    console.log(id)
     history.push(`${PATH.JOB_FAIR_REGISTRATION_PAGE}${id}`)
   }
 

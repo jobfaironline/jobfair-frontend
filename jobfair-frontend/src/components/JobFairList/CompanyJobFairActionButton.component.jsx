@@ -140,8 +140,9 @@ const CompanyJobFairActionButton = props => {
 
   switch (item.status) {
     case COMPANY_JOB_FAIR_STATUS.REGISTRABLE:
-    case COMPANY_JOB_FAIR_STATUS.REJECT:
       return <RegistrableButton onClick={() => handleRedirect(`${PATH.JOB_FAIR_REGISTRATION_PAGE}${item.id}`)} />
+    case COMPANY_JOB_FAIR_STATUS.REJECT:
+      return <RejectButton onClick={() => notification['info']({message: 'click to view reason'})}/>
     case COMPANY_JOB_FAIR_STATUS.SUBMITTED:
       return <SubmittedButton />
     case COMPANY_JOB_FAIR_STATUS.APPROVE:
