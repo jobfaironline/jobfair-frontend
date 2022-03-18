@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import JobPositionDetailModalComponent from "./JobPositionDetailModal.component";
+import JobPositionDetailModalComponent from "../../components/JobPosition/JobPositionManagement/JobPositionDetailModal.component";
 import {Form, notification} from "antd";
-import {updateJobPositionAPI} from "../../../services/job-controller/JobControllerService";
+import {updateJobPositionAPI} from "../../services/job-controller/JobControllerService";
 import {
     setJobPositionSubmodalVisibility
 } from "../../../redux-flow/registration-jobfair-form/registration-jobfair-form-slice";

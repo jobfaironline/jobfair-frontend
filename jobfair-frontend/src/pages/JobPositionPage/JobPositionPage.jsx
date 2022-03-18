@@ -1,5 +1,5 @@
 import React from 'react'
-import JobPositionManagementContainer from '../../components/JobPosition/JobPositionManagement/JobPositionManagement.container'
+import JobPositionManagementContainer from "../../containers/JobPositionManagement/JobPositionManagement.container";
 
 const JobPositionPage = props => {
   return (

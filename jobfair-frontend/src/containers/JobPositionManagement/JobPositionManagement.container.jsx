@@ -1,15 +1,16 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { Button, notification, Space, Typography, Upload } from 'antd'
-import { getJobPositionsAPI, uploadCSVFile } from '../../../services/job-controller/JobControllerService'
-import { getEmployeesAPI } from '../../../services/company-employee-controller/CompanyEmployeeControllerService'
-import { useDispatch } from 'react-redux'
-import { PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path'
-import { useHistory } from 'react-router-dom'
-import PaginationComponent from '../../PaginationComponent/Pagination.component'
-import JobPositionTable from '../../JobPositionTable/JobPositionTable.component'
-import { handleCreateListEmailFromListAccount, handleCreateListNameFromListAccount } from '../../../utils/common'
-import { UploadOutlined } from '@ant-design/icons'
-import { useSelector } from 'react-redux'
+import React, {useEffect, useLayoutEffect, useState} from 'react'
+import {Button, notification, Space, Typography, Upload} from 'antd'
+import {getJobPositionsAPI, uploadCSVFile} from '../../services/job-controller/JobControllerService'
+import {getEmployeesAPI} from '../../services/company-employee-controller/CompanyEmployeeControllerService'
+import {useDispatch} from 'react-redux'
+import {PATH_COMPANY_MANAGER} from '../../constants/Paths/Path'
+import {useHistory} from 'react-router-dom'
+import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
+import JobPositionTable from '../../components/JobPositionTable/JobPositionTable.component'
+import {handleCreateListEmailFromListAccount, handleCreateListNameFromListAccount} from '../../utils/common'
+import {UploadOutlined} from '@ant-design/icons'
+import {useSelector} from 'react-redux'
+
 const JobPositionManagementContainer = props => {
   const companyId = useSelector(state => state?.authentication?.user?.companyId)
   const [data, setData] = useState([])
@@ -71,7 +72,7 @@ const JobPositionManagementContainer = props => {
   const handleCreateOnClick = () => {
     history.push({
       pathname: PATH_COMPANY_MANAGER.CREATE_JOB_POSITION,
-      state: { listContactPersonSuggestion: listContactPersonSuggestion, listEmailSuggestion: listEmailSuggestion }
+      state: {listContactPersonSuggestion: listContactPersonSuggestion, listEmailSuggestion: listEmailSuggestion}
     })
   }
 
@@ -121,8 +122,8 @@ const JobPositionManagementContainer = props => {
       {/*<JobPositionDetailModalContainer {...modalProps} />*/}
       {/*<JobPositionSubmodalContainer/>*/}
 
-      <Space style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-        <Typography.Title level={2} style={{ marginBottom: '0rem' }}>
+      <Space style={{display: 'flex', justifyContent: 'space-between', marginBottom: '1rem'}}>
+        <Typography.Title level={2} style={{marginBottom: '0rem'}}>
           Job positions
         </Typography.Title>
         <Space>
@@ -130,12 +131,12 @@ const JobPositionManagementContainer = props => {
             Create job position
           </Button>
           <Upload {...loadFile}>
-            <Button icon={<UploadOutlined />}>Upload CSV</Button>{' '}
+            <Button icon={<UploadOutlined/>}>Upload CSV</Button>{' '}
           </Upload>
         </Space>
       </Space>
 
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div style={{display: 'flex', flexDirection: 'column'}}>
         <JobPositionTable
           data={data}
           editable
@@ -156,8 +157,8 @@ const JobPositionManagementContainer = props => {
             }
           }}
         />
-        <Space style={{ margin: '1rem 0', display: 'flex', justifyContent: 'end' }}>
-          <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={totalRecord} />
+        <Space style={{margin: '1rem 0', display: 'flex', justifyContent: 'end'}}>
+          <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={totalRecord}/>
         </Space>
       </div>
     </div>
