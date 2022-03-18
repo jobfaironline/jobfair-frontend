@@ -12,7 +12,6 @@ const PickJobPositionForm = props => {
   const {handlePickJobPosition, form, handleRemove} = props
 
   const jobPositions = form.getFieldsValue().jobPositions //for anchor
-  console.log(jobPositions)
 
   return (
     <>
