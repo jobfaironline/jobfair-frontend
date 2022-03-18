@@ -1,16 +1,12 @@
 import {Button, Checkbox, Form, notification, Popconfirm, Steps} from 'antd'
 import React, {useEffect, useRef, useState} from 'react'
-import {useForm, useStepsForm} from 'sunflower-antd'
-import CompanyProfileForm from '../../components/company-profile-form/CompanyProfileForm.component'
 import {useHistory, useParams} from 'react-router-dom'
-import {useDispatch, useSelector} from 'react-redux'
+import {useSelector} from 'react-redux'
 import {getCompanyProfileAPI} from '../../services/company-controller/CompanyControllerService'
-import TextArea from 'antd/es/input/TextArea'
-import {CompanyProfileValidation} from '../../validate/CompanyProfileValidation'
 import ConfirmContainer from '../Confirm/Confirm.container'
 import JobfairRegistrationFormComponent
   from '../../components/JobfairRegistrationForm/JobfairRegistrationForm.component'
-import {PATH, PATH_COMPANY_MANAGER} from '../../constants/Paths/Path'
+import {PATH} from '../../constants/Paths/Path'
 import PolicyComponent from '../../components/Policy/Policy.component'
 import JobFairDetailCompanyContainer from '../JobFairDetail/JobFairDetail.company.container'
 import {

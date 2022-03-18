@@ -30,9 +30,6 @@ const formItemLayout = {
 const CreateJobPositionForm = props => {
   const [totalSelect, setTotalSelect] = useState(0)
   const [totalSkillTags, setTotalSkillTags] = useState(0)
-  const [isShowSalary, setIsShowSalary] = useState(JOB_POSITION_MODEL.isShowSalary)
-  const [isRequiredLetter, setIsRequiredLetter] = useState(JOB_POSITION_MODEL.isRequiredLetter)
-  const [isShowContactPerson, setIsShowContactPerson] = useState(JOB_POSITION_MODEL.isShowContactPerson)
   const { Text } = Typography
   const {
     form,
@@ -147,7 +144,7 @@ const CreateJobPositionForm = props => {
               )}
             >
               {SkillTagsConst.map(item => (
-                <Option value={item.id}>{item.name}</Option>
+                <Option value={item.name}>{item.name}</Option>
               ))}
             </Select>
           </Form.Item>
@@ -184,7 +181,7 @@ const CreateJobPositionForm = props => {
               {CategoriesConst.map(category => (
                 <OptGroup label={category.label}>
                   {SubCategories.filter(item => item.category_id === category.value).map(item => (
-                    <Option value={item.value}>{item.label}</Option>
+                    <Option value={item.label}>{item.label}</Option>
                   ))}
                 </OptGroup>
               ))}

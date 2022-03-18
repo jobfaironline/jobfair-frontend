@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import CreateJobPositionForm from '../../components/create-job-position-form/CreateJobPositionForm'
-import { Button, Form, notification } from 'antd'
+import {Button, Form, notification} from 'antd'
 import {useHistory, useLocation} from 'react-router-dom'
-import { createJobPositionsAPI } from '../../services/job-controller/JobControllerService'
-import { getEmployeesAPI } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
-import { useSelector } from 'react-redux'
+import {createJobPositionsAPI} from '../../services/job-controller/JobControllerService'
+import {getEmployeesAPI} from '../../services/company-employee-controller/CompanyEmployeeControllerService'
+import {useSelector} from 'react-redux'
 import {getSuggestionContactName, getSuggestionEmail} from "../../utils/common";
+import {SkillTagsConst} from "../../constants/JobPositionConst";
+import {SubCategories} from "../../constants/CompanyProfileConstant";
 
 const CreateJobPositionContainer = () => {
   const [form] = Form.useForm()
@@ -34,10 +36,17 @@ const CreateJobPositionContainer = () => {
   }
 
   const onFinish = values => {
-    createJobPositionsAPI({
+    const body = {
       ...values,
+      skillTagIds: values.skillTagIds.map(item => {
+        return SkillTagsConst.find(skill => skill.name === item).id
+      }),
+      subCategoryIds: values.subCategoryIds?.map(item => {
+        return SubCategories.find(sub => sub.label === item)?.value
+      }),
       companyId: companyId
-    })
+    }
+    createJobPositionsAPI(body)
       .then(res => {
         notification['success']({
           message: `Create job position data successfully`,

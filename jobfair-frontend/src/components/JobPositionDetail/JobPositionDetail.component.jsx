@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {AutoComplete, Button, Card, Divider, Form, Input, Select, Space} from 'antd'
+import {AutoComplete, Button, Card, Divider, Form, Input, Popconfirm, Select, Space} from 'antd'
 import {
   JobLevelConst,
   JobTypeConst,
@@ -277,9 +277,14 @@ const JobPositionDetailComponent = (props) => {
               <Button type="primary" htmlType="submit" style={{margin: '0 3rem', width: '7rem'}}>
                 Edit
               </Button>
-              <Button type="primary" onClick={handleDelete} style={{margin: '0 3rem', width: '7rem'}}>
-                Delete
-              </Button>
+              <Popconfirm
+                title="Are you sure to delete this task?"
+                onConfirm={() => handleDelete(data.id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button style={{ margin: '0 0.5rem' }}>Delete</Button>
+              </Popconfirm>
             </Space>
           </Form.Item>
         </Form>
