@@ -1,5 +1,5 @@
 import {Button, Checkbox, Form, notification, Popconfirm, Steps} from 'antd'
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {useForm, useStepsForm} from 'sunflower-antd'
 import CompanyProfileForm from '../../components/company-profile-form/CompanyProfileForm.component'
 import {useHistory, useParams} from 'react-router-dom'
@@ -26,9 +26,13 @@ const JobfairRegistrationForm = () => {
   const companyId = useSelector(state => state.authentication.user.companyId)
   const [agreeStatus, setAgreeStatus] = useState(false)
   const [companyInfo, setCompanyInfo] = useState({})
+  const totalJobPosition = useRef({})
 
   //management step
   const [currentStep, setCurrentStep] = useState(0)
+
+  //total job position
+  const [jobPositionArr, setJobPositionArr] = useState([])
 
   const onSubmit = async values => {
     const body = {
@@ -88,9 +92,6 @@ const JobfairRegistrationForm = () => {
               setCurrentStep(currentStep + 1)
             })
             .catch(err => {
-              // notification['error']({
-              //   message: 'job position must not be empty'
-              // })
               const errorsArray = form.getFieldsError()
               for (const error of errorsArray) {
                 if (error.errors.length > 0) {
@@ -108,6 +109,12 @@ const JobfairRegistrationForm = () => {
   useEffect(() => {
     getCompanyProfile(companyId, setCompanyInfo)
   }, [])
+
+  useEffect(() => {
+    // setJobPositionArr(form.getFieldsValue().jobPositions)
+    totalJobPosition.current = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions.length : 0
+    console.log(totalJobPosition)
+  }, [form.getFieldsValue().jobPositions])
 
   return (
     <div>
@@ -148,7 +155,7 @@ const JobfairRegistrationForm = () => {
           <div className="next-step-button">
             <Form.Item>
               <div className="submit-registration-popconfirm">
-                {currentStep == 3 ? (
+                {currentStep == 3 ? ( //current step = 3 => show pop up to confirm
                   <Popconfirm
                     title="Are you sure to submit this form?"
                     onConfirm={nextStepButtonActions(currentStep)}
@@ -159,8 +166,8 @@ const JobfairRegistrationForm = () => {
                       Register
                     </Button>
                   </Popconfirm>
-                ) : (
-                  (currentStep == 1 && !agreeStatus) ?
+                ) : ( //else current step = 1 or 2
+                  (currentStep == 1 && !agreeStatus) ? //current step = 1 and agreeStatus is unchecked
                     <Button
                       size="large"
                       type="primary"
@@ -175,14 +182,32 @@ const JobfairRegistrationForm = () => {
                       }}
                     >
                       Next
-                    </Button> :
-                    <Button
-                      size="large"
-                      type="primary"
-                      onClick={nextStepButtonActions(currentStep)}
-                    >
-                      Next
-                    </Button>
+                    </Button> : //else current step = 2
+                    (
+                      (currentStep == 2 && true) ? //current step = 2 and total job position = 0
+                        <Button
+                          size="large"
+                          type="primary"
+                          onClick={nextStepButtonActions(currentStep)}
+                          disabled={true}
+                          style={{
+                            color: '#00000040',
+                            borderColor: '#d9d9d9',
+                            background: '#f5f5f5',
+                            textShadow: 'none',
+                            boxShadow: 'none'
+                          }}
+                        >
+                          Next
+                        </Button>
+                        : <Button //else all conditions are passed
+                          size="large"
+                          type="primary"
+                          onClick={nextStepButtonActions(currentStep)}
+                        >
+                          Next
+                        </Button>
+                    )
                 )}
               </div>
             </Form.Item>
@@ -196,11 +221,6 @@ const JobfairRegistrationForm = () => {
 const getCompanyProfile = async (companyId, setCompanyInfo) => {
   getCompanyProfileAPI(companyId)
     .then(res => {
-      // notification['success']({
-      //   message: `Fetch company profile successfully`,
-      //   description: `For company with ${companyId}`,
-      //   duration: 2
-      // })
       const response = {
         ...res.data,
         benefits: res.data.companyBenefitDTOS.map(item => {

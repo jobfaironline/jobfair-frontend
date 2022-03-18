@@ -1,12 +1,12 @@
 export const PickJobPositionFormValidation = {
-  jobTitle: [{ required: true, message: 'Missing title' }],
-  description: [{ required: true, message: 'Missing description' }],
-  requirement: [{ required: true, message: 'Missing requirement' }],
+  jobTitle: [{required: true, message: 'Missing title'}],
+  description: [{required: true, message: 'Missing description'}],
+  requirement: [{required: true, message: 'Missing requirement'}],
   minSalary: name => {
     return [
-      { required: true, message: 'Missing min salary' },
-      { pattern: /^\d+$/, message: 'Invalid number format' },
-      ({ getFieldValue }) => ({
+      {required: true, message: 'Missing min salary'},
+      {pattern: /^\d+$/, message: 'Invalid number format'},
+      ({getFieldValue}) => ({
         validator(_, value) {
           const minValue = parseInt(value)
           const maxValue = parseInt(getFieldValue('jobPositions')[name].maxSalary)
@@ -27,7 +27,7 @@ export const PickJobPositionFormValidation = {
   },
   maxSalary: name => {
     return [
-      ({ getFieldValue }) => ({
+      ({getFieldValue}) => ({
         validator(_, value) {
           const maxValue = parseInt(value)
           const minValue = parseInt(getFieldValue('jobPositions')[name].minSalary)
@@ -53,8 +53,8 @@ export const PickJobPositionFormValidation = {
     ]
   },
   numberOfPosition: [
-    { required: true, message: 'Missing number of position' },
-    { pattern: /^\d+$/, message: 'Invalid number format' },
+    {required: true, message: 'Missing number of position'},
+    {pattern: /^\d+$/, message: 'Invalid number format'},
     () => ({
       validator(_, value) {
         const numOfPosition = parseInt(value)
@@ -65,6 +65,16 @@ export const PickJobPositionFormValidation = {
           return Promise.reject(new Error('The minimum of position is 1'))
         }
 
+        return Promise.resolve()
+      }
+    })
+  ],
+  jobPositions: [
+    ({ getFieldValue }) => ({
+      validator(_, value) {
+        if (!value || value.length === 0) {
+          return Promise.reject(new Error('Job position must not be empty'))
+        }
         return Promise.resolve()
       }
     })

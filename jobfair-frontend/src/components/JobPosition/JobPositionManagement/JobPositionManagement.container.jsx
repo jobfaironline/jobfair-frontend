@@ -77,7 +77,9 @@ const JobPositionManagementContainer = props => {
 
   const handleViewDetailPage = id => {
     history.push(PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL, {
-      jobPosition: data.find(item => item.id === id)
+      jobPosition: data.find(item => item.id === id),
+      listContactPersonSuggestion: listContactPersonSuggestion,
+      listEmailSuggestion: listEmailSuggestion
     })
   }
 

@@ -129,7 +129,6 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
                     .writeText(url)
                     .then(message.success('Copied to clipboard'))
                     .catch(err => {
-                      message.error(`An error occurred, ${err}`)
                     })
                 }}
                 icon={<CopyOutlined />}

@@ -3,6 +3,7 @@ import CreateJobPositionForm from '../../components/create-job-position-form/Cre
 import CreateJobPositionContainer from '../../containers/CreateJobPosition/CreateJobPosition.container'
 import { Button, PageHeader } from 'antd'
 import { useHistory } from 'react-router-dom'
+import {PATH_COMPANY_MANAGER} from "../../constants/Paths/Path";
 
 const CreateJobPositionPage = props => {
   const history = useHistory()
@@ -12,8 +13,8 @@ const CreateJobPositionPage = props => {
       <PageHeader
         style={{ borderBottom: '1px solid grey', width: '100vw' }}
         className="site-page-header"
-        onBack={() => history.push('/company/job-position-management')}
-        title="Job position's details"
+        onBack={() => history.push(PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT)}
+        title="Create job position page"
       />
       <div style={{ display: 'flex', justifyContent: 'center', padding: '3rem 0' }}>
         <CreateJobPositionContainer />

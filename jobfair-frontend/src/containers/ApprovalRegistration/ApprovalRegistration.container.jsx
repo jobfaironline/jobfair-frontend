@@ -1,7 +1,7 @@
 import React, {useLayoutEffect, useState} from 'react'
 import ApprovalRegistrationComponent
   from '../../components/ApprovalRegistration/components/ApprovalRegistration.component'
-import {notification, Pagination, Space} from 'antd'
+import {message, notification, Pagination, Space} from 'antd'
 import {useHistory, useParams} from 'react-router-dom'
 import {
   getRegistrationByJobFairId
@@ -41,11 +41,6 @@ const ApprovalRegistrationContainer = () => {
           })
         })
         .catch(err => {
-          notification['error']({
-            message: `Not found company registration by job fair ID: ${jobFairId}`,
-            description: `${err}`,
-            duration: 2
-          })
         })
     } else {
       setData([])

@@ -14,6 +14,7 @@ import TextArea from 'antd/es/input/TextArea'
 import { JobPositionValidation } from '../../validate/CreateJobPositionValidation'
 import { CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories } from '../../constants/CompanyProfileConstant'
 import { useLocation } from 'react-router-dom'
+import {getSuggestionContactName, getSuggestionEmail} from "../../utils/common";
 const { Option, OptGroup } = Select
 const formItemLayout = {
   labelCol: {
@@ -27,53 +28,25 @@ const formItemLayout = {
 }
 
 const CreateJobPositionForm = props => {
-  const location = useLocation()
-  const [listContactPersonSuggestion, setListContactPersonSuggestion] = useState()
-  const [listEmailSuggestion, setListEmailSuggestion] = useState()
   const [totalSelect, setTotalSelect] = useState(0)
   const [totalSkillTags, setTotalSkillTags] = useState(0)
   const [isShowSalary, setIsShowSalary] = useState(JOB_POSITION_MODEL.isShowSalary)
   const [isRequiredLetter, setIsRequiredLetter] = useState(JOB_POSITION_MODEL.isRequiredLetter)
   const [isShowContactPerson, setIsShowContactPerson] = useState(JOB_POSITION_MODEL.isShowContactPerson)
   const { Text } = Typography
-  const { form, onFinish } = props
-  const [resultNameSuggested, setResultNameSuggested] = useState([])
-  const [resultEmailSuggested, setResultEmailSuggested] = useState([])
-  useEffect(() => {
-    setListContactPersonSuggestion(location.state?.listContactPersonSuggestion)
-    setListEmailSuggestion(location.state?.listEmailSuggestion)
-  }, [location])
-  const handleAutoCompleteContactPerson = value => {
-    let res = []
-    if (!value) {
-      res = []
-    } else {
-      listContactPersonSuggestion.map(name => {
-        if (name.toLowerCase().includes(value.toLowerCase())) {
-          res.push(name)
-        }
-      })
-    }
-    setResultNameSuggested(res)
-  }
-  const handleAutoCompleteEmail = value => {
-    let res = []
-    if (!value || value.indexOf('@') >= 0) {
-      res = []
-    } else {
-      listEmailSuggestion.map(email => {
-        if (email.toLowerCase().includes(value.toLowerCase())) {
-          res.push(email)
-        }
-      })
-    }
-    setResultEmailSuggested(res)
-  }
+  const {
+    form,
+    onFinish,
+    handleAutoCompleteContactPerson,
+    handleAutoCompleteEmail,
+    resultNameSuggested,
+    resultEmailSuggested
+  } = props
 
   return (
     <div style={{ width: '80%' }}>
-      <Card title={`Create job position application`} style={{ width: '70%', margin: '3rem auto' }}>
-        <Form onFinish={onFinish} form={form} {...formItemLayout} layout="vertical" labelCol={21} wrapperCol={21}>
+      <Card title={`Create job position`} style={{ width: '70%', margin: '3rem auto' }} headStyle={{fontWeight: 700, fontSize: 24}}>
+        <Form onFinish={onFinish} form={form} {...formItemLayout} layout="vertical" labelCol={21} wrapperCol={21} scrollToFirstError={{block: 'center', behavior: 'smooth'}}>
           <Form.Item
             label="Job title"
             name="title"
@@ -90,7 +63,7 @@ const CreateJobPositionForm = props => {
             tooltip="This is required"
             name="level"
             rules={JobPositionValidation.jobLevel}
-            style={{ display: 'inline-block', width: '26%', marginRight: '1rem', marginLeft: '1rem' }}
+            style={{ display: 'inline-block', width: '25%', marginRight: '1rem', marginLeft: '1rem' }}
           >
             <Select
               showSearch

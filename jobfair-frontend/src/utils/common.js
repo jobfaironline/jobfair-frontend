@@ -99,3 +99,33 @@ export const handleCreateListNameFromListAccount = arr => {
 export const handleGetStatus = data => {
   return data.find(item => item.key !== undefined)
 }
+
+//handle suggestion email
+export const getSuggestionEmail = (listEmailSuggestion, value) => {
+  let res = []
+  if (!value || value.indexOf('@') >= 0) {
+    res = []
+  } else {
+    listEmailSuggestion.map(email => {
+      if (email.toLowerCase().includes(value.toLowerCase())) {
+        res.push(email)
+      }
+    })
+  }
+  return res
+}
+
+//handle suggestion contact name
+export const getSuggestionContactName = (listContactPersonSuggestion, value) => {
+  let res = []
+  if (!value) {
+    res = []
+  } else {
+    listContactPersonSuggestion.map(name => {
+      if (name.toLowerCase().includes(value.toLowerCase())) {
+        res.push(name)
+      }
+    })
+  }
+  return res
+}

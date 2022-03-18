@@ -1,11 +1,9 @@
-import React, {useState, useLayoutEffect, useEffect} from 'react'
+import React, {useLayoutEffect, useState} from 'react'
 import JobPositionTableComponent from '../../components/JobPositionTable/JobPositionTable.component'
-import {Space, notification, Popconfirm, Button} from 'antd'
+import {Button, Space} from 'antd'
 import {useDispatch, useSelector} from 'react-redux'
-import {getJobPositionsAPI} from '../../services/job-controller/JobControllerService'
 import {fetchJobPositions} from '../../redux-flow/jobPositions/job-positions-action'
 import JobPositionSubmodalContainer from '../JobPositionModal/JobPositionSubmodal.container'
-import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
 
 const PickJobPositionTable = ({selectable, form}) => {
   console.log(form.getFieldsValue())

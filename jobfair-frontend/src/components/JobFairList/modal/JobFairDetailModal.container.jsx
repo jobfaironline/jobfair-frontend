@@ -18,8 +18,10 @@ const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVis
   const [totalRegistration, setTotalRegistration] = useState(0)
   const [totalBooth, setTotalBooth] = useState(0)
 
+  console.log('visible: ', visible)
+
   const fetchData = async () => {
-    if (jobFairList !== undefined && jobFairId !== undefined && jobFairList.length > 0) {
+    if (visible == true && jobFairList !== undefined && jobFairId !== undefined && jobFairList.length > 0) {
       const jobFair = jobFairList.find(item => item.id === jobFairId)
       setJobFairDetail(jobFair)
       //get creator name by creatorId
@@ -47,7 +49,7 @@ const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVis
     fetchData()
     getTotalCompanyRegistrationOfJobFair()
     getTotalBoothOfJobFair()
-  }, [])
+  }, [visible])
 
   const onFinish = values => {
     evaluateJobFairPlanAPI(values)
@@ -79,7 +81,7 @@ const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVis
 
 
   const getTotalCompanyRegistrationOfJobFair = async () => {
-    if (jobFairId !== undefined) {
+    if ( visible !== undefined && visible == true && jobFairId !== undefined) {
       //need API for getting company registrations have status APPROVE by jobfairId
       getRegistrationByJobFairId(jobFairId, 0, 5000, 'createDate', 'DESC')
         .then(res => {
@@ -96,7 +98,7 @@ const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVis
 
   const getTotalBoothOfJobFair = async () => {
     //get total booth by layoutId
-    if (jobFairDetail !== null && jobFairDetail.layoutId !== undefined) {
+    if (visible !== undefined && visible == true && jobFairDetail !== null && jobFairDetail.layoutId !== undefined) {
       getLayoutDetail(jobFairDetail.layoutId)
         .then(res => {
           const totalBooth = res.data.booths.length

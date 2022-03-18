@@ -4,7 +4,7 @@ import {Html, Stage, Stats, useProgress} from '@react-three/drei'
 import {EffectComposer, Outline} from '@react-three/postprocessing'
 import {ChooseBoothGroundMesh} from './ChooseBoothGroundMesh.component'
 import {ArrowHelper} from './ArrowHelper.component'
-import {Modal, notification} from 'antd'
+import {message, Modal, notification} from 'antd'
 import {
   getLatestApproveRegistration
 } from '../../services/company-registration-controller/CompanyRegistrationControllerService'
@@ -45,11 +45,6 @@ export const ChooseBoothCanvas = props => {
         history.push(`${PATH.DECORATE_BOOTH_PATH}${response.data.id}/${jobFairId}`)
       })
       .catch(err => {
-        notification['error']({
-          message: `Not found company registration by job fair ID: ${jobFairId}`,
-          description: `${err}`,
-          duration: 2
-        })
       })
   }
 

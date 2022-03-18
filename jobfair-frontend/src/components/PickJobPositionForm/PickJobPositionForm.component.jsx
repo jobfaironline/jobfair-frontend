@@ -1,16 +1,18 @@
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Button, Form, Input, Space, Anchor, Typography, Divider, Popconfirm} from 'antd'
 import {MinusCircleOutlined, PlusOutlined} from '@ant-design/icons'
 import TextArea from 'antd/lib/input/TextArea'
 import {PickJobPositionFormValidation} from '../../validate/PickJobPositionForm'
 
 const {Link} = Anchor
+const {Text} = Typography
 import './PickJobPositionForm.styles.scss'
 
 const PickJobPositionForm = props => {
   const {handlePickJobPosition, form, handleRemove} = props
 
   const jobPositions = form.getFieldsValue().jobPositions //for anchor
+  console.log(jobPositions)
 
   return (
     <>
@@ -28,16 +30,7 @@ const PickJobPositionForm = props => {
       {/* /// */}
       <Form.List
         name="jobPositions"
-        rules={[
-          ({getFieldValue}) => ({
-            validator(_, value) {
-              if (!value || value.length === 0) {
-                return Promise.reject(new Error('Job position must not be empty'))
-              }
-              return Promise.resolve()
-            }
-          })
-        ]}
+        rules={PickJobPositionFormValidation.jobPositions}
       >
         {(fields, {add, remove}) => {
           return (
@@ -71,7 +64,7 @@ const PickJobPositionForm = props => {
                             rules={PickJobPositionFormValidation.numberOfPosition}
                             style={{maxWidth: '14rem', width: '14rem'}}
                           >
-                            <Input placeholder="Number of position" style={{width: '12rem'}}/>
+                            <Input placeholder="Number of position" style={{width: '12rem'}} type='number' min="1" max="10000"/>
                           </Form.Item>
                           <div style={{width: 'fit-content', flex: 'none'}}>
                             <Input.Group compact>
@@ -81,7 +74,7 @@ const PickJobPositionForm = props => {
                                 name={[name, 'minSalary']}
                                 rules={PickJobPositionFormValidation.minSalary(name)}
                               >
-                                <Input prefix="$" placeholder="Min salary"/>
+                                <Input prefix="$" placeholder="Min salary" type='number' min="1" max="99999"/>
                               </Form.Item>
                               <Form.Item label=" ">
                                 <Input
@@ -97,7 +90,7 @@ const PickJobPositionForm = props => {
                                 name={[name, 'maxSalary']}
                                 rules={PickJobPositionFormValidation.maxSalary(name)}
                               >
-                                <Input prefix="$" className="site-input-right" placeholder="Max salary"/>
+                                <Input prefix="$" className="site-input-right" placeholder="Max salary" type='number' min="1" max="99999"/>
                               </Form.Item>
                             </Input.Group>
                           </div>
