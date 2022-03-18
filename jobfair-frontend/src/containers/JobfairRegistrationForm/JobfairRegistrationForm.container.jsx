@@ -28,7 +28,7 @@ const JobfairRegistrationForm = () => {
   const [currentStep, setCurrentStep] = useState(0)
 
   //total job position
-  const [jobPositionArr, setJobPositionArr] = useState([])
+  const [_, rerender] = useState()
 
   const onSubmit = async values => {
     const body = {
@@ -68,7 +68,7 @@ const JobfairRegistrationForm = () => {
         I have read and accept the Job fair Policy
       </Checkbox>
     </>,
-    <JobfairRegistrationFormComponent form={form} jobFairId={jobfairId}/>,
+    <JobfairRegistrationFormComponent form={form} jobFairId={jobfairId} rerender={rerender}/>,
     <>
       <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo}/>
     </>
@@ -106,11 +106,12 @@ const JobfairRegistrationForm = () => {
     getCompanyProfile(companyId, setCompanyInfo)
   }, [])
 
-  useEffect(() => {
+/*  useEffect(() => {
     // setJobPositionArr(form.getFieldsValue().jobPositions)
     totalJobPosition.current = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions.length : 0
     console.log(totalJobPosition)
-  }, [form.getFieldsValue().jobPositions])
+  }, [form.getFieldsValue().jobPositions])*/
+
 
   return (
     <div>
@@ -180,7 +181,7 @@ const JobfairRegistrationForm = () => {
                       Next
                     </Button> : //else current step = 2
                     (
-                      (currentStep == 2 && true) ? //current step = 2 and total job position = 0
+                      (currentStep == 2 && (form.getFieldsValue().jobPositions === undefined || form.getFieldsValue().jobPositions?.length === 0)) ? //current step = 2 and total job position = 0
                         <Button
                           size="large"
                           type="primary"

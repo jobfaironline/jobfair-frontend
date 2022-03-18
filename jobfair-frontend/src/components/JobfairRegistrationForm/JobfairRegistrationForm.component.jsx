@@ -10,18 +10,17 @@ import {
 
 const {Text} = Typography
 
-const JobfairRegistrationForm = ({ form , jobFairId}) => {
+const JobfairRegistrationForm = ({ form , jobFairId, rerender}) => {
 
   const [adminMessage, setAdminMessage] = useState('')
   const fetchData = async () => {
     if (jobFairId !== undefined) {
       getLatestCompanyRegistration(jobFairId)
         .then(res => {
-          console.log(res.data)
           setAdminMessage(res.data.adminMessage)
         })
         .catch(err => {
-          console.log(err.response.data)
+          console.error(err.response.data)
         })
     }
   }
@@ -88,7 +87,7 @@ const JobfairRegistrationForm = ({ form , jobFairId}) => {
         >
           <TextArea autoSize={{ minRows: 5 }} showCount maxLength={3000} placeholder="Registration description" />
         </Form.Item>
-        <PickJobPositionFormContainer form={form}/>
+        <PickJobPositionFormContainer form={form} rerender={rerender}/>
       </Form>
     </>
 

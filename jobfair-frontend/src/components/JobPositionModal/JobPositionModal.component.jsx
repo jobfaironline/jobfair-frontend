@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Modal, Space } from 'antd'
 import PickJobPositionTableContainer from '../../containers/JobPositionTable/JobPositionTable.container'
 
-const JobPositionModal = ({ visible, handleCloseModal, form }) => {
+const JobPositionModal = ({ visible, handleCloseModal, form, rerender }) => {
   return (
     <>
       <Modal
@@ -13,7 +13,7 @@ const JobPositionModal = ({ visible, handleCloseModal, form }) => {
         footer={null}
         destroyOnClose
       >
-        {visible ? <PickJobPositionTableContainer form={form} selectable /> : null}
+        {visible ? <PickJobPositionTableContainer form={form} rerender={rerender} selectable /> : null}
       </Modal>
     </>
   )

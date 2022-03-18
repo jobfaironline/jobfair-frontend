@@ -5,8 +5,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {fetchJobPositions} from '../../redux-flow/jobPositions/job-positions-action'
 import JobPositionSubmodalContainer from '../JobPositionModal/JobPositionSubmodal.container'
 
-const PickJobPositionTable = ({selectable, form}) => {
-  console.log(form.getFieldsValue())
+const PickJobPositionTable = ({selectable, form, rerender}) => {
 
   const [neededJobPositionDetail, setNeededJobPositionDetail] = useState(null)
   const [modalVisible, setModalVisibile] = useState(false)
@@ -35,6 +34,8 @@ const PickJobPositionTable = ({selectable, form}) => {
     const currentJobPositionsInForm = form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions] : []
     form.setFieldsValue({...form.getFieldsValue(), jobPositions: [...currentJobPositionsInForm, ...mappedData]})
     setInitialSelectedValues(selectedRowKeys)
+    rerender({})
+
   }
 
   const rowSelection = {

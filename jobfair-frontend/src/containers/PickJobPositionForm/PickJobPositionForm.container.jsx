@@ -5,7 +5,7 @@ import {
   getLatestCompanyRegistration
 } from "../../services/company-registration-controller/CompanyRegistrationControllerService";
 
-const PickJobPositionFormContainer = ({form}) => {
+const PickJobPositionFormContainer = ({form, rerender}) => {
   const [modalVisibile, setModalVisible] = useState(false)
 
   const handlePickJobPosition = (name, add) => {
@@ -14,6 +14,8 @@ const PickJobPositionFormContainer = ({form}) => {
 
   const handleRemove = (name, remove) => {
     remove(name)
+    rerender({})
+
   }
 
   const handleCloseModal = () => {
@@ -22,7 +24,7 @@ const PickJobPositionFormContainer = ({form}) => {
 
   return (
     <>
-      <JobPositionModal visible={modalVisibile} handleCloseModal={handleCloseModal} form={form}/>
+      <JobPositionModal visible={modalVisibile} handleCloseModal={handleCloseModal} form={form} rerender={rerender}/>
       <PickJobPositionForm
         handlePickJobPosition={handlePickJobPosition}
         form={form}
