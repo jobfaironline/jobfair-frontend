@@ -1,4 +1,4 @@
-import React, {useMemo, useRef, useState} from "react";
+import React, {useState} from "react";
 import styles from "../../pages/AttendantJobFairPage/AttendantJobFairPage.module.scss";
 import {SideBarContainer} from "../../components/AttendantJobFair/SideBar/SideBar.container";
 import {ControlTipsModalContainer} from "./ControlTipsModal.container";
@@ -16,13 +16,10 @@ export const AttendantJobFairContainer = (props) => {
     })
   }
 
-  const boothContainer = useMemo(() => {
-    return  <AttendantJobFairBoothContainer companyBoothId={companyBoothId} handleOpenDetail={handleOpenDetail}/>
-  }, []);
-
   return (
     <div className={styles.container}>
-      <SideBarContainer companyBoothId={companyBoothId} isShow={tabState.isShow} activeKey={tabState.activeKey} handleOpenDetail={handleOpenDetail}/>
+      <SideBarContainer companyBoothId={companyBoothId} isShow={tabState.isShow} activeKey={tabState.activeKey}
+                        handleOpenDetail={handleOpenDetail}/>
       <div className={styles.booth}>
         <ControlTipsModalContainer/>
         <AttendantJobFairBoothContainer companyBoothId={companyBoothId} handleOpenDetail={handleOpenDetail}/>

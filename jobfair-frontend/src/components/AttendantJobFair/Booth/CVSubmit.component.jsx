@@ -1,27 +1,14 @@
 import {BasicMesh} from "../../ThreeJSBaseComponent/ChildMesh.component";
-import React from "react";
-import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer"
-import {useThree} from "@react-three/fiber";
+import React, {useRef} from "react";
 import {Html} from "@react-three/drei";
 
 
-function drawTooltip(tooltipText) {
-  if (tooltipText) {
-    let divToolTip;
-    divToolTip = document.createElement('div');
-    divToolTip.id = "tien-cute";
-    let strong = document.createElement('strong');
-    strong.innerHTML = tooltipText;
-    divToolTip.appendChild(strong);
-    return divToolTip;
-  }
-}
-
-
 export const CVSubmitComponent = props => {
-  const {mesh, cvSubmitRef, handleOpenDetail, onHover} = props;
+  const {mesh, cvSubmitRef, handleOpenDetail, onHover, isHover} = props;
 
-  const {scene} = useThree();
+  const toolTipPositionRef = useRef({
+    x: 0, y: 0
+  })
 
   return (
     <mesh
@@ -36,16 +23,31 @@ export const CVSubmitComponent = props => {
       scale={mesh.scale}
       castShadow={true}
       receiveShadow={true}
-      onClick={e => handleOpenDetail(true, "1")}
-      onPointerOver={e => {
+      onClick={_ => handleOpenDetail(true, "1")}
+      onPointerMove={e => {
+        toolTipPositionRef.current.x = e.offsetX + 10;
+        toolTipPositionRef.current.y = e.offsetY;
         document.getElementsByTagName("html")[0].style.cursor = "pointer"
         onHover(true);
       }}
-      onPointerLeave={e => {
+      onPointerLeave={_ => {
         onHover(false);
         document.getElementsByTagName("html")[0].style.cursor = "default"
       }}
     >
+      <Html
+        calculatePosition={() => {
+          return [toolTipPositionRef.current.x, toolTipPositionRef.current.y];
+        }}
+        style={{
+          visibility: isHover ? 'visible' : 'hidden',
+          background: 'white',
+          padding: "5px",
+          minWidth: "150px",
+          textAlign: "center",
+        }}>
+        Click here to apply CV
+      </Html>
       {mesh.children.map(child => <BasicMesh mesh={child} key={child.uuid}/>)}
     </mesh>
   )

@@ -7,10 +7,8 @@ import {ViewSelect} from "./ViewSelect.component";
 import {FirstPersonControl} from "../../ThreeJSBaseComponent/FirstPersonControl.component";
 import {Character} from "./Character.component";
 import {EffectComposer, Outline} from "@react-three/postprocessing";
-import {notification} from "antd";
 import {CVSubmitComponent} from "./CVSubmit.component";
 import {ArrowHelper} from "../../ChooseBooth/ArrowHelper.component";
-import {CSS2DObject, CSS2DRenderer} from "three/examples/jsm/renderers/CSS2DRenderer"
 
 
 export const CompanyBoothCanvasComponent = (props) => {
@@ -35,7 +33,6 @@ export const CompanyBoothCanvasComponent = (props) => {
   }
 
 
-
   return (
     <div style={{width: '100%', height: '100vh'}}
     >
@@ -49,15 +46,18 @@ export const CompanyBoothCanvasComponent = (props) => {
         })}
       >
         <SkyComponent style={SkyType.Sunset}/>
-        {view ? <FirstPersonControl model={model} isChangeCamera={isChangeCamera} collidableMeshListRef={sceneMeshRef}/> : <OrbitControls enableZoom={true}
-                                                                                                     maxPolarAngle={Math.PI / 2 - Math.PI / 10}
-                                                                                                     minPolarAngle={0}
-                                                                                                     />}
+        {view ?
+          <FirstPersonControl model={model} isChangeCamera={isChangeCamera} collidableMeshListRef={sceneMeshRef}/> :
+          <OrbitControls enableZoom={true}
+                         maxPolarAngle={Math.PI / 2 - Math.PI / 10}
+                         minPolarAngle={0}
+          />}
         <Stage adjustCamera={false} preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
           <group ref={sceneMeshRef}>
             {boothMesh.children.map(child => {
               if (child.name === "rostrum" || child.name === "reception_desk") {
-                return <CVSubmitComponent mesh={child} cvSubmitRef={cvSubmitRef} onHover={cvSubmitItemOnHover} handleOpenDetail={handleOpenDetail}/>;
+                return <CVSubmitComponent mesh={child} cvSubmitRef={cvSubmitRef} onHover={cvSubmitItemOnHover}
+                                          handleOpenDetail={handleOpenDetail} isHover={isHover}/>;
               }
               return <BasicMesh mesh={child}/>
             })}
