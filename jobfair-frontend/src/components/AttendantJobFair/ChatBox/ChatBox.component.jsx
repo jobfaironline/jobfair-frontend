@@ -1,14 +1,14 @@
-import { CloseOutlined, ArrowsAltOutlined, MinusOutlined } from '@ant-design/icons'
-import { useEffect, useState } from 'react'
-import { Input } from 'antd'
+import {ArrowsAltOutlined, CloseOutlined, MinusOutlined} from '@ant-design/icons'
+import {useEffect, useState} from 'react'
+import {Form, Input} from 'antd'
 import styles from './ChatBox.module.scss'
-import ChatField from './components/ChatField/ChatField.component'
-import VideoCall from './components/VideoCall/VideoCall.component'
+import ChatField from './ChatField.component'
+import VideoCall from './VideoCall.component'
 import AgoraRTC from 'agora-rtc-react'
 import SendIcon from '@mui/icons-material/Send'
-import { getAgoraRTMToken } from '../../../../services/agora-token-controller/AgoraTokenControllerService'
-import { useSelector } from 'react-redux'
-import { Form, Button } from 'antd'
+import {useSelector} from 'react-redux'
+import {getAgoraRTMToken} from "../../../services/agora-token-controller/AgoraTokenControllerService";
+
 class Message {
   constructor(accountName, content, isMyMessage) {
     this.accountName = accountName
@@ -16,8 +16,9 @@ class Message {
     this.isMyMessage = isMyMessage
   }
 }
+
 const ChatBox = props => {
-  const { audioTrackRef, cameraTrackRef } = props
+  const {audioTrackRef, cameraTrackRef} = props
   const [audioReady, setAudioReady] = useState(false)
   const [audioTrack, setAudioTrack] = useState(null)
   const [cameraReady, setCameraReady] = useState(false)
@@ -29,7 +30,7 @@ const ChatBox = props => {
   const channelId = useSelector(state => state.agora.channelId)
   //handle button Chat
   const [isShowChatBox, setIsShowChatBox] = useState(true)
-  const [isShowMinChatBox, setIsMinChatBox] = useState(`height: 550px`)
+
   async function initializeRtmClient(rtmClient, rtmToken, userId) {
     rtmClient.on('ConnectionStateChanged', (newState, reason) => {
       console.log('reason', reason)
@@ -43,15 +44,15 @@ const ChatBox = props => {
         console.log('message ' + message.text + ' peerId' + peerId)
       }
     })
-    rtmClient.on('MemberJoined', ({ channelName, args }) => {
+    rtmClient.on('MemberJoined', ({channelName, args}) => {
       const memberId = args[0]
       console.log('channel ', channelName, ' member: ', memberId, ' joined')
     })
-    rtmClient.on('MemberLeft', ({ channelName, args }) => {
+    rtmClient.on('MemberLeft', ({channelName, args}) => {
       const memberId = args[0]
       console.log('channel ', channelName, ' member: ', memberId, ' joined')
     })
-    rtmClient.on('ChannelMessage', async ({ channelName, args }) => {
+    rtmClient.on('ChannelMessage', async ({channelName, args}) => {
       const [message, memberId] = args
       if (message.messageType === 'IMAGE') {
         const blob = await rtmClient.client.downloadMedia(message.mediaId)
@@ -101,7 +102,7 @@ const ChatBox = props => {
     })
   }, [])
 
-  const videoProps = { audioReady, audioTrack, cameraReady, cameraTrack }
+  const videoProps = {audioReady, audioTrack, cameraReady, cameraTrack}
 
   return (
     <>
@@ -110,16 +111,16 @@ const ChatBox = props => {
           <div className={styles.chatContainer}>
             <div className={styles.chatHeader}>
               <div className={styles.iconHeader}>
-                <ArrowsAltOutlined />
-                <MinusOutlined />
-                <CloseOutlined onClick={() => setIsShowChatBox(false)} />
+                <ArrowsAltOutlined/>
+                <MinusOutlined/>
+                <CloseOutlined onClick={() => setIsShowChatBox(false)}/>
               </div>
             </div>
             <div className={styles.videoContainer}>
               <VideoCall {...videoProps} />
             </div>
             <div className={styles.chatZone}>
-              <ChatField messageList={messageList} />
+              <ChatField messageList={messageList}/>
             </div>
           </div>
           <div className={styles.chatInput}>
@@ -135,9 +136,9 @@ const ChatBox = props => {
               >
                 <Input
                   autoFocus
-                  style={{ borderRadius: '5rem 5rem 5rem 5rem' }}
+                  style={{borderRadius: '5rem 5rem 5rem 5rem'}}
                   placeholder="Type message..."
-                  suffix={<SendIcon />}
+                  suffix={<SendIcon/>}
                 />
               </Form.Item>
             </Form>

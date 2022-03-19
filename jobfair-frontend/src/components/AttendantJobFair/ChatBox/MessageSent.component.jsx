@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import styles from './MessageSent.module.scss'
-const Message = prop => {
+const MessageSent = prop => {
   const { message } = prop
   useEffect(() => console.log(message), [prop])
   return (
@@ -15,4 +15,4 @@ const Message = prop => {
     </div>
   )
 }
-export default Message
+export default MessageSent

@@ -10,7 +10,7 @@ export const ItemSlot = props => {
              onDragStart={onDragStart} onDragOver={onDragOver} onDrop={onDrop}
              onClick={onClick}
         >
-          {isContain ? <img src={window.location.origin + "/icon/scroll-unfurled.svg"} id={id}/> : null}
+          {isContain ? <img src={window.location.origin + "/icon/scroll-unfurled.svg"} id={id} alt={"CV"}/> : null}
         </div>
       </Tooltip>
     )
@@ -19,7 +19,7 @@ export const ItemSlot = props => {
          onDragStart={onDragStart} onDragOver={onDragOver} onDrop={onDrop}
          onClick={onClick}
     >
-      {isContain ? <img src={window.location.origin + "/icon/scroll-unfurled.svg"} id={id}/> : null}
+      {isContain ? <img src={window.location.origin + "/icon/scroll-unfurled.svg"} alt={"CV"} id={id}/> : null}
     </div>
   )
 }

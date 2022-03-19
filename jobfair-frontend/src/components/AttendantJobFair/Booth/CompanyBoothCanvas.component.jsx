@@ -1,10 +1,10 @@
 import {Canvas} from "@react-three/fiber";
 import {ContactShadows, OrbitControls, Stage} from "@react-three/drei";
 import React, {useRef, useState} from "react";
-import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
-import {SkyComponent, SkyType} from "../ThreeJSBaseComponent/Sky.component";
+import {BasicMesh} from "../../ThreeJSBaseComponent/ChildMesh.component";
+import {SkyComponent, SkyType} from "../../ThreeJSBaseComponent/Sky.component";
 import {ViewSelect} from "./ViewSelect.component";
-import {FirstPersonControl} from "../ThreeJSBaseComponent/FirstPersonControl.component";
+import {FirstPersonControl} from "../../ThreeJSBaseComponent/FirstPersonControl.component";
 import {Character} from "./Character.component";
 import {EffectComposer, Outline} from "@react-three/postprocessing";
 import {notification} from "antd";

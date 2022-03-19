@@ -2,7 +2,7 @@ import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import { useEffect } from 'react'
 import styles from './MessageReceived.module.scss'
-const Message = prop => {
+const MessageReceived = prop => {
   const { name, message, avatar } = prop
   useEffect(() => console.log(message), [prop])
   return (
@@ -25,4 +25,4 @@ const Message = prop => {
     </div>
   )
 }
-export default Message
+export default MessageReceived

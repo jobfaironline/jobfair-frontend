@@ -1,13 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useRef} from 'react'
 import RTMClient from '../../services/RTMClient'
 import {createClient} from 'agora-rtc-react'
 import {useParams} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import {agoraAction} from '../../redux-flow/agora/agora-slice'
 import {AttendantJobFairBoothContainer} from '../../containers/AttendantJobFair/AttendantJobFairBooth.container'
-import SideBar from './components/SideBar/SideBar.component'
+import SideBar from '../../components/AttendantJobFair/SideBar/SideBar.component'
 import styles from './AttendantJobFairPage.module.scss'
-import {Stats} from "@react-three/drei";
 import {ControlTipsModalContainer} from "../../containers/AttendantJobFair/ControlTipsModal.container";
 
 const config = {
@@ -61,7 +60,6 @@ const AttendantJobFairPage = () => {
           <SideBar/>
         </div>
         <div className={styles.booth}>
-          <Stats/>
           <ControlTipsModalContainer/>
           <AttendantJobFairBoothContainer companyBoothId={companyBoothId}/>
 

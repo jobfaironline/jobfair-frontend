@@ -1,7 +1,7 @@
 import { Tabs } from 'antd'
 import { useState } from 'react'
 import { Typography } from '@mui/material'
-import CompanyInfor from './components/CompanyInfor/CompanyInfor.component'
+import CompanyInfor from './CompanyInfor.component'
 import { CloseOutlined, MenuOutlined } from '@ant-design/icons'
 import styles from './SideBar.module.scss'
 const { TabPane } = Tabs
@@ -17,9 +17,9 @@ const SideBar = () => {
   }
 
   return (
-    <div className={styles.container} defaultActiveKey={1} accessKey={currentKey}>
+    <div className={styles.container} accessKey={currentKey}>
       <Tabs tabPosition="left">
-        <TabPane
+        <TabPane defaultActiveKey={1}
           tab={
             <span>
               {isShow ? (
@@ -31,7 +31,7 @@ const SideBar = () => {
           }
           key="1"
           disabled
-        ></TabPane>
+        >123</TabPane>
         {isShow ? (
           <>
             <TabPane tab="Tab 1" key="2">

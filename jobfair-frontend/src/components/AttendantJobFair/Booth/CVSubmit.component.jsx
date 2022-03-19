@@ -1,4 +1,4 @@
-import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
+import {BasicMesh} from "../../ThreeJSBaseComponent/ChildMesh.component";
 import React from "react";
 
 export const CVSubmitComponent = props => {
