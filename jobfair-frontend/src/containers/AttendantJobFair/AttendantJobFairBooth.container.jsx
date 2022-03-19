@@ -54,6 +54,15 @@ export const AttendantJobFairBoothContainer = props => {
     boothMesh: undefined,
   })
 
+  const [inventoryVisible, setInventoryVisible] = useState(false);
+  const openInventory = (status) => {
+    if (status !== undefined){
+      setInventoryVisible(status)
+    } else {
+      setInventoryVisible(prevState => !prevState);
+    }
+  }
+
   const getBoothMesh = async (companyBoothId) => {
     const response = await getCompanyBoothLatestLayout(companyBoothId)
     const companyBoothLayoutVideos = {}
@@ -143,12 +152,12 @@ export const AttendantJobFairBoothContainer = props => {
     cameraRef,
     sceneMeshRef,
     zoom: (boothSize.width / 200) / 2.5,
-    handleOpenDetail
+    handleOpenDetail,
+    openInventory
   }
-  console.log("Render container")
   return (
     <>
-      <InventoryContainer/>
+      <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible}/>
       <CompanyBoothCanvasComponent {...cProps}/>
     </>
   )

@@ -4,7 +4,7 @@ import './InventoryButton.component.scss'
 export const InventoryButton = props => {
   const {onClick} = props;
   return (
-    <div className={"button"} onClick={onClick}>
+    <div className={"button"} onClick={e => onClick()}>
       <img src={window.location.origin + "/icon/backpack.svg"} alt={"Backpack"}/>
     </div>
   )

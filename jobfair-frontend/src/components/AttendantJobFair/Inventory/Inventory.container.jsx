@@ -4,12 +4,9 @@ import {InventoryButton} from "./InventoryButton.component";
 
 
 
-export const InventoryContainer = () => {
+export const InventoryContainer = (props) => {
 
-  const [inventoryVisible, setInventoryVisible] = useState(false);
-  const onClick = () => {
-    setInventoryVisible(prevState => !prevState);
-  }
+  const {onClick, inventoryVisible} = props;
 
   return (
     <>

@@ -12,7 +12,7 @@ import {ArrowHelper} from "../../ChooseBooth/ArrowHelper.component";
 
 
 export const CompanyBoothCanvasComponent = (props) => {
-  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef, zoom, handleOpenDetail} = props;
+  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef, zoom, handleOpenDetail, openInventory} = props;
   const [view, setView] = useState(false);
   const cvSubmitRef = useRef()
 
@@ -57,7 +57,7 @@ export const CompanyBoothCanvasComponent = (props) => {
             {boothMesh.children.map(child => {
               if (child.name === "rostrum" || child.name === "reception_desk") {
                 return <CVSubmitComponent mesh={child} cvSubmitRef={cvSubmitRef} onHover={cvSubmitItemOnHover}
-                                          handleOpenDetail={handleOpenDetail} isHover={isHover}/>;
+                                          handleOpenDetail={handleOpenDetail} isHover={isHover} openInventory={openInventory}/>;
               }
               return <BasicMesh mesh={child}/>
             })}
