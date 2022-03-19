@@ -139,8 +139,6 @@ export const GenericButton = props => {
 const CompanyJobFairActionButton = props => {
   const {getCompanyBoothId, item, handleRedirect, handleViewMap, handleRequestChange, role, companyId} = props
   const companyIdRedux = useSelector(state => state?.authentication?.user?.companyId)
-  console.log(role)
-  console.log(companyIdRedux, companyId)
 
   switch (item.status) {
     case COMPANY_JOB_FAIR_STATUS.REGISTRABLE:
@@ -161,7 +159,7 @@ const CompanyJobFairActionButton = props => {
       if (role === 'ATTENDANT' || (role === 'COMPANY_EMPLOYEE' && companyId === companyIdRedux)) {
         return <HappeningButton onClick={() => handleViewMap(item.id)}/>
       } else {
-        return <GenericButton tooltip='Sorry, you dont have permission to join this job fair' status='NOT ALLOW' onClick={() => notification['info']({message: 'You dont have permission to join this job fair.'})}/>
+        return null
       }
     case COMPANY_JOB_FAIR_STATUS.CLOSED:
       return <ClosedButton onClick={() => notification['info']({message: 'This job fair was closed.'})}/>
