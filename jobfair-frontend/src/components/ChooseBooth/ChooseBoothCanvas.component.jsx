@@ -126,7 +126,7 @@ export const ChooseBoothCanvas = props => {
             })}
             {mesh.children.map(childMesh => {
               if (childMesh.name.includes('company') && boothData[childMesh.name] !== undefined) {
-                return <ArrowHelper origin={childMesh.position}/>
+                return <ArrowHelper origin={childMesh.position} color={0x32a852} length={20} distance={23}/>
               }
               return null
             })}

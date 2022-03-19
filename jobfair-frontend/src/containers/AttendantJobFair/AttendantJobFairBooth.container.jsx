@@ -45,7 +45,7 @@ class CharacterModel extends BasicCharacterControl {
 }
 
 export const AttendantJobFairBoothContainer = props => {
-  const {companyBoothId} = props
+  const {companyBoothId, handleOpenDetail} = props
   const cameraRef = useRef();
   const sceneMeshRef = useRef();
   const [state, setState] = useState({
@@ -142,11 +142,12 @@ export const AttendantJobFairBoothContainer = props => {
     characterControl: state.characterControl,
     cameraRef,
     sceneMeshRef,
-    zoom: (boothSize.width / 200) / 2.5
+    zoom: (boothSize.width / 200) / 2.5,
+    handleOpenDetail
   }
+  console.log("Render container")
   return (
     <>
-
       <InventoryContainer/>
       <CompanyBoothCanvasComponent {...cProps}/>
     </>
