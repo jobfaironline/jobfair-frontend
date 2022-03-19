@@ -22,7 +22,6 @@ const JobfairRegistrationForm = () => {
   const companyId = useSelector(state => state.authentication.user.companyId)
   const [agreeStatus, setAgreeStatus] = useState(false)
   const [companyInfo, setCompanyInfo] = useState({})
-  const totalJobPosition = useRef({})
 
   //management step
   const [currentStep, setCurrentStep] = useState(0)
@@ -106,11 +105,6 @@ const JobfairRegistrationForm = () => {
     getCompanyProfile(companyId, setCompanyInfo)
   }, [])
 
-/*  useEffect(() => {
-    // setJobPositionArr(form.getFieldsValue().jobPositions)
-    totalJobPosition.current = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions.length : 0
-    console.log(totalJobPosition)
-  }, [form.getFieldsValue().jobPositions])*/
 
 
   return (
@@ -245,11 +239,11 @@ const getCompanyProfile = async (companyId, setCompanyInfo) => {
 const submitRegistration = async (companyRegistrationId, successCallback, failedCallback) => {
   try {
     const res = await submitRegistrationAPI(companyRegistrationId)
-    notification['success']({
-      message: `Registration draft version has been submitted`,
-      description: `Submitted successfully`,
-      duration: 2
-    })
+    // notification['success']({
+    //   message: `Registration draft version has been submitted`,
+    //   description: `Submitted successfully`,
+    //   duration: 2
+    // })
     successCallback()
   } catch (err) {
     notification['error']({

@@ -35,9 +35,8 @@ const ApprovalRegistrationContainer = () => {
           }))
           setData([...result])
           notification['success']({
-            message: `All registration has been loaded`,
-            description: `with job fair ID: ${jobFairId}`,
-            duration: 1
+            message: `All company registrations have been loaded`,
+            duration: 2
           })
         })
         .catch(err => {

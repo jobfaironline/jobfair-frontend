@@ -258,6 +258,8 @@ const JobFairListManagementComponent = props => {
                               handleRedirect={handleRedirect}
                               handleViewMap={handleViewMap}
                               handleRequestChange={handleRequestChange}
+                              companyId={item.companyId}
+                              role={role}
                             />
                           </div>
                         </div>
