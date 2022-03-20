@@ -7,7 +7,6 @@ import { ResultSuccessPage } from '../pages/ResultPage/ResultSuccessPage'
 import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage'
 import JobFairListPage from '../pages/JobFairListPage/JobFairList.page'
 import JobFairsPage from '../pages/JobFairsPage/JobFairsPage'
-import ContactPage from '../pages/ContactPage/ContactPage'
 import UserPage from '../pages/UserPage/UserPage'
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage'
 import FAQPage from '../pages/FAQPage/FAQPage'
@@ -50,6 +49,7 @@ import {
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
 import JobFairDetailCompanyPage from "../pages/JobFairDetailPage/JobFairDetailCompanyPage";
 import ResumeDetailPage from "../pages/ResumeDetailPage/ResumeDetailPage";
+import ContactPage from "../pages/ContactPage/ContactPage";
 
 const AppRouter = () => {
   return (
