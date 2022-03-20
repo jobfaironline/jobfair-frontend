@@ -1,31 +1,20 @@
 import React, { useRef, useState } from 'react'
-import { Button, Form, Input, Space, Anchor, Typography, Divider, Popconfirm } from 'antd'
+import { Button, Form, Input, Space, Anchor, Typography, Divider, Popconfirm, Collapse, Col, Row, Tag } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import TextArea from 'antd/lib/input/TextArea'
 import { PickJobPositionFormValidation } from '../../validate/PickJobPositionForm'
+import { convertEnumToString } from '../../utils/common'
+import './PickJobPositionForm.styles.scss'
 
 const { Link } = Anchor
-import './PickJobPositionForm.styles.scss'
+const { Panel } = Collapse
+const { Title, Paragraph, Text } = Typography
 
 const PickJobPositionForm = props => {
   const { handlePickJobPosition, form, handleRemove } = props
 
-  const jobPositions = form.getFieldsValue().jobPositions //for anchor
-
   return (
     <>
-      {/* TODO: use anchor component and move it to pickjob registrationform container*/}
-      {/* <div style={{ position: 'fixed', left: '0.8rem', top: '200px' }}>
-        {jobPositions.length ? (
-          <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Job Positions</Typography>
-        ) : null}
-        <Anchor targetOffset={300} onClick={e => e.preventDefault()}>
-          {jobPositions.map((jobPosition, index) => {
-            return <Link href={`#${index}-job-position`} title={`${index + 1}: ${jobPosition.title}`} />
-          })}
-        </Anchor>
-      </div> */}
-      {/* /// */}
       <Form.List
         name="jobPositions"
         rules={[
@@ -44,6 +33,8 @@ const PickJobPositionForm = props => {
             <>
               {fields.map(({ key, name, ...restField }) => {
                 const id = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions[key].id : undefined
+                const item = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions[key] : {}
+
                 return (
                   <div>
                     <Divider></Divider>
@@ -64,6 +55,108 @@ const PickJobPositionForm = props => {
                             />
                           </Form.Item>
                         </div>
+                        <Collapse bordered={false} defaultActiveKey={['1']} style={{ marginBottom: '1rem' }}>
+                          <Panel
+                            header={
+                              <Text strong style={{ fontSize: '1rem' }}>
+                                General information
+                              </Text>
+                            }
+                          >
+                            <Col style={{ marginLeft: '1rem' }}>
+                              <Row>
+                                <div key="title">
+                                  <Space>
+                                    <Text strong>Job title: </Text>
+                                    <Text>{item.title}</Text>
+                                  </Space>
+                                </div>
+                              </Row>
+                              <div key="language">
+                                <Space>
+                                  <Text strong>Prefer language: </Text>
+                                  <Text>{item.language}</Text>
+                                </Space>
+                              </div>
+                              <Row gutter={[100, 0]}>
+                                <Col span={8} key="level">
+                                  <Space>
+                                    <Text strong>Job level: </Text>
+                                    <Text>{convertEnumToString(item.level)}</Text>
+                                  </Space>
+                                </Col>
+                                <Col span={12} key="type">
+                                  <Space>
+                                    <Text strong>Job type: </Text>
+                                    <Text>{convertEnumToString(item.jobType)}</Text>
+                                  </Space>
+                                </Col>
+                              </Row>
+                              <Row gutter={[100, 0]}>
+                                <Col span={8}>
+                                  <div key="contact-name">
+                                    <Space>
+                                      <Text strong>Contact Person:</Text>
+                                      <Text>{item.contactPersonName}</Text>
+                                    </Space>
+                                  </div>
+                                </Col>
+                                <Col span={12}>
+                                  <div key="contact-email">
+                                    <Space>
+                                      <Text strong>Contact Email:</Text>
+                                      <Text>{item.contactEmail}</Text>
+                                    </Space>
+                                  </div>
+                                </Col>
+                                <Col>
+                                  <div key="skills">
+                                    <Space>
+                                      <Text strong>Required skills: </Text>
+                                      {item.skillTagDTOS.map(skill => {
+                                        return (
+                                          <Tag color="blue" style={{ fontSize: '0.9rem', padding: '0.1rem 0.3rem' }}>
+                                            {skill.name}
+                                          </Tag>
+                                        )
+                                      })}
+                                    </Space>
+                                  </div>
+                                  <div key="category">
+                                    <Space>
+                                      <Text strong>Category: </Text>
+                                      {item.subCategoryDTOs.map(category => {
+                                        return (
+                                          <Tag color="blue" style={{ fontSize: '0.9rem', padding: '0.1rem 0.3rem' }}>
+                                            {category.name}
+                                          </Tag>
+                                        )
+                                      })}
+                                    </Space>
+                                  </div>
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col>
+                                  <div>
+                                    <div key="description">
+                                      <Space align="start" direction="vertical" size={0}>
+                                        <Text strong>Job description: </Text>
+                                        <Text>{item.description}</Text>
+                                      </Space>
+                                    </div>
+                                    <div key="requirement">
+                                      <Space align="start" direction="vertical" size={0}>
+                                        <Text strong>Job requirements: </Text>
+                                        <Text>{item.requirements}</Text>
+                                      </Space>
+                                    </div>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </Col>
+                          </Panel>
+                        </Collapse>
                         <div className="job-position-row-container ">
                           <Form.Item
                             label="Number of position"

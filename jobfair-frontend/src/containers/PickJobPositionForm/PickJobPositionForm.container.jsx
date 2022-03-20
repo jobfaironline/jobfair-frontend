@@ -37,7 +37,7 @@ const PickJobPositionFormContainer = ({ form }) => {
 
   return (
     <>
-      <div style={{ position: 'fixed', left: '0.8rem', top: '200px', zIndex: '100000' }}>
+      <div style={{ position: 'fixed', left: '0.8rem', top: '200px', zIndex: '1000' }}>
         <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Content list</Typography>
         <AnchorComponent
           listData={
