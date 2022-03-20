@@ -49,6 +49,7 @@ import {
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
 import JobFairDetailCompanyPage from '../pages/JobFairDetailPage/JobFairDetailCompanyPage'
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage'
+import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage'
 
 const AppRouter = () => {
   return (
@@ -141,6 +142,12 @@ const AppRouter = () => {
           path={PATH_ATTENDANT.JOB_FAIR_DETAIL}
           exact
         />
+        <AttendantRouter
+          key={PATH_ATTENDANT.CV_DETAIL_PAGE}
+          component={() => <ResumeDetailPage />}
+          path={PATH_ATTENDANT.CV_DETAIL_PAGE}
+          exact
+        />
         <CompanyEmployeeRouter
           key={PATH_COMPANY_EMPLOYEE.APPLIED_JOB_PAGE}
           component={() => <ApplicationManagementPage />}
@@ -151,6 +158,18 @@ const AppRouter = () => {
           key={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}
           component={() => <CompanyProfile />}
           path={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.CV_DETAIL_PAGE}
+          component={() => <ResumeDetailPage />}
+          path={PATH_COMPANY_EMPLOYEE.CV_DETAIL_PAGE}
+          exact
+        />
+        <CompanyManagerRouter
+          key={PATH_COMPANY_MANAGER.CV_DETAIL_PAGE}
+          component={() => <ResumeDetailPage />}
+          path={PATH_COMPANY_MANAGER.CV_DETAIL_PAGE}
           exact
         />
         <CompanyManagerRouter
