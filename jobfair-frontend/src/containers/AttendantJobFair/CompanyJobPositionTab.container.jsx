@@ -1,18 +1,34 @@
 import React, {useState} from "react";
-import {Modal, notification} from "antd";
+import {Col, Modal, notification, Row, Space, Tag, Typography} from "antd";
 import {CompanyJobPositionTab} from "../../components/AttendantJobFair/SideBar/CompanyJobPositionTab.component";
+import JobPositionDetailComponent from "../../components/JobPositionDetail/JobPositionDetail.component";
+import JobPositionSubmodalContainer from "../JobPositionModal/JobPositionSubmodal.container";
+import JobPositionSubmodal from "../../components/JobPositionModal/JobPositionSubmodal.component";
+import {convertEnumToString} from "../../utils/common";
+import JobPositionSubmodalDetailComponent from "../../components/JobPositionModal/JobPositionSubmodalDetail.component";
+
+const {Text} = Typography
 
 export const CompanyJobPositionTabContainer = (props) => {
   const {jobPositions} = props;
   const [hoverJobPosition, setHoverJobPosition] = useState();
+  const [visible, setVisible] = useState(false)
 
   const onClick = (item) => {
     Modal.info({
       title: "Job detail",
+      width: '70rem',
+      closable: true,
+      maskClosable: true,
       onOk: () => {
 
-      }
-    });
+      },
+      content: <JobPositionSubmodalDetailComponent data={item}/>
+    })
+  }
+
+  const handleVisibleModal = () => {
+    setVisible(true)
   }
 
   const onDragOver = (event, jobPosition) => {
@@ -41,7 +57,7 @@ export const CompanyJobPositionTabContainer = (props) => {
     setHoverJobPosition(undefined)
   }
 
-  const componentProps = {jobPositions, hoverListItem: hoverJobPosition, onClick, onDragOver, onDragLeave, onDrop };
+  const componentProps = {jobPositions, hoverListItem: hoverJobPosition, onClick, onDragOver, onDragLeave, onDrop};
 
 
   return <CompanyJobPositionTab {...componentProps}/>
