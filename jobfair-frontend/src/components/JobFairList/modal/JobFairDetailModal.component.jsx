@@ -19,7 +19,9 @@ const JobFairDetailModalComponent = (props) => {
         <>
             <Modal title="Job Fair Detail"
                    visible={visible} onOk={onOk}
-                   onCancel={onCancel}>
+                   onCancel={onCancel}
+                   width={1300}>
+                    
                 <JobFairDetailComponent
                     data={data}
                     onFinish={onFinish}
