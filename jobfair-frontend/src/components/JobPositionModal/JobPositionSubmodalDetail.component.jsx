@@ -6,7 +6,7 @@ const {Text} = Typography
 
 const JobPositionSubmodalDetailComponent = ({data}) => {
   return (
-    <div style={{ height: 'max-content', marginLeft: '-38px', fontSize: '1.2rem' }}>
+    <div style={{ height: 'max-content', fontSize: '1.2rem' }}>
       <div
         key="no"
         style={{ marginBottom: '0.8rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
