@@ -1,8 +1,7 @@
-import React from 'react';
-import {Tag} from "antd";
+import React from 'react'
+import { Tag } from 'antd'
 
-
-const defaultColumns = (getColumnSearchProps) => {
+const defaultColumns = getColumnSearchProps => {
   return [
     {
       title: 'No',
@@ -12,7 +11,7 @@ const defaultColumns = (getColumnSearchProps) => {
       render(text, record) {
         return {
           props: {
-            style: {textAlign: 'end', width: '5px'}
+            style: { textAlign: 'end', width: '5px' }
           },
           children: text
         }
@@ -103,14 +102,11 @@ const defaultColumns = (getColumnSearchProps) => {
             }
             break
         }
-        return (
-          <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
-        )
+        return <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
       }
     }
   ]
 }
-
 
 const ApprovalRegistrationColumn = (getColumnSearchProps, jobFairId) => {
   if (jobFairId !== undefined) {
@@ -125,7 +121,7 @@ const ApprovalRegistrationColumn = (getColumnSearchProps, jobFairId) => {
         render(text, record) {
           return {
             props: {
-              style: {textAlign: 'end', width: '5px'}
+              style: { textAlign: 'end', width: '5px' }
             },
             children: text
           }
@@ -222,15 +218,11 @@ const ApprovalRegistrationColumn = (getColumnSearchProps, jobFairId) => {
               }
               break
           }
-          return (
-            <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
-          )
+          return <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
         }
       }
     ]
   }
+}
 
-};
-
-
-export default ApprovalRegistrationColumn;
+export default ApprovalRegistrationColumn

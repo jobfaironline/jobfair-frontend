@@ -68,7 +68,7 @@ const JobfairRegistrationForm = () => {
         I have read and accept the Job fair Policy
       </Checkbox>
     </>,
-    <JobfairRegistrationFormComponent form={form}/>,
+    <JobfairRegistrationFormComponent form={form} jobFairId={jobfairId}/>,
     <>
       <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo}/>
     </>
@@ -88,6 +88,9 @@ const JobfairRegistrationForm = () => {
               setCurrentStep(currentStep + 1)
             })
             .catch(err => {
+              // notification['error']({
+              //   message: 'job position must not be empty'
+              // })
               const errorsArray = form.getFieldsError()
               for (const error of errorsArray) {
                 if (error.errors.length > 0) {
@@ -169,7 +172,7 @@ const JobfairRegistrationForm = () => {
                         background: '#f5f5f5',
                         textShadow: 'none',
                         boxShadow: 'none'
-                    }}
+                      }}
                     >
                       Next
                     </Button> :
@@ -193,11 +196,11 @@ const JobfairRegistrationForm = () => {
 const getCompanyProfile = async (companyId, setCompanyInfo) => {
   getCompanyProfileAPI(companyId)
     .then(res => {
-      notification['success']({
-        message: `Fetch company profile successfully`,
-        description: `For company with ${companyId}`,
-        duration: 2
-      })
+      // notification['success']({
+      //   message: `Fetch company profile successfully`,
+      //   description: `For company with ${companyId}`,
+      //   duration: 2
+      // })
       const response = {
         ...res.data,
         benefits: res.data.companyBenefitDTOS.map(item => {
@@ -244,11 +247,11 @@ const submitRegistration = async (companyRegistrationId, successCallback, failed
 const onCreateDraft = async body => {
   try {
     const res = await createDraftRegistrationAPI(body)
-    notification['success']({
-      message: `Registration draft version has been created`,
-      description: `Created draft successfully`,
-      duration: 2
-    })
+    // notification['success']({
+    //   message: `Registration draft version has been created`,
+    //   description: `Created draft successfully`,
+    //   duration: 2
+    // })
     return res.data.companyRegistrationId
   } catch (err) {
     notification['error']({

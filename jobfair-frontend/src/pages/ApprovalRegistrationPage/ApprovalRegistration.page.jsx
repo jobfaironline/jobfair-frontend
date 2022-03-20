@@ -28,7 +28,7 @@ const ApprovalRegistrationPage = props => {
   const getJobFairDetail = async (jobFairId) => {
     getJobFairPlanById(jobFairId)
       .then(res => {
-        setJobFairDescription(res.data.description)
+        setJobFairDescription(res.data.name)
       }).catch(err => {
       notification['error']({
         message: 'Get job fair detail failed'

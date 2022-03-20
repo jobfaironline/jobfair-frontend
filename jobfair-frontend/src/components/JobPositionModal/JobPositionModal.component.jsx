@@ -13,7 +13,7 @@ const JobPositionModal = ({ visible, handleCloseModal, form }) => {
         footer={null}
         destroyOnClose
       >
-        <PickJobPositionTableContainer form={form} selectable />
+        {visible ? <PickJobPositionTableContainer form={form} selectable /> : null}
       </Modal>
     </>
   )
