@@ -1,14 +1,17 @@
 import React, {useState} from "react";
+
 import {Modal, notification, Typography} from "antd";
 import {CompanyJobPositionTab} from "../../components/AttendantJobFair/SideBar/CompanyJobPositionTab.component";
 import JobPositionSubmodalDetailComponent from "../../components/JobPositionModal/JobPositionSubmodalDetail.component";
 import "./CompanyJobPositionTab.styles.scss"
+
 
 const {Text} = Typography
 
 export const CompanyJobPositionTabContainer = (props) => {
   const {jobPositions} = props;
   const [hoverJobPosition, setHoverJobPosition] = useState();
+  const [visible, setVisible] = useState(false)
 
   const onClick = (item) => {
     Modal.info({
@@ -23,7 +26,6 @@ export const CompanyJobPositionTabContainer = (props) => {
       content: <JobPositionSubmodalDetailComponent data={item}/>
     })
   }
-
 
   const onDragOver = (event, jobPosition) => {
     event.preventDefault()
