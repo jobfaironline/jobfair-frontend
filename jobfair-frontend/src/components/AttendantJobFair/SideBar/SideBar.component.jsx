@@ -3,7 +3,7 @@ import {CompanyInformation} from './CompanyInformation.component'
 import {CloseOutlined, MenuOutlined} from '@ant-design/icons'
 import styles from './SideBar.module.scss'
 import React from 'react'
-import {CompanyJobPositionTab} from "./CompanyJobPositionTab.component";
+import {CompanyJobPositionTabContainer} from "../../../containers/AttendantJobFair/CompanyJobPositionTab.container";
 
 const {Text} = Typography;
 
@@ -30,14 +30,16 @@ const SideBar = (props) => {
 
         {isShow ? (
           <>
-            <Tabs.TabPane tab="Tab 1" key="0">
+            <Tabs.TabPane tab={<div style={{textAlign: "center"}}>
+              Company <br/> Information
+            </div>} key="0">
               <div className={styles.aboutCompany}>
                 <Typography variant="button">About Company</Typography>
                 <CompanyInformation data={companyInformation}/>
               </div>
             </Tabs.TabPane>
-            <Tabs.TabPane tab="Tab 2" key="1">
-              <CompanyJobPositionTab jobPositions={jobPositions}/>
+            <Tabs.TabPane tab="Job positions" key="1">
+              <CompanyJobPositionTabContainer jobPositions={jobPositions}/>
             </Tabs.TabPane>
 
           </>
