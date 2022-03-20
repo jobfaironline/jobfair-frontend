@@ -442,7 +442,7 @@ const ResumeDetailComponent = (props) => {
                 <Card title="Evaluate this registration" style={{width: 500, marginTop: '2rem'}}
                       headStyle={{fontWeight: 700, fontSize: 24}}>
                   <div style={{marginLeft: '5rem'}}>
-                    <EvaluationFormComponent onFinish={onFinish} name='resumeRegistration' id={defaultResumeId}/>
+                    <EvaluationFormComponent onFinish={onFinish} name='resumeRegistrationId' id={defaultResumeId}/>
                   </div>
                 </Card>
               </div>
