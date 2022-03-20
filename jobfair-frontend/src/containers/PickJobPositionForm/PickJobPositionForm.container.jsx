@@ -3,6 +3,7 @@ import PickJobPositionForm from '../../components/PickJobPositionForm/PickJobPos
 import JobPositionModal from '../../components/JobPositionModal/JobPositionModal.component'
 import { getLatestCompanyRegistration } from '../../services/company-registration-controller/CompanyRegistrationControllerService'
 import AnchorComponent from '../../components/Anchor/Achor.component'
+import { Typography } from 'antd'
 
 const PickJobPositionFormContainer = ({ form }) => {
   const [modalVisibile, setModalVisible] = useState(false)
@@ -36,7 +37,8 @@ const PickJobPositionFormContainer = ({ form }) => {
 
   return (
     <>
-      <div style={{ position: 'fixed', left: '0.8rem', top: '200px' }}>
+      <div style={{ position: 'fixed', left: '0.8rem', top: '200px', zIndex: '100000' }}>
+        <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Content list</Typography>
         <AnchorComponent
           listData={
             form.getFieldsValue().jobPositions

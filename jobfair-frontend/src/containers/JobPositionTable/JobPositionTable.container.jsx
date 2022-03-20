@@ -8,8 +8,11 @@ import JobPositionSubmodalContainer from '../JobPositionModal/JobPositionSubmoda
 import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
 
 const PickJobPositionTable = ({ selectable, form }) => {
-  console.log(form.getFieldsValue())
-
+  //pagination
+  const totalRecord = useSelector(state => state.jobPosition.totalRecord)
+  const [currentPage, setCurrentPage] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+  //
   const [neededJobPositionDetail, setNeededJobPositionDetail] = useState(null)
   const [modalVisible, setModalVisibile] = useState(false)
 
@@ -24,15 +27,19 @@ const PickJobPositionTable = ({ selectable, form }) => {
     form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions.map(item => item.key)] : []
   )
   const [selectedRowKeys, setSelectedRowKeys] = useState(() => [...initialSelectedValues])
+  const [selectedRows, setSelectedRows] = useState(
+    form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions] : []
+  )
 
   //handle choose job button
   const chooseJobPositions = () => {
     const mappedData = []
-    for (const item of jobPositionData) {
-      if (selectedRowKeys.includes(item.key) && !initialSelectedValues.includes(item.key)) {
+
+    selectedRows.forEach(item => {
+      if (!initialSelectedValues.includes(item.id)) {
         mappedData.push(item)
       }
-    }
+    })
 
     const currentJobPositionsInForm = form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions] : []
     form.setFieldsValue({ ...form.getFieldsValue(), jobPositions: [...currentJobPositionsInForm, ...mappedData] })
@@ -43,6 +50,7 @@ const PickJobPositionTable = ({ selectable, form }) => {
     selectedRowKeys: [...selectedRowKeys],
     onChange: (selectedRowKeys, selectedRows) => {
       setSelectedRowKeys(selectedRowKeys)
+      setSelectedRows(selectedRows)
     },
     getCheckboxProps: record => {
       return {
@@ -51,7 +59,8 @@ const PickJobPositionTable = ({ selectable, form }) => {
         name: record.name
       }
     },
-    hideSelectAll: true
+    hideSelectAll: true,
+    preserveSelectedRowKeys: true
   }
 
   const handleGetDetail = jobPositionId => {
@@ -59,13 +68,22 @@ const PickJobPositionTable = ({ selectable, form }) => {
     setModalVisibile(true)
   }
 
+  const handlePageChange = (page, pageSize) => {
+    if (page > 0) {
+      setCurrentPage(page - 1)
+    } else {
+      setCurrentPage(page)
+    }
+    setPageSize(pageSize)
+  }
+
   const fetchData = async (currentPage, pageSize) => {
     dispatch(fetchJobPositions({ currentPage, pageSize }))
   }
 
   useLayoutEffect(() => {
-    fetchData(0, 5000)
-  }, [])
+    fetchData(currentPage, pageSize)
+  }, [currentPage, pageSize])
 
   return (
     <div>
@@ -96,9 +114,9 @@ const PickJobPositionTable = ({ selectable, form }) => {
         }}
         rowSelection={selectable ? { ...rowSelection } : null}
       />
-      {/* <Space style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}>
+      <Space style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}>
         <PaginationComponent data={jobPositionData} handlePageChange={handlePageChange} totalRecord={totalRecord} />
-      </Space> */}
+      </Space>
       {selectable ? (
         <Button style={{ width: '100%' }} type="primary" onClick={chooseJobPositions}>
           Choose
