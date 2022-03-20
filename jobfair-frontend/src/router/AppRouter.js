@@ -7,7 +7,7 @@ import { ResultSuccessPage } from '../pages/ResultPage/ResultSuccessPage'
 import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage'
 import JobFairListPage from '../pages/JobFairListPage/JobFairList.page'
 import JobFairsPage from '../pages/JobFairsPage/JobFairsPage'
-import ContractsPage from '../pages/ContractsPage/ContractsPage'
+import ContactPage from '../pages/ContactPage/ContactPage'
 import UserPage from '../pages/UserPage/UserPage'
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage'
 import FAQPage from '../pages/FAQPage/FAQPage'
@@ -96,7 +96,7 @@ const AppRouter = () => {
           <UserPage />
         </Route>
         <Route path={PATH.CONTRACTS_PAGE} exact>
-          <ContractsPage />
+          <ContactPage />
         </Route>
         <Route path={PATH.JOB_FAIRS_PAGE} exact>
           <JobFairsPage />
