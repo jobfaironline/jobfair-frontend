@@ -49,7 +49,7 @@ export const PATH_COMPANY_EMPLOYEE = {
   COMPANY_EMPLOYEE_MANAGEMENT: '/company/employee-management',
   APPLIED_JOB_PAGE: '/applied-job',
   CV_DETAIL: '/cv-detail/:resumeId',
-  CV_DETAIL_PAGE: '/cv-detail'
+  CV_DETAIL_PAGE: '/employee/cv-detail'
 }
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',
@@ -63,7 +63,7 @@ export const PATH_COMPANY_MANAGER = {
   JOB_FAIR_DETAIL: '/company/job-fair-detail',
   APPLIED_JOB_PAGE: '/company/applied-job',
   CV_DETAIL: '/cv-detail/:resumeId',
-  CV_DETAIL_PAGE: '/cv-detail'
+  CV_DETAIL_PAGE: '/manager/cv-detail'
 }
 export const PATH_STAFF = {
   APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId',

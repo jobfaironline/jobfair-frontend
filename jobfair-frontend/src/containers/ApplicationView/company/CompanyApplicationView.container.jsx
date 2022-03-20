@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { notification, Space, Tooltip, Input } from 'antd'
 import { MoreOutlined, EyeOutlined } from '@ant-design/icons'
 import ApplicationTable from '../../../components/ApplicationView/ApplicationTable.component'
@@ -7,6 +8,7 @@ const { Search } = Input
 
 const CompanyApplicationView = ({ tabStatus, ...otherProps }) => {
   const [applicationData, setApplicationData] = useState([])
+  const history = useHistory()
 
   //TODO: there will be a switch case here to make dynamic fetch data function
   const fetchData = async () => {
@@ -52,7 +54,11 @@ const CompanyApplicationView = ({ tabStatus, ...otherProps }) => {
                 return (
                   <Space size="middle">
                     <Tooltip placement="top" title="View detail">
-                      <a onClick={() => {}}>
+                      <a
+                        onClick={() => {
+                          history.push('/manager/cv-detail', { resumeId: record.applicationId })
+                        }}
+                      >
                         <EyeOutlined />
                       </a>
                     </Tooltip>
