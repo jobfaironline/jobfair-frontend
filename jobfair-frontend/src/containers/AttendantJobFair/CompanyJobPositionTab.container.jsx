@@ -1,12 +1,11 @@
 import React, {useState} from "react";
-import {Col, Modal, notification, Row, Space, Tag, Typography} from "antd";
+
+import {Modal, notification, Typography} from "antd";
 import {CompanyJobPositionTab} from "../../components/AttendantJobFair/SideBar/CompanyJobPositionTab.component";
-import JobPositionDetailComponent from "../../components/JobPositionDetail/JobPositionDetail.component";
-import JobPositionSubmodalContainer from "../JobPositionModal/JobPositionSubmodal.container";
-import JobPositionSubmodal from "../../components/JobPositionModal/JobPositionSubmodal.component";
-import {convertEnumToString} from "../../utils/common";
 import JobPositionSubmodalDetailComponent from "../../components/JobPositionModal/JobPositionSubmodalDetail.component";
+import "./CompanyJobPositionTab.styles.scss"
 import {useSelector} from "react-redux";
+
 
 const {Text} = Typography
 
@@ -22,15 +21,12 @@ export const CompanyJobPositionTabContainer = (props) => {
       width: '70rem',
       closable: true,
       maskClosable: true,
+      wrapClassName: 'company-job-position-tab-modal',
       onOk: () => {
 
       },
       content: <JobPositionSubmodalDetailComponent data={item}/>
     })
-  }
-
-  const handleVisibleModal = () => {
-    setVisible(true)
   }
 
   const onDragOver = (event, jobPosition) => {
