@@ -4,6 +4,7 @@ import {Modal, notification, Typography} from "antd";
 import {CompanyJobPositionTab} from "../../components/AttendantJobFair/SideBar/CompanyJobPositionTab.component";
 import JobPositionSubmodalDetailComponent from "../../components/JobPositionModal/JobPositionSubmodalDetail.component";
 import "./CompanyJobPositionTab.styles.scss"
+import {useSelector} from "react-redux";
 
 
 const {Text} = Typography
@@ -12,6 +13,7 @@ export const CompanyJobPositionTabContainer = (props) => {
   const {jobPositions} = props;
   const [hoverJobPosition, setHoverJobPosition] = useState();
   const [visible, setVisible] = useState(false)
+  const inventory = useSelector(state => state.inventory.data)
 
   const onClick = (item) => {
     Modal.info({
@@ -42,11 +44,12 @@ export const CompanyJobPositionTabContainer = (props) => {
 
   const onDrop = (event, jobPosition) => {
     const dragId = event.dataTransfer.getData("text/plain");
+    const cv = inventory[dragId];
     Modal.info({
       title: "Are you sure?",
       onOk: () => {
         notification['success']({
-          message: `Add cv ${dragId} successfully to ${jobPosition.title}`,
+          message: `Add cv ${cv.id} successfully to ${jobPosition.title}`,
         })
       }
     })
