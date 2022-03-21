@@ -5,6 +5,7 @@ import {CompanyJobPositionTab} from "../../components/AttendantJobFair/SideBar/C
 import JobPositionSubmodalDetailComponent from "../../components/JobPositionModal/JobPositionSubmodalDetail.component";
 import "./CompanyJobPositionTab.styles.scss"
 import {useSelector} from "react-redux";
+import ConfirmSubmitResumeComponent from "../../components/ConfirmSubmitResume/ConfirmSubmitResume.component";
 
 
 const {Text} = Typography
@@ -46,12 +47,19 @@ export const CompanyJobPositionTabContainer = (props) => {
     const dragId = event.dataTransfer.getData("text/plain");
     const cv = inventory[dragId];
     Modal.info({
-      title: "Are you sure?",
-      onOk: () => {
-        notification['success']({
-          message: `Add cv ${cv.id} successfully to ${jobPosition.title}`,
-        })
-      }
+      title: "Confirm last time before submit your resume",
+      width: '45rem',
+      closable: true,
+      maskClosable: true,
+      wrapClassName: 'confirm-submit-resume',
+      okText: 'Close',
+      // onOk: () => {
+      //   //call API, close modal
+      //   notification['success']({
+      //     message: `Add cv ${cv.id} successfully to ${jobPosition.title}`,
+      //   })
+      // },
+      content: <ConfirmSubmitResumeComponent dragId={dragId} cv={cv} jobPosition={jobPosition}/>
     })
     setHoverJobPosition(undefined)
   }

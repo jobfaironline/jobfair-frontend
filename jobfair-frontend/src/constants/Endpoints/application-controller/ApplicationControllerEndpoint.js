@@ -1,0 +1,1 @@
+export const ENDPOINT_APPLICATION_CONTROLLER = '/api/v1/applications'
