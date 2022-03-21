@@ -40,23 +40,23 @@ const defaultColumns = getColumnSearchProps => {
       title: 'Status',
       key: 'status',
       dataIndex: 'status',
-      filters: [
-        {
-          text: 'Pending',
-          value: 'PENDING'
-        },
-        {
-          text: 'Approved',
-          value: 'APPROVED'
-        },
-        {
-          text: 'Rejected',
-          value: 'REJECTED'
-        }
-      ],
-      onFilter: (value, record) => {
-        return record.status === value
-      },
+      // filters: [
+      //   {
+      //     text: 'Pending',
+      //     value: 'PENDING'
+      //   },
+      //   {
+      //     text: 'Approved',
+      //     value: 'APPROVE'
+      //   },
+      //   {
+      //     text: 'Rejected',
+      //     value: 'REJECT'
+      //   }
+      // ],
+      // onFilter: (value, record) => {
+      //   return record.status === value
+      // },
       render: status => {
         let objStatus
         switch (status) {

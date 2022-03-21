@@ -3,26 +3,44 @@ import { useHistory } from 'react-router-dom'
 import { notification, Space, Tooltip, Input } from 'antd'
 import { MoreOutlined, EyeOutlined } from '@ant-design/icons'
 import ApplicationTable from '../../../components/ApplicationView/ApplicationTable.component'
+import { getAllApplication } from '../../../services/application-controller/ApplicationControllerService'
+import PaginationComponent from '../../../components/PaginationComponent/Pagination.component'
 
 const { Search } = Input
 
 const CompanyApplicationView = ({ tabStatus, ...otherProps }) => {
+  //pagination
+  const [totalRecord, setTotalRecord] = useState(0)
+  const [currentPage, setCurrentPage] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+  //
   const [applicationData, setApplicationData] = useState([])
   const history = useHistory()
+  const [jobFairSearchValue, setJobfairSearchValue] = useState('')
+  const [jobPositionSearchValue, setJobPositionSearchValue] = useState('')
 
   //TODO: there will be a switch case here to make dynamic fetch data function
-  const fetchData = async () => {
+  const fetchData = async (currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue) => {
     const testStatus = filterStatus(tabStatus)
     try {
-      const res = await fetch('https://61bb1f8fe943920017784c8f.mockapi.io/api/application', {
-        method: 'GET'
-      })
-
-      const resData = await res.json()
-
-      if (res) {
-        setApplicationData(resData.map((item, index) => ({ ...item, no: index + 1, status: testStatus })))
-        //TODO: will change mapping status when have API
+      const res = await getAllApplication(
+        currentPage,
+        pageSize,
+        [testStatus],
+        jobFairSearchValue,
+        jobPositionSearchValue
+      )
+      const { data } = res
+      if (res.status != 204) {
+        if (data) {
+          setApplicationData(
+            data.content.map((item, index) => ({ ...item, key: item.id, no: index + data.number * data.size + 1 }))
+          )
+          setTotalRecord(data.totalElements)
+        }
+      } else {
+        setApplicationData([])
+        setTotalRecord(0)
       }
     } catch (err) {
       notification['error']({
@@ -32,16 +50,37 @@ const CompanyApplicationView = ({ tabStatus, ...otherProps }) => {
     }
   }
 
+  const handlePageChange = (page, pageSize) => {
+    if (page > 0) {
+      setCurrentPage(page - 1)
+    } else {
+      setCurrentPage(page)
+    }
+    setPageSize(pageSize)
+  }
+
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData(currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue)
+  }, [currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue])
 
   return (
     <div>
       <div>
         <Space style={{ marginBottom: '1rem' }}>
-          <Search placeholder="Search by jobfair name" onSearch={() => {}} style={{ width: 200 }} />
-          <Search placeholder="Search by job position" onSearch={() => {}} style={{ width: 200 }} />
+          <Input
+            placeholder="Search by jobfair name"
+            onChange={e => {
+              setJobfairSearchValue(e.target.value)
+            }}
+            style={{ width: 200 }}
+          />
+          <Input
+            placeholder="Search by job position"
+            onChange={e => {
+              setJobPositionSearchValue(e.target.value)
+            }}
+            style={{ width: 200 }}
+          />
         </Space>
         <ApplicationTable
           applicationData={applicationData}
@@ -56,7 +95,7 @@ const CompanyApplicationView = ({ tabStatus, ...otherProps }) => {
                     <Tooltip placement="top" title="View detail">
                       <a
                         onClick={() => {
-                          history.push('/manager/cv-detail', { resumeId: record.applicationId })
+                          history.push('/manager/cv-detail', { resumeId: record.id })
                         }}
                       >
                         <EyeOutlined />
@@ -68,6 +107,9 @@ const CompanyApplicationView = ({ tabStatus, ...otherProps }) => {
             }
           ]}
         />
+        <Space style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}>
+          <PaginationComponent data={applicationData} handlePageChange={handlePageChange} totalRecord={totalRecord} />
+        </Space>
       </div>
     </div>
   )
@@ -80,7 +122,7 @@ const filterStatus = key => {
     case '3':
       return 'APPROVE'
     default:
-      return 'REJECTED'
+      return 'REJECT'
   }
 }
 

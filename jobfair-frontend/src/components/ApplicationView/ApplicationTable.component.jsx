@@ -75,7 +75,7 @@ const ApplicationTable = ({ applicationData, extra }) => {
 
   return (
     <Fragment>
-      <Table columns={finalColumns} dataSource={applicationData} pagination={{ pageSize: 8 }} />
+      <Table columns={finalColumns} dataSource={applicationData} pagination={false} />
     </Fragment>
   )
 }
