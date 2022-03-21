@@ -21,7 +21,6 @@ import JobfairRegistrationPage from '../pages/JobfairRegistrationPage/JobfairReg
 import CompanyProfile from '../pages/ProfilePage/Company/CompanyProfilePage'
 import ApprovalRegistrationPage from '../pages/ApprovalRegistrationPage/ApprovalRegistration.page'
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage'
-import AppliedJobPage from '../pages/AppliedJobPage/AppliedJobPage'
 import CompanyEmployeeRouter from './components/CompanyEmployeeRouter'
 import AdminRouter from './components/AdminRouter'
 import StaffRouter from './components/StaffRouter'
@@ -48,7 +47,9 @@ import {
   PATH_STAFF
 } from '../constants/Paths/Path'
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
-import JobFairDetailCompanyPage from "../pages/JobFairDetailPage/JobFairDetailCompanyPage";
+import JobFairDetailCompanyPage from '../pages/JobFairDetailPage/JobFairDetailCompanyPage'
+import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage'
+import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage'
 
 const AppRouter = () => {
   return (
@@ -119,7 +120,7 @@ const AppRouter = () => {
         />
         <AttendantRouter
           key={PATH_ATTENDANT.APPLIED_JOB_PAGE}
-          component={() => <AppliedJobPage />}
+          component={() => <ApplicationManagementPage />}
           path={PATH_ATTENDANT.APPLIED_JOB_PAGE}
           exact
         />
@@ -141,10 +142,40 @@ const AppRouter = () => {
           path={PATH_ATTENDANT.JOB_FAIR_DETAIL}
           exact
         />
+        <AttendantRouter
+          key={PATH_ATTENDANT.CV_DETAIL_PAGE}
+          component={() => <ResumeDetailPage />}
+          path={PATH_ATTENDANT.CV_DETAIL_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.APPLIED_JOB_PAGE}
+          component={() => <ApplicationManagementPage />}
+          path={PATH_COMPANY_EMPLOYEE.APPLIED_JOB_PAGE}
+          exact
+        />
         <CompanyEmployeeRouter
           key={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}
           component={() => <CompanyProfile />}
           path={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.CV_DETAIL_PAGE}
+          component={() => <ResumeDetailPage />}
+          path={PATH_COMPANY_EMPLOYEE.CV_DETAIL_PAGE}
+          exact
+        />
+        <CompanyManagerRouter
+          key={PATH_COMPANY_MANAGER.CV_DETAIL_PAGE}
+          component={() => <ResumeDetailPage />}
+          path={PATH_COMPANY_MANAGER.CV_DETAIL_PAGE}
+          exact
+        />
+        <CompanyManagerRouter
+          key={PATH_COMPANY_MANAGER.APPLIED_JOB_PAGE}
+          component={() => <ApplicationManagementPage />}
+          path={PATH_COMPANY_MANAGER.APPLIED_JOB_PAGE}
           exact
         />
         <CompanyManagerRouter
@@ -195,6 +226,7 @@ const AppRouter = () => {
           path={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL}
           exact
         />
+
         <AdminRouter
           key={PATH_ADMIN.APPROVAL_REGISTRATION_PAGE}
           component={() => <ApprovalRegistrationPage />}
