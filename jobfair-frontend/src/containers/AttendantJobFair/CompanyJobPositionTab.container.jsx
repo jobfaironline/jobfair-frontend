@@ -1,18 +1,17 @@
 import React, {useState} from "react";
 
-import {Modal, notification, Typography} from "antd";
+import {Modal, Typography} from "antd";
 import {CompanyJobPositionTab} from "../../components/AttendantJobFair/SideBar/CompanyJobPositionTab.component";
 import JobPositionSubmodalDetailComponent from "../../components/JobPositionModal/JobPositionSubmodalDetail.component";
 import "./CompanyJobPositionTab.styles.scss"
 import {useSelector} from "react-redux";
+import ConfirmSubmitResumeComponent from "../../components/AttendantJobFair/SubmitCV/ConfirmSubmitCV.component";
 
 
-const {Text} = Typography
 
 export const CompanyJobPositionTabContainer = (props) => {
   const {jobPositions} = props;
   const [hoverJobPosition, setHoverJobPosition] = useState();
-  const [visible, setVisible] = useState(false)
   const inventory = useSelector(state => state.inventory.data)
 
   const onClick = (item) => {
@@ -42,16 +41,22 @@ export const CompanyJobPositionTabContainer = (props) => {
     setHoverJobPosition(undefined);
   }
 
+
   const onDrop = (event, jobPosition) => {
     const dragId = event.dataTransfer.getData("text/plain");
     const cv = inventory[dragId];
-    Modal.info({
-      title: "Are you sure?",
-      onOk: () => {
-        notification['success']({
-          message: `Add cv ${cv.id} successfully to ${jobPosition.title}`,
-        })
-      }
+    const closeModal = () => {
+      modal.destroy();
+    }
+    const modal = Modal.info({
+      title: "Confirm last time before submit your resume",
+      width: '45rem',
+      closable: true,
+      maskClosable: true,
+      wrapClassName: 'confirm-submit-resume',
+      footer: null,
+
+      content: <ConfirmSubmitResumeComponent dragId={dragId} cv={cv} jobPosition={jobPosition} closeModal={closeModal}/>
     })
     setHoverJobPosition(undefined)
   }

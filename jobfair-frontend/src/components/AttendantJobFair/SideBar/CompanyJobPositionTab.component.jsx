@@ -12,9 +12,10 @@ export const CompanyJobPositionTab = (props) => {
         dataSource={jobPositions}
         renderItem={item => (
           <JobPositionComponent
+            key={item.id}
             hoverListItem={hoverListItem}
             data={item}
-            onClick={e => {
+            onClick={_ => {
               onClick(item)
             }}
             onDragOver={(e) => {

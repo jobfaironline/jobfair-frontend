@@ -39,3 +39,8 @@ export const getApplication = applicationId => {
 export const evaluateApplication = body => {
   return CallAPI(`${ENDPOINT_APPLICATION}/evaluate`, 'POST', body)
 }
+
+export const draftApplication = (body) => CallAPI(`${ENDPOINT_APPLICATION}/draft`, 'POST', body)
+
+export const submitApplication = (applicationId) => CallAPI(`${ENDPOINT_APPLICATION}/submit/${applicationId}`, 'POST');
+
