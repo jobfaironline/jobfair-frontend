@@ -119,6 +119,7 @@ const ResumeDetailComponent = props => {
   const { Text } = Typography
   const { Panel } = Collapse
   const { Link } = Anchor
+  console.log(data)
 
   return (
     <>
