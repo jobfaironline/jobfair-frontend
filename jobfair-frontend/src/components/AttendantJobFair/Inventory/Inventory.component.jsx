@@ -16,7 +16,7 @@ export const Inventory = props => {
         {
           Object.keys(inventory).map(key => {
             return (
-              <ItemSlot isContain={inventory[key]} id={key} key={key} onDragStart={onDragStart} onDragOver={onDragOver}
+              <ItemSlot isContain={inventory[key] !== undefined} id={key} key={key} onDragStart={onDragStart} onDragOver={onDragOver}
                         onDrop={onDrop} onClick={onClick}/>
             )
           })

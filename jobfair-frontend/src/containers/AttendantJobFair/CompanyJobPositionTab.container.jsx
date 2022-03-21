@@ -6,6 +6,7 @@ import JobPositionSubmodalContainer from "../JobPositionModal/JobPositionSubmoda
 import JobPositionSubmodal from "../../components/JobPositionModal/JobPositionSubmodal.component";
 import {convertEnumToString} from "../../utils/common";
 import JobPositionSubmodalDetailComponent from "../../components/JobPositionModal/JobPositionSubmodalDetail.component";
+import {useSelector} from "react-redux";
 
 const {Text} = Typography
 
@@ -13,6 +14,7 @@ export const CompanyJobPositionTabContainer = (props) => {
   const {jobPositions} = props;
   const [hoverJobPosition, setHoverJobPosition] = useState();
   const [visible, setVisible] = useState(false)
+  const inventory = useSelector(state => state.inventory.data)
 
   const onClick = (item) => {
     Modal.info({
@@ -46,11 +48,12 @@ export const CompanyJobPositionTabContainer = (props) => {
 
   const onDrop = (event, jobPosition) => {
     const dragId = event.dataTransfer.getData("text/plain");
+    const cv = inventory[dragId];
     Modal.info({
       title: "Are you sure?",
       onOk: () => {
         notification['success']({
-          message: `Add cv ${dragId} successfully to ${jobPosition.title}`,
+          message: `Add cv ${cv.id} successfully to ${jobPosition.title}`,
         })
       }
     })
