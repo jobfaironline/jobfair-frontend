@@ -19,7 +19,6 @@ const CompanyApplicationView = ({ tabStatus, ...otherProps }) => {
   const [jobFairSearchValue, setJobfairSearchValue] = useState('')
   const [jobPositionSearchValue, setJobPositionSearchValue] = useState('')
 
-  //TODO: there will be a switch case here to make dynamic fetch data function
   const fetchData = async (currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue) => {
     const testStatus = filterStatus(tabStatus)
     try {
@@ -28,7 +27,8 @@ const CompanyApplicationView = ({ tabStatus, ...otherProps }) => {
         pageSize,
         [testStatus],
         jobFairSearchValue,
-        jobPositionSearchValue
+        jobPositionSearchValue,
+        tabStatus != 2 ? 'appliedDate' : 'appliedDate'
       )
       const { data } = res
       if (res.status != 204) {

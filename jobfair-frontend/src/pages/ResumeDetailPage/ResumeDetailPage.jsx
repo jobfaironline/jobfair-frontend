@@ -32,7 +32,7 @@ import EvaluationFormComponent from '../../components/EvaluationForm/EvaluationF
 import { CountryConst } from '../../components/attendant-profile-form/AttendantConstants'
 import './ResumeDetailPage.styles.scss'
 import { Content } from 'antd/es/layout/layout'
-import { getApplication } from '../../services/application-controller/ApplicationControllerService'
+import { evaluateApplication, getApplication } from '../../services/application-controller/ApplicationControllerService'
 
 const defaultResumeId = 'a5c3e29d-0a5c-4950-bf4a-8f31b3401b72'
 
@@ -53,6 +53,7 @@ const ResumeDetailPage = () => {
 
 const ResumeDetailContainer = () => {
   const location = useLocation()
+  const history = useHistory()
   const [form] = Form.useForm()
   const attendantId = useSelector(state => state.authentication.user.userId)
   const [data, setData] = useState({})
@@ -60,7 +61,29 @@ const ResumeDetailContainer = () => {
   const { resumeId } = location.state
 
   const onFinish = values => {
-    console.log(values)
+    //mapping
+    const body = {
+      applicationId: values['applicationId'],
+      evaluateMessage: values['message'],
+      status: values['status']
+    }
+
+    evaluateApplication(body)
+      .then(res => {
+        notification['success']({
+          message: `Submit evaluation successfully`,
+          description: `Your evaluation has been submitted`,
+          duration: 2
+        })
+        history.goBack()
+      })
+      .catch(e => {
+        notification['error']({
+          message: `Submit evaluation failed`,
+          description: `There is problem while submitting, try again later`,
+          duration: 2
+        })
+      })
   }
 
   const fetchData = async () => {
@@ -97,7 +120,6 @@ const ResumeDetailComponent = props => {
   const { Panel } = Collapse
   const { Link } = Anchor
 
-  console.log(data)
   return (
     <>
       <Anchor affix={true} offsetTop={100} getCurrentAnchor="#skill-resume">
@@ -519,7 +541,7 @@ const ResumeDetailComponent = props => {
                   headStyle={{ fontWeight: 700, fontSize: 24 }}
                 >
                   <div style={{ marginLeft: '5rem' }}>
-                    <EvaluationFormComponent onFinish={onFinish} name="resumeRegistrationId" id={data.id} />
+                    <EvaluationFormComponent onFinish={onFinish} name="applicationId" id={data.id} />
                   </div>
                 </Card>
               </div>

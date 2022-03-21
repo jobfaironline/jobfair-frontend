@@ -1,5 +1,6 @@
 import React from 'react'
 import { Tag } from 'antd'
+import { convertToDateString } from '../../utils/common'
 
 const defaultColumns = getColumnSearchProps => {
   return [
@@ -24,7 +25,12 @@ const defaultColumns = getColumnSearchProps => {
     {
       title: 'Applied date',
       dataIndex: 'appliedDate',
-      key: 'appliedDate'
+      key: 'appliedDate',
+      render(text, record) {
+        return {
+          children: convertToDateString(text)
+        }
+      }
     },
     {
       title: 'Job position',
@@ -40,23 +46,6 @@ const defaultColumns = getColumnSearchProps => {
       title: 'Status',
       key: 'status',
       dataIndex: 'status',
-      // filters: [
-      //   {
-      //     text: 'Pending',
-      //     value: 'PENDING'
-      //   },
-      //   {
-      //     text: 'Approved',
-      //     value: 'APPROVE'
-      //   },
-      //   {
-      //     text: 'Rejected',
-      //     value: 'REJECT'
-      //   }
-      // ],
-      // onFilter: (value, record) => {
-      //   return record.status === value
-      // },
       render: status => {
         let objStatus
         switch (status) {

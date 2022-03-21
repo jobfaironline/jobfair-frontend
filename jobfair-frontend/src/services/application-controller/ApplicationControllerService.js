@@ -1,6 +1,13 @@
 import { CallAPI } from '../axiosBase'
 import { ENDPOINT_APPLICATION } from '../../constants/Endpoints/application-controller/ApplicationControllerEndpoint'
-export const getAllApplication = (pageNumber, pageSize, status, jobFairSearchValue, jobPositionSearchValue) => {
+export const getAllApplication = (
+  pageNumber,
+  pageSize,
+  status,
+  jobFairSearchValue,
+  jobPositionSearchValue,
+  sortField
+) => {
   const filterStatusString = status
     ? status.reduce((previousValue, currentValue, index) => {
         if (index === 0) {
@@ -18,7 +25,7 @@ export const getAllApplication = (pageNumber, pageSize, status, jobFairSearchVal
       offset: pageNumber,
       pageSize: pageSize,
       direction: 'DESC',
-      sortBy: 'appliedDate',
+      sortBy: sortField,
       jobPositionName: jobPositionSearchValue,
       jobFairName: jobFairSearchValue
     }
@@ -27,4 +34,8 @@ export const getAllApplication = (pageNumber, pageSize, status, jobFairSearchVal
 
 export const getApplication = applicationId => {
   return CallAPI(`${ENDPOINT_APPLICATION}/company-general/${applicationId}`, 'GET')
+}
+
+export const evaluateApplication = body => {
+  return CallAPI(`${ENDPOINT_APPLICATION}/evaluate`, 'POST', body)
 }
