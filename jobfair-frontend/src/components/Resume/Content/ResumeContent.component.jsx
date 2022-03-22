@@ -7,82 +7,8 @@ import NodeListComponent from './NodeList/ResumeNodeList.component'
 import SkillListComponent from './SkillsList/ResumeSkillList.component'
 import OverviewComponent from './Overview/ResumeOverview.component'
 const { Text, Title } = Typography
-const listEducation = [
-  {
-    id: '1',
-    edutTime: '2012-2014',
-    titleName: 'Modern College',
-    subName: 'Bachlors in Fine Arts',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
-  },
-  {
-    id: '2',
-    edutTime: '2008-2012',
-    titleName: 'Haravard University',
-    subName: 'Computer Science',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
-  }
-]
-const listWorkAndWorkExperience = [
-  {
-    id: '1',
-    time: '2012-2014',
-    titleName: 'Designer',
-    subName: 'Musical Studio',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
-  },
-  {
-    id: '2',
-    time: '2008-2012',
-    titleName: 'CEO-founder',
-    subName: 'Techy Studio',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
-  }
-]
-const listAdwards = [
-  {
-    id: '1',
-    time: 'JAN 2017',
-    titleName: 'Perfect Attendance Programs',
-    subName: '',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
-  },
-  {
-    id: '2',
-    time: 'DEC 2017',
-    titleName: 'Top Performer Recognition',
-    subName: '',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
-  },
-  {
-    id: '3',
-    time: 'DEC 2017',
-    titleName: 'King LLC',
-    subName: '',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
-  }
-]
-const userOverview = {
-  experience: '5-10 Years',
-  age: '28-33 Years',
-  currentSalary: '41K - 50K',
-  expectedSalary: 'Above 50K',
-  gender: 'Male',
-  language: 'EnglishFrench',
-  educationLevel: 'Certificate'
-}
-const listSkill = [
-  { id: '1', name: 'Creativity' },
-  { id: '2', name: 'Problem Solving' }
-]
-const ResumeContent = () => {
+const ResumeContent = props => {
+  const { candidateAbout, educations, workExperiences, adwards, skills, userOverview } = props
   return (
     <div className="header">
       <Col span={16} offset={4}>
@@ -102,20 +28,11 @@ const ResumeContent = () => {
             <Title id="candidatesAbout" level={2}>
               Candidates About
             </Title>
-            <Text type="secondary">
-              Hello my name is James Rogers and Painter from Miami. In pharetra orci dignissim, blandit mi semper,
-              ultricies diam. Suspendisse malesuada suscipit nunc non volutpat. Sed porta nulla id orci laoreet tempor
-              non consequat enim. Sed vitae aliquam velit. Aliquam ante erat, blandit at pretium et, accumsan ac est.
-              Integer vehicula rhoncus molestie. Morbi ornare ipsum sed sem condimentum, et pulvinar tortor luctus.
-              Suspendisse condimentum lorem ut elementum aliquam. Mauris nec erat ut libero vulputate pulvinar. Aliquam
-              ante erat, blandit at pretium et, accumsan ac est. Integer vehicula rhoncus molestie. Morbi ornare ipsum
-              sed sem condimentum, et pulvinar tortor luctus. Suspendisse condimentum lorem ut elementum aliquam. Mauris
-              nec erat ut libero vulputate pulvinar.
-            </Text>
+            <Text type="secondary">{candidateAbout}</Text>
             <Title id="education" level={2}>
               Education
             </Title>
-            {listEducation.map(data => (
+            {educations.map(data => (
               <div className={styles.educationList}>
                 <EducationList id={data} data={data} />
               </div>
@@ -123,15 +40,15 @@ const ResumeContent = () => {
             <Title id="workExperience" level={2}>
               Work & Experience
             </Title>
-            <NodeListComponent listData={listWorkAndWorkExperience} />
+            <NodeListComponent listData={workExperiences} />
             <Title id="professionalSkills" level={2}>
               Professional Skills
             </Title>
-            <SkillListComponent listData={listSkill} />
+            <SkillListComponent listData={skills} />
             <Title id="awards" level={2}>
               Awards
             </Title>
-            <NodeListComponent listData={listAdwards} />
+            <NodeListComponent listData={adwards} />
           </Col>
           <Col span={6}>
             <Text type="secondary" style={{ fontSize: '1.2rem' }}>

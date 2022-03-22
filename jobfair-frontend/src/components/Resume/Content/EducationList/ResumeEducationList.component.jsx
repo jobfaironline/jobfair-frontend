@@ -13,7 +13,7 @@ const EducationList = props => {
         <Col span={20}>
           <div>
             <Text type="secondary" style={{ fontWeight: 'bold' }}>
-              {data?.edutTime}
+              {data?.time}
             </Text>
             <Row>
               <Col span={6}>

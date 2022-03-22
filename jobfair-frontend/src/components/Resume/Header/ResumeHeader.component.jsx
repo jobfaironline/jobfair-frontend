@@ -83,7 +83,7 @@ const ResumeHeader = props => {
                           <Col>
                             <FieldTimeOutlined />
                             <Text strong style={{ color: 'white' }}>
-                              Member Since {data.time}
+                              Member Since {data.startYear}
                             </Text>
                           </Col>
                         </Row>
