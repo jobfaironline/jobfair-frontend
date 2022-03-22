@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import BasicControlInput from "./BasicControlInput";
+import {debounce, throttle} from "throttle-debounce";
 
 export default class BasicCharacterControl {
   constructor({input, animations, target, mixer, thirdPersonCamera, collidableMeshListRef, zoom, geckoClientRef}) {
@@ -97,7 +98,8 @@ export default class BasicCharacterControl {
       _Q.setFromAxisAngle(_A, -Math.PI * characterTime * this._acceleration.y);
       _R.multiply(_Q);
     }
-
+    const oldQuaternion = new THREE.Quaternion()
+    oldQuaternion.copy(controlObject.quaternion);
     controlObject.quaternion.copy(_R);
 
     const oldPosition = new THREE.Vector3();
@@ -118,8 +120,24 @@ export default class BasicCharacterControl {
     controlObject.position.add(forward);
     controlObject.position.add(sideways);
 
-    if (!controlObject.position.equals(oldPosition)){
-      this.geckoClientRef.current.move(controlObject.position)
+
+    const self = this;
+
+    const distance = Math.abs(controlObject.position.x + controlObject.position.y + controlObject.position.z - oldPosition.x - oldPosition.y - oldPosition.z)
+
+    if (distance > 0.01 || !controlObject.quaternion.equals(oldQuaternion)){
+      const obj = {
+        position: controlObject.position,
+        quaternion: {
+          x: controlObject.quaternion._x,
+          y: controlObject.quaternion._y,
+          z: controlObject.quaternion._z,
+          w: controlObject.quaternion._w,
+        }
+      }
+      self.geckoClientRef.current.move(obj)
+    } else {
+      self.geckoClientRef.current.stop()
     }
 
 

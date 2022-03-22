@@ -6,10 +6,10 @@ export class GeckoClient extends EventEmitter{
     super()
   }
 
-  joinChannel(companyBoothId, userId, initialPosition){
+  joinChannel(companyBoothId, userId, initialPosition, initialQuaternion){
     this.companyBoothId = companyBoothId;
     this.userId = userId;
-    const auth = `${this.companyBoothId}/${this.userId}/${JSON.stringify(initialPosition)}`
+    const auth = `${this.companyBoothId}/${this.userId}/${JSON.stringify(initialPosition)}/${JSON.stringify(initialQuaternion)}`
     this.channel = geckos({port: 3001, authorization: auth});
 
     const self = this;
@@ -31,7 +31,8 @@ export class GeckoClient extends EventEmitter{
       'init',
       'new-user-connect',
       'user-left',
-      'move'
+      'move',
+      'stop'
     ]
     const self = this;
     clientEvents.forEach((eventName) => {
@@ -43,6 +44,10 @@ export class GeckoClient extends EventEmitter{
 
   move(coordinate) {
     this.channel.emit('move', JSON.stringify(coordinate))
+  }
+
+  stop(){
+    this.channel.emit('stop');
   }
 
   close(){

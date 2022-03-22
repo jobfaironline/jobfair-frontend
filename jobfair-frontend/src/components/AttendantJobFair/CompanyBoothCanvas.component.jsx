@@ -1,4 +1,4 @@
-import {Canvas} from "@react-three/fiber";
+import {Canvas, useFrame} from "@react-three/fiber";
 import {ContactShadows, OrbitControls, Stage} from "@react-three/drei";
 import React, {useRef, useState} from "react";
 import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
@@ -10,13 +10,39 @@ import {EffectComposer, Outline} from "@react-three/postprocessing";
 import {notification} from "antd";
 import {CVSubmitComponent} from "./CVSubmit.component";
 
+
+
+const AiCharacter = props => {
+  const {state} = props;
+
+  useFrame((rootState, delta) => {
+    if (state.isMoving) {
+      state.animations.walk.timeScale = 1;
+      state.animations.walk.crossFadeTo(state.animations.idle, 2, true);
+      state.animations.walk.play();
+
+    } else {
+      state.animations.idle.time = 0.0;
+      state.animations.idle.enabled = true;
+      state.animations.idle.setEffectiveTimeScale(1.0);
+      state.animations.idle.setEffectiveWeight(1.0);
+      state.animations.idle.crossFadeTo(state.animations.walk, 2, true);
+      state.animations.idle.play();
+    }
+
+    state.mixer.update(delta);
+  })
+  
+  return <primitive object={state.model}></primitive>
+
+}
+
 export const CompanyBoothCanvasComponent = (props) => {
-  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef, zoom, user} = props;
+  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef, zoom, user, isChangeCamera} = props;
   const [view, setView] = useState(false);
   const cvSubmitRef = useRef()
 
   const [isDragOver, setIsDragOver] = useState(false);
-  const isChangeCamera = useRef(true);
 
   const modelProps = {model, characterControl, isChangeCamera}
 
@@ -26,8 +52,6 @@ export const CompanyBoothCanvasComponent = (props) => {
     setView(value.value === "First")
   }
 
-
-  console.log("AAAAAAAAAAAAAAAA", user)
 
 
 
@@ -71,10 +95,7 @@ export const CompanyBoothCanvasComponent = (props) => {
             })}
           </group>
           {view ? null : <Character {...modelProps}/>}
-          {user.map(u => <primitive
-            uuid={u}
-            object={u.model}
-          />)}
+          {user.map(u => <AiCharacter state={u}/>)}
         </Stage>
         <ContactShadows frames={10} position={[0, -1.05, 0]} scale={10} blur={2} far={10}/>
         <EffectComposer multisampling={8} autoClear={false}>

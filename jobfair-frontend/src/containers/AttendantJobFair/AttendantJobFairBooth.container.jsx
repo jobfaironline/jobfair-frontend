@@ -13,7 +13,6 @@ import ThirdPersonCamera from "../../utils/ThreeJS/ThirdPersonCamera";
 import BasicCharacterControl from "../../utils/ThreeJS/BasicCharacterControl";
 import {InventoryContainer} from "../../components/AttendantJobFair/Inventory.container";
 import {LoadingComponent} from "../../components/JobFairParkMap/Loading.component";
-import {Button, Modal} from "antd";
 import {useSelector} from "react-redux";
 import BasicControlInput from "../../utils/ThreeJS/BasicControlInput";
 
@@ -47,15 +46,6 @@ class CharacterModel extends BasicCharacterControl {
   }
 }
 
-class AIModel{
-  constructor({animations, target, mixer, id, model}) {
-    this.animations = animations;
-    this.target = target;
-    this.mixer = mixer;
-    this.id = id;
-    this.model = model
-  }
-}
 
 
 
@@ -64,6 +54,8 @@ export const AttendantJobFairBoothContainer = props => {
   const {userId} = useSelector(state => state.authentication.user)
   const cameraRef = useRef();
   const sceneMeshRef = useRef();
+  const isChangeCamera = useRef(true);
+
   const [state, setState] = useState({
     model: undefined,
     characterControl: undefined,
@@ -87,40 +79,6 @@ export const AttendantJobFairBoothContainer = props => {
     }
     return glb.scene;
   }
-
-  /*useEffect(() => {
-    //initialize gecko
-    console.log("initialize gecko")
-    geckoClientRef.current.on('init', async data => {
-      console.log('init', data)
-      const obj = JSON.parse(data);
-      const userState = []
-      for (const state of obj){
-        state.model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx");
-        userState.push(state);
-      }
-      setUser(userState)
-    });
-    geckoClientRef.current.on('new-user-connect', async data => {
-      console.log('new-user-connect', data)
-      const obj = JSON.parse(data);
-      obj.model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx");
-      setUser(prevState => {
-        return [...prevState, obj]
-      })
-    });
-    geckoClientRef.current.on('user-left', data => {
-      console.log('user-left', data)
-      setUser(prevState => {
-        return prevState.filter(state => state.id !== data)
-      })
-    })
-    geckoClientRef.current.on('move', data => {
-      console.log('move', data);
-    });
-    geckoClientRef.current.joinChannel(companyBoothId, userId);
-  }, [])*/
-
 
   const process = async () => {
     const boothMesh = await getBoothMesh(companyBoothId);
@@ -184,11 +142,18 @@ export const AttendantJobFairBoothContainer = props => {
     //initialize gecko
     console.log("initialize gecko")
     geckoClientRef.current.on('init', async data => {
-      console.log('init', data)
       const obj = JSON.parse(data);
       const userState = []
       for (const state of obj){
         const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx");
+        const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx");
+        const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx")
+        const mixer = new THREE.AnimationMixer(model);
+        const animations = {
+          'walk': mixer.clipAction(walkingModel.animations[0]),
+          'idle': mixer.clipAction(idleModel.animations[0])
+        }
+        animations.idle.play();
         model.scale.setScalar((boothSize.width / 200) / 2.5);
         model.children.forEach(child => {
           if (child.isMesh) {
@@ -198,7 +163,10 @@ export const AttendantJobFairBoothContainer = props => {
           }
         })
         model.position.set(state.position.x, state.position.y, state.position.z )
+        model.quaternion.set(state.quaternion.x, state.quaternion.y, state.quaternion.z, state.quaternion.w)
         state.model = model;
+        state.mixer = mixer;
+        state.animations = animations;
         userState.push(state);
       }
       setUser(userState)
@@ -207,6 +175,14 @@ export const AttendantJobFairBoothContainer = props => {
       console.log('new-user-connect', data)
       const obj = JSON.parse(data);
       const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx");
+      const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx");
+      const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx")
+      const mixer = new THREE.AnimationMixer(model);
+      const animations = {
+        'walk': mixer.clipAction(walkingModel.animations[0]),
+        'idle': mixer.clipAction(idleModel.animations[0])
+      }
+      animations.idle.play();
       model.scale.setScalar((boothSize.width / 200) / 2.5);
       model.children.forEach(child => {
         if (child.isMesh) {
@@ -216,28 +192,54 @@ export const AttendantJobFairBoothContainer = props => {
         }
       })
       model.position.set(obj.position.x, obj.position.y, obj.position.z )
+      model.quaternion.set(obj.quaternion.x, obj.quaternion.y, obj.quaternion.z, obj.quaternion.w)
+
       obj.model = model
+      obj.mixer = mixer;
+      obj.animations = animations;
+      isChangeCamera.current = false
       setUser(prevState => {
         return [...prevState, obj]
       })
     });
     geckoClientRef.current.on('user-left', data => {
       console.log('user-left', data)
+      isChangeCamera.current = false
+
       setUser(prevState => {
         return prevState.filter(state => state.id !== data)
       })
     })
     geckoClientRef.current.on('move', data => {
+      isChangeCamera.current = false
       setUser(prevState => {
-        const state = prevState.filter(user => user.id === data.userId)[0];
-        state?.model.position.set(data.x, data.y, data.z);
+        const state = prevState.filter(abc => abc.id === data.userId)[0];
+        state?.model.position.set(data.position.x, data.position.y, data.position.z);
+        state?.model.quaternion.set(data.quaternion.x, data.quaternion.y, data.quaternion.z, data.quaternion.w);
+        state.isMoving = true;
+        /*state?.animations.walk.crossFadeTo(state?.animations.idle, 0.5, true);
+        state?.animations.walk.play();*/
+        return prevState;
+      })
+    });
+    geckoClientRef.current.on('stop', data => {
+      isChangeCamera.current = false
+      setUser(prevState => {
+        const state = prevState.filter(abc => abc.id === data.id)[0];
+        state.isMoving = false
+
+        /*state.animations.idle.crossFadeTo(state.animations.walk, 2, true);
+        state.animations.idle.play();*/
+
         return prevState;
       })
     });
 
-    const initialPosition = {x: 0, y:floorMesh.position.y + floorHeight / 2, z: 0}
 
-    geckoClientRef.current.joinChannel(companyBoothId, userId, initialPosition);
+    const initialPosition = {x: 0, y:floorMesh.position.y + floorHeight / 2, z: 0}
+    const initialQuaternion = new THREE.Quaternion();
+
+    geckoClientRef.current.joinChannel(companyBoothId, userId, initialPosition, initialQuaternion);
 
 
 
@@ -251,8 +253,6 @@ export const AttendantJobFairBoothContainer = props => {
       }
     })
   }
-
-
 
   useEffect( () => {
     process();
@@ -269,6 +269,7 @@ export const AttendantJobFairBoothContainer = props => {
     sceneMeshRef,
     zoom: (boothSize.width / 200) / 2.5,
     user: user,
+    isChangeCamera
   }
   return (
     <>

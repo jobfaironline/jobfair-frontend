@@ -14,7 +14,6 @@ export const Character = props => {
     camera.position.copy(idealOffset);
   }
 
-
   useFrame((state, delta) => {
     characterControl.Update(delta, state.scene)
   })
