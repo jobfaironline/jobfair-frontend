@@ -11,7 +11,7 @@ import {notification} from "antd";
 import {CVSubmitComponent} from "./CVSubmit.component";
 
 export const CompanyBoothCanvasComponent = (props) => {
-  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef, zoom} = props;
+  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef, zoom, user} = props;
   const [view, setView] = useState(false);
   const cvSubmitRef = useRef()
 
@@ -25,6 +25,10 @@ export const CompanyBoothCanvasComponent = (props) => {
     isChangeCamera.current = true;
     setView(value.value === "First")
   }
+
+
+  console.log("AAAAAAAAAAAAAAAA", user)
+
 
 
   return (
@@ -67,6 +71,10 @@ export const CompanyBoothCanvasComponent = (props) => {
             })}
           </group>
           {view ? null : <Character {...modelProps}/>}
+          {user.map(u => <primitive
+            uuid={u}
+            object={u.model}
+          />)}
         </Stage>
         <ContactShadows frames={10} position={[0, -1.05, 0]} scale={10} blur={2} far={10}/>
         <EffectComposer multisampling={8} autoClear={false}>
