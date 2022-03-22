@@ -10,7 +10,6 @@ const { Text } = Typography
 
 const JobFairDetailComponent = props => {
   const { data, onFinish, totalRegistration, totalBooth, totalApproval } = props
-
   const handleButton = status => {
     if (status === undefined) {
       return
@@ -52,7 +51,8 @@ const JobFairDetailComponent = props => {
     <>
       <Descriptions title="Job fair detail" bordered size="small" style={{ textAlign: 'center' }}>
         <Descriptions.Item label="Job fair name">{data.name}</Descriptions.Item>
-        <Descriptions.Item label="Description">{data.description}</Descriptions.Item>
+        <Descriptions.Item label="Status">{handleStatusTag(data.status)}</Descriptions.Item>
+
         <Descriptions.Item label="Job fair time">
           <Tag color="orange">
             {data.startTime} {' -> '}
@@ -78,7 +78,9 @@ const JobFairDetailComponent = props => {
         <Descriptions.Item label="Total approval company registrations">{totalApproval}</Descriptions.Item>
         <Descriptions.Item label="Total company registrations">{totalRegistration}</Descriptions.Item>
         <Descriptions.Item label="Total booths">{totalBooth} slot(s)</Descriptions.Item>
-        <Descriptions.Item label="Status"> {handleStatusTag(data.status)}</Descriptions.Item>
+        <Descriptions.Item label="Description" style={{ textAlign: 'start' }}>
+          {data.description}
+        </Descriptions.Item>
       </Descriptions>
       <Space>{handleButton(data.status)}</Space>
     </>
