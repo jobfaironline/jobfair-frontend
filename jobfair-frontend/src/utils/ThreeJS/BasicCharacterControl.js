@@ -1,8 +1,9 @@
 import * as THREE from "three";
 import BasicControlInput from "./BasicControlInput";
+import {debounce, throttle} from "throttle-debounce";
 
 export default class BasicCharacterControl {
-  constructor({animations, target, mixer, thirdPersonCamera, collidableMeshListRef, zoom}) {
+  constructor({input, animations, target, mixer, thirdPersonCamera, collidableMeshListRef, zoom, geckoClientRef}) {
     this.animations = animations;
     this.target = target;
     this.mixer = mixer;
@@ -10,8 +11,9 @@ export default class BasicCharacterControl {
     this._decceleration = new THREE.Vector3(-0.0005, -0.0001, -20.0);
     this._acceleration = new THREE.Vector3(1, 2, 200.0 / (0.04 / zoom));
     this._velocity = new THREE.Vector3(0, 0, 0);
-    this._input = new BasicControlInput();
+    this._input = input;
     this.collidableMeshListRef = collidableMeshListRef;
+    this.geckoClientRef = geckoClientRef;
   }
 
 
@@ -96,7 +98,8 @@ export default class BasicCharacterControl {
       _Q.setFromAxisAngle(_A, -Math.PI * characterTime * this._acceleration.y);
       _R.multiply(_Q);
     }
-
+    const oldQuaternion = new THREE.Quaternion()
+    oldQuaternion.copy(controlObject.quaternion);
     controlObject.quaternion.copy(_R);
 
     const oldPosition = new THREE.Vector3();
@@ -118,6 +121,26 @@ export default class BasicCharacterControl {
     controlObject.position.add(sideways);
 
 
+
+    const distance = Math.abs(controlObject.position.x + controlObject.position.y + controlObject.position.z - oldPosition.x - oldPosition.y - oldPosition.z)
+
+    if (distance > 0.01 || !controlObject.quaternion.equals(oldQuaternion)){
+      const obj = {
+        position: controlObject.position,
+        quaternion: {
+          x: controlObject.quaternion._x,
+          y: controlObject.quaternion._y,
+          z: controlObject.quaternion._z,
+          w: controlObject.quaternion._w,
+        }
+      }
+      this.geckoClientRef.current.move(obj)
+    } else {
+      this.geckoClientRef.current.stop()
+    }
+
+
+
     this.switchAnimation();
     this.mixer.update(timeInSeconds);
     this.thirdPersonCamera.Update(timeInSeconds);
@@ -126,104 +149,4 @@ export default class BasicCharacterControl {
     }*/
 
   }
-}
-
-
-function updateAABB(skinnedMesh) {
-  var vertex = new THREE.Vector3();
-  var temp = new THREE.Vector3();
-  var skinned = new THREE.Vector3();
-  var skinIndices = new THREE.Vector4();
-  var skinWeights = new THREE.Vector4();
-  var boneMatrix = new THREE.Matrix4();
-  var aabb = new THREE.Box3();
-  var skeleton = skinnedMesh.skeleton;
-  var boneMatrices = skeleton.boneMatrices;
-  var geometry = skinnedMesh.geometry;
-
-  var index = geometry.index;
-  var position = geometry.attributes.position;
-  var skinIndex = geometry.attributes.skinIndex;
-  var skinWeigth = geometry.attributes.skinWeight;
-
-  var bindMatrix = skinnedMesh.bindMatrix;
-  var bindMatrixInverse = skinnedMesh.bindMatrixInverse;
-
-  var i, j, si, sw;
-
-  aabb.makeEmpty();
-
-  if (index !== null) {
-
-    // indexed geometry
-
-    for (i = 0; i < index.count; i++) {
-
-      vertex.fromBufferAttribute(position, index[i]);
-      skinIndices.fromBufferAttribute(skinIndex, index[i]);
-      skinWeights.fromBufferAttribute(skinWeigth, index[i]);
-
-      // the following code section is normally implemented in the vertex shader
-
-      vertex.applyMatrix4(bindMatrix); // transform to bind space
-      skinned.set(0, 0, 0);
-
-      for (j = 0; j < 4; j++) {
-
-        si = skinIndices.getComponent(j);
-        sw = skinWeights.getComponent(j);
-        boneMatrix.fromArray(boneMatrices, si * 16);
-
-        // weighted vertex transformation
-
-        temp.copy(vertex).applyMatrix4(boneMatrix).multiplyScalar(sw);
-        skinned.add(temp);
-
-      }
-
-      skinned.applyMatrix4(bindMatrixInverse); // back to local space
-
-      // expand aabb
-
-      aabb.expandByPoint(skinned);
-
-    }
-
-  } else {
-    for (i = 0; i < position.count; i++) {
-
-      vertex.fromBufferAttribute(position, i);
-      skinIndices.fromBufferAttribute(skinIndex, i);
-      skinWeights.fromBufferAttribute(skinWeigth, i);
-
-      // the following code section is normally implemented in the vertex shader
-
-      vertex.applyMatrix4(bindMatrix); // transform to bind space
-      skinned.set(0, 0, 0);
-
-      for (j = 0; j < 4; j++) {
-
-        si = skinIndices.getComponent(j);
-        sw = skinWeights.getComponent(j);
-        boneMatrix.fromArray(boneMatrices, si * 16);
-
-        // weighted vertex transformation
-
-        temp.copy(vertex).applyMatrix4(boneMatrix).multiplyScalar(sw);
-        skinned.add(temp);
-
-      }
-
-      skinned.applyMatrix4(bindMatrixInverse); // back to local space
-
-      // expand aabb
-
-      aabb.expandByPoint(skinned);
-
-    }
-  }
-
-  aabb.applyMatrix4(skinnedMesh.matrixWorld);
-  return aabb;
-
 }
