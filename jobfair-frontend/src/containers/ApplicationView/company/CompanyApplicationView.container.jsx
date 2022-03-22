@@ -28,7 +28,7 @@ const CompanyApplicationView = ({ tabStatus, ...otherProps }) => {
         [testStatus],
         jobFairSearchValue,
         jobPositionSearchValue,
-        tabStatus != 2 ? 'appliedDate' : 'appliedDate'
+        tabStatus != 1 ? 'evaluateDate' : 'appliedDate'
       )
       const { data } = res
       if (res.status != 204) {

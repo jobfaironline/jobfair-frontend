@@ -35,6 +35,9 @@ export const CompanyManagerMenu = [
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT}>
     <Link to={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT}>Job Position Management</Link>
+  </Menu.Item>,
+  <Menu.Item key={PATH_COMPANY_MANAGER.APPLIED_JOB_PAGE}>
+    <Link to={PATH_COMPANY_MANAGER.APPLIED_JOB_PAGE}>Applications management</Link>
   </Menu.Item>
 ]
 

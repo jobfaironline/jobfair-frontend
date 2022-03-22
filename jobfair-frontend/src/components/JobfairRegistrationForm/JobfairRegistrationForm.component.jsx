@@ -1,17 +1,14 @@
-import React, {useEffect, useState} from 'react'
-import {Button, Form, notification, Typography} from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Button, Form, notification, Typography } from 'antd'
 import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
 import TextArea from 'antd/es/input/TextArea'
 import PickJobPositionFormContainer from '../../containers/PickJobPositionForm/PickJobPositionForm.container'
 import './JobfairRegistrationForm.styles.scss'
-import {
-  getLatestCompanyRegistration
-} from "../../services/company-registration-controller/CompanyRegistrationControllerService";
+import { getLatestCompanyRegistration } from '../../services/company-registration-controller/CompanyRegistrationControllerService'
 
-const {Text} = Typography
+const { Text } = Typography
 
-const JobfairRegistrationForm = ({ form , jobFairId}) => {
-
+const JobfairRegistrationForm = ({ form, jobFairId }) => {
   const [adminMessage, setAdminMessage] = useState('')
   const fetchData = async () => {
     if (jobFairId !== undefined) {
@@ -30,7 +27,9 @@ const JobfairRegistrationForm = ({ form , jobFairId}) => {
     fetchData()
   }, [])
 
-  {/* TODO: fetch latest company registration*/}
+  {
+    /* TODO: fetch latest company registration*/
+  }
   // const fetchData = async () => {
   //   if (jobFairId !== undefined) {
   //     getLatestCompanyRegistration(jobFairId)
@@ -59,17 +58,15 @@ const JobfairRegistrationForm = ({ form , jobFairId}) => {
   // useEffect(() => {
   //   fetchData()
   // }, [])
+
   return (
     <>
-      {adminMessage?.length !== 0 ?
-        (
-          <div style={{marginBottom: 20}}>
-            <Text strong>Admin request change content: </Text>
-            <Text>
-              {adminMessage}
-            </Text>
-          </div>
-        ) : null}
+      {adminMessage?.length !== 0 ? (
+        <div style={{ marginBottom: 20 }}>
+          <Text strong>Admin request change content: </Text>
+          <Text>{adminMessage}</Text>
+        </div>
+      ) : null}
 
       <Form
         form={form}
@@ -88,10 +85,9 @@ const JobfairRegistrationForm = ({ form , jobFairId}) => {
         >
           <TextArea autoSize={{ minRows: 5 }} showCount maxLength={3000} placeholder="Registration description" />
         </Form.Item>
-        <PickJobPositionFormContainer form={form}/>
+        <PickJobPositionFormContainer form={form} />
       </Form>
     </>
-
   )
 }
 

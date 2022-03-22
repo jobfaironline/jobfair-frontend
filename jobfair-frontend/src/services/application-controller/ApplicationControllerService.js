@@ -44,3 +44,4 @@ export const draftApplication = (body) => CallAPI(`${ENDPOINT_APPLICATION}/draft
 
 export const submitApplication = (applicationId) => CallAPI(`${ENDPOINT_APPLICATION}/submit/${applicationId}`, 'POST');
 
+
