@@ -14,7 +14,12 @@ const ResumeContent = props => {
       <Col span={16} offset={4}>
         <div className={styles.anchorBar}>
           <Space align="center" direction="vertical">
-            <Anchor targetOffset="70">
+            <Anchor
+              targetOffset="70"
+              onClick={e => {
+                e.preventDefault()
+              }}
+            >
               <Link href="#candidatesAbout" title="Candidates About" />
               <Link href="#education" title="Education" />
               <Link href="#workExperience" title="Work & Experience" />

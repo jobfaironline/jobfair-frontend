@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation, useHistory } from 'react-router-dom'
 import {
   Anchor,
   Card,
@@ -34,29 +34,56 @@ import './ResumeDetailPage.styles.scss'
 import { Content } from 'antd/es/layout/layout'
 import ResumeHeader from '../../components/Resume/Header/ResumeHeader.component'
 import ResumeContent from '../../components/Resume/Content/ResumeContent.component'
+import { evaluateApplication, getApplication } from '../../services/application-controller/ApplicationControllerService'
 const defaultResumeId = 'a5c3e29d-0a5c-4950-bf4a-8f31b3401b72'
 
 const ResumeDetailPage = () => {
+  const history = useHistory()
+  const location = useLocation()
+  const { resumeId } = location.state
+
   return (
     <div className="page">
       <PageHeader className="site-page-header" onBack={() => history.goBack()} title="Resume Detail Page" />
-      <ResumeDetailContainer />
+      <ResumeDetailContainer resumeId={resumeId} />
     </div>
   )
 }
 
-const ResumeDetailContainer = () => {
-  const resumeId = useParams()
+const ResumeDetailContainer = ({ resumeId }) => {
+  const history = useHistory()
   const [form] = Form.useForm()
   const attendantId = useSelector(state => state.authentication.user.userId)
   const [data, setData] = useState({})
 
   const onFinish = values => {
-    console.log(values)
+    //mapping
+    const body = {
+      applicationId: values['applicationId'],
+      evaluateMessage: values['message'],
+      status: values['status']
+    }
+
+    evaluateApplication(body)
+      .then(res => {
+        notification['success']({
+          message: `Submit evaluation successfully`,
+          description: `Your evaluation has been submitted`,
+          duration: 2
+        })
+        history.goBack()
+      })
+      .catch(e => {
+        notification['error']({
+          message: `Submit evaluation failed`,
+          description: `There is problem while submitting, try again later`,
+          duration: 2
+        })
+      })
   }
 
   const fetchData = async () => {
-    getAttendantDetailAPI(attendantId)
+    getApplication(resumeId)
       .then(res => {
         setData(res.data)
       })
@@ -174,7 +201,7 @@ const ResumeDetailComponent = props => {
   nec erat ut libero vulputate pulvinar.'`
   const dataInfo = {
     jobPosition: 'Designer',
-    name: data.account?.lastname,
+    name: data.candidateName,
     email: data.account?.email,
     website: 'dsc@gmail.com',
     location: 'vietnam',
@@ -194,15 +221,19 @@ const ResumeDetailComponent = props => {
           skills={skills}
         />
       </Card>
-      <Card
-        title="Evaluate this registration"
-        style={{ width: 500, marginTop: '2rem' }}
-        headStyle={{ fontWeight: 700, fontSize: 24 }}
-      >
-        <div style={{ marginLeft: '5rem' }}>
-          <EvaluationFormComponent onFinish={onFinish} name="resumeRegistrationId" id={defaultResumeId} />
+      {data.status == 'PENDING' ? (
+        <div style={{ paddingBottom: '5rem' }}>
+          <Card
+            title="Evaluate this registration"
+            style={{ width: 500, margin: '2rem auto' }}
+            headStyle={{ fontWeight: 700, fontSize: 24 }}
+          >
+            <div style={{ marginLeft: '5rem' }}>
+              <EvaluationFormComponent onFinish={onFinish} name="applicationId" id={data.id} />
+            </div>
+          </Card>
         </div>
-      </Card>
+      ) : null}
     </>
   )
 }
