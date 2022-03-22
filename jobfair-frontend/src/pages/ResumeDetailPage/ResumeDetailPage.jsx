@@ -181,7 +181,6 @@ const ResumeDetailComponent = props => {
     startYear: '2020',
     profileImageUrl: data.account?.profileImageUrl
   }
-  console.log(data)
   return (
     <>
       <Card title="Resume Detail">
