@@ -10,7 +10,7 @@ const IconText = ({ icon, text }) => (
   </Space>
 )
 
-const AppliedJobList = () => {
+const ApplicationList = () => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
 
@@ -113,4 +113,4 @@ const AppliedJobList = () => {
   )
 }
 
-export default AppliedJobList
+export default ApplicationList

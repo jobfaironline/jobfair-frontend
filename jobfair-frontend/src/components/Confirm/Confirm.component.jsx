@@ -15,7 +15,7 @@ const ConfirmComponent = props => {
   return (
     <>
       <div style={{ position: 'fixed', left: '0.8rem', top: '200px' }}>
-        <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Registration</Typography>
+        <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Content list</Typography>
         <AnchorComponent listData={data.jobPositions} href={'#company-information'} title={'Company info'} />
       </div>
       <div className="confirm-form-container">

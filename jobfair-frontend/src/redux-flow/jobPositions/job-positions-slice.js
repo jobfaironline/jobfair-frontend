@@ -18,7 +18,7 @@ const jobPositionsSlice = createSlice({
       state.data = action.payload.content.map((item, index) => {
         return {
           key: item.id,
-          no: index + action.payload.number * 10 + 1,
+          no: index + action.payload.number * action.payload.size + 1,
           ...item
         }
       })

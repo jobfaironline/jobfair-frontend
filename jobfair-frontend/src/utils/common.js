@@ -1,5 +1,7 @@
 import moment from 'moment'
 
+import {Progress} from "antd";
+import React from "react";
 export const contains = (list, listCurrent) => {
   var result = false
   list.forEach(e => {
@@ -40,7 +42,12 @@ export const getBase64 = file => {
 }
 
 export const convertToDateString = dateValue => {
-  return new Date(dateValue).toISOString().replace(/T.*/, '').split('-').reverse().join('-')
+  try {
+    return new Date(dateValue).toISOString().replace(/T.*/, '').split('-').reverse().join('-')
+  }
+  catch (err) {
+    return '01-01-1970'
+  }
 }
 
 export const convertToDateValue = dateString => {
@@ -71,12 +78,15 @@ export const handleConvertRangePicker = data => {
 
 //convert enum status to string
 export const convertEnumToString = data => {
-  const arr = data.split('_') //['INTERN', 'SHIP', 'STUDENT']
-  const result = arr
-    .map(item => item.toString().toLowerCase())
-    .map(item => item[0].toUpperCase() + item.slice(1))
-    .join(' ')
-  return result
+  if (data !== undefined) {
+    const arr = data.includes('_') ? data.split('_') : Array.of(data) //['INTERN', 'SHIP', 'STUDENT']
+    const result = arr
+      .map(item => item.toString().toLowerCase())
+      .map(item => item[0].toUpperCase() + item.slice(1))
+      .join(' ')
+    return result
+  }
+  return data
 }
 
 //
@@ -100,6 +110,15 @@ export const handleGetStatus = data => {
   return data.find(item => item.key !== undefined)
 }
 
+export const handleProgress = (proficiency) => {
+  switch (proficiency) {
+    case 1: return <Progress percent={20} status="active" steps='5'/>
+    case 2: return <Progress percent={40} status="active" steps='5'/>
+    case 3: return <Progress percent={60} status="active" steps='5'/>
+    case 4: return <Progress percent={80} status="active" steps='5'/>
+    default: return <Progress percent={100} status="active" steps='5'/>
+  }
+}
 //handle suggestion email
 export const getSuggestionEmail = (listEmailSuggestion, value) => {
   let res = []

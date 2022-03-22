@@ -1,14 +1,12 @@
-import React, {useEffect, useState} from 'react'
-import {Button, Form, notification, Typography} from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Button, Form, notification, Typography } from 'antd'
 import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
 import TextArea from 'antd/es/input/TextArea'
 import PickJobPositionFormContainer from '../../containers/PickJobPositionForm/PickJobPositionForm.container'
 import './JobfairRegistrationForm.styles.scss'
-import {
-  getLatestCompanyRegistration
-} from "../../services/company-registration-controller/CompanyRegistrationControllerService";
+import { getLatestCompanyRegistration } from '../../services/company-registration-controller/CompanyRegistrationControllerService'
 
-const {Text} = Typography
+const { Text } = Typography
 
 const JobfairRegistrationForm = ({ form , jobFairId, rerender}) => {
 
