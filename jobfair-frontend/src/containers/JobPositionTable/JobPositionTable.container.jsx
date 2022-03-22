@@ -4,8 +4,14 @@ import {Button, Space} from 'antd'
 import {useDispatch, useSelector} from 'react-redux'
 import {fetchJobPositions} from '../../redux-flow/jobPositions/job-positions-action'
 import JobPositionSubmodalContainer from '../JobPositionModal/JobPositionSubmodal.container'
+import PaginationComponent from "../../components/PaginationComponent/Pagination.component";
 
 const PickJobPositionTable = ({selectable, form, rerender}) => {
+
+  //pagination
+  const totalRecord = useSelector(state => state.jobPosition.totalRecord)
+  const [currentPage, setCurrentPage] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
 
   const [neededJobPositionDetail, setNeededJobPositionDetail] = useState(null)
   const [modalVisible, setModalVisibile] = useState(false)
