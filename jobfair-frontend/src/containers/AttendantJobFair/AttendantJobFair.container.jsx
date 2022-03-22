@@ -5,7 +5,7 @@ import {ControlTipsModalContainer} from "./ControlTipsModal.container";
 import {AttendantJobFairBoothContainer} from "./AttendantJobFairBooth.container";
 
 export const AttendantJobFairContainer = (props) => {
-  const {companyBoothId} = props;
+  const {companyBoothId, geckoClientRef} = props;
   const [tabState, setTabState] = useState({
     isShow: false,
     activeKey: "0",
@@ -22,7 +22,7 @@ export const AttendantJobFairContainer = (props) => {
                         handleOpenDetail={handleOpenDetail}/>
       <div className={styles.booth}>
         <ControlTipsModalContainer/>
-        <AttendantJobFairBoothContainer companyBoothId={companyBoothId} handleOpenDetail={handleOpenDetail}/>
+        <AttendantJobFairBoothContainer companyBoothId={companyBoothId} handleOpenDetail={handleOpenDetail} geckoClientRef={geckoClientRef}/>
       </div>
       {/*<div>
               <ChatBox {...communicationProps} />
