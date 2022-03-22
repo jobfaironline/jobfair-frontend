@@ -6,14 +6,13 @@ import {
   loadFBXModel,
   loadGLBModel
 } from '../../utils/ThreeJS/threeJSUtil'
-import {CompanyBoothCanvasComponent} from '../../components/AttendantJobFair/CompanyBoothCanvas.component'
+import {CompanyBoothCanvasComponent} from '../../components/AttendantJobFair/Booth/CompanyBoothCanvas.component'
 import {getCompanyBoothLatestLayout} from '../../services/company-booth-layout-controller/CompanyBoothLayoutControllerService'
 import * as THREE from "three";
 import ThirdPersonCamera from "../../utils/ThreeJS/ThirdPersonCamera";
 import BasicCharacterControl from "../../utils/ThreeJS/BasicCharacterControl";
-import {InventoryContainer} from "../../components/AttendantJobFair/Inventory.container";
+import {InventoryContainer} from "../../components/AttendantJobFair/Inventory/Inventory.container";
 import {LoadingComponent} from "../../components/JobFairParkMap/Loading.component";
-import {Button, Modal} from "antd";
 
 
 class CharacterModel extends BasicCharacterControl {
@@ -46,7 +45,7 @@ class CharacterModel extends BasicCharacterControl {
 }
 
 export const AttendantJobFairBoothContainer = props => {
-  const {companyBoothId} = props
+  const {companyBoothId, handleOpenDetail} = props
   const cameraRef = useRef();
   const sceneMeshRef = useRef();
   const [state, setState] = useState({
@@ -54,6 +53,15 @@ export const AttendantJobFairBoothContainer = props => {
     characterControl: undefined,
     boothMesh: undefined,
   })
+
+  const [inventoryVisible, setInventoryVisible] = useState(false);
+  const openInventory = (status) => {
+    if (status !== undefined){
+      setInventoryVisible(status)
+    } else {
+      setInventoryVisible(prevState => !prevState);
+    }
+  }
 
   const getBoothMesh = async (companyBoothId) => {
     const response = await getCompanyBoothLatestLayout(companyBoothId)
@@ -95,8 +103,8 @@ export const AttendantJobFairBoothContainer = props => {
 
     const modelSize = calculateMeshSize(model);
     //load animation
-   /* const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx");
-    const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking4.fbx")*/
+    /* const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx");
+     const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking4.fbx")*/
     const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx");
     const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx")
     const mixer = new THREE.AnimationMixer(model);
@@ -123,7 +131,6 @@ export const AttendantJobFairBoothContainer = props => {
     const characterControl = new CharacterModel({...params});
 
 
-
     setState(prevState => {
       return {
         ...prevState,
@@ -136,7 +143,6 @@ export const AttendantJobFairBoothContainer = props => {
   }, [])
 
 
-
   if (state.boothMesh === undefined) return <LoadingComponent/>;
   const boothSize = calculateMeshSize(state.boothMesh);
   const cProps = {
@@ -145,12 +151,13 @@ export const AttendantJobFairBoothContainer = props => {
     characterControl: state.characterControl,
     cameraRef,
     sceneMeshRef,
-    zoom: (boothSize.width / 200) / 2.5
+    zoom: (boothSize.width / 200) / 2.5,
+    handleOpenDetail,
+    openInventory
   }
   return (
     <>
-
-      <InventoryContainer/>
+      <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible}/>
       <CompanyBoothCanvasComponent {...cProps}/>
     </>
   )

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {ControlTipsModal} from "../../components/AttendantJobFair/ControlTipsModal.component";
+import {ControlTipsModal} from "../../components/AttendantJobFair/Booth/ControlTipsModal.component";
 
-export const ControlTipsModalContainer = props => {
+export const ControlTipsModalContainer = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const openControlTips = () => {
@@ -12,6 +12,6 @@ export const ControlTipsModalContainer = props => {
     setIsModalVisible(false)
   }
 
-  const componentProps = {openControlTips, isModalVisible, closeControlTips }
+  const componentProps = {openControlTips, isModalVisible, closeControlTips}
   return <ControlTipsModal {...componentProps}/>
 }

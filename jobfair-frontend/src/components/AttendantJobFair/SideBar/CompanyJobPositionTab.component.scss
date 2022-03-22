@@ -1,0 +1,48 @@
+.companyJobPositionTab {
+  transition: all .4s ease 0s;
+  border: 1px solid #edeff7;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: start;
+  padding: 5px 10px;
+
+
+  &:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+  }
+
+  .jobInformation {
+    .title {
+      margin-bottom: 0.3rem;
+    }
+
+    div {
+      margin-bottom: 0.3rem;
+    }
+
+    .tagContainer {
+      font-size: 0.7rem
+    }
+  }
+
+  .jobType {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    .tagContainer {
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 0.2rem;
+    }
+  }
+
+  .folderIcon {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem;
+  }
+
+}
