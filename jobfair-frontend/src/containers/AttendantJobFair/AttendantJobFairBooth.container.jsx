@@ -6,12 +6,12 @@ import {
   loadFBXModel,
   loadGLBModel
 } from '../../utils/ThreeJS/threeJSUtil'
-import {CompanyBoothCanvasComponent} from '../../components/AttendantJobFair/CompanyBoothCanvas.component'
+import {CompanyBoothCanvasComponent} from '../../components/AttendantJobFair/Booth/CompanyBoothCanvas.component'
 import {getCompanyBoothLatestLayout} from '../../services/company-booth-layout-controller/CompanyBoothLayoutControllerService'
 import * as THREE from "three";
 import ThirdPersonCamera from "../../utils/ThreeJS/ThirdPersonCamera";
 import BasicCharacterControl from "../../utils/ThreeJS/BasicCharacterControl";
-import {InventoryContainer} from "../../components/AttendantJobFair/Inventory.container";
+import {InventoryContainer} from "../../components/AttendantJobFair/Inventory/Inventory.container";
 import {LoadingComponent} from "../../components/JobFairParkMap/Loading.component";
 import {useSelector} from "react-redux";
 import BasicControlInput from "../../utils/ThreeJS/BasicControlInput";
@@ -46,7 +46,7 @@ class CharacterModel extends BasicCharacterControl {
 }
 
 export const AttendantJobFairBoothContainer = props => {
-  const {companyBoothId, geckoClientRef} = props
+  const {companyBoothId, geckoClientRef, handleOpenDetail} = props
   const {userId} = useSelector(state => state.authentication.user)
   const cameraRef = useRef();
   const sceneMeshRef = useRef();
@@ -57,6 +57,15 @@ export const AttendantJobFairBoothContainer = props => {
     characterControl: undefined,
     boothMesh: undefined,
   })
+
+  const [inventoryVisible, setInventoryVisible] = useState(false);
+  const openInventory = (status) => {
+    if (status !== undefined){
+      setInventoryVisible(status)
+    } else {
+      setInventoryVisible(prevState => !prevState);
+    }
+  }
 
   const [user, setUser] = useState([])
 
@@ -101,8 +110,8 @@ export const AttendantJobFairBoothContainer = props => {
 
     const modelSize = calculateMeshSize(model);
     //load animation
-    /* const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx");
-     const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking4.fbx")*/
+   /* const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx");
+    const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking4.fbx")*/
     const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx");
     const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx")
     const mixer = new THREE.AnimationMixer(model);
@@ -264,14 +273,15 @@ export const AttendantJobFairBoothContainer = props => {
     cameraRef,
     sceneMeshRef,
     zoom: (boothSize.width / 200) / 2.5,
+    handleOpenDetail,
+    openInventory,
     user: user,
     isChangeCamera,
     geckoClientRef
   }
   return (
     <>
-
-      <InventoryContainer/>
+      <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible}/>
       <CompanyBoothCanvasComponent {...cProps}/>
     </>
   )

@@ -1,17 +1,18 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import JobFairDetailModalComponent from './JobFairDetailModal.component'
-import {getAccountByIdAPI} from '../../../services/account-controller/AccountControllerService'
-import {notification} from 'antd'
-import {evaluateJobFairPlanAPI} from "../../../services/job-fair-controller/JobFairConTrollerService";
+import { getAccountByIdAPI } from '../../../services/account-controller/AccountControllerService'
+import { notification } from 'antd'
+import { evaluateJobFairPlanAPI } from '../../../services/job-fair-controller/JobFairConTrollerService'
 import {
+  getAllRegistractionForAdmin,
   getRegistrationByJobFairId
-} from "../../../services/company-registration-controller/CompanyRegistrationControllerService";
-import {CompanyRegistrationStatus} from "../../../constants/CompanyRegistrationConst";
-import {getLayoutDetail} from "../../../services/layout-controller/LayoutControllerService";
-import {convertEnumToString} from "../../../utils/common";
-import {mapperJobFairDetail} from "../../../utils/mapperJobFairDetail";
+} from '../../../services/company-registration-controller/CompanyRegistrationControllerService'
+import { CompanyRegistrationStatus } from '../../../constants/CompanyRegistrationConst'
+import { getLayoutDetail } from '../../../services/layout-controller/LayoutControllerService'
+import { convertEnumToString } from '../../../utils/common'
+import { mapperJobFairDetail } from '../../../utils/mapperJobFairDetail'
 
-const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVisible, jobFairList}) => {
+const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVisible, jobFairList }) => {
   const [jobFairDetail, setJobFairDetail] = useState({})
   const [creatorInfo, setCreatorInfo] = useState('')
   const [totalApproval, setTotalApproval] = useState(0)
@@ -26,7 +27,9 @@ const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVis
       getAccountByIdAPI(creatorId)
         .then(res => {
           setCreatorInfo(
-            `Full name: ${res.data.firstname} ${res.data.middlename} ${res.data.lastname}. Role: ${convertEnumToString(res.data.role)}`
+            `Full name: ${res.data.firstname} ${res.data.middlename} ${res.data.lastname}. Role: ${convertEnumToString(
+              res.data.role
+            )}`
           )
         })
         .catch(err => {
@@ -47,7 +50,7 @@ const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVis
     fetchData()
     getTotalCompanyRegistrationOfJobFair()
     getTotalBoothOfJobFair()
-  }, [])
+  }, [visible])
 
   const onFinish = values => {
     evaluateJobFairPlanAPI(values)
@@ -77,13 +80,14 @@ const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVis
     totalApproval: totalApproval
   }
 
-
   const getTotalCompanyRegistrationOfJobFair = async () => {
     if (jobFairId !== undefined) {
       //need API for getting company registrations have status APPROVE by jobfairId
       getRegistrationByJobFairId(jobFairId, 0, 5000, 'createDate', 'DESC')
         .then(res => {
-          const approvalRegistrations = res.data.content.filter(item => item.status === CompanyRegistrationStatus.APPROVE).length
+          const approvalRegistrations = res.data.content.filter(
+            item => item.status === CompanyRegistrationStatus.APPROVE
+          ).length
           setTotalApproval(approvalRegistrations)
           const totalRegistrations = res.data.totalElements
           setTotalRegistration(totalRegistrations)
@@ -102,17 +106,11 @@ const JobFairDetailModalContainer = ({jobFairId, creatorId, visible, setModalVis
           const totalBooth = res.data.booths.length
           setTotalBooth(totalBooth)
         })
-        .catch(err => {
-
-        })
+        .catch(err => {})
     }
   }
 
-  return (
-    <>
-      <JobFairDetailModalComponent {...componentProps} />
-    </>
-  )
+  return <>{visible ? <JobFairDetailModalComponent {...componentProps} /> : null}</>
 }
 
 export default JobFairDetailModalContainer
