@@ -38,7 +38,7 @@ const AiCharacter = props => {
 }
 
 export const CompanyBoothCanvasComponent = (props) => {
-  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef, zoom, user, isChangeCamera} = props;
+  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef, zoom, user, isChangeCamera, geckoClientRef} = props;
   const [view, setView] = useState(false);
   const cvSubmitRef = useRef()
 
@@ -81,7 +81,7 @@ export const CompanyBoothCanvasComponent = (props) => {
         })}
       >
         <SkyComponent style={SkyType.Sunset}/>
-        {view ? <FirstPersonControl model={model} isChangeCamera={isChangeCamera} collidableMeshListRef={sceneMeshRef}/> : <OrbitControls enableZoom={true}
+        {view ? <FirstPersonControl model={model} isChangeCamera={isChangeCamera} collidableMeshListRef={sceneMeshRef} geckoClientRef={geckoClientRef}/> : <OrbitControls enableZoom={true}
                                                                                                      maxPolarAngle={Math.PI / 2 - Math.PI / 10}
                                                                                                      minPolarAngle={0}
                                                                                                      />}

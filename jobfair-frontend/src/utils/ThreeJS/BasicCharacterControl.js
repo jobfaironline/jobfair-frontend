@@ -121,7 +121,6 @@ export default class BasicCharacterControl {
     controlObject.position.add(sideways);
 
 
-    const self = this;
 
     const distance = Math.abs(controlObject.position.x + controlObject.position.y + controlObject.position.z - oldPosition.x - oldPosition.y - oldPosition.z)
 
@@ -135,9 +134,9 @@ export default class BasicCharacterControl {
           w: controlObject.quaternion._w,
         }
       }
-      self.geckoClientRef.current.move(obj)
+      this.geckoClientRef.current.move(obj)
     } else {
-      self.geckoClientRef.current.stop()
+      this.geckoClientRef.current.stop()
     }
 
 

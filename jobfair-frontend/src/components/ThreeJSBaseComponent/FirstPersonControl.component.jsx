@@ -7,7 +7,7 @@ import * as THREE from "three";
 
 
 export const FirstPersonControl = (props) => {
-  const {model, isChangeCamera, collidableMeshListRef} = props;
+  const {model, isChangeCamera, collidableMeshListRef, geckoClientRef} = props;
   const {camera, scene} = useThree();
   const controlRef = useRef();
   const speed = 0.1;
@@ -36,6 +36,9 @@ export const FirstPersonControl = (props) => {
       controlRef.current.moveRight(speed)
     }
 
+    const oldQuaternion = new THREE.Quaternion();
+    oldQuaternion.copy(model.quaternion);
+
     //re-adjust model position
     model.position.x = camera.position.x;
     model.position.z = camera.position.z;
@@ -54,8 +57,27 @@ export const FirstPersonControl = (props) => {
     model.quaternion.copy(_R);
 
 
+    const distance = Math.abs(model.position.x + model.position.y + model.position.z - modelOldPosition.x - modelOldPosition.y - modelOldPosition.z)
+    if (distance > 0.01){
+      const obj = {
+        position: model.position,
+        quaternion: {
+          x: model.quaternion._x,
+          y: model.quaternion._y,
+          z: model.quaternion._z,
+          w: model.quaternion._w,
+        }
+      }
+      geckoClientRef.current.move(obj)
+    } else {
+      geckoClientRef.current.stop()
+    }
+
+
+
+
     //make model bouding box
-    const skeleton = new THREE.SkeletonHelper(model);
+    /*const skeleton = new THREE.SkeletonHelper(model);
     var bone_min = {x: Infinity, y: Infinity, z: Infinity};
     var bone_max = {x: -Infinity, y: -Infinity, z: -Infinity};
     for (var b = 0; b < skeleton.bones.length; b++) {
@@ -87,7 +109,7 @@ export const FirstPersonControl = (props) => {
     bone_min.z += camera.position.z - (bone_max.z + bone_min.z) / 2;
     bone_min.z += camera.position.z - (bone_max.z + bone_min.z) / 2;
 
-    const box = new THREE.Box3(new THREE.Vector3(bone_min.x, bone_min.y, bone_min.z), new THREE.Vector3(bone_max.x, bone_max.y, bone_max.z))
+    const box = new THREE.Box3(new THREE.Vector3(bone_min.x, bone_min.y, bone_min.z), new THREE.Vector3(bone_max.x, bone_max.y, bone_max.z))*/
     //check collision
     /*if (collidableMeshListRef !== undefined) {
       for (const child of collidableMeshListRef.current.children) {
@@ -114,18 +136,12 @@ export const FirstPersonControl = (props) => {
     camera.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI)
   }
 
-
-
-
-
-
   useFrame((state) => {
     state.camera.zoom = 1
     state.camera.updateProjectionMatrix();
-
-    console.log(state.camera.zoom);
+    controlRef.current.pointerSpeed = 0.01
     control();
   })
 
-  return <PointerLockControls ref={controlRef} pointerSpeed={0.4}/>;
+  return <PointerLockControls ref={controlRef} pointerSpeed={0}/>;
 }

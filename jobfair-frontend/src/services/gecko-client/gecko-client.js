@@ -18,10 +18,6 @@ export class GeckoClient extends EventEmitter{
         console.error(error.message);
         return;
       }
-
-
-
-
       self.subscribeClientEvents()
     })
   }

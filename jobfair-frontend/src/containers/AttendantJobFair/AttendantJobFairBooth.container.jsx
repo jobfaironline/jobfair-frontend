@@ -41,13 +41,9 @@ class CharacterModel extends BasicCharacterControl {
       this.animations.idle.setEffectiveWeight(1.0);
       this.animations.idle.crossFadeTo(this.animations.walk, 2, true);
       this.animations.idle.play();
-
     }
   }
 }
-
-
-
 
 export const AttendantJobFairBoothContainer = props => {
   const {companyBoothId, geckoClientRef} = props
@@ -269,7 +265,8 @@ export const AttendantJobFairBoothContainer = props => {
     sceneMeshRef,
     zoom: (boothSize.width / 200) / 2.5,
     user: user,
-    isChangeCamera
+    isChangeCamera,
+    geckoClientRef
   }
   return (
     <>
