@@ -5,6 +5,7 @@ import styles from './ResumeContent.module.scss'
 import EducationList from './EducationList/ResumeEducationList.component'
 import NodeListComponent from './NodeList/ResumeNodeList.component'
 import SkillListComponent from './SkillsList/ResumeSkillList.component'
+import OverviewComponent from './Overview/ResumeOverview.component'
 const { Text, Title } = Typography
 const listEducation = [
   {
@@ -68,6 +69,15 @@ const listAdwards = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
   }
 ]
+const userOverview = {
+  experience: '5-10 Years',
+  age: '28-33 Years',
+  currentSalary: '41K - 50K',
+  expectedSalary: 'Above 50K',
+  gender: 'Male',
+  language: 'EnglishFrench',
+  educationLevel: 'Certificate'
+}
 const listSkill = [
   { id: '1', name: 'Creativity' },
   { id: '2', name: 'Problem Solving' }
@@ -78,20 +88,20 @@ const ResumeContent = () => {
       <Col span={16} offset={4}>
         <div className={styles.anchorBar}>
           <Space align="center" direction="vertical">
-            <Anchor targetOffset="65">
-              <Link href="#hero" title="Home" />
-              <Link href="#about" title="About" />
-              <Link href="#feature" title="Features" />
-              <Link href="#works" title="How it works" />
-              <Link href="#faq" title="FAQ" />
-              <Link href="#pricing" title="Pricing" />
-              <Link href="#contact" title="Contact" />
+            <Anchor targetOffset="70">
+              <Link href="#candidatesAbout" title="Candidates About" />
+              <Link href="#education" title="Education" />
+              <Link href="#workExperience" title="Work & Experience" />
+              <Link href="#professionalSkills" title="Professional Skills" />
+              <Link href="#awards" title="Awards" />
             </Anchor>
           </Space>
         </div>
-        <Row>
-          <Col>
-            <Title level={2}>Candidates About</Title>
+        <Row justify="space-between">
+          <Col span={18}>
+            <Title id="candidatesAbout" level={2}>
+              Candidates About
+            </Title>
             <Text type="secondary">
               Hello my name is James Rogers and Painter from Miami. In pharetra orci dignissim, blandit mi semper,
               ultricies diam. Suspendisse malesuada suscipit nunc non volutpat. Sed porta nulla id orci laoreet tempor
@@ -102,20 +112,33 @@ const ResumeContent = () => {
               sed sem condimentum, et pulvinar tortor luctus. Suspendisse condimentum lorem ut elementum aliquam. Mauris
               nec erat ut libero vulputate pulvinar.
             </Text>
-            <Title level={2}>Education</Title>
+            <Title id="education" level={2}>
+              Education
+            </Title>
             {listEducation.map(data => (
               <div className={styles.educationList}>
                 <EducationList id={data} data={data} />
               </div>
             ))}
-            <Title level={2}>Work & Experience</Title>
+            <Title id="workExperience" level={2}>
+              Work & Experience
+            </Title>
             <NodeListComponent listData={listWorkAndWorkExperience} />
-            <Title level={2}>Professional Skills</Title>
+            <Title id="professionalSkills" level={2}>
+              Professional Skills
+            </Title>
             <SkillListComponent listData={listSkill} />
-            <Title level={2}>Awards</Title>
+            <Title id="awards" level={2}>
+              Awards
+            </Title>
             <NodeListComponent listData={listAdwards} />
           </Col>
-          <Col></Col>
+          <Col span={6}>
+            <Text type="secondary" style={{ fontSize: '1.2rem' }}>
+              Candidate Overview
+            </Text>
+            <OverviewComponent data={userOverview} />
+          </Col>
         </Row>
       </Col>
     </div>

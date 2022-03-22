@@ -9,7 +9,7 @@ const NodeListComponent = props => {
       <Timeline>
         {listData.map(data => (
           <Timeline.Item>
-            <div style={{ marginLeft: '1.5rem' }}>
+            <div style={{ marginLeft: '3rem' }}>
               <Row>
                 <Col span={4}>
                   <Title level={4}>{data?.titleName}</Title>

@@ -7,8 +7,8 @@ const EducationList = props => {
   return (
     <>
       <Row>
-        <Col span={1}>
-          <ReadFilled style={{ fontSize: '3rem' }} />
+        <Col span={2}>
+          <ReadFilled style={{ fontSize: '4rem' }} />
         </Col>
         <Col span={20}>
           <div>
@@ -16,10 +16,10 @@ const EducationList = props => {
               {data?.edutTime}
             </Text>
             <Row>
-              <Col span={5}>
+              <Col span={6}>
                 <Title level={4}>{data?.titleName}</Title>
               </Col>
-              <Col span={4} style={{ marginTop: '2px' }}>
+              <Col span={6} style={{ marginTop: '2px' }}>
                 <Text>{data?.subName}</Text>
               </Col>
             </Row>
