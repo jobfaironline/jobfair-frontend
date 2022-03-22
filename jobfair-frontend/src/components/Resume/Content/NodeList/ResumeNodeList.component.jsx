@@ -2,7 +2,7 @@ import React from 'react'
 import { Timeline, Typography, Col, Row } from 'antd'
 
 const NodeListComponent = props => {
-  const { listData } = props
+  const { listData, titleSize, subTitleSize } = props
   const { Title, Text } = Typography
   return (
     <>
@@ -11,10 +11,10 @@ const NodeListComponent = props => {
           <Timeline.Item>
             <div style={{ marginLeft: '3rem' }}>
               <Row>
-                <Col span={4}>
+                <Col span={titleSize}>
                   <Title level={4}>{data?.titleName}</Title>
                 </Col>
-                <Col span={4} style={{ marginTop: '2px' }}>
+                <Col span={subTitleSize} style={{ marginTop: '2px' }}>
                   <Text>{data?.subName}</Text>
                 </Col>
               </Row>

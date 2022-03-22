@@ -88,14 +88,7 @@ const ResumeDetailComponent = props => {
   const { Text } = Typography
   const { Panel } = Collapse
   const { Link } = Anchor
-  const dataInfo = {
-    jobPosition: 'Designer',
-    name: 'BanhsBao',
-    email: 'huynhbaofaker@gmail.com',
-    website: 'dsc@gmail.com',
-    location: 'vietnam',
-    startYear: '2020'
-  }
+
   const educations = [
     {
       id: '1',
@@ -158,13 +151,13 @@ const ResumeDetailComponent = props => {
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
     }
   ]
-  const userOverview = {
+  const candidateOverView = {
     experience: '5-10 Years',
     age: '28-33 Years',
     currentSalary: '41K - 50K',
     expectedSalary: 'Above 50K',
     gender: 'Male',
-    language: 'EnglishFrench',
+    language: 'English, French',
     educationLevel: 'Certificate'
   }
   const skills = [
@@ -179,6 +172,15 @@ const ResumeDetailComponent = props => {
   ante erat, blandit at pretium et, accumsan ac est. Integer vehicula rhoncus molestie. Morbi ornare ipsum
   sed sem condimentum, et pulvinar tortor luctus. Suspendisse condimentum lorem ut elementum aliquam. Mauris
   nec erat ut libero vulputate pulvinar.'`
+  const dataInfo = {
+    jobPosition: 'Designer',
+    name: data.account?.lastname,
+    email: data.account?.email,
+    website: 'dsc@gmail.com',
+    location: 'vietnam',
+    startYear: '2020',
+    profileImageUrl: data.account?.profileImageUrl
+  }
   console.log(data)
   return (
     <>
@@ -189,7 +191,7 @@ const ResumeDetailComponent = props => {
           candidateAbout={candidateAbout}
           educations={educations}
           workExperiences={workExperiences}
-          userOverview={userOverview}
+          userOverview={candidateOverView}
           skills={skills}
         />
       </Card>

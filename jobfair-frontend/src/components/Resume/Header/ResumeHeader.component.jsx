@@ -45,7 +45,7 @@ const ResumeHeader = props => {
                     <Space align="center" direction="vertical">
                       <div className={styles.candidateImage}>
                         <Avatar
-                          src="https://joeschmoe.io/api/v1/random"
+                          src={data.profileImageUrl ? data.profileImageUrl : 'https://joeschmoe.io/api/v1/random'}
                           size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 145 }}
                         />
                       </div>
