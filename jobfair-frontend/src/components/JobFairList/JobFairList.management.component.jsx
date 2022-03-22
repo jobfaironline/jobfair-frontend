@@ -147,7 +147,7 @@ const JobFairListManagementComponent = props => {
                         <Badge.Ribbon
                           text={
                             <Text strong style={{color: 'white', fontSize: '1.3rem'}}>
-                              17 Aug
+                              {item.startTime}
                             </Text>
                           }
                           style={{height: '1.7rem'}}

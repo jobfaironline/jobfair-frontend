@@ -14,7 +14,9 @@ export const getAvailableJobFairForCompany = (pageNumber, pageSize) =>
     {},
     {
       offset: pageNumber,
-      pageSize: pageSize
+      pageSize: pageSize,
+      direction: 'DESC',
+      sortBy: 'jobFair.createTime'
     }
   )
 export const getHistoricalJobFairForCompany = (pageNumber, pageSize) =>
@@ -24,7 +26,9 @@ export const getHistoricalJobFairForCompany = (pageNumber, pageSize) =>
     {},
     {
       offset: pageNumber,
-      pageSize: pageSize
+      pageSize: pageSize,
+      direction: 'DESC',
+      sortBy: 'jobFair.createTime'
     }
   )
 

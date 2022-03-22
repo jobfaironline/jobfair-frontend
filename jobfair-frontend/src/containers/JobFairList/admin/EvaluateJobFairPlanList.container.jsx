@@ -36,10 +36,10 @@ const EvaluateJobFairPlanListContainer = () => {
                     }
                 })
                 setData([...dataSet])
-                notification['success']({
-                    message: `Get job fair list successfully`,
-                    duration: 2
-                })
+                // notification['success']({
+                //     message: `Get job fair list successfully`,
+                //     duration: 2
+                // })
             })
             .catch(err => {
                 notification['error']({

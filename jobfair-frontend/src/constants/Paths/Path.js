@@ -40,11 +40,15 @@ export const PATH_ATTENDANT = {
   ATTENDANT_JOB_FAIR_PAGE: '/attendant/job-fair',
   APPLIED_JOB_PAGE: '/applied-job',
   ATTENDANT_PROFILE: '',
-  JOB_FAIR_DETAIL: '/attendant/job-fair-detail'
+  JOB_FAIR_DETAIL: '/attendant/job-fair-detail',
+  CV_DETAIL: '/attendant/cv-detail/:resumeId',
+  CV_DETAIL_PAGE: '/attendant/cv-detail'
 }
 export const PATH_COMPANY_EMPLOYEE = {
   COMPANY_PROFILE_PAGE: '/employee/company-profile',
-  COMPANY_EMPLOYEE_MANAGEMENT: '/company/employee-management'
+  COMPANY_EMPLOYEE_MANAGEMENT: '/company/employee-management',
+  CV_DETAIL: '/cv-detail/:resumeId',
+  CV_DETAIL_PAGE: '/cv-detail'
 }
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',
@@ -55,7 +59,9 @@ export const PATH_COMPANY_MANAGER = {
   JOB_POSITION_MANAGEMENT: '/company/job-position-management',
   JOB_POSITION_DETAIL: '/company/job-position-detail',
   CREATE_JOB_POSITION: '/company/create-job-position',
-  JOB_FAIR_DETAIL: '/company/job-fair-detail'
+  JOB_FAIR_DETAIL: '/company/job-fair-detail',
+  CV_DETAIL: '/cv-detail/:resumeId',
+  CV_DETAIL_PAGE: '/cv-detail'
 }
 export const PATH_STAFF = {
   APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId',

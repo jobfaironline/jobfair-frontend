@@ -45,10 +45,6 @@ const CompanyProfileFormContainer = props => {
   const fetchData = async () => {
     getCompanyProfileAPI(companyId)
       .then(res => {
-        notification['success']({
-          message: `Fetch company profile successfully`,
-          description: `For company with ${companyId}`
-        })
         setData({
           ...res.data,
           benefits: res.data.companyBenefitDTOS.map(item => {

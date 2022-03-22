@@ -8,7 +8,7 @@ class ErrorHandlerComponent extends React.Component {
     this.state = { hasError: false }
   }
   componentDidCatch(error, info) {
-    //window.location.href = `${PATH.FINAL_ERROR_PAGE}`
+    // window.location.href = `${PATH.FINAL_ERROR_PAGE}`
   }
 
   render() {
