@@ -6,23 +6,23 @@ const {Text} = Typography
 
 const JobPositionSubmodalDetailComponent = ({data}) => {
   return (
-    <div style={{ height: 'max-content', fontSize: '1.2rem' }}>
+    <div style={{height: 'max-content', fontSize: '1.2rem'}}>
       <div
         key="no"
-        style={{ marginBottom: '0.8rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+        style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
       >
-        <Text strong style={{ fontSize: '1.8rem' }}>{`- Job position -`}</Text>
-        <Text strong style={{ fontSize: '1.8rem' }}>{`${data.title}`}</Text>
+        <Text strong style={{fontSize: '1.8rem'}}>{`- Job position -`}</Text>
+        <Text strong style={{fontSize: '1.8rem'}}>{`${data.title}`}</Text>
       </div>
-      <div style={{  }}>
-        <div className="sub-title" style={{ marginBottom: '0.2rem' }}>
-          <Text strong style={{ fontSize: '1.5rem' }}>
+      <div style={{}}>
+        <div className="sub-title" style={{}}>
+          <Text strong style={{fontSize: '1.5rem'}}>
             General information
           </Text>
         </div>
-        <Col style={{ marginLeft: '1rem' }}>
+        <Col style={{marginLeft: '1rem'}}>
           <Col gutter={[0, 48]}>
-            <Row key="language" style={{ marginBottom: '0.3rem' }}>
+            <Row key="language" style={{}}>
               <Space>
                 <Text strong>Prefer language: </Text>
                 <Text>{data.language}</Text>
@@ -66,7 +66,7 @@ const JobPositionSubmodalDetailComponent = ({data}) => {
                 <Space wrap size="4">
                   {data.skillTagDTOS.map(skill => {
                     return (
-                      <Tag color="blue" style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
+                      <Tag color="blue" style={{fontSize: '1rem', padding: '0.15rem 0.6rem'}}>
                         {skill.name}
                       </Tag>
                     )
@@ -80,7 +80,7 @@ const JobPositionSubmodalDetailComponent = ({data}) => {
                 <Space wrap size="4">
                   {data.subCategoryDTOs.map(category => {
                     return (
-                      <Tag color="blue" style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
+                      <Tag color="blue" style={{fontSize: '1rem', padding: '0.15rem 0.6rem'}}>
                         {category.name}
                       </Tag>
                     )
@@ -90,21 +90,21 @@ const JobPositionSubmodalDetailComponent = ({data}) => {
             </Row>
           </Col>
         </Col>
-        <div className="sub-title" style={{ margin: '1.5rem 0 0.2rem 0' }}>
-          <Text strong style={{ fontSize: '1.5rem' }}>
+        <div className="sub-title" style={{margin: '0 0 0 0'}}>
+          <Text strong style={{fontSize: '1.5rem'}}>
             Specific information
           </Text>
         </div>
-        <Col style={{ marginLeft: '1rem' }}>
+        <Col style={{marginLeft: '1rem'}}>
           <div>
             <div key="description">
-              <Space align="start" direction="vertical">
+              <Space align="start" direction="vertical" size={"0.3rem"} >
                 <Text strong>Job description: </Text>
                 <Text>{data.description}</Text>
               </Space>
             </div>
             <div key="requirement">
-              <Space align="start" direction="vertical">
+              <Space align="start" direction="vertical" size={"0.3rem"}>
                 <Text strong>Job requirements: </Text>
                 <Text>{data.requirements}</Text>
               </Space>

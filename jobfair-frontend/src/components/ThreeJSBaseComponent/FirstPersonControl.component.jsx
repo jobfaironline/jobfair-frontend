@@ -7,7 +7,7 @@ import * as THREE from "three";
 
 
 export const FirstPersonControl = (props) => {
-  const {model, isChangeCamera, collidableMeshListRef, geckoClientRef} = props;
+  const {model, isChangeCamera, collidableMeshListRef, geckoClientRef, zoom} = props;
   const {camera, scene} = useThree();
   const controlRef = useRef();
   const speed = 0.1;
@@ -24,16 +24,16 @@ export const FirstPersonControl = (props) => {
     modelOldPosition.copy(model.position)
 
     if (input.keys.forward) {
-      controlRef.current.moveForward(speed)
+      controlRef.current.moveForward(speed * zoom * 20)
     }
     if (input.keys.backward) { // s
-      controlRef.current.moveForward(-speed)
+      controlRef.current.moveForward(-speed * zoom * 20)
     }
     if (input.keys.left) { // a
-      controlRef.current.moveRight(-speed)
+      controlRef.current.moveRight(-speed * zoom * 20)
     }
     if (input.keys.right) { // d
-      controlRef.current.moveRight(speed)
+      controlRef.current.moveRight(speed * zoom * 20)
     }
 
     const oldQuaternion = new THREE.Quaternion();

@@ -58,14 +58,7 @@ export const AttendantJobFairBoothContainer = props => {
     boothMesh: undefined,
   })
 
-  const [inventoryVisible, setInventoryVisible] = useState(false);
-  const openInventory = (status) => {
-    if (status !== undefined){
-      setInventoryVisible(status)
-    } else {
-      setInventoryVisible(prevState => !prevState);
-    }
-  }
+
 
   const [user, setUser] = useState([])
 
@@ -274,14 +267,12 @@ export const AttendantJobFairBoothContainer = props => {
     sceneMeshRef,
     zoom: (boothSize.width / 200) / 2.5,
     handleOpenDetail,
-    openInventory,
     user: user,
     isChangeCamera,
     geckoClientRef
   }
   return (
     <>
-      <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible}/>
       <CompanyBoothCanvasComponent {...cProps}/>
     </>
   )

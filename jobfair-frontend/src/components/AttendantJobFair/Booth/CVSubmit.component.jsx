@@ -4,7 +4,7 @@ import {Html} from "@react-three/drei";
 
 
 export const CVSubmitComponent = props => {
-  const {mesh, cvSubmitRef, handleOpenDetail, onHover, isHover, openInventory} = props;
+  const {mesh, cvSubmitRef, handleOpenDetail, onHover, isHover} = props;
 
   const toolTipPositionRef = useRef({
     x: 0, y: 0
@@ -25,7 +25,6 @@ export const CVSubmitComponent = props => {
       receiveShadow={true}
       onClick={_ => {
         handleOpenDetail(true, "1");
-        openInventory(true);
       }}
       onPointerMove={e => {
         toolTipPositionRef.current.x = e.offsetX + 10;

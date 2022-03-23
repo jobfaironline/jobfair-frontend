@@ -10,8 +10,7 @@ const {Text} = Typography;
 
 const SideBar = (props) => {
 
-  const {companyInformation, jobPositions, isShow, handleOpenDetail, activeKey} = props;
-  console.log(companyInformation.name)
+  const {companyInformation, jobPositions, isShow, handleOpenDetail, activeKey, openInventory} = props;
   return (
     <div className={styles.container}>
       <div className={styles.tabHeader}>
@@ -39,7 +38,7 @@ const SideBar = (props) => {
               </div>
             </Tabs.TabPane>
             <Tabs.TabPane tab="Job positions" key="1">
-              <CompanyJobPositionTabContainer jobPositions={jobPositions}/>
+              <CompanyJobPositionTabContainer jobPositions={jobPositions} openInventory={openInventory}/>
             </Tabs.TabPane>
 
           </>

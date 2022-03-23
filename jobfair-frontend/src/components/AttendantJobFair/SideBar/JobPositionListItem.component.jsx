@@ -1,11 +1,11 @@
 import {List, Tag, Typography} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFolder, faFolderOpen, faLocationDot} from "@fortawesome/free-solid-svg-icons";
 import {convertEnumToString} from "../../../utils/common";
 import React from "react";
+import {faLocationDot} from "@fortawesome/free-solid-svg-icons";
 
 export const JobPositionComponent = (props) => {
-  const {data, hoverListItem, onClick, onDragOver, onDragLeave, onDrop} = props;
+  const {data, onClick, onDragOver, onDragLeave, onDrop} = props;
   return (
     <List.Item className={"companyJobPositionTab"}
                onDragOver={onDragOver}
@@ -36,11 +36,6 @@ export const JobPositionComponent = (props) => {
           {convertEnumToString(data.jobLevel)}
         </Tag>
       </div>
-      <div className={"folderIcon"}>
-        {hoverListItem?.id === data.id ? <FontAwesomeIcon icon={faFolderOpen} size={"2x"}/> :
-          <FontAwesomeIcon icon={faFolder} size={"2x"}/>}
-      </div>
-
     </List.Item>
   )
 }
