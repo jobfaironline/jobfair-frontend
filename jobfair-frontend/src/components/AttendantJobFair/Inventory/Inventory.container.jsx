@@ -5,7 +5,8 @@ import {Modal} from "antd";
 import {getAttendantCv} from "../../../services/cv-controller/CvControllerService";
 import {useDispatch} from "react-redux";
 import {inventoryAction} from "../../../redux-flow/inventory/inventory-slice";
-
+import ResumeDetailComponent from "../../Resume/ResumeDetail.component";
+import {convertToDateValue} from "../../../utils/common";
 
 
 export const InventoryContainer = (props) => {
@@ -76,11 +77,20 @@ export const InventoryContainer = (props) => {
     );
   }
 
-  const onInventoryClick = e => {
+  const handleOnChangeDob = dateString => {
+    return convertToDateValue(dateString)
+  }
+
+  const onInventoryClick = (e) => {
     e.preventDefault();
+    const id = e.target.id;
+    const cv = inventory[id]
     Modal.info({
-      title: 'Updated title',
-      content: 'Updated content',
+      title: 'Cv detail',
+      width: '90rem',
+      closable: true,
+      maskClosable: true,
+      content: <ResumeDetailComponent data={cv} handleOnChangeDob={handleOnChangeDob}/>
     });
   }
 

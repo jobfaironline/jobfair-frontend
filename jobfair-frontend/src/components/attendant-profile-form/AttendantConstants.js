@@ -1091,28 +1091,28 @@ export const JobLevelConst = [
 export const QualificationConst = [
   {
     id: 0,
-    name: 'College',
-    enumName: 'COLLEGE'
+    name: 'Others',
+    enumName: 'OTHERS'
   },
   {
     id: 1,
-    name: 'Bachelors',
-    enumName: 'BACHELORS'
-  },
-  {
-    id: 2,
-    name: 'Doctorate',
-    enumName: 'DOCTORATE'
-  },
-  {
-    id: 3,
     name: 'High school',
     enumName: 'HIGH_SCHOOL'
   },
   {
+    id: 2,
+    name: 'Associate Degree',
+    enumName: 'ASSOCIATE_DEGREE'
+  },
+  {
+    id: 3,
+    name: 'College',
+    enumName: 'COLLEGE'
+  },
+  {
     id: 4,
-    name: 'Others',
-    enumName: 'OTHERS'
+    name: 'Bachelors',
+    enumName: 'BACHELORS'
   },
   {
     id: 5,
@@ -1121,8 +1121,8 @@ export const QualificationConst = [
   },
   {
     id: 6,
-    name: 'Associate Degree',
-    enumName: 'ASSOCIATE_DEGREE'
+    name: 'Doctorate',
+    enumName: 'DOCTORATE'
   }
 ]
 export const GenderConst = [

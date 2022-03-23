@@ -26,10 +26,10 @@ export const transformToSelections = data => {
 
 const toSelection = data => {
   if (data?.user) {
-    return { value: data.user?.id, label: data.user?.email }
+    return {value: data.user?.id, label: data.user?.email}
   }
 
-  return { value: data?.id, label: data?.name }
+  return {value: data?.id, label: data?.name}
 }
 
 export const getBase64 = file => {
@@ -44,8 +44,7 @@ export const getBase64 = file => {
 export const convertToDateString = dateValue => {
   try {
     return new Date(dateValue).toISOString().replace(/T.*/, '').split('-').reverse().join('-')
-  }
-  catch (err) {
+  } catch (err) {
     return '01-01-1970'
   }
 }
@@ -112,10 +111,27 @@ export const handleGetStatus = data => {
 
 export const handleProgress = (proficiency) => {
   switch (proficiency) {
-    case 1: return <Progress percent={20} status="active" steps='5'/>
-    case 2: return <Progress percent={40} status="active" steps='5'/>
-    case 3: return <Progress percent={60} status="active" steps='5'/>
-    case 4: return <Progress percent={80} status="active" steps='5'/>
-    default: return <Progress percent={100} status="active" steps='5'/>
+    case 1:
+      return <Progress percent={20} status="active" steps='5'/>
+    case 2:
+      return <Progress percent={40} status="active" steps='5'/>
+    case 3:
+      return <Progress percent={60} status="active" steps='5'/>
+    case 4:
+      return <Progress percent={80} status="active" steps='5'/>
+    default:
+      return <Progress percent={100} status="active" steps='5'/>
   }
+}
+
+//convert date of birth to Age
+export const convertDobToAge = (dob) => {
+  const today = new Date();
+  const birthDate = new Date(dob);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
 }
