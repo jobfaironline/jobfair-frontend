@@ -44,7 +44,7 @@ export const SubmitCVComponent = props => {
           <Divider style={{margin: "1rem 0"}}/>
           <div style={{display: "flex", flexDirection: "row"}}>
             <div>
-              <Text strong style={{fontSize: '1.5rem'}}> {`CV: ${selectedCv.id} `}</Text>
+              <Text strong style={{fontSize: '1.5rem'}}> {`CV: ${selectedCv.name} `}</Text>
             </div>
             <div className={"remove-cv"} style={{marginLeft: "3rem", display: "flex", alignItems: "center"}}>
               <FontAwesomeIcon icon={faTrash} size={"2x"} style={{display: "block"}} onClick={e => {
