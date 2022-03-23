@@ -46,7 +46,7 @@ const ResumeContent = props => {
             <Title id="workExperience" level={2}>
               Work & Experience
             </Title>
-            <NodeListComponent listData={workExperiences} titleSize={4} subTitleSize={4} />
+            <NodeListComponent listData={workExperiences} titleSize={4} subTitleSize={21} />
             <Title id="professionalSkills" level={2}>
               Professional Skills
             </Title>
@@ -54,11 +54,11 @@ const ResumeContent = props => {
             <Title id="certifications" level={2}>
               Certifications
             </Title>
-            <NodeListComponent listData={adwards} titleSize={8} subTitleSize={4} />
+            <NodeListComponent listData={adwards} titleSize={8} subTitleSize={21} />
             <Title id="references" level={3}>
               References
             </Title>
-            <NodeListComponent listData={references} titleSize={8} subTitleSize={4} />
+            <NodeListComponent listData={references} titleSize={8} subTitleSize={21} />
           </Col>
           <Col span={6}>
             <Text type="secondary" style={{ fontSize: '1.2rem' }}>
