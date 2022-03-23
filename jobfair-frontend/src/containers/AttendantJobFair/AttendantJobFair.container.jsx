@@ -3,6 +3,7 @@ import styles from "../../pages/AttendantJobFairPage/AttendantJobFairPage.module
 import {SideBarContainer} from "../../components/AttendantJobFair/SideBar/SideBar.container";
 import {ControlTipsModalContainer} from "./ControlTipsModal.container";
 import {AttendantJobFairBoothContainer} from "./AttendantJobFairBooth.container";
+import {InventoryContainer} from "../../components/AttendantJobFair/Inventory/Inventory.container";
 
 export const AttendantJobFairContainer = (props) => {
   const {companyBoothId, geckoClientRef} = props;
@@ -16,11 +17,21 @@ export const AttendantJobFairContainer = (props) => {
     })
   }
 
+  const [inventoryVisible, setInventoryVisible] = useState(false);
+  const openInventory = (status) => {
+    if (status !== undefined){
+      setInventoryVisible(status)
+    } else {
+      setInventoryVisible(prevState => !prevState);
+    }
+  }
+
   return (
     <div className={styles.container}>
       <SideBarContainer companyBoothId={companyBoothId} isShow={tabState.isShow} activeKey={tabState.activeKey}
-                        handleOpenDetail={handleOpenDetail}/>
+                        handleOpenDetail={handleOpenDetail} openInventory={openInventory}/>
       <div className={styles.booth}>
+        <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible}/>
         <ControlTipsModalContainer/>
         <AttendantJobFairBoothContainer companyBoothId={companyBoothId} handleOpenDetail={handleOpenDetail} geckoClientRef={geckoClientRef}/>
       </div>

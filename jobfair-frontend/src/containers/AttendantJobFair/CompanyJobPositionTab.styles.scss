@@ -2,6 +2,11 @@
   .ant-modal-confirm-content {
     margin: 0 !important;
   }
+  .ant-modal-confirm-btns{
+    display: none;
+  }
+
+  overflow: hidden;
 }
 
 .confirm-submit-resume {
@@ -16,4 +21,11 @@
     display: flex;
   }
 
+}
+
+.remove-cv{
+  .fa-trash:hover{
+    color: red;
+    cursor: pointer;
+  }
 }

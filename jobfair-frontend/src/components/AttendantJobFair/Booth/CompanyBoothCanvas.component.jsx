@@ -34,12 +34,12 @@ const AiCharacter = props => {
     state.mixer.update(delta);
   })
 
-  return <primitive object={state.model}></primitive>
+  return <primitive object={state.model}/>
 
 }
 
 export const CompanyBoothCanvasComponent = (props) => {
-  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef, zoom, handleOpenDetail, openInventory,  user, isChangeCamera, geckoClientRef} = props;
+  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef, zoom, handleOpenDetail,  user, isChangeCamera, geckoClientRef} = props;
   const [view, setView] = useState(false);
   const cvSubmitRef = useRef()
 
@@ -90,7 +90,7 @@ export const CompanyBoothCanvasComponent = (props) => {
             {boothMesh.children.map(child => {
               if (child.name === "rostrum" || child.name === "reception_desk") {
                 return <CVSubmitComponent mesh={child} cvSubmitRef={cvSubmitRef} onHover={cvSubmitItemOnHover}
-                                          handleOpenDetail={handleOpenDetail} isHover={isHover} openInventory={openInventory}/>;
+                                          handleOpenDetail={handleOpenDetail} isHover={isHover}/>;
               }
               return <BasicMesh mesh={child}/>
             })}
