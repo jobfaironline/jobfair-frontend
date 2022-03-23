@@ -5,7 +5,7 @@ import {getCompanyBoothById} from "../../../services/company-booth-controller/Co
 import {getCompanyProfileAPI} from "../../../services/company-controller/CompanyControllerService";
 
 export const SideBarContainer = (props) => {
-  const {companyBoothId, handleOpenDetail, isShow, activeKey} = props;
+  const {companyBoothId, handleOpenDetail, isShow, activeKey, openInventory} = props;
   const [state, setState] = useState({
     companyInformation: undefined,
     jobPositions: []
@@ -28,7 +28,7 @@ export const SideBarContainer = (props) => {
 
   if (state.companyInformation === undefined) return null;
 
-  const sideBarProps = {companyInformation: state.companyInformation, jobPositions: state.jobPositions, isShow, handleOpenDetail, activeKey}
+  const sideBarProps = {companyInformation: state.companyInformation, jobPositions: state.jobPositions, isShow, handleOpenDetail, activeKey, openInventory}
 
   return (
     <div className={styles.sideBar}>

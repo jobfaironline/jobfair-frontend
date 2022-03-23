@@ -34,12 +34,12 @@ const AiCharacter = props => {
     state.mixer.update(delta);
   })
 
-  return <primitive object={state.model}></primitive>
+  return <primitive object={state.model}/>
 
 }
 
 export const CompanyBoothCanvasComponent = (props) => {
-  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef, zoom, handleOpenDetail, openInventory,  user, isChangeCamera, geckoClientRef} = props;
+  const {boothMesh, model, characterControl, cameraRef, sceneMeshRef, zoom, handleOpenDetail,  user, isChangeCamera, geckoClientRef} = props;
   const [view, setView] = useState(false);
   const cvSubmitRef = useRef()
 
@@ -72,23 +72,32 @@ export const CompanyBoothCanvasComponent = (props) => {
         })}
       >
         <SkyComponent style={SkyType.Sunset}/>
-        {view ? <FirstPersonControl model={model} isChangeCamera={isChangeCamera} collidableMeshListRef={sceneMeshRef} geckoClientRef={geckoClientRef}/> : <OrbitControls enableZoom={true}
-                                                                                                     maxPolarAngle={Math.PI / 2 - Math.PI / 10}
-                                                                                                     minPolarAngle={0}
-                                                                                                     />}
+        {view ? <FirstPersonControl
+          model={model}
+          isChangeCamera={isChangeCamera}
+          collidableMeshListRef={sceneMeshRef}
+          geckoClientRef={geckoClientRef}
+          zoom={zoom}
+          /> :
+
+          <OrbitControls
+            enableZoom={true}
+             maxPolarAngle={Math.PI / 2 - Math.PI / 10}
+             minPolarAngle={0}
+           />}
         <Stage adjustCamera={false} preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
           <group ref={sceneMeshRef}>
             {boothMesh.children.map(child => {
               if (child.name === "rostrum" || child.name === "reception_desk") {
                 return <CVSubmitComponent mesh={child} cvSubmitRef={cvSubmitRef} onHover={cvSubmitItemOnHover}
-                                          handleOpenDetail={handleOpenDetail} isHover={isHover} openInventory={openInventory}/>;
+                                          handleOpenDetail={handleOpenDetail} isHover={isHover}/>;
               }
               return <BasicMesh mesh={child}/>
             })}
             {
               boothMesh.children.map(child => {
                 if (child.name === "rostrum" || child.name === "reception_desk") {
-                  return <ArrowHelper origin={child.position} color={0xe05522} length={8} distance={13}/>
+                  return <ArrowHelper origin={child.position} color={0xe05522} length={8 * zoom * 50} distance={13 * zoom * 50}/>
                 }
               })
             }

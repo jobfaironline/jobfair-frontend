@@ -1,7 +1,6 @@
 import React from 'react';
-import {Button, Form, Modal, notification, Space} from "antd";
+import {Button, Form, notification, Space} from "antd";
 import TextArea from "antd/es/input/TextArea";
-import JobPositionSubmodalDetailComponent from "../../JobPositionModal/JobPositionSubmodalDetail.component";
 import {ApplicationValidation} from "../../../validate/ApplicationValidation";
 import {
   draftApplication,
@@ -35,24 +34,6 @@ const ConfirmSubmitResumeComponent = (props) => {
     closeModal();
   }
 
-  const handleViewCvDetail = () => {
-
-  }
-
-  const handleViewJobPositionDetail = () => {
-    Modal.info({
-      title: "Job detail",
-      width: '70rem',
-      closable: true,
-      maskClosable: true,
-      wrapClassName: 'company-job-position-tab-modal',
-      onOk: () => {
-
-      },
-      content: <JobPositionSubmodalDetailComponent data={jobPosition}/>
-    })
-  }
-
   const [form] = Form.useForm()
   return (
     <Form
@@ -60,18 +41,15 @@ const ConfirmSubmitResumeComponent = (props) => {
       onFinish={onFinish}
       requiredMark="required"
       autoComplete="off"
+      labelAlign={'left'}
       scrollToFirstError={{block: 'center', behavior: 'smooth'}}
     >
-      <Space direction="vertical" style={{width: '40rem', marginTop: '2rem'}}>
-        {/*<Space direction="horizontal">
-          <Text strong onClick={handleViewCvDetail}>CV detail</Text>
-          <Text strong onClick={handleViewJobPositionDetail}>Job position detail</Text>
-        </Space>*/}
+      <Space direction="vertical" style={{width: '100%'}}>
         <Form.Item
           label='Message to employers'
           name='summary'
           rules={ApplicationValidation.summary}
-          style={{marginLeft: '1rem', width: '96%', display: "flex", flexDirection: "column"}}
+          style={{width: '100%', display: "flex", flexDirection: "column"}}
         >
           <TextArea placeholder="Summary" showCount maxLength={1000} autoSize={{minRows: 5}}/>
         </Form.Item>
