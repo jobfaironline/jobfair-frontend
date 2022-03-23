@@ -41,15 +41,15 @@ export const PATH_ATTENDANT = {
   APPLIED_JOB_PAGE: '/applied-job',
   ATTENDANT_PROFILE: '',
   JOB_FAIR_DETAIL: '/attendant/job-fair-detail',
-  CV_DETAIL: '/attendant/cv-detail/:resumeId',
-  CV_DETAIL_PAGE: '/attendant/cv-detail'
+  RESUME_DETAIL: '/attendant/resume-detail/:resumeId',
+  RESUME_DETAIL_PAGE: '/attendant/resume-detail'
 }
 export const PATH_COMPANY_EMPLOYEE = {
   COMPANY_PROFILE_PAGE: '/employee/company-profile',
   COMPANY_EMPLOYEE_MANAGEMENT: '/company/employee-management',
   APPLIED_JOB_PAGE: '/applied-job',
-  CV_DETAIL: '/cv-detail/:resumeId',
-  CV_DETAIL_PAGE: '/employee/cv-detail'
+  RESUME_DETAIL: '/resume-detail/:resumeId',
+  RESUME_DETAIL_PAGE: '/employee/resume-detail'
 }
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',
@@ -62,8 +62,8 @@ export const PATH_COMPANY_MANAGER = {
   CREATE_JOB_POSITION: '/company/create-job-position',
   JOB_FAIR_DETAIL: '/company/job-fair-detail',
   APPLIED_JOB_PAGE: '/company/applied-job',
-  CV_DETAIL: '/cv-detail/:resumeId',
-  CV_DETAIL_PAGE: '/manager/cv-detail'
+  RESUME_DETAIL: '/resume-detail/:resumeId',
+  RESUME_DETAIL_PAGE: '/manager/resume-detail'
 }
 export const PATH_STAFF = {
   APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId',

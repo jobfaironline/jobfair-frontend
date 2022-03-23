@@ -2,8 +2,7 @@ import React from 'react'
 import {useHistory, useLocation} from 'react-router-dom'
 import {PageHeader} from 'antd'
 import './ResumeDetailPage.styles.scss'
-import ResumeDetailContainer from "../../containers/Resume/ResumeDetail.container";
-import {useSelector} from "react-redux";
+import ResumeDetailForCompanyContainer from "../../containers/Resume/ResumeDetailForCompany.container";
 
 const ResumeDetailPage = () => {
   const history = useHistory()
@@ -13,7 +12,7 @@ const ResumeDetailPage = () => {
   return (
     <div className="page">
       <PageHeader className="site-page-header" onBack={() => history.goBack()} title="Resume Detail Page"/>
-      <ResumeDetailContainer resumeId={resumeId} />
+      <ResumeDetailForCompanyContainer resumeId={resumeId}/>
     </div>
   )
 }

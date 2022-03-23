@@ -16,6 +16,7 @@ const ResumeDetailComponent = props => {
     return <Spin/>
   }
 
+  //TODO: refactor mapping later
   const educations = !!data?.candidateEducation ? data.candidateEducation.map((item, index) => {
       return {
         id: index,

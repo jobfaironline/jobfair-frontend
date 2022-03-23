@@ -1,14 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useHistory} from "react-router-dom";
 import {Form, notification, Spin} from "antd";
-import {useSelector} from "react-redux";
 import {evaluateApplication, getApplication} from "../../services/application-controller/ApplicationControllerService";
 import {convertToDateValue} from "../../utils/common";
 import ResumeDetailComponent from "../../components/Resume/ResumeDetail.component";
-import {getAttendantDetailAPI} from "../../services/attendant-controller/AttendantControllerService";
-import {getAttendantCvById} from "../../services/cv-controller/CvControllerService";
 
-const ResumeDetailContainer = ({resumeId}) => {
+const ResumeDetailForCompanyContainer = ({resumeId}) => {
   const history = useHistory()
   const [form] = Form.useForm()
   const [data, setData] = useState(undefined)
@@ -73,4 +70,4 @@ const ResumeDetailContainer = ({resumeId}) => {
   )
 }
 
-export default ResumeDetailContainer;
+export default ResumeDetailForCompanyContainer;

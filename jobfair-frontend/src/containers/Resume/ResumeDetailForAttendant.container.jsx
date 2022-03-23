@@ -5,13 +5,13 @@ import {getAttendantDetailAPI} from "../../services/attendant-controller/Attenda
 import {mapperResumeDetail} from "../../utils/mapperResumeDetailForAttendant";
 
 const ResumeDetailForAttendantContainer = (props) => {
-  const {cv, attendantId} = props;
+  const {resume, attendantId} = props;
   const [data, setData] = useState(undefined)
 
   useEffect(() => {
     getAttendantDetailAPI(attendantId)
       .then(res => {
-        const result = mapperResumeDetail(res, cv)
+        const result = mapperResumeDetail(res, resume)
         setData(result)
       })
   }, [])

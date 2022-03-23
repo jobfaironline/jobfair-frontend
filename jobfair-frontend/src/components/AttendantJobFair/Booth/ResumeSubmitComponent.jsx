@@ -3,8 +3,8 @@ import React, {useRef} from "react";
 import {Html} from "@react-three/drei";
 
 
-export const CVSubmitComponent = props => {
-  const {mesh, cvSubmitRef, handleOpenDetail, onHover, isHover} = props;
+export const ResumeSubmitComponent = props => {
+  const {mesh, resumeSubmitRef, handleOpenDetail, onHover, isHover} = props;
 
   const toolTipPositionRef = useRef({
     x: 0, y: 0
@@ -12,7 +12,7 @@ export const CVSubmitComponent = props => {
 
   return (
     <mesh
-      ref={cvSubmitRef}
+      ref={resumeSubmitRef}
       name={mesh.name}
       key={mesh.uuid}
       uuid={mesh.uuid}

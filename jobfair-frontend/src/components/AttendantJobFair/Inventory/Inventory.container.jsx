@@ -5,8 +5,6 @@ import {Modal} from "antd";
 import {getAttendantCv} from "../../../services/cv-controller/CvControllerService";
 import {useDispatch, useSelector} from "react-redux";
 import {inventoryAction} from "../../../redux-flow/inventory/inventory-slice";
-import ResumeDetailComponent from "../../Resume/ResumeDetail.component";
-import {convertToDateValue} from "../../../utils/common";
 import ResumeDetailForAttendantContainer from "../../../containers/Resume/ResumeDetailForAttendant.container";
 
 
@@ -15,7 +13,6 @@ export const InventoryContainer = (props) => {
   const {onClick, inventoryVisible} = props;
   const dispatch = useDispatch()
   const attendantId = useSelector(state => state.authentication.user.userId)
-
 
 
   const [inventory, setInventory] = useState({
@@ -33,9 +30,9 @@ export const InventoryContainer = (props) => {
     const response = await getAttendantCv();
     const data = response.data;
     const obj = {}
-    for (let i=1; i < data.length + 1; i++){
+    for (let i = 1; i < data.length + 1; i++) {
       const key = "slot-" + i;
-      obj[key] = data[i-1];
+      obj[key] = data[i - 1];
     }
     dispatch(inventoryAction.setInventory({...inventory, ...obj}));
 
@@ -84,13 +81,13 @@ export const InventoryContainer = (props) => {
   const onInventoryClick = (e) => {
     e.preventDefault();
     const id = e.target.id;
-    const cv = inventory[id]
+    const resume = inventory[id]
     Modal.info({
-      title: 'Cv detail',
+      title: 'Resume detail',
       width: '90rem',
       closable: true,
       maskClosable: true,
-      content: <ResumeDetailForAttendantContainer cv={cv} attendantId={attendantId}/>
+      content: <ResumeDetailForAttendantContainer resume={resume} attendantId={attendantId}/>
     });
   }
 

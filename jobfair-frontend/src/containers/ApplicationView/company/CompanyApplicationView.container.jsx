@@ -5,6 +5,7 @@ import { MoreOutlined, EyeOutlined } from '@ant-design/icons'
 import ApplicationTable from '../../../components/ApplicationView/ApplicationTable.component'
 import { getAllApplication } from '../../../services/application-controller/ApplicationControllerService'
 import PaginationComponent from '../../../components/PaginationComponent/Pagination.component'
+import {PATH_COMPANY_MANAGER} from "../../../constants/Paths/Path";
 
 const { Search } = Input
 
@@ -95,7 +96,7 @@ const CompanyApplicationView = ({ tabStatus, ...otherProps }) => {
                     <Tooltip placement="top" title="View detail">
                       <a
                         onClick={() => {
-                          history.push('/manager/cv-detail', { resumeId: record.id })
+                          history.push(PATH_COMPANY_MANAGER.RESUME_DETAIL_PAGE, { resumeId: record.id })
                         }}
                       >
                         <EyeOutlined />
