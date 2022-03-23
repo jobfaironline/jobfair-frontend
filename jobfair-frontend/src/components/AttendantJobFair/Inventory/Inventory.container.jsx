@@ -3,16 +3,19 @@ import {Inventory} from "./Inventory.component";
 import {InventoryButton} from "./InventoryButton.component";
 import {Modal} from "antd";
 import {getAttendantCv} from "../../../services/cv-controller/CvControllerService";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {inventoryAction} from "../../../redux-flow/inventory/inventory-slice";
 import ResumeDetailComponent from "../../Resume/ResumeDetail.component";
 import {convertToDateValue} from "../../../utils/common";
+import ResumeDetailForAttendantContainer from "../../../containers/Resume/ResumeDetailForAttendant.container";
 
 
 export const InventoryContainer = (props) => {
 
   const {onClick, inventoryVisible} = props;
   const dispatch = useDispatch()
+  const attendantId = useSelector(state => state.authentication.user.userId)
+
 
 
   const [inventory, setInventory] = useState({
@@ -77,9 +80,6 @@ export const InventoryContainer = (props) => {
     );
   }
 
-  const handleOnChangeDob = dateString => {
-    return convertToDateValue(dateString)
-  }
 
   const onInventoryClick = (e) => {
     e.preventDefault();
@@ -90,7 +90,7 @@ export const InventoryContainer = (props) => {
       width: '90rem',
       closable: true,
       maskClosable: true,
-      content: <ResumeDetailComponent data={cv} handleOnChangeDob={handleOnChangeDob}/>
+      content: <ResumeDetailForAttendantContainer cv={cv} attendantId={attendantId}/>
     });
   }
 

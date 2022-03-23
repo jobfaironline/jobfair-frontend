@@ -12,8 +12,6 @@ const ResumeDetailContainer = ({resumeId}) => {
   const history = useHistory()
   const [form] = Form.useForm()
   const [data, setData] = useState(undefined)
-  const attendantId = useSelector(state => state.authentication.user.userId)
-  const [attendant, setAttendant] = useState({})
 
 
   const onFinish = values => {
@@ -70,7 +68,7 @@ const ResumeDetailContainer = ({resumeId}) => {
 
   return (
     <>
-      <ResumeDetailComponent form={form} onFinish={onFinish} data={data} handleOnChangeDob={handleOnChangeDob} attendant={attendant}/>
+      <ResumeDetailComponent form={form} onFinish={onFinish} data={data} handleOnChangeDob={handleOnChangeDob}/>
     </>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Anchor, Card, Collapse, Typography} from "antd";
+import {Anchor, Card, Collapse, Spin, Typography} from "antd";
 import ResumeHeader from "./Header/ResumeHeader.component";
 import ResumeContent from "./Content/ResumeContent.component";
 import EvaluationFormComponent from "../EvaluationForm/EvaluationForm.component";
@@ -11,6 +11,10 @@ const ResumeDetailComponent = props => {
   const {Text} = Typography
   const {Panel} = Collapse
   const {Link} = Anchor
+
+  if (data === undefined || data === null) {
+    return <Spin/>
+  }
 
   const educations = !!data?.candidateEducation ? data.candidateEducation.map((item, index) => {
       return {
@@ -46,7 +50,7 @@ const ResumeDetailComponent = props => {
     return result.id
   })
     .sort()
-  const highestEducationLevel = QualificationConst.find(item => item.id === result[0])?.name
+  const highestEducationLevel = result !== undefined ? QualificationConst.find(item => item.id === result[0])?.name : ''
   const workExperiences = !!data?.candidateWorkHistories ? data.candidateWorkHistories.map((item, index) => {
     return {
       id: index,
