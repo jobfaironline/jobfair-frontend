@@ -144,9 +144,9 @@ const AppRouter = () => {
           exact
         />
         <AttendantRouter
-          key={PATH_ATTENDANT.CV_DETAIL_PAGE}
+          key={PATH_ATTENDANT.RESUME_DETAIL_PAGE}
           component={() => <ResumeDetailPage />}
-          path={PATH_ATTENDANT.CV_DETAIL_PAGE}
+          path={PATH_ATTENDANT.RESUME_DETAIL_PAGE}
           exact
         />
         <CompanyEmployeeRouter
@@ -162,15 +162,15 @@ const AppRouter = () => {
           exact
         />
         <CompanyEmployeeRouter
-          key={PATH_COMPANY_EMPLOYEE.CV_DETAIL_PAGE}
+          key={PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE}
           component={() => <ResumeDetailPage />}
-          path={PATH_COMPANY_EMPLOYEE.CV_DETAIL_PAGE}
+          path={PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE}
           exact
         />
         <CompanyManagerRouter
-          key={PATH_COMPANY_MANAGER.CV_DETAIL_PAGE}
+          key={PATH_COMPANY_MANAGER.RESUME_DETAIL_PAGE}
           component={() => <ResumeDetailPage />}
-          path={PATH_COMPANY_MANAGER.CV_DETAIL_PAGE}
+          path={PATH_COMPANY_MANAGER.RESUME_DETAIL_PAGE}
           exact
         />
         <CompanyManagerRouter

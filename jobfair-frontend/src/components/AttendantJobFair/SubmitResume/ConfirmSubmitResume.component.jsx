@@ -9,13 +9,12 @@ import {
 
 
 const ConfirmSubmitResumeComponent = (props) => {
-  const {cv, jobPosition, closeModal} = props
-
+  const {resume, jobPosition, closeModal} = props
 
   const onFinish = async (values) => {
     const body = {
       ...values,
-      cvId: cv.id,
+      cvId: resume.id,
       registrationJobPositionId: jobPosition.id,
     }
     try {

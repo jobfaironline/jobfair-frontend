@@ -52,7 +52,7 @@ const ResumeHeader = props => {
 
                       <Title level={2}>{data?.name}</Title>
                       <Link href={data.email} target="_blank">
-                        Painter
+                        {data?.jobTitle}
                       </Link>
                       <div style={{ color: '#888888' }}>
                         <MailOutlined />

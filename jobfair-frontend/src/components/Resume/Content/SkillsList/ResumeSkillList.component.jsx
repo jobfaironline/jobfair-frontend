@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography } from 'antd'
+import {Tag, Typography} from 'antd'
 import { BulbTwoTone } from '@ant-design/icons'
 const SkillListComponent = props => {
   const { Text } = Typography
@@ -8,8 +8,9 @@ const SkillListComponent = props => {
     <div style={{ display: 'flex', gap: '10px' }}>
       {listData.map(data => (
         <div>
-          <BulbTwoTone />
-          <Text type="secondary">{data.name}</Text>
+          <Tag color='blue'>
+            {data.name}
+          </Tag>
         </div>
       ))}
     </div>

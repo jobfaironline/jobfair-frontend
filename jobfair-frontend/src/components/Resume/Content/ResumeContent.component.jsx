@@ -8,7 +8,7 @@ import SkillListComponent from './SkillsList/ResumeSkillList.component'
 import OverviewComponent from './Overview/ResumeOverview.component'
 const { Text, Title } = Typography
 const ResumeContent = props => {
-  const { candidateAbout, educations, workExperiences, adwards, skills, userOverview } = props
+  const { candidateAbout, educations, workExperiences, adwards, skills, userOverview, references } = props
   return (
     <div className="header">
       <Col span={16} offset={4}>
@@ -24,7 +24,8 @@ const ResumeContent = props => {
               <Link href="#education" title="Education" />
               <Link href="#workExperience" title="Work & Experience" />
               <Link href="#professionalSkills" title="Professional Skills" />
-              <Link href="#awards" title="Awards" />
+              <Link href="#references" title="Reference" />
+              <Link href="#certifications" title="Certification" />
             </Anchor>
           </Space>
         </div>
@@ -45,15 +46,19 @@ const ResumeContent = props => {
             <Title id="workExperience" level={2}>
               Work & Experience
             </Title>
-            <NodeListComponent listData={workExperiences} titleSize={4} subTitleSize={4} />
+            <NodeListComponent listData={workExperiences} titleSize={4} subTitleSize={21} />
             <Title id="professionalSkills" level={2}>
               Professional Skills
             </Title>
             <SkillListComponent listData={skills} />
-            <Title id="awards" level={2}>
-              Awards
+            <Title id="certifications" level={2}>
+              Certifications
             </Title>
-            <NodeListComponent listData={adwards} titleSize={8} subTitleSize={4} />
+            <NodeListComponent listData={adwards} titleSize={8} subTitleSize={21} />
+            <Title id="references" level={3}>
+              References
+            </Title>
+            <NodeListComponent listData={references} titleSize={8} subTitleSize={21} />
           </Col>
           <Col span={6}>
             <Text type="secondary" style={{ fontSize: '1.2rem' }}>

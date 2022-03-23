@@ -7,7 +7,7 @@ import {ViewSelect} from "./ViewSelect.component";
 import {FirstPersonControl} from "../../ThreeJSBaseComponent/FirstPersonControl.component";
 import {Character} from "./Character.component";
 import {EffectComposer, Outline} from "@react-three/postprocessing";
-import {CVSubmitComponent} from "./CVSubmit.component";
+import {ResumeSubmitComponent} from "./ResumeSubmitComponent";
 import {ArrowHelper} from "../../ChooseBooth/ArrowHelper.component";
 
 
@@ -41,7 +41,7 @@ const AiCharacter = props => {
 export const CompanyBoothCanvasComponent = (props) => {
   const {boothMesh, model, characterControl, cameraRef, sceneMeshRef, zoom, handleOpenDetail,  user, isChangeCamera, geckoClientRef} = props;
   const [view, setView] = useState(false);
-  const cvSubmitRef = useRef()
+  const resumeSubmitRef = useRef()
 
   const [isHover, setIsHover] = useState(false);
 
@@ -53,7 +53,7 @@ export const CompanyBoothCanvasComponent = (props) => {
     setView(value.value === "First")
   }
 
-  const cvSubmitItemOnHover = (status) => {
+  const resumeSubmitItemOnHover = (status) => {
     isChangeCamera.current = false;
     setIsHover(status);
   }
@@ -89,8 +89,8 @@ export const CompanyBoothCanvasComponent = (props) => {
           <group ref={sceneMeshRef}>
             {boothMesh.children.map(child => {
               if (child.name === "rostrum" || child.name === "reception_desk") {
-                return <CVSubmitComponent mesh={child} cvSubmitRef={cvSubmitRef} onHover={cvSubmitItemOnHover}
-                                          handleOpenDetail={handleOpenDetail} isHover={isHover}/>;
+                return <ResumeSubmitComponent mesh={child} resumeSubmitRef={resumeSubmitRef} onHover={resumeSubmitItemOnHover}
+                                              handleOpenDetail={handleOpenDetail} isHover={isHover}/>;
               }
               return <BasicMesh mesh={child}/>
             })}
@@ -108,7 +108,7 @@ export const CompanyBoothCanvasComponent = (props) => {
         <ContactShadows frames={10} position={[0, -1.05, 0]} scale={10} blur={2} far={10}/>
         <EffectComposer multisampling={8} autoClear={false}>
           <Outline
-            selection={isHover ? cvSubmitRef : undefined}
+            selection={isHover ? resumeSubmitRef : undefined}
             visibleEdgeColor="yellow"
             hiddenEdgeColor="yellow"
             edgeStrength={100}

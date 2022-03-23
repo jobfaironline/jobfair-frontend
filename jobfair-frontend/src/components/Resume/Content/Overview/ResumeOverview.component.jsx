@@ -58,34 +58,6 @@ const OverviewComponent = props => {
           </Row>
         ) : null}
 
-        {data.currentSalary ? (
-          <Row>
-            <Col>
-              <BarChartOutlined />
-            </Col>
-            <Col style={styleOverviewText}>
-              <Title level={4}>Current Salary</Title>
-              <div style={styleText}>
-                <Text type="secondary">{data.currentSalary}</Text>
-              </div>
-            </Col>
-          </Row>
-        ) : null}
-
-        {data.expectedSalary ? (
-          <Row>
-            <Col>
-              <AreaChartOutlined />
-            </Col>
-            <Col style={styleOverviewText}>
-              <Title level={4}>Expected Salary</Title>
-              <div style={styleText}>
-                <Text type="secondary">{data.expectedSalary}</Text>
-              </div>
-            </Col>
-          </Row>
-        ) : null}
-
         {data.gender ? (
           <Row>
             <Col>
@@ -95,20 +67,6 @@ const OverviewComponent = props => {
               <Title level={4}>Gender</Title>
               <div style={styleText}>
                 <Text type="secondary">{data.gender}</Text>
-              </div>
-            </Col>
-          </Row>
-        ) : null}
-
-        {data.language ? (
-          <Row>
-            <Col>
-              <TranslationOutlined />
-            </Col>
-            <Col style={styleOverviewText}>
-              <Title level={4}>Language</Title>
-              <div style={styleText}>
-                <Text type="secondary">{data.language}</Text>
               </div>
             </Col>
           </Row>
