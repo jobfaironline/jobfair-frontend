@@ -1,7 +1,6 @@
 import React from 'react';
-import {Button, Form, Modal, notification, Space} from "antd";
+import {Button, Form, notification, Space} from "antd";
 import TextArea from "antd/es/input/TextArea";
-import JobPositionSubmodalDetailComponent from "../../JobPositionModal/JobPositionSubmodalDetail.component";
 import {ApplicationValidation} from "../../../validate/ApplicationValidation";
 import {
   draftApplication,

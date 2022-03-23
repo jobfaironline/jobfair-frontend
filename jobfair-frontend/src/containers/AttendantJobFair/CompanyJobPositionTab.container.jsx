@@ -12,6 +12,7 @@ export const CompanyJobPositionTabContainer = (props) => {
   const inventory = useSelector(state => state.inventory.data)
 
 
+
   const onClick = (item) => {
     openInventory(true)
     const closeModal = () => {
