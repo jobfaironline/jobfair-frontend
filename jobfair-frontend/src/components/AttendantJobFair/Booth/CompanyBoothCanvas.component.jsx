@@ -72,10 +72,19 @@ export const CompanyBoothCanvasComponent = (props) => {
         })}
       >
         <SkyComponent style={SkyType.Sunset}/>
-        {view ? <FirstPersonControl model={model} isChangeCamera={isChangeCamera} collidableMeshListRef={sceneMeshRef} geckoClientRef={geckoClientRef}/> : <OrbitControls enableZoom={true}
-                                                                                                     maxPolarAngle={Math.PI / 2 - Math.PI / 10}
-                                                                                                     minPolarAngle={0}
-                                                                                                     />}
+        {view ? <FirstPersonControl
+          model={model}
+          isChangeCamera={isChangeCamera}
+          collidableMeshListRef={sceneMeshRef}
+          geckoClientRef={geckoClientRef}
+          zoom={zoom}
+          /> :
+
+          <OrbitControls
+            enableZoom={true}
+             maxPolarAngle={Math.PI / 2 - Math.PI / 10}
+             minPolarAngle={0}
+           />}
         <Stage adjustCamera={false} preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
           <group ref={sceneMeshRef}>
             {boothMesh.children.map(child => {
@@ -88,7 +97,7 @@ export const CompanyBoothCanvasComponent = (props) => {
             {
               boothMesh.children.map(child => {
                 if (child.name === "rostrum" || child.name === "reception_desk") {
-                  return <ArrowHelper origin={child.position} color={0xe05522} length={8} distance={13}/>
+                  return <ArrowHelper origin={child.position} color={0xe05522} length={8 * zoom * 50} distance={13 * zoom * 50}/>
                 }
               })
             }
