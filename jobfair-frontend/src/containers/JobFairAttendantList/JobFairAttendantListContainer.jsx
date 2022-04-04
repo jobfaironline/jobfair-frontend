@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import {generatePath, useHistory} from 'react-router-dom'
 import JobFairListManagementComponent from '../../components/JobFairList/JobFairList.management.component'
 import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
 import { getJobFairAvailableForAttendant } from '../../services/job-fair-controller/JobFairConTrollerService'
@@ -52,17 +52,6 @@ const JobFairAttendantListContainer = (props) => {
       })
   }
 
-  // const getCompanyBoothId = jobFairId => {
-  //   getCompanyBoothByJobFairId(jobFairId)
-  //     .then(res => {
-  //       const result = res.data[0]?.id
-  //       handleRedirect(`${PATH.DECORATE_BOOTH_PATH}${result}/${jobFairId}`)
-  //     })
-  //     .catch(err => {
-  //       console.log(err)
-  //     })
-  // }
-
   const handleFilterByStatus = statusArr => {
     const result = data.filter(item => statusArr.some(st => st === item.status))
     setSearchResult([...result])
@@ -88,13 +77,14 @@ const JobFairAttendantListContainer = (props) => {
   }
 
   const handleViewDetail = (id) => {
-    history.push(PATH_ATTENDANT.JOB_FAIR_DETAIL, {
+    history.push(PATH_ATTENDANT.JOB_FAIR_DETAIL_PAGE, {
       jobFairId: id
     })
   }
 
   const handleViewMap = (id) => {
-    history.push(`${PATH.MAP}${id}`)
+    const url = generatePath(PATH.PUBLICIZED_BOOTH_PAGE, {jobFairId : id})
+    history.push(url)
   }
 
   return (

@@ -23,8 +23,8 @@
 /src/components/EmployeeForm/EmployeeForm.component.jsx
 /src/components/attendant-profile-form/AttendantProfileForm.jsx
 /src/components/company-profile-form/CompanyProfile.jsx
-/src/components/create-job-position-form/CreateJobPositionForm.jsx
-/src/components/register-job-fair-form/RegisterJobFairForm.jsx
+/src/components/create-job-position-form/CreateJobPositionFormComponent.jsx
+/src/components/register-job-fair-form/RegisterJobFairForm.component.jsx
 /src/containers/EmployeeForm/EmployeeForm.container.jsx
 /src/containers/EmployeeTable/EmployeeTable.container.jsx
 /src/pages/JobFairPackPage/components/Menu/ItemListMenu.js

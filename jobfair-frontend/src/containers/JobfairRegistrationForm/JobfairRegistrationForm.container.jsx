@@ -1,7 +1,7 @@
 import {Button, Checkbox, Form, notification, Popconfirm, Steps} from 'antd'
 import React, {useEffect, useState} from 'react'
 import {useForm, useStepsForm} from 'sunflower-antd'
-import CompanyProfileForm from '../../components/company-profile-form/CompanyProfileForm.component'
+import CompanyProfileForm from '../../components/CompanyProfileForm/CompanyProfileForm.component'
 import {useHistory, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {getCompanyProfileAPI} from '../../services/company-controller/CompanyControllerService'
@@ -19,8 +19,8 @@ import {
 } from '../../services/company-registration-controller/CompanyRegistrationControllerService'
 
 const {Step} = Steps
-const JobfairRegistrationForm = () => {
-  const {jobfairId} = useParams()
+const JobfairRegistrationForm = (props) => {
+  const {jobFairId} = props
   const history = useHistory()
   const [form] = Form.useForm() //form for registration
   const companyId = useSelector(state => state.authentication.user.companyId)
@@ -33,7 +33,7 @@ const JobfairRegistrationForm = () => {
   const onSubmit = async values => {
     const body = {
       description: values.description,
-      jobFairId: jobfairId,
+      jobFairId: jobFairId,
       jobPositions: values.jobPositions.map(item => {
         const result = {
           jobPositionId: item.id,
@@ -51,7 +51,7 @@ const JobfairRegistrationForm = () => {
         () => {
           history.push(PATH.RESULT_SUCCESS_PAGE)
         },
-        () => history.push(PATH.PROCESSED_FAIL)
+        () => history.push(PATH.RESULT_FAILED_PAGE)
       )
     }
   }
@@ -59,7 +59,7 @@ const JobfairRegistrationForm = () => {
   const stepComponentList = [
     <>
       <div style={{width: '70%', margin: '3rem auto'}}>
-        <JobFairDetailCompanyContainer id={jobfairId}/>
+        <JobFairDetailCompanyContainer id={jobFairId}/>
       </div>
     </>,
     <>
@@ -68,7 +68,7 @@ const JobfairRegistrationForm = () => {
         I have read and accept the Job fair Policy
       </Checkbox>
     </>,
-    <JobfairRegistrationFormComponent form={form} jobFairId={jobfairId}/>,
+    <JobfairRegistrationFormComponent form={form} jobFairId={jobFairId}/>,
     <>
       <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo}/>
     </>

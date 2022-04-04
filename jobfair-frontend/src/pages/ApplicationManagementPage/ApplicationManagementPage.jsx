@@ -8,12 +8,11 @@ const { TabPane } = Tabs
 
 const ApplicationManagementPage = () => {
   const role = useSelector(state => state.authentication.user.roles)
-
   const ViewComponent = ({ ...viewProps }) => {
     switch (role) {
       case 'COMPANY_EMPLOYEE':
       case 'COMPANY_MANAGER':
-        return <CompanyApplicationView {...viewProps} />
+        return <CompanyApplicationView {...viewProps} role={role}/>
       case 'ATTENDANT':
         return <AttendantApplicationView {...viewProps} />
     }

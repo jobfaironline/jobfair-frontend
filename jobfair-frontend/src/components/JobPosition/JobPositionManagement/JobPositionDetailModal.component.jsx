@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Affix, Button, Card, Col, Divider, Form, Input, Modal, Popconfirm, Row, Select, Space} from "antd";
 import {jobLevel} from "../../../constants/AppConst";
 import {JobLevelConst, LanguageConst} from "../../../constants/JobPositionConst";
-import {CountryConst} from "../../attendant-profile-form/AttendantConstants";
+import {CountryConst} from "../../AttendantProfileForm/AttendantConstants";
 import {InfoCircleOutlined, MinusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import {CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories} from "../../../constants/CompanyProfileConstant";
 import Text from "antd/es/typography/Text";

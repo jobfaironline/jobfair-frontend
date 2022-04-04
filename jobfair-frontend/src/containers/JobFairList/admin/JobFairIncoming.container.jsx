@@ -6,7 +6,7 @@ import JobFairForAdminComponent from '../../../components/JobFairList/JobFairFor
 import PaginationComponent from '../../../components/PaginationComponent/Pagination.component'
 import { PATH_ADMIN } from '../../../constants/Paths/Path'
 import { MoreOutlined } from '@ant-design/icons'
-import ViewRegistrationButton from '../../../components/ViewRegistrationButton/ViewRegistrationButton'
+import ViewRegistrationButtonComponent from '../../../components/ViewRegistrationButton/ViewRegistrationButton.component'
 import JobFairDetailModalContainer from '../../../components/JobFairList/modal/JobFairDetailModal.container'
 import { mapperResponseJobFairForAdmin } from '../../../utils/mapperJobFairDetail'
 
@@ -94,7 +94,7 @@ const JobFairIncomingContainer = ({ key }) => {
                     <MoreOutlined />
                   </a>
                 </Tooltip>
-                <ViewRegistrationButton status={record.status} id={record.id} />
+                <ViewRegistrationButtonComponent status={record.status} id={record.id} />
               </Space>
             )
           }

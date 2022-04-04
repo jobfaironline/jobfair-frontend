@@ -1,4 +1,4 @@
-import {CountryConst} from "../components/attendant-profile-form/AttendantConstants";
+import {CountryConst} from "../components/AttendantProfileForm/AttendantConstants";
 
 export const mapperResumeDetail = (res ,resume) => {
   return {

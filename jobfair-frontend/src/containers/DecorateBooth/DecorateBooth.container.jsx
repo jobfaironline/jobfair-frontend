@@ -1,4 +1,4 @@
-import {useHistory} from "react-router-dom";
+import {generatePath, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect, useRef, useState} from "react";
 import {
@@ -34,7 +34,6 @@ import {LoadingComponent} from "../../components/JobFairParkMap/Loading.componen
 
 export const DecorateBoothContainer = (props) => {
     const {companyBoothId, jobFairId} = props;
-
     const history = useHistory()
     const dispatch = useDispatch();
     const {mode, selectedItem} = useSelector(state => state.decorateBooth)
@@ -137,7 +136,8 @@ export const DecorateBoothContainer = (props) => {
     }
 
     const reviewHandle = () => {
-        history.push(`${PATH.MAP}${jobFairId}`);
+        const url = generatePath(PATH.PUBLICIZED_BOOTH_PAGE ,{jobFairId : jobFairId})
+        history.push(url)
     }
 
     const handleOnRotationLeft = _ => {

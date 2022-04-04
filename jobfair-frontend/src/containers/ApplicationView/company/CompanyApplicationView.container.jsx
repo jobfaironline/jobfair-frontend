@@ -5,11 +5,12 @@ import { MoreOutlined, EyeOutlined } from '@ant-design/icons'
 import ApplicationTable from '../../../components/ApplicationView/ApplicationTable.component'
 import { getAllApplication } from '../../../services/application-controller/ApplicationControllerService'
 import PaginationComponent from '../../../components/PaginationComponent/Pagination.component'
-import {PATH_COMPANY_MANAGER} from "../../../constants/Paths/Path";
+import {PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER} from "../../../constants/Paths/Path";
+import {COMPANY_EMPLOYEE, COMPANY_MANAGER} from "../../../constants/RoleType";
 
 const { Search } = Input
 
-const CompanyApplicationView = ({ tabStatus, ...otherProps }) => {
+const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
   //pagination
   const [totalRecord, setTotalRecord] = useState(0)
   const [currentPage, setCurrentPage] = useState(0)
@@ -60,6 +61,19 @@ const CompanyApplicationView = ({ tabStatus, ...otherProps }) => {
     setPageSize(pageSize)
   }
 
+  const handleViewResumeDetail = (resumeId, role) => {
+    switch (role) {
+      case COMPANY_MANAGER:
+        history.push(PATH_COMPANY_MANAGER.RESUME_DETAIL_PAGE, { resumeId: resumeId })
+        break
+      case COMPANY_EMPLOYEE:
+        history.push(PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE, {resumeId: resumeId})
+        break
+      default:
+        return null
+    }
+  }
+
   useEffect(() => {
     fetchData(currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue)
   }, [currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue])
@@ -95,9 +109,7 @@ const CompanyApplicationView = ({ tabStatus, ...otherProps }) => {
                   <Space size="middle">
                     <Tooltip placement="top" title="View detail">
                       <a
-                        onClick={() => {
-                          history.push(PATH_COMPANY_MANAGER.RESUME_DETAIL_PAGE, { resumeId: record.id })
-                        }}
+                        onClick={() => handleViewResumeDetail(record.id, role)}
                       >
                         <EyeOutlined />
                       </a>
