@@ -89,7 +89,7 @@ const JobFairListAvailableContainer = props => {
   }
 
   const handleViewDetail = (id) => {
-    history.push(PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL, {
+    history.push(PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE, {
       jobFairId: id
     })
   }

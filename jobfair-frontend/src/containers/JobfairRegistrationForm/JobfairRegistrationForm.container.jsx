@@ -51,7 +51,7 @@ const JobfairRegistrationForm = (props) => {
         () => {
           history.push(PATH.RESULT_SUCCESS_PAGE)
         },
-        () => history.push(PATH.PROCESSED_FAIL)
+        () => history.push(PATH.RESULT_FAILED_PAGE)
       )
     }
   }

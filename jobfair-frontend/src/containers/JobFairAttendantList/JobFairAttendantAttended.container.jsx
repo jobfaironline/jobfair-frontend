@@ -82,7 +82,7 @@ const JobFairAttendantAttendedContainer = () => {
   }
 
   const handleViewDetail = (id) => {
-    history.push(PATH_ATTENDANT.JOB_FAIR_DETAIL, {
+    history.push(PATH_ATTENDANT.JOB_FAIR_DETAIL_PAGE, {
       jobFairId: id
     })
   }

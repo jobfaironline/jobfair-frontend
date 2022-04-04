@@ -8,9 +8,9 @@ export const PATH = {
   REGISTER_JOB_FAIR_PAGE: '/register-job-fair/:jobFairId',
   LOGIN_PAGE: '/auth/login',
   REGISTER_PAGE: '/auth/register',
-  FORGOT_PASSWORD_PAGE: '/accounts/forgot-password',
-  CHANGE_PASSWORD_PAGE: '/accounts/change-password',
-  RESET_PASSWORD_PAGE: '/accounts/reset-password',
+  FORGOT_PASSWORD_PAGE: '/account/forgot-password',
+  CHANGE_PASSWORD_PAGE: '/account/change-password',
+  RESET_PASSWORD_PAGE: '/account/reset-password',
   RESULT_SUCCESS_PAGE: '/proceed-success',
   RESULT_FAILED_PAGE: '/proceed-fail',
   FAQ_PAGE: '/faq',
@@ -19,41 +19,38 @@ export const PATH = {
   //choose booth page
   CHOOSE_BOOTH_PAGE: '/choose-booth/:jobFairId',
   CONTRACTS_PAGE: '/contacts',
-  PUBLICIZED_JOB_FAIR_PAGE: '/job-fair',
-  HOME: '/home',
-  EMPLOYEE_MANAGEMENT: '/employee-management',
-  PROCESSED_FAIL: '/proceed-fail',
-  PROCESSED_SUCCESS: '/',
+  PUBLICIZED_JOB_FAIR_LIST_PAGE: '/job-fair-list',
+  HOME_PAGE: '/home',
   FINAL_ERROR_PAGE: '/error-500'
 }
 export const PATH_ADMIN = {
   JOB_FAIR_LIST_PAGE: '/admin/job-fair-list',
   APPROVAL_REGISTRATION_PAGE: '/admin/approval-registration/:jobFairId',
   JOB_FAIR_DETAIL_PAGE: '/admin/job-fair-detail',
-  JOB_FAIR_PLAN_LIST: '/admin/job-fair-plan-list',
-  COMPANY_REGISTRATION_DETAIL: '/admin/company-registration-detail'
+  JOB_FAIR_PLAN_LIST_PAGE: '/admin/job-fair-plan-list',
+  COMPANY_REGISTRATION_DETAIL_PAGE: '/admin/company-registration-detail'
 }
 export const PATH_ATTENDANT = {
-  ATTENDANT_PROFILE_PAGE: `/attendant/profile`,
-  ATTENDANT_JOB_FAIR_PAGE: '/attendant/job-fair',
-  APPLIED_JOB_PAGE: '/attendant/applied-job',
-  JOB_FAIR_DETAIL: '/attendant/job-fair-detail',
+  PROFILE_PAGE: `/attendant/profile`,
+  JOB_FAIR_LIST_PAGE: '/attendant/job-fair-list',
+  APPLICATION_MANAGEMENT_PAGE: '/attendant/application-management',
+  JOB_FAIR_DETAIL_PAGE: '/attendant/job-fair-detail',
   RESUME_DETAIL_PAGE: '/attendant/resume-detail'
 }
 export const PATH_COMPANY_EMPLOYEE = {
   COMPANY_PROFILE_PAGE: '/employee/company-profile',
-  APPLIED_JOB_PAGE: '/employee/applied-job',
+  APPLICATION_MANAGEMENT_PAGE: '/employee/application-management',
   RESUME_DETAIL_PAGE: '/employee/resume-detail'
 }
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',
   EMPLOYEE_REGISTER_PAGE: '/company/employee-register',
-  REGISTER_JOB_FAIR_FORM: '/company/register-job-fair',
-  COMPANY_PROFILE: '/company/company-profile',
-  JOB_POSITION_MANAGEMENT: '/company/job-position-management',
-  JOB_POSITION_DETAIL: '/company/job-position-detail',
-  CREATE_JOB_POSITION: '/company/create-job-position',
-  JOB_FAIR_DETAIL: '/company/job-fair-detail',
-  APPLIED_JOB_PAGE: '/company/applied-job',
+  REGISTER_JOB_FAIR_FORM_PAGE: '/company/register-job-fair',
+  COMPANY_PROFILE_PAGE: '/company/company-profile',
+  JOB_POSITION_MANAGEMENT_PAGE: '/company/job-position-management',
+  JOB_POSITION_DETAIL_PAGE: '/company/job-position-detail',
+  CREATE_JOB_POSITION_PAGE: '/company/create-job-position',
+  JOB_FAIR_DETAIL_PAGE: '/company/job-fair-detail',
+  APPLICATION_MANAGEMENT_PAGE: '/company/application-management',
   RESUME_DETAIL_PAGE: '/company/resume-detail'
 }

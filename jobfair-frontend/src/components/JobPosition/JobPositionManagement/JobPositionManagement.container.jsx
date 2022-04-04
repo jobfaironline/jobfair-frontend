@@ -70,13 +70,13 @@ const JobPositionManagementContainer = props => {
 
   const handleCreateOnClick = () => {
     history.push({
-      pathname: PATH_COMPANY_MANAGER.CREATE_JOB_POSITION,
+      pathname: PATH_COMPANY_MANAGER.CREATE_JOB_POSITION_PAGE,
       state: { listContactPersonSuggestion: listContactPersonSuggestion, listEmailSuggestion: listEmailSuggestion }
     })
   }
 
   const handleViewDetailPage = id => {
-    history.push(PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL, {
+    history.push(PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL_PAGE, {
       jobPosition: data.find(item => item.id === id)
     })
   }

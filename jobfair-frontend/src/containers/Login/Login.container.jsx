@@ -26,10 +26,10 @@ const LoginContainer = props => {
         switch (res.data.roles) {
           case 'COMPANY_EMPLOYEE':
           case 'COMPANY_MANAGER':
-            history.push(PATH.PUBLICIZED_JOB_FAIR_PAGE)
+            history.push(PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE)
             return
           case 'ATTENDANT':
-            history.push(PATH_ATTENDANT.ATTENDANT_JOB_FAIR_PAGE)
+            history.push(PATH_ATTENDANT.JOB_FAIR_LIST_PAGE)
             return
           case 'ADMIN':
             history.push(PATH_ADMIN.JOB_FAIR_LIST_PAGE)

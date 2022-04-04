@@ -69,7 +69,7 @@ const EvaluateInformationBoothContainer = () => {
 
 
   const handleViewDetail = (id) => {
-    history.push(PATH_ADMIN.COMPANY_REGISTRATION_DETAIL, {
+    history.push(PATH_ADMIN.COMPANY_REGISTRATION_DETAIL_PAGE, {
       companyRegistration: data.find(item => item.id === id)
     })
   }

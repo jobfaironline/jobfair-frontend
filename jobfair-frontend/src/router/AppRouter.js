@@ -96,7 +96,7 @@ const AppRouter = () => {
         <Route path={PATH.CONTRACTS_PAGE} exact>
           <ContactPage />
         </Route>
-        <Route path={PATH.PUBLICIZED_JOB_FAIR_PAGE} exact>
+        <Route path={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE} exact>
           <JobFairListPage />
         </Route>
         <Route path={PATH_ADMIN.JOB_FAIR_LIST_PAGE} exact>
@@ -117,27 +117,27 @@ const AppRouter = () => {
           exact
         />
         <AttendantRouter
-          key={PATH_ATTENDANT.APPLIED_JOB_PAGE}
+          key={PATH_ATTENDANT.APPLICATION_MANAGEMENT_PAGE}
           component={() => <ApplicationManagementPage />}
-          path={PATH_ATTENDANT.APPLIED_JOB_PAGE}
+          path={PATH_ATTENDANT.APPLICATION_MANAGEMENT_PAGE}
           exact
         />
         <AttendantRouter
-          key={PATH_ATTENDANT.ATTENDANT_PROFILE_PAGE}
+          key={PATH_ATTENDANT.PROFILE_PAGE}
           component={() => <AttendantProfile />}
-          path={PATH_ATTENDANT.ATTENDANT_PROFILE_PAGE}
+          path={PATH_ATTENDANT.PROFILE_PAGE}
           exact
         />
         <AttendantRouter
-          key={PATH_ATTENDANT.ATTENDANT_JOB_FAIR_PAGE}
+          key={PATH_ATTENDANT.JOB_FAIR_LIST_PAGE}
           component={() => <JobFairAttendantListPage />}
-          path={PATH_ATTENDANT.ATTENDANT_JOB_FAIR_PAGE}
+          path={PATH_ATTENDANT.JOB_FAIR_LIST_PAGE}
           exact
         />
         <AttendantRouter
-          key={PATH_ATTENDANT.JOB_FAIR_DETAIL}
+          key={PATH_ATTENDANT.JOB_FAIR_DETAIL_PAGE}
           component={() => <PublicizeJobFairDetailPage />}
-          path={PATH_ATTENDANT.JOB_FAIR_DETAIL}
+          path={PATH_ATTENDANT.JOB_FAIR_DETAIL_PAGE}
           exact
         />
         <AttendantRouter
@@ -147,9 +147,9 @@ const AppRouter = () => {
           exact
         />
         <CompanyEmployeeRouter
-          key={PATH_COMPANY_EMPLOYEE.APPLIED_JOB_PAGE}
+          key={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}
           component={() => <ApplicationManagementPage />}
-          path={PATH_COMPANY_EMPLOYEE.APPLIED_JOB_PAGE}
+          path={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}
           exact
         />
         <CompanyEmployeeRouter
@@ -171,9 +171,9 @@ const AppRouter = () => {
           exact
         />
         <CompanyManagerRouter
-          key={PATH_COMPANY_MANAGER.APPLIED_JOB_PAGE}
+          key={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}
           component={() => <ApplicationManagementPage />}
-          path={PATH_COMPANY_MANAGER.APPLIED_JOB_PAGE}
+          path={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}
           exact
         />
         <CompanyManagerRouter
@@ -189,39 +189,39 @@ const AppRouter = () => {
           exact
         />
         <CompanyManagerRouter
-          key={PATH_COMPANY_MANAGER.REGISTER_JOB_FAIR_FORM}
+          key={PATH_COMPANY_MANAGER.REGISTER_JOB_FAIR_FORM_PAGE}
           component={() => <RegisterJobFairForm />}
-          path={PATH_COMPANY_MANAGER.REGISTER_JOB_FAIR_FORM}
+          path={PATH_COMPANY_MANAGER.REGISTER_JOB_FAIR_FORM_PAGE}
           exact
         />
         <CompanyManagerRouter
-          key={PATH_COMPANY_MANAGER.COMPANY_PROFILE}
+          key={PATH_COMPANY_MANAGER.COMPANY_PROFILE_PAGE}
           component={() => <CompanyProfile />}
-          path={PATH_COMPANY_MANAGER.COMPANY_PROFILE}
+          path={PATH_COMPANY_MANAGER.COMPANY_PROFILE_PAGE}
           exact
         />
         <CompanyManagerRouter
-          key={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT}
+          key={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}
           component={() => <JobPositionPage />}
-          path={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT}
+          path={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}
           exact
         />
         <CompanyManagerRouter
-          key={PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL}
+          key={PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL_PAGE}
           component={() => <JobPositionDetailPage />}
-          path={PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL}
+          path={PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL_PAGE}
           exact
         />
         <CompanyManagerRouter
-          key={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION}
+          key={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION_PAGE}
           component={() => <CreateJobPositionPage />}
-          path={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION}
+          path={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION_PAGE}
           exact
         />
         <CompanyManagerRouter
-          key={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL}
+          key={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE}
           component={() => <PublicizeJobFairDetailPage />}
-          path={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL}
+          path={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE}
           exact
         />
         <AdminRouter
@@ -237,15 +237,15 @@ const AppRouter = () => {
           exact
         />
         <AdminRouter
-          key={PATH_ADMIN.JOB_FAIR_PLAN_LIST}
+          key={PATH_ADMIN.JOB_FAIR_PLAN_LIST_PAGE}
           component={() => <JobFairPlanPage />}
-          path={PATH_ADMIN.JOB_FAIR_PLAN_LIST}
+          path={PATH_ADMIN.JOB_FAIR_PLAN_LIST_PAGE}
           exact
         />
         <AdminRouter
-          key={PATH_ADMIN.COMPANY_REGISTRATION_DETAIL}
+          key={PATH_ADMIN.COMPANY_REGISTRATION_DETAIL_PAGE}
           component={() => <CompanyRegistrationDetailPage />}
-          path={PATH_ADMIN.COMPANY_REGISTRATION_DETAIL}
+          path={PATH_ADMIN.COMPANY_REGISTRATION_DETAIL_PAGE}
           exact
         />
         <Route path="*" component={() => <ErrorPage code={404} />} />
