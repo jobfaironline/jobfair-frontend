@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, notification } from 'antd'
-import LoginComponent from '../../components/login/Login.component'
+import LoginComponent from '../../components/Login/Login.component'
 import { signInAPI } from '../../services/auth-controller/AuthControllerService'
 import { useDispatch } from 'react-redux'
 import { SigninHandler } from '../../redux-flow/authentication/authentication-action'
