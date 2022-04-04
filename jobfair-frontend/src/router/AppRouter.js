@@ -6,7 +6,7 @@ import CompanyManagerRouter from './components/CompanyManagerRouter'
 import { ResultSuccessPage } from '../pages/ResultPage/ResultSuccessPage'
 import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage'
 import JobFairTablePage from '../pages/JobFairTablePage/JobFairTablePage'
-import JobFairListPage from '../pages/JobFairListPage/JobFairListPage'
+import JobFairListPage from '../pages/JobFairListPage-remove/JobFairListPage'
 import UserPage from '../pages/UserPage-remove/UserPage'
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage'
 import FAQPage from '../pages/FAQPage/FAQPage'
@@ -14,9 +14,9 @@ import ResultFailedPage from '../pages/ResultPage/ResultFailedPage'
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage'
 import RegisterPage from '../pages/RegisterPage/RegisterPage'
 import LoginPage from '../pages/LoginPage/LoginPage'
-import JobFairParkPage from '../pages/JobFairParkPage/JobFairParkPage'
+import PublicizedBoothPage from '../pages/PublicizedBoothPage/PublicizedBoothPage'
 import HomePage from '../pages/HomePage'
-import JobfairRegistrationPage from '../pages/JobfairRegistrationPage/JobfairRegistrationPage'
+import FillBoothGeneralInformationPage from '../pages/FillBoothGeneralInformationPage/FillBoothGeneralInformationPage'
 import CompanyProfile from '../pages/ProfilePage/Company/CompanyProfilePage'
 import EvaluateBoothInformationPage from '../pages/EvaluateBoothInformation/EvaluateBoothInformationPage'
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage'
@@ -31,10 +31,10 @@ import JobPositionDetailPage from '../pages/JobPositionPage/JobPositionDetailPag
 import CreateJobPositionPage from '../pages/JobPositionPage/CreateJobPositionPage'
 import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage'
 import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage'
-import JobFairDetailPage from '../pages/JobFairDetailPage/JobFairDetailPage'
-import JobFairPlanPage from '../pages/JobFairPlanPage/JobFairPlanPage'
+import JobFairDetailPage from '../pages/JobFairDetailPage/JobFairDetailPage-remove'
+import JobFairPlanPage from '../pages/JobFairPlanPage-remove/JobFairPlanPage'
 import CompanyRegistrationDetailPage from '../pages/CompanyRegistrationDetailPage/CompanyRegistrationDetailPage'
-import JobFairAttendantListPage from '../pages/JobFairAttendantListPage/JobFairAttendantListPage'
+import JobFairAttendantListPage from '../pages/JobFairAttendantListPage-remove/JobFairAttendantListPage'
 import PublicRouter from './components/PublicRouter'
 import ErrorPage from '../pages/ErrorPage/ErrorPage'
 import {
@@ -46,7 +46,7 @@ import {
   PATH_STAFF
 } from '../constants/Paths/Path'
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
-import JobFairDetailCompanyPage from "../pages/JobFairDetailPage/JobFairDetailCompanyPage";
+import PublicizeJobFairDetailPage from "../pages/JobFairDetailPage/PublicizeJobFairDetailPage";
 import ResumeDetailPage from "../pages/ResumeDetailPage/ResumeDetailPage";
 import ContactPage from "../pages/ContactPage/ContactPage";
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage'
@@ -64,16 +64,16 @@ const AppRouter = () => {
           <HomePage />
         </Route>
         <Route path={PATH.JOB_FAIR_PARK_PAGE} exact>
-          <JobFairParkPage />
+          <PublicizedBoothPage />
         </Route>
         <Route path={PATH.ATTENDANT_JOB_FAIR_PAGE} exact>
           <AttendantJobFairPage />
         </Route>
         <Route path={PATH.JOB_FAIR_REGISTRATION_PAGE_ID} exact>
-          <JobfairRegistrationPage />
+          <FillBoothGeneralInformationPage />
         </Route>
         <Route path={PATH.JOB_FAIR_REGISTRATION_PAGE} exact>
-          <JobfairRegistrationPage />
+          <FillBoothGeneralInformationPage />
         </Route>
         <Route path={PATH.RESET_PASSWORD_PAGE} exact>
           <ResetPasswordPage />
@@ -139,7 +139,7 @@ const AppRouter = () => {
         />
         <AttendantRouter
           key={PATH_ATTENDANT.JOB_FAIR_DETAIL}
-          component={() => <JobFairDetailCompanyPage />}
+          component={() => <PublicizeJobFairDetailPage />}
           path={PATH_ATTENDANT.JOB_FAIR_DETAIL}
           exact
         />
@@ -223,7 +223,7 @@ const AppRouter = () => {
         />
         <CompanyManagerRouter
           key={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL}
-          component={() => <JobFairDetailCompanyPage />}
+          component={() => <PublicizeJobFairDetailPage />}
           path={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL}
           exact
         />

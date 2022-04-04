@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import JobfairRegistrationForm from '../../containers/JobfairRegistrationForm/JobfairRegistrationForm.container'
 import { PATH } from '../../constants/Paths/Path'
-import './JobfairRegistrationPage.styles.scss'
+import './FillBoothGeneralInformationPage.styles.scss'
 
-const JobfairRegistrationPage = () => {
+const FillBoothGeneralInformationPage = () => {
   const dispatch = useDispatch()
   const { jobfairId } = useParams()
   const history = useHistory()
@@ -21,4 +21,4 @@ const JobfairRegistrationPage = () => {
   )
 }
 
-export default JobfairRegistrationPage
+export default FillBoothGeneralInformationPage

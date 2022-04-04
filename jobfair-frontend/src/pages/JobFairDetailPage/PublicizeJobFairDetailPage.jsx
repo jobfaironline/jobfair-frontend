@@ -4,7 +4,7 @@ import {useHistory, useLocation} from "react-router-dom";
 import {PageHeader} from "antd";
 import {PATH} from "../../constants/Paths/Path";
 
-const JobFairDetailCompanyPage = () => {
+const PublicizeJobFairDetailPage = () => {
   const location = useLocation()
   const jobFairId = location.state.jobFairId
   const history = useHistory()
@@ -21,4 +21,4 @@ const JobFairDetailCompanyPage = () => {
   );
 };
 
-export default JobFairDetailCompanyPage;
+export default PublicizeJobFairDetailPage;

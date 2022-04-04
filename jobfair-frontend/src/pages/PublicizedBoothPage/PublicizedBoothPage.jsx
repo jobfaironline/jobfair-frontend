@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 import JobFairParkMapContainer from "../../containers/JobFairParkMap/JobFairParkMap.container";
 
 
-const JobFairParkPage = (props) => {
+const PublicizedBoothPage = (props) => {
     const {jobFairId} = useParams();
     return (<div className={"page"}>
         <JobFairParkMapContainer jobFairId={jobFairId}/>
@@ -12,4 +12,4 @@ const JobFairParkPage = (props) => {
     </div>)
 }
 
-export default JobFairParkPage;
+export default PublicizedBoothPage;
