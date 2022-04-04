@@ -14,7 +14,7 @@ import {
   MAX_LENGTH_VALIDATOR,
   REQUIRED_VALIDATOR
 } from '../../validate/CompanyProfileValidation'
-import { COMPANY_DEFAULT_MODEL } from '../../default_models/CompanyProfileModel'
+import { COMPANY_DEFAULT_MODEL } from '../../default_models-remove/CompanyProfileModel'
 import TextArea from 'antd/es/input/TextArea'
 
 const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {

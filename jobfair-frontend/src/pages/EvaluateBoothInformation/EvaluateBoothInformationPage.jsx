@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import ApprovalRegistrationContainer from "../../containers/ApprovalRegistration/ApprovalRegistration.container";
+import EvaluateInformationBoothContainer from "../../containers/EvaluateBoothInformation/EvaluateInformationBooth.container";
 import {Breadcrumb, Divider, notification, PageHeader, Typography} from 'antd';
 import {HomeOutlined, UnorderedListOutlined} from "@ant-design/icons";
 import {useHistory, useParams} from "react-router-dom";
@@ -7,7 +7,7 @@ import {getJobFairPlanById} from "../../services/job-fair-controller/JobFairConT
 
 const {Text, Title} = Typography
 
-const ApprovalRegistrationPage = props => {
+const EvaluateBoothInformationPage = props => {
   const history = useHistory()
   const {jobFairId} = useParams()
   const [jobFairDescription, setJobFairDescription] = useState('')
@@ -48,9 +48,9 @@ const ApprovalRegistrationPage = props => {
         title="Company registrations"
         subTitle={`for job fair : ${jobFairDescription}`}
       />
-      <ApprovalRegistrationContainer/>
+      <EvaluateInformationBoothContainer/>
     </div>
   );
 };
 
-export default ApprovalRegistrationPage;
+export default EvaluateBoothInformationPage;

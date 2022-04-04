@@ -1,34 +1,24 @@
 import React from 'react'
-import { Divider, Tabs, Typography } from 'antd'
-import { useSelector } from 'react-redux'
-import JobFairOccurredContainer from '../../containers/JobFairList/admin/JobFairOccurred.container'
-import JobFairHappeningContainer from '../../containers/JobFairList/admin/JobFairHappening.container'
-import JobFairIncomingContainer from '../../containers/JobFairList/admin/JobFairIncoming.container'
-import './JobFairListPage.styles.scss'
+import JobFairListAvailableContainer from '../../containers/JobFairList/company/JobFairList.available.container'
+import {Divider, Tabs, Typography} from "antd";
+import JobFairListHistoryContainer from "../../containers/JobFairList/company/JobFairList.history.container";
 
 const { TabPane } = Tabs
-const { Text } = Typography
+const {Title} = Typography
 const JobFairListPage = () => {
-  const role = useSelector(state => state.authentication?.user?.roles)
-
   return (
-    <div className="page jobfair-list-page">
-      <div style={{ padding: '2rem 0' }}>
-        <Divider>
-          <Typography.Title level={2}>Job fair list</Typography.Title>
-        </Divider>
-        <Tabs defaultActiveKey="2" centered>
-          <TabPane tab="Taken place" key="1">
-            <JobFairOccurredContainer />
-          </TabPane>
-          <TabPane tab="Happening" key="2">
-            <JobFairHappeningContainer />
-          </TabPane>
-          <TabPane tab="Coming soon" key="3">
-            <JobFairIncomingContainer />
-          </TabPane>
-        </Tabs>
-      </div>
+    <div className="page">
+      <Divider size="small" plain>
+        <Title>Job Fair List</Title>
+      </Divider>
+      <Tabs defaultActiveKey="1" centered>
+        <TabPane tab={"Happening job fairs"} key={1} >
+          <JobFairListAvailableContainer />
+        </TabPane>
+        <TabPane tab={"My job fair history"} key={2}>
+          <JobFairListHistoryContainer />
+        </TabPane>
+      </Tabs>
     </div>
   )
 }

@@ -108,7 +108,7 @@ const defaultColumns = getColumnSearchProps => {
   ]
 }
 
-const ApprovalRegistrationColumn = (getColumnSearchProps, jobFairId) => {
+const EvaluateBoothInformationTableColumn = (getColumnSearchProps, jobFairId) => {
   if (jobFairId !== undefined) {
     return defaultColumns(getColumnSearchProps)
   } else {
@@ -225,4 +225,4 @@ const ApprovalRegistrationColumn = (getColumnSearchProps, jobFairId) => {
   }
 }
 
-export default ApprovalRegistrationColumn
+export default EvaluateBoothInformationTableColumn

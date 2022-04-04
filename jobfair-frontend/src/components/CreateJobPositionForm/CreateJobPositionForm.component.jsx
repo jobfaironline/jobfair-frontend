@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Divider, Form, Input, Radio, Select, Space, Switch, Typography, AutoComplete } from 'antd'
-import { JOB_POSITION_MODEL } from '../../default_models/CreateJobPositionModel/JobPositionModel'
+import { JOB_POSITION_MODEL } from '../../default_models-remove/CreateJobPositionModel/JobPositionModel'
 import {
   IsRequiredLetterConst,
   JobLevelConst,

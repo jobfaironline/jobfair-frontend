@@ -1,6 +1,6 @@
 import React, {useLayoutEffect, useState} from 'react'
-import ApprovalRegistrationComponent
-  from '../../components/ApprovalRegistration/components/ApprovalRegistration.component'
+import EvaluateBoothInformationTableComponent
+  from '../../components/EvaluateBoothInformation/EvaluateBoothInformationTable.component'
 import {notification, Pagination, Space} from 'antd'
 import {useHistory, useParams} from 'react-router-dom'
 import {
@@ -11,7 +11,7 @@ import {PATH_ADMIN} from "../../constants/Paths/Path";
 import {getCompanyProfileAPI} from "../../services/company-controller/CompanyControllerService";
 import {CompanyRegistrationStatus} from "../../constants/CompanyRegistrationConst";
 
-const ApprovalRegistrationContainer = () => {
+const EvaluateInformationBoothContainer = () => {
   const [data, setData] = useState([])
   //paging state
   const [currentPage, setCurrentPage] = useState(0)
@@ -76,7 +76,7 @@ const ApprovalRegistrationContainer = () => {
 
   return (
     <>
-      <ApprovalRegistrationComponent
+      <EvaluateBoothInformationTableComponent
         data={data}
         jobFairId={jobFairId}
         editable
@@ -111,4 +111,4 @@ const ApprovalRegistrationContainer = () => {
   )
 }
 
-export default ApprovalRegistrationContainer
+export default EvaluateInformationBoothContainer

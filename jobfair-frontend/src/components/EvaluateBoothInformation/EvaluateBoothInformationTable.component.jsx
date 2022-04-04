@@ -2,10 +2,10 @@ import React , {useState} from 'react';
 import {Button, Empty, Input, Pagination, Space, Spin, Table} from "antd";
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import Highlighter from "react-highlight-words";
-import ApprovalRegistrationColumn from "../columns/ApprovalRegistration.column";
+import EvaluateBoothInformationTableColumn from "./EvaluateBoothInformationTable.column";
 import {useHistory} from "react-router-dom";
 
-const ApprovalRegistrationComponent = ({data, extra, jobFairId}) => {
+const EvaluateBoothInformationTableComponent = ({data, extra, jobFairId}) => {
 
     const [searchText, setSearchText] = useState('')
     const [searchedColumn, setSearchedColumn] = useState('')
@@ -82,7 +82,7 @@ const ApprovalRegistrationComponent = ({data, extra, jobFairId}) => {
         ) : (text)
     })
 
-    const defaultColumns = ApprovalRegistrationColumn(getColumnSearchProps, jobFairId)
+    const defaultColumns = EvaluateBoothInformationTableColumn(getColumnSearchProps, jobFairId)
 
     const finalColumns = extra ? [...defaultColumns, extra] : [...defaultColumns]
 
@@ -96,4 +96,4 @@ const ApprovalRegistrationComponent = ({data, extra, jobFairId}) => {
     )
 };
 
-export default ApprovalRegistrationComponent;
+export default EvaluateBoothInformationTableComponent;

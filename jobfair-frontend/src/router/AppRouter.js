@@ -5,9 +5,9 @@ import AttendantProfile from '../pages/ProfilePage/Attendant/AttendantProfilePag
 import CompanyManagerRouter from './components/CompanyManagerRouter'
 import { ResultSuccessPage } from '../pages/ResultPage/ResultSuccessPage'
 import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage'
+import JobFairTablePage from '../pages/JobFairTablePage/JobFairTablePage'
 import JobFairListPage from '../pages/JobFairListPage/JobFairListPage'
-import JobFairsPage from '../pages/JobFairsPage/JobFairsPage'
-import UserPage from '../pages/UserPage/UserPage'
+import UserPage from '../pages/UserPage-remove/UserPage'
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage'
 import FAQPage from '../pages/FAQPage/FAQPage'
 import ResultFailedPage from '../pages/ResultPage/ResultFailedPage'
@@ -18,7 +18,7 @@ import JobFairParkPage from '../pages/JobFairParkPage/JobFairParkPage'
 import HomePage from '../pages/HomePage'
 import JobfairRegistrationPage from '../pages/JobfairRegistrationPage/JobfairRegistrationPage'
 import CompanyProfile from '../pages/ProfilePage/Company/CompanyProfilePage'
-import ApprovalRegistrationPage from '../pages/ApprovalRegistrationPage/ApprovalRegistration.page'
+import EvaluateBoothInformationPage from '../pages/EvaluateBoothInformation/EvaluateBoothInformationPage'
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage'
 import CompanyEmployeeRouter from './components/CompanyEmployeeRouter'
 import AdminRouter from './components/AdminRouter'
@@ -100,10 +100,10 @@ const AppRouter = () => {
           <ContactPage />
         </Route>
         <Route path={PATH.JOB_FAIRS_PAGE} exact>
-          <JobFairsPage />
+          <JobFairListPage />
         </Route>
         <Route path={PATH.JOB_FAIR_LIST_PAGE} exact>
-          <JobFairListPage />
+          <JobFairTablePage />
         </Route>
         <Route path={PATH.CHOOSE_BOOTH_PAGE} exact>
           <ChooseBoothPage />
@@ -230,13 +230,13 @@ const AppRouter = () => {
 
         <AdminRouter
           key={PATH_ADMIN.APPROVAL_REGISTRATION_PAGE}
-          component={() => <ApprovalRegistrationPage />}
+          component={() => <EvaluateBoothInformationPage />}
           path={PATH_ADMIN.APPROVAL_REGISTRATION_PAGE}
           exact
         />
         <AdminRouter
           key={PATH_ADMIN.COMPANY_REGISTRATION_PAGE}
-          component={() => <ApprovalRegistrationPage />}
+          component={() => <EvaluateBoothInformationPage />}
           path={PATH_ADMIN.COMPANY_REGISTRATION_PAGE}
           exact
         />
@@ -260,7 +260,7 @@ const AppRouter = () => {
         />
         <StaffRouter
           key={PATH_STAFF.APPROVAL_REGISTRATION_PAGE}
-          component={() => <ApprovalRegistrationPage />}
+          component={() => <EvaluateBoothInformationPage />}
           path={PATH_STAFF.APPROVAL_REGISTRATION_PAGE}
           exact
         />

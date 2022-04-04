@@ -4,7 +4,7 @@ import ResultFailedComponent from "../../components/Result/ResultFailed.componen
 const ResultFailedContainer = props => {
     return (
         <>
-            <ResultFailedComponent/>
+
         </>
     );
 };

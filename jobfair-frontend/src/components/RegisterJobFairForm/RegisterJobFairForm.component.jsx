@@ -4,7 +4,7 @@ import { Steps, Input, Button, Form, Result } from 'antd'
 import CreateJobPositionFormComponent from '../CreateJobPositionForm/CreateJobPositionForm.component'
 import CompanyProfileForm from '../CompanyProfileForm/CompanyProfileForm.component'
 import { benefitConst } from '../../constants/CompanyProfileConstant'
-import { JOB_POSITION_MODEL } from '../../default_models/CreateJobPositionModel/JobPositionModel'
+import { JOB_POSITION_MODEL } from '../../default_models-remove/CreateJobPositionModel/JobPositionModel'
 
 const { Step } = Steps
 
