@@ -64,7 +64,7 @@ const AttendantJobFairPage = () => {
 
   return (
     <div className={"page"} style={{overflow: "hidden"}}>
-      <AttendantJobFairContainer companyBoothId={companyBoothId} geckoClientRef={geckoClientRef}/>
+      <AttendantJobFairContainer companyBoothId={companyBoothId} geckoClientRef={geckoClientRef} communicationProps={communicationProps}/>
     </div>
   )
 }
