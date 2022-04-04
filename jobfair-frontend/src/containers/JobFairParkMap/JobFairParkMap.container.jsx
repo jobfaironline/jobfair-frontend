@@ -3,7 +3,7 @@ import {addVideoTexture, fixTextureOffset, loadGLBModel} from '../../utils/Three
 import * as THREE from 'three'
 import JobFairParkMapComponent from '../../components/JobFairParkMap/JobFairParkMap.component'
 import { getLayoutInformationForJobFairPark } from '../../services/job-fair-controller/JobFairConTrollerService'
-import { useHistory } from 'react-router-dom'
+import {generatePath, useHistory} from 'react-router-dom'
 import { PATH } from '../../constants/Paths/Path'
 import ReactLoading from "react-loading";
 import {LoadingComponent} from "../../components/JobFairParkMap/Loading.component";
@@ -84,7 +84,8 @@ const JobFairParkMapContainer = props => {
   }
 
   const clickHandle = companyBoothId => {
-    history.push(`${PATH.ATTENDANT_JOB_FAIR_PATH}${companyBoothId}`)
+    const url = generatePath(PATH.BOOTH_PAGE, {companyBoothId: companyBoothId})
+    history.push(url)
   }
 
   return <JobFairParkMapComponent mapMesh={state.mapMesh} boothMeshes={state.boothMeshes} onClick={clickHandle} />

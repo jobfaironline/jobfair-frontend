@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useHistory} from "react-router-dom";
+import {generatePath, useHistory} from "react-router-dom";
 import {
   getHistoricalJobFairForCompany,
   getJobFairPlanForCompany
@@ -87,7 +87,8 @@ const JobFairListHistoryContainer = () => {
   }
 
   const handleRequestChange = (id) => {
-    history.push(`${PATH.JOB_FAIR_REGISTRATION_PAGE}${id}`)
+    const url = generatePath(PATH.REGISTER_JOB_FAIR_PAGE, {jobFairId: id})
+    history.push(url)
   }
 
   useEffect(() => {

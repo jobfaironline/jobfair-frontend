@@ -19,8 +19,8 @@ import {
 } from '../../services/company-registration-controller/CompanyRegistrationControllerService'
 
 const {Step} = Steps
-const JobfairRegistrationForm = () => {
-  const {jobfairId} = useParams()
+const JobfairRegistrationForm = (props) => {
+  const {jobFairId} = props
   const history = useHistory()
   const [form] = Form.useForm() //form for registration
   const companyId = useSelector(state => state.authentication.user.companyId)
@@ -33,7 +33,7 @@ const JobfairRegistrationForm = () => {
   const onSubmit = async values => {
     const body = {
       description: values.description,
-      jobFairId: jobfairId,
+      jobFairId: jobFairId,
       jobPositions: values.jobPositions.map(item => {
         const result = {
           jobPositionId: item.id,
@@ -59,7 +59,7 @@ const JobfairRegistrationForm = () => {
   const stepComponentList = [
     <>
       <div style={{width: '70%', margin: '3rem auto'}}>
-        <JobFairDetailCompanyContainer id={jobfairId}/>
+        <JobFairDetailCompanyContainer id={jobFairId}/>
       </div>
     </>,
     <>
@@ -68,7 +68,7 @@ const JobfairRegistrationForm = () => {
         I have read and accept the Job fair Policy
       </Checkbox>
     </>,
-    <JobfairRegistrationFormComponent form={form} jobFairId={jobfairId}/>,
+    <JobfairRegistrationFormComponent form={form} jobFairId={jobFairId}/>,
     <>
       <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo}/>
     </>

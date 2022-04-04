@@ -63,16 +63,16 @@ const AppRouter = () => {
         <Route path={PATH.INDEX} exact>
           <HomePage />
         </Route>
-        <Route path={PATH.JOB_FAIR_PARK_PAGE} exact>
+        <Route path={PATH.PUBLICIZED_BOOTH_PAGE} exact>
           <PublicizedBoothPage />
         </Route>
-        <Route path={PATH.ATTENDANT_JOB_FAIR_PAGE} exact>
+        <Route path={PATH.BOOTH_PAGE} exact>
           <AttendantJobFairPage />
         </Route>
-        <Route path={PATH.JOB_FAIR_REGISTRATION_PAGE_ID} exact>
+        <Route path={PATH.REGISTER_JOB_FAIR_PAGE} exact>
           <FillBoothGeneralInformationPage />
         </Route>
-        <Route path={PATH.JOB_FAIR_REGISTRATION_PAGE} exact>
+        <Route path={PATH.REGISTER_JOB_FAIR_PAGE} exact>
           <FillBoothGeneralInformationPage />
         </Route>
         <Route path={PATH.RESET_PASSWORD_PAGE} exact>
@@ -99,10 +99,10 @@ const AppRouter = () => {
         <Route path={PATH.CONTRACTS_PAGE} exact>
           <ContactPage />
         </Route>
-        <Route path={PATH.JOB_FAIRS_PAGE} exact>
+        <Route path={PATH.PUBLICIZED_JOB_FAIR_PAGE} exact>
           <JobFairListPage />
         </Route>
-        <Route path={PATH.JOB_FAIR_LIST_PAGE} exact>
+        <Route path={PATH_ADMIN.JOB_FAIR_LIST_PAGE} exact>
           <JobFairTablePage />
         </Route>
         <Route path={PATH.CHOOSE_BOOTH_PAGE} exact>

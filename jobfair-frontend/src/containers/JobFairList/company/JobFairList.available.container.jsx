@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {useHistory} from 'react-router-dom'
+import {generatePath, useHistory} from 'react-router-dom'
 import JobFairListManagementComponent from '../../../components/JobFairList/JobFairList.management.component'
 import {
   getAvailableJobFairForCompany,
@@ -99,7 +99,8 @@ const JobFairListAvailableContainer = props => {
   }
 
   const handleViewMap = (id) => {
-    history.push(`${PATH.MAP}${id}`)
+    const url = generatePath(PATH.PUBLICIZED_BOOTH_PAGE, {jobFairId: id})
+    history.push(url)
   }
 
 

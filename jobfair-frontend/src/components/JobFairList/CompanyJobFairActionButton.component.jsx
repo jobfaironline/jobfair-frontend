@@ -2,6 +2,7 @@ import {Button, notification, Tooltip} from 'antd'
 import { PATH } from '../../constants/Paths/Path'
 import React from 'react'
 import { COMPANY_JOB_FAIR_STATUS } from '../../constants/CompanyJobFairStatus'
+import {generatePath} from "react-router-dom";
 
 export const RegistrableButton = props => {
   const { onClick } = props
@@ -140,7 +141,10 @@ const CompanyJobFairActionButton = props => {
 
   switch (item.status) {
     case COMPANY_JOB_FAIR_STATUS.REGISTRABLE:
-      return <RegistrableButton onClick={() => handleRedirect(`${PATH.JOB_FAIR_REGISTRATION_PAGE}${item.id}`)} />
+      return <RegistrableButton onClick={() => {
+        const url = generatePath(PATH.REGISTER_JOB_FAIR_PAGE, {jobFairId: item.id})
+        handleRedirect(url)
+      }} />
     case COMPANY_JOB_FAIR_STATUS.REJECT:
       return <RejectButton onClick={() => notification['info']({message: 'click to view reason'})}/>
     case COMPANY_JOB_FAIR_STATUS.SUBMITTED:

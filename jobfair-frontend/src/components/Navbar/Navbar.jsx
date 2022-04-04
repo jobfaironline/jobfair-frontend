@@ -30,8 +30,8 @@ export const CompanyManagerMenu = [
   <Menu.Item key={PATH_COMPANY_EMPLOYEE.COMPANY_EMPLOYEE_MANAGEMENT}>
     <Link to={PATH_COMPANY_EMPLOYEE.COMPANY_EMPLOYEE_MANAGEMENT}>Employee Management</Link>
   </Menu.Item>,
-  <Menu.Item key={PATH.JOB_FAIRS_PAGE}>
-    <Link to={PATH.JOB_FAIRS_PAGE}>Register to job fair</Link>
+  <Menu.Item key={PATH.PUBLICIZED_JOB_FAIR_PAGE}>
+    <Link to={PATH.PUBLICIZED_JOB_FAIR_PAGE}>Register to job fair</Link>
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT}>
     <Link to={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT}>Job Position Management</Link>
@@ -45,14 +45,11 @@ export const CompanyEmployeeMenu = [
   <Menu.Item key={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}>
     <Link to={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}>Company profile</Link>
   </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_MANAGER.MANAGER_REGISTER_JOBFAIR}>
-    <Link to={PATH_COMPANY_MANAGER.MANAGER_REGISTER_JOBFAIR}>Register to job fair</Link>
-  </Menu.Item>
 ]
 
 export const AdminMenu = [
-  <Menu.Item key={PATH.JOB_FAIR_LIST_PAGE}>
-    <Link to={PATH.JOB_FAIR_LIST_PAGE}>Job fair list</Link>
+  <Menu.Item key={PATH_ADMIN.JOB_FAIR_LIST_PAGE}>
+    <Link to={PATH_ADMIN.JOB_FAIR_LIST_PAGE}>Job fair list</Link>
   </Menu.Item>,
   <Menu.Item key={PATH_ADMIN.JOB_FAIR_PLAN_LIST}>
     <Link to={PATH_ADMIN.JOB_FAIR_PLAN_LIST}>Job fair plan list</Link>
@@ -63,8 +60,8 @@ export const AdminMenu = [
 ]
 
 export const StaffMenu = [
-  <Menu.Item key={PATH.JOB_FAIR_LIST_PAGE}>
-    <Link to={PATH.JOB_FAIR_LIST_PAGE}>Job fair list</Link>
+  <Menu.Item key={PATH_STAFF.JOB_FAIR_LIST_PAGE}>
+    <Link to={PATH_STAFF.JOB_FAIR_LIST_PAGE}>Job fair list</Link>
   </Menu.Item>
 ]
 

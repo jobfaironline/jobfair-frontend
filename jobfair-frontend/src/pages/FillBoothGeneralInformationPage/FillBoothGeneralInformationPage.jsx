@@ -7,14 +7,14 @@ import './FillBoothGeneralInformationPage.styles.scss'
 
 const FillBoothGeneralInformationPage = () => {
   const dispatch = useDispatch()
-  const { jobfairId } = useParams()
+  const { jobFairId } = useParams()
   const history = useHistory()
 
   return (
     <div className="page">
       <div className="jobfair-registration-page">
         <div className="jobfair-registration-cotnainer">
-          <JobfairRegistrationForm />
+          <JobfairRegistrationForm jobFairId={jobFairId}/>
         </div>
       </div>
     </div>
