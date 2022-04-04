@@ -7,7 +7,7 @@ import PaginationComponent from '../../../components/PaginationComponent/Paginat
 import { PATH_ADMIN } from '../../../constants/Paths/Path'
 import { convertToDateString } from '../../../utils/common'
 import { MoreOutlined } from '@ant-design/icons'
-import ViewRegistrationButton from '../../../components/ViewRegistrationButton/ViewRegistrationButton'
+import ViewRegistrationButtonComponent from '../../../components/ViewRegistrationButton/ViewRegistrationButton.component'
 import JobFairDetailModalContainer from '../../../components/JobFairList/modal/JobFairDetailModal.container'
 import { mapperResponseJobFairForAdmin } from '../../../utils/mapperJobFairDetail'
 
@@ -93,7 +93,7 @@ const JobFairOccurredContainer = ({ key }) => {
                     <MoreOutlined />
                   </a>
                 </Tooltip>
-                <ViewRegistrationButton status={record.status} id={record.id} />
+                <ViewRegistrationButtonComponent status={record.status} id={record.id} />
               </Space>
             )
           }

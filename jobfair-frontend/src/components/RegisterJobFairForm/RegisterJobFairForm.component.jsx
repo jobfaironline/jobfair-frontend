@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useStepsForm } from 'sunflower-antd'
 import { Steps, Input, Button, Form, Result } from 'antd'
-import CreateJobPositionForm from '../CreateJobPositionForm/CreateJobPositionForm'
+import CreateJobPositionFormComponent from '../CreateJobPositionForm/CreateJobPositionForm.component'
 import CompanyProfileForm from '../CompanyProfileForm/CompanyProfileForm.component'
 import { benefitConst } from '../../constants/CompanyProfileConstant'
 import { JOB_POSITION_MODEL } from '../../default_models/CreateJobPositionModel/JobPositionModel'
@@ -34,7 +34,7 @@ export default SunflowerForm => {
 
   const formList = [
     <>
-      <CreateJobPositionForm />
+      <CreateJobPositionFormComponent />
       <Form.Item>
         <Button onClick={() => gotoStep(current + 1)}>Next</Button>
       </Form.Item>

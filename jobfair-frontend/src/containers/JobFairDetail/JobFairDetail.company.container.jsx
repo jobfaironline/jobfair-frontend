@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import JobFairDetailCompanyComponent from '../../components/JobFairDetail/JobFairDetail.company.component'
+import JobFairDetailComponent from '../../components/JobFairDetail/JobFairDetail.company.component'
 import {getJobFairPlanById} from '../../services/job-fair-controller/JobFairConTrollerService'
 import {notification} from "antd";
 
@@ -28,7 +28,7 @@ const JobFairDetailCompanyContainer = props => {
   }, [])
   return (
     <>
-      <JobFairDetailCompanyComponent data={jobFairDetailData}/>
+      <JobFairDetailComponent data={jobFairDetailData}/>
     </>
   )
 }

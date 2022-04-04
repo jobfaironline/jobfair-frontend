@@ -3,7 +3,7 @@ import { getBase64 } from '../../utils/common'
 import { PlusOutlined } from '@ant-design/icons'
 import { Form, Modal, Upload } from 'antd'
 
-class ImageUpload extends Component {
+class ImageUploadComponent extends Component {
   state = {
     previewVisible: false,
     previewImage: '',
@@ -81,4 +81,4 @@ class ImageUpload extends Component {
   }
 }
 
-export default ImageUpload
+export default ImageUploadComponent

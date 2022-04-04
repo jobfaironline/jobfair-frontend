@@ -8,7 +8,7 @@ import {
   SizeConst,
   SubCategories
 } from '../../constants/CompanyProfileConstant'
-import ImageUpload from '../ImageUpload/ImageUpload'
+import ImageUploadComponent from '../ImageUpload/ImageUpload.component'
 import {
   CompanyProfileValidation,
   MAX_LENGTH_VALIDATOR,
@@ -273,7 +273,7 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
           icon: <InfoCircleOutlined />
         }}
       >
-        {noStyle !== true ? <ImageUpload /> : null}
+        {noStyle !== true ? <ImageUploadComponent /> : null}
       </Form.Item>
     </>
   )

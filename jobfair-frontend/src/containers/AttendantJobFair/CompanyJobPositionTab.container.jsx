@@ -4,7 +4,7 @@ import {Modal} from "antd";
 import {CompanyJobPositionTab} from "../../components/AttendantJobFair/SideBar/CompanyJobPositionTab.component";
 import "./CompanyJobPositionTab.styles.scss"
 import {useSelector} from "react-redux";
-import {SubmitResumeComponent} from "../../components/AttendantJobFair/SubmitResume/SubmitResumeComponent";
+import {SubmitResumeModalComponent} from "../../components/AttendantJobFair/SubmitResume/SubmitResumeModal.component";
 
 
 export const CompanyJobPositionTabContainer = (props) => {
@@ -30,7 +30,7 @@ export const CompanyJobPositionTabContainer = (props) => {
       onOk: () => {
 
       },
-      content: <SubmitResumeComponent jobPosition={item} inventory={inventory} closeModal={closeModal}/>
+      content: <SubmitResumeModalComponent jobPosition={item} inventory={inventory} closeModal={closeModal}/>
     })
   }
 

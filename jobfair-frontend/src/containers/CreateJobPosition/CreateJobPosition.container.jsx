@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import CreateJobPositionForm from '../../components/CreateJobPositionForm/CreateJobPositionForm'
+import CreateJobPositionFormComponent from '../../components/CreateJobPositionForm/CreateJobPositionForm.component'
 import { Button, Form, notification } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { createJobPositionsAPI } from '../../services/job-controller/JobControllerService'
@@ -30,7 +30,7 @@ const CreateJobPositionContainer = () => {
         })
       })
   }
-  return <CreateJobPositionForm form={form} onFinish={onFinish} />
+  return <CreateJobPositionFormComponent form={form} onFinish={onFinish} />
 }
 
 export default CreateJobPositionContainer

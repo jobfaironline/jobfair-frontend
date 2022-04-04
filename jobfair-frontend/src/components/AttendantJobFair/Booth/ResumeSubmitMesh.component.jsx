@@ -3,7 +3,7 @@ import React, {useRef} from "react";
 import {Html} from "@react-three/drei";
 
 
-export const ResumeSubmitComponent = props => {
+export const ResumeSubmitMeshComponent = props => {
   const {mesh, resumeSubmitRef, handleOpenDetail, onHover, isHover} = props;
 
   const toolTipPositionRef = useRef({

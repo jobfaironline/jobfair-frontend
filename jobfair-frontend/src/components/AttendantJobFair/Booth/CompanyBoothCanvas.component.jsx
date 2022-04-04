@@ -7,7 +7,7 @@ import {ViewSelect} from "./ViewSelect.component";
 import {FirstPersonControl} from "../../ThreeJSBaseComponent/FirstPersonControl.component";
 import {Character} from "./Character.component";
 import {EffectComposer, Outline} from "@react-three/postprocessing";
-import {ResumeSubmitComponent} from "./ResumeSubmitComponent";
+import {ResumeSubmitMeshComponent} from "./ResumeSubmitMesh.component";
 import {ArrowHelper} from "../../ChooseBooth/ArrowHelper.component";
 
 
@@ -89,8 +89,8 @@ export const CompanyBoothCanvasComponent = (props) => {
           <group ref={sceneMeshRef}>
             {boothMesh.children.map(child => {
               if (child.name === "rostrum" || child.name === "reception_desk") {
-                return <ResumeSubmitComponent mesh={child} resumeSubmitRef={resumeSubmitRef} onHover={resumeSubmitItemOnHover}
-                                              handleOpenDetail={handleOpenDetail} isHover={isHover}/>;
+                return <ResumeSubmitMeshComponent mesh={child} resumeSubmitRef={resumeSubmitRef} onHover={resumeSubmitItemOnHover}
+                                                  handleOpenDetail={handleOpenDetail} isHover={isHover}/>;
               }
               return <BasicMesh mesh={child}/>
             })}

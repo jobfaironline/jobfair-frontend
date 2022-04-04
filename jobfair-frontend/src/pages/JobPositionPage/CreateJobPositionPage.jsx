@@ -1,5 +1,5 @@
 import React from 'react'
-import CreateJobPositionForm from '../../components/CreateJobPositionForm/CreateJobPositionForm'
+import CreateJobPositionFormComponent from '../../components/CreateJobPositionForm/CreateJobPositionForm.component'
 import CreateJobPositionContainer from '../../containers/CreateJobPosition/CreateJobPosition.container'
 import { Button, PageHeader } from 'antd'
 import { useHistory } from 'react-router-dom'

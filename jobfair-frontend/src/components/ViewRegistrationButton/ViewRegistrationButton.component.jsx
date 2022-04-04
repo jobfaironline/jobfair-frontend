@@ -6,7 +6,7 @@ import {EyeInvisibleOutlined, EyeOutlined, MoreOutlined} from "@ant-design/icons
 import "./ViewRegistrationButton.style.scss"
 
 
-const ViewRegistrationButton = (props) => {
+const ViewRegistrationButtonComponent = (props) => {
     const {status, id} = props
     if (status === undefined || id === undefined) {
         return;
@@ -36,4 +36,4 @@ const ViewRegistrationButton = (props) => {
     }
 };
 
-export default ViewRegistrationButton;
+export default ViewRegistrationButtonComponent;

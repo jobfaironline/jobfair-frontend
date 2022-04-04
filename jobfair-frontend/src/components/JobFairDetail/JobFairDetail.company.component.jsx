@@ -1,43 +1,22 @@
 import React from 'react'
-import {Card, Col, Empty, Row, Space, Spin, Tag, Typography} from 'antd'
-import { useHistory } from 'react-router-dom'
-import { JOB_FAIR_PLAN_STATUS } from '../../constants/JobFairConst'
-import { convertEnumToString, convertToDateString } from '../../utils/common'
+import {Card, Col, Empty, Row, Space, Spin, Typography} from 'antd'
+import {convertToDateString} from '../../utils/common'
 
-const { Text } = Typography
+const {Text} = Typography
 
 const JobFairDetailCompanyComponent = props => {
-  const { data } = props
+  const {data} = props
   if (data === undefined) {
     return <Spin/>
   }
   if (data.length === 0) {
     return <Empty/>
   }
-  const handleStatusTag = status => {
-    if (status === undefined) {
-      return
-    }
-    switch (status) {
-      case JOB_FAIR_PLAN_STATUS.PENDING:
-        return <Tag color="blue">{convertEnumToString(status)}</Tag>
-      case JOB_FAIR_PLAN_STATUS.APPROVE:
-        return <Tag color="green">{convertEnumToString(status)}</Tag>
-      case JOB_FAIR_PLAN_STATUS.DRAFT:
-        return <Tag color="gold">{convertEnumToString(status)}</Tag>
-      case JOB_FAIR_PLAN_STATUS.REJECT:
-        return <Tag color="red">{convertEnumToString(status)}</Tag>
-      case JOB_FAIR_PLAN_STATUS.DELETED:
-        return <Tag color="volcano">{convertEnumToString(status)}</Tag>
-      default:
-        return <Tag color="orange">{convertEnumToString(status)}</Tag>
-    }
-  }
-  const history = useHistory()
+
   return (
     <>
       {data ? (
-        <Card title="Job fair detail" bordered={true} headStyle={{ textAlign: 'center' }}>
+        <Card title="Job fair detail" bordered={true} headStyle={{textAlign: 'center'}}>
           <Space direction="vertical">
             <Space size="middle" direction="vertical">
               <Row>
@@ -55,7 +34,7 @@ const JobFairDetailCompanyComponent = props => {
                   <Text strong>Job fair time: </Text>
                   <Text italic>
                     {convertToDateString(data?.startTime)}
-                    {' -> '}
+                    {' → '}
                     {convertToDateString(data?.endTime)}
                   </Text>
                 </Col>
@@ -65,7 +44,7 @@ const JobFairDetailCompanyComponent = props => {
                   <Text strong>Company register time: </Text>
                   <Text italic>
                     {convertToDateString(data?.companyRegisterStartTime)}
-                    {' -> '}
+                    {' → '}
                     {convertToDateString(data?.companyRegisterEndTime)}
                   </Text>
                 </Col>
@@ -75,7 +54,7 @@ const JobFairDetailCompanyComponent = props => {
                   <Text strong>Company buy booth time: </Text>
                   <Text italic>
                     {convertToDateString(data?.companyBuyBoothStartTime)}
-                    {' -> '}
+                    {' → '}
                     {convertToDateString(data?.companyBuyBoothEndTime)}
                   </Text>
                 </Col>

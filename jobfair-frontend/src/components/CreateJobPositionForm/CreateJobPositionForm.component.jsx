@@ -26,7 +26,7 @@ const formItemLayout = {
   }
 }
 
-const CreateJobPositionForm = props => {
+const CreateJobPositionFormComponent = props => {
   const location = useLocation()
   const [listContactPersonSuggestion, setListContactPersonSuggestion] = useState()
   const [listEmailSuggestion, setListEmailSuggestion] = useState()
@@ -294,4 +294,4 @@ const CreateJobPositionForm = props => {
   )
 }
 
-export default CreateJobPositionForm
+export default CreateJobPositionFormComponent

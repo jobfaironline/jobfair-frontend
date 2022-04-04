@@ -8,7 +8,7 @@ import ConfirmSubmitResumeComponent from "./ConfirmSubmitResume.component";
 
 const {Text} = Typography
 
-export const SubmitResumeComponent = props => {
+export const SubmitResumeModalComponent = props => {
   const {jobPosition, inventory, closeModal} = props;
   const [selectedResume, setSelectedResume] = useState();
 

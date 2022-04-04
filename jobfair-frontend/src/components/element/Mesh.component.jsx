@@ -1,5 +1,5 @@
 import React from 'react'
-const Mesh = prop => {
+const MeshComponent = prop => {
   const { geometry, material, position, scale, rotation } = prop
   return (
     <mesh
@@ -11,4 +11,4 @@ const Mesh = prop => {
     />
   )
 }
-export default Mesh
+export default MeshComponent
