@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import CreateJobPositionForm from '../../components/create-job-position-form/CreateJobPositionForm'
+import CreateJobPositionForm from '../../components/CreateJobPositionForm/CreateJobPositionForm'
 import { Button, Form, notification } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { createJobPositionsAPI } from '../../services/job-controller/JobControllerService'

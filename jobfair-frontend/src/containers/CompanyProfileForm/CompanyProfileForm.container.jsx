@@ -5,7 +5,7 @@ import {
   getCompanyProfileAPI,
   updateCompanyProfileAPI
 } from '../../services/company-controller/CompanyControllerService'
-import CompanyProfileForm from '../../components/company-profile-form/CompanyProfileForm.component'
+import CompanyProfileForm from '../../components/CompanyProfileForm/CompanyProfileForm.component'
 
 const CompanyProfileFormContainer = props => {
   const [form] = Form.useForm()

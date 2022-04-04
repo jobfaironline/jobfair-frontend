@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useStepsForm } from 'sunflower-antd'
 import { Steps, Input, Button, Form, Result } from 'antd'
-import CreateJobPositionForm from '../create-job-position-form/CreateJobPositionForm'
-import CompanyProfileForm from '../company-profile-form/CompanyProfileForm.component'
+import CreateJobPositionForm from '../CreateJobPositionForm/CreateJobPositionForm'
+import CompanyProfileForm from '../CompanyProfileForm/CompanyProfileForm.component'
 import { benefitConst } from '../../constants/CompanyProfileConstant'
 import { JOB_POSITION_MODEL } from '../../default_models/CreateJobPositionModel/JobPositionModel'
 

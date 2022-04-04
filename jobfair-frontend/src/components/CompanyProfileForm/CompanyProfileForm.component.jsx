@@ -8,7 +8,7 @@ import {
   SizeConst,
   SubCategories
 } from '../../constants/CompanyProfileConstant'
-import ImageUpload from '../image-upload/ImageUpload'
+import ImageUpload from '../ImageUpload/ImageUpload'
 import {
   CompanyProfileValidation,
   MAX_LENGTH_VALIDATOR,

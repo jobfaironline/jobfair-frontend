@@ -1,7 +1,7 @@
 import {Button, Checkbox, Form, notification, Popconfirm, Steps} from 'antd'
 import React, {useEffect, useState} from 'react'
 import {useForm, useStepsForm} from 'sunflower-antd'
-import CompanyProfileForm from '../../components/company-profile-form/CompanyProfileForm.component'
+import CompanyProfileForm from '../../components/CompanyProfileForm/CompanyProfileForm.component'
 import {useHistory, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {getCompanyProfileAPI} from '../../services/company-controller/CompanyControllerService'

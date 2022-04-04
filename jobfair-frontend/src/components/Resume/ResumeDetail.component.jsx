@@ -4,7 +4,7 @@ import ResumeHeader from "./Header/ResumeHeader.component";
 import ResumeContent from "./Content/ResumeContent.component";
 import EvaluationFormComponent from "../EvaluationForm/EvaluationForm.component";
 import {convertDobToAge, convertEnumToString} from "../../utils/common";
-import {QualificationConst} from "../attendant-profile-form/AttendantConstants";
+import {QualificationConst} from "../AttendantProfileForm/AttendantConstants";
 
 const ResumeDetailComponent = props => {
   const {onFinish, form, handleOnChangeDob, data, attendant} = props

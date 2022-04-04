@@ -5,7 +5,7 @@ import {
   getAttendantDetailAPI,
   updateAttendantProfileAPI
 } from '../../services/attendant-controller/AttendantControllerService'
-import AttendantProfileFormComponent from '../../components/attendant-profile-form/AttendantProfileForm.component'
+import AttendantProfileFormComponent from '../../components/AttendantProfileForm/AttendantProfileForm.component'
 import { convertToDateValue, handleConvertRangePicker } from '../../utils/common'
 
 const AttendantProfileFormContainer = () => {
