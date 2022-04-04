@@ -14,13 +14,12 @@ export const PATH = {
   RESULT_SUCCESS_PAGE: '/proceed-success',
   RESULT_FAILED_PAGE: '/proceed-fail',
   FAQ_PAGE: '/faq',
-  DECORATE_BOOTH_PAGE: '/decorate-booth/:companyBoothId/:jobFairId',
-  USER_PAGE: '/user',
+  //decorate booth
+  DECORATE_BOOTH_PAGE: '/decorate-booth/:jobFairId/:companyBoothId',
+  //choose booth page
+  CHOOSE_BOOTH_PAGE: '/choose-booth/:jobFairId',
   CONTRACTS_PAGE: '/contacts',
   PUBLICIZED_JOB_FAIR_PAGE: '/job-fair',
-  CHOOSE_BOOTH_PAGE: '/choose-booth/:jobFairId',
-  CHOOSE_BOOTH_PATH: '/choose-booth/',
-  DECORATE_BOOTH_PATH: '/decorate-booth/',
   HOME: '/home',
   EMPLOYEE_MANAGEMENT: '/employee-management',
   PROCESSED_FAIL: '/proceed-fail',
@@ -29,42 +28,32 @@ export const PATH = {
 }
 export const PATH_ADMIN = {
   JOB_FAIR_LIST_PAGE: '/admin/job-fair-list',
-  APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId',
-  COMPANY_REGISTRATION_PAGE: '/approval-registration',
-  JOB_FAIR_DETAIL_PAGE: '/job-fair-detail',
-  JOB_FAIR_PLAN_LIST: '/job-fair-plan-list',
-  COMPANY_REGISTRATION_DETAIL: '/company-registration-detail'
+  APPROVAL_REGISTRATION_PAGE: '/admin/approval-registration/:jobFairId',
+  JOB_FAIR_DETAIL_PAGE: '/admin/job-fair-detail',
+  JOB_FAIR_PLAN_LIST: '/admin/job-fair-plan-list',
+  COMPANY_REGISTRATION_DETAIL: '/admin/company-registration-detail'
 }
 export const PATH_ATTENDANT = {
   ATTENDANT_PROFILE_PAGE: `/attendant/profile`,
   ATTENDANT_JOB_FAIR_PAGE: '/attendant/job-fair',
-  APPLIED_JOB_PAGE: '/applied-job',
+  APPLIED_JOB_PAGE: '/attendant/applied-job',
   JOB_FAIR_DETAIL: '/attendant/job-fair-detail',
-  RESUME_DETAIL: '/attendant/resume-detail/:resumeId',
   RESUME_DETAIL_PAGE: '/attendant/resume-detail'
 }
 export const PATH_COMPANY_EMPLOYEE = {
   COMPANY_PROFILE_PAGE: '/employee/company-profile',
-  COMPANY_EMPLOYEE_MANAGEMENT: '/company/employee-management',
-  APPLIED_JOB_PAGE: '/applied-job',
-  RESUME_DETAIL: '/resume-detail/:resumeId',
+  APPLIED_JOB_PAGE: '/employee/applied-job',
   RESUME_DETAIL_PAGE: '/employee/resume-detail'
 }
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',
   EMPLOYEE_REGISTER_PAGE: '/company/employee-register',
   REGISTER_JOB_FAIR_FORM: '/company/register-job-fair',
-  COMPANY_PROFILE: '/manager/company-profile',
+  COMPANY_PROFILE: '/company/company-profile',
   JOB_POSITION_MANAGEMENT: '/company/job-position-management',
   JOB_POSITION_DETAIL: '/company/job-position-detail',
   CREATE_JOB_POSITION: '/company/create-job-position',
   JOB_FAIR_DETAIL: '/company/job-fair-detail',
   APPLIED_JOB_PAGE: '/company/applied-job',
-  RESUME_DETAIL: '/resume-detail/:resumeId',
-  RESUME_DETAIL_PAGE: '/manager/resume-detail'
-}
-export const PATH_STAFF = {
-  JOB_FAIR_LIST_PAGE: '/staff/job-fair-list',
-  APPROVAL_REGISTRATION_PAGE: '/approval-registration/:jobFairId',
-  JOB_FAIR_DETAIL_PAGE: '/job-fair-detail'
+  RESUME_DETAIL_PAGE: '/company/resume-detail'
 }

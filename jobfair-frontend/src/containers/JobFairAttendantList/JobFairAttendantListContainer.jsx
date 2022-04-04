@@ -52,17 +52,6 @@ const JobFairAttendantListContainer = (props) => {
       })
   }
 
-  // const getCompanyBoothId = jobFairId => {
-  //   getCompanyBoothByJobFairId(jobFairId)
-  //     .then(res => {
-  //       const result = res.data[0]?.id
-  //       handleRedirect(`${PATH.DECORATE_BOOTH_PATH}${result}/${jobFairId}`)
-  //     })
-  //     .catch(err => {
-  //       console.log(err)
-  //     })
-  // }
-
   const handleFilterByStatus = statusArr => {
     const result = data.filter(item => statusArr.some(st => st === item.status))
     setSearchResult([...result])

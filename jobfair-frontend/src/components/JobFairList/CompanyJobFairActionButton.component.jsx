@@ -156,7 +156,10 @@ const CompanyJobFairActionButton = props => {
     case COMPANY_JOB_FAIR_STATUS.DECORATE_BOOTH:
       return <DecorateBoothButton onClick={() => getCompanyBoothId(item.id)} />
     case COMPANY_JOB_FAIR_STATUS.CHOOSE_BOOTH:
-      return <ChooseBoothButton onClick={() => handleRedirect(`${PATH.CHOOSE_BOOTH_PATH}${item.id}`)} />
+      return <ChooseBoothButton onClick={() => {
+        const url = generatePath(PATH.CHOOSE_BOOTH_PAGE, {jobFairId: item.id})
+        handleRedirect(url)
+      }} />
     case COMPANY_JOB_FAIR_STATUS.HAPPENING:
       return <HappeningButton onClick={() => handleViewMap(item.id)} />
     case COMPANY_JOB_FAIR_STATUS.CLOSED:

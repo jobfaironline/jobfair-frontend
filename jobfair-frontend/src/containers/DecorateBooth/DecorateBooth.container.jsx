@@ -34,7 +34,6 @@ import {LoadingComponent} from "../../components/JobFairParkMap/Loading.componen
 
 export const DecorateBoothContainer = (props) => {
     const {companyBoothId, jobFairId} = props;
-
     const history = useHistory()
     const dispatch = useDispatch();
     const {mode, selectedItem} = useSelector(state => state.decorateBooth)

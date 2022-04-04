@@ -93,9 +93,6 @@ const AppRouter = () => {
         <Route path={PATH.DECORATE_BOOTH_PAGE} exact>
           <DecorateBoothPage />
         </Route>
-        <Route path={PATH.USER_PAGE} exact>
-          <UserPage />
-        </Route>
         <Route path={PATH.CONTRACTS_PAGE} exact>
           <ContactPage />
         </Route>
@@ -227,17 +224,10 @@ const AppRouter = () => {
           path={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL}
           exact
         />
-
         <AdminRouter
           key={PATH_ADMIN.APPROVAL_REGISTRATION_PAGE}
           component={() => <EvaluateBoothInformationPage />}
           path={PATH_ADMIN.APPROVAL_REGISTRATION_PAGE}
-          exact
-        />
-        <AdminRouter
-          key={PATH_ADMIN.COMPANY_REGISTRATION_PAGE}
-          component={() => <EvaluateBoothInformationPage />}
-          path={PATH_ADMIN.COMPANY_REGISTRATION_PAGE}
           exact
         />
         <AdminRouter
@@ -256,18 +246,6 @@ const AppRouter = () => {
           key={PATH_ADMIN.COMPANY_REGISTRATION_DETAIL}
           component={() => <CompanyRegistrationDetailPage />}
           path={PATH_ADMIN.COMPANY_REGISTRATION_DETAIL}
-          exact
-        />
-        <StaffRouter
-          key={PATH_STAFF.APPROVAL_REGISTRATION_PAGE}
-          component={() => <EvaluateBoothInformationPage />}
-          path={PATH_STAFF.APPROVAL_REGISTRATION_PAGE}
-          exact
-        />
-        <StaffRouter
-          key={PATH_STAFF.JOB_FAIR_DETAIL_PAGE}
-          component={() => <JobFairDetailPage />}
-          path={PATH_STAFF.JOB_FAIR_DETAIL_PAGE}
           exact
         />
         <Route path="*" component={() => <ErrorPage code={404} />} />

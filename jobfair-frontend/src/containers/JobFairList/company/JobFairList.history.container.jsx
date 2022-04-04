@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {generatePath, useHistory} from "react-router-dom";
 import {
   getHistoricalJobFairForCompany,
-  getJobFairPlanForCompany
 } from "../../../services/job-fair-controller/JobFairConTrollerService";
 import {getCompanyBoothByJobFairId} from "../../../services/company-booth-controller/CompanyBoothControllerService";
 import {PATH, PATH_ADMIN, PATH_COMPANY_MANAGER} from "../../../constants/Paths/Path";
@@ -59,7 +58,8 @@ const JobFairListHistoryContainer = () => {
     getCompanyBoothByJobFairId(jobFairId)
       .then(res => {
         const result = res.data[0]?.id
-        handleRedirect(`${PATH.DECORATE_BOOTH_PATH}${result}/${jobFairId}`)
+        const url = generatePath(PATH.DECORATE_BOOTH_PAGE, {jobFairId: jobFairId, companyBoothId: result })
+        handleRedirect(url)
       })
       .catch(err => {
 

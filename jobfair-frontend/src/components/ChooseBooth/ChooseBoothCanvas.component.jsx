@@ -8,7 +8,7 @@ import {Modal, notification} from 'antd'
 import {
   getLatestApproveRegistration
 } from '../../services/company-registration-controller/CompanyRegistrationControllerService'
-import {useHistory} from 'react-router-dom'
+import {generatePath, useHistory} from 'react-router-dom'
 import {purchaseBooth} from '../../services/company-buy-booth-controller/CompanyBuyBoothControllerService'
 import {BasicMesh} from '../ThreeJSBaseComponent/ChildMesh.component'
 import {CameraControls} from '../ThreeJSBaseComponent/CameraControls.component'
@@ -42,7 +42,8 @@ export const ChooseBoothCanvas = props => {
       companyRegistrationId: registrationId
     })
       .then(response => {
-        history.push(`${PATH.DECORATE_BOOTH_PATH}${response.data.id}/${jobFairId}`)
+        const url = generatePath(PATH.DECORATE_BOOTH_PAGE, {jobFairId: jobFairId, companyBoothId: modalState.boothId})
+        history.push(url)
       })
       .catch(err => {
         notification['error']({

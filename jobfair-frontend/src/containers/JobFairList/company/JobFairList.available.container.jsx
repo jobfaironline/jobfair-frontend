@@ -1,14 +1,10 @@
 import React, {useEffect, useState} from 'react'
 import {generatePath, useHistory} from 'react-router-dom'
 import JobFairListManagementComponent from '../../../components/JobFairList/JobFairList.management.component'
-import {
-  getAvailableJobFairForCompany,
-  getAvailableJobFairForRegistration,
-  getJobFairPlanForCompany
-} from '../../../services/job-fair-controller/JobFairConTrollerService'
+import {getAvailableJobFairForCompany} from '../../../services/job-fair-controller/JobFairConTrollerService'
 import {getCompanyBoothByJobFairId} from '../../../services/company-booth-controller/CompanyBoothControllerService'
-import {PATH, PATH_ADMIN, PATH_COMPANY_MANAGER} from '../../../constants/Paths/Path'
-import {convertToDateString, handleJobFairRangePicker} from "../../../utils/common";
+import {PATH, PATH_COMPANY_MANAGER} from '../../../constants/Paths/Path'
+import {convertToDateString} from "../../../utils/common";
 import {notification} from "antd";
 
 const approvedJobFairId = 'a50a9875-93aa-4605-8afd-29923d3310fe'
@@ -64,12 +60,12 @@ const JobFairListAvailableContainer = props => {
   }
 
 
-
   const getCompanyBoothId = jobFairId => {
     getCompanyBoothByJobFairId(jobFairId)
       .then(res => {
         const result = res.data[0]?.id
-        handleRedirect(`${PATH.DECORATE_BOOTH_PATH}${result}/${jobFairId}`)
+        const url = generatePath(PATH.DECORATE_BOOTH_PAGE, {jobFairId: jobFairId, companyBoothId: result})
+        handleRedirect(url)
       })
       .catch(err => {
         notification['error']({

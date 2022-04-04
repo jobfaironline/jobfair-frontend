@@ -12,7 +12,6 @@ import {
   PATH_COMPANY_EMPLOYEE,
   PATH_COMPANY_MANAGER,
   PATH_ATTENDANT,
-  PATH_STAFF
 } from '../../constants/Paths/Path'
 export const AttendantMenu = [
   <Menu.Item key={PATH_ATTENDANT.ATTENDANT_PROFILE_PAGE}>
@@ -45,6 +44,9 @@ export const CompanyEmployeeMenu = [
   <Menu.Item key={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}>
     <Link to={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}>Company profile</Link>
   </Menu.Item>,
+  <Menu.Item key={PATH_COMPANY_EMPLOYEE.APPLIED_JOB_PAGE}>
+    <Link to={PATH_COMPANY_EMPLOYEE.APPLIED_JOB_PAGE}>Applications management</Link>
+  </Menu.Item>
 ]
 
 export const AdminMenu = [
@@ -54,16 +56,8 @@ export const AdminMenu = [
   <Menu.Item key={PATH_ADMIN.JOB_FAIR_PLAN_LIST}>
     <Link to={PATH_ADMIN.JOB_FAIR_PLAN_LIST}>Job fair plan list</Link>
   </Menu.Item>,
-  <Menu.Item key={PATH_ADMIN.COMPANY_REGISTRATION_PAGE}>
-    <Link to={PATH_ADMIN.COMPANY_REGISTRATION_PAGE}>View company registration</Link>
-  </Menu.Item>
 ]
 
-export const StaffMenu = [
-  <Menu.Item key={PATH_STAFF.JOB_FAIR_LIST_PAGE}>
-    <Link to={PATH_STAFF.JOB_FAIR_LIST_PAGE}>Job fair list</Link>
-  </Menu.Item>
-]
 
 const NavigationBar = () => {
   const role = useSelector(state => state.authentication?.user?.roles)
@@ -79,8 +73,6 @@ const NavigationBar = () => {
         return CompanyEmployeeMenu
       case 'ADMIN':
         return AdminMenu
-      case 'STAFF':
-        return StaffMenu
       default:
         return null
     }
