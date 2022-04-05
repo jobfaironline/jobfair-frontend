@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import PickJobPositionForm from '../../components/PickJobPositionForm/PickJobPositionForm.component'
-import JobPositionModal from '../../components/JobPositionModal/JobPositionModal.component'
 import { getLatestCompanyRegistration } from '../../services/company-registration-controller/CompanyRegistrationControllerService'
 import AnchorComponent from '../../components/Anchor/Achor.component'
-import { Typography } from 'antd'
+import {Modal, Typography} from 'antd'
+import PickJobPositionTableContainer from "../JobPositionTable/JobPositionTable.container";
 
 const PickJobPositionFormContainer = ({ form }) => {
   const [modalVisibile, setModalVisible] = useState(false)
@@ -49,7 +49,16 @@ const PickJobPositionFormContainer = ({ form }) => {
           title={'Registration description'}
         />
       </div>
-      <JobPositionModal visible={modalVisibile} handleCloseModal={handleCloseModal} form={form} />
+      <Modal
+        width={800}
+        title="Choose job position"
+        visible={modalVisibile}
+        onCancel={handleCloseModal}
+        footer={null}
+        destroyOnClose
+      >
+        {modalVisibile ? <PickJobPositionTableContainer form={form} selectable /> : null}
+      </Modal>
       <PickJobPositionForm handlePickJobPosition={handlePickJobPosition} form={form} handleRemove={handleRemove} />
     </>
   )

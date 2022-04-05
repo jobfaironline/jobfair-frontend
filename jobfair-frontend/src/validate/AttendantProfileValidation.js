@@ -28,7 +28,7 @@ export const AttendantProfileValidation = {
       () => ({
         validator(_, value) {
           const dateValue = moment(value).toDate().getTime()
-          if (!value || dateValue >= Date.parse(MinimumDateOfBirth)) {
+          if (!value || dateValue < Date.parse(MinimumDateOfBirth)) {
             return Promise.reject(new Error('Age restriction required: at least 18 years'))
           }
           return Promise.resolve()
@@ -47,7 +47,7 @@ export const AttendantProfileValidation = {
     REQUIRED_VALIDATOR("Year of experience"),
     () => ({
       validator(_, value) {
-        if (!value || value >= 50) {
+        if (!value || value > 50) {
           return Promise.reject(new Error('The maximum year of experience is 50 years'))
         }
         if (value < 0) {
