@@ -1,5 +1,5 @@
 import React from 'react'
-import ApplicationListComponent from '../../components/ApplicationView/ApplicationList.component'
+import ApplicationListComponent from '../../../components/ApplicationView/ApplicationList.component'
 
 const AttendantApplicationView = () => {
   return (

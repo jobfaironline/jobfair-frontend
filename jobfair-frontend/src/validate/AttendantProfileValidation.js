@@ -1,48 +1,30 @@
 import { MinimumDateOfBirth } from '../constants/ApplicationConst'
 import { PHONE_REGEX } from '../constants/RegexConstant'
 import moment from 'moment'
+import {
+  DATE_RANGE_VALIDATOR,
+  EMAIL_VALIDATOR,
+  MAX_LENGTH_VALIDATOR,
+  PHONE_VALIDATOR,
+  REQUIRED_VALIDATOR,
+  URL_VALIDATOR, YEAR_VALIDATOR
+} from "./GeneralValidation";
 
 export const AttendantProfileValidation = {
   account: {
     email: [
-      {
-        required: true,
-        message: 'This field is required'
-      },
-      {
-        max: 322,
-        message: 'This field has max length is 322 characters'
-      },
-      {
-        type: 'email',
-        message: 'This field is not valid E-mail!'
-      }
+      REQUIRED_VALIDATOR("Email"),
+      ...EMAIL_VALIDATOR()
     ],
     countryId: [
-      {
-        required: true,
-        message: 'This field is required'
-      }
+      REQUIRED_VALIDATOR("Country")
     ],
     phone: [
-      {
-        required: true,
-        message: 'This field is required'
-      },
-      {
-        max: 11,
-        message: 'This field has max length is 11 characters'
-      },
-      {
-        pattern: PHONE_REGEX,
-        message: 'This field is not valid phone.'
-      }
+      REQUIRED_VALIDATOR("Phone"),
+      ...PHONE_VALIDATOR()
     ],
     dob: [
-      {
-        required: true,
-        message: 'This field is required'
-      },
+      REQUIRED_VALIDATOR("Birthday"),
       () => ({
         validator(_, value) {
           const dateValue = moment(value).toDate().getTime()
@@ -53,25 +35,16 @@ export const AttendantProfileValidation = {
         }
       })
     ],
-    firstname: [{ required: true, message: 'First name is required' }],
-    middlename: [{ required: true, message: 'Middle name is required' }],
-    lastname: [{ required: true, message: 'Last name is required' }]
+    firstname: [REQUIRED_VALIDATOR("First name")],
+    middlename: [],
+    lastname: [REQUIRED_VALIDATOR("Last name")]
   },
   address: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
-    {
-      max: 300,
-      message: 'This field has max length is 300 characters'
-    }
+    REQUIRED_VALIDATOR("Address"),
+    MAX_LENGTH_VALIDATOR("Address", 300)
   ],
   yearOfExp: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
+    REQUIRED_VALIDATOR("Year of experience"),
     () => ({
       validator(_, value) {
         if (!value || value >= 50) {
@@ -85,84 +58,56 @@ export const AttendantProfileValidation = {
       }
     })
   ],
-  title: [{ required: true, message: 'Title is required' }],
-  jobTitle: [{ required: true, message: 'Job title is required' }],
+  title: [REQUIRED_VALIDATOR('Title')],
+  jobTitle: [REQUIRED_VALIDATOR('Job title')],
   skills: {
-    name: [{ required: true, message: 'Missing name' }]
+    name: [REQUIRED_VALIDATOR("Skill name")]
   },
   workHistories: {
-    company: [{ required: true, message: 'Missing company' }],
-    description: [{ required: true, message: 'Missing description' }],
-    position: [{ required: true, message: 'Missing position' }],
+    company: [REQUIRED_VALIDATOR("Company")],
+    description: [REQUIRED_VALIDATOR("Description")],
+    position: [REQUIRED_VALIDATOR("Position")],
     range: [
-      { required: true, message: 'Missing date range' },
-      () => ({
-        validator(_, value) {
-          const fromDate = moment(value[0]).toDate().getTime()
-          const toDate = moment(value[1]).toDate().getTime()
-          if (!value) {
-            return Promise.reject(new Error('This field is required'))
-          }
-          if (fromDate >= Date.now()) {
-            return Promise.reject(new Error('From date must be lower than today'))
-          }
-          if (toDate >= Date.now()) {
-            return Promise.reject(new Error('To date must be lower than today'))
-          }
-          return Promise.resolve()
-        }
-      })
+      REQUIRED_VALIDATOR("Date range"),
+      DATE_RANGE_VALIDATOR(new Date(1940, 0, 1).getTime(), Date.now())
     ]
   },
   educations: {
-    subject: [{ required: true, message: 'Missing subject' }],
-    school: [{ required: true, message: 'Missing school' }],
-    achievement: [{ required: true, message: 'Missing achievement' }]
+    subject: [REQUIRED_VALIDATOR("Subject")],
+    school: [REQUIRED_VALIDATOR("School")],
+    achievement: [REQUIRED_VALIDATOR("Achievement")]
   },
   certifications: {
-    name: [{ required: true, message: 'Missing name' }],
-    institution: [{ required: true, message: 'Missing institution' }],
+    name: [REQUIRED_VALIDATOR("Certificate's name")],
+    institution: [REQUIRED_VALIDATOR("Institution")],
     year: [
-      { required: true, message: 'Missing year' },
-      () => ({
-        validator(_, value) {
-          if (!value || value <= 1940) {
-            return Promise.reject(new Error('The minimum year is 1940 years'))
-          }
-          if (value > new Date().getFullYear()) {
-            return Promise.reject(new Error('The year must lower than current year'))
-          }
-          return Promise.resolve()
-        }
-      })
+      REQUIRED_VALIDATOR("Year"),
+      YEAR_VALIDATOR(1940, new Date().getFullYear())
     ],
     certificationLink: [
-      { required: true, message: 'Missing certification link' },
-      { type: 'url', message: 'This field is invalid url' }
+      REQUIRED_VALIDATOR("Certificate's link"),
+      ...URL_VALIDATOR()
     ]
   },
   references: {
-    company: [{ required: true, message: 'Missing company' }],
+    company: [REQUIRED_VALIDATOR("Reference's company")],
     email: [
-      { required: true, message: 'Missing email' },
-      { type: 'email', message: 'This field is invalid email.' }
+      REQUIRED_VALIDATOR("Reference's email"),
+      ...EMAIL_VALIDATOR()
     ],
-    fullname: [{ required: true, message: 'Missing fullname' }],
+    fullname: [REQUIRED_VALIDATOR("Reference's full name")],
     phone: [
-      { required: true, message: 'Missing phone' },
-      {
-        pattern: PHONE_REGEX,
-        message: 'This field is invalid phone.'
-      }
+      REQUIRED_VALIDATOR("Phone number"),
+      ...PHONE_VALIDATOR()
     ],
-    position: [{ required: true, message: 'Missing position' }]
+    position: [REQUIRED_VALIDATOR("Reference's position")]
   },
   activities: {
-    name: [{ required: true, message: 'Missing name' }],
-    functionTitle: [{ required: true, message: 'Missing functionTitle' }],
-    organization: [{ required: true, message: 'Missing organization' }],
-    fromDate: [{ required: true, message: 'Missing fromDate' }],
-    toDate: [{ required: true, message: 'Missing toDate' }],
-    description: [{ required: true, message: 'Missing description' }]
+    name: [REQUIRED_VALIDATOR("Activity's name")],
+    functionTitle: [REQUIRED_VALIDATOR("Function title")],
+    organization: [REQUIRED_VALIDATOR("Organization")],
+    fromDate: [REQUIRED_VALIDATOR("From date")],
+    toDate: [REQUIRED_VALIDATOR("To date")],
+    description: [REQUIRED_VALIDATOR("Activity's description")]
   }
 }

@@ -1,11 +1,24 @@
 import React from 'react'
-import { Button, Checkbox, Divider, Form, Input, Layout, Typography } from 'antd'
+import { Button, Checkbox, Divider, Form, Input, Select, Typography } from 'antd'
 import { Content, Footer, Header } from 'antd/es/layout/layout'
 import { Tabs } from 'antd'
 import './Register.styles.scss'
 import { useForm } from 'react-hook-form'
+import { AttendantRegisterValidation, CompanyRegisterValidation } from '../../validate/RegisterValidation'
 
 const { TabPane } = Tabs
+const { Option } = Select
+
+const genderType = [
+  {
+    title: 'Male',
+    value: 'MALE'
+  },
+  {
+    title: 'Female',
+    value: 'FEMALE'
+  }
+]
 
 const RegisterComponent = ({ onFinish, form }) => {
   return (
@@ -30,57 +43,31 @@ const AttendantForm = () => {
 
   return (
     <Form form={form} name="register" onFinish={() => {}} scrollToFirstError>
-      <Form.Item name="attendantName" rules={[{ required: true, message: 'Please input your name', whitespace: true }]}>
-        <Input placeholder="Your name" />
+      <Form.Item name="firstName" rules={AttendantRegisterValidation.firstName}>
+        <Input placeholder="First name" />
       </Form.Item>
-      <Form.Item
-        name="email"
-        rules={[
-          {
-            type: 'email',
-            message: 'The input is not valid E-mail!'
-          },
-          {
-            required: true,
-            message: 'Please input your E-mail!'
-          }
-        ]}
-      >
+      <Form.Item name="middleName" rules={AttendantRegisterValidation.middleName}>
+        <Input placeholder="Middle name" />
+      </Form.Item>
+      <Form.Item name="lastName" rules={AttendantRegisterValidation.lastName}>
+        <Input placeholder="Last name" />
+      </Form.Item>
+      <Form.Item name="gender" label="Gender" rules={AttendantRegisterValidation.gender}>
+        <Select defaultValue="MALE" placeholder="select your gender">
+          {genderType.map(gender => {
+            return <Option value={gender.value}>{gender.title}</Option>
+          })}
+        </Select>
+      </Form.Item>
+      <Form.Item name="email" rules={AttendantRegisterValidation.email}>
         <Input placeholder="Email" />
       </Form.Item>
 
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!'
-          }
-        ]}
-        hasFeedback
-      >
+      <Form.Item name="password" rules={AttendantRegisterValidation.password} hasFeedback>
         <Input.Password placeholder="Password" />
       </Form.Item>
 
-      <Form.Item
-        name="confirm"
-        dependencies={['password']}
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: 'Please confirm your password!'
-          },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
-                return Promise.resolve()
-              }
-              return Promise.reject(new Error('The two passwords that you entered do not match!'))
-            }
-          })
-        ]}
-      >
+      <Form.Item name="confirm" dependencies={['password']} hasFeedback rules={AttendantRegisterValidation.rePassword}>
         <Input.Password placeholder="Confirm password" />
       </Form.Item>
       <Form.Item>
@@ -100,57 +87,26 @@ const CompanyForm = () => {
 
   return (
     <Form form={form} name="register" onFinish={() => {}} scrollToFirstError>
-      <Form.Item name="companyName" rules={[{ required: true, message: 'Please input your name', whitespace: true }]}>
+      <Form.Item name="companyName" rules={CompanyRegisterValidation.companyName}>
         <Input placeholder="Your company name" />
       </Form.Item>
-      <Form.Item
-        name="email"
-        rules={[
-          {
-            type: 'email',
-            message: 'The input is not valid E-mail!'
-          },
-          {
-            required: true,
-            message: 'Please input your E-mail!'
-          }
-        ]}
-      >
+      <Form.Item name="email" rules={CompanyRegisterValidation.email}>
         <Input placeholder="Email" />
       </Form.Item>
-
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!'
-          }
-        ]}
-        hasFeedback
-      >
+      <Form.Item name="taxId" rules={CompanyRegisterValidation.taxId}>
+        <Input placeholder="Tax ID" />
+      </Form.Item>
+      <Form.Item name="address" rules={CompanyRegisterValidation.address}>
+        <Input placeholder="Address" />
+      </Form.Item>
+      <Form.Item name="phone" rules={CompanyRegisterValidation.phone}>
+        <Input placeholder="Phone number" />
+      </Form.Item>
+      <Form.Item name="password" rules={CompanyRegisterValidation.password} hasFeedback>
         <Input.Password placeholder="Password" />
       </Form.Item>
 
-      <Form.Item
-        name="confirm"
-        dependencies={['password']}
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: 'Please confirm your password!'
-          },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
-                return Promise.resolve()
-              }
-              return Promise.reject(new Error('The two passwords that you entered do not match!'))
-            }
-          })
-        ]}
-      >
+      <Form.Item name="confirm" dependencies={['password']} hasFeedback rules={CompanyRegisterValidation.rePassword}>
         <Input.Password placeholder="Confirm password" />
       </Form.Item>
       <Form.Item>

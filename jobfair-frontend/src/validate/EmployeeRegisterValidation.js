@@ -1,39 +1,22 @@
+import {EMAIL_VALIDATOR, PHONE_VALIDATOR, REQUIRED_VALIDATOR} from "./GeneralValidation";
+
 export const EmployeeRegisterValidation = {
   email: [
-    {
-      type: 'email',
-      message: 'The input is not valid E-mail!'
-    },
-    {
-      required: true,
-      message: 'Please input your E-mail!'
-    }
+    REQUIRED_VALIDATOR("Email"),
+    ...EMAIL_VALIDATOR()
   ],
   firstName: [
-    {
-      required: true,
-      message: 'Please input your nickname!',
-      whitespace: true
-    }
+    REQUIRED_VALIDATOR("First name")
   ],
   middleName: [],
   lastName: [
-    {
-      required: true,
-      message: 'Please input your nickname!',
-      whitespace: true
-    }
+    REQUIRED_VALIDATOR("Last name")
   ],
   phone: [
-    {
-      required: true,
-      message: 'Please input your phone number!'
-    }
+    REQUIRED_VALIDATOR("Phone number"),
+    ...PHONE_VALIDATOR()
   ],
   gender: [
-    {
-      required: true,
-      message: 'Please select gender!'
-    }
+    REQUIRED_VALIDATOR("Gender")
   ]
 }

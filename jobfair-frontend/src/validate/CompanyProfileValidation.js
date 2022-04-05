@@ -1,115 +1,35 @@
-import {PHONE_REGEX} from "../constants/RegexConstant";
-
-export const REQUIRED_VALIDATOR = fieldName => {
-  return {
-    required: true,
-    message: `${fieldName} is required.`
-  }
-}
-
-export const MAX_LENGTH_VALIDATOR = (fieldName, maxValue) => {
-  return {
-    max: maxValue,
-    message: `${fieldName} has max value of length is ${maxValue}`
-  }
-}
-
-export const MIN_LENGTH_VALIDATOR = (fieldName, minValue) => {
-  return {
-    min: minValue,
-    message: `${fieldName} has min value of length is ${minValue}`
-  }
-}
+import {
+  REQUIRED_VALIDATOR,
+  MAX_LENGTH_VALIDATOR,
+  MIN_LENGTH_VALIDATOR,
+  EMAIL_VALIDATOR,
+  PHONE_VALIDATOR, URL_VALIDATOR
+} from "./GeneralValidation";
 
 export const CompanyProfileValidation = {
   name: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
-    {
-      max: 100,
-      message: 'This field has max length is 100 characters'
-    }
+    REQUIRED_VALIDATOR("name"),
+    MAX_LENGTH_VALIDATOR("name", 100)
   ],
   address: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
-    {
-      max: 300,
-      message: 'This field has max length is 300 characters'
-    }
+    REQUIRED_VALIDATOR("address"),
+    MAX_LENGTH_VALIDATOR("address", 300)
   ],
   email: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
-    {
-      max: 322,
-      message: 'This field has max length is 322 characters'
-    },
-    {
-      type: 'email',
-      message: 'This field has invalid email'
-    }
-  ],
-  taxId: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
-    {
-      max: 13,
-      message: 'This field has max length is 13 characters'
-    },
-    {
-      min: 10,
-      message: 'This field has min length is 10 characters'
-    }
+    REQUIRED_VALIDATOR("email"),
+    ...EMAIL_VALIDATOR()
   ],
   phone: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
-    {
-      max: 11,
-      message: 'This field has max length is 11 characters'
-    },
-    {
-      pattern: PHONE_REGEX,
-      message: 'This field has invalid phone number'
-    }
+    REQUIRED_VALIDATOR("phone"),
+    ...PHONE_VALIDATOR()
   ],
   url: [
-    {
-      max: 2048,
-      message: 'This field has max length is 2048 characters'
-    }
-  ],
-  description: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
-    {
-      max: 3000,
-      message: 'This field has max length is 3000 characters'
-    }
+    ...URL_VALIDATOR()
   ],
   benefits: {
     description: [
-      {
-        required: true,
-        message: 'This field is required'
-      },
-      {
-        max: 3000,
-        message: 'This field has max length is 3000 characters'
-      }
+      REQUIRED_VALIDATOR("benefit's description"),
+      MAX_LENGTH_VALIDATOR("benefit's description", 300)
     ]
   }
 }
