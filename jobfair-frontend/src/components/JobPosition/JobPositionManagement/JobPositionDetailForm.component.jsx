@@ -4,6 +4,7 @@ import { JobLevelConst, LanguageConst } from '../../../constants/JobPositionCons
 import { CompanyProfileValidation } from '../../../validate/CompanyProfileValidation'
 import { InfoCircleOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories } from '../../../constants/CompanyProfileConstant'
+import {JobPositionValidation} from "../../../validate/CreateJobPositionValidation";
 import Text from 'antd/es/typography/Text'
 
 const JobPositionDetailFormComponent = ({ form, onFinish }) => {
@@ -23,11 +24,11 @@ const JobPositionDetailFormComponent = ({ form, onFinish }) => {
           label="Title"
           name={'title'}
           hasFeedback
-          // rules={AttendantProfileValidation.account.email}
+          rules={JobPositionValidation.title}
         >
           <Input placeholder="Title" style={{ width: 200 }} />
         </Form.Item>
-        <Form.Item label="Job level" name={'level'} hasFeedback>
+        <Form.Item label="Job level" name={'level'} rules={JobPositionValidation.jobLevel} hasFeedback>
           <Select
             showSearch
             style={{ width: 250 }}
@@ -43,15 +44,7 @@ const JobPositionDetailFormComponent = ({ form, onFinish }) => {
             ))}
           </Select>
         </Form.Item>
-        <Form.Item
-          label="Job level"
-          name={'level'}
-          hasFeedback
-          // rules={AttendantProfileValidation.account.email}
-        >
-          <Input placeholder="Title" style={{ width: 200 }} />
-        </Form.Item>
-        <Form.Item label="Language" name={'language'} hasFeedback>
+        <Form.Item label="Language" name={'language'} hasFeedback rules={JobPositionValidation.language}>
           <Select
             showSearch
             style={{ width: 250 }}
@@ -67,20 +60,21 @@ const JobPositionDetailFormComponent = ({ form, onFinish }) => {
             ))}
           </Select>
         </Form.Item>
-        <Form.Item label="Contact email" name={'contactEmail'} hasFeedback rules={CompanyProfileValidation.email}>
+        <Form.Item label="Contact email" name={'contactEmail'} hasFeedback rules={JobPositionValidation.email}>
           <Input placeholder="Contact email" style={{ width: 200 }} />
         </Form.Item>
         <Form.Item
           label="Contact person name"
           name={'contactPersonName'}
           hasFeedback
-          rules={CompanyProfileValidation.name}
+          rules={JobPositionValidation.contactPerson}
         >
           <Input placeholder="Contact person name" style={{ width: 200 }} />
         </Form.Item>
         <Form.Item
           label="Company industry"
           name="subCategoriesIds"
+          rules={JobPositionValidation.jobCategory}//TODO: Check again
           tooltip={{
             title: 'You can select maximum 3 items',
             icon: <InfoCircleOutlined />
@@ -125,7 +119,7 @@ const JobPositionDetailFormComponent = ({ form, onFinish }) => {
 
       <Space size="large">
         <Card title="Skills" style={{ width: 750 }} headStyle={{ fontWeight: 700, fontSize: 24 }}>
-          <Form.List name="skillTagIds" label="Skills">
+          <Form.List name="skillTagIds" label="Skills" rules={JobPositionValidation.skillTags}>
             {(fields, { add, remove }) => {
               return (
                 <>

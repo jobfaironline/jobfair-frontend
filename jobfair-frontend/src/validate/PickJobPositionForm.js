@@ -1,10 +1,12 @@
+import { NUMBER_RANGE_VALIDATOR, REQUIRED_VALIDATOR } from './GeneralValidation'
+
 export const PickJobPositionFormValidation = {
-  jobTitle: [{ required: true, message: 'Missing title' }],
-  description: [{ required: true, message: 'Missing description' }],
-  requirement: [{ required: true, message: 'Missing requirement' }],
+  jobTitle: [REQUIRED_VALIDATOR('Job title')],
+  description: [REQUIRED_VALIDATOR('Description')],
+  requirement: [REQUIRED_VALIDATOR('Requirement')],
   minSalary: name => {
     return [
-      { required: true, message: 'Missing min salary' },
+      REQUIRED_VALIDATOR('Min salary'),
       { pattern: /^\d+$/, message: 'Invalid number format' },
       ({ getFieldValue }) => ({
         validator(_, value) {
@@ -52,21 +54,5 @@ export const PickJobPositionFormValidation = {
       })
     ]
   },
-  numberOfPosition: [
-    { required: true, message: 'Missing number of position' },
-    { pattern: /^\d+$/, message: 'Invalid number format' },
-    () => ({
-      validator(_, value) {
-        const numOfPosition = parseInt(value)
-        if (!value || numOfPosition >= 10000) {
-          return Promise.reject(new Error('The maximum of position is 10000'))
-        }
-        if (numOfPosition <= 0) {
-          return Promise.reject(new Error('The minimum of position is 1'))
-        }
-
-        return Promise.resolve()
-      }
-    })
-  ]
+  numberOfPosition: [REQUIRED_VALIDATOR('Number of position'), NUMBER_RANGE_VALIDATOR(1, 10000)]
 }

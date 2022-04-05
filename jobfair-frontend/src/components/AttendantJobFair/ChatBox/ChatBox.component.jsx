@@ -8,6 +8,7 @@ import AgoraRTC from 'agora-rtc-react'
 import SendIcon from '@mui/icons-material/Send'
 import {useSelector} from 'react-redux'
 import {getAgoraRTMToken} from "../../../services/agora-token-controller/AgoraTokenControllerService";
+import {REQUIRED_VALIDATOR} from "../../../validate/GeneralValidation";
 
 class Message {
   constructor(accountName, content, isMyMessage) {
@@ -128,10 +129,7 @@ const ChatBox = props => {
               <Form.Item
                 name="message"
                 rules={[
-                  {
-                    required: true,
-                    message: 'Please input your message!'
-                  }
+                  REQUIRED_VALIDATOR("Message")
                 ]}
               >
                 <Input

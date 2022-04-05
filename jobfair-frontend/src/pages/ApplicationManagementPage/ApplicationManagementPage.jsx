@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Divider, Tabs, Typography } from 'antd'
-import AttendantApplicationView from '../../containers/ApplicationView/AttendantApplicationView.container'
+import AttendantApplicationView from '../../containers/ApplicationView/attendant/AttendantApplicationView.container'
 import CompanyApplicationView from '../../containers/ApplicationView/company/CompanyApplicationView.container'
 
 const { TabPane } = Tabs
@@ -12,7 +12,7 @@ const ApplicationManagementPage = () => {
     switch (role) {
       case 'COMPANY_EMPLOYEE':
       case 'COMPANY_MANAGER':
-        return <CompanyApplicationView {...viewProps} role={role}/>
+        return <CompanyApplicationView {...viewProps} role={role} />
       case 'ATTENDANT':
         return <AttendantApplicationView {...viewProps} />
     }

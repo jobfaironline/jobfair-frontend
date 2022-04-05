@@ -1,86 +1,39 @@
+import {EMAIL_VALIDATOR, MAX_LENGTH_VALIDATOR, REQUIRED_VALIDATOR} from "./GeneralValidation";
+
 export const JobPositionValidation = {
   title: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
-    {
-      max: 100,
-      message: 'This field has max length is 100 characters'
-    }
+    REQUIRED_VALIDATOR("Title"),
+    MAX_LENGTH_VALIDATOR("Title", 100)
   ],
   jobLevel: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
+    REQUIRED_VALIDATOR("Job level"),
   ],
   jobType: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
+    REQUIRED_VALIDATOR("Job type"),
   ],
   language: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
+    REQUIRED_VALIDATOR("Language"),
   ],
   skillTags: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
+    REQUIRED_VALIDATOR("Skill tag"),
   ],
   jobCategory: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
+    REQUIRED_VALIDATOR("Job category"),
   ],
   description: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
-    {
-      max: 3000,
-      message: 'This field has max length is 3000 characters'
-    }
+    REQUIRED_VALIDATOR("Description"),
+    MAX_LENGTH_VALIDATOR("Description", 3000)
   ],
   requirements: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
-    {
-      max: 3000,
-      message: 'This field has max length is 3000 characters'
-    }
+    REQUIRED_VALIDATOR("Requirements"),
+    MAX_LENGTH_VALIDATOR("Requirements", 3000)
   ],
   contactPerson: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
-    {
-      max: 300,
-      message: 'This field has max length is 300 characters'
-    }
+    REQUIRED_VALIDATOR("Contact person"),
+    MAX_LENGTH_VALIDATOR("Contact person", 300)
   ],
   email: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
-    {
-      max: 322,
-      message: 'This field has max length is 322 characters'
-    },
-    {
-      type: 'email',
-      message: 'The input is not valid E-mail!'
-    },
+    REQUIRED_VALIDATOR("Email"),
+    ...EMAIL_VALIDATOR()
   ]
 }

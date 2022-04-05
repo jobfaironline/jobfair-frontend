@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { Content, Footer, Header } from 'antd/es/layout/layout'
 import { PATH } from '../../constants/Paths/Path'
 import './Login.styles.scss'
+import { LoginValidation } from '../../validate/LoginValidation'
 
 const LoginComponent = ({ onFinish, form }) => {
   const history = useHistory()
@@ -14,20 +15,10 @@ const LoginComponent = ({ onFinish, form }) => {
       </Divider>
       <div className="input-container">
         <Form className="login-form" form={form} onFinish={onFinish} autoComplete="off">
-          <Form.Item
-            name="email"
-            hasFeedback
-            rules={[
-              { required: true, message: 'Please input your email!' },
-              {
-                type: 'email',
-                message: 'This field has invalid email format.'
-              }
-            ]}
-          >
+          <Form.Item name="email" hasFeedback rules={LoginValidation.email}>
             <Input placeholder="Email" />
           </Form.Item>
-          <Form.Item name="password" hasFeedback rules={[{ required: true, message: 'Please input your password!' }]}>
+          <Form.Item name="password" hasFeedback rules={LoginValidation.password}>
             <Input.Password placeholder="Password" />
           </Form.Item>
           <Form.Item className="login">
