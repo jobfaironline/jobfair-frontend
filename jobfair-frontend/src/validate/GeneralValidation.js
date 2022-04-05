@@ -65,13 +65,13 @@ export const NUMBER_RANGE_VALIDATOR = (minValue, maxValue) => {
   return () => ({
     validator(_, value) {
       const num = parseInt(value)
-      if (/^\d+$/.test(value)) {
-        return Promise.reject(new Error(`Invalid number value}`))
+      if (!/^\d+$/.test(value)) {
+        return Promise.reject(new Error(`Invalid number value`))
       }
-      if (!value || num >= maxValue) {
+      if (!value || num > maxValue) {
         return Promise.reject(new Error(`The maximum of position is ${maxValue}`))
       }
-      if (num <= minValue) {
+      if (num < minValue) {
         return Promise.reject(new Error(`The minimum of position is ${minValue}`))
       }
 
@@ -108,7 +108,7 @@ export const DATE_RANGE_VALIDATOR = (minTime, maxTime) => {
 export const YEAR_VALIDATOR = (minYear, maxYear) => {
   return () => ({
     validator(_, value) {
-      if (!value || value <= minYear) {
+      if (!value || value < minYear) {
         return Promise.reject(new Error(`The minimum year is ${minYear} years`))
       }
       if (value > maxYear) {

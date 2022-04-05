@@ -16,10 +16,8 @@ const JobPositionDetailModalComponent = (props) => {
         visible,
         handleOk,
         handleCancel,
-        data,
         form,
         onFinish,
-        handleDelete,
     } = props
 
 

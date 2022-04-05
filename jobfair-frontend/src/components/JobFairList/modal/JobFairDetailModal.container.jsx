@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import JobFairDetailModalComponent from './JobFairDetailModal.component'
 import { getAccountByIdAPI } from '../../../services/account-controller/AccountControllerService'
-import { notification } from 'antd'
+import {Col, Modal, notification, Typography} from 'antd'
 import { evaluateJobFairPlanAPI } from '../../../services/job-fair-controller/JobFairConTrollerService'
 import {
   getAllRegistractionForAdmin,
@@ -11,6 +10,9 @@ import { CompanyRegistrationStatus } from '../../../constants/CompanyRegistratio
 import { getLayoutDetail } from '../../../services/layout-controller/LayoutControllerService'
 import { convertEnumToString } from '../../../utils/common'
 import { mapperJobFairDetail } from '../../../utils/mapperJobFairDetail'
+import JobFairDetailComponent from "../../JobFairDetail/JobFairDetail.component";
+
+const { Text } = Typography
 
 const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVisible, jobFairList }) => {
   const [jobFairDetail, setJobFairDetail] = useState({})
@@ -69,16 +71,7 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
       })
   }
 
-  const componentProps = {
-    data: mapperJobFairDetail(jobFairDetail, creatorInfo),
-    visible: visible,
-    onOk: onOk,
-    onCancel: onCancel,
-    onFinish: onFinish,
-    totalRegistration: totalRegistration,
-    totalBooth: totalBooth,
-    totalApproval: totalApproval
-  }
+
 
   const getTotalCompanyRegistrationOfJobFair = async () => {
     if (jobFairId !== undefined) {
@@ -110,7 +103,25 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
     }
   }
 
-  return <>{visible ? <JobFairDetailModalComponent {...componentProps} /> : null}</>
+  const data = mapperJobFairDetail(jobFairDetail, creatorInfo);
+  const { ...result } = data ? data : {}
+
+  return !visible ? null :
+    <>
+      <Modal title="Job Fair Detail" visible={visible} onOk={onOk} onCancel={onCancel} width={1300}>
+        <JobFairDetailComponent
+          data={data}
+          onFinish={onFinish}
+          totalRegistration={totalRegistration}
+          totalBooth={totalBooth}
+          totalApproval={totalApproval}
+        />
+        <Col span={24}>
+          <Text strong>Creator Information: </Text>
+          <Text italic>{result.creatorInfo}</Text>
+        </Col>
+      </Modal>
+    </>
 }
 
 export default JobFairDetailModalContainer

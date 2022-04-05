@@ -42,7 +42,7 @@ export const PickJobPositionFormValidation = {
           if (maxValue < minValue) {
             return Promise.reject(new Error('Invalid max salary.'))
           }
-          if (maxValue <= 0) {
+          if (maxValue < 1) {
             return Promise.reject(new Error('The minimum of salary is 1'))
           }
           if (maxValue > 99999) {
