@@ -10,9 +10,7 @@ const JobPositionDetailModalContainer = props => {
 
   const init = () => {
     jobPosition['skillTagIds'] = jobPosition['skillTagDTOS']
-    jobPosition['subCategoriesIds'] = jobPosition['subCategoryDTOs']?.map(
-      item => item.id
-    )
+    jobPosition['subCategoriesIds'] = jobPosition['subCategoryDTOs']?.map(item => item.id)
     form.setFieldsValue({ ...jobPosition })
   }
 

@@ -24,11 +24,7 @@ export const SampleItemMenuContainer = () => {
       return
     }
     dispatch(decorateBoothAction.setMode(ModeConstant.ADD))
-    dispatch(
-      decorateBoothAction.setSelectedSampleItem(
-        sampleItems.filter(item => item.id === id)[0]
-      )
-    )
+    dispatch(decorateBoothAction.setSelectedSampleItem(sampleItems.filter(item => item.id === id)[0]))
   }
 
   const sampleItemMenuProps = {

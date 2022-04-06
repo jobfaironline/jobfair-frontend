@@ -6,9 +6,7 @@ import './PasswordInput.module.scss'
 const PasswordInput = ({ register, name, ...rest }) => {
   ;<Input.Password
     placeholder="input password"
-    iconRender={visible =>
-      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-    }
+    iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
     {...register(name)}
     {...rest}
     className="InputPassword"

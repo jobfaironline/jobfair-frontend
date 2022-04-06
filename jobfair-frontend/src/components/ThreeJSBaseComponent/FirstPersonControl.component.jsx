@@ -7,8 +7,7 @@ import BasicControlInput from '../../utils/ThreeJS/BasicControlInput'
 import * as THREE from 'three'
 
 export const FirstPersonControl = props => {
-  const { model, isChangeCamera, collidableMeshListRef, geckoClientRef, zoom } =
-    props
+  const { model, isChangeCamera, collidableMeshListRef, geckoClientRef, zoom } = props
   const { camera, scene } = useThree()
   const controlRef = useRef()
   const speed = 0.1

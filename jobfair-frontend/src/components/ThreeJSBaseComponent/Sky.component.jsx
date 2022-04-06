@@ -6,12 +6,7 @@ const Morning = () => {
     <>
       <ambientLight intensity={0.7} />
       <directionalLight intensity={0.4} position={[5, 1, 8]} />
-      <Sky
-        distance={450000}
-        sunPosition={[5, 1, 8]}
-        inclination={0}
-        azimuth={0.25}
-      />
+      <Sky distance={450000} sunPosition={[5, 1, 8]} inclination={0} azimuth={0.25} />
     </>
   )
 }

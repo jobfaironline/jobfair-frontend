@@ -14,16 +14,9 @@ const ChatField = prop => {
     <div className={styles.container}>
       {messageList?.map(message => {
         if (message.isMyMessage) {
-          return (
-            <MessageSent name={message.accountName} message={message.content} />
-          )
+          return <MessageSent name={message.accountName} message={message.content} />
         } else {
-          return (
-            <MessageReceived
-              name={message.accountName}
-              message={message.content}
-            />
-          )
+          return <MessageReceived name={message.accountName} message={message.content} />
         }
       })}
       <div ref={endChatRef} />

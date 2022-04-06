@@ -82,17 +82,7 @@ export const calculateMeshSize = mesh => {
   return { length: vector.x, height: vector.y, width: vector.z }
 }
 
-export const calculatePositionWithBoundary = ({
-  x,
-  y,
-  z,
-  x_range,
-  y_range,
-  z_range,
-  length,
-  width,
-  height
-}) => {
+export const calculatePositionWithBoundary = ({ x, y, z, x_range, y_range, z_range, length, width, height }) => {
   let new_x = x
   let new_y = y
   let new_z = z
@@ -112,9 +102,7 @@ export const calculatePositionWithBoundary = ({
 
 export const addVideoTexture = (mesh, videoData) => {
   if (Object.keys(videoData).includes(mesh.name)) {
-    const imagePlane = mesh.children.filter(child =>
-      child.name.includes(IMAGE_PLANE_NAME)
-    )[0]
+    const imagePlane = mesh.children.filter(child => child.name.includes(IMAGE_PLANE_NAME))[0]
     const vid = document.createElement('video')
     vid.crossOrigin = 'Anonymous'
     vid.loop = true
@@ -155,19 +143,11 @@ export const rotateModelRight = (mesh, angleInDegree) => {
 }
 
 export const moveModelUp = (mesh, distance) => {
-  mesh.position.set(
-    mesh.position.x,
-    mesh.position.y + distance,
-    mesh.position.z
-  )
+  mesh.position.set(mesh.position.x, mesh.position.y + distance, mesh.position.z)
 }
 
 export const moveModelDown = (mesh, distance) => {
-  mesh.position.set(
-    mesh.position.x,
-    mesh.position.y - distance,
-    mesh.position.z
-  )
+  mesh.position.set(mesh.position.x, mesh.position.y - distance, mesh.position.z)
 }
 
 export const extractTexture = (mesh, meshName) => {

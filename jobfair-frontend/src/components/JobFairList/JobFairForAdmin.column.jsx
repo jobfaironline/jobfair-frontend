@@ -83,9 +83,7 @@ const JobFairForAdminColumn = (getColumnSearchProps, key) => {
             }
             break
         }
-        return (
-          <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
-        )
+        return <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
       }
     }
   ]

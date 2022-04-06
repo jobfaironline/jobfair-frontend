@@ -16,16 +16,7 @@ import { useSelector } from 'react-redux'
 import BasicControlInput from '../../utils/ThreeJS/BasicControlInput'
 
 class CharacterModel extends BasicCharacterControl {
-  constructor({
-    input,
-    animations,
-    target,
-    mixer,
-    thirdPersonCamera,
-    collidableMeshListRef,
-    zoom,
-    geckoClientRef
-  }) {
+  constructor({ input, animations, target, mixer, thirdPersonCamera, collidableMeshListRef, zoom, geckoClientRef }) {
     super({
       input,
       animations,
@@ -40,12 +31,7 @@ class CharacterModel extends BasicCharacterControl {
   }
 
   switchAnimation() {
-    if (
-      this._input.keys.right ||
-      this._input.keys.forward ||
-      this._input.keys.left ||
-      this._input.keys.backward
-    ) {
+    if (this._input.keys.right || this._input.keys.forward || this._input.keys.left || this._input.keys.backward) {
       if (this._input.keys.backward) {
         this.animations.walk.timeScale = -1
       } else {
@@ -97,14 +83,10 @@ export const AttendantJobFairBoothContainer = props => {
   const process = async () => {
     const boothMesh = await getBoothMesh(companyBoothId)
 
-    const floorMesh = boothMesh.children.filter(
-      child => child.name === 'sand'
-    )[0]
+    const floorMesh = boothMesh.children.filter(child => child.name === 'sand')[0]
     const floorHeight = calculateMeshSize(floorMesh).height
     //load model
-    const model = await loadFBXModel(
-      'https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx'
-    )
+    const model = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx')
     //const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx");
 
     const boothSize = calculateMeshSize(boothMesh)
@@ -125,12 +107,8 @@ export const AttendantJobFairBoothContainer = props => {
     //load animation
     /* const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx");
     const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking4.fbx")*/
-    const idleModel = await loadFBXModel(
-      'https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx'
-    )
-    const walkingModel = await loadFBXModel(
-      'https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx'
-    )
+    const idleModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx')
+    const walkingModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx')
     const mixer = new THREE.AnimationMixer(model)
     const animations = {
       walk: mixer.clipAction(walkingModel.animations[0]),
@@ -163,15 +141,9 @@ export const AttendantJobFairBoothContainer = props => {
       const obj = JSON.parse(data)
       const userState = []
       for (const state of obj) {
-        const model = await loadFBXModel(
-          'https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx'
-        )
-        const idleModel = await loadFBXModel(
-          'https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx'
-        )
-        const walkingModel = await loadFBXModel(
-          'https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx'
-        )
+        const model = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx')
+        const idleModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx')
+        const walkingModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx')
         const mixer = new THREE.AnimationMixer(model)
         const animations = {
           walk: mixer.clipAction(walkingModel.animations[0]),
@@ -187,12 +159,7 @@ export const AttendantJobFairBoothContainer = props => {
           }
         })
         model.position.set(state.position.x, state.position.y, state.position.z)
-        model.quaternion.set(
-          state.quaternion.x,
-          state.quaternion.y,
-          state.quaternion.z,
-          state.quaternion.w
-        )
+        model.quaternion.set(state.quaternion.x, state.quaternion.y, state.quaternion.z, state.quaternion.w)
         state.model = model
         state.mixer = mixer
         state.animations = animations
@@ -203,15 +170,9 @@ export const AttendantJobFairBoothContainer = props => {
     geckoClientRef.current.on('new-user-connect', async data => {
       console.log('new-user-connect', data)
       const obj = JSON.parse(data)
-      const model = await loadFBXModel(
-        'https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx'
-      )
-      const idleModel = await loadFBXModel(
-        'https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx'
-      )
-      const walkingModel = await loadFBXModel(
-        'https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx'
-      )
+      const model = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx')
+      const idleModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx')
+      const walkingModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx')
       const mixer = new THREE.AnimationMixer(model)
       const animations = {
         walk: mixer.clipAction(walkingModel.animations[0]),
@@ -227,12 +188,7 @@ export const AttendantJobFairBoothContainer = props => {
         }
       })
       model.position.set(obj.position.x, obj.position.y, obj.position.z)
-      model.quaternion.set(
-        obj.quaternion.x,
-        obj.quaternion.y,
-        obj.quaternion.z,
-        obj.quaternion.w
-      )
+      model.quaternion.set(obj.quaternion.x, obj.quaternion.y, obj.quaternion.z, obj.quaternion.w)
 
       obj.model = model
       obj.mixer = mixer
@@ -254,17 +210,8 @@ export const AttendantJobFairBoothContainer = props => {
       isChangeCamera.current = false
       setUser(prevState => {
         const state = prevState.filter(abc => abc.id === data.userId)[0]
-        state?.model.position.set(
-          data.position.x,
-          data.position.y,
-          data.position.z
-        )
-        state?.model.quaternion.set(
-          data.quaternion.x,
-          data.quaternion.y,
-          data.quaternion.z,
-          data.quaternion.w
-        )
+        state?.model.position.set(data.position.x, data.position.y, data.position.z)
+        state?.model.quaternion.set(data.quaternion.x, data.quaternion.y, data.quaternion.z, data.quaternion.w)
         state.isMoving = true
         /*state?.animations.walk.crossFadeTo(state?.animations.idle, 0.5, true);
         state?.animations.walk.play();*/
@@ -291,12 +238,7 @@ export const AttendantJobFairBoothContainer = props => {
     }
     const initialQuaternion = new THREE.Quaternion()
 
-    geckoClientRef.current.joinChannel(
-      companyBoothId,
-      userId,
-      initialPosition,
-      initialQuaternion
-    )
+    geckoClientRef.current.joinChannel(companyBoothId, userId, initialPosition, initialQuaternion)
 
     setState(prevState => {
       return {

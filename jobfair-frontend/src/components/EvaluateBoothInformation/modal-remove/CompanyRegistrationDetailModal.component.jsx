@@ -1,23 +1,13 @@
 import React from 'react'
 import { Col, Divider, Modal, Row, Space, Typography } from 'antd'
 
-const CompanyRegistrationDetailModalComponent = ({
-  data,
-  visible,
-  onOk,
-  onCancel
-}) => {
+const CompanyRegistrationDetailModalComponent = ({ data, visible, onOk, onCancel }) => {
   const { ...result } = data ? data : {}
   const { Text } = Typography
 
   return (
     <>
-      <Modal
-        title="Registration Detail"
-        visible={visible}
-        onOk={onOk}
-        onCancel={onCancel}
-      >
+      <Modal title="Registration Detail" visible={visible} onOk={onOk} onCancel={onCancel}>
         <Space size="middle" direction="vertical">
           <Row>
             <Col span={24}>
@@ -59,12 +49,8 @@ const CompanyRegistrationDetailModalComponent = ({
               </Row>
               <Row>
                 <Col span={24}>
-                  <Text strong>
-                    Person contact information (full name/email):{' '}
-                  </Text>
-                  <Text
-                    italic
-                  >{`${item.contactPersonName}/${item.contactEmail}`}</Text>
+                  <Text strong>Person contact information (full name/email): </Text>
+                  <Text italic>{`${item.contactPersonName}/${item.contactEmail}`}</Text>
                 </Col>
               </Row>
             </div>

@@ -21,9 +21,7 @@ export const AttendantProfileValidation = {
         validator(_, value) {
           const dateValue = moment(value).toDate().getTime()
           if (!value || dateValue < Date.parse(MinimumDateOfBirth)) {
-            return Promise.reject(
-              new Error('Age restriction required: at least 18 years')
-            )
+            return Promise.reject(new Error('Age restriction required: at least 18 years'))
           }
           return Promise.resolve()
         }
@@ -33,23 +31,16 @@ export const AttendantProfileValidation = {
     middlename: [],
     lastname: [REQUIRED_VALIDATOR('Last name')]
   },
-  address: [
-    REQUIRED_VALIDATOR('Address'),
-    MAX_LENGTH_VALIDATOR('Address', 300)
-  ],
+  address: [REQUIRED_VALIDATOR('Address'), MAX_LENGTH_VALIDATOR('Address', 300)],
   yearOfExp: [
     REQUIRED_VALIDATOR('Year of experience'),
     () => ({
       validator(_, value) {
         if (!value || value > 50) {
-          return Promise.reject(
-            new Error('The maximum year of experience is 50 years')
-          )
+          return Promise.reject(new Error('The maximum year of experience is 50 years'))
         }
         if (value < 0) {
-          return Promise.reject(
-            new Error('The minimum year of experience is 0 years')
-          )
+          return Promise.reject(new Error('The minimum year of experience is 0 years'))
         }
 
         return Promise.resolve()
@@ -65,10 +56,7 @@ export const AttendantProfileValidation = {
     company: [REQUIRED_VALIDATOR('Company')],
     description: [REQUIRED_VALIDATOR('Description')],
     position: [REQUIRED_VALIDATOR('Position')],
-    range: [
-      REQUIRED_VALIDATOR('Date range'),
-      DATE_RANGE_VALIDATOR(new Date(1940, 0, 1).getTime(), Date.now())
-    ]
+    range: [REQUIRED_VALIDATOR('Date range'), DATE_RANGE_VALIDATOR(new Date(1940, 0, 1).getTime(), Date.now())]
   },
   educations: {
     subject: [REQUIRED_VALIDATOR('Subject')],
@@ -78,14 +66,8 @@ export const AttendantProfileValidation = {
   certifications: {
     name: [REQUIRED_VALIDATOR("Certificate's name")],
     institution: [REQUIRED_VALIDATOR('Institution')],
-    year: [
-      REQUIRED_VALIDATOR('Year'),
-      YEAR_VALIDATOR(1940, new Date().getFullYear())
-    ],
-    certificationLink: [
-      REQUIRED_VALIDATOR("Certificate's link"),
-      ...URL_VALIDATOR()
-    ]
+    year: [REQUIRED_VALIDATOR('Year'), YEAR_VALIDATOR(1940, new Date().getFullYear())],
+    certificationLink: [REQUIRED_VALIDATOR("Certificate's link"), ...URL_VALIDATOR()]
   },
   references: {
     company: [REQUIRED_VALIDATOR("Reference's company")],

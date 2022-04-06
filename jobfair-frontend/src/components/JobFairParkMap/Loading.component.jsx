@@ -12,12 +12,7 @@ export const LoadingComponent = () => {
         alignItems: 'center'
       }}
     >
-      <ReactLoading
-        type={'spin'}
-        color={'#1890ff'}
-        height={'100px'}
-        width={'100px'}
-      />
+      <ReactLoading type={'spin'} color={'#1890ff'} height={'100px'} width={'100px'} />
     </div>
   )
 }

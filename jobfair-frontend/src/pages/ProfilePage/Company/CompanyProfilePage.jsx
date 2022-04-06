@@ -6,11 +6,7 @@ const CompanyProfile = () => {
   return (
     <div>
       <Space direction="vertical" size="large">
-        <Card
-          title="Company profile"
-          style={{ width: 1400 }}
-          headStyle={{ fontWeight: 700, fontSize: 24 }}
-        >
+        <Card title="Company profile" style={{ width: 1400 }} headStyle={{ fontWeight: 700, fontSize: 24 }}>
           <CompanyProfileFormContainer />
         </Card>
       </Space>

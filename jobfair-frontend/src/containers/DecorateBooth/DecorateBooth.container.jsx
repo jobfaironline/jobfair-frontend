@@ -50,7 +50,9 @@ export const DecorateBoothContainer = props => {
       response.data.companyBoothLayoutVideos?.forEach(data => {
         companyBoothLayoutVideos[data.itemName] = data.url
       })
-    } catch (err) {}
+    } catch (err) {
+      //handle error in here
+    }
     //parse file and get items
     const glb = await loadGLBModel(url)
     const result = glb.scene.children
@@ -117,11 +119,7 @@ export const DecorateBoothContainer = props => {
     //upload video
     const videoUploadPromises = []
     for (const textureObj of textureList) {
-      const promise = uploadVideo(
-        textureObj,
-        response.data.id,
-        textureObj.meshName
-      )
+      const promise = uploadVideo(textureObj, response.data.id, textureObj.meshName)
       videoUploadPromises.push(promise)
     }
     await Promise.all(videoUploadPromises)
@@ -219,11 +217,7 @@ export const DecorateBoothContainer = props => {
         }}
       >
         <DecoratedBoothSideBarContainer {...sideBarProps} />
-        <DecorateBoothCanvas
-          modelItems={modelItems}
-          handleAdd={handleAdd}
-          ref={meshGroupRef}
-        />
+        <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd} ref={meshGroupRef} />
       </div>
 
       <ControlButtonGroup {...controlButtonsProps} />

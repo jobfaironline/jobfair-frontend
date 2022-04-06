@@ -10,9 +10,7 @@ const RegisterPage = () => {
     <div className="page">
       <PageHeader
         className="site-page-header"
-        onBack={() =>
-          history.push(PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE)
-        }
+        onBack={() => history.push(PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE)}
         title="Create employee account"
         subTitle="Create your company's employee account in here!"
       />

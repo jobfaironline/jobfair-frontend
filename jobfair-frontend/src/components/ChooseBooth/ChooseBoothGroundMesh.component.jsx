@@ -3,8 +3,7 @@ import React, { useRef } from 'react'
 import { BasicMesh } from '../ThreeJSBaseComponent/ChildMesh.component'
 
 export const ChooseBoothGroundMesh = props => {
-  const { mesh, onPointerOver, onPointerLeave, onClick, isAvailable, boothId } =
-    props
+  const { mesh, onPointerOver, onPointerLeave, onClick, isAvailable, boothId } = props
   const ref = useRef()
   if (!isAvailable) {
     const newMaterial = mesh.material.clone()

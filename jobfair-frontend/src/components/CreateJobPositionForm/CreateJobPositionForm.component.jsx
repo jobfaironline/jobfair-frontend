@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  AutoComplete,
-  Button,
-  Card,
-  Divider,
-  Form,
-  Input,
-  Select,
-  Space,
-  Typography
-} from 'antd'
+import { AutoComplete, Button, Card, Divider, Form, Input, Select, Space, Typography } from 'antd'
 import {
   JobLevelConst,
   JobTypeConst,
@@ -19,11 +9,7 @@ import {
 } from '../../constants/JobPositionConst'
 import TextArea from 'antd/es/input/TextArea'
 import { JobPositionValidation } from '../../validate/CreateJobPositionValidation'
-import {
-  CategoriesConst,
-  NUM_OF_SIZE_MAXIMUM,
-  SubCategories
-} from '../../constants/CompanyProfileConstant'
+import { CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories } from '../../constants/CompanyProfileConstant'
 import { useLocation } from 'react-router-dom'
 
 const { Option, OptGroup } = Select
@@ -40,8 +26,7 @@ const formItemLayout = {
 
 const CreateJobPositionFormComponent = props => {
   const location = useLocation()
-  const [listContactPersonSuggestion, setListContactPersonSuggestion] =
-    useState()
+  const [listContactPersonSuggestion, setListContactPersonSuggestion] = useState()
   const [listEmailSuggestion, setListEmailSuggestion] = useState()
   const [totalSelect, setTotalSelect] = useState(0)
   const [totalSkillTags, setTotalSkillTags] = useState(0)
@@ -82,18 +67,8 @@ const CreateJobPositionFormComponent = props => {
 
   return (
     <div style={{ width: '80%' }}>
-      <Card
-        title={`Create job position application`}
-        style={{ width: '70%', margin: '3rem auto' }}
-      >
-        <Form
-          onFinish={onFinish}
-          form={form}
-          {...formItemLayout}
-          layout="vertical"
-          labelCol={21}
-          wrapperCol={21}
-        >
+      <Card title={`Create job position application`} style={{ width: '70%', margin: '3rem auto' }}>
+        <Form onFinish={onFinish} form={form} {...formItemLayout} layout="vertical" labelCol={21} wrapperCol={21}>
           <Form.Item
             label="Job title"
             name="title"
@@ -120,9 +95,7 @@ const CreateJobPositionFormComponent = props => {
             <Select
               showSearch
               onChange={() => {}}
-              filterOption={(input, option) =>
-                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
+              filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
               onSearch={() => {}}
             >
               {JobLevelConst.map(item => (
@@ -146,9 +119,7 @@ const CreateJobPositionFormComponent = props => {
             <Select
               showSearch
               onChange={() => {}}
-              filterOption={(input, option) =>
-                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
+              filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
               onSearch={() => {}}
             >
               {JobTypeConst.map(item => (
@@ -171,13 +142,9 @@ const CreateJobPositionFormComponent = props => {
               showSearch
               placeholder="Search to Select"
               optionFilterProp="children"
-              filterOption={(input, option) =>
-                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
+              filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
               filterSort={(optionA, optionB) =>
-                optionA.children
-                  .toLowerCase()
-                  .localeCompare(optionB.children.toLowerCase())
+                optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
               }
             >
               {LanguageConst.map(item => (
@@ -215,9 +182,7 @@ const CreateJobPositionFormComponent = props => {
                   <Text type={totalSkillTags > 3 ? 'danger' : 'success'}>
                     {totalSkillTags > 5
                       ? null
-                      : `You can select ${NUM_OF_SKILL_TAGS} items only. (${
-                          NUM_OF_SKILL_TAGS - totalSkillTags
-                        } left)`}
+                      : `You can select ${NUM_OF_SKILL_TAGS} items only. (${NUM_OF_SKILL_TAGS - totalSkillTags} left)`}
                   </Text>
                 </>
               )}
@@ -257,18 +222,14 @@ const CreateJobPositionFormComponent = props => {
                   <Text type={totalSelect > 3 ? 'danger' : 'success'}>
                     {totalSelect > 3
                       ? null
-                      : `You can select ${NUM_OF_SIZE_MAXIMUM} items only. (${
-                          NUM_OF_SIZE_MAXIMUM - totalSelect
-                        } left)`}
+                      : `You can select ${NUM_OF_SIZE_MAXIMUM} items only. (${NUM_OF_SIZE_MAXIMUM - totalSelect} left)`}
                   </Text>
                 </>
               )}
             >
               {CategoriesConst.map(category => (
                 <OptGroup label={category.label}>
-                  {SubCategories.filter(
-                    item => item.category_id === category.value
-                  ).map(item => (
+                  {SubCategories.filter(item => item.category_id === category.value).map(item => (
                     <Option value={item.value}>{item.label}</Option>
                   ))}
                 </OptGroup>
@@ -342,12 +303,7 @@ const CreateJobPositionFormComponent = props => {
             name="description"
             style={{ marginLeft: '1rem', width: '96%' }}
           >
-            <TextArea
-              placeholder="Description"
-              showCount
-              maxLength={3000}
-              autoSize={{ minRows: 5 }}
-            />
+            <TextArea placeholder="Description" showCount maxLength={3000} autoSize={{ minRows: 5 }} />
           </Form.Item>
           <Form.Item
             label="Requirements"
@@ -357,20 +313,11 @@ const CreateJobPositionFormComponent = props => {
             name="requirements"
             style={{ marginLeft: '1rem', width: '96%' }}
           >
-            <TextArea
-              placeholder="Requirements"
-              showCount
-              maxLength={3000}
-              autoSize={{ minRows: 5 }}
-            />
+            <TextArea placeholder="Requirements" showCount maxLength={3000} autoSize={{ minRows: 5 }} />
           </Form.Item>
           <Form.Item style={{ display: 'flex', justifyContent: 'end' }}>
             <Space style={{ display: 'flex', justifyContent: 'end' }}>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ margin: '0 3rem', width: '7rem' }}
-              >
+              <Button type="primary" htmlType="submit" style={{ margin: '0 3rem', width: '7rem' }}>
                 Create
               </Button>
             </Space>

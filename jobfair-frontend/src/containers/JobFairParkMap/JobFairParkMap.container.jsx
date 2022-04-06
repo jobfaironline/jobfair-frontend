@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  addVideoTexture,
-  fixTextureOffset,
-  loadGLBModel
-} from '../../utils/ThreeJS/threeJSUtil'
+import { addVideoTexture, fixTextureOffset, loadGLBModel } from '../../utils/ThreeJS/threeJSUtil'
 import * as THREE from 'three'
 import JobFairParkMapComponent from '../../components/JobFairParkMap/JobFairParkMap.component'
 import { getLayoutInformationForJobFairPark } from '../../services/job-fair-controller/JobFairConTrollerService'
@@ -11,13 +7,7 @@ import { generatePath, useHistory } from 'react-router-dom'
 import { PATH } from '../../constants/Paths/Path'
 import { LoadingComponent } from '../../components/JobFairParkMap/Loading.component'
 
-const getBootMesh = async (
-  position,
-  foundationBox,
-  url,
-  companyBoothId,
-  companyBoothLayoutVideos
-) => {
+const getBootMesh = async (position, foundationBox, url, companyBoothId, companyBoothLayoutVideos) => {
   const gltf = await loadGLBModel(url)
   const { x, y, z } = position
   let sceneMesh = gltf.scene
@@ -32,10 +22,7 @@ const getBootMesh = async (
   const meshBoundingBox = new THREE.Box3().setFromObject(sceneMesh)
   meshBoundingBox.getSize(meshSize)
 
-  const scale = Math.max(
-    foundationSize.x / meshSize.x,
-    foundationSize.z / meshSize.z
-  )
+  const scale = Math.max(foundationSize.x / meshSize.x, foundationSize.z / meshSize.z)
   sceneMesh.scale.setScalar(scale)
   sceneMesh.companyBoothId = companyBoothId
   for (const mesh of sceneMesh.children) {
@@ -53,9 +40,7 @@ const JobFairParkMapContainer = props => {
   })
 
   useEffect(async () => {
-    const responseData = await getLayoutInformationForJobFairPark(
-      jobFairId
-    ).then(response => response.data)
+    const responseData = await getLayoutInformationForJobFairPark(jobFairId).then(response => response.data)
     const url = responseData.jobFairLayoutUrl
     const data = responseData.booths
     const glb = await loadGLBModel(url)
@@ -109,13 +94,7 @@ const JobFairParkMapContainer = props => {
     history.push(url)
   }
 
-  return (
-    <JobFairParkMapComponent
-      mapMesh={state.mapMesh}
-      boothMeshes={state.boothMeshes}
-      onClick={clickHandle}
-    />
-  )
+  return <JobFairParkMapComponent mapMesh={state.mapMesh} boothMeshes={state.boothMeshes} onClick={clickHandle} />
 }
 
 export default JobFairParkMapContainer

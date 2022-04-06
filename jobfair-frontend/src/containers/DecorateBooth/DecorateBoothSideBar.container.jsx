@@ -12,9 +12,7 @@ export const DecoratedBoothSideBarContainer = props => {
 
   const selectedItem = useSelector(state => state.decorateBooth.selectedItem)
 
-  const [currentSelectedColor, setCurrentSelectedColor] = useState(
-    selectedItem?.material.color.getHexString()
-  )
+  const [currentSelectedColor, setCurrentSelectedColor] = useState(selectedItem?.material.color.getHexString())
   const [positionState, setPositionState] = useState({
     x: selectedItem?.position.x ?? 0,
     y: selectedItem?.position.y ?? 0,
@@ -25,11 +23,7 @@ export const DecoratedBoothSideBarContainer = props => {
       return false
     },
     onChange: async info => {
-      if (
-        info.file.type !== 'image/png' &&
-        info.file.type !== 'image/jpeg' &&
-        info.file.type !== 'video/mp4'
-      ) {
+      if (info.file.type !== 'image/png' && info.file.type !== 'image/jpeg' && info.file.type !== 'video/mp4') {
         notify(0, `Upload file must be png, jpg or mp4`)
         return
       }
@@ -65,15 +59,9 @@ export const DecoratedBoothSideBarContainer = props => {
       //check if screenMesh is a plane
 
       if (
-        screenMesh.geometry.boundingBox.max.x -
-          screenMesh.geometry.boundingBox.min.x ===
-          0 ||
-        screenMesh.geometry.boundingBox.max.y -
-          screenMesh.geometry.boundingBox.min.y ===
-          0 ||
-        screenMesh.geometry.boundingBox.max.z -
-          screenMesh.geometry.boundingBox.min.z ===
-          0
+        screenMesh.geometry.boundingBox.max.x - screenMesh.geometry.boundingBox.min.x === 0 ||
+        screenMesh.geometry.boundingBox.max.y - screenMesh.geometry.boundingBox.min.y === 0 ||
+        screenMesh.geometry.boundingBox.max.z - screenMesh.geometry.boundingBox.min.z === 0
       ) {
         texture.center.x = 0.5
         texture.center.y = 0.5
@@ -91,11 +79,7 @@ export const DecoratedBoothSideBarContainer = props => {
       const scale = screenMesh.scale
       const localSize = new THREE.Vector3()
       screenMesh.geometry.boundingBox.getSize(localSize)
-      const screenSize = new THREE.Vector3(
-        scale.x * localSize.x,
-        scale.y * localSize.y,
-        scale.z * localSize.z
-      )
+      const screenSize = new THREE.Vector3(scale.x * localSize.x, scale.y * localSize.y, scale.z * localSize.z)
 
       //calculate which dimension is the length and which dimension is the width
       let width
@@ -107,10 +91,7 @@ export const DecoratedBoothSideBarContainer = props => {
 
       let plane
       //create new plane
-      const geometry = new THREE.PlaneGeometry(
-        width,
-        screenSize.y / screenMesh.scale.y
-      )
+      const geometry = new THREE.PlaneGeometry(width, screenSize.y / screenMesh.scale.y)
       const material = new THREE.MeshBasicMaterial({
         side: THREE.DoubleSide,
         map: texture

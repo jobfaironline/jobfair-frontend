@@ -26,9 +26,6 @@ const jobPositionsSlice = createSlice({
   }
 })
 
-export const {
-  fetchingJobPositions,
-  fetchingJobPositionsSuccess,
-  fetchingJobPositionsFailure
-} = jobPositionsSlice.actions
+export const { fetchingJobPositions, fetchingJobPositionsSuccess, fetchingJobPositionsFailure } =
+  jobPositionsSlice.actions
 export default jobPositionsSlice.reducer

@@ -5,8 +5,7 @@ import { getCompanyBoothById } from '../../../services/company-booth-controller/
 import { getCompanyProfileAPI } from '../../../services/company-controller/CompanyControllerService'
 
 export const SideBarContainer = props => {
-  const { companyBoothId, handleOpenDetail, isShow, activeKey, openInventory } =
-    props
+  const { companyBoothId, handleOpenDetail, isShow, activeKey, openInventory } = props
   const [state, setState] = useState({
     companyInformation: undefined,
     jobPositions: []
@@ -15,8 +14,7 @@ export const SideBarContainer = props => {
   const fetchData = async () => {
     let response = await getCompanyBoothById(companyBoothId)
     const companyId = response.data.order.companyRegistration.companyId
-    const jobPositions =
-      response.data.order.companyRegistration.registrationJobPositions
+    const jobPositions = response.data.order.companyRegistration.registrationJobPositions
     response = await getCompanyProfileAPI(companyId)
     setState(prevState => {
       return {

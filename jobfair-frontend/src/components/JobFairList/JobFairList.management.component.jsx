@@ -1,35 +1,14 @@
 import React from 'react'
-import {
-  Badge,
-  Card,
-  Carousel,
-  Col,
-  Divider,
-  List,
-  Row,
-  Select,
-  Skeleton,
-  Space,
-  Tag,
-  Tooltip,
-  Typography
-} from 'antd'
+import { Badge, Card, Carousel, Col, Divider, List, Row, Select, Skeleton, Space, Tag, Tooltip, Typography } from 'antd'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import ShowMoreText from 'react-show-more-text'
-import {
-  JOB_FAIR_FOR_ATTENDANT_STATUS,
-  JOB_FAIR_PLAN_COMPANY_STATUS
-} from '../../constants/JobFairConst'
+import { JOB_FAIR_FOR_ATTENDANT_STATUS, JOB_FAIR_PLAN_COMPANY_STATUS } from '../../constants/JobFairConst'
 import { COMPANY_JOB_FAIR_STATUS } from '../../constants/CompanyJobFairStatus'
 import CompanyJobFairActionButton from './CompanyJobFairActionButton.component'
 import JobFairListManagementImageComponent from './components/JobFairList.management.image.component'
 import { useSelector } from 'react-redux'
 import { BankTwoTone, InfoCircleTwoTone, UserOutlined } from '@ant-design/icons'
-import {
-  ATTENDANT,
-  COMPANY_EMPLOYEE,
-  COMPANY_MANAGER
-} from '../../constants/RoleType'
+import { ATTENDANT, COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../constants/RoleType'
 
 const listImage = [
   {
@@ -53,13 +32,9 @@ const handleOption = role => {
   }
   switch (role) {
     case 'COMPANY_MANAGER':
-      return JOB_FAIR_PLAN_COMPANY_STATUS.map(item => (
-        <Option value={item.value}>{item.label}</Option>
-      ))
+      return JOB_FAIR_PLAN_COMPANY_STATUS.map(item => <Option value={item.value}>{item.label}</Option>)
     default:
-      return JOB_FAIR_FOR_ATTENDANT_STATUS.map(item => (
-        <Option value={item.value}>{item.label}</Option>
-      ))
+      return JOB_FAIR_FOR_ATTENDANT_STATUS.map(item => <Option value={item.value}>{item.label}</Option>)
   }
 }
 
@@ -82,10 +57,7 @@ const JobFairListManagementComponent = props => {
   const role = useSelector(state => state.authentication?.user?.roles)
 
   const handleMessage = status => {
-    if (
-      (isAuthUser && listRole.includes(COMPANY_EMPLOYEE)) ||
-      (isAuthUser && listRole.includes(COMPANY_MANAGER))
-    ) {
+    if ((isAuthUser && listRole.includes(COMPANY_EMPLOYEE)) || (isAuthUser && listRole.includes(COMPANY_MANAGER))) {
       switch (status) {
         case COMPANY_JOB_FAIR_STATUS.REJECT:
           return (
@@ -98,9 +70,7 @@ const JobFairListManagementComponent = props => {
         case COMPANY_JOB_FAIR_STATUS.REQUEST_CHANGE:
           return (
             <Space>
-              <Typography style={{ color: '#000bdd' }}>
-                Your registration requires changes!
-              </Typography>
+              <Typography style={{ color: '#000bdd' }}>Your registration requires changes!</Typography>
             </Space>
           )
         default:
@@ -169,10 +139,7 @@ const JobFairListManagementComponent = props => {
                       <Col span={6}>
                         <Badge.Ribbon
                           text={
-                            <Text
-                              strong
-                              style={{ color: 'white', fontSize: '1.3rem' }}
-                            >
+                            <Text strong style={{ color: 'white', fontSize: '1.3rem' }}>
                               {item.startTime}
                             </Text>
                           }
@@ -181,10 +148,7 @@ const JobFairListManagementComponent = props => {
                           <Carousel autoplay>
                             {listImage.map(image => (
                               <div style={contentStyle}>
-                                <JobFairListManagementImageComponent
-                                  key={image.id}
-                                  urlImage={image.urlImage}
-                                />
+                                <JobFairListManagementImageComponent key={image.id} urlImage={image.urlImage} />
                               </div>
                             ))}
                           </Carousel>
@@ -221,8 +185,7 @@ const JobFairListManagementComponent = props => {
                                 </Title>
                                 <Tag color="green">
                                   <Text strong>
-                                    {isAuthUser &&
-                                    listRole.includes(COMPANY_MANAGER)
+                                    {isAuthUser && listRole.includes(COMPANY_MANAGER)
                                       ? item.companyRegisterStartTime
                                       : null}
                                     {isAuthUser && listRole.includes(ATTENDANT)
@@ -258,22 +221,16 @@ const JobFairListManagementComponent = props => {
                         <div>
                           <div style={{ float: 'right' }}>
                             {isAuthUser && listRole.includes(ATTENDANT) ? (
-                              <Tooltip
-                                title="300 users are joining this job fair"
-                                color="lime"
-                                key="currentUser"
-                              >
+                              <Tooltip title="300 users are joining this job fair" color="lime" key="currentUser">
                                 <Tag color="lime">
                                   <UserOutlined /> 300
                                 </Tag>
                               </Tooltip>
                             ) : null}
-                            {(isAuthUser &&
-                              listRole.includes(COMPANY_EMPLOYEE)) ||
+                            {(isAuthUser && listRole.includes(COMPANY_EMPLOYEE)) ||
                             (isAuthUser &&
                               listRole.includes(COMPANY_MANAGER) &&
-                              item.status !==
-                                COMPANY_JOB_FAIR_STATUS.ATTENDED) ? (
+                              item.status !== COMPANY_JOB_FAIR_STATUS.ATTENDED) ? (
                               <Tooltip
                                 title="300 company registered to this job fair"
                                 color="geekblue"
@@ -284,9 +241,7 @@ const JobFairListManagementComponent = props => {
                                 </Tag>
                               </Tooltip>
                             ) : null}
-                            <InfoCircleTwoTone
-                              onClick={() => handleViewDetail(item['id'])}
-                            />
+                            <InfoCircleTwoTone onClick={() => handleViewDetail(item['id'])} />
                             {handleMessage(item.status)}
                           </div>
                           <div style={{ position: 'absolute', bottom: '1rem' }}>

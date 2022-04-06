@@ -34,12 +34,7 @@ const ResetPasswordContainer = () => {
   }
   return (
     <div className="page">
-      <ResetPasswordComponent
-        form={form}
-        onFinish={onFinish}
-        email={location?.state?.email}
-        setOtpCode={setOtpCode}
-      />
+      <ResetPasswordComponent form={form} onFinish={onFinish} email={location?.state?.email} setOtpCode={setOtpCode} />
     </div>
   )
 }

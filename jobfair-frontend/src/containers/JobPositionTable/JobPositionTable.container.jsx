@@ -1,10 +1,11 @@
 import React, { useLayoutEffect, useState } from 'react'
-import JobPositionTableComponent from '../../components/JobPositionTable/JobPositionTable.component'
+import JobPositionTableColumn from '../../components/JobPositionTable/JobPositionTable.column'
 import { Button, Space } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchJobPositions } from '../../redux-flow/jobPositions/job-positions-action'
+import { convertEnumToString } from '../../utils/common'
 import JobPositionSubmodalContainer from '../JobPositionModal/JobPositionSubmodal.container'
-import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
+import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container'
 
 const PickJobPositionTable = ({ selectable, form }) => {
   //pagination
@@ -23,17 +24,11 @@ const PickJobPositionTable = ({ selectable, form }) => {
 
   //select table logic
   const [initialSelectedValues, setInitialSelectedValues] = useState(() =>
-    form.getFieldsValue().jobPositions
-      ? [...form.getFieldsValue().jobPositions.map(item => item.key)]
-      : []
+    form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions.map(item => item.key)] : []
   )
-  const [selectedRowKeys, setSelectedRowKeys] = useState(() => [
-    ...initialSelectedValues
-  ])
+  const [selectedRowKeys, setSelectedRowKeys] = useState(() => [...initialSelectedValues])
   const [selectedRows, setSelectedRows] = useState(
-    form.getFieldsValue().jobPositions
-      ? [...form.getFieldsValue().jobPositions]
-      : []
+    form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions] : []
   )
 
   //handle choose job button
@@ -46,9 +41,7 @@ const PickJobPositionTable = ({ selectable, form }) => {
       }
     })
 
-    const currentJobPositionsInForm = form.getFieldsValue().jobPositions
-      ? [...form.getFieldsValue().jobPositions]
-      : []
+    const currentJobPositionsInForm = form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions] : []
     form.setFieldsValue({
       ...form.getFieldsValue(),
       jobPositions: [...currentJobPositionsInForm, ...mappedData]
@@ -95,6 +88,44 @@ const PickJobPositionTable = ({ selectable, form }) => {
     fetchData(currentPage, pageSize)
   }, [currentPage, pageSize])
 
+  const jobPositionTableProps = {
+    tableData: jobPositionData.map(item => {
+      return {
+        ...item,
+        jobType: convertEnumToString(item?.jobType),
+        level: convertEnumToString(item?.level)
+      }
+    }),
+    tableColumns: JobPositionTableColumn,
+    onSearch: () => {
+      //TODO: fetch data for search
+    },
+    extra: [
+      {
+        title: 'Actions',
+        key: 'action',
+        render: (text, record) => {
+          return (
+            <Space size="middle">
+              <a
+                onClick={() => {
+                  handleGetDetail(record.id)
+                }}
+              >
+                Detail
+              </a>
+            </Space>
+          )
+        }
+      }
+    ],
+    paginationObject: {
+      handlePageChange,
+      totalRecord
+    },
+    rowSelection: selectable ? { ...rowSelection } : null
+  }
+
   return (
     <div>
       <JobPositionSubmodalContainer
@@ -102,41 +133,9 @@ const PickJobPositionTable = ({ selectable, form }) => {
         visible={modalVisible}
         handleCloseModal={() => setModalVisibile(false)}
       />
-      <JobPositionTableComponent
-        data={jobPositionData}
-        editable
-        extra={{
-          title: 'Actions',
-          key: 'action',
-          render: (text, record) => {
-            return (
-              <Space size="middle">
-                <a
-                  onClick={() => {
-                    handleGetDetail(record.id)
-                  }}
-                >
-                  Detail
-                </a>
-              </Space>
-            )
-          }
-        }}
-        rowSelection={selectable ? { ...rowSelection } : null}
-      />
-      <Space style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}>
-        <PaginationComponent
-          data={jobPositionData}
-          handlePageChange={handlePageChange}
-          totalRecord={totalRecord}
-        />
-      </Space>
+      <CommonTableContainer {...jobPositionTableProps} />
       {selectable ? (
-        <Button
-          style={{ width: '100%' }}
-          type="primary"
-          onClick={chooseJobPositions}
-        >
+        <Button style={{ width: '100%' }} type="primary" onClick={chooseJobPositions}>
           Choose
         </Button>
       ) : null}

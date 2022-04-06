@@ -40,8 +40,7 @@ class ImageUploadComponent extends Component {
     this.setState({
       previewImage: file.url || file.preview,
       previewVisible: true,
-      previewTitle:
-        file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
+      previewTitle: file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
     })
   }
 
@@ -68,12 +67,7 @@ class ImageUploadComponent extends Component {
             {fileList.length >= 8 ? null : uploadButton}
           </Upload>
         </Form.Item>
-        <Modal
-          visible={previewVisible}
-          title={previewTitle}
-          footer={null}
-          onCancel={this.handleCancel}
-        >
+        <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={this.handleCancel}>
           <img alt="example" style={{ width: '100%' }} src={previewImage} />
         </Modal>
       </>

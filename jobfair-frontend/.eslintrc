@@ -18,15 +18,15 @@
     "prettier/prettier": [
       "error",
       {
-        "printWidth": 80,
-        "trailingComma": "none",
+        "arrowParens": "avoid",
         "semi": false,
+        "trailingComma": "none",
+        "tabWidth": 2,
+        "useTabs": false,
         "singleQuote": true,
-        "no-mixed-spaces-and-tabs": [
-          "error",
-          "smart-tabs"
-        ],
-        "endOfLine": "auto"
+        "printWidth": 120,
+        "jsxSingleQuote": false,
+        "endOfLine":"auto"
       }
     ],
     "no-unused-vars": [
@@ -39,6 +39,7 @@
     ],
     "no-console": "warn",
     "no-eval": "error",
-    "import/first": "error"
+    "import/first": "error",
+    "no-extra-boolean-cast": 0
   }
 }

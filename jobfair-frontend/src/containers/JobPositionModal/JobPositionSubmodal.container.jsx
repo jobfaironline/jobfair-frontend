@@ -3,11 +3,7 @@ import { useSelector } from 'react-redux'
 import JobPositionSubmodalDetailComponent from '../../components/JobPositionModal/JobPositionSubmodalDetail.component'
 import { Modal } from 'antd'
 
-const JobPositionSubmodalContainer = ({
-  jobPositionId,
-  visible,
-  handleCloseModal
-}) => {
+const JobPositionSubmodalContainer = ({ jobPositionId, visible, handleCloseModal }) => {
   const [data, setData] = useState(null)
 
   const jobPositions = useSelector(state => {

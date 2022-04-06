@@ -8,28 +8,15 @@ import { CompanyJobPositionTabContainer } from '../../../containers/AttendantJob
 const { Text } = Typography
 
 const SideBar = props => {
-  const {
-    companyInformation,
-    jobPositions,
-    isShow,
-    handleOpenDetail,
-    activeKey,
-    openInventory
-  } = props
+  const { companyInformation, jobPositions, isShow, handleOpenDetail, activeKey, openInventory } = props
   return (
     <div className={styles.container}>
       <div className={styles.tabHeader}>
         <span>
           {isShow ? (
-            <CloseOutlined
-              onClick={() => handleOpenDetail(false, activeKey)}
-              className={styles.icon}
-            />
+            <CloseOutlined onClick={() => handleOpenDetail(false, activeKey)} className={styles.icon} />
           ) : (
-            <MenuOutlined
-              onClick={() => handleOpenDetail(true, activeKey)}
-              className={styles.icon}
-            />
+            <MenuOutlined onClick={() => handleOpenDetail(true, activeKey)} className={styles.icon} />
           )}
         </span>
         <Text strong className={styles.title}>
@@ -60,10 +47,7 @@ const SideBar = props => {
               </div>
             </Tabs.TabPane>
             <Tabs.TabPane tab="Job positions" key="1">
-              <CompanyJobPositionTabContainer
-                jobPositions={jobPositions}
-                openInventory={openInventory}
-              />
+              <CompanyJobPositionTabContainer jobPositions={jobPositions} openInventory={openInventory} />
             </Tabs.TabPane>
           </>
         ) : (

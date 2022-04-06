@@ -15,11 +15,7 @@ const CompanyRegistrationDetailComponent = props => {
         return (
           <>
             <Text strong>Evaluate this registration</Text>
-            <EvaluationFormComponent
-              onFinish={onFinish}
-              id={data.id}
-              name="companyRegistrationId"
-            />
+            <EvaluationFormComponent onFinish={onFinish} id={data.id} name="companyRegistrationId" />
           </>
         )
       default:

@@ -78,13 +78,7 @@ const CompanyProfileFormContainer = () => {
       {data === undefined || data === null || Object.keys(data).length === 0 ? (
         <Spin size="large" />
       ) : (
-        <Form
-          form={form}
-          onFinish={onFinish}
-          requiredMark="required"
-          autoComplete="off"
-          scrollToFirstError={true}
-        >
+        <Form form={form} onFinish={onFinish} requiredMark="required" autoComplete="off" scrollToFirstError={true}>
           <CompanyProfileForm urlValue={data.url} />
           <Form.Item>
             <Affix offsetBottom={10}>

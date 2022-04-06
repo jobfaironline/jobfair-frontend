@@ -13,20 +13,11 @@ const LoginComponent = ({ onFinish, form }) => {
         <Typography.Title level={4}>Job Fair Online - Login</Typography.Title>
       </Divider>
       <div className="input-container">
-        <Form
-          className="login-form"
-          form={form}
-          onFinish={onFinish}
-          autoComplete="off"
-        >
+        <Form className="login-form" form={form} onFinish={onFinish} autoComplete="off">
           <Form.Item name="email" hasFeedback rules={LoginValidation.email}>
             <Input placeholder="Email" />
           </Form.Item>
-          <Form.Item
-            name="password"
-            hasFeedback
-            rules={LoginValidation.password}
-          >
+          <Form.Item name="password" hasFeedback rules={LoginValidation.password}>
             <Input.Password placeholder="Password" />
           </Form.Item>
           <Form.Item className="login">
@@ -35,16 +26,12 @@ const LoginComponent = ({ onFinish, form }) => {
             </Button>
           </Form.Item>
           <Form.Item className="forgot-password">
-            <Button
-              type="link"
-              onClick={() => history.push(PATH.FORGOT_PASSWORD_PAGE)}
-            >
+            <Button type="link" onClick={() => history.push(PATH.FORGOT_PASSWORD_PAGE)}>
               Forgot password?
             </Button>
           </Form.Item>
           <Form.Item className="register">
-            <span>Don't you have an account?</span>{' '}
-            <Button type="link">Register</Button>
+            <span>Don't you have an account?</span> <Button type="link">Register</Button>
           </Form.Item>
         </Form>
       </div>

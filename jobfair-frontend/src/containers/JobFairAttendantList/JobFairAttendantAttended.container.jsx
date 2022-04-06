@@ -32,12 +32,8 @@ const JobFairAttendantAttendedContainer = () => {
             companyId: item.companyId,
             startTime: convertToDateString(item.jobFair.startTime),
             endTime: convertToDateString(item.jobFair.endTime),
-            companyRegisterStartTime: convertToDateString(
-              item.jobFair.companyRegisterStartTime
-            ),
-            attendantRegisterStartTime: convertToDateString(
-              item.jobFair.attendantRegisterStartTime
-            ),
+            companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime),
+            attendantRegisterStartTime: convertToDateString(item.jobFair.attendantRegisterStartTime),
             description: item.jobFair.description,
             layoutId: item.jobFair.layoutId,
             thumbnail: item.jobFair.thumbnail,
@@ -99,10 +95,7 @@ const JobFairAttendantAttendedContainer = () => {
         handleViewDetail={handleViewDetail}
         // getCompanyBoothId={getCompanyBoothId}
       />
-      <PaginationComponent
-        handlePageChange={handlePageChange}
-        totalRecord={data.length}
-      />
+      <PaginationComponent handlePageChange={handlePageChange} totalRecord={data.length} />
     </div>
   )
 }

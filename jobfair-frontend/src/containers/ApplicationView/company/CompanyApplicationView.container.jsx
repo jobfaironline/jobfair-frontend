@@ -2,14 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Input, notification, Space, Tooltip } from 'antd'
 import { EyeOutlined } from '@ant-design/icons'
-import ApplicationTable from '../../../components/ApplicationView/ApplicationTable.component'
 import { getAllApplication } from '../../../services/application-controller/ApplicationControllerService'
-import PaginationComponent from '../../../components/PaginationComponent/Pagination.component'
-import {
-  PATH_COMPANY_EMPLOYEE,
-  PATH_COMPANY_MANAGER
-} from '../../../constants/Paths/Path'
+import { PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path'
 import { COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../../constants/RoleType'
+import ApplicationTableColumn from '../../../components/ApplicationView/ApplicationTable.column'
+import CommonTableContainer from '../../CommonTableComponent/CommonTableComponent.container'
 // eslint-disable-next-line no-unused-vars
 const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
   //pagination
@@ -22,12 +19,7 @@ const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
   const [jobFairSearchValue, setJobfairSearchValue] = useState('')
   const [jobPositionSearchValue, setJobPositionSearchValue] = useState('')
 
-  const fetchData = async (
-    currentPage,
-    pageSize,
-    jobFairSearchValue,
-    jobPositionSearchValue
-  ) => {
+  const fetchData = async (currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue) => {
     const testStatus = filterStatus(tabStatus)
     try {
       const res = await getAllApplication(
@@ -36,10 +28,10 @@ const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
         [testStatus],
         jobFairSearchValue,
         jobPositionSearchValue,
-        tabStatus != 1 ? 'evaluateDate' : 'appliedDate'
+        tabStatus !== 1 ? 'evaluateDate' : 'appliedDate'
       )
       const { data } = res
-      if (res.status != 204) {
+      if (res.status !== 204) {
         if (data) {
           setApplicationData(
             data.content.map((item, index) => ({
@@ -92,6 +84,36 @@ const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
     fetchData(currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue)
   }, [currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue])
 
+  const applicationTableProps = {
+    tableData: applicationData,
+    tableColumns: ApplicationTableColumn,
+    onSearch: () => {
+      //TODO: fetch data for search
+    },
+    extra: [
+      {
+        title: 'Actions',
+        key: 'action',
+        width: '6rem',
+        render: (text, record) => {
+          return (
+            <Space size="middle">
+              <Tooltip placement="top" title="View detail">
+                <a onClick={() => handleViewResumeDetail(record.id, role)}>
+                  <EyeOutlined />
+                </a>
+              </Tooltip>
+            </Space>
+          )
+        }
+      }
+    ],
+    paginationObject: {
+      handlePageChange,
+      totalRecord
+    }
+  }
+
   return (
     <div>
       <div>
@@ -111,38 +133,7 @@ const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
             style={{ width: 200 }}
           />
         </Space>
-        <ApplicationTable
-          applicationData={applicationData}
-          extra={[
-            {
-              title: 'Actions',
-              key: 'action',
-              width: '6rem',
-              render: (text, record) => {
-                return (
-                  <Space size="middle">
-                    <Tooltip placement="top" title="View detail">
-                      <a
-                        onClick={() => handleViewResumeDetail(record.id, role)}
-                      >
-                        <EyeOutlined />
-                      </a>
-                    </Tooltip>
-                  </Space>
-                )
-              }
-            }
-          ]}
-        />
-        <Space
-          style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}
-        >
-          <PaginationComponent
-            data={applicationData}
-            handlePageChange={handlePageChange}
-            totalRecord={totalRecord}
-          />
-        </Space>
+        <CommonTableContainer {...applicationTableProps} />
       </div>
     </div>
   )

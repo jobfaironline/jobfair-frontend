@@ -58,17 +58,12 @@ export default class RTMClient extends EventEmitter {
 
   async leaveChannel(name) {
     console.log('leaveChannel', name)
-    if (
-      !this.channels[name] ||
-      (this.channels[name] && !this.channels[name].joined)
-    )
-      return
+    if (!this.channels[name] || (this.channels[name] && !this.channels[name].joined)) return
     return this.channels[name].channel.leave()
   }
 
   async sendChannelMessage(text, channelName) {
-    if (!this.channels[channelName] || !this.channels[channelName].joined)
-      return
+    if (!this.channels[channelName] || !this.channels[channelName].joined) return
     return this.channels[channelName].channel.sendMessage({ text })
   }
 
@@ -99,8 +94,7 @@ export default class RTMClient extends EventEmitter {
 
   async sendChannelMediaMessage(blob, channelName) {
     console.log('sendChannelMessage', blob, channelName)
-    if (!this.channels[channelName] || !this.channels[channelName].joined)
-      return
+    if (!this.channels[channelName] || !this.channels[channelName].joined) return
     const mediaMessage = await this.client.createMediaMessageByUploading(blob, {
       messageType: 'IMAGE',
       fileName: 'agora.jpg',

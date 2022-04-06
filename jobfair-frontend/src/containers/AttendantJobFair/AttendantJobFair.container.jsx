@@ -37,10 +37,7 @@ export const AttendantJobFairContainer = props => {
         openInventory={openInventory}
       />
       <div className={styles.booth}>
-        <InventoryContainer
-          onClick={openInventory}
-          inventoryVisible={inventoryVisible}
-        />
+        <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />
         <ControlTipsModalContainer />
         <AttendantJobFairBoothContainer
           companyBoothId={companyBoothId}

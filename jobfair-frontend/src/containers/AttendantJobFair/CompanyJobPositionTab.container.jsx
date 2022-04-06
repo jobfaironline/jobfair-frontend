@@ -25,13 +25,7 @@ export const CompanyJobPositionTabContainer = props => {
       zIndex: 2,
       okText: 'Apply',
       onOk: () => {},
-      content: (
-        <SubmitResumeModalComponent
-          jobPosition={item}
-          inventory={inventory}
-          closeModal={closeModal}
-        />
-      )
+      content: <SubmitResumeModalComponent jobPosition={item} inventory={inventory} closeModal={closeModal} />
     })
   }
 

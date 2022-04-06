@@ -1,8 +1,4 @@
-import {
-  ArrowsAltOutlined,
-  CloseOutlined,
-  MinusOutlined
-} from '@ant-design/icons'
+import { ArrowsAltOutlined, CloseOutlined, MinusOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { Form, Input } from 'antd'
 import styles from './ChatBox.module.scss'
@@ -66,14 +62,7 @@ const ChatBox = props => {
         /*blobToImage(blob, (image) => {
                 })*/
       } else {
-        console.log(
-          'channel ',
-          channelName,
-          ', messsage: ',
-          message.text,
-          ', memberId: ',
-          memberId
-        )
+        console.log('channel ', channelName, ', messsage: ', message.text, ', memberId: ', memberId)
         setMessageList(prevState => {
           return [...prevState, new Message(memberId, message.text, false)]
         })

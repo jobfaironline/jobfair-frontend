@@ -3,14 +3,7 @@ import React from 'react'
 import { BasicMesh } from '../ThreeJSBaseComponent/ChildMesh.component'
 
 export const ItemMesh = React.forwardRef((props, ref) => {
-  const {
-    position,
-    onClick,
-    onPointerOver,
-    onPointerLeave,
-    useDragBind,
-    mesh
-  } = props
+  const { position, onClick, onPointerOver, onPointerLeave, useDragBind, mesh } = props
 
   return (
     <mesh

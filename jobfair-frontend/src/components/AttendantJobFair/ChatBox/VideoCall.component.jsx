@@ -71,8 +71,7 @@ const VideoCall = props => {
   }, [])
 
   useEffect(async () => {
-    if (isRTCClientReady && audioReady && audioTrack)
-      await rtcClient.publish(audioTrack)
+    if (isRTCClientReady && audioReady && audioTrack) await rtcClient.publish(audioTrack)
     if (isRTCClientReady && cameraReady && cameraTrack) {
       await rtcClient.publish(cameraTrack)
     }
@@ -101,15 +100,9 @@ const VideoCall = props => {
         </div>
         <div className={styles.videoCall}>
           {cameraReady && !muteState.video ? (
-            <AgoraVideoPlayer
-              style={{ height: '95%', width: '95%' }}
-              className="vid"
-              videoTrack={cameraTrack}
-            />
+            <AgoraVideoPlayer style={{ height: '95%', width: '95%' }} className="vid" videoTrack={cameraTrack} />
           ) : (
-            <div
-              style={{ height: '95%', width: '95%', backgroundColor: 'yellow' }}
-            />
+            <div style={{ height: '95%', width: '95%', backgroundColor: 'yellow' }} />
           )}
         </div>
       </div>
@@ -140,20 +133,14 @@ const VideoCall = props => {
         )}
         <div className={styles.videoIcon}>
           {audioTrack ? (
-            <div
-              className={muteState.audio ? 'on' : ''}
-              onClick={() => handleMute('audio')}
-            >
+            <div className={muteState.audio ? 'on' : ''} onClick={() => handleMute('audio')}>
               {!muteState.audio ? <MicIcon /> : <MicOffIcon />}
             </div>
           ) : (
             <PowerOffIcon />
           )}
           {cameraTrack ? (
-            <div
-              className={muteState.video ? 'on' : ''}
-              onClick={() => handleMute('video')}
-            >
+            <div className={muteState.video ? 'on' : ''} onClick={() => handleMute('video')}>
               {!muteState.video ? <VideocamIcon /> : <VideocamOffIcon />}
             </div>
           ) : (
