@@ -1,8 +1,12 @@
 import React from 'react'
-import {Card, Divider, Image, Space, Typography,} from "antd";
-import {FacebookOutlined, GithubOutlined, InstagramOutlined} from "@ant-design/icons";
+import { Divider, Space, Typography } from 'antd'
+import {
+  FacebookOutlined,
+  GithubOutlined,
+  InstagramOutlined
+} from '@ant-design/icons'
 
-const {Paragraph, Title, Text} = Typography
+const { Title } = Typography
 
 const ContactPage = () => {
   return (
@@ -10,20 +14,32 @@ const ContactPage = () => {
       <Divider plain>
         <Title>Contact us now !!!</Title>
       </Divider>
-      <Space size='large' direction="vertical" style={{marginLeft: '42rem'}}>
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-          <FacebookOutlined style={{fontSize: '7rem'}} onClick={() => {
-            window.location.href = 'https://www.facebook.com/TrongKhanh.Kieu'
-          }}/>
-          <InstagramOutlined style={{fontSize: '7rem'}} onClick={() => {
-            window.location.href = 'https://help.instagram.com/'
-          }}/>
-          <GithubOutlined style={{fontSize: '7rem'}} onClick={() => {
-            window.location.href = 'https://github.com/jobfaironline'
-          }}/>
+      <Space size="large" direction="vertical" style={{ marginLeft: '42rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <FacebookOutlined
+            style={{ fontSize: '7rem' }}
+            onClick={() => {
+              window.location.href = 'https://www.facebook.com/TrongKhanh.Kieu'
+            }}
+          />
+          <InstagramOutlined
+            style={{ fontSize: '7rem' }}
+            onClick={() => {
+              window.location.href = 'https://help.instagram.com/'
+            }}
+          />
+          <GithubOutlined
+            style={{ fontSize: '7rem' }}
+            onClick={() => {
+              window.location.href = 'https://github.com/jobfaironline'
+            }}
+          />
         </div>
-        <div style={{fontSize: '7rem'}}>
-          <img src={window.location.origin + "/contact.png"} style={{margin: '0 -12rem'}}/>
+        <div style={{ fontSize: '7rem' }}>
+          <img
+            src={window.location.origin + '/contact.png'}
+            style={{ margin: '0 -12rem' }}
+          />
         </div>
       </Space>
     </div>

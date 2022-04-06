@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Image } from 'antd'
+
 const JobFairListManagementImageComponent = props => {
   const { urlImage } = props
   return (

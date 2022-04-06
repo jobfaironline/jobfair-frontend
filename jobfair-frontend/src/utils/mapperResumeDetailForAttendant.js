@@ -1,9 +1,11 @@
-import {CountryConst} from "../components/AttendantProfileForm/AttendantConstants";
+import { CountryConst } from '../components/AttendantProfileForm/AttendantConstants'
 
-export const mapperResumeDetail = (res ,resume) => {
+export const mapperResumeDetail = (res, resume) => {
   return {
     jobPositionTitle: resume.jobTitle,
-    candidateName: ''.concat(`${res.data.account.firstname} ${res.data.account.middlename} ${res.data.account.lastname}`),
+    candidateName: ''.concat(
+      `${res.data.account.firstname} ${res.data.account.middlename} ${res.data.account.lastname}`
+    ),
     candidateYearOfExp: resume.yearOfExp,
     candidateJobLevel: resume.jobLevel,
     candidateJobTitle: resume.jobTitle,
@@ -15,7 +17,7 @@ export const mapperResumeDetail = (res ,resume) => {
     candidateWorkHistories: resume.workHistories,
     gender: res.data.account.gender,
     imageUrl: res.data.account.profileImageUrl,
-    country: CountryConst.find(item => item.id = res.data.countryId)?.name,
+    country: CountryConst.find(item => (item.id = res.data.countryId))?.name,
     dob: res.data.dob
   }
 }

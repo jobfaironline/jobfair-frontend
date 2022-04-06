@@ -18,14 +18,14 @@ const EmployeeForm = () => {
       middleName: values.middleName,
       phone: values.phone
     })
-      .then(data => {
+      .then(() => {
         notification['success']({
           message: `Add employee successfully`,
           description: `Added employee ${values.email} successfully`
         })
         form.resetFields()
       })
-      .catch(err => {
+      .catch(() => {
         notification['error']({
           message: `Add employee failed`,
           description: `There is problem while adding, try again later`

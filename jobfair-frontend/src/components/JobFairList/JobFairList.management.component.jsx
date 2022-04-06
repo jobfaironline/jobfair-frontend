@@ -1,15 +1,35 @@
 import React from 'react'
-import {Divider, List, Select, Skeleton, Space, Tag, Typography, Carousel, Card, Badge, Row, Col, Tooltip} from 'antd'
+import {
+  Badge,
+  Card,
+  Carousel,
+  Col,
+  Divider,
+  List,
+  Row,
+  Select,
+  Skeleton,
+  Space,
+  Tag,
+  Tooltip,
+  Typography
+} from 'antd'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import ShowMoreText from 'react-show-more-text'
-import {JOB_FAIR_FOR_ATTENDANT_STATUS, JOB_FAIR_PLAN_COMPANY_STATUS} from '../../constants/JobFairConst'
-import {COMPANY_JOB_FAIR_STATUS} from '../../constants/CompanyJobFairStatus'
+import {
+  JOB_FAIR_FOR_ATTENDANT_STATUS,
+  JOB_FAIR_PLAN_COMPANY_STATUS
+} from '../../constants/JobFairConst'
+import { COMPANY_JOB_FAIR_STATUS } from '../../constants/CompanyJobFairStatus'
 import CompanyJobFairActionButton from './CompanyJobFairActionButton.component'
 import JobFairListManagementImageComponent from './components/JobFairList.management.image.component'
-import {useSelector} from 'react-redux'
-import {InfoCircleTwoTone, UserOutlined, BankTwoTone} from '@ant-design/icons'
-import {COMPANY_EMPLOYEE, ATTENDANT, COMPANY_MANAGER} from '../../constants/RoleType'
-import {convertToDateString} from "../../utils/common";
+import { useSelector } from 'react-redux'
+import { BankTwoTone, InfoCircleTwoTone, UserOutlined } from '@ant-design/icons'
+import {
+  ATTENDANT,
+  COMPANY_EMPLOYEE,
+  COMPANY_MANAGER
+} from '../../constants/RoleType'
 
 const listImage = [
   {
@@ -26,25 +46,27 @@ const listImage = [
   }
 ]
 
-const {Option} = Select
-const {Title, Text} = Typography
+const { Option } = Select
 const handleOption = role => {
   if (role === undefined) {
     return
   }
   switch (role) {
     case 'COMPANY_MANAGER':
-      return JOB_FAIR_PLAN_COMPANY_STATUS.map(item => <Option value={item.value}>{item.label}</Option>)
+      return JOB_FAIR_PLAN_COMPANY_STATUS.map(item => (
+        <Option value={item.value}>{item.label}</Option>
+      ))
     default:
-      return JOB_FAIR_FOR_ATTENDANT_STATUS.map(item => <Option value={item.value}>{item.label}</Option>)
+      return JOB_FAIR_FOR_ATTENDANT_STATUS.map(item => (
+        <Option value={item.value}>{item.label}</Option>
+      ))
   }
 }
 
-
 const JobFairListManagementComponent = props => {
-  const {user, isAuthUser} = useSelector(state => state.authentication)
+  const { user, isAuthUser } = useSelector(state => state.authentication)
   var listRole = user ? Array.of(user.roles) : []
-  const {Title, Paragraph, Text, Link} = Typography
+  const { Title, Text } = Typography
   const {
     data,
     handleRedirect,
@@ -59,15 +81,16 @@ const JobFairListManagementComponent = props => {
   } = props
   const role = useSelector(state => state.authentication?.user?.roles)
 
-  const handleMessage = (status) => {
-    if ((isAuthUser && listRole.includes(COMPANY_EMPLOYEE)) ||
+  const handleMessage = status => {
+    if (
+      (isAuthUser && listRole.includes(COMPANY_EMPLOYEE)) ||
       (isAuthUser && listRole.includes(COMPANY_MANAGER))
     ) {
       switch (status) {
         case COMPANY_JOB_FAIR_STATUS.REJECT:
           return (
             <Space>
-              <Typography style={{color: '#DD0000'}}>
+              <Typography style={{ color: '#DD0000' }}>
                 Your recent registration has been rejected, please try again!
               </Typography>
             </Space>
@@ -75,7 +98,7 @@ const JobFairListManagementComponent = props => {
         case COMPANY_JOB_FAIR_STATUS.REQUEST_CHANGE:
           return (
             <Space>
-              <Typography style={{color: '#000bdd'}}>
+              <Typography style={{ color: '#000bdd' }}>
                 Your registration requires changes!
               </Typography>
             </Space>
@@ -107,7 +130,7 @@ const JobFairListManagementComponent = props => {
       <Select
         mode="multiple"
         allowClear
-        style={{width: '25%'}}
+        style={{ width: '25%' }}
         placeholder="Filter by status"
         onChange={value => {
           if (value.length !== 0) {
@@ -124,7 +147,7 @@ const JobFairListManagementComponent = props => {
         dataLength={data.length}
         next={loadMoreData}
         // hasMore={data.length < 50}
-        loader={<Skeleton avatar paragraph={{rows: 1}} active/>}
+        loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
         endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
         scrollableTarget="scrollableDiv"
       >
@@ -146,16 +169,22 @@ const JobFairListManagementComponent = props => {
                       <Col span={6}>
                         <Badge.Ribbon
                           text={
-                            <Text strong style={{color: 'white', fontSize: '1.3rem'}}>
+                            <Text
+                              strong
+                              style={{ color: 'white', fontSize: '1.3rem' }}
+                            >
                               {item.startTime}
                             </Text>
                           }
-                          style={{height: '1.7rem'}}
+                          style={{ height: '1.7rem' }}
                         >
                           <Carousel autoplay>
                             {listImage.map(image => (
                               <div style={contentStyle}>
-                                <JobFairListManagementImageComponent key={image.id} urlImage={image.urlImage}/>
+                                <JobFairListManagementImageComponent
+                                  key={image.id}
+                                  urlImage={image.urlImage}
+                                />
                               </div>
                             ))}
                           </Carousel>
@@ -172,9 +201,7 @@ const JobFairListManagementComponent = props => {
                                 Start Date
                               </Title>
                               <Tag color="cyan">
-                                <Text strong>
-                                  {item.startTime}
-                                </Text>
+                                <Text strong>{item.startTime}</Text>
                               </Tag>
                             </Col>
                             <Col span={12}>
@@ -182,33 +209,32 @@ const JobFairListManagementComponent = props => {
                                 End Date
                               </Title>
                               <Tag color="blue">
-                                <Text strong>
-                                  {item.endTime}
-                                </Text>
+                                <Text strong>{item.endTime}</Text>
                               </Tag>
                             </Col>
                           </Row>
                           <Col span={16}>
-                            <Row justify='space-between'>
+                            <Row justify="space-between">
                               <Col span={8}>
                                 <Title level={5} type="secondary">
                                   Register time
                                 </Title>
                                 <Tag color="green">
                                   <Text strong>
-                                    {(isAuthUser && listRole.includes(COMPANY_MANAGER)) ?
-                                      item.companyRegisterStartTime : null
-                                    }
-                                    {(isAuthUser && listRole.includes(ATTENDANT)) ?
-                                      item.attendantRegisterStartTime : null
-                                    }
+                                    {isAuthUser &&
+                                    listRole.includes(COMPANY_MANAGER)
+                                      ? item.companyRegisterStartTime
+                                      : null}
+                                    {isAuthUser && listRole.includes(ATTENDANT)
+                                      ? item.attendantRegisterStartTime
+                                      : null}
                                   </Text>
                                 </Tag>
                               </Col>
                             </Row>
                           </Col>
                         </Row>
-                        <div style={{marginTop: '2rem'}}>
+                        <div style={{ marginTop: '2rem' }}>
                           <Title level={5} type="secondary">
                             Description
                           </Title>
@@ -230,28 +256,40 @@ const JobFairListManagementComponent = props => {
                       </Col>
                       <Col span={3}>
                         <div>
-                          <div style={{float: 'right'}}>
+                          <div style={{ float: 'right' }}>
                             {isAuthUser && listRole.includes(ATTENDANT) ? (
-                              <Tooltip title="300 users are joining this job fair" color="lime" key="currentUser">
+                              <Tooltip
+                                title="300 users are joining this job fair"
+                                color="lime"
+                                key="currentUser"
+                              >
                                 <Tag color="lime">
-                                  <UserOutlined/> 300
+                                  <UserOutlined /> 300
                                 </Tag>
                               </Tooltip>
                             ) : null}
-                            {(isAuthUser && listRole.includes(COMPANY_EMPLOYEE)) ||
-                            (isAuthUser && listRole.includes(COMPANY_MANAGER)) &&
-                            (item.status !== COMPANY_JOB_FAIR_STATUS.ATTENDED)
-                              ? (
-                              <Tooltip title="300 company registered to this job fair" color="geekblue" key="currentRegistration">
+                            {(isAuthUser &&
+                              listRole.includes(COMPANY_EMPLOYEE)) ||
+                            (isAuthUser &&
+                              listRole.includes(COMPANY_MANAGER) &&
+                              item.status !==
+                                COMPANY_JOB_FAIR_STATUS.ATTENDED) ? (
+                              <Tooltip
+                                title="300 company registered to this job fair"
+                                color="geekblue"
+                                key="currentRegistration"
+                              >
                                 <Tag color="geekblue">
-                                  <BankTwoTone/> 300
+                                  <BankTwoTone /> 300
                                 </Tag>
                               </Tooltip>
                             ) : null}
-                            <InfoCircleTwoTone onClick={() => handleViewDetail(item['id'])}/>
+                            <InfoCircleTwoTone
+                              onClick={() => handleViewDetail(item['id'])}
+                            />
                             {handleMessage(item.status)}
                           </div>
-                          <div style={{position: 'absolute', bottom: '1rem'}}>
+                          <div style={{ position: 'absolute', bottom: '1rem' }}>
                             <CompanyJobFairActionButton
                               getCompanyBoothId={getCompanyBoothId}
                               item={item}

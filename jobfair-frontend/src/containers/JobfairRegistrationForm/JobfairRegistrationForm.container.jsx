@@ -1,16 +1,12 @@
-import {Button, Checkbox, Form, notification, Popconfirm, Steps} from 'antd'
-import React, {useEffect, useState} from 'react'
-import {useForm, useStepsForm} from 'sunflower-antd'
-import CompanyProfileForm from '../../components/CompanyProfileForm/CompanyProfileForm.component'
-import {useHistory, useParams} from 'react-router-dom'
-import {useDispatch, useSelector} from 'react-redux'
-import {getCompanyProfileAPI} from '../../services/company-controller/CompanyControllerService'
-import TextArea from 'antd/es/input/TextArea'
-import {CompanyProfileValidation} from '../../validate/CompanyProfileValidation'
+/* eslint-disable no-unused-vars */
+import { Button, Checkbox, Form, notification, Popconfirm, Steps } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { getCompanyProfileAPI } from '../../services/company-controller/CompanyControllerService'
 import ConfirmContainer from '../Confirm/Confirm.container'
-import JobfairRegistrationFormComponent
-  from '../../components/JobfairRegistrationForm/JobfairRegistrationForm.component'
-import {PATH, PATH_COMPANY_MANAGER} from '../../constants/Paths/Path'
+import JobfairRegistrationFormComponent from '../../components/JobfairRegistrationForm/JobfairRegistrationForm.component'
+import { PATH } from '../../constants/Paths/Path'
 import PolicyComponent from '../../components/Policy/Policy.component'
 import JobFairDetailCompanyContainer from '../JobFairDetail/JobFairDetail.company.container'
 import {
@@ -18,9 +14,9 @@ import {
   submitRegistrationAPI
 } from '../../services/company-registration-controller/CompanyRegistrationControllerService'
 
-const {Step} = Steps
-const JobfairRegistrationForm = (props) => {
-  const {jobFairId} = props
+const { Step } = Steps
+const JobfairRegistrationForm = props => {
+  const { jobFairId } = props
   const history = useHistory()
   const [form] = Form.useForm() //form for registration
   const companyId = useSelector(state => state.authentication.user.companyId)
@@ -58,19 +54,25 @@ const JobfairRegistrationForm = (props) => {
 
   const stepComponentList = [
     <>
-      <div style={{width: '70%', margin: '3rem auto'}}>
-        <JobFairDetailCompanyContainer id={jobFairId}/>
+      <div style={{ width: '70%', margin: '3rem auto' }}>
+        <JobFairDetailCompanyContainer id={jobFairId} />
       </div>
     </>,
     <>
-      <PolicyComponent/>
-      <Checkbox checked={agreeStatus} onChange={e => setAgreeStatus(e.target.checked)}>
+      <PolicyComponent />
+      <Checkbox
+        checked={agreeStatus}
+        onChange={e => setAgreeStatus(e.target.checked)}
+      >
         I have read and accept the Job fair Policy
       </Checkbox>
     </>,
-    <JobfairRegistrationFormComponent form={form} jobFairId={jobFairId}/>,
+    <JobfairRegistrationFormComponent form={form} jobFairId={jobFairId} />,
     <>
-      <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo}/>
+      <ConfirmContainer
+        data={form.getFieldsValue(true)}
+        companyInfo={companyInfo}
+      />
     </>
   ]
 
@@ -84,17 +86,20 @@ const JobfairRegistrationForm = (props) => {
         return () => {
           form
             .validateFields()
-            .then(res => {
+            .then(() => {
               setCurrentStep(currentStep + 1)
             })
-            .catch(err => {
+            .catch(() => {
               // notification['error']({
               //   message: 'job position must not be empty'
               // })
               const errorsArray = form.getFieldsError()
               for (const error of errorsArray) {
                 if (error.errors.length > 0) {
-                  form.scrollToField(error.name, {behavior: 'smooth', block: 'center'})
+                  form.scrollToField(error.name, {
+                    behavior: 'smooth',
+                    block: 'center'
+                  })
                   break
                 }
               }
@@ -111,7 +116,10 @@ const JobfairRegistrationForm = (props) => {
 
   return (
     <div>
-      <div className="jobfair-registration-form-container" style={{background: '#FFF'}}>
+      <div
+        className="jobfair-registration-form-container"
+        style={{ background: '#FFF' }}
+      >
         <Steps
           current={currentStep}
           style={{
@@ -123,10 +131,10 @@ const JobfairRegistrationForm = (props) => {
             padding: '1rem'
           }}
         >
-          <Step title="Job fair's details"/>
-          <Step title="Our policy"/>
-          <Step title="Jobfair registration form"/>
-          <Step title="Confirm registration"/>
+          <Step title="Job fair's details" />
+          <Step title="Our policy" />
+          <Step title="Jobfair registration form" />
+          <Step title="Confirm registration" />
         </Steps>
         {stepComponentList[currentStep]}
         <div className="step-buttons">
@@ -159,30 +167,30 @@ const JobfairRegistrationForm = (props) => {
                       Register
                     </Button>
                   </Popconfirm>
+                ) : currentStep == 1 && !agreeStatus ? (
+                  <Button
+                    size="large"
+                    type="primary"
+                    onClick={nextStepButtonActions(currentStep)}
+                    disabled={true}
+                    style={{
+                      color: '#00000040',
+                      borderColor: '#d9d9d9',
+                      background: '#f5f5f5',
+                      textShadow: 'none',
+                      boxShadow: 'none'
+                    }}
+                  >
+                    Next
+                  </Button>
                 ) : (
-                  (currentStep == 1 && !agreeStatus) ?
-                    <Button
-                      size="large"
-                      type="primary"
-                      onClick={nextStepButtonActions(currentStep)}
-                      disabled={true}
-                      style={{
-                        color: '#00000040',
-                        borderColor: '#d9d9d9',
-                        background: '#f5f5f5',
-                        textShadow: 'none',
-                        boxShadow: 'none'
-                      }}
-                    >
-                      Next
-                    </Button> :
-                    <Button
-                      size="large"
-                      type="primary"
-                      onClick={nextStepButtonActions(currentStep)}
-                    >
-                      Next
-                    </Button>
+                  <Button
+                    size="large"
+                    type="primary"
+                    onClick={nextStepButtonActions(currentStep)}
+                  >
+                    Next
+                  </Button>
                 )}
               </div>
             </Form.Item>
@@ -214,7 +222,7 @@ const getCompanyProfile = async (companyId, setCompanyInfo) => {
         subCategoriesIds: res.data.subCategoryDTOs.map(item => item.id),
         url: res.data.websiteUrl
       }
-      setCompanyInfo({...response})
+      setCompanyInfo({ ...response })
     })
     .catch(() => {
       notification['error']({
@@ -225,7 +233,11 @@ const getCompanyProfile = async (companyId, setCompanyInfo) => {
     })
 }
 
-const submitRegistration = async (companyRegistrationId, successCallback, failedCallback) => {
+const submitRegistration = async (
+  companyRegistrationId,
+  successCallback,
+  failedCallback
+) => {
   try {
     const res = await submitRegistrationAPI(companyRegistrationId)
     notification['success']({

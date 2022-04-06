@@ -3,8 +3,8 @@ import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu'
 import { Button } from 'antd'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 
-export const SampleItemMenu = (props) => {
-  const {items, onItemClick, selectedItemId} = props
+export const SampleItemMenu = props => {
+  const { items, onItemClick, selectedItemId } = props
   const isItemSelected = id => selectedItemId === id
 
   return (
@@ -40,7 +40,7 @@ function RightArrow() {
   )
 }
 
-function Card({ onClick, selected, title, itemId }) {
+function Card({ onClick, selected, title }) {
   return (
     <div
       onClick={onClick}

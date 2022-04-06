@@ -1,7 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Route, Redirect } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom'
 import { PATH } from '../../constants/Paths/Path'
+
 const PublicRouter = ({ component: Component, ...rest }) => {
   const { isAuthUser } = useSelector(state => state.authentication)
   const resultComponent = props => {

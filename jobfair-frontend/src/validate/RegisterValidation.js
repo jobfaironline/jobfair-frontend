@@ -1,4 +1,9 @@
-import { EMAIL_VALIDATOR, MAX_LENGTH_VALIDATOR, PHONE_VALIDATOR, REQUIRED_VALIDATOR } from './GeneralValidation'
+import {
+  EMAIL_VALIDATOR,
+  MAX_LENGTH_VALIDATOR,
+  PHONE_VALIDATOR,
+  REQUIRED_VALIDATOR
+} from './GeneralValidation'
 
 export const AttendantRegisterValidation = {
   email: [REQUIRED_VALIDATOR('Email'), ...EMAIL_VALIDATOR()],
@@ -25,7 +30,10 @@ export const CompanyRegisterValidation = {
   email: [REQUIRED_VALIDATOR('Email'), ...EMAIL_VALIDATOR()],
   companyName: [REQUIRED_VALIDATOR('Company name')],
   taxId: [REQUIRED_VALIDATOR('Tax ID')],
-  address: [REQUIRED_VALIDATOR('Address'), MAX_LENGTH_VALIDATOR('Address', 300)],
+  address: [
+    REQUIRED_VALIDATOR('Address'),
+    MAX_LENGTH_VALIDATOR('Address', 300)
+  ],
   phone: [REQUIRED_VALIDATOR('Phone number'), ...PHONE_VALIDATOR()],
   password: [REQUIRED_VALIDATOR('Password')],
   rePassword: [

@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
-import { Button, Dropdown, Menu, Typography, Avatar } from 'antd'
+import { Avatar, Button, Dropdown, Menu, Typography } from 'antd'
 import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutHandler } from '../../redux-flow/authentication/authentication-action'
@@ -9,10 +10,11 @@ import './Navbar.styles.scss'
 import {
   PATH,
   PATH_ADMIN,
-  PATH_COMPANY_EMPLOYEE,
-  PATH_COMPANY_MANAGER,
   PATH_ATTENDANT,
+  PATH_COMPANY_EMPLOYEE,
+  PATH_COMPANY_MANAGER
 } from '../../constants/Paths/Path'
+
 export const AttendantMenu = [
   <Menu.Item key={PATH_ATTENDANT.PROFILE_PAGE}>
     <Link to={PATH_ATTENDANT.PROFILE_PAGE}>Attendant Profile</Link>
@@ -27,16 +29,22 @@ export const CompanyManagerMenu = [
     <Link to={PATH_COMPANY_MANAGER.COMPANY_PROFILE_PAGE}>Company profile</Link>
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>Employee Management</Link>
+    <Link to={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>
+      Employee Management
+    </Link>
   </Menu.Item>,
   <Menu.Item key={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>
     <Link to={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>Register to job fair</Link>
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}>Job Position Management</Link>
+    <Link to={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}>
+      Job Position Management
+    </Link>
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}>Applications management</Link>
+    <Link to={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}>
+      Applications management
+    </Link>
   </Menu.Item>
 ]
 
@@ -45,7 +53,9 @@ export const CompanyEmployeeMenu = [
     <Link to={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}>Company profile</Link>
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}>
-    <Link to={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}>Applications management</Link>
+    <Link to={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}>
+      Applications management
+    </Link>
   </Menu.Item>
 ]
 
@@ -55,9 +65,8 @@ export const AdminMenu = [
   </Menu.Item>,
   <Menu.Item key={PATH_ADMIN.JOB_FAIR_PLAN_LIST_PAGE}>
     <Link to={PATH_ADMIN.JOB_FAIR_PLAN_LIST_PAGE}>Job fair plan list</Link>
-  </Menu.Item>,
+  </Menu.Item>
 ]
-
 
 const NavigationBar = () => {
   const role = useSelector(state => state.authentication?.user?.roles)
@@ -88,7 +97,10 @@ const NavigationBar = () => {
       <div className="Navbar">
         <Link to={PATH.INDEX} className="logo">
           <div>
-            <Typography.Title level={2} style={{ marginBottom: 0, padding: '0 1.5rem', color: '#FFF' }}>
+            <Typography.Title
+              level={2}
+              style={{ marginBottom: 0, padding: '0 1.5rem', color: '#FFF' }}
+            >
               Jobhub
             </Typography.Title>
           </div>
@@ -117,8 +129,15 @@ const NavigationBar = () => {
             : null}
           {/* {role ? <Button onClick={handleClick}>Logout</Button> : null} */}
         </Menu>
-        {!role ? <AuthenticationButtonGroups handleRedirect={handleRedirect} /> : null}
-        {role ? <AvatarMenu logoutFunction={handleClick} handleRedirect={handleRedirect} /> : null}
+        {!role ? (
+          <AuthenticationButtonGroups handleRedirect={handleRedirect} />
+        ) : null}
+        {role ? (
+          <AvatarMenu
+            logoutFunction={handleClick}
+            handleRedirect={handleRedirect}
+          />
+        ) : null}
       </div>
     </div>
   )
@@ -147,7 +166,7 @@ const AuthenticationButtonGroups = ({ handleRedirect }) => {
   )
 }
 
-const AvatarMenu = ({ logoutFunction, handleRedirect }) => {
+const AvatarMenu = ({ logoutFunction }) => {
   const history = useHistory()
   const name = useSelector(state => state.authentication.user.fullName)
 
@@ -164,14 +183,12 @@ const AvatarMenu = ({ logoutFunction, handleRedirect }) => {
         return 'Attendant'
     }
   }
-
-  const username = getUsername(name)
-
   const menu = (
     <Menu
       onClick={e => {
         if (e.key === 'LOGOUT') logoutFunction()
-        else if (e.key === 'CHANGE_PASSWORD_PAGE') history.push(PATH.CHANGE_PASSWORD_PAGE)
+        else if (e.key === 'CHANGE_PASSWORD_PAGE')
+          history.push(PATH.CHANGE_PASSWORD_PAGE)
       }}
       style={{ zIndex: 10000000 }}
     >
@@ -186,7 +203,11 @@ const AvatarMenu = ({ logoutFunction, handleRedirect }) => {
         <Typography style={{ color: '#fff' }}>{name}</Typography>
       </div>
       <Dropdown overlay={menu} placement="bottomRight">
-        <Avatar size={45} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+        <Avatar
+          size={45}
+          style={{ backgroundColor: '#87d068' }}
+          icon={<UserOutlined />}
+        />
       </Dropdown>
     </div>
   )

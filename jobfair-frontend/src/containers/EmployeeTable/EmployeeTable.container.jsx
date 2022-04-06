@@ -5,10 +5,10 @@ import {
   deleteEmployeeAPI,
   getEmployeesAPI
 } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
-import { Space, notification, Popconfirm, Button } from 'antd'
+import { Button, notification, Popconfirm, Space } from 'antd'
 import { useSelector } from 'react-redux'
 
-const EmployeeTable = ({ extra }) => {
+const EmployeeTable = () => {
   const [employeeData, setEmployeeData] = useState([])
   const [drawerVisibility, setDrawerVisibility] = useState(false)
   const [neededEmployee, setNeededEmployee] = useState(null)
@@ -21,7 +21,8 @@ const EmployeeTable = ({ extra }) => {
 
         const newValues = data.map((employee, index) => {
           const { firstname, middlename, lastname } = employee.account
-          const fullName = firstname + ' ' + (middlename ? middlename + ' ' : '') + lastname
+          const fullName =
+            firstname + ' ' + (middlename ? middlename + ' ' : '') + lastname
 
           return {
             id: employee.account.id,
@@ -35,7 +36,7 @@ const EmployeeTable = ({ extra }) => {
 
         setEmployeeData(newValues)
       })
-      .catch(e => {
+      .catch(() => {
         notification['error']({
           message: `Get employee data failed`,
           description: `There is problem while deleting, try again later`
@@ -48,14 +49,14 @@ const EmployeeTable = ({ extra }) => {
 
   const handleDelete = employeeId => {
     deleteEmployeeAPI(employeeId)
-      .then(res => {
+      .then(() => {
         notification['success']({
           message: `Delete employee successfully`,
           description: `Deleted employee ${employeeId} successfully`
         })
         fetchData()
       })
-      .catch(e => {
+      .catch(() => {
         notification['error']({
           message: `Delete employee failed`,
           description: `There is problem while deleting, try again later`

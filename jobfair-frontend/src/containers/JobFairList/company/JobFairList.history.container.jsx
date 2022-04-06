@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {generatePath, useHistory} from "react-router-dom";
-import {
-  getHistoricalJobFairForCompany,
-} from "../../../services/job-fair-controller/JobFairConTrollerService";
-import {getCompanyBoothByJobFairId} from "../../../services/company-booth-controller/CompanyBoothControllerService";
-import {PATH, PATH_ADMIN, PATH_COMPANY_MANAGER} from "../../../constants/Paths/Path";
-import JobFairListManagementComponent from "../../../components/JobFairList/JobFairList.management.component";
-import {convertToDateString} from "../../../utils/common";
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react'
+import { generatePath, useHistory } from 'react-router-dom'
+import { getHistoricalJobFairForCompany } from '../../../services/job-fair-controller/JobFairConTrollerService'
+import { getCompanyBoothByJobFairId } from '../../../services/company-booth-controller/CompanyBoothControllerService'
+import { PATH, PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path'
+import JobFairListManagementComponent from '../../../components/JobFairList/JobFairList.management.component'
+import { convertToDateString } from '../../../utils/common'
 
 const JobFairListHistoryContainer = () => {
   const [loading, setLoading] = useState(false)
@@ -35,7 +34,9 @@ const JobFairListHistoryContainer = () => {
             companyId: item.companyId,
             startTime: convertToDateString(item.jobFair.startTime),
             endTime: convertToDateString(item.jobFair.endTime),
-            companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime),
+            companyRegisterStartTime: convertToDateString(
+              item.jobFair.companyRegisterStartTime
+            ),
             description: item.jobFair.description,
             layoutId: item.jobFair.layoutId,
             thumbnail: item.jobFair.thumbnail,
@@ -49,7 +50,7 @@ const JobFairListHistoryContainer = () => {
         setSearchResult([...data, ...result])
         setLoading(false)
       })
-      .catch(err => {
+      .catch(() => {
         setLoading(false)
       })
   }
@@ -58,12 +59,13 @@ const JobFairListHistoryContainer = () => {
     getCompanyBoothByJobFairId(jobFairId)
       .then(res => {
         const result = res.data[0]?.id
-        const url = generatePath(PATH.DECORATE_BOOTH_PAGE, {jobFairId: jobFairId, companyBoothId: result })
+        const url = generatePath(PATH.DECORATE_BOOTH_PAGE, {
+          jobFairId: jobFairId,
+          companyBoothId: result
+        })
         handleRedirect(url)
       })
-      .catch(err => {
-
-      })
+      .catch(() => {})
   }
 
   const handleFilterByStatus = statusArr => {
@@ -80,14 +82,14 @@ const JobFairListHistoryContainer = () => {
     setSearchResult([...data])
   }
 
-  const handleViewDetail = (id) => {
+  const handleViewDetail = id => {
     history.push(PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE, {
       jobFairId: id
     })
   }
 
-  const handleRequestChange = (id) => {
-    const url = generatePath(PATH.REGISTER_JOB_FAIR_PAGE, {jobFairId: id})
+  const handleRequestChange = id => {
+    const url = generatePath(PATH.REGISTER_JOB_FAIR_PAGE, { jobFairId: id })
     history.push(url)
   }
 
@@ -110,6 +112,6 @@ const JobFairListHistoryContainer = () => {
       />
     </>
   )
-};
+}
 
-export default JobFairListHistoryContainer;
+export default JobFairListHistoryContainer

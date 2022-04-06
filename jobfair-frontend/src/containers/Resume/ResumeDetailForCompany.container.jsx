@@ -1,15 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import {useHistory} from "react-router-dom";
-import {Form, notification, Spin} from "antd";
-import {evaluateApplication, getApplication} from "../../services/application-controller/ApplicationControllerService";
-import {convertToDateValue} from "../../utils/common";
-import ResumeDetailComponent from "../../components/Resume/ResumeDetail.component";
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { Form, notification, Spin } from 'antd'
+import {
+  evaluateApplication,
+  getApplication
+} from '../../services/application-controller/ApplicationControllerService'
+import { convertToDateValue } from '../../utils/common'
+import ResumeDetailComponent from '../../components/Resume/ResumeDetail.component'
 
-const ResumeDetailForCompanyContainer = ({resumeId}) => {
+const ResumeDetailForCompanyContainer = ({ resumeId }) => {
   const history = useHistory()
   const [form] = Form.useForm()
   const [data, setData] = useState(undefined)
-
 
   const onFinish = values => {
     //mapping
@@ -20,7 +22,7 @@ const ResumeDetailForCompanyContainer = ({resumeId}) => {
     }
 
     evaluateApplication(body)
-      .then(res => {
+      .then(() => {
         notification['success']({
           message: `Submit evaluation successfully`,
           description: `Your evaluation has been submitted`,
@@ -28,7 +30,7 @@ const ResumeDetailForCompanyContainer = ({resumeId}) => {
         })
         history.goBack()
       })
-      .catch(e => {
+      .catch(() => {
         notification['error']({
           message: `Submit evaluation failed`,
           description: `There is problem while submitting, try again later`,
@@ -41,14 +43,8 @@ const ResumeDetailForCompanyContainer = ({resumeId}) => {
     getApplication(resumeId)
       .then(res => {
         setData(res.data)
-
       })
-      .catch(() => {
-        notification['error']({
-          message: `Fetch attendant profile failed`,
-          description: `Failed for attendant with ${attendantId}`
-        })
-      })
+      .catch(() => {})
   }
 
   useEffect(() => {
@@ -60,14 +56,19 @@ const ResumeDetailForCompanyContainer = ({resumeId}) => {
   }
 
   if (data === undefined) {
-    return <Spin/>
+    return <Spin />
   }
 
   return (
     <>
-      <ResumeDetailComponent form={form} onFinish={onFinish} data={data} handleOnChangeDob={handleOnChangeDob}/>
+      <ResumeDetailComponent
+        form={form}
+        onFinish={onFinish}
+        data={data}
+        handleOnChangeDob={handleOnChangeDob}
+      />
     </>
   )
 }
 
-export default ResumeDetailForCompanyContainer;
+export default ResumeDetailForCompanyContainer

@@ -1,10 +1,10 @@
 import React from 'react'
-import ResultFailedComponent from "../../components/Result/ResultFailed.component";
+import ResultFailedComponent from '../../components/Result/ResultFailed.component'
 
-const ResultFailedPage = props => {
+const ResultFailedPage = () => {
   return (
     <div className="page">
-      <ResultFailedComponent/>
+      <ResultFailedComponent />
     </div>
   )
 }

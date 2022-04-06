@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import CreateJobPositionFormComponent from '../../components/CreateJobPositionForm/CreateJobPositionForm.component'
-import { Button, Form, notification } from 'antd'
+import { Form, notification } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { createJobPositionsAPI } from '../../services/job-controller/JobControllerService'
-import { getEmployeesAPI } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
 import { useSelector } from 'react-redux'
 
 const CreateJobPositionContainer = () => {
@@ -16,9 +15,9 @@ const CreateJobPositionContainer = () => {
       ...values,
       companyId: companyId
     })
-      .then(res => {
+      .then(() => {
         notification['success']({
-          message: `Create job position data successfully`,
+          message: `Create job position data successfully`
         })
         form.resetFields()
         history.goBack()

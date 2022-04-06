@@ -1,9 +1,10 @@
 import React from 'react'
-import { Button, Checkbox, Divider, Form, Input, Layout, InputNumber } from 'antd'
+import { Button, Divider, Form, Input } from 'antd'
 import Typography from '@mui/material/Typography'
 import ReactCodeInput from 'react-code-input'
 import { ChangePasswordValidation } from '../../validate/ChangePasswordValidation'
 import './ResetPassword.scss'
+
 const ResetPasswordComponent = ({ onFinish, form, email, setOtpCode }) => {
   const handlePinChange = otp => {
     setOtpCode(otp)
@@ -14,7 +15,13 @@ const ResetPasswordComponent = ({ onFinish, form, email, setOtpCode }) => {
         Reset Password Page
       </Divider>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Form labelCol={{ span: 8 }} wrapperCol={{ span: 8 }} form={form} onFinish={onFinish} autoComplete="off">
+        <Form
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 8 }}
+          form={form}
+          onFinish={onFinish}
+          autoComplete="off"
+        >
           <div
             style={{
               display: 'flex',
@@ -25,14 +32,29 @@ const ResetPasswordComponent = ({ onFinish, form, email, setOtpCode }) => {
             <Typography variant="h6" gutterBottom component="div">
               OTP Code:
             </Typography>
-            <ReactCodeInput id="pinCode" type="text" fields={6} onChange={handlePinChange} />
+            <ReactCodeInput
+              id="pinCode"
+              type="text"
+              fields={6}
+              onChange={handlePinChange}
+            />
           </div>
           {!email ? (
-            <Form.Item label="Email" name="email" hasFeedback rules={ChangePasswordValidation.email}>
+            <Form.Item
+              label="Email"
+              name="email"
+              hasFeedback
+              rules={ChangePasswordValidation.email}
+            >
               <Input />
             </Form.Item>
           ) : null}
-          <Form.Item label="newPassword" name="newPassword" hasFeedback rules={ChangePasswordValidation.newPassword}>
+          <Form.Item
+            label="newPassword"
+            name="newPassword"
+            hasFeedback
+            rules={ChangePasswordValidation.newPassword}
+          >
             <Input.Password />
           </Form.Item>
           <Form.Item

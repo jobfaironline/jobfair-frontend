@@ -1,9 +1,16 @@
 import React from 'react'
 
-import {BasicMesh} from "../ThreeJSBaseComponent/ChildMesh.component";
+import { BasicMesh } from '../ThreeJSBaseComponent/ChildMesh.component'
 
 export const ItemMesh = React.forwardRef((props, ref) => {
-  const {position, onClick, onPointerOver, onPointerLeave, useDragBind, mesh } = props;
+  const {
+    position,
+    onClick,
+    onPointerOver,
+    onPointerLeave,
+    useDragBind,
+    mesh
+  } = props
 
   return (
     <mesh
@@ -23,9 +30,9 @@ export const ItemMesh = React.forwardRef((props, ref) => {
       castShadow={true}
       receiveShadow={true}
     >
-      {mesh.children.map(child => <BasicMesh mesh={child} key={child.uuid}/>)}
+      {mesh.children.map(child => (
+        <BasicMesh mesh={child} key={child.uuid} />
+      ))}
     </mesh>
   )
 })
-
-

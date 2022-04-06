@@ -1,23 +1,28 @@
 import React from 'react'
-import { Row, Col, Button, Typography, Avatar, Space } from 'antd'
+import { Avatar, Button, Col, Row, Space, Typography } from 'antd'
 import {
-  TwitterOutlined,
-  FacebookOutlined,
-  GoogleOutlined,
-  MailOutlined,
-  LinkOutlined,
-  FieldTimeOutlined,
+  DownloadOutlined,
   EnvironmentOutlined,
-  DownloadOutlined
+  FacebookOutlined,
+  FieldTimeOutlined,
+  GoogleOutlined,
+  LinkOutlined,
+  MailOutlined,
+  TwitterOutlined
 } from '@ant-design/icons'
 import styles from './ResumeHeader.module.scss'
+
 const ResumeHeader = props => {
   const { Text, Link, Title } = Typography
   const { data } = props
   return (
     <>
       <div className={styles.container}>
-        <img src="/miku.jpg" alt="123" style={{ width: '100%', height: '20rem' }} />
+        <img
+          src="/miku.jpg"
+          alt="123"
+          style={{ width: '100%', height: '20rem' }}
+        />
         <div className={styles.content}>
           <Row>
             <Col span={16} offset={4}>
@@ -45,8 +50,19 @@ const ResumeHeader = props => {
                     <Space align="center" direction="vertical">
                       <div className={styles.candidateImage}>
                         <Avatar
-                          src={data.profileImageUrl ? data.profileImageUrl : 'https://joeschmoe.io/api/v1/random'}
-                          size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 145 }}
+                          src={
+                            data.profileImageUrl
+                              ? data.profileImageUrl
+                              : 'https://joeschmoe.io/api/v1/random'
+                          }
+                          size={{
+                            xs: 24,
+                            sm: 32,
+                            md: 40,
+                            lg: 64,
+                            xl: 80,
+                            xxl: 145
+                          }}
                         />
                       </div>
 
@@ -56,13 +72,21 @@ const ResumeHeader = props => {
                       </Link>
                       <div style={{ color: '#888888' }}>
                         <MailOutlined />
-                        <Link href={data.email} target="_blank" style={{ color: '#888888' }}>
+                        <Link
+                          href={data.email}
+                          target="_blank"
+                          style={{ color: '#888888' }}
+                        >
                           {data.email}
                         </Link>
                       </div>
                       <div style={{ color: '#888888' }}>
                         <LinkOutlined />
-                        <Link href={data.website} target="_blank" style={{ color: '#888888' }}>
+                        <Link
+                          href={data.website}
+                          target="_blank"
+                          style={{ color: '#888888' }}
+                        >
                           website
                         </Link>
                       </div>
@@ -71,7 +95,11 @@ const ResumeHeader = props => {
                 </Col>
                 <Col span={8}>
                   <div className={styles.singleCandidateHeadeLeft}>
-                    <Space direction="vertical" size={100} style={{ width: '100%' }}>
+                    <Space
+                      direction="vertical"
+                      size={100}
+                      style={{ width: '100%' }}
+                    >
                       <div className={styles.locationPublished}>
                         <Row justify="space-between">
                           <Col>

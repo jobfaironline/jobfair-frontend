@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import styles from './MessageSent.module.scss'
+
 const MessageSent = prop => {
   const { message } = prop
   useEffect(() => console.log(message), [prop])

@@ -10,7 +10,7 @@ const JobFairForAdminColumn = (getColumnSearchProps, key) => {
       dataIndex: 'no',
       key: 'no',
       width: '4rem',
-      render(text, record) {
+      render(text) {
         return {
           props: {
             style: { textAlign: 'end' }
@@ -83,7 +83,9 @@ const JobFairForAdminColumn = (getColumnSearchProps, key) => {
             }
             break
         }
-        return <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
+        return (
+          <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
+        )
       }
     }
   ]

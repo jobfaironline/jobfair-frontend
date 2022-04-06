@@ -8,7 +8,7 @@ const defaultColumns = getColumnSearchProps => {
       dataIndex: 'no',
       key: 'no',
       ...getColumnSearchProps('no'),
-      render(text, record) {
+      render(text) {
         return {
           props: {
             style: { textAlign: 'end', width: '5px' }
@@ -102,13 +102,18 @@ const defaultColumns = getColumnSearchProps => {
             }
             break
         }
-        return <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
+        return (
+          <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
+        )
       }
     }
   ]
 }
 
-const EvaluateBoothInformationTableColumn = (getColumnSearchProps, jobFairId) => {
+const EvaluateBoothInformationTableColumn = (
+  getColumnSearchProps,
+  jobFairId
+) => {
   if (jobFairId !== undefined) {
     return defaultColumns(getColumnSearchProps)
   } else {
@@ -118,7 +123,7 @@ const EvaluateBoothInformationTableColumn = (getColumnSearchProps, jobFairId) =>
         dataIndex: 'no',
         key: 'no',
         ...getColumnSearchProps('no'),
-        render(text, record) {
+        render(text) {
           return {
             props: {
               style: { textAlign: 'end', width: '5px' }
@@ -218,7 +223,9 @@ const EvaluateBoothInformationTableColumn = (getColumnSearchProps, jobFairId) =>
               }
               break
           }
-          return <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
+          return (
+            <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
+          )
         }
       }
     ]

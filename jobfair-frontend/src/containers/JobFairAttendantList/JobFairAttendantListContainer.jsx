@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import {generatePath, useHistory} from 'react-router-dom'
+import { generatePath, useHistory } from 'react-router-dom'
 import JobFairListManagementComponent from '../../components/JobFairList/JobFairList.management.component'
 import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
 import { getJobFairAvailableForAttendant } from '../../services/job-fair-controller/JobFairConTrollerService'
-import {PATH, PATH_ATTENDANT} from "../../constants/Paths/Path";
-import {convertToDateString} from "../../utils/common";
-const JobFairAttendantListContainer = (props) => {
+import { PATH, PATH_ATTENDANT } from '../../constants/Paths/Path'
+import { convertToDateString } from '../../utils/common'
+
+const JobFairAttendantListContainer = () => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
   //paging
   const [pageSize, setPageSize] = useState(100)
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0)
   const [searchResult, setSearchResult] = useState([])
   const [count, setCount] = useState(0)
 
@@ -31,8 +32,12 @@ const JobFairAttendantListContainer = (props) => {
             companyId: item.companyId,
             startTime: convertToDateString(item.jobFair.startTime),
             endTime: convertToDateString(item.jobFair.endTime),
-            companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime),
-            attendantRegisterStartTime: convertToDateString(item.jobFair.attendantRegisterStartTime),
+            companyRegisterStartTime: convertToDateString(
+              item.jobFair.companyRegisterStartTime
+            ),
+            attendantRegisterStartTime: convertToDateString(
+              item.jobFair.attendantRegisterStartTime
+            ),
             description: item.jobFair.description,
             layoutId: item.jobFair.layoutId,
             thumbnail: item.jobFair.thumbnail,
@@ -76,14 +81,14 @@ const JobFairAttendantListContainer = (props) => {
     setSearchResult([...data])
   }
 
-  const handleViewDetail = (id) => {
+  const handleViewDetail = id => {
     history.push(PATH_ATTENDANT.JOB_FAIR_DETAIL_PAGE, {
       jobFairId: id
     })
   }
 
-  const handleViewMap = (id) => {
-    const url = generatePath(PATH.PUBLICIZED_BOOTH_PAGE, {jobFairId : id})
+  const handleViewMap = id => {
+    const url = generatePath(PATH.PUBLICIZED_BOOTH_PAGE, { jobFairId: id })
     history.push(url)
   }
 
@@ -100,7 +105,10 @@ const JobFairAttendantListContainer = (props) => {
         handleViewMap={handleViewMap}
         // getCompanyBoothId={getCompanyBoothId}
       />
-      <PaginationComponent handlePageChange={handlePageChange} totalRecord={data.length} />
+      <PaginationComponent
+        handlePageChange={handlePageChange}
+        totalRecord={data.length}
+      />
     </div>
   )
 }

@@ -1,15 +1,14 @@
-import React, {useEffect, useState} from 'react'
-import {generatePath, useHistory} from 'react-router-dom'
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react'
+import { generatePath, useHistory } from 'react-router-dom'
 import JobFairListManagementComponent from '../../../components/JobFairList/JobFairList.management.component'
-import {getAvailableJobFairForCompany} from '../../../services/job-fair-controller/JobFairConTrollerService'
-import {getCompanyBoothByJobFairId} from '../../../services/company-booth-controller/CompanyBoothControllerService'
-import {PATH, PATH_COMPANY_MANAGER} from '../../../constants/Paths/Path'
-import {convertToDateString} from "../../../utils/common";
-import {notification} from "antd";
+import { getAvailableJobFairForCompany } from '../../../services/job-fair-controller/JobFairConTrollerService'
+import { getCompanyBoothByJobFairId } from '../../../services/company-booth-controller/CompanyBoothControllerService'
+import { PATH, PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path'
+import { convertToDateString } from '../../../utils/common'
+import { notification } from 'antd'
 
-const approvedJobFairId = 'a50a9875-93aa-4605-8afd-29923d3310fe'
-
-const JobFairListAvailableContainer = props => {
+const JobFairListAvailableContainer = () => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
   //paging state
@@ -18,7 +17,6 @@ const JobFairListAvailableContainer = props => {
 
   const [searchResult, setSearchResult] = useState([])
   const [count, setCount] = useState(0)
-
 
   const history = useHistory()
 
@@ -37,7 +35,9 @@ const JobFairListAvailableContainer = props => {
             companyId: item.companyId,
             startTime: convertToDateString(item.jobFair.startTime),
             endTime: convertToDateString(item.jobFair.endTime),
-            companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime),
+            companyRegisterStartTime: convertToDateString(
+              item.jobFair.companyRegisterStartTime
+            ),
             description: item.jobFair.description,
             layoutId: item.jobFair.layoutId,
             thumbnail: item.jobFair.thumbnail,
@@ -51,7 +51,7 @@ const JobFairListAvailableContainer = props => {
         setSearchResult([...data, ...result])
         setLoading(false)
       })
-      .catch(err => {
+      .catch(() => {
         setLoading(false)
       })
       .finally(() => {
@@ -59,12 +59,14 @@ const JobFairListAvailableContainer = props => {
       })
   }
 
-
   const getCompanyBoothId = jobFairId => {
     getCompanyBoothByJobFairId(jobFairId)
       .then(res => {
         const result = res.data[0]?.id
-        const url = generatePath(PATH.DECORATE_BOOTH_PAGE, {jobFairId: jobFairId, companyBoothId: result})
+        const url = generatePath(PATH.DECORATE_BOOTH_PAGE, {
+          jobFairId: jobFairId,
+          companyBoothId: result
+        })
         handleRedirect(url)
       })
       .catch(err => {
@@ -88,17 +90,16 @@ const JobFairListAvailableContainer = props => {
     setSearchResult([...data])
   }
 
-  const handleViewDetail = (id) => {
+  const handleViewDetail = id => {
     history.push(PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE, {
       jobFairId: id
     })
   }
 
-  const handleViewMap = (id) => {
-    const url = generatePath(PATH.PUBLICIZED_BOOTH_PAGE, {jobFairId: id})
+  const handleViewMap = id => {
+    const url = generatePath(PATH.PUBLICIZED_BOOTH_PAGE, { jobFairId: id })
     history.push(url)
   }
-
 
   useEffect(() => {
     loadMoreData()

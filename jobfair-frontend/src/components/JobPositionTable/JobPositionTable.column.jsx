@@ -1,12 +1,10 @@
-import { Tag } from 'antd'
-
 const JobPositionTableColumn = getColumnSearchProps => {
   return [
     {
       title: 'No',
       dataIndex: 'no',
       key: 'no',
-      render(text, record) {
+      render(text) {
         return {
           props: {
             style: { width: '3rem', textAlign: 'right' }

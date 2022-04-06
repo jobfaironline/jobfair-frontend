@@ -1,16 +1,14 @@
 import React from 'react'
-import { Typography, Space, Row, Col } from 'antd'
+import { Col, Row, Space, Typography } from 'antd'
 import {
-  ProjectOutlined,
-  SmileOutlined,
-  BarChartOutlined,
-  AreaChartOutlined,
   ManOutlined,
-  TranslationOutlined,
-  ReadFilled
+  ProjectOutlined,
+  ReadFilled,
+  SmileOutlined
 } from '@ant-design/icons'
+
 const OverviewComponent = props => {
-  const { Title, Text, Link } = Typography
+  const { Title, Text } = Typography
   const { data } = props
   const styleOverviewText = {
     marginLeft: '1rem'

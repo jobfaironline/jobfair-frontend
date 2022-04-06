@@ -1,4 +1,4 @@
-import {convertToDateString} from "./common";
+import { convertToDateString } from './common'
 
 export const mapperJobFairDetail = (data, creatorInfo) => {
   return {
@@ -17,20 +17,30 @@ export const mapperJobFairDetail = (data, creatorInfo) => {
     name: data?.name,
     estimateParticipant: data?.estimateParticipant,
     targetCompany: data?.targetCompany,
-    targetAttendant: data?.targetAttendant,
+    targetAttendant: data?.targetAttendant
   }
 }
 
-export const mapperResponseJobFairForAdmin = (res) => {
+export const mapperResponseJobFairForAdmin = res => {
   return res.data.content.map((item, index) => {
     return {
       no: index + 1,
       id: item.jobFairId,
-      companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime),
-      companyRegisterEndTime: convertToDateString(item.jobFair.companyRegisterEndTime),
-      companyBuyBoothStartTime: convertToDateString(item.jobFair.companyBuyBoothStartTime),
-      companyBuyBoothEndTime: convertToDateString(item.jobFair.companyBuyBoothEndTime),
-      attendantRegisterStartTime: convertToDateString(item.jobFair.attendantRegisterStartTime),
+      companyRegisterStartTime: convertToDateString(
+        item.jobFair.companyRegisterStartTime
+      ),
+      companyRegisterEndTime: convertToDateString(
+        item.jobFair.companyRegisterEndTime
+      ),
+      companyBuyBoothStartTime: convertToDateString(
+        item.jobFair.companyBuyBoothStartTime
+      ),
+      companyBuyBoothEndTime: convertToDateString(
+        item.jobFair.companyBuyBoothEndTime
+      ),
+      attendantRegisterStartTime: convertToDateString(
+        item.jobFair.attendantRegisterStartTime
+      ),
       startTime: convertToDateString(item.jobFair.startTime),
       endTime: convertToDateString(item.jobFair.endTime),
       description: item.jobFair.description,
@@ -42,7 +52,7 @@ export const mapperResponseJobFairForAdmin = (res) => {
       targetAttendant: item.jobFair.targetAttendant,
       createTime: convertToDateString(item.jobFair.createTime),
       thumbnail: item.jobFair.thumbnail,
-      status: item.status,
+      status: item.status
     }
   })
 }

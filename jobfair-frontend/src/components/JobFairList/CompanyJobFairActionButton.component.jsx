@@ -1,8 +1,8 @@
-import {Button, notification, Tooltip} from 'antd'
+import { Button, notification, Tooltip } from 'antd'
 import { PATH } from '../../constants/Paths/Path'
 import React from 'react'
 import { COMPANY_JOB_FAIR_STATUS } from '../../constants/CompanyJobFairStatus'
-import {generatePath} from "react-router-dom";
+import { generatePath } from 'react-router-dom'
 
 export const RegistrableButton = props => {
   const { onClick } = props
@@ -18,7 +18,10 @@ export const RegistrableButton = props => {
 export const SubmittedButton = props => {
   const { onClick } = props
   return (
-    <Tooltip title="You registration is still in progress. Please wait!" color="gold">
+    <Tooltip
+      title="You registration is still in progress. Please wait!"
+      color="gold"
+    >
       <Button type="primary" onClick={onClick}>
         PENDING
       </Button>
@@ -51,7 +54,10 @@ export const UnavailableButton = props => {
 export const DecorateBoothButton = props => {
   const { onClick } = props
   return (
-    <Tooltip title="You chose a booth in this event. Decorate it now" color="geekblue">
+    <Tooltip
+      title="You chose a booth in this event. Decorate it now"
+      color="geekblue"
+    >
       <Button type="primary" onClick={onClick}>
         DECORATE BOOTH
       </Button>
@@ -62,7 +68,10 @@ export const DecorateBoothButton = props => {
 export const ChooseBoothButton = props => {
   const { onClick } = props
   return (
-    <Tooltip title="You registration has been approved. Now you can choose booth" color="blue">
+    <Tooltip
+      title="You registration has been approved. Now you can choose booth"
+      color="blue"
+    >
       <Button type="primary" onClick={onClick}>
         CHOOSE BOOTH
       </Button>
@@ -95,7 +104,10 @@ export const ClosedButton = props => {
 export const AttendedButton = props => {
   const { onClick } = props
   return (
-    <Tooltip title="🌼Thank you for joining this job fair. See ya🌼" color="cyan">
+    <Tooltip
+      title="🌼Thank you for joining this job fair. See ya🌼"
+      color="cyan"
+    >
       <Button type="primary" onClick={onClick}>
         ATTENDED
       </Button>
@@ -106,7 +118,10 @@ export const AttendedButton = props => {
 export const RequestChangeButton = props => {
   const { onClick } = props
   return (
-    <Tooltip title="Please edit your registration and submit again!" color="purple">
+    <Tooltip
+      title="Please edit your registration and submit again!"
+      color="purple"
+    >
       <Button type="primary" onClick={onClick}>
         REQUEST CHANGE
       </Button>
@@ -117,7 +132,10 @@ export const RequestChangeButton = props => {
 export const RejectButton = props => {
   const { onClick } = props
   return (
-    <Tooltip title="Sorry, your registration was rejected. Click to view the reason" color="red">
+    <Tooltip
+      title="Sorry, your registration was rejected. Click to view the reason"
+      color="red"
+    >
       <Button type="primary" onClick={onClick}>
         REJECT
       </Button>
@@ -137,16 +155,34 @@ export const GenericButton = props => {
 }
 
 const CompanyJobFairActionButton = props => {
-  const { getCompanyBoothId, item, handleRedirect, handleViewMap, handleRequestChange } = props
+  const {
+    getCompanyBoothId,
+    item,
+    handleRedirect,
+    handleViewMap,
+    handleRequestChange
+  } = props
 
   switch (item.status) {
     case COMPANY_JOB_FAIR_STATUS.REGISTRABLE:
-      return <RegistrableButton onClick={() => {
-        const url = generatePath(PATH.REGISTER_JOB_FAIR_PAGE, {jobFairId: item.id})
-        handleRedirect(url)
-      }} />
+      return (
+        <RegistrableButton
+          onClick={() => {
+            const url = generatePath(PATH.REGISTER_JOB_FAIR_PAGE, {
+              jobFairId: item.id
+            })
+            handleRedirect(url)
+          }}
+        />
+      )
     case COMPANY_JOB_FAIR_STATUS.REJECT:
-      return <RejectButton onClick={() => notification['info']({message: 'click to view reason'})}/>
+      return (
+        <RejectButton
+          onClick={() =>
+            notification['info']({ message: 'click to view reason' })
+          }
+        />
+      )
     case COMPANY_JOB_FAIR_STATUS.SUBMITTED:
       return <SubmittedButton />
     case COMPANY_JOB_FAIR_STATUS.APPROVE:
@@ -156,18 +192,34 @@ const CompanyJobFairActionButton = props => {
     case COMPANY_JOB_FAIR_STATUS.DECORATE_BOOTH:
       return <DecorateBoothButton onClick={() => getCompanyBoothId(item.id)} />
     case COMPANY_JOB_FAIR_STATUS.CHOOSE_BOOTH:
-      return <ChooseBoothButton onClick={() => {
-        const url = generatePath(PATH.CHOOSE_BOOTH_PAGE, {jobFairId: item.id})
-        handleRedirect(url)
-      }} />
+      return (
+        <ChooseBoothButton
+          onClick={() => {
+            const url = generatePath(PATH.CHOOSE_BOOTH_PAGE, {
+              jobFairId: item.id
+            })
+            handleRedirect(url)
+          }}
+        />
+      )
     case COMPANY_JOB_FAIR_STATUS.HAPPENING:
       return <HappeningButton onClick={() => handleViewMap(item.id)} />
     case COMPANY_JOB_FAIR_STATUS.CLOSED:
-      return <ClosedButton onClick={() => notification['success']({message: 'Closed!!'})}/>
+      return (
+        <ClosedButton
+          onClick={() => notification['success']({ message: 'Closed!!' })}
+        />
+      )
     case COMPANY_JOB_FAIR_STATUS.ATTENDED:
-      return <AttendedButton onClick={() => notification['success']({message: '💖'})}/>
+      return (
+        <AttendedButton
+          onClick={() => notification['success']({ message: '💖' })}
+        />
+      )
     case COMPANY_JOB_FAIR_STATUS.REQUEST_CHANGE:
-      return <RequestChangeButton onClick={() => handleRequestChange(item.id)}/>
+      return (
+        <RequestChangeButton onClick={() => handleRequestChange(item.id)} />
+      )
     default:
       return <GenericButton status={item.status} />
   }

@@ -1,4 +1,5 @@
 import React from 'react'
+
 const MeshComponent = prop => {
   const { geometry, material, position, scale, rotation } = prop
   return (

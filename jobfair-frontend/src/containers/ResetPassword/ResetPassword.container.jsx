@@ -4,6 +4,7 @@ import { Form, notification } from 'antd'
 import { resetPasswordAPI } from '../../services/reset-password-controller/ResetPasswordControllerService'
 import { PATH } from '../../constants/Paths/Path'
 import ResetPasswordComponent from '../../components/ResetPassword/ResetPassword.component'
+
 const ResetPasswordContainer = () => {
   const [otpCode, setOtpCode] = useState()
   const location = useLocation()
@@ -17,7 +18,7 @@ const ResetPasswordContainer = () => {
       confirmPassword: values.confirmPassword
     }
     resetPasswordAPI(body)
-      .then(res => {
+      .then(() => {
         notification['success']({
           message: `Your password has been change!.`,
           duration: 1
@@ -33,7 +34,12 @@ const ResetPasswordContainer = () => {
   }
   return (
     <div className="page">
-      <ResetPasswordComponent form={form} onFinish={onFinish} email={location?.state?.email} setOtpCode={setOtpCode} />
+      <ResetPasswordComponent
+        form={form}
+        onFinish={onFinish}
+        email={location?.state?.email}
+        setOtpCode={setOtpCode}
+      />
     </div>
   )
 }

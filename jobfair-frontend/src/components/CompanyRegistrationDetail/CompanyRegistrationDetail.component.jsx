@@ -1,31 +1,40 @@
-import React from 'react';
-import {Card, Col, Divider, Row, Space, Typography} from "antd";
-import {convertEnumToString} from "../../utils/common";
-import EvaluationFormComponent from "../EvaluationForm/EvaluationForm.component";
-import {CompanyRegistrationStatus} from "../../constants/CompanyRegistrationConst";
+import React from 'react'
+import { Card, Col, Divider, Row, Space, Typography } from 'antd'
+import { convertEnumToString } from '../../utils/common'
+import EvaluationFormComponent from '../EvaluationForm/EvaluationForm.component'
+import { CompanyRegistrationStatus } from '../../constants/CompanyRegistrationConst'
 
-const {Text} = Typography
+const { Text } = Typography
 
-const CompanyRegistrationDetailComponent = (props) => {
-  const {data, onFinish} = props
+const CompanyRegistrationDetailComponent = props => {
+  const { data, onFinish } = props
 
-  const handleEvaluation = (status) => {
+  const handleEvaluation = status => {
     switch (status) {
       case CompanyRegistrationStatus.PENDING:
         return (
           <>
             <Text strong>Evaluate this registration</Text>
-            <EvaluationFormComponent onFinish={onFinish} id={data.id} name="companyRegistrationId"/>
+            <EvaluationFormComponent
+              onFinish={onFinish}
+              id={data.id}
+              name="companyRegistrationId"
+            />
           </>
         )
-      default: return null
+      default:
+        return null
     }
   }
 
   return (
     <>
-      <Card title="Company registration detail" bordered={true} headStyle={{textAlign: 'center'}}
-            style={{width: 750, marginLeft: 300, marginTop: 80}}>
+      <Card
+        title="Company registration detail"
+        bordered={true}
+        headStyle={{ textAlign: 'center' }}
+        style={{ width: 750, marginLeft: 300, marginTop: 80 }}
+      >
         <Space direction="vertical">
           <Space size="middle" direction="vertical">
             <Row>
@@ -38,7 +47,7 @@ const CompanyRegistrationDetailComponent = (props) => {
                 <Text italic>{data.status}</Text>
               </Col>
             </Row>
-            <Divider style={{width: 700}}>
+            <Divider style={{ width: 700 }}>
               <Text>Job positions: </Text>
             </Divider>
             {data.registrationJobPositions.map(item => (
@@ -98,7 +107,7 @@ const CompanyRegistrationDetailComponent = (props) => {
                   </Col>
                 </Row>
                 <Text strong>Skill required: </Text>
-                {item.skillTagDTOS.map((skill, index) => (
+                {item.skillTagDTOS.map(skill => (
                   <>
                     <Row>
                       <Col span={24}>
@@ -108,7 +117,7 @@ const CompanyRegistrationDetailComponent = (props) => {
                     </Row>
                   </>
                 ))}
-                <Divider/>
+                <Divider />
               </div>
             ))}
             {handleEvaluation(data.status)}
@@ -116,7 +125,7 @@ const CompanyRegistrationDetailComponent = (props) => {
         </Space>
       </Card>
     </>
-  );
-};
+  )
+}
 
-export default CompanyRegistrationDetailComponent;
+export default CompanyRegistrationDetailComponent
