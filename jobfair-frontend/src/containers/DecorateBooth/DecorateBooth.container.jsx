@@ -50,7 +50,9 @@ export const DecorateBoothContainer = props => {
       response.data.companyBoothLayoutVideos?.forEach(data => {
         companyBoothLayoutVideos[data.itemName] = data.url
       })
-    } catch (err) {}
+    } catch (err) {
+      //handle error in here
+    }
     //parse file and get items
     const glb = await loadGLBModel(url)
     const result = glb.scene.children

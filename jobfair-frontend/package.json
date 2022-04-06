@@ -64,6 +64,9 @@
   "scripts": {
     "lint": "eslint './src/**/*.{js,jsx}'",
     "lint:fix": "eslint --quiet --fix --ext .js,.jsx src/",
+    "prettier": "npx prettier src --check",
+    "prettier:fix": "npm run prettier -- --write",
+    "format": "npm run prettier:fix && npm run lint:fix",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -89,7 +92,7 @@
     ]
   },
   "devDependencies": {
-    "eslint-config-prettier": "^8.4.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.5.1",
     "tailwindcss": "^3.0.11"

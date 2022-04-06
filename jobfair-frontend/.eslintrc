@@ -39,6 +39,7 @@
     ],
     "no-console": "warn",
     "no-eval": "error",
-    "import/first": "error"
+    "import/first": "error",
+    "no-extra-boolean-cast": 0
   }
 }

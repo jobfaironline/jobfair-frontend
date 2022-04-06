@@ -21,7 +21,7 @@ const authenticationSlice = createSlice({
       }
     },
     fetchingLoginSuccess: (state, action) => {
-      return {...state, isAuthUser: true, user: action.payload}
+      return { ...state, isAuthUser: true, user: action.payload }
     },
     fetchingLoginFailure: (state, action) => {
       state = {
@@ -32,7 +32,7 @@ const authenticationSlice = createSlice({
       }
     },
     logout: state => {
-      return {...state, isAuthUser: false, user: {}}
+      return { ...state, isAuthUser: false, user: {} }
     }
   }
 })
