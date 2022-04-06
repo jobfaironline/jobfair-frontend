@@ -1,18 +1,14 @@
 import React, { useLayoutEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import { getJobFairIncomingForAdmin } from '../../../services/job-fair-controller/JobFairConTrollerService'
-import { notification, Select, Space, Tooltip } from 'antd'
+import { notification, Space, Tooltip } from 'antd'
 import JobFairForAdminComponent from '../../../components/JobFairList/JobFairForAdmin.component'
 import PaginationComponent from '../../../components/PaginationComponent/Pagination.component'
-import { PATH_ADMIN } from '../../../constants/Paths/Path'
 import { MoreOutlined } from '@ant-design/icons'
 import ViewRegistrationButtonComponent from '../../../components/ViewRegistrationButton/ViewRegistrationButton.component'
 import JobFairDetailModalContainer from '../../../components/JobFairList/modal/JobFairDetailModal.container'
 import { mapperResponseJobFairForAdmin } from '../../../utils/mapperJobFairDetail'
 
-const { Option } = Select
-
-const JobFairIncomingContainer = ({ key }) => {
+const JobFairIncomingContainer = () => {
   const [data, setData] = useState([])
   //pagination
   const [currentPage, setCurrentPage] = useState(0)
@@ -22,7 +18,6 @@ const JobFairIncomingContainer = ({ key }) => {
   const [creatorId, setCreatorId] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const [totalElements, setTotalElements] = useState(0)
-  const history = useHistory()
 
   const fetchData = async () => {
     getJobFairIncomingForAdmin(currentPage, pageSize)
@@ -55,13 +50,6 @@ const JobFairIncomingContainer = ({ key }) => {
     }
     setPageSize(pageSize)
   }
-
-  const handleViewDetailPage = id => {
-    history.push(PATH_ADMIN.JOB_FAIR_DETAIL_PAGE, {
-      jobFair: data.find(item => item.id === id)
-    })
-  }
-
   const modalProps = {
     jobFairId: jobFairId,
     creatorId: creatorId,
@@ -90,18 +78,27 @@ const JobFairIncomingContainer = ({ key }) => {
             return (
               <Space size="middle">
                 <Tooltip placement="top" title="View detail">
-                  <a onClick={() => handleViewModal(record.id, record.creatorId)}>
+                  <a
+                    onClick={() => handleViewModal(record.id, record.creatorId)}
+                  >
                     <MoreOutlined />
                   </a>
                 </Tooltip>
-                <ViewRegistrationButtonComponent status={record.status} id={record.id} />
+                <ViewRegistrationButtonComponent
+                  status={record.status}
+                  id={record.id}
+                />
               </Space>
             )
           }
         }}
       />
       <div style={{ display: 'flex', justifyContent: 'end', padding: '1rem' }}>
-        <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={totalElements} />
+        <PaginationComponent
+          data={data}
+          handlePageChange={handlePageChange}
+          totalRecord={totalElements}
+        />
       </div>
     </>
   )

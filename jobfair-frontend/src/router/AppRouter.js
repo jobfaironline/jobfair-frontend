@@ -7,7 +7,6 @@ import { ResultSuccessPage } from '../pages/ResultPage/ResultSuccessPage'
 import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage'
 import JobFairTablePage from '../pages/JobFairTablePage/JobFairTablePage'
 import JobFairListPage from '../pages/JobFairListPage-remove/JobFairListPage'
-import UserPage from '../pages/UserPage-remove/UserPage'
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage'
 import FAQPage from '../pages/FAQPage/FAQPage'
 import ResultFailedPage from '../pages/ResultPage/ResultFailedPage'
@@ -22,7 +21,6 @@ import EvaluateBoothInformationPage from '../pages/EvaluateBoothInformation/Eval
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage'
 import CompanyEmployeeRouter from './components/CompanyEmployeeRouter'
 import AdminRouter from './components/AdminRouter'
-import StaffRouter from './components/StaffRouter'
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage'
 import RegisterJobFairForm from '../components/RegisterJobFairForm/RegisterJobFairForm.component'
 import JobPositionPage from '../pages/JobPositionPage/JobPositionPage'
@@ -42,15 +40,13 @@ import {
   PATH_ADMIN,
   PATH_ATTENDANT,
   PATH_COMPANY_EMPLOYEE,
-  PATH_COMPANY_MANAGER,
-  PATH_STAFF
+  PATH_COMPANY_MANAGER
 } from '../constants/Paths/Path'
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
-import PublicizeJobFairDetailPage from "../pages/JobFairDetailPage/PublicizeJobFairDetailPage";
-import ResumeDetailPage from "../pages/ResumeDetailPage/ResumeDetailPage";
-import ContactPage from "../pages/ContactPage/ContactPage";
+import PublicizeJobFairDetailPage from '../pages/JobFairDetailPage/PublicizeJobFairDetailPage'
+import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage'
+import ContactPage from '../pages/ContactPage/ContactPage'
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage'
-
 
 const AppRouter = () => {
   return (
@@ -108,8 +104,18 @@ const AppRouter = () => {
         <Route path={PATH.RESULT_SUCCESS_PAGE} exact>
           <ResultSuccessPage />
         </Route>
-        <PublicRouter key={PATH.LOGIN_PAGE} component={() => <LoginPage />} path={PATH.LOGIN_PAGE} exact />
-        <PublicRouter key={PATH.REGISTER_PAGE} component={() => <RegisterPage />} path={PATH.REGISTER_PAGE} exact />
+        <PublicRouter
+          key={PATH.LOGIN_PAGE}
+          component={() => <LoginPage />}
+          path={PATH.LOGIN_PAGE}
+          exact
+        />
+        <PublicRouter
+          key={PATH.REGISTER_PAGE}
+          component={() => <RegisterPage />}
+          path={PATH.REGISTER_PAGE}
+          exact
+        />
         <PublicRouter
           key={PATH.FORGOT_PASSWORD_PAGE}
           component={() => <ForgotPasswordPage />}

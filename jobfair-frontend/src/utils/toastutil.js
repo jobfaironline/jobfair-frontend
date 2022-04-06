@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify'
+
 export const notify = (state, message) => {
   if (state === 2) {
     toast.success(message, {

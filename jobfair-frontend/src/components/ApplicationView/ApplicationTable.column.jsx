@@ -2,13 +2,13 @@ import React from 'react'
 import { Tag } from 'antd'
 import { convertToDateString } from '../../utils/common'
 
-const defaultColumns = getColumnSearchProps => {
+const defaultColumns = () => {
   return [
     {
       title: 'No',
       dataIndex: 'no',
       key: 'no',
-      render(text, record) {
+      render(text) {
         return {
           props: {
             style: { textAlign: 'end', width: '5px' }
@@ -26,7 +26,7 @@ const defaultColumns = getColumnSearchProps => {
       title: 'Applied date',
       dataIndex: 'appliedDate',
       key: 'appliedDate',
-      render(text, record) {
+      render(text) {
         return {
           children: convertToDateString(text)
         }
@@ -68,19 +68,27 @@ const defaultColumns = getColumnSearchProps => {
             }
             break
         }
-        return <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
+        return (
+          <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
+        )
       }
     }
   ]
 }
 
-const ApplicationTableColumn = (getColumnSearchProps, jobPositionId, jobFairId) => {
+const ApplicationTableColumn = (
+  getColumnSearchProps,
+  jobPositionId,
+  jobFairId
+) => {
   if (jobPositionId) {
-    return [...defaultColumns(getColumnSearchProps)].filter(column => column.dataIndex != 'jobPosition')
+    return [...defaultColumns()].filter(
+      column => column.dataIndex != 'jobPosition'
+    )
   } else if (jobFairId) {
-    return [...defaultColumns(getColumnSearchProps)].filter(column => column.dataIndex != 'jobFair')
+    return [...defaultColumns()].filter(column => column.dataIndex != 'jobFair')
   } else {
-    return defaultColumns(getColumnSearchProps)
+    return defaultColumns()
   }
 }
 

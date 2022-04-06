@@ -1,13 +1,7 @@
-import React from 'react';
-import ResultFailedComponent from "../../components/Result/ResultFailed.component";
+import React from 'react'
 
-const ResultFailedContainer = props => {
-    return (
-        <>
+const ResultFailedContainer = () => {
+  return <></>
+}
 
-        </>
-    );
-};
-
-
-export default ResultFailedContainer;
+export default ResultFailedContainer

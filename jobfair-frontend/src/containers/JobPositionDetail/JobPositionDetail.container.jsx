@@ -2,7 +2,10 @@ import React, { useEffect } from 'react'
 import { Form, notification } from 'antd'
 import JobPositionDetailComponent from '../../components/JobPositionDetail/JobPositionDetail.component'
 import { useHistory, useLocation } from 'react-router-dom'
-import { deleteJobPositionAPI, updateJobPositionAPI } from '../../services/job-controller/JobControllerService'
+import {
+  deleteJobPositionAPI,
+  updateJobPositionAPI
+} from '../../services/job-controller/JobControllerService'
 
 const JobPositionDetailContainer = () => {
   const location = useLocation()
@@ -13,7 +16,7 @@ const JobPositionDetailContainer = () => {
 
   const handleDelete = id => {
     deleteJobPositionAPI(id)
-      .then(res => {
+      .then(() => {
         notification['success']({
           message: `Delete job position successfully`
         })
@@ -31,7 +34,7 @@ const JobPositionDetailContainer = () => {
   const onFinish = values => {
     values['subCategoryIds'] = values['subCategoriesIds']
     updateJobPositionAPI(values, values.id)
-      .then(res => {
+      .then(() => {
         notification['success']({
           message: `Update job position successfully`
         })
@@ -47,8 +50,12 @@ const JobPositionDetailContainer = () => {
   }
 
   const init = () => {
-    jobPosition['skillTagIds'] = jobPosition['skillTagDTOS']?.map(item => item.id)
-    jobPosition['subCategoriesIds'] = jobPosition['subCategoryDTOs']?.map(item => item.id)
+    jobPosition['skillTagIds'] = jobPosition['skillTagDTOS']?.map(
+      item => item.id
+    )
+    jobPosition['subCategoriesIds'] = jobPosition['subCategoryDTOs']?.map(
+      item => item.id
+    )
     form.setFieldsValue({ ...jobPosition })
   }
 
@@ -58,7 +65,12 @@ const JobPositionDetailContainer = () => {
 
   return (
     <>
-      <JobPositionDetailComponent data={jobPosition} onFinish={onFinish} form={form} handleDelete={handleDelete} />
+      <JobPositionDetailComponent
+        data={jobPosition}
+        onFinish={onFinish}
+        form={form}
+        handleDelete={handleDelete}
+      />
     </>
   )
 }

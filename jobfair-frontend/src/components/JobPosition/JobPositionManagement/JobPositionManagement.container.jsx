@@ -1,29 +1,33 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { Button, notification, Space, Typography, Upload } from 'antd'
-import { getJobPositionsAPI, uploadCSVFile } from '../../../services/job-controller/JobControllerService'
+import {
+  getJobPositionsAPI,
+  uploadCSVFile
+} from '../../../services/job-controller/JobControllerService'
 import { getEmployeesAPI } from '../../../services/company-employee-controller/CompanyEmployeeControllerService'
-import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path'
 import { useHistory } from 'react-router-dom'
 import PaginationComponent from '../../PaginationComponent/Pagination.component'
 import JobPositionTable from '../../JobPositionTable/JobPositionTable.component'
-import { handleCreateListEmailFromListAccount, handleCreateListNameFromListAccount } from '../../../utils/common'
+import {
+  handleCreateListEmailFromListAccount,
+  handleCreateListNameFromListAccount
+} from '../../../utils/common'
 import { UploadOutlined } from '@ant-design/icons'
-import { useSelector } from 'react-redux'
-const JobPositionManagementContainer = props => {
+
+const JobPositionManagementContainer = () => {
   const companyId = useSelector(state => state?.authentication?.user?.companyId)
   const [data, setData] = useState([])
-  const [jobPosition, setJobPosition] = useState({})
-  const [modalVisible, setModalVisible] = useState(false)
   const [forceRerenderState, setForceRerenderState] = useState(false)
-  const [listContactPersonSuggestion, setListContactPersonSuggestion] = useState([])
+  const [listContactPersonSuggestion, setListContactPersonSuggestion] =
+    useState([])
   const [listEmailSuggestion, setListEmailSuggestion] = useState([])
   //pagination
   const [totalRecord, setTotalRecord] = useState(0)
   const [currentPage, setCurrentPage] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   //
-  const dispatch = useDispatch()
   const history = useHistory()
 
   const fetchData = async () => {
@@ -41,18 +45,20 @@ const JobPositionManagementContainer = props => {
           })
         ])
       })
-      .catch(err => {
-//
+      .catch(() => {
+        //
       })
   }
   useEffect(() => {
     getEmployeesAPI(companyId)
       .then(res => {
-        setListContactPersonSuggestion(handleCreateListNameFromListAccount(res.data))
+        setListContactPersonSuggestion(
+          handleCreateListNameFromListAccount(res.data)
+        )
         setListEmailSuggestion(handleCreateListEmailFromListAccount(res.data))
       })
-      .catch(e => {
-//
+      .catch(() => {
+        //
       })
   }, [])
   useLayoutEffect(() => {
@@ -71,7 +77,10 @@ const JobPositionManagementContainer = props => {
   const handleCreateOnClick = () => {
     history.push({
       pathname: PATH_COMPANY_MANAGER.CREATE_JOB_POSITION_PAGE,
-      state: { listContactPersonSuggestion: listContactPersonSuggestion, listEmailSuggestion: listEmailSuggestion }
+      state: {
+        listContactPersonSuggestion: listContactPersonSuggestion,
+        listEmailSuggestion: listEmailSuggestion
+      }
     })
   }
 
@@ -84,7 +93,7 @@ const JobPositionManagementContainer = props => {
   const loadFile = {
     name: 'file',
     accept: '.csv',
-    beforeUpload: file => {
+    beforeUpload: () => {
       return false
     },
     onChange: async info => {
@@ -119,7 +128,13 @@ const JobPositionManagementContainer = props => {
       {/*<JobPositionDetailModalContainer {...modalProps} />*/}
       {/*<JobPositionSubmodalContainer/>*/}
 
-      <Space style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+      <Space
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginBottom: '1rem'
+        }}
+      >
         <Typography.Title level={2} style={{ marginBottom: '0rem' }}>
           Job positions
         </Typography.Title>
@@ -154,8 +169,14 @@ const JobPositionManagementContainer = props => {
             }
           }}
         />
-        <Space style={{ margin: '1rem 0', display: 'flex', justifyContent: 'end' }}>
-          <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={totalRecord} />
+        <Space
+          style={{ margin: '1rem 0', display: 'flex', justifyContent: 'end' }}
+        >
+          <PaginationComponent
+            data={data}
+            handlePageChange={handlePageChange}
+            totalRecord={totalRecord}
+          />
         </Space>
       </div>
     </div>

@@ -1,14 +1,18 @@
-import {ArrowsAltOutlined, CloseOutlined, MinusOutlined} from '@ant-design/icons'
-import {useEffect, useState} from 'react'
-import {Form, Input} from 'antd'
+import {
+  ArrowsAltOutlined,
+  CloseOutlined,
+  MinusOutlined
+} from '@ant-design/icons'
+import { useEffect, useState } from 'react'
+import { Form, Input } from 'antd'
 import styles from './ChatBox.module.scss'
 import ChatField from './ChatField.component'
 import VideoCall from './VideoCall.component'
 import AgoraRTC from 'agora-rtc-react'
 import SendIcon from '@mui/icons-material/Send'
-import {useSelector} from 'react-redux'
-import {getAgoraRTMToken} from "../../../services/agora-token-controller/AgoraTokenControllerService";
-import {REQUIRED_VALIDATOR} from "../../../validate/GeneralValidation";
+import { useSelector } from 'react-redux'
+import { getAgoraRTMToken } from '../../../services/agora-token-controller/AgoraTokenControllerService'
+import { REQUIRED_VALIDATOR } from '../../../validate/GeneralValidation'
 
 class Message {
   constructor(accountName, content, isMyMessage) {
@@ -19,7 +23,7 @@ class Message {
 }
 
 const ChatBox = props => {
-  const {audioTrackRef, cameraTrackRef} = props
+  const { audioTrackRef, cameraTrackRef } = props
   const [audioReady, setAudioReady] = useState(false)
   const [audioTrack, setAudioTrack] = useState(null)
   const [cameraReady, setCameraReady] = useState(false)
@@ -38,6 +42,7 @@ const ChatBox = props => {
     })
     rtmClient.on('MessageFromPeer', async (message, peerId) => {
       if (message.messageType === 'IMAGE') {
+        // eslint-disable-next-line no-unused-vars
         const blob = await rtm.client.downloadMedia(message.mediaId)
         /*blobToImage(blob, (image) => {
                 })*/
@@ -45,22 +50,30 @@ const ChatBox = props => {
         console.log('message ' + message.text + ' peerId' + peerId)
       }
     })
-    rtmClient.on('MemberJoined', ({channelName, args}) => {
+    rtmClient.on('MemberJoined', ({ channelName, args }) => {
       const memberId = args[0]
       console.log('channel ', channelName, ' member: ', memberId, ' joined')
     })
-    rtmClient.on('MemberLeft', ({channelName, args}) => {
+    rtmClient.on('MemberLeft', ({ channelName, args }) => {
       const memberId = args[0]
       console.log('channel ', channelName, ' member: ', memberId, ' joined')
     })
-    rtmClient.on('ChannelMessage', async ({channelName, args}) => {
+    rtmClient.on('ChannelMessage', async ({ channelName, args }) => {
       const [message, memberId] = args
       if (message.messageType === 'IMAGE') {
+        // eslint-disable-next-line no-unused-vars
         const blob = await rtmClient.client.downloadMedia(message.mediaId)
         /*blobToImage(blob, (image) => {
                 })*/
       } else {
-        console.log('channel ', channelName, ', messsage: ', message.text, ', memberId: ', memberId)
+        console.log(
+          'channel ',
+          channelName,
+          ', messsage: ',
+          message.text,
+          ', memberId: ',
+          memberId
+        )
         setMessageList(prevState => {
           return [...prevState, new Message(memberId, message.text, false)]
         })
@@ -103,7 +116,7 @@ const ChatBox = props => {
     })
   }, [])
 
-  const videoProps = {audioReady, audioTrack, cameraReady, cameraTrack}
+  const videoProps = { audioReady, audioTrack, cameraReady, cameraTrack }
 
   return (
     <>
@@ -112,31 +125,26 @@ const ChatBox = props => {
           <div className={styles.chatContainer}>
             <div className={styles.chatHeader}>
               <div className={styles.iconHeader}>
-                <ArrowsAltOutlined/>
-                <MinusOutlined/>
-                <CloseOutlined onClick={() => setIsShowChatBox(false)}/>
+                <ArrowsAltOutlined />
+                <MinusOutlined />
+                <CloseOutlined onClick={() => setIsShowChatBox(false)} />
               </div>
             </div>
             <div className={styles.videoContainer}>
               <VideoCall {...videoProps} />
             </div>
             <div className={styles.chatZone}>
-              <ChatField messageList={messageList}/>
+              <ChatField messageList={messageList} />
             </div>
           </div>
           <div className={styles.chatInput}>
             <Form form={form} onFinish={onSubmit} disabled={!isChatReady}>
-              <Form.Item
-                name="message"
-                rules={[
-                  REQUIRED_VALIDATOR("Message")
-                ]}
-              >
+              <Form.Item name="message" rules={[REQUIRED_VALIDATOR('Message')]}>
                 <Input
                   autoFocus
-                  style={{borderRadius: '5rem 5rem 5rem 5rem'}}
+                  style={{ borderRadius: '5rem 5rem 5rem 5rem' }}
                   placeholder="Type message..."
-                  suffix={<SendIcon/>}
+                  suffix={<SendIcon />}
                 />
               </Form.Item>
             </Form>

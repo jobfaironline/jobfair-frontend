@@ -1,31 +1,20 @@
 import {
-  REQUIRED_VALIDATOR,
-  MAX_LENGTH_VALIDATOR,
-  MIN_LENGTH_VALIDATOR,
   EMAIL_VALIDATOR,
-  PHONE_VALIDATOR, URL_VALIDATOR
-} from "./GeneralValidation";
+  MAX_LENGTH_VALIDATOR,
+  PHONE_VALIDATOR,
+  REQUIRED_VALIDATOR,
+  URL_VALIDATOR
+} from './GeneralValidation'
 
 export const CompanyProfileValidation = {
-  name: [
-    REQUIRED_VALIDATOR("name"),
-    MAX_LENGTH_VALIDATOR("name", 100)
-  ],
+  name: [REQUIRED_VALIDATOR('name'), MAX_LENGTH_VALIDATOR('name', 100)],
   address: [
-    REQUIRED_VALIDATOR("address"),
-    MAX_LENGTH_VALIDATOR("address", 300)
+    REQUIRED_VALIDATOR('address'),
+    MAX_LENGTH_VALIDATOR('address', 300)
   ],
-  email: [
-    REQUIRED_VALIDATOR("email"),
-    ...EMAIL_VALIDATOR()
-  ],
-  phone: [
-    REQUIRED_VALIDATOR("phone"),
-    ...PHONE_VALIDATOR()
-  ],
-  url: [
-    ...URL_VALIDATOR()
-  ],
+  email: [REQUIRED_VALIDATOR('email'), ...EMAIL_VALIDATOR()],
+  phone: [REQUIRED_VALIDATOR('phone'), ...PHONE_VALIDATOR()],
+  url: [...URL_VALIDATOR()],
   benefits: {
     description: [
       REQUIRED_VALIDATOR("benefit's description"),

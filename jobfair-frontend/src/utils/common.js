@@ -1,14 +1,13 @@
 import moment from 'moment'
-import {Progress, Tag} from "antd";
-import React from "react";
-import {JOB_FAIR_PLAN_STATUS} from "../constants/JobFairConst";
+import { Progress, Tag } from 'antd'
+import React from 'react'
+import { JOB_FAIR_PLAN_STATUS } from '../constants/JobFairConst'
 
 export const contains = (list, listCurrent) => {
   var result = false
   list.forEach(e => {
     if (listCurrent?.includes(e) === true) {
       result = true
-      return
     }
   })
   return result
@@ -27,10 +26,10 @@ export const transformToSelections = data => {
 
 const toSelection = data => {
   if (data?.user) {
-    return {value: data.user?.id, label: data.user?.email}
+    return { value: data.user?.id, label: data.user?.email }
   }
 
-  return {value: data?.id, label: data?.name}
+  return { value: data?.id, label: data?.name }
 }
 
 export const getBase64 = file => {
@@ -44,7 +43,12 @@ export const getBase64 = file => {
 
 export const convertToDateString = dateValue => {
   try {
-    return new Date(dateValue).toISOString().replace(/T.*/, '').split('-').reverse().join('-')
+    return new Date(dateValue)
+      .toISOString()
+      .replace(/T.*/, '')
+      .split('-')
+      .reverse()
+      .join('-')
   } catch (err) {
     return '01-01-1970'
   }
@@ -58,7 +62,10 @@ export const convertToMoment = data => {
   const result = data.map(item => {
     return {
       ...item,
-      range: [moment(convertToDateString(item.fromDate)), moment(convertToDateString(item.toDate))]
+      range: [
+        moment(convertToDateString(item.fromDate)),
+        moment(convertToDateString(item.toDate))
+      ]
     }
   })
   return result
@@ -110,31 +117,31 @@ export const handleGetStatus = data => {
   return data.find(item => item.key !== undefined)
 }
 
-export const handleProgress = (proficiency) => {
+export const handleProgress = proficiency => {
   switch (proficiency) {
     case 1:
-      return <Progress percent={20} status="active" steps='5'/>
+      return <Progress percent={20} status="active" steps="5" />
     case 2:
-      return <Progress percent={40} status="active" steps='5'/>
+      return <Progress percent={40} status="active" steps="5" />
     case 3:
-      return <Progress percent={60} status="active" steps='5'/>
+      return <Progress percent={60} status="active" steps="5" />
     case 4:
-      return <Progress percent={80} status="active" steps='5'/>
+      return <Progress percent={80} status="active" steps="5" />
     default:
-      return <Progress percent={100} status="active" steps='5'/>
+      return <Progress percent={100} status="active" steps="5" />
   }
 }
 
 //convert date of birth to Age
-export const convertDobToAge = (dob) => {
-  const today = new Date();
-  const birthDate = new Date(dob);
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const m = today.getMonth() - birthDate.getMonth();
+export const convertDobToAge = dob => {
+  const today = new Date()
+  const birthDate = new Date(dob)
+  let age = today.getFullYear() - birthDate.getFullYear()
+  const m = today.getMonth() - birthDate.getMonth()
   if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
+    age--
   }
-  return age;
+  return age
 }
 
 //handle status tag

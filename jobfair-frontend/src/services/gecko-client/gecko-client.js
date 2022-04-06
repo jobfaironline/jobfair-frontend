@@ -9,10 +9,14 @@ export class GeckoClient extends EventEmitter {
   joinChannel(companyBoothId, userId, initialPosition, initialQuaternion) {
     this.companyBoothId = companyBoothId
     this.userId = userId
-    const auth = `${this.companyBoothId}/${this.userId}/${JSON.stringify(initialPosition)}/${JSON.stringify(
-      initialQuaternion
-    )}`
-    this.channel = geckos({ url: 'http://3.0.57.177', port: 3001, authorization: auth })
+    const auth = `${this.companyBoothId}/${this.userId}/${JSON.stringify(
+      initialPosition
+    )}/${JSON.stringify(initialQuaternion)}`
+    this.channel = geckos({
+      url: 'http://3.0.57.177',
+      port: 3001,
+      authorization: auth
+    })
 
     const self = this
     this.channel.onConnect(error => {
@@ -25,7 +29,13 @@ export class GeckoClient extends EventEmitter {
   }
 
   subscribeClientEvents() {
-    const clientEvents = ['init', 'new-user-connect', 'user-left', 'move', 'stop']
+    const clientEvents = [
+      'init',
+      'new-user-connect',
+      'user-left',
+      'move',
+      'stop'
+    ]
     const self = this
     clientEvents.forEach(eventName => {
       self.channel.on(eventName, (...args) => {

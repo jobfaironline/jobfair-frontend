@@ -1,9 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { useStepsForm } from 'sunflower-antd'
-import { Steps, Input, Button, Form, Result } from 'antd'
+import { Button, Form, Result, Steps } from 'antd'
 import CreateJobPositionFormComponent from '../CreateJobPositionForm/CreateJobPositionForm.component'
 import CompanyProfileForm from '../CompanyProfileForm/CompanyProfileForm.component'
-import { benefitConst } from '../../constants/CompanyProfileConstant'
 import { JOB_POSITION_MODEL } from '../../default_models-remove/CreateJobPositionModel/JobPositionModel'
 
 const { Step } = Steps
@@ -24,7 +24,15 @@ export default SunflowerForm => {
     console.log('submitted: ', values)
   }
 
-  const { form, current, gotoStep, stepsProps, formProps, submit, formLoading } = useStepsForm({
+  const {
+    form,
+    current,
+    gotoStep,
+    stepsProps,
+    formProps,
+    submit,
+    formLoading
+  } = useStepsForm({
     async submit(values) {
       await new Promise(r => setTimeout(r, 1000))
       return 'ok'

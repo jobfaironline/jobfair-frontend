@@ -3,7 +3,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import JobPositionDetailContainer from '../../containers/JobPositionDetail/JobPositionDetail.container'
 
-const JobPositionDetailPage = props => {
+const JobPositionDetailPage = () => {
   const history = useHistory()
 
   return (

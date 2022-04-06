@@ -1,10 +1,4 @@
-import React, { useState } from 'react'
-import { companySchema } from '../../schema/register.company.schema'
-import { attendantSchema } from '../../schema/register.attendant.schema'
-import Form from '../../components/react-hook-form/form/Form'
-import TextInput from '../../components/react-hook-form/input/TextInput/TextInput'
-import { registerAttendantAPI } from '../../services/attendant-controller/AttendantControllerService'
-import { registerCompanyAPI } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
+import React from 'react'
 import './RegisterPage.styles.scss'
 import RegisterComponent from '../../components/Register/Register.component'
 

@@ -1,14 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import JobFairDetailComponent from '../../components/JobFairDetail/JobFairDetail.component'
-import {Link, useHistory, useLocation} from 'react-router-dom'
-import EvaluationFormComponent from '../../components/EvaluationForm/EvaluationForm.component'
-import {evaluateJobFairPlanAPI} from '../../services/job-fair-controller/JobFairConTrollerService'
-import {notification, Spin} from 'antd'
-import {
-  getRegistrationByJobFairId
-} from '../../services/company-registration-controller/CompanyRegistrationControllerService'
-import {CompanyRegistrationStatus} from '../../constants/CompanyRegistrationConst'
-import {getLayoutDetail} from '../../services/layout-controller/LayoutControllerService'
+import { useHistory, useLocation } from 'react-router-dom'
+import { evaluateJobFairPlanAPI } from '../../services/job-fair-controller/JobFairConTrollerService'
+import { notification } from 'antd'
+import { getRegistrationByJobFairId } from '../../services/company-registration-controller/CompanyRegistrationControllerService'
+import { CompanyRegistrationStatus } from '../../constants/CompanyRegistrationConst'
+import { getLayoutDetail } from '../../services/layout-controller/LayoutControllerService'
 
 const JobFairDetailContainer = () => {
   const location = useLocation()
@@ -30,7 +27,7 @@ const JobFairDetailContainer = () => {
           const totalRegistrations = res.data.totalElements
           setTotalRegistration(totalRegistrations)
         })
-        .catch(err => {
+        .catch(() => {
           //
         })
     }
@@ -65,7 +62,7 @@ const JobFairDetailContainer = () => {
 
   const onFinish = values => {
     evaluateJobFairPlanAPI(values)
-      .then(res => {
+      .then(() => {
         notification['success']({
           message: `Your evaluation has been submitted`,
           description: `Evaluate job fair plan successfully`

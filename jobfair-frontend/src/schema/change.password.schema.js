@@ -1,4 +1,5 @@
 import yup from '../validate/yupGlobal'
+
 export const changePasswordSchema = yup.object().shape({
   newPassword: yup
     .string()

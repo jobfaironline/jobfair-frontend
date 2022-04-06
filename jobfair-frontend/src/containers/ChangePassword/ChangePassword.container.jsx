@@ -1,10 +1,9 @@
-import React from 'react';
-import ChangePasswordComponent from "../../components/ChangePassword/ChangePassword.component";
-import {Form, notification} from "antd";
-import {changePasswordAPI} from "../../services/account-controller/AccountControllerService";
+import React from 'react'
+import ChangePasswordComponent from '../../components/ChangePassword/ChangePassword.component'
+import { Form, notification } from 'antd'
+import { changePasswordAPI } from '../../services/account-controller/AccountControllerService'
 
 const ChangePasswordContainer = () => {
-
   const [form] = Form.useForm()
 
   const onFinish = values => {
@@ -13,7 +12,7 @@ const ChangePasswordContainer = () => {
       oldPassword: values.oldPassword
     }
     changePasswordAPI(body)
-      .then(res => {
+      .then(() => {
         notification['success']({
           message: `Change password successfully`
         })
@@ -27,9 +26,9 @@ const ChangePasswordContainer = () => {
 
   return (
     <>
-      <ChangePasswordComponent form={form} onFinish={onFinish}/>
+      <ChangePasswordComponent form={form} onFinish={onFinish} />
     </>
-  );
-};
+  )
+}
 
-export default ChangePasswordContainer;
+export default ChangePasswordContainer

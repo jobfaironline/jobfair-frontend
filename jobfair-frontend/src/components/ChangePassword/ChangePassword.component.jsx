@@ -1,19 +1,22 @@
-import React from 'react';
-import {Button, Form, Input} from "antd";
-import {ChangePasswordValidation} from "../../validate/ChangePasswordValidation";
+import React from 'react'
+import { Button, Form, Input } from 'antd'
+import { ChangePasswordValidation } from '../../validate/ChangePasswordValidation'
 
-const ChangePasswordComponent = (props) => {
-
-  const {form, onFinish} = props
+const ChangePasswordComponent = props => {
+  const { form, onFinish } = props
   return (
-    <div className="input-container" style={{width: '75%', marginTop: '5%', marginLeft: '15%'}}>
+    <div
+      className="input-container"
+      style={{ width: '75%', marginTop: '5%', marginLeft: '15%' }}
+    >
       <Form
-        labelCol={{ span: 8 }} wrapperCol={{ span: 8 }}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 8 }}
         form={form}
         onFinish={onFinish}
         requiredMark="required"
         autoComplete="off"
-        scrollToFirstError={{block: 'center', behavior: 'smooth'}}
+        scrollToFirstError={{ block: 'center', behavior: 'smooth' }}
       >
         <Form.Item
           label="Your old password"
@@ -21,7 +24,7 @@ const ChangePasswordComponent = (props) => {
           hasFeedback
           rules={ChangePasswordValidation.oldPassword}
         >
-          <Input.Password/>
+          <Input.Password />
         </Form.Item>
         <Form.Item
           label="Your new password"
@@ -29,7 +32,7 @@ const ChangePasswordComponent = (props) => {
           hasFeedback
           rules={ChangePasswordValidation.newPassword}
         >
-          <Input.Password/>
+          <Input.Password />
         </Form.Item>
         <Form.Item
           label="Confirm your new password"
@@ -37,16 +40,20 @@ const ChangePasswordComponent = (props) => {
           hasFeedback
           rules={ChangePasswordValidation.rePassword}
         >
-          <Input.Password/>
+          <Input.Password />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" style={{marginLeft: '100%'}}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ marginLeft: '100%' }}
+          >
             Change password
           </Button>
         </Form.Item>
       </Form>
     </div>
-  );
-};
+  )
+}
 
-export default ChangePasswordComponent;
+export default ChangePasswordComponent

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Anchor, Menu, Button } from 'antd'
-import { MenuUnfoldOutlined, MenuFoldOutlined, PieChartOutlined } from '@ant-design/icons'
-const { SubMenu } = Menu
+import { Anchor, Button } from 'antd'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+
 const { Link } = Anchor
 const AnchorComponent = props => {
   const { listData, href, title } = props
@@ -11,8 +11,14 @@ const AnchorComponent = props => {
   }
   return (
     <>
-      <Button type="primary" style={{ marginBottom: 10 }} onClick={() => handleOnOpenMenu(!isHide)}>
-        <div style={{ fontSize: '15px' }}>{isHide ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}</div>
+      <Button
+        type="primary"
+        style={{ marginBottom: 10 }}
+        onClick={() => handleOnOpenMenu(!isHide)}
+      >
+        <div style={{ fontSize: '15px' }}>
+          {isHide ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        </div>
       </Button>
 
       {isHide ? (
@@ -31,7 +37,12 @@ const AnchorComponent = props => {
               <Anchor targetOffset={300} onClick={e => e.preventDefault()}>
                 <Link href={href} title={title} />
                 {listData.map((item, index) => {
-                  return <Link href={item.href} title={`${index + 1}: ${item.title}`} />
+                  return (
+                    <Link
+                      href={item.href}
+                      title={`${index + 1}: ${item.title}`}
+                    />
+                  )
                 })}
               </Anchor>
             </div>

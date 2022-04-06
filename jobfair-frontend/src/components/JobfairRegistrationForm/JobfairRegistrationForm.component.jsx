@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Form, notification, Typography } from 'antd'
+import { Form, Typography } from 'antd'
 import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
 import TextArea from 'antd/es/input/TextArea'
 import PickJobPositionFormContainer from '../../containers/PickJobPositionForm/PickJobPositionForm.container'
@@ -83,7 +83,12 @@ const JobfairRegistrationForm = ({ form, jobFairId }) => {
           rules={CompanyProfileValidation.description}
           name="description"
         >
-          <TextArea autoSize={{ minRows: 5 }} showCount maxLength={3000} placeholder="Registration description" />
+          <TextArea
+            autoSize={{ minRows: 5 }}
+            showCount
+            maxLength={3000}
+            placeholder="Registration description"
+          />
         </Form.Item>
         <PickJobPositionFormContainer form={form} />
       </Form>

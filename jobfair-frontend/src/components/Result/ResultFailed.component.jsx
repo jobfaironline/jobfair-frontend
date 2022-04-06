@@ -3,6 +3,7 @@ import { Button, Result, Space, Typography } from 'antd'
 import { Link, useHistory } from 'react-router-dom'
 import { CloseCircleOutlined } from '@ant-design/icons'
 import { PATH } from '../../constants/Paths/Path'
+
 const ResultFailedComponent = () => {
   const { Paragraph, Text } = Typography
   const history = useHistory()
@@ -14,7 +15,11 @@ const ResultFailedComponent = () => {
         title="Submission Failed"
         subTitle="Please check and modify the following information before resubmitting."
         extra={[
-          <Button type="primary" key="console" onClick={() => history.push(PATH.INDEX)}>
+          <Button
+            type="primary"
+            key="console"
+            onClick={() => history.push(PATH.INDEX)}
+          >
             Back to home page
           </Button>
         ]}
@@ -33,8 +38,8 @@ const ResultFailedComponent = () => {
           <Paragraph>
             <Space>
               <CloseCircleOutlined className="site-result-demo-error-icon" />
-              There is a registration still in evaluating process. Please wait at least 12 hours to resubmit another
-              registration
+              There is a registration still in evaluating process. Please wait
+              at least 12 hours to resubmit another registration
               <Link to="/contacts">Contact with admin &gt;&gt;</Link>
             </Space>
           </Paragraph>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   Affix,
   Avatar,
@@ -26,21 +26,21 @@ import {
   YesNoConst
 } from './AttendantConstants'
 import { AttendantProfileValidation } from '../../validate/AttendantProfileValidation'
-import { convertToDateString, convertToDateValue, convertToMoment } from '../../utils/common'
+import {
+  convertToDateString,
+  convertToDateValue,
+  convertToMoment
+} from '../../utils/common'
 import moment from 'moment'
 import { DateFormat } from '../../constants/ApplicationConst'
 import TextArea from 'antd/es/input/TextArea'
-import { set } from 'react-hook-form'
 
 const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
-  const [countryId, setCountryId] = useState('60ebd8bd-2b10-4d03-a3a4-ccfd0ab504d3')
-  const [disable, setDisable] = useState(false)
-
   if (data === undefined || data === null || Object.keys(data).length === 0) {
     return <Spin size="large" />
   }
 
-  const onFormChange = values => {}
+  const onFormChange = () => {}
 
   const { Option } = Select
 
@@ -76,7 +76,11 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
         scrollToFirstError={{ block: 'center', behavior: 'smooth' }}
       >
         <Space direction="vertical" size="large">
-          <Card title="Contact information" style={{ width: 1400 }} headStyle={{ fontWeight: 700, fontSize: 24 }}>
+          <Card
+            title="Contact information"
+            style={{ width: 1400 }}
+            headStyle={{ fontWeight: 700, fontSize: 24 }}
+          >
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               <Form.Item
                 label="Email"
@@ -96,8 +100,16 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
               </Form.Item>
             </div>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <Form.Item label="Date of birth" name="dob" hasFeedback rules={AttendantProfileValidation.account.dob}>
-                <DatePicker format={DateFormat} onChange={(date, dateString) => handleOnChangeDob(dateString)} />
+              <Form.Item
+                label="Date of birth"
+                name="dob"
+                hasFeedback
+                rules={AttendantProfileValidation.account.dob}
+              >
+                <DatePicker
+                  format={DateFormat}
+                  onChange={(date, dateString) => handleOnChangeDob(dateString)}
+                />
               </Form.Item>
               <Form.Item
                 label="Country"
@@ -124,9 +136,15 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                     }
                   }}
                   optionFilterProp="children"
-                  filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                  filterOption={(input, option) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
                   filterSort={(optionA, optionB) =>
-                    optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                    optionA.children
+                      .toLowerCase()
+                      .localeCompare(optionB.children.toLowerCase())
                   }
                 >
                   {CountryConst.map(item => (
@@ -157,7 +175,12 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
               </Form.Item>
             </div>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <Form.Item label="Address" name="address" hasFeedback rules={AttendantProfileValidation.address}>
+              <Form.Item
+                label="Address"
+                name="address"
+                hasFeedback
+                rules={AttendantProfileValidation.address}
+              >
                 <Input placeholder="Address" style={{ width: 300 }} />
               </Form.Item>
               <Form.Item shouldUpdate>
@@ -166,15 +189,22 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                     <Form.Item label="Residence" name="residenceId">
                       <Select
                         showSearch
-                        disabled={form.getFieldValue('countryId') !== '60ebd8bd-2b10-4d03-a3a4-ccfd0ab504d3'}
+                        disabled={
+                          form.getFieldValue('countryId') !==
+                          '60ebd8bd-2b10-4d03-a3a4-ccfd0ab504d3'
+                        }
                         style={{ width: 150 }}
                         placeholder="Search to Select"
                         optionFilterProp="children"
                         filterOption={(input, option) =>
-                          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                          option.children
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
                         }
                         filterSort={(optionA, optionB) =>
-                          optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                          optionA.children
+                            .toLowerCase()
+                            .localeCompare(optionB.children.toLowerCase())
                         }
                       >
                         {ResidenceConst.map(item => (
@@ -191,7 +221,12 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                 hasFeedback
                 rules={AttendantProfileValidation.yearOfExp}
               >
-                <Input placeholder="Year of exp" style={{ width: '50%', textAlign: 'right' }} type="number" min="0" />
+                <Input
+                  placeholder="Year of exp"
+                  style={{ width: '50%', textAlign: 'right' }}
+                  type="number"
+                  min="0"
+                />
               </Form.Item>
             </div>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -221,10 +256,20 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
               </Form.Item>
             </div>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
-              <Form.Item label="Title" name="title" hasFeedback rules={AttendantProfileValidation.title}>
+              <Form.Item
+                label="Title"
+                name="title"
+                hasFeedback
+                rules={AttendantProfileValidation.title}
+              >
                 <Input placeholder="Title" style={{ width: 150 }} />
               </Form.Item>
-              <Form.Item label="Job title" name="jobTitle" hasFeedback rules={AttendantProfileValidation.jobTitle}>
+              <Form.Item
+                label="Job title"
+                name="jobTitle"
+                hasFeedback
+                rules={AttendantProfileValidation.jobTitle}
+              >
                 <Input placeholder="Job title" style={{ width: 150 }} />
               </Form.Item>
               <Form.Item label="Job level" name="jobLevel">
@@ -233,9 +278,15 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                   style={{ width: 200 }}
                   placeholder="Search to Select"
                   optionFilterProp="children"
-                  filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                  filterOption={(input, option) =>
+                    option.children
+                      .toLowerCase()
+                      .indexOf(input.toLowerCase()) >= 0
+                  }
                   filterSort={(optionA, optionB) =>
-                    optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                    optionA.children
+                      .toLowerCase()
+                      .localeCompare(optionB.children.toLowerCase())
                   }
                 >
                   {JobLevelConst.map(item => (
@@ -245,15 +296,24 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
               </Form.Item>
             </div>
           </Card>
-          <Card title="Skills" style={{ width: 1400 }} headStyle={{ fontWeight: 700, fontSize: 24 }}>
+          <Card
+            title="Skills"
+            style={{ width: 1400 }}
+            headStyle={{ fontWeight: 700, fontSize: 24 }}
+          >
             <Form.List name="skills" label="Skills">
               {(fields, { add, remove }) => {
                 return (
                   <>
                     {fields.map(({ key, name, ...restField }) => {
                       return (
-                        <div key={key} style={{ display: 'flex', flexDirection: 'row' }}>
-                          <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <div
+                          key={key}
+                          style={{ display: 'flex', flexDirection: 'row' }}
+                        >
+                          <div
+                            style={{ display: 'flex', flexDirection: 'column' }}
+                          >
                             <Form.Item
                               {...restField}
                               label="Name"
@@ -294,21 +354,32 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
               }}
             </Form.List>
           </Card>
-          <Card title="Work history" style={{ width: 1400 }} headStyle={{ fontWeight: 700, fontSize: 24 }}>
+          <Card
+            title="Work history"
+            style={{ width: 1400 }}
+            headStyle={{ fontWeight: 700, fontSize: 24 }}
+          >
             <Form.List name="workHistories">
               {(fields, { add, remove }) => {
                 return (
                   <>
                     {fields.map(({ key, name, ...restField }) => {
                       return (
-                        <div key={key} style={{ display: 'flex', flexDirection: 'column' }}>
-                          <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        <div
+                          key={key}
+                          style={{ display: 'flex', flexDirection: 'column' }}
+                        >
+                          <div
+                            style={{ display: 'flex', flexDirection: 'row' }}
+                          >
                             <Form.Item
                               {...restField}
                               label="Company"
                               name={[name, 'company']}
                               hasFeedback
-                              rules={AttendantProfileValidation.workHistories.company}
+                              rules={
+                                AttendantProfileValidation.workHistories.company
+                              }
                               style={{ width: 250 }}
                             >
                               <Input placeholder="company" />
@@ -318,23 +389,32 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                               name={[name, 'description']}
                               hasFeedback
                               label="Description"
-                              rules={AttendantProfileValidation.workHistories.description}
+                              rules={
+                                AttendantProfileValidation.workHistories
+                                  .description
+                              }
                               style={{ width: 450 }}
                             >
                               <Input placeholder="description" />
                             </Form.Item>
                           </div>
-                          <div style={{ display: 'flex', flexDirection: 'row' }}>
+                          <div
+                            style={{ display: 'flex', flexDirection: 'row' }}
+                          >
                             <Form.Item
                               label="Date range"
                               {...restField}
                               name={[name, 'range']}
-                              rules={AttendantProfileValidation.workHistories.range}
+                              rules={
+                                AttendantProfileValidation.workHistories.range
+                              }
                             >
                               <RangePicker format={DateFormat} />
                             </Form.Item>
                           </div>
-                          <div style={{ display: 'flex', flexDirection: 'row' }}>
+                          <div
+                            style={{ display: 'flex', flexDirection: 'row' }}
+                          >
                             <Form.Item
                               {...restField}
                               name={[name, 'isCurrentJob']}
@@ -344,7 +424,9 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                             >
                               <Radio.Group>
                                 {YesNoConst.map(item => (
-                                  <Radio.Button value={item.value}>{item.label}</Radio.Button>
+                                  <Radio.Button value={item.value}>
+                                    {item.label}
+                                  </Radio.Button>
                                 ))}
                               </Radio.Group>
                             </Form.Item>
@@ -352,7 +434,10 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                               {...restField}
                               name={[name, 'position']}
                               label="Position"
-                              rules={AttendantProfileValidation.workHistories.position}
+                              rules={
+                                AttendantProfileValidation.workHistories
+                                  .position
+                              }
                               style={{ width: 400 }}
                             >
                               <Input placeholder="Position" />
@@ -382,20 +467,31 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
               }}
             </Form.List>
           </Card>
-          <Card title="Education" style={{ width: 1400 }} headStyle={{ fontWeight: 700, fontSize: 24 }}>
+          <Card
+            title="Education"
+            style={{ width: 1400 }}
+            headStyle={{ fontWeight: 700, fontSize: 24 }}
+          >
             <Form.List name="educations">
               {(fields, { add, remove }) => {
                 return (
                   <>
                     {fields.map(({ key, name, ...restField }) => {
                       return (
-                        <div key={key} style={{ display: 'flex', flexDirection: 'column' }}>
-                          <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        <div
+                          key={key}
+                          style={{ display: 'flex', flexDirection: 'column' }}
+                        >
+                          <div
+                            style={{ display: 'flex', flexDirection: 'row' }}
+                          >
                             <Form.Item
                               {...restField}
                               name={[name, 'school']}
                               label="School"
-                              rules={AttendantProfileValidation.educations.school}
+                              rules={
+                                AttendantProfileValidation.educations.school
+                              }
                               style={{ width: 300 }}
                             >
                               <Input placeholder="School" />
@@ -404,7 +500,9 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                               {...restField}
                               name={[name, 'subject']}
                               label="Subject"
-                              rules={AttendantProfileValidation.educations.subject}
+                              rules={
+                                AttendantProfileValidation.educations.subject
+                              }
                               style={{ width: 250 }}
                             >
                               <TextArea placeholder="Subject" />
@@ -413,18 +511,25 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                               {...restField}
                               name={[name, 'achievement']}
                               label="Achievement"
-                              rules={AttendantProfileValidation.educations.achievement}
+                              rules={
+                                AttendantProfileValidation.educations
+                                  .achievement
+                              }
                               style={{ width: 300 }}
                             >
                               <TextArea placeholder="Achievement" />
                             </Form.Item>
                           </div>
-                          <div style={{ display: 'flex', flexDirection: 'row' }}>
+                          <div
+                            style={{ display: 'flex', flexDirection: 'row' }}
+                          >
                             <Form.Item
                               label="Date range"
                               {...restField}
                               name={[name, 'range']}
-                              rules={AttendantProfileValidation.workHistories.range}
+                              rules={
+                                AttendantProfileValidation.workHistories.range
+                              }
                             >
                               <RangePicker format={DateFormat} />
                             </Form.Item>
@@ -441,14 +546,20 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                               placeholder="Search to Select"
                               optionFilterProp="children"
                               filterOption={(input, option) =>
-                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                option.children
+                                  .toLowerCase()
+                                  .indexOf(input.toLowerCase()) >= 0
                               }
                               filterSort={(optionA, optionB) =>
-                                optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                                optionA.children
+                                  .toLowerCase()
+                                  .localeCompare(optionB.children.toLowerCase())
                               }
                             >
                               {QualificationConst.map(item => (
-                                <Option value={item.enumName}>{item.name}</Option>
+                                <Option value={item.enumName}>
+                                  {item.name}
+                                </Option>
                               ))}
                             </Select>
                           </Form.Item>
@@ -472,19 +583,28 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
               }}
             </Form.List>
           </Card>
-          <Card title="Certification" style={{ width: 1400 }} headStyle={{ fontWeight: 700, fontSize: 24 }}>
+          <Card
+            title="Certification"
+            style={{ width: 1400 }}
+            headStyle={{ fontWeight: 700, fontSize: 24 }}
+          >
             <Form.List name="certifications">
               {(fields, { add, remove }) => {
                 return (
                   <>
                     {fields.map(({ key, name, ...restField }) => {
                       return (
-                        <div key={key} style={{ display: 'flex', flexDirection: 'column' }}>
+                        <div
+                          key={key}
+                          style={{ display: 'flex', flexDirection: 'column' }}
+                        >
                           <Form.Item
                             {...restField}
                             label="Name"
                             name={[name, 'name']}
-                            rules={AttendantProfileValidation.certifications.name}
+                            rules={
+                              AttendantProfileValidation.certifications.name
+                            }
                             style={{ width: 300 }}
                           >
                             <Input placeholder="Name" />
@@ -493,7 +613,10 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                             {...restField}
                             name={[name, 'institution']}
                             label="Institution"
-                            rules={AttendantProfileValidation.certifications.institution}
+                            rules={
+                              AttendantProfileValidation.certifications
+                                .institution
+                            }
                             style={{ width: 300 }}
                           >
                             <Input placeholder="Institution" />
@@ -502,7 +625,9 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                             {...restField}
                             name={[name, 'year']}
                             label="Year"
-                            rules={AttendantProfileValidation.certifications.year}
+                            rules={
+                              AttendantProfileValidation.certifications.year
+                            }
                             style={{ width: '20%' }}
                           >
                             <Input
@@ -516,7 +641,10 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                             {...restField}
                             name={[name, 'certificationLink']}
                             label="Certification link"
-                            rules={AttendantProfileValidation.certifications.certificationLink}
+                            rules={
+                              AttendantProfileValidation.certifications
+                                .certificationLink
+                            }
                             style={{ width: 350 }}
                           >
                             <Input placeholder="Certification link" />
@@ -541,19 +669,28 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
               }}
             </Form.List>
           </Card>
-          <Card title="References" style={{ width: 1400 }} headStyle={{ fontWeight: 700, fontSize: 24 }}>
+          <Card
+            title="References"
+            style={{ width: 1400 }}
+            headStyle={{ fontWeight: 700, fontSize: 24 }}
+          >
             <Form.List name="references">
               {(fields, { add, remove }) => {
                 return (
                   <>
                     {fields.map(({ key, name, ...restField }) => {
                       return (
-                        <div key={key} style={{ display: 'flex', flexDirection: 'column' }}>
+                        <div
+                          key={key}
+                          style={{ display: 'flex', flexDirection: 'column' }}
+                        >
                           <Form.Item
                             {...restField}
                             name={[name, 'company']}
                             label="Company"
-                            rules={AttendantProfileValidation.references.company}
+                            rules={
+                              AttendantProfileValidation.references.company
+                            }
                             style={{ width: 300 }}
                           >
                             <Input placeholder="name" />
@@ -571,7 +708,9 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                             {...restField}
                             name={[name, 'fullname']}
                             label="Full name"
-                            rules={AttendantProfileValidation.references.fullname}
+                            rules={
+                              AttendantProfileValidation.references.fullname
+                            }
                             style={{ width: 400 }}
                           >
                             <Input placeholder="Full name" />
@@ -589,7 +728,9 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                             {...restField}
                             name={[name, 'position']}
                             label="Position"
-                            rules={AttendantProfileValidation.references.position}
+                            rules={
+                              AttendantProfileValidation.references.position
+                            }
                             style={{ width: 250 }}
                           >
                             <Input placeholder="Position" />
@@ -614,14 +755,21 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
               }}
             </Form.List>
           </Card>
-          <Card title="Activities" style={{ width: 1400 }} headStyle={{ fontWeight: 700, fontSize: 24 }}>
+          <Card
+            title="Activities"
+            style={{ width: 1400 }}
+            headStyle={{ fontWeight: 700, fontSize: 24 }}
+          >
             <Form.List name="activities">
               {(fields, { add, remove }) => {
                 return (
                   <>
                     {fields.map(({ key, name, ...restField }) => {
                       return (
-                        <div key={key} style={{ display: 'flex', flexDirection: 'column' }}>
+                        <div
+                          key={key}
+                          style={{ display: 'flex', flexDirection: 'column' }}
+                        >
                           <Form.Item
                             {...restField}
                             name={[name, 'name']}
@@ -635,7 +783,10 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                             {...restField}
                             name={[name, 'functionTitle']}
                             label="Function title"
-                            rules={AttendantProfileValidation.activities.functionTitle}
+                            rules={
+                              AttendantProfileValidation.activities
+                                .functionTitle
+                            }
                             style={{ width: 300 }}
                           >
                             <Input placeholder="Function title" />
@@ -644,7 +795,9 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                             {...restField}
                             name={[name, 'organization']}
                             label="Organization"
-                            rules={AttendantProfileValidation.activities.organization}
+                            rules={
+                              AttendantProfileValidation.activities.organization
+                            }
                             style={{ width: 350 }}
                           >
                             <Input placeholder="Organization" />
@@ -653,7 +806,9 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                             label="Date range"
                             {...restField}
                             name={[name, 'range']}
-                            rules={AttendantProfileValidation.workHistories.range}
+                            rules={
+                              AttendantProfileValidation.workHistories.range
+                            }
                           >
                             <RangePicker format={DateFormat} />
                           </Form.Item>
@@ -666,7 +821,9 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                           >
                             <Radio.Group>
                               {YesNoConst.map(item => (
-                                <Radio.Button value={item.value}>{item.label}</Radio.Button>
+                                <Radio.Button value={item.value}>
+                                  {item.label}
+                                </Radio.Button>
                               ))}
                             </Radio.Group>
                           </Form.Item>
@@ -674,7 +831,9 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                             {...restField}
                             name={[name, 'description']}
                             label="Description"
-                            rules={AttendantProfileValidation.activities.description}
+                            rules={
+                              AttendantProfileValidation.activities.description
+                            }
                             style={{ width: 350 }}
                           >
                             <Input placeholder="Description" />

@@ -1,9 +1,13 @@
-import React, {useEffect, useState} from 'react'
-import {useSelector} from 'react-redux'
-import JobPositionSubmodalDetailComponent from "../../components/JobPositionModal/JobPositionSubmodalDetail.component";
-import {Modal} from "antd";
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import JobPositionSubmodalDetailComponent from '../../components/JobPositionModal/JobPositionSubmodalDetail.component'
+import { Modal } from 'antd'
 
-const JobPositionSubmodalContainer = ({jobPositionId, visible, handleCloseModal}) => {
+const JobPositionSubmodalContainer = ({
+  jobPositionId,
+  visible,
+  handleCloseModal
+}) => {
   const [data, setData] = useState(null)
 
   const jobPositions = useSelector(state => {
@@ -23,11 +27,9 @@ const JobPositionSubmodalContainer = ({jobPositionId, visible, handleCloseModal}
       footer={null}
       destroyOnClose
     >
-      <JobPositionSubmodalDetailComponent data={data}/>
+      <JobPositionSubmodalDetailComponent data={data} />
     </Modal>
   )
-
-
 }
 
 export default JobPositionSubmodalContainer

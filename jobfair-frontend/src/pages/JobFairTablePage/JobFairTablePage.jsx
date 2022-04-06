@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import { Divider, Tabs, Typography } from 'antd'
 import { useSelector } from 'react-redux'
@@ -7,7 +8,6 @@ import JobFairIncomingContainer from '../../containers/JobFairList/admin/JobFair
 import './JobFairTablePage.styles.scss'
 
 const { TabPane } = Tabs
-const { Text } = Typography
 const JobFairTablePage = () => {
   const role = useSelector(state => state.authentication?.user?.roles)
 

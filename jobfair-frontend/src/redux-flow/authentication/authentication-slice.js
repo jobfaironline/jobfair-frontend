@@ -10,31 +10,31 @@ const authenticationSlice = createSlice({
     error: false,
     isAuthUser: !!localStorage.getItem(USER_STORAGE),
     user: JSON.parse(localStorage.getItem(USER_STORAGE)) || {},
-    status: '',
+    status: ''
   },
   reducers: {
     fetchingLogin: (state, action) => {
       state = {
         ...state,
         data: [],
-        isFetching: true,
+        isFetching: true
       }
     },
     fetchingLoginSuccess: (state, action) => {
-      return { ...state, isAuthUser: true, user: action.payload }
+      return {...state, isAuthUser: true, user: action.payload}
     },
     fetchingLoginFailure: (state, action) => {
       state = {
         ...state,
         isFetching: false,
         error: true,
-        status: action.data.status,
+        status: action.data.status
       }
     },
     logout: state => {
-      return { ...state, isAuthUser: false, user: {} }
-    },
-  },
+      return {...state, isAuthUser: false, user: {}}
+    }
+  }
 })
 
 export const authenticationActions = authenticationSlice.actions

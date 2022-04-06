@@ -1,8 +1,7 @@
-import React, { useState, useLayoutEffect, useEffect } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import JobPositionTableComponent from '../../components/JobPositionTable/JobPositionTable.component'
-import { Space, notification, Popconfirm, Button } from 'antd'
+import { Button, Space } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { getJobPositionsAPI } from '../../services/job-controller/JobControllerService'
 import { fetchJobPositions } from '../../redux-flow/jobPositions/job-positions-action'
 import JobPositionSubmodalContainer from '../JobPositionModal/JobPositionSubmodal.container'
 import PaginationComponent from '../../components/PaginationComponent/Pagination.component'
@@ -24,11 +23,17 @@ const PickJobPositionTable = ({ selectable, form }) => {
 
   //select table logic
   const [initialSelectedValues, setInitialSelectedValues] = useState(() =>
-    form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions.map(item => item.key)] : []
+    form.getFieldsValue().jobPositions
+      ? [...form.getFieldsValue().jobPositions.map(item => item.key)]
+      : []
   )
-  const [selectedRowKeys, setSelectedRowKeys] = useState(() => [...initialSelectedValues])
+  const [selectedRowKeys, setSelectedRowKeys] = useState(() => [
+    ...initialSelectedValues
+  ])
   const [selectedRows, setSelectedRows] = useState(
-    form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions] : []
+    form.getFieldsValue().jobPositions
+      ? [...form.getFieldsValue().jobPositions]
+      : []
   )
 
   //handle choose job button
@@ -41,8 +46,13 @@ const PickJobPositionTable = ({ selectable, form }) => {
       }
     })
 
-    const currentJobPositionsInForm = form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions] : []
-    form.setFieldsValue({ ...form.getFieldsValue(), jobPositions: [...currentJobPositionsInForm, ...mappedData] })
+    const currentJobPositionsInForm = form.getFieldsValue().jobPositions
+      ? [...form.getFieldsValue().jobPositions]
+      : []
+    form.setFieldsValue({
+      ...form.getFieldsValue(),
+      jobPositions: [...currentJobPositionsInForm, ...mappedData]
+    })
     setInitialSelectedValues(selectedRowKeys)
   }
 
@@ -115,10 +125,18 @@ const PickJobPositionTable = ({ selectable, form }) => {
         rowSelection={selectable ? { ...rowSelection } : null}
       />
       <Space style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}>
-        <PaginationComponent data={jobPositionData} handlePageChange={handlePageChange} totalRecord={totalRecord} />
+        <PaginationComponent
+          data={jobPositionData}
+          handlePageChange={handlePageChange}
+          totalRecord={totalRecord}
+        />
       </Space>
       {selectable ? (
-        <Button style={{ width: '100%' }} type="primary" onClick={chooseJobPositions}>
+        <Button
+          style={{ width: '100%' }}
+          type="primary"
+          onClick={chooseJobPositions}
+        >
           Choose
         </Button>
       ) : null}
