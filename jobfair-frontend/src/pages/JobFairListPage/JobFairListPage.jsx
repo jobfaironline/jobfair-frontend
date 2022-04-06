@@ -3,7 +3,9 @@ import React from 'react'
 import { Divider, Tabs, Typography } from 'antd'
 import { useSelector } from 'react-redux'
 import { ATTENDANT, COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../constants/RoleType'
-import JobFairListContainer from '../../containers/JobFairList/commons/JobFairList.container'
+import JobFairListManagerContainer from '../../containers/JobFairList/commons/JobFairListManager.container'
+import JobFairListEmployeeContainer from '../../containers/JobFairList/commons/JobFairListEmployee.container'
+import JobFairListAttendantContainer from '../../containers/JobFairList/commons/JobFairListAttendant.container'
 
 const { TabPane } = Tabs
 const { Title } = Typography
@@ -12,11 +14,13 @@ const JobFairListPage = () => {
   const ViewComponent = ({ role, tabStatus }) => {
     switch (role) {
       case 'COMPANY_EMPLOYEE':
-        return <JobFairListContainer role="COMPANY_EMPLOYEE" tabStatus={tabStatus} />
+        return <JobFairListEmployeeContainer tabStatus={tabStatus} />
       case 'COMPANY_MANAGER':
-        return <JobFairListContainer role="COMPANY_MANAGER" tabStatus={tabStatus} />
+        return <JobFairListManagerContainer tabStatus={tabStatus} />
       case 'ATTENDANT':
-        return <JobFairListContainer role="ATTENDANT" tabStatus={tabStatus} />
+        return <JobFairListAttendantContainer tabStatus={tabStatus} />
+      default:
+        return null
     }
   }
   return (

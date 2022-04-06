@@ -4,7 +4,6 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import ShowMoreText from 'react-show-more-text'
 import { JOB_FAIR_FOR_ATTENDANT_STATUS, JOB_FAIR_PLAN_COMPANY_STATUS } from '../../constants/JobFairConst'
 import { COMPANY_JOB_FAIR_STATUS } from '../../constants/CompanyJobFairStatus'
-import CompanyJobFairActionButton from './CompanyJobFairActionButton.component'
 import JobFairListManagementImageComponent from './components/JobFairList.management.image.component'
 import { useSelector } from 'react-redux'
 import { BankTwoTone, InfoCircleTwoTone, UserOutlined } from '@ant-design/icons'
@@ -44,15 +43,12 @@ const JobFairListManagementComponent = props => {
   const { Title, Text } = Typography
   const {
     data,
-    handleRedirect,
     loadMoreData,
     handleFilterByStatus,
     searchResult,
-    getCompanyBoothId,
     handleClearFilter,
     handleViewDetail,
-    handleViewMap,
-    handleRequestChange
+    extraHeaderComponent
   } = props
   const role = useSelector(state => state.authentication?.user?.roles)
 
@@ -245,13 +241,9 @@ const JobFairListManagementComponent = props => {
                             {handleMessage(item.status)}
                           </div>
                           <div style={{ position: 'absolute', bottom: '1rem' }}>
-                            <CompanyJobFairActionButton
-                              getCompanyBoothId={getCompanyBoothId}
-                              item={item}
-                              handleRedirect={handleRedirect}
-                              handleViewMap={handleViewMap}
-                              handleRequestChange={handleRequestChange}
-                            />
+                            {extraHeaderComponent(item).map(headerElement => {
+                              return headerElement
+                            })}
                           </div>
                         </div>
                       </Col>
