@@ -54,9 +54,7 @@ const PickJobPositionFormContainer = ({ form }) => {
           zIndex: '1000'
         }}
       >
-        <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>
-          Content list
-        </Typography>
+        <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Content list</Typography>
         <AnchorComponent
           listData={
             form.getFieldsValue().jobPositions
@@ -78,15 +76,9 @@ const PickJobPositionFormContainer = ({ form }) => {
         footer={null}
         destroyOnClose
       >
-        {modalVisibile ? (
-          <PickJobPositionTableContainer form={form} selectable />
-        ) : null}
+        {modalVisibile ? <PickJobPositionTableContainer form={form} selectable /> : null}
       </Modal>
-      <PickJobPositionForm
-        handlePickJobPosition={handlePickJobPosition}
-        form={form}
-        handleRemove={handleRemove}
-      />
+      <PickJobPositionForm handlePickJobPosition={handlePickJobPosition} form={form} handleRemove={handleRemove} />
     </>
   )
 }

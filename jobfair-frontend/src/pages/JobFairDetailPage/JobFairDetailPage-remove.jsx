@@ -7,12 +7,7 @@ const JobFairDetailPage = () => {
   const history = useHistory()
   return (
     <div className="page" style={{ marginTop: 80 }}>
-      <PageHeader
-        className="site-page-header"
-        onBack={() => history.goBack()}
-        title="Job fair detail"
-        subTitle=""
-      />
+      <PageHeader className="site-page-header" onBack={() => history.goBack()} title="Job fair detail" subTitle="" />
       <JobFairDetailContainer />
     </div>
   )

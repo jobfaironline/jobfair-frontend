@@ -43,12 +43,7 @@ export const getBase64 = file => {
 
 export const convertToDateString = dateValue => {
   try {
-    return new Date(dateValue)
-      .toISOString()
-      .replace(/T.*/, '')
-      .split('-')
-      .reverse()
-      .join('-')
+    return new Date(dateValue).toISOString().replace(/T.*/, '').split('-').reverse().join('-')
   } catch (err) {
     return '01-01-1970'
   }
@@ -62,10 +57,7 @@ export const convertToMoment = data => {
   const result = data.map(item => {
     return {
       ...item,
-      range: [
-        moment(convertToDateString(item.fromDate)),
-        moment(convertToDateString(item.toDate))
-      ]
+      range: [moment(convertToDateString(item.fromDate)), moment(convertToDateString(item.toDate))]
     }
   })
   return result

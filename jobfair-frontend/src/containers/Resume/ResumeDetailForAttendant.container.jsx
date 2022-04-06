@@ -21,10 +21,7 @@ const ResumeDetailForAttendantContainer = props => {
 
   return (
     <>
-      <ResumeDetailComponent
-        data={data}
-        handleOnChangeDob={handleOnChangeDob}
-      />
+      <ResumeDetailComponent data={data} handleOnChangeDob={handleOnChangeDob} />
     </>
   )
 }

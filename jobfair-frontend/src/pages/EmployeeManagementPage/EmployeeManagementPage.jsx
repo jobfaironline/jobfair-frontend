@@ -19,12 +19,7 @@ const EmployeeManagementPage = () => {
               alignItems: 'center'
             }}
           >
-            <Button
-              type="primary"
-              onClick={() =>
-                history.push(PATH_COMPANY_MANAGER.EMPLOYEE_REGISTER_PAGE)
-              }
-            >
+            <Button type="primary" onClick={() => history.push(PATH_COMPANY_MANAGER.EMPLOYEE_REGISTER_PAGE)}>
               Create employee account
             </Button>
           </div>

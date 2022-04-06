@@ -32,10 +32,7 @@ const ViewRegistrationButtonComponent = props => {
     default:
       return (
         <>
-          <Tooltip
-            placement="top"
-            title="Cannot view registration at this moment"
-          >
+          <Tooltip placement="top" title="Cannot view registration at this moment">
             <a className="disabled">
               <EyeInvisibleOutlined />
             </a>

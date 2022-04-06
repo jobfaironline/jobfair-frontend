@@ -30,10 +30,7 @@ const CompanyRegistrationDetailContainer = () => {
 
   return (
     <>
-      <CompanyRegistrationDetailComponent
-        data={companyRegistration}
-        onFinish={onFinish}
-      />
+      <CompanyRegistrationDetailComponent data={companyRegistration} onFinish={onFinish} />
     </>
   )
 }

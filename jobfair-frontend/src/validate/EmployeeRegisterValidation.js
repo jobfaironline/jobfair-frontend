@@ -1,8 +1,4 @@
-import {
-  EMAIL_VALIDATOR,
-  PHONE_VALIDATOR,
-  REQUIRED_VALIDATOR
-} from './GeneralValidation'
+import { EMAIL_VALIDATOR, PHONE_VALIDATOR, REQUIRED_VALIDATOR } from './GeneralValidation'
 
 export const EmployeeRegisterValidation = {
   email: [REQUIRED_VALIDATOR('Email'), ...EMAIL_VALIDATOR()],

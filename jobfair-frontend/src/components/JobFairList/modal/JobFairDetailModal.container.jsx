@@ -12,13 +12,7 @@ import { useHistory } from 'react-router-dom'
 
 const { Text } = Typography
 
-const JobFairDetailModalContainer = ({
-  jobFairId,
-  creatorId,
-  visible,
-  setModalVisible,
-  jobFairList
-}) => {
+const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVisible, jobFairList }) => {
   const [jobFairDetail, setJobFairDetail] = useState({})
   const [creatorInfo, setCreatorInfo] = useState('')
   const [totalApproval, setTotalApproval] = useState(0)
@@ -27,20 +21,16 @@ const JobFairDetailModalContainer = ({
   const history = useHistory()
 
   const fetchData = async () => {
-    if (
-      jobFairList !== undefined &&
-      jobFairId !== undefined &&
-      jobFairList.length > 0
-    ) {
+    if (jobFairList !== undefined && jobFairId !== undefined && jobFairList.length > 0) {
       const jobFair = jobFairList.find(item => item.id === jobFairId)
       setJobFairDetail(jobFair)
       //get creator name by creatorId
       getAccountByIdAPI(creatorId)
         .then(res => {
           setCreatorInfo(
-            `Full name: ${res.data.firstname} ${res.data.middlename} ${
-              res.data.lastname
-            }. Role: ${convertEnumToString(res.data.role)}`
+            `Full name: ${res.data.firstname} ${res.data.middlename} ${res.data.lastname}. Role: ${convertEnumToString(
+              res.data.role
+            )}`
           )
         })
         .catch(() => {
@@ -115,13 +105,7 @@ const JobFairDetailModalContainer = ({
 
   return !visible ? null : (
     <>
-      <Modal
-        title="Job Fair Detail"
-        visible={visible}
-        onOk={onOk}
-        onCancel={onCancel}
-        width={1300}
-      >
+      <Modal title="Job Fair Detail" visible={visible} onOk={onOk} onCancel={onCancel} width={1300}>
         <JobFairDetailComponent
           data={data}
           onFinish={onFinish}

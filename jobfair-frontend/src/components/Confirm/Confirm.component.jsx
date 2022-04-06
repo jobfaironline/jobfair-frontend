@@ -13,14 +13,8 @@ const ConfirmComponent = props => {
   return (
     <>
       <div style={{ position: 'fixed', left: '0.8rem', top: '200px' }}>
-        <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>
-          Content list
-        </Typography>
-        <AnchorComponent
-          listData={data.jobPositions}
-          href={'#company-information'}
-          title={'Company info'}
-        />
+        <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Content list</Typography>
+        <AnchorComponent listData={data.jobPositions} href={'#company-information'} title={'Company info'} />
       </div>
       <div className="confirm-form-container">
         <div className="site-card-wrapper">
@@ -97,10 +91,7 @@ const ConfirmComponent = props => {
                           </Text>
                         </div>
                         <div style={{ marginLeft: '1rem' }}>
-                          <div
-                            className="sub-title"
-                            style={{ marginBottom: '0.2rem' }}
-                          >
+                          <div className="sub-title" style={{ marginBottom: '0.2rem' }}>
                             <Text strong style={{ fontSize: '1.4rem' }}></Text>
                           </div>
                         </div>
@@ -113,11 +104,7 @@ const ConfirmComponent = props => {
                                   <Text>{item.numberOfPosition} slot(s)</Text>
                                 </Space>
                               </Col>
-                              <Col
-                                span={8}
-                                key="salary-range"
-                                style={{ marginLeft: '-20%' }}
-                              >
+                              <Col span={8} key="salary-range" style={{ marginLeft: '-20%' }}>
                                 <Space>
                                   <Text strong>Min salary: </Text>
                                   <Text>{item.minSalary}</Text>
@@ -160,17 +147,13 @@ const ConfirmComponent = props => {
                                 <Col span={8} key="level">
                                   <Space>
                                     <Text strong>Job level: </Text>
-                                    <Text>
-                                      {convertEnumToString(item.level)}
-                                    </Text>
+                                    <Text>{convertEnumToString(item.level)}</Text>
                                   </Space>
                                 </Col>
                                 <Col span={12} key="type">
                                   <Space>
                                     <Text strong>Job type: </Text>
-                                    <Text>
-                                      {convertEnumToString(item.jobType)}
-                                    </Text>
+                                    <Text>{convertEnumToString(item.jobType)}</Text>
                                   </Space>
                                 </Col>
                               </Row>
@@ -234,21 +217,13 @@ const ConfirmComponent = props => {
                                 <Col>
                                   <div>
                                     <div key="description">
-                                      <Space
-                                        align="start"
-                                        direction="vertical"
-                                        size={0}
-                                      >
+                                      <Space align="start" direction="vertical" size={0}>
                                         <Text strong>Job description: </Text>
                                         <Text>{item.description}</Text>
                                       </Space>
                                     </div>
                                     <div key="requirement">
-                                      <Space
-                                        align="start"
-                                        direction="vertical"
-                                        size={0}
-                                      >
+                                      <Space align="start" direction="vertical" size={0}>
                                         <Text strong>Job requirements: </Text>
                                         <Text>{item.requirements}</Text>
                                       </Space>

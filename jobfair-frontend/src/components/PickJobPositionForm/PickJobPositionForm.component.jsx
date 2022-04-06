@@ -1,18 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import {
-  Button,
-  Col,
-  Collapse,
-  Divider,
-  Form,
-  Input,
-  Popconfirm,
-  Row,
-  Space,
-  Tag,
-  Typography
-} from 'antd'
+import { Button, Col, Collapse, Divider, Form, Input, Popconfirm, Row, Space, Tag, Typography } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { PickJobPositionFormValidation } from '../../validate/PickJobPositionForm'
 import { convertEnumToString } from '../../utils/common'
@@ -32,9 +20,7 @@ const PickJobPositionForm = props => {
           ({ getFieldValue }) => ({
             validator(_, value) {
               if (!value || value.length === 0) {
-                return Promise.reject(
-                  new Error('Job position must not be empty')
-                )
+                return Promise.reject(new Error('Job position must not be empty'))
               }
               return Promise.resolve()
             }
@@ -45,26 +31,16 @@ const PickJobPositionForm = props => {
           return (
             <>
               {fields.map(({ key, name, ...restField }) => {
-                const id = form.getFieldsValue().jobPositions
-                  ? form.getFieldsValue().jobPositions[key].id
-                  : undefined
-                const item = form.getFieldsValue().jobPositions
-                  ? form.getFieldsValue().jobPositions[key]
-                  : {}
+                const id = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions[key].id : undefined
+                const item = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions[key] : {}
 
                 return (
                   <div>
                     <Divider></Divider>
-                    <div
-                      id={id}
-                      key={key}
-                      style={{ width: '100%', display: 'flex' }}
-                    >
+                    <div id={id} key={key} style={{ width: '100%', display: 'flex' }}>
                       <div className="job-position-input-container ">
                         <div className="job-position-row-container">
-                          <Typography style={{ fontSize: '1.5rem' }}>
-                            Job position:{' '}
-                          </Typography>
+                          <Typography style={{ fontSize: '1.5rem' }}>Job position: </Typography>
                           <Form.Item {...restField} name={[name, 'title']}>
                             <Input
                               disabled
@@ -78,11 +54,7 @@ const PickJobPositionForm = props => {
                             />
                           </Form.Item>
                         </div>
-                        <Collapse
-                          bordered={false}
-                          defaultActiveKey={['1']}
-                          style={{ marginBottom: '1rem' }}
-                        >
+                        <Collapse bordered={false} defaultActiveKey={['1']} style={{ marginBottom: '1rem' }}>
                           <Panel
                             header={
                               <Text strong style={{ fontSize: '1rem' }}>
@@ -109,17 +81,13 @@ const PickJobPositionForm = props => {
                                 <Col span={8} key="level">
                                   <Space>
                                     <Text strong>Job level: </Text>
-                                    <Text>
-                                      {convertEnumToString(item.level)}
-                                    </Text>
+                                    <Text>{convertEnumToString(item.level)}</Text>
                                   </Space>
                                 </Col>
                                 <Col span={12} key="type">
                                   <Space>
                                     <Text strong>Job type: </Text>
-                                    <Text>
-                                      {convertEnumToString(item.jobType)}
-                                    </Text>
+                                    <Text>{convertEnumToString(item.jobType)}</Text>
                                   </Space>
                                 </Col>
                               </Row>
@@ -183,21 +151,13 @@ const PickJobPositionForm = props => {
                                 <Col>
                                   <div>
                                     <div key="description">
-                                      <Space
-                                        align="start"
-                                        direction="vertical"
-                                        size={0}
-                                      >
+                                      <Space align="start" direction="vertical" size={0}>
                                         <Text strong>Job description: </Text>
                                         <Text>{item.description}</Text>
                                       </Space>
                                     </div>
                                     <div key="requirement">
-                                      <Space
-                                        align="start"
-                                        direction="vertical"
-                                        size={0}
-                                      >
+                                      <Space align="start" direction="vertical" size={0}>
                                         <Text strong>Job requirements: </Text>
                                         <Text>{item.requirements}</Text>
                                       </Space>
@@ -213,15 +173,10 @@ const PickJobPositionForm = props => {
                             label="Number of position"
                             {...restField}
                             name={[name, 'numberOfPosition']}
-                            rules={
-                              PickJobPositionFormValidation.numberOfPosition
-                            }
+                            rules={PickJobPositionFormValidation.numberOfPosition}
                             style={{ maxWidth: '14rem', width: '14rem' }}
                           >
-                            <Input
-                              placeholder="Number of position"
-                              style={{ width: '12rem' }}
-                            />
+                            <Input placeholder="Number of position" style={{ width: '12rem' }} />
                           </Form.Item>
                           <div style={{ width: 'fit-content', flex: 'none' }}>
                             <Input.Group compact>
@@ -229,9 +184,7 @@ const PickJobPositionForm = props => {
                                 label="Min salary"
                                 {...restField}
                                 name={[name, 'minSalary']}
-                                rules={PickJobPositionFormValidation.minSalary(
-                                  name
-                                )}
+                                rules={PickJobPositionFormValidation.minSalary(name)}
                               >
                                 <Input prefix="$" placeholder="Min salary" />
                               </Form.Item>
@@ -247,15 +200,9 @@ const PickJobPositionForm = props => {
                                 {...restField}
                                 label="Max salary"
                                 name={[name, 'maxSalary']}
-                                rules={PickJobPositionFormValidation.maxSalary(
-                                  name
-                                )}
+                                rules={PickJobPositionFormValidation.maxSalary(name)}
                               >
-                                <Input
-                                  prefix="$"
-                                  className="site-input-right"
-                                  placeholder="Max salary"
-                                />
+                                <Input prefix="$" className="site-input-right" placeholder="Max salary" />
                               </Form.Item>
                             </Input.Group>
                           </div>
@@ -275,12 +222,7 @@ const PickJobPositionForm = props => {
                 )
               })}
               <Form.Item>
-                <Button
-                  type="dashed"
-                  onClick={() => handlePickJobPosition()}
-                  block
-                  icon={<PlusOutlined />}
-                >
+                <Button type="dashed" onClick={() => handlePickJobPosition()} block icon={<PlusOutlined />}>
                   Add job
                 </Button>
               </Form.Item>

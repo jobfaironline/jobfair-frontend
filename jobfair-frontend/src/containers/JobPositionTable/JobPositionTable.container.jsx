@@ -23,17 +23,11 @@ const PickJobPositionTable = ({ selectable, form }) => {
 
   //select table logic
   const [initialSelectedValues, setInitialSelectedValues] = useState(() =>
-    form.getFieldsValue().jobPositions
-      ? [...form.getFieldsValue().jobPositions.map(item => item.key)]
-      : []
+    form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions.map(item => item.key)] : []
   )
-  const [selectedRowKeys, setSelectedRowKeys] = useState(() => [
-    ...initialSelectedValues
-  ])
+  const [selectedRowKeys, setSelectedRowKeys] = useState(() => [...initialSelectedValues])
   const [selectedRows, setSelectedRows] = useState(
-    form.getFieldsValue().jobPositions
-      ? [...form.getFieldsValue().jobPositions]
-      : []
+    form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions] : []
   )
 
   //handle choose job button
@@ -46,9 +40,7 @@ const PickJobPositionTable = ({ selectable, form }) => {
       }
     })
 
-    const currentJobPositionsInForm = form.getFieldsValue().jobPositions
-      ? [...form.getFieldsValue().jobPositions]
-      : []
+    const currentJobPositionsInForm = form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions] : []
     form.setFieldsValue({
       ...form.getFieldsValue(),
       jobPositions: [...currentJobPositionsInForm, ...mappedData]
@@ -125,18 +117,10 @@ const PickJobPositionTable = ({ selectable, form }) => {
         rowSelection={selectable ? { ...rowSelection } : null}
       />
       <Space style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}>
-        <PaginationComponent
-          data={jobPositionData}
-          handlePageChange={handlePageChange}
-          totalRecord={totalRecord}
-        />
+        <PaginationComponent data={jobPositionData} handlePageChange={handlePageChange} totalRecord={totalRecord} />
       </Space>
       {selectable ? (
-        <Button
-          style={{ width: '100%' }}
-          type="primary"
-          onClick={chooseJobPositions}
-        >
+        <Button style={{ width: '100%' }} type="primary" onClick={chooseJobPositions}>
           Choose
         </Button>
       ) : null}

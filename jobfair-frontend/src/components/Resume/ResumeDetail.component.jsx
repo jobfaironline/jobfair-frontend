@@ -22,9 +22,7 @@ const ResumeDetailComponent = props => {
           time: `${item.fromDate}-${item.toDate}`,
           titleName: item.school,
           subName: `with subject ${item.subject}`,
-          description: `Achievement: ${
-            item.achievement
-          } - Qualification: ${convertEnumToString(item.qualificationId)}`
+          description: `Achievement: ${item.achievement} - Qualification: ${convertEnumToString(item.qualificationId)}`
         }
       })
     : [
@@ -50,16 +48,11 @@ const ResumeDetailComponent = props => {
   const result = data.candidateEducation
     ?.map(item => item.qualificationId)
     .map(name => {
-      const result = QualificationConst.find(
-        qualification => qualification.enumName === name
-      )
+      const result = QualificationConst.find(qualification => qualification.enumName === name)
       return result.id
     })
     .sort()
-  const highestEducationLevel =
-    result !== undefined
-      ? QualificationConst.find(item => item.id === result[0])?.name
-      : ''
+  const highestEducationLevel = result !== undefined ? QualificationConst.find(item => item.id === result[0])?.name : ''
   const workExperiences = !!data?.candidateWorkHistories
     ? data.candidateWorkHistories.map((item, index) => {
         return {
@@ -211,11 +204,7 @@ const ResumeDetailComponent = props => {
             headStyle={{ fontWeight: 700, fontSize: 24 }}
           >
             <div style={{ marginLeft: '5rem' }}>
-              <EvaluationFormComponent
-                onFinish={onFinish}
-                name="applicationId"
-                id={data.id}
-              />
+              <EvaluationFormComponent onFinish={onFinish} name="applicationId" id={data.id} />
             </div>
           </Card>
         </div>

@@ -5,10 +5,7 @@ import { ChangePasswordValidation } from '../../validate/ChangePasswordValidatio
 const ChangePasswordComponent = props => {
   const { form, onFinish } = props
   return (
-    <div
-      className="input-container"
-      style={{ width: '75%', marginTop: '5%', marginLeft: '15%' }}
-    >
+    <div className="input-container" style={{ width: '75%', marginTop: '5%', marginLeft: '15%' }}>
       <Form
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 8 }}
@@ -43,11 +40,7 @@ const ChangePasswordComponent = props => {
           <Input.Password />
         </Form.Item>
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            style={{ marginLeft: '100%' }}
-          >
+          <Button type="primary" htmlType="submit" style={{ marginLeft: '100%' }}>
             Change password
           </Button>
         </Form.Item>

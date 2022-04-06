@@ -8,12 +8,7 @@ const TextInput = ({ register, name, label, ...rest }) => {
         {label}
       </label>{' '}
       <br></br>
-      <input
-        {...register(name)}
-        {...rest}
-        className={styles.InputText}
-        autoComplete="off"
-      />{' '}
+      <input {...register(name)} {...rest} className={styles.InputText} autoComplete="off" />{' '}
     </div>
   )
 }

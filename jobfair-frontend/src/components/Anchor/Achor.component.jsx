@@ -11,14 +11,8 @@ const AnchorComponent = props => {
   }
   return (
     <>
-      <Button
-        type="primary"
-        style={{ marginBottom: 10 }}
-        onClick={() => handleOnOpenMenu(!isHide)}
-      >
-        <div style={{ fontSize: '15px' }}>
-          {isHide ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-        </div>
+      <Button type="primary" style={{ marginBottom: 10 }} onClick={() => handleOnOpenMenu(!isHide)}>
+        <div style={{ fontSize: '15px' }}>{isHide ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}</div>
       </Button>
 
       {isHide ? (
@@ -37,12 +31,7 @@ const AnchorComponent = props => {
               <Anchor targetOffset={300} onClick={e => e.preventDefault()}>
                 <Link href={href} title={title} />
                 {listData.map((item, index) => {
-                  return (
-                    <Link
-                      href={item.href}
-                      title={`${index + 1}: ${item.title}`}
-                    />
-                  )
+                  return <Link href={item.href} title={`${index + 1}: ${item.title}`} />
                 })}
               </Anchor>
             </div>

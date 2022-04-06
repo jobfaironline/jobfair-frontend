@@ -21,9 +21,7 @@ export const FloorMeshContainer = props => {
     }
     //get intersection point between click coordinate and plane coordinate
     const planeIntersectPoint = new THREE.Vector3()
-    const floorPlane = new THREE.Plane(
-      new THREE.Vector3(mesh.position.x, mesh.position.y + 0.5, mesh.position.z)
-    )
+    const floorPlane = new THREE.Plane(new THREE.Vector3(mesh.position.x, mesh.position.y + 0.5, mesh.position.z))
     e.ray.intersectPlane(floorPlane, planeIntersectPoint)
 
     //load new item mesh
@@ -31,13 +29,8 @@ export const FloorMeshContainer = props => {
     const itemMesh = gltf.scene.children[0]
 
     //calculate new item position on plane
-    const { x_range: floor_x_range, z_range: floor_z_range } =
-      calculateMeshDimensionRange(mesh)
-    const {
-      length: item_length,
-      width: item_width,
-      height: item_height
-    } = calculateMeshSize(itemMesh)
+    const { x_range: floor_x_range, z_range: floor_z_range } = calculateMeshDimensionRange(mesh)
+    const { length: item_length, width: item_width, height: item_height } = calculateMeshSize(itemMesh)
     const { height: floor_height } = calculateMeshSize(mesh)
     const { x, y, z } = calculatePositionWithBoundary({
       x: planeIntersectPoint.x,

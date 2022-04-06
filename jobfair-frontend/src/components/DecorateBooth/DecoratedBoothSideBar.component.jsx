@@ -7,8 +7,7 @@ import { Button, Descriptions, InputNumber, Upload } from 'antd'
 import { SketchPicker } from 'react-color'
 import './DecoratedBoothSideBar.style.scss'
 
-export const DecorateBoothSideBarComponent = (props) => {
-
+export const DecorateBoothSideBarComponent = props => {
   const {
     selectedItem,
     handleOnchangePositionZ,
@@ -23,19 +22,19 @@ export const DecorateBoothSideBarComponent = (props) => {
 
   return (
     <>
-      <div style={{position: 'absolute', zIndex: 100000}}>
-        <div style={{padding: '1rem'}}>
+      <div style={{ position: 'absolute', zIndex: 100000 }}>
+        <div style={{ padding: '1rem' }}>
           <p>
             Component: <a>{selectedItem?.name}</a>
           </p>
         </div>
-        <Divider/>
-        <Typography variant="button" style={{padding: '1rem'}}>
+        <Divider />
+        <Typography variant="button" style={{ padding: '1rem' }}>
           Properties
         </Typography>
         <div>
           <Descriptions title="Position" layout="vertical" bordered size="small">
-            <Descriptions.Item label="Width" style={{padding: 0}}>
+            <Descriptions.Item label="Width" style={{ padding: 0 }}>
               <InputNumber
                 min={-10}
                 max={360}
@@ -71,25 +70,24 @@ export const DecorateBoothSideBarComponent = (props) => {
             layout="vertical"
             size="small"
             bordered
-            style={{padding: '1rem'}}
-            contentStyle={{alignItems: 'center'}}
+            style={{ padding: '1rem' }}
+            contentStyle={{ alignItems: 'center' }}
           >
             <Descriptions.Item label="Left">
-              <LeftOutlined onClick={handleOnRotationLeft}/>
+              <LeftOutlined onClick={handleOnRotationLeft} />
             </Descriptions.Item>
             <Descriptions.Item label="Right">
-              <RightOutlined onClick={handleOnRotationRight}/>
+              <RightOutlined onClick={handleOnRotationRight} />
             </Descriptions.Item>
           </Descriptions>
         </div>
-        <div style={{margin: '1rem 0'}}>
+        <div style={{ margin: '1rem 0' }}>
           <Upload {...loadFile}>
-            <Button icon={<UploadOutlined/>}>Upload Media</Button>{' '}
+            <Button icon={<UploadOutlined />}>Upload Media</Button>{' '}
           </Upload>
-          <Button icon={<DeleteOutlined/>} onClick={handleDelete}>
+          <Button icon={<DeleteOutlined />} onClick={handleDelete}>
             Delete item
           </Button>
-
         </div>
       </div>
       <Descriptions
@@ -97,17 +95,13 @@ export const DecorateBoothSideBarComponent = (props) => {
         layout="vertical"
         size="small"
         bordered
-        style={{padding: '1rem'}}
-        contentStyle={{textAlign: 'center'}}
+        style={{ padding: '1rem' }}
+        contentStyle={{ textAlign: 'center' }}
       >
         <Descriptions.Item>
-          <SketchPicker
-            color={selectedItem?.material.color.getHexString()}
-            onChangeComplete={handleOnChangeColor}
-          />
+          <SketchPicker color={selectedItem?.material.color.getHexString()} onChangeComplete={handleOnChangeColor} />
         </Descriptions.Item>
       </Descriptions>
     </>
   )
 }
-

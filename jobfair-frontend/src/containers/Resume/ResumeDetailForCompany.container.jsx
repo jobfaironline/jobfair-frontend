@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Form, notification, Spin } from 'antd'
-import {
-  evaluateApplication,
-  getApplication
-} from '../../services/application-controller/ApplicationControllerService'
+import { evaluateApplication, getApplication } from '../../services/application-controller/ApplicationControllerService'
 import { convertToDateValue } from '../../utils/common'
 import ResumeDetailComponent from '../../components/Resume/ResumeDetail.component'
 
@@ -61,12 +58,7 @@ const ResumeDetailForCompanyContainer = ({ resumeId }) => {
 
   return (
     <>
-      <ResumeDetailComponent
-        form={form}
-        onFinish={onFinish}
-        data={data}
-        handleOnChangeDob={handleOnChangeDob}
-      />
+      <ResumeDetailComponent form={form} onFinish={onFinish} data={data} handleOnChangeDob={handleOnChangeDob} />
     </>
   )
 }

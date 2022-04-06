@@ -1,15 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useLayoutEffect, useState } from 'react'
 import { getEmployeeByIdAPI } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
-import { useSelector } from 'react-redux'
 import { notification, Spin } from 'antd'
 import EmployeeDrawerComponent from '../../components/EmployeeDrawer/EmployeeDrawer.component'
 
-const EmployeeDrawer = ({
-  employeeId,
-  drawerVisibility,
-  setDrawerVisibility
-}) => {
+const EmployeeDrawer = ({ employeeId, drawerVisibility, setDrawerVisibility }) => {
   const [employeeData, setEmployeeData] = useState({})
   const [loading, setLoading] = useState(false)
 
@@ -40,11 +35,7 @@ const EmployeeDrawer = ({
 
   return (
     <>
-      <EmployeeDrawerComponent
-        onClose={onClose}
-        visible={drawerVisibility}
-        data={employeeData}
-      />
+      <EmployeeDrawerComponent onClose={onClose} visible={drawerVisibility} data={employeeData} />
     </>
   )
 }

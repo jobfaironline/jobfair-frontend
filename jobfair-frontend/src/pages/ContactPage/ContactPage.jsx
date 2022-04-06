@@ -1,10 +1,6 @@
 import React from 'react'
 import { Divider, Space, Typography } from 'antd'
-import {
-  FacebookOutlined,
-  GithubOutlined,
-  InstagramOutlined
-} from '@ant-design/icons'
+import { FacebookOutlined, GithubOutlined, InstagramOutlined } from '@ant-design/icons'
 
 const { Title } = Typography
 
@@ -36,10 +32,7 @@ const ContactPage = () => {
           />
         </div>
         <div style={{ fontSize: '7rem' }}>
-          <img
-            src={window.location.origin + '/contact.png'}
-            style={{ margin: '0 -12rem' }}
-          />
+          <img src={window.location.origin + '/contact.png'} style={{ margin: '0 -12rem' }} />
         </div>
       </Space>
     </div>

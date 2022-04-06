@@ -26,21 +26,11 @@ export const mapperResponseJobFairForAdmin = res => {
     return {
       no: index + 1,
       id: item.jobFairId,
-      companyRegisterStartTime: convertToDateString(
-        item.jobFair.companyRegisterStartTime
-      ),
-      companyRegisterEndTime: convertToDateString(
-        item.jobFair.companyRegisterEndTime
-      ),
-      companyBuyBoothStartTime: convertToDateString(
-        item.jobFair.companyBuyBoothStartTime
-      ),
-      companyBuyBoothEndTime: convertToDateString(
-        item.jobFair.companyBuyBoothEndTime
-      ),
-      attendantRegisterStartTime: convertToDateString(
-        item.jobFair.attendantRegisterStartTime
-      ),
+      companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime),
+      companyRegisterEndTime: convertToDateString(item.jobFair.companyRegisterEndTime),
+      companyBuyBoothStartTime: convertToDateString(item.jobFair.companyBuyBoothStartTime),
+      companyBuyBoothEndTime: convertToDateString(item.jobFair.companyBuyBoothEndTime),
+      attendantRegisterStartTime: convertToDateString(item.jobFair.attendantRegisterStartTime),
       startTime: convertToDateString(item.jobFair.startTime),
       endTime: convertToDateString(item.jobFair.endTime),
       description: item.jobFair.description,

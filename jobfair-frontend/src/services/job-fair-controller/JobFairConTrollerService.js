@@ -7,6 +7,38 @@ import {
 } from '../../constants/Endpoints/job-fair-controller/JobFairConTrollerEndpoint'
 import { JOB_FAIR_FOR_ADMIN_STATUS } from '../../constants/JobFairConst'
 
+export const getJobFairForCompany = (pageNumber, pageSize, tabStatus) => {
+  switch (tabStatus) {
+    //available
+    case 1:
+      return CallAPI(
+        `${ENDPOINT_GET_JOB_FAIR_PLAN_OF_COMPANY}?filterStatus=HAPPENING&filterStatus=REGISTRABLE`,
+        'GET',
+        {},
+        {
+          offset: pageNumber,
+          pageSize: pageSize,
+          direction: 'DESC',
+          sortBy: 'jobFair.createTime'
+        }
+      )
+    //history
+    case 2:
+      return CallAPI(
+        `${ENDPOINT_GET_JOB_FAIR_PLAN_OF_COMPANY}?filterStatus=APPROVE&filterStatus=ATTENDED&filterStatus=CHOOSE_BOOTH&filterStatus=DECORATE_BOOTH&filterStatus=REJECT&filterStatus=REQUEST_CHANGE&filterStatus=SUBMITTED`,
+        'GET',
+        {},
+        {
+          offset: pageNumber,
+          pageSize: pageSize,
+          direction: 'DESC',
+          sortBy: 'jobFair.createTime'
+        }
+      )
+    default:
+      return null
+  }
+}
 export const getAvailableJobFairForCompany = (pageNumber, pageSize) =>
   CallAPI(
     `${ENDPOINT_GET_JOB_FAIR_PLAN_OF_COMPANY}?filterStatus=HAPPENING&filterStatus=REGISTRABLE`,
@@ -47,8 +79,35 @@ export const getAllJobFairAPI = (pageNumber, pageSize, sortBy, direction) =>
       sortBy: sortBy
     }
   )
-export const evaluateJobFairPlanAPI = body =>
-  CallAPI(`${ENDPOINT_JOB_FAIR}/evaluate`, 'POST', body)
+export const evaluateJobFairPlanAPI = body => CallAPI(`${ENDPOINT_JOB_FAIR}/evaluate`, 'POST', body)
+export const getJobFairForAttendant = (offset, pageSize, tabStatus) => {
+  switch (tabStatus) {
+    //available
+    case 1:
+      return CallAPI(
+        `${ENDPOINT_GET_JOB_FAIR_FOR_ATTENDANT}?filterStatus=HAPPENING&filterStatus=REGISTRABLE`,
+        'GET',
+        {},
+        {
+          offset: offset,
+          pageSize: pageSize
+        }
+      )
+    //history
+    case 2:
+      return CallAPI(
+        `${ENDPOINT_GET_JOB_FAIR_FOR_ATTENDANT}?filterStatus=ATTENDED&filterStatus=CLOSED&filterStatus=REGISTERED`,
+        'GET',
+        {},
+        {
+          offset: offset,
+          pageSize: pageSize
+        }
+      )
+    default:
+      return null
+  }
+}
 export const getJobFairAvailableForAttendant = (offset, pageSize) =>
   CallAPI(
     `${ENDPOINT_GET_JOB_FAIR_FOR_ATTENDANT}?filterStatus=HAPPENING&filterStatus=REGISTRABLE`,
@@ -104,5 +163,4 @@ export const getJobFairIncomingForAdmin = (offset, pageSize) =>
     }
   )
 
-export const getJobFairPlanById = id =>
-  CallAPI(`${ENDPOINT_JOB_FAIR}/${id}`, 'GET')
+export const getJobFairPlanById = id => CallAPI(`${ENDPOINT_JOB_FAIR}/${id}`, 'GET')

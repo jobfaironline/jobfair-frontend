@@ -19,8 +19,8 @@ export const AttendantMenu = [
   <Menu.Item key={PATH_ATTENDANT.PROFILE_PAGE}>
     <Link to={PATH_ATTENDANT.PROFILE_PAGE}>Attendant Profile</Link>
   </Menu.Item>,
-  <Menu.Item key={PATH_ATTENDANT.JOB_FAIR_LIST_PAGE}>
-    <Link to={PATH_ATTENDANT.JOB_FAIR_LIST_PAGE}>Job Fair List</Link>
+  <Menu.Item key={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>
+    <Link to={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>Job Fair List</Link>
   </Menu.Item>
 ]
 
@@ -29,22 +29,16 @@ export const CompanyManagerMenu = [
     <Link to={PATH_COMPANY_MANAGER.COMPANY_PROFILE_PAGE}>Company profile</Link>
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>
-      Employee Management
-    </Link>
+    <Link to={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>Employee Management</Link>
   </Menu.Item>,
   <Menu.Item key={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>
     <Link to={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>Register to job fair</Link>
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}>
-      Job Position Management
-    </Link>
+    <Link to={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}>Job Position Management</Link>
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}>
-      Applications management
-    </Link>
+    <Link to={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}>Applications management</Link>
   </Menu.Item>
 ]
 
@@ -53,9 +47,7 @@ export const CompanyEmployeeMenu = [
     <Link to={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}>Company profile</Link>
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}>
-    <Link to={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}>
-      Applications management
-    </Link>
+    <Link to={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}>Applications management</Link>
   </Menu.Item>
 ]
 
@@ -97,10 +89,7 @@ const NavigationBar = () => {
       <div className="Navbar">
         <Link to={PATH.INDEX} className="logo">
           <div>
-            <Typography.Title
-              level={2}
-              style={{ marginBottom: 0, padding: '0 1.5rem', color: '#FFF' }}
-            >
+            <Typography.Title level={2} style={{ marginBottom: 0, padding: '0 1.5rem', color: '#FFF' }}>
               Jobhub
             </Typography.Title>
           </div>
@@ -129,15 +118,8 @@ const NavigationBar = () => {
             : null}
           {/* {role ? <Button onClick={handleClick}>Logout</Button> : null} */}
         </Menu>
-        {!role ? (
-          <AuthenticationButtonGroups handleRedirect={handleRedirect} />
-        ) : null}
-        {role ? (
-          <AvatarMenu
-            logoutFunction={handleClick}
-            handleRedirect={handleRedirect}
-          />
-        ) : null}
+        {!role ? <AuthenticationButtonGroups handleRedirect={handleRedirect} /> : null}
+        {role ? <AvatarMenu logoutFunction={handleClick} handleRedirect={handleRedirect} /> : null}
       </div>
     </div>
   )
@@ -187,8 +169,7 @@ const AvatarMenu = ({ logoutFunction }) => {
     <Menu
       onClick={e => {
         if (e.key === 'LOGOUT') logoutFunction()
-        else if (e.key === 'CHANGE_PASSWORD_PAGE')
-          history.push(PATH.CHANGE_PASSWORD_PAGE)
+        else if (e.key === 'CHANGE_PASSWORD_PAGE') history.push(PATH.CHANGE_PASSWORD_PAGE)
       }}
       style={{ zIndex: 10000000 }}
     >
@@ -203,11 +184,7 @@ const AvatarMenu = ({ logoutFunction }) => {
         <Typography style={{ color: '#fff' }}>{name}</Typography>
       </div>
       <Dropdown overlay={menu} placement="bottomRight">
-        <Avatar
-          size={45}
-          style={{ backgroundColor: '#87d068' }}
-          icon={<UserOutlined />}
-        />
+        <Avatar size={45} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
       </Dropdown>
     </div>
   )

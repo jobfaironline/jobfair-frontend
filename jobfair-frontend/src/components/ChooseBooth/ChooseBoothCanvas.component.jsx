@@ -26,9 +26,7 @@ export const ChooseBoothCanvas = props => {
   })
   const [skyType, setSkyType] = useState(SkyType.Morning)
   const handleOk = async () => {
-    let data = await getLatestApproveRegistration(jobFairId).then(
-      response => response.data
-    )
+    let data = await getLatestApproveRegistration(jobFairId).then(response => response.data)
     const registrationId = data.id
     data = await purchaseBooth({
       boothId: modalState.boothId,
@@ -90,12 +88,7 @@ export const ChooseBoothCanvas = props => {
 
   return (
     <Fragment>
-      <Modal
-        title="Confirm booth"
-        visible={modalState.isVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
+      <Modal title="Confirm booth" visible={modalState.isVisible} onOk={handleOk} onCancel={handleCancel}>
         Are you sure?
       </Modal>
       <SkyTypeSelect onChange={onChangeSkyType} />
@@ -131,18 +124,8 @@ export const ChooseBoothCanvas = props => {
             return <BasicMesh key={childMesh.uuid} mesh={childMesh} />
           })}
           {mesh.children.map(childMesh => {
-            if (
-              childMesh.name.includes('company') &&
-              boothData[childMesh.name] !== undefined
-            ) {
-              return (
-                <ArrowHelper
-                  origin={childMesh.position}
-                  color={0x32a852}
-                  length={20}
-                  distance={23}
-                />
-              )
+            if (childMesh.name.includes('company') && boothData[childMesh.name] !== undefined) {
+              return <ArrowHelper origin={childMesh.position} color={0x32a852} length={20} distance={23} />
             }
             return null
           })}

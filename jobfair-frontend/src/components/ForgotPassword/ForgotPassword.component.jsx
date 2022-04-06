@@ -13,19 +13,8 @@ const ForgotPasswordComponent = ({ onFinish, form }) => {
         </Divider>
       </div>
       <div className="form">
-        <Form
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 8 }}
-          form={form}
-          onFinish={onFinish}
-          autoComplete="off"
-        >
-          <Form.Item
-            label="Email"
-            name="email"
-            hasFeedback
-            rule={ForgetPasswordValidation.email}
-          >
+        <Form labelCol={{ span: 8 }} wrapperCol={{ span: 8 }} form={form} onFinish={onFinish} autoComplete="off">
+          <Form.Item label="Email" name="email" hasFeedback rule={ForgetPasswordValidation.email}>
             <Input />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

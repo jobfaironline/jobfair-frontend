@@ -6,10 +6,7 @@ import {
   updateAttendantProfileAPI
 } from '../../services/attendant-controller/AttendantControllerService'
 import AttendantProfileFormComponent from '../../components/AttendantProfileForm/AttendantProfileForm.component'
-import {
-  convertToDateValue,
-  handleConvertRangePicker
-} from '../../utils/common'
+import { convertToDateValue, handleConvertRangePicker } from '../../utils/common'
 
 const AttendantProfileFormContainer = () => {
   const [form] = Form.useForm()
@@ -74,11 +71,7 @@ const AttendantProfileFormContainer = () => {
 
   return (
     <>
-      <AttendantProfileFormComponent
-        form={form}
-        onFinish={onFinish}
-        data={data}
-      />
+      <AttendantProfileFormComponent form={form} onFinish={onFinish} data={data} />
     </>
   )
 }

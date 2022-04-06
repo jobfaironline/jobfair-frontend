@@ -29,21 +29,11 @@ const EvaluateJobFairPlanListContainer = () => {
         const dataSet = res.data.content.map(item => {
           return {
             ...item,
-            attendantRegisterStartTime: convertToDateString(
-              item.attendantRegisterStartTime
-            ),
-            companyBuyBoothEndTime: convertToDateString(
-              item.companyBuyBoothEndTime
-            ),
-            companyBuyBoothStartTime: convertToDateString(
-              item.companyBuyBoothStartTime
-            ),
-            companyRegisterEndTime: convertToDateString(
-              item.companyRegisterEndTime
-            ),
-            companyRegisterStartTime: convertToDateString(
-              item.companyRegisterStartTime
-            ),
+            attendantRegisterStartTime: convertToDateString(item.attendantRegisterStartTime),
+            companyBuyBoothEndTime: convertToDateString(item.companyBuyBoothEndTime),
+            companyBuyBoothStartTime: convertToDateString(item.companyBuyBoothStartTime),
+            companyRegisterEndTime: convertToDateString(item.companyRegisterEndTime),
+            companyRegisterStartTime: convertToDateString(item.companyRegisterStartTime),
             endTime: convertToDateString(item.endTime),
             startTime: convertToDateString(item.startTime)
           }
@@ -122,16 +112,10 @@ const EvaluateJobFairPlanListContainer = () => {
                   View detail
                 </a>
                 {record.status === 'PENDING' ? (
-                  <EvaluationFormComponent
-                    onFinish={onFinish}
-                    id={record.id}
-                    name="jobFairId"
-                  />
+                  <EvaluationFormComponent onFinish={onFinish} id={record.id} name="jobFairId" />
                 ) : null}
                 {record.status === 'APPROVE' ? (
-                  <Link to={`/approval-registration/${record.id}`}>
-                    View registrations
-                  </Link>
+                  <Link to={`/approval-registration/${record.id}`}>View registrations</Link>
                 ) : null}
               </Space>
             )

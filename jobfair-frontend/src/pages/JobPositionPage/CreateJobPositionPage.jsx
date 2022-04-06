@@ -14,9 +14,7 @@ const CreateJobPositionPage = () => {
         onBack={() => history.push('/company/job-position-management')}
         title="Job position's details"
       />
-      <div
-        style={{ display: 'flex', justifyContent: 'center', padding: '3rem 0' }}
-      >
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '3rem 0' }}>
         <CreateJobPositionContainer />
       </div>
     </div>

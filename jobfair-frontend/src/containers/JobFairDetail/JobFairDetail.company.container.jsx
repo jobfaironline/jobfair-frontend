@@ -4,7 +4,7 @@ import { getJobFairPlanById } from '../../services/job-fair-controller/JobFairCo
 import { notification } from 'antd'
 
 const JobFairDetailCompanyContainer = props => {
-  const { id } = props
+  const { id, role } = props
   const [jobFairDetailData, setJobFairDetailData] = useState()
   const getJobFairDetail = async () => {
     getJobFairPlanById(id)
@@ -28,7 +28,7 @@ const JobFairDetailCompanyContainer = props => {
   }, [])
   return (
     <>
-      <JobFairDetailComponent data={jobFairDetailData} />
+      <JobFairDetailComponent data={jobFairDetailData} role={role} />
     </>
   )
 }

@@ -13,11 +13,7 @@ const ResultSuccessComponent = () => {
         title="Your submission was successfully"
         subTitle="Please wait until admin evaluate your form. Thank you 😊"
         extra={[
-          <Button
-            type="primary"
-            key="console"
-            onClick={() => history.push(PATH.INDEX)}
-          >
+          <Button type="primary" key="console" onClick={() => history.push(PATH.INDEX)}>
             Back to home page
           </Button>
         ]}

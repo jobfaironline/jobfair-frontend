@@ -100,9 +100,7 @@ const JobFairListColumn = getColumnSearchProps => {
             }
             break
         }
-        return (
-          <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
-        )
+        return <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
       }
     }
   ]
