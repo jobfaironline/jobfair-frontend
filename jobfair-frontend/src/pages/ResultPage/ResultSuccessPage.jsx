@@ -26,21 +26,14 @@ export const ResultSuccessPage = () => {
             </Text>
           </Paragraph>
           <Paragraph>
-            We will look over your registration and get back to you by 3-5 days.
-            After that, we will send you at this email address:{' '}
-            <a href={`mailto:${email}`}>{email}</a> to inform the result.
+            We will look over your registration and get back to you by 3-5 days. After that, we will send you at this
+            email address: <a href={`mailto:${email}`}>{email}</a> to inform the result.
           </Paragraph>
           <Paragraph>
-            In the meantime, you can check the{' '}
-            <Link to={PATH.FAQ_PAGE}>FAQ Section</Link> or{' '}
-            <Link to={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>Job Fair Page</Link>{' '}
-            to check other job fairs !
+            In the meantime, you can check the <Link to={PATH.FAQ_PAGE}>FAQ Section</Link> or{' '}
+            <Link to={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>Job Fair Page</Link> to check other job fairs !
           </Paragraph>
-          <Button
-            type="primary"
-            key="console"
-            onClick={() => history.push(PATH.INDEX)}
-          >
+          <Button type="primary" key="console" onClick={() => history.push(PATH.INDEX)}>
             Back to home page
           </Button>
         </div>

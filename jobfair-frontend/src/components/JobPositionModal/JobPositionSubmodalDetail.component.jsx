@@ -37,9 +37,7 @@ const JobPositionSubmodalDetailComponent = ({ data }) => {
                 <Space>
                   <Text strong>Job level: </Text>
                   <Text>
-                    {data.level !== undefined
-                      ? convertEnumToString(data.level)
-                      : convertEnumToString(data.jobLevel)}
+                    {data.level !== undefined ? convertEnumToString(data.level) : convertEnumToString(data.jobLevel)}
                   </Text>
                 </Space>
               </Col>
@@ -74,10 +72,7 @@ const JobPositionSubmodalDetailComponent = ({ data }) => {
                 <Space wrap size="4">
                   {data.skillTagDTOS.map(skill => {
                     return (
-                      <Tag
-                        color="blue"
-                        style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}
-                      >
+                      <Tag color="blue" style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
                         {skill.name}
                       </Tag>
                     )
@@ -91,10 +86,7 @@ const JobPositionSubmodalDetailComponent = ({ data }) => {
                 <Space wrap size="4">
                   {data.subCategoryDTOs.map(category => {
                     return (
-                      <Tag
-                        color="blue"
-                        style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}
-                      >
+                      <Tag color="blue" style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
                         {category.name}
                       </Tag>
                     )

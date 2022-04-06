@@ -68,23 +68,15 @@ const defaultColumns = () => {
             }
             break
         }
-        return (
-          <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
-        )
+        return <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
       }
     }
   ]
 }
 
-const ApplicationTableColumn = (
-  getColumnSearchProps,
-  jobPositionId,
-  jobFairId
-) => {
+const ApplicationTableColumn = (getColumnSearchProps, jobPositionId, jobFairId) => {
   if (jobPositionId) {
-    return [...defaultColumns()].filter(
-      column => column.dataIndex != 'jobPosition'
-    )
+    return [...defaultColumns()].filter(column => column.dataIndex != 'jobPosition')
   } else if (jobFairId) {
     return [...defaultColumns()].filter(column => column.dataIndex != 'jobFair')
   } else {

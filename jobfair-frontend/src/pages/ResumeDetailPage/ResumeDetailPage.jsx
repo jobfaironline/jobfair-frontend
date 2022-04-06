@@ -11,11 +11,7 @@ const ResumeDetailPage = () => {
 
   return (
     <div className="page">
-      <PageHeader
-        className="site-page-header"
-        onBack={() => history.goBack()}
-        title="Resume Detail Page"
-      />
+      <PageHeader className="site-page-header" onBack={() => history.goBack()} title="Resume Detail Page" />
       <ResumeDetailForCompanyContainer resumeId={resumeId} />
     </div>
   )

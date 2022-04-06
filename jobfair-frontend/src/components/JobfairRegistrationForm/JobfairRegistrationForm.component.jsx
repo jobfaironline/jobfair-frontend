@@ -83,12 +83,7 @@ const JobfairRegistrationForm = ({ form, jobFairId }) => {
           rules={CompanyProfileValidation.description}
           name="description"
         >
-          <TextArea
-            autoSize={{ minRows: 5 }}
-            showCount
-            maxLength={3000}
-            placeholder="Registration description"
-          />
+          <TextArea autoSize={{ minRows: 5 }} showCount maxLength={3000} placeholder="Registration description" />
         </Form.Item>
         <PickJobPositionFormContainer form={form} />
       </Form>

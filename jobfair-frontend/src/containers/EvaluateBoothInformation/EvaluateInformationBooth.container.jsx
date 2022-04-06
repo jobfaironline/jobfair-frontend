@@ -18,13 +18,7 @@ const EvaluateInformationBoothContainer = () => {
 
   const fetchData = async () => {
     if (jobFairId !== undefined) {
-      getRegistrationByJobFairId(
-        jobFairId,
-        currentPage,
-        pageSize,
-        'createDate',
-        'DESC'
-      )
+      getRegistrationByJobFairId(jobFairId, currentPage, pageSize, 'createDate', 'DESC')
         .then(async res => {
           const result = await Promise.all(
             res.data.content.map(async (item, index) => {

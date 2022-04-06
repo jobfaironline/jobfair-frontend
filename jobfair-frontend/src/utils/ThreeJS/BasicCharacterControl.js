@@ -1,16 +1,7 @@
 import * as THREE from 'three'
 
 export default class BasicCharacterControl {
-  constructor({
-    input,
-    animations,
-    target,
-    mixer,
-    thirdPersonCamera,
-    collidableMeshListRef,
-    zoom,
-    geckoClientRef
-  }) {
+  constructor({ input, animations, target, mixer, thirdPersonCamera, collidableMeshListRef, zoom, geckoClientRef }) {
     this.animations = animations
     this.target = target
     this.mixer = mixer
@@ -79,8 +70,7 @@ export default class BasicCharacterControl {
     )
     frameDecceleration.multiplyScalar(characterTime)
     frameDecceleration.z =
-      Math.sign(frameDecceleration.z) *
-      Math.min(Math.abs(frameDecceleration.z), Math.abs(velocity.z))
+      Math.sign(frameDecceleration.z) * Math.min(Math.abs(frameDecceleration.z), Math.abs(velocity.z))
 
     velocity.add(frameDecceleration)
 

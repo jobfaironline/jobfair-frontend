@@ -21,8 +21,7 @@ const EmployeeTable = () => {
 
         const newValues = data.map((employee, index) => {
           const { firstname, middlename, lastname } = employee.account
-          const fullName =
-            firstname + ' ' + (middlename ? middlename + ' ' : '') + lastname
+          const fullName = firstname + ' ' + (middlename ? middlename + ' ' : '') + lastname
 
           return {
             id: employee.account.id,

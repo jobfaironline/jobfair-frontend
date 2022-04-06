@@ -24,15 +24,7 @@ export default SunflowerForm => {
     console.log('submitted: ', values)
   }
 
-  const {
-    form,
-    current,
-    gotoStep,
-    stepsProps,
-    formProps,
-    submit,
-    formLoading
-  } = useStepsForm({
+  const { form, current, gotoStep, stepsProps, formProps, submit, formLoading } = useStepsForm({
     async submit(values) {
       await new Promise(r => setTimeout(r, 1000))
       return 'ok'

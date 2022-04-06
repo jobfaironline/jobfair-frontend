@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { Button, Empty, Input, Space, Spin, Table } from 'antd'
-import SearchOutlined from '@ant-design/icons/SearchOutlined'
-import Highlighter from 'react-highlight-words'
+import { Empty, Spin, Table } from 'antd'
 import JobFairForAdminColumn from './JobFairForAdmin.column'
+import getColumnSearchProps from '../TableSearchComponent/TableSearchComponent.component'
 import { handleGetStatus } from '../../utils/common'
 
 const JobFairForAdminComponent = props => {

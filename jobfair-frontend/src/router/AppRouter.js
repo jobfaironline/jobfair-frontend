@@ -35,13 +35,7 @@ import CompanyRegistrationDetailPage from '../pages/CompanyRegistrationDetailPag
 import JobFairAttendantListPage from '../pages/JobFairAttendantListPage-remove/JobFairAttendantListPage'
 import PublicRouter from './components/PublicRouter'
 import ErrorPage from '../pages/ErrorPage/ErrorPage'
-import {
-  PATH,
-  PATH_ADMIN,
-  PATH_ATTENDANT,
-  PATH_COMPANY_EMPLOYEE,
-  PATH_COMPANY_MANAGER
-} from '../constants/Paths/Path'
+import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path'
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
 import PublicizeJobFairDetailPage from '../pages/JobFairDetailPage/PublicizeJobFairDetailPage'
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage'
@@ -104,18 +98,8 @@ const AppRouter = () => {
         <Route path={PATH.RESULT_SUCCESS_PAGE} exact>
           <ResultSuccessPage />
         </Route>
-        <PublicRouter
-          key={PATH.LOGIN_PAGE}
-          component={() => <LoginPage />}
-          path={PATH.LOGIN_PAGE}
-          exact
-        />
-        <PublicRouter
-          key={PATH.REGISTER_PAGE}
-          component={() => <RegisterPage />}
-          path={PATH.REGISTER_PAGE}
-          exact
-        />
+        <PublicRouter key={PATH.LOGIN_PAGE} component={() => <LoginPage />} path={PATH.LOGIN_PAGE} exact />
+        <PublicRouter key={PATH.REGISTER_PAGE} component={() => <RegisterPage />} path={PATH.REGISTER_PAGE} exact />
         <PublicRouter
           key={PATH.FORGOT_PASSWORD_PAGE}
           component={() => <ForgotPasswordPage />}

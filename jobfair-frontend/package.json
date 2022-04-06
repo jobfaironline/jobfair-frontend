@@ -63,7 +63,7 @@
   },
   "scripts": {
     "lint": "eslint './src/**/*.{js,jsx}'",
-    "lint:fix": "eslint --fix --ext .js,.jsx src/",
+    "lint:fix": "eslint --quiet --fix --ext .js,.jsx src/",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

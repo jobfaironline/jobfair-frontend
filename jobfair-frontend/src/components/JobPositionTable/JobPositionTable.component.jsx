@@ -1,9 +1,8 @@
 import React, { Fragment, useState } from 'react'
 // import { defaultColumns, editableColumns } from './columns-type';
-import { Button, Empty, Input, Space, Spin, Table } from 'antd'
-import Highlighter from 'react-highlight-words'
-import SearchOutlined from '@ant-design/icons/SearchOutlined'
+import { Empty, Spin, Table } from 'antd'
 import JobPositionTableColumn from './JobPositionTable.column'
+import getColumnSearchProps from '../TableSearchComponent/TableSearchComponent.component'
 import { convertEnumToString } from '../../utils/common'
 
 const FormTable = ({ extra, data, ...otherTableProps }) => {

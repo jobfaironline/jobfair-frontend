@@ -14,10 +14,7 @@ const DecorateBoothPage = () => {
   })
   return (
     <div className={'page'}>
-      <DecorateBoothContainer
-        companyBoothId={companyBoothId}
-        jobFairId={jobFairId}
-      />
+      <DecorateBoothContainer companyBoothId={companyBoothId} jobFairId={jobFairId} />
     </div>
   )
 }

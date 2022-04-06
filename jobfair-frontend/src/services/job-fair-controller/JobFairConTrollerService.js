@@ -47,8 +47,7 @@ export const getAllJobFairAPI = (pageNumber, pageSize, sortBy, direction) =>
       sortBy: sortBy
     }
   )
-export const evaluateJobFairPlanAPI = body =>
-  CallAPI(`${ENDPOINT_JOB_FAIR}/evaluate`, 'POST', body)
+export const evaluateJobFairPlanAPI = body => CallAPI(`${ENDPOINT_JOB_FAIR}/evaluate`, 'POST', body)
 export const getJobFairAvailableForAttendant = (offset, pageSize) =>
   CallAPI(
     `${ENDPOINT_GET_JOB_FAIR_FOR_ATTENDANT}?filterStatus=HAPPENING&filterStatus=REGISTRABLE`,
@@ -104,5 +103,4 @@ export const getJobFairIncomingForAdmin = (offset, pageSize) =>
     }
   )
 
-export const getJobFairPlanById = id =>
-  CallAPI(`${ENDPOINT_JOB_FAIR}/${id}`, 'GET')
+export const getJobFairPlanById = id => CallAPI(`${ENDPOINT_JOB_FAIR}/${id}`, 'GET')

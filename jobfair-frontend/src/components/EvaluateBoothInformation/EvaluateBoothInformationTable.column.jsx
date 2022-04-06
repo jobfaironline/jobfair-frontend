@@ -102,18 +102,13 @@ const defaultColumns = getColumnSearchProps => {
             }
             break
         }
-        return (
-          <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
-        )
+        return <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
       }
     }
   ]
 }
 
-const EvaluateBoothInformationTableColumn = (
-  getColumnSearchProps,
-  jobFairId
-) => {
+const EvaluateBoothInformationTableColumn = (getColumnSearchProps, jobFairId) => {
   if (jobFairId !== undefined) {
     return defaultColumns(getColumnSearchProps)
   } else {
@@ -223,9 +218,7 @@ const EvaluateBoothInformationTableColumn = (
               }
               break
           }
-          return (
-            <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
-          )
+          return <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>
         }
       }
     ]

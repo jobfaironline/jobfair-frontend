@@ -12,9 +12,7 @@ export const ChooseBoothPageContainer = props => {
   })
 
   useEffect(async () => {
-    const data = await getLayoutAndAvailableSlotByJobFairId(jobFairId).then(
-      response => response.data
-    )
+    const data = await getLayoutAndAvailableSlotByJobFairId(jobFairId).then(response => response.data)
     const url = data.url
 
     const glb = await loadGLBModel(url)
@@ -44,19 +42,8 @@ export const ChooseBoothPageContainer = props => {
           alignItems: 'center'
         }}
       >
-        <ReactLoading
-          type={'spin'}
-          color={'#1890ff'}
-          height={100}
-          width={100}
-        />
+        <ReactLoading type={'spin'} color={'#1890ff'} height={100} width={100} />
       </div>
     )
-  return (
-    <ChooseBoothCanvas
-      mesh={state.glbMesh}
-      boothData={state.boothData}
-      jobFairId={jobFairId}
-    />
-  )
+  return <ChooseBoothCanvas mesh={state.glbMesh} boothData={state.boothData} jobFairId={jobFairId} />
 }

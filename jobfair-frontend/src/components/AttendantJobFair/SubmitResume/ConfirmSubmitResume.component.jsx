@@ -49,19 +49,10 @@ const ConfirmSubmitResumeComponent = props => {
           rules={ApplicationValidation.summary}
           style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
         >
-          <TextArea
-            placeholder="Summary"
-            showCount
-            maxLength={1000}
-            autoSize={{ minRows: 5 }}
-          />
+          <TextArea placeholder="Summary" showCount maxLength={1000} autoSize={{ minRows: 5 }} />
         </Form.Item>
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            style={{ position: 'absolute', right: '0' }}
-          >
+          <Button type="primary" htmlType="submit" style={{ position: 'absolute', right: '0' }}>
             Apply
           </Button>
         </Form.Item>

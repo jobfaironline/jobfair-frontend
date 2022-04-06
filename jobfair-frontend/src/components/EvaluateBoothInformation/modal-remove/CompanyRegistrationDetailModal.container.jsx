@@ -3,19 +3,12 @@ import { notification } from 'antd'
 import CompanyRegistrationDetailModalComponent from './CompanyRegistrationDetailModal.component'
 import { getCompanyProfileAPI } from '../../../services/company-controller/CompanyControllerService'
 
-const CompanyRegistrationDetailModalContainer = ({
-  registrationId,
-  visible,
-  setModalVisible,
-  registrationList
-}) => {
+const CompanyRegistrationDetailModalContainer = ({ registrationId, visible, setModalVisible, registrationList }) => {
   const [registrationDetail, setRegistrationDetail] = useState({})
   const [companyName, setCompanyName] = useState('')
 
   const fetchData = async () => {
-    const registration = registrationList?.find(
-      item => item.id === registrationId
-    )
+    const registration = registrationList?.find(item => item.id === registrationId)
     setRegistrationDetail(registration)
     const companyId = registration?.companyId
     // eslint-disable-next-line no-unused-expressions
@@ -53,10 +46,7 @@ const CompanyRegistrationDetailModalContainer = ({
       description: registrationDetail?.description,
       companyName: companyName,
       registrationJobPositions: () => {
-        if (
-          registrationDetail !== undefined &&
-          registrationDetail.registrationJobPositions !== undefined
-        ) {
+        if (registrationDetail !== undefined && registrationDetail.registrationJobPositions !== undefined) {
           return [...registrationDetail.registrationJobPositions]
         } else {
           return []

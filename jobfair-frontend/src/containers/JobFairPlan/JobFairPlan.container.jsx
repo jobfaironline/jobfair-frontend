@@ -23,21 +23,11 @@ const JobFairPlanContainer = () => {
         const dataSet = res.data.content.map(item => {
           return {
             ...item,
-            attendantRegisterStartTime: convertToDateString(
-              item.attendantRegisterStartTime
-            ),
-            companyBuyBoothEndTime: convertToDateString(
-              item.companyBuyBoothEndTime
-            ),
-            companyBuyBoothStartTime: convertToDateString(
-              item.companyBuyBoothStartTime
-            ),
-            companyRegisterEndTime: convertToDateString(
-              item.companyRegisterEndTime
-            ),
-            companyRegisterStartTime: convertToDateString(
-              item.companyRegisterStartTime
-            ),
+            attendantRegisterStartTime: convertToDateString(item.attendantRegisterStartTime),
+            companyBuyBoothEndTime: convertToDateString(item.companyBuyBoothEndTime),
+            companyBuyBoothStartTime: convertToDateString(item.companyBuyBoothStartTime),
+            companyRegisterEndTime: convertToDateString(item.companyRegisterEndTime),
+            companyRegisterStartTime: convertToDateString(item.companyRegisterStartTime),
             endTime: convertToDateString(item.endTime),
             startTime: convertToDateString(item.startTime)
           }

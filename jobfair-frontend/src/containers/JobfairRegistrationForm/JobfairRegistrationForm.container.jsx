@@ -60,19 +60,13 @@ const JobfairRegistrationForm = props => {
     </>,
     <>
       <PolicyComponent />
-      <Checkbox
-        checked={agreeStatus}
-        onChange={e => setAgreeStatus(e.target.checked)}
-      >
+      <Checkbox checked={agreeStatus} onChange={e => setAgreeStatus(e.target.checked)}>
         I have read and accept the Job fair Policy
       </Checkbox>
     </>,
     <JobfairRegistrationFormComponent form={form} jobFairId={jobFairId} />,
     <>
-      <ConfirmContainer
-        data={form.getFieldsValue(true)}
-        companyInfo={companyInfo}
-      />
+      <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
     </>
   ]
 
@@ -116,10 +110,7 @@ const JobfairRegistrationForm = props => {
 
   return (
     <div>
-      <div
-        className="jobfair-registration-form-container"
-        style={{ background: '#FFF' }}
-      >
+      <div className="jobfair-registration-form-container" style={{ background: '#FFF' }}>
         <Steps
           current={currentStep}
           style={{
@@ -184,11 +175,7 @@ const JobfairRegistrationForm = props => {
                     Next
                   </Button>
                 ) : (
-                  <Button
-                    size="large"
-                    type="primary"
-                    onClick={nextStepButtonActions(currentStep)}
-                  >
+                  <Button size="large" type="primary" onClick={nextStepButtonActions(currentStep)}>
                     Next
                   </Button>
                 )}
@@ -233,11 +220,7 @@ const getCompanyProfile = async (companyId, setCompanyInfo) => {
     })
 }
 
-const submitRegistration = async (
-  companyRegistrationId,
-  successCallback,
-  failedCallback
-) => {
+const submitRegistration = async (companyRegistrationId, successCallback, failedCallback) => {
   try {
     const res = await submitRegistrationAPI(companyRegistrationId)
     notification['success']({

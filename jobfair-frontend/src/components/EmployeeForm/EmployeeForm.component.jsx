@@ -18,10 +18,7 @@ const genderType = [
 
 const EmployeeForm = ({ form, onFinish }) => {
   return (
-    <Card
-      title="Create employee account form"
-      style={{ width: '40%', margin: '3rem auto' }}
-    >
+    <Card title="Create employee account form" style={{ width: '40%', margin: '3rem auto' }}>
       <Form
         {...formItemLayout}
         form={form}
@@ -32,11 +29,7 @@ const EmployeeForm = ({ form, onFinish }) => {
         labelCol={21}
         wrapperCol={21}
       >
-        <Form.Item
-          name="email"
-          label="E-mail"
-          rules={EmployeeRegisterValidation.email}
-        >
+        <Form.Item name="email" label="E-mail" rules={EmployeeRegisterValidation.email}>
           <Input placeholder="Enter your email" />
         </Form.Item>
 
@@ -93,12 +86,7 @@ const EmployeeForm = ({ form, onFinish }) => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 21 }}>
-          <Popconfirm
-            title="Are you sure？"
-            okText="Yes"
-            cancelText="No"
-            onConfirm={() => form.submit()}
-          >
+          <Popconfirm title="Are you sure？" okText="Yes" cancelText="No" onConfirm={() => form.submit()}>
             <Button type="primary" htmlType="submit">
               Register
             </Button>

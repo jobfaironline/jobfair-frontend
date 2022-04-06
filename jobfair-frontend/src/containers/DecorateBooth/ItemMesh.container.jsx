@@ -29,22 +29,14 @@ export const ItemMeshContainer = props => {
         event.ray.intersectPlane(floorPlane, planeIntersectPoint)
 
         //calculate new item position on plane
-        const { x_range: floor_x_range, z_range: floor_z_range } =
-          calculateMeshDimensionRange(floorMesh)
-        const {
-          length: item_length,
-          width: item_width,
-          height: item_height
-        } = calculateMeshSize(mesh)
+        const { x_range: floor_x_range, z_range: floor_z_range } = calculateMeshDimensionRange(floorMesh)
+        const { length: item_length, width: item_width, height: item_height } = calculateMeshSize(mesh)
         const { x, y, z } = calculatePositionWithBoundary({
           x: planeIntersectPoint.x,
           y: mesh.position.y,
           z: planeIntersectPoint.z,
           x_range: floor_x_range,
-          y_range: [
-            mesh.position.y + item_height / 2,
-            mesh.position.y + item_height / 2
-          ],
+          y_range: [mesh.position.y + item_height / 2, mesh.position.y + item_height / 2],
           z_range: floor_z_range,
           length: item_length,
           width: item_width,

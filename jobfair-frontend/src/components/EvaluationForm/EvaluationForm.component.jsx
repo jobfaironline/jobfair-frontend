@@ -47,27 +47,25 @@ const EvaluationFormComponent = ({ onFinish, id, name }) => {
                     </Button>
                   </div>
                 ))
-              : EvaluateConst.filter(item => item.id !== 'REQUEST_CHANGE').map(
-                  item => (
-                    <div key={item.id}>
-                      <Form.Item name="status" noStyle>
-                        <Input type="text" type="hidden" />
-                      </Form.Item>
-                      <Button
-                        value={item.id}
-                        type="primary"
-                        htmlType="submit"
-                        onClick={() => {
-                          form.setFieldsValue({
-                            status: item.id
-                          })
-                        }}
-                      >
-                        {item.name}
-                      </Button>
-                    </div>
-                  )
-                )}
+              : EvaluateConst.filter(item => item.id !== 'REQUEST_CHANGE').map(item => (
+                  <div key={item.id}>
+                    <Form.Item name="status" noStyle>
+                      <Input type="text" type="hidden" />
+                    </Form.Item>
+                    <Button
+                      value={item.id}
+                      type="primary"
+                      htmlType="submit"
+                      onClick={() => {
+                        form.setFieldsValue({
+                          status: item.id
+                        })
+                      }}
+                    >
+                      {item.name}
+                    </Button>
+                  </div>
+                ))}
           </Space>
         </Space>
       </Form>

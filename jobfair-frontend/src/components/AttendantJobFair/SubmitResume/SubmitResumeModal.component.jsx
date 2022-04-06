@@ -68,11 +68,7 @@ export const SubmitResumeModalComponent = props => {
             </div>
           </div>
           <Divider style={{ margin: '1rem 0' }} />
-          <ConfirmSubmitResumeComponent
-            jobPosition={jobPosition}
-            resume={selectedResume}
-            closeModal={closeModal}
-          />
+          <ConfirmSubmitResumeComponent jobPosition={jobPosition} resume={selectedResume} closeModal={closeModal} />
         </>
       )}
     </div>

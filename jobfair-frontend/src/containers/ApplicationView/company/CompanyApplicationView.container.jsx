@@ -5,10 +5,7 @@ import { EyeOutlined } from '@ant-design/icons'
 import ApplicationTable from '../../../components/ApplicationView/ApplicationTable.component'
 import { getAllApplication } from '../../../services/application-controller/ApplicationControllerService'
 import PaginationComponent from '../../../components/PaginationComponent/Pagination.component'
-import {
-  PATH_COMPANY_EMPLOYEE,
-  PATH_COMPANY_MANAGER
-} from '../../../constants/Paths/Path'
+import { PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path'
 import { COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../../constants/RoleType'
 // eslint-disable-next-line no-unused-vars
 const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
@@ -22,12 +19,7 @@ const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
   const [jobFairSearchValue, setJobfairSearchValue] = useState('')
   const [jobPositionSearchValue, setJobPositionSearchValue] = useState('')
 
-  const fetchData = async (
-    currentPage,
-    pageSize,
-    jobFairSearchValue,
-    jobPositionSearchValue
-  ) => {
+  const fetchData = async (currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue) => {
     const testStatus = filterStatus(tabStatus)
     try {
       const res = await getAllApplication(
@@ -122,9 +114,7 @@ const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
                 return (
                   <Space size="middle">
                     <Tooltip placement="top" title="View detail">
-                      <a
-                        onClick={() => handleViewResumeDetail(record.id, role)}
-                      >
+                      <a onClick={() => handleViewResumeDetail(record.id, role)}>
                         <EyeOutlined />
                       </a>
                     </Tooltip>
@@ -134,14 +124,8 @@ const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
             }
           ]}
         />
-        <Space
-          style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}
-        >
-          <PaginationComponent
-            data={applicationData}
-            handlePageChange={handlePageChange}
-            totalRecord={totalRecord}
-          />
+        <Space style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}>
+          <PaginationComponent data={applicationData} handlePageChange={handlePageChange} totalRecord={totalRecord} />
         </Space>
       </div>
     </div>

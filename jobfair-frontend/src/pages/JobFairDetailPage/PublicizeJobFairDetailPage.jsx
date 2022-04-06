@@ -9,12 +9,7 @@ const PublicizeJobFairDetailPage = () => {
   const history = useHistory()
   return (
     <div className="page" style={{ marginTop: 50 }}>
-      <PageHeader
-        className="site-page-header"
-        onBack={() => history.goBack()}
-        title="Job fair detail"
-        subTitle=""
-      />
+      <PageHeader className="site-page-header" onBack={() => history.goBack()} title="Job fair detail" subTitle="" />
       <JobFairDetailCompanyContainer id={jobFairId} />
     </div>
   )

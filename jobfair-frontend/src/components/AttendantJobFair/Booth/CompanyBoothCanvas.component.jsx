@@ -84,19 +84,9 @@ export const CompanyBoothCanvasComponent = props => {
             zoom={zoom}
           />
         ) : (
-          <OrbitControls
-            enableZoom={true}
-            maxPolarAngle={Math.PI / 2 - Math.PI / 10}
-            minPolarAngle={0}
-          />
+          <OrbitControls enableZoom={true} maxPolarAngle={Math.PI / 2 - Math.PI / 10} minPolarAngle={0} />
         )}
-        <Stage
-          adjustCamera={false}
-          preset="rembrandt"
-          intensity={0.4}
-          environment="city"
-          contactShadow={false}
-        >
+        <Stage adjustCamera={false} preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
           <group ref={sceneMeshRef}>
             {boothMesh.children.map(child => {
               if (child.name === 'rostrum' || child.name === 'reception_desk') {
@@ -130,13 +120,7 @@ export const CompanyBoothCanvasComponent = props => {
             <AiCharacter state={u} />
           ))}
         </Stage>
-        <ContactShadows
-          frames={10}
-          position={[0, -1.05, 0]}
-          scale={10}
-          blur={2}
-          far={10}
-        />
+        <ContactShadows frames={10} position={[0, -1.05, 0]} scale={10} blur={2} far={10} />
         <EffectComposer multisampling={8} autoClear={false}>
           <Outline
             selection={isHover ? resumeSubmitRef : undefined}

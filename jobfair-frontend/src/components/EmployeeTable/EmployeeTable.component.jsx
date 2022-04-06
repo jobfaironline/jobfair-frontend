@@ -1,8 +1,6 @@
 import React, { Fragment, useState } from 'react'
 // import { defaultColumns, editableColumns } from './columns-type';
-import { Button, Input, Space, Table } from 'antd'
-import Highlighter from 'react-highlight-words'
-import SearchOutlined from '@ant-design/icons/SearchOutlined'
+import { Table } from 'antd'
 import EmployeeTableColumn from './EmployeeTable.column'
 import getColumnSearchProps from '../TableSearchComponent/TableSearchComponent.component'
 

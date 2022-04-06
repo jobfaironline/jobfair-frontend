@@ -34,9 +34,7 @@ const JobFairListHistoryContainer = () => {
             companyId: item.companyId,
             startTime: convertToDateString(item.jobFair.startTime),
             endTime: convertToDateString(item.jobFair.endTime),
-            companyRegisterStartTime: convertToDateString(
-              item.jobFair.companyRegisterStartTime
-            ),
+            companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime),
             description: item.jobFair.description,
             layoutId: item.jobFair.layoutId,
             thumbnail: item.jobFair.thumbnail,

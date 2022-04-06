@@ -1,11 +1,6 @@
 import React from 'react'
 import { Col, Row, Space, Typography } from 'antd'
-import {
-  ManOutlined,
-  ProjectOutlined,
-  ReadFilled,
-  SmileOutlined
-} from '@ant-design/icons'
+import { ManOutlined, ProjectOutlined, ReadFilled, SmileOutlined } from '@ant-design/icons'
 
 const OverviewComponent = props => {
   const { Title, Text } = Typography

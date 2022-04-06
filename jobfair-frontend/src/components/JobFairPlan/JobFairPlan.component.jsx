@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { Button, Input, Space, Spin, Table } from 'antd'
-import SearchOutlined from '@ant-design/icons/SearchOutlined'
-import Highlighter from 'react-highlight-words'
+import { Spin, Table } from 'antd'
+import getColumnSearchProps from '../TableSearchComponent/TableSearchComponent.component'
 import JobFairListColumn from '../JobFairList/JobFairList.column'
 
 const JobFairPlanComponent = ({ data, extra }) => {

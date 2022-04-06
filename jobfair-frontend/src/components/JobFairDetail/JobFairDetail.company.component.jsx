@@ -16,11 +16,7 @@ const JobFairDetailCompanyComponent = props => {
   return (
     <>
       {data ? (
-        <Card
-          title="Job fair detail"
-          bordered={true}
-          headStyle={{ textAlign: 'center' }}
-        >
+        <Card title="Job fair detail" bordered={true} headStyle={{ textAlign: 'center' }}>
           <Space direction="vertical">
             <Space size="middle" direction="vertical">
               <Row>

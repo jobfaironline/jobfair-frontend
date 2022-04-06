@@ -6,10 +6,7 @@ const MeshFamilyComponent = props => {
   return (
     <>
       <MeshComponent prop={meshData} />;
-      {meshData.childres &&
-        meshData.childres.map((mesh, index) => (
-          <MeshFamilyComponent key={index} meshData={mesh} />
-        ))}
+      {meshData.childres && meshData.childres.map((mesh, index) => <MeshFamilyComponent key={index} meshData={mesh} />)}
     </>
   )
 }

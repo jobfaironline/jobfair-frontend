@@ -1,8 +1,7 @@
 import React, { Fragment, useState } from 'react'
 // import { defaultColumns, editableColumns } from './columns-type';
-import { Button, Input, Space, Table } from 'antd'
-import Highlighter from 'react-highlight-words'
-import SearchOutlined from '@ant-design/icons/SearchOutlined'
+import getColumnSearchProps from '../TableSearchComponent/TableSearchComponent.component'
+import { Table } from 'antd'
 import ApplicationTableColumn from './ApplicationTable.column'
 
 const ApplicationTable = ({ applicationData, extra }) => {

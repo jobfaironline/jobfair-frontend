@@ -11,14 +11,15 @@ const CommonTableContainer = ({ onSearch, tableColumns, ...otherTableProps }) =>
     ? tableColumns(getColumnSearchProps(searchText, setSearchText, searchedColumn, setSearchedColumn))
     : tableColumns()
 
-    useEffect(() => {
-        const searchObject[searchedColumn] = searchText
-        onSearch(searchObject)
-    }, [searchText, searchedColumn]);
+  useEffect(() => {
+    const searchObject = {}
+    searchObject[searchedColumn] = searchText
+    onSearch(searchObject)
+  }, [searchText, searchedColumn, onSearch])
 
   return (
     <Fragment>
-      <DefaultTableComponent defaultColumns={defaultColumns} {...otherTableProps}>
+      <DefaultTableComponent defaultColumns={defaultColumns} {...otherTableProps} />
     </Fragment>
   )
 }

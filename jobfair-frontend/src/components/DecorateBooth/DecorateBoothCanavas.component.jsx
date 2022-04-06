@@ -11,9 +11,7 @@ import { FloorMeshContainer } from '../../containers/DecorateBooth/FloorMesh.con
 export const DecorateBoothCanvas = React.forwardRef((props, ref) => {
   const { modelItems, handleAdd } = props
   const ContextBridge = useContextBridge(ReactReduxContext)
-  const { hoverItem, selectedItem, mode } = useSelector(
-    state => state.decorateBooth
-  )
+  const { hoverItem, selectedItem, mode } = useSelector(state => state.decorateBooth)
 
   const calculateOutlineMesh = () => {
     const result = []
@@ -39,31 +37,13 @@ export const DecorateBoothCanvas = React.forwardRef((props, ref) => {
     >
       <ContextBridge>
         <CameraControls enabled={mode !== ModeConstant.DRAGGING} />
-        <Stage
-          adjustCamera={false}
-          preset="rembrandt"
-          intensity={0.4}
-          environment="city"
-          contactShadow={false}
-        >
+        <Stage adjustCamera={false} preset="rembrandt" intensity={0.4} environment="city" contactShadow={false}>
           <group dispose={null} ref={ref}>
             {modelItems.map(mesh => {
               if (mesh === floorMesh) {
-                return (
-                  <FloorMeshContainer
-                    key={mesh.uuid}
-                    mesh={mesh}
-                    handleAdd={handleAdd}
-                  />
-                )
+                return <FloorMeshContainer key={mesh.uuid} mesh={mesh} handleAdd={handleAdd} />
               }
-              return (
-                <ItemMeshContainer
-                  key={mesh.uuid}
-                  mesh={mesh}
-                  floorMesh={floorMesh}
-                />
-              )
+              return <ItemMeshContainer key={mesh.uuid} mesh={mesh} floorMesh={floorMesh} />
             })}
           </group>
         </Stage>

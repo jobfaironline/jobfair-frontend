@@ -11,9 +11,7 @@ export default class ThirdPersonCamera {
 
   calculateIdealLookAt() {
     const idealLookAt = new THREE.Vector3(0, 0, 0)
-    idealLookAt.applyQuaternion(
-      new THREE.Quaternion().setFromEuler(this._params.target.rotation)
-    )
+    idealLookAt.applyQuaternion(new THREE.Quaternion().setFromEuler(this._params.target.rotation))
     idealLookAt.add(this._params.target.position)
     idealLookAt.y += this._height
     return idealLookAt

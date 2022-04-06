@@ -1,27 +1,20 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { Button, notification, Space, Typography, Upload } from 'antd'
-import {
-  getJobPositionsAPI,
-  uploadCSVFile
-} from '../../../services/job-controller/JobControllerService'
+import { getJobPositionsAPI, uploadCSVFile } from '../../../services/job-controller/JobControllerService'
 import { getEmployeesAPI } from '../../../services/company-employee-controller/CompanyEmployeeControllerService'
 import { useSelector } from 'react-redux'
 import { PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path'
 import { useHistory } from 'react-router-dom'
 import PaginationComponent from '../../PaginationComponent/Pagination.component'
 import JobPositionTable from '../../JobPositionTable/JobPositionTable.component'
-import {
-  handleCreateListEmailFromListAccount,
-  handleCreateListNameFromListAccount
-} from '../../../utils/common'
+import { handleCreateListEmailFromListAccount, handleCreateListNameFromListAccount } from '../../../utils/common'
 import { UploadOutlined } from '@ant-design/icons'
 
 const JobPositionManagementContainer = () => {
   const companyId = useSelector(state => state?.authentication?.user?.companyId)
   const [data, setData] = useState([])
   const [forceRerenderState, setForceRerenderState] = useState(false)
-  const [listContactPersonSuggestion, setListContactPersonSuggestion] =
-    useState([])
+  const [listContactPersonSuggestion, setListContactPersonSuggestion] = useState([])
   const [listEmailSuggestion, setListEmailSuggestion] = useState([])
   //pagination
   const [totalRecord, setTotalRecord] = useState(0)
@@ -52,9 +45,7 @@ const JobPositionManagementContainer = () => {
   useEffect(() => {
     getEmployeesAPI(companyId)
       .then(res => {
-        setListContactPersonSuggestion(
-          handleCreateListNameFromListAccount(res.data)
-        )
+        setListContactPersonSuggestion(handleCreateListNameFromListAccount(res.data))
         setListEmailSuggestion(handleCreateListEmailFromListAccount(res.data))
       })
       .catch(() => {
@@ -169,14 +160,8 @@ const JobPositionManagementContainer = () => {
             }
           }}
         />
-        <Space
-          style={{ margin: '1rem 0', display: 'flex', justifyContent: 'end' }}
-        >
-          <PaginationComponent
-            data={data}
-            handlePageChange={handlePageChange}
-            totalRecord={totalRecord}
-          />
+        <Space style={{ margin: '1rem 0', display: 'flex', justifyContent: 'end' }}>
+          <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={totalRecord} />
         </Space>
       </div>
     </div>

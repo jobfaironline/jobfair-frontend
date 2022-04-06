@@ -78,27 +78,18 @@ const JobFairOccurredContainer = () => {
             return (
               <Space size="middle">
                 <Tooltip placement="top" title="View detail">
-                  <a
-                    onClick={() => handleViewModal(record.id, record.creatorId)}
-                  >
+                  <a onClick={() => handleViewModal(record.id, record.creatorId)}>
                     <MoreOutlined />
                   </a>
                 </Tooltip>
-                <ViewRegistrationButtonComponent
-                  status={record.status}
-                  id={record.id}
-                />
+                <ViewRegistrationButtonComponent status={record.status} id={record.id} />
               </Space>
             )
           }
         }}
       />
       <div style={{ display: 'flex', justifyContent: 'end', padding: '1rem' }}>
-        <PaginationComponent
-          data={data}
-          handlePageChange={handlePageChange}
-          totalRecord={totalElements}
-        />
+        <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={totalElements} />
       </div>
     </>
   )

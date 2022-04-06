@@ -1,8 +1,6 @@
-import React, { Fragment, useState } from 'react'
-// import { defaultColumns, editableColumns } from './columns-type';
+import React, { Fragment } from 'react'
 import PaginationComponent from '../PaginationComponent/Pagination.component'
 import { Table, Space } from 'antd'
-import getColumnSearchProps from '../TableSearchComponent/TableSearchComponent.component'
 
 const DefaultTableComponent = ({ tableData, defaultColumns, extra, paginationObject }) => {
   const { handlePageChange, totalRecord } = paginationObject
