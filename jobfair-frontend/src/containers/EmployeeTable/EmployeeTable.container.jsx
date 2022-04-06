@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import EmployeeTableComponent from '../../components/EmployeeTable/EmployeeTable.component'
 import EmployeeDrawer from '../../containers/EmployeeDrawer/EmployeeDrawer.container'
 import {
   deleteEmployeeAPI,
@@ -7,8 +6,17 @@ import {
 } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
 import { Button, notification, Popconfirm, Space } from 'antd'
 import { useSelector } from 'react-redux'
+import EmployeeTableColumn from '../../components/EmployeeTable/EmployeeTable.column'
+import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container'
 
 const EmployeeTable = () => {
+  //pagination
+  /* eslint-disable no-unused-vars */
+
+  const [totalRecord, setTotalRecord] = useState(0)
+  const [currentPage, setCurrentPage] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+  //
   const [employeeData, setEmployeeData] = useState([])
   const [drawerVisibility, setDrawerVisibility] = useState(false)
   const [neededEmployee, setNeededEmployee] = useState(null)
@@ -68,6 +76,58 @@ const EmployeeTable = () => {
     setNeededEmployee(employeeId)
   }
 
+  const handlePageChange = (page, pageSize) => {
+    if (page > 0) {
+      setCurrentPage(page - 1)
+    } else {
+      setCurrentPage(page)
+    }
+    setPageSize(pageSize)
+  }
+
+  const employeeTableProps = {
+    tableData: employeeData,
+    tableColumns: EmployeeTableColumn,
+    onSearch: () => {
+      //TODO: fetch data for search
+    },
+    extra: [
+      {
+        title: 'Actions',
+        key: 'action',
+        render: (text, record) => {
+          return (
+            <Space size="middle">
+              <a
+                onClick={() => {
+                  handleGetDetail(record.id)
+                }}
+              >
+                Detail
+              </a>
+              <Popconfirm
+                title="Are you sure？"
+                okText="Yes"
+                cancelText="No"
+                onConfirm={() => {
+                  handleDelete(record.id)
+                }}
+              >
+                <Button type="link" disabled={record.status === 'INACTIVE'}>
+                  Delete
+                </Button>
+              </Popconfirm>
+            </Space>
+          )
+        }
+      }
+    ],
+    paginationObject: {
+      handlePageChange,
+      totalRecord
+    }
+  }
+
   return (
     <div>
       {neededEmployee != null ? (
@@ -77,39 +137,12 @@ const EmployeeTable = () => {
           employeeId={neededEmployee}
         />
       ) : null}
-      <EmployeeTableComponent
+      {/*<EmployeeTableComponent
         employeeData={employeeData}
         editable
-        extra={{
-          title: 'Actions',
-          key: 'action',
-          render: (text, record) => {
-            return (
-              <Space size="middle">
-                <a
-                  onClick={() => {
-                    handleGetDetail(record.id)
-                  }}
-                >
-                  Detail
-                </a>
-                <Popconfirm
-                  title="Are you sure？"
-                  okText="Yes"
-                  cancelText="No"
-                  onConfirm={() => {
-                    handleDelete(record.id)
-                  }}
-                >
-                  <Button type="link" disabled={record.status == 'INACTIVE'}>
-                    Delete
-                  </Button>
-                </Popconfirm>
-              </Space>
-            )
-          }
-        }}
-      />
+        extra={}
+      />*/}
+      <CommonTableContainer {...employeeTableProps} />
     </div>
   )
 }

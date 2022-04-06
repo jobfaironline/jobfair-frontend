@@ -196,7 +196,7 @@ const ResumeDetailComponent = props => {
           references={references}
         />
       </Card>
-      {data.status == 'PENDING' ? (
+      {data.status === 'PENDING' ? (
         <div style={{ paddingBottom: '5rem' }}>
           <Card
             title="Evaluate this registration"

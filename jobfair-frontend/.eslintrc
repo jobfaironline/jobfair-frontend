@@ -26,7 +26,7 @@
         "singleQuote": true,
         "printWidth": 120,
         "jsxSingleQuote": false,
-        "endOfLine": "auto"
+        "endOfLine":"auto"
       }
     ],
     "no-unused-vars": [
@@ -39,6 +39,7 @@
     ],
     "no-console": "warn",
     "no-eval": "error",
-    "import/first": "error"
+    "import/first": "error",
+    "no-extra-boolean-cast": 0
   }
 }
