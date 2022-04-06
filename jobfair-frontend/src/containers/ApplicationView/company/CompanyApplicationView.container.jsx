@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { notification, Space, Tooltip, Input } from 'antd'
-import { MoreOutlined, EyeOutlined } from '@ant-design/icons'
+import { Input, notification, Space, Tooltip } from 'antd'
+import { EyeOutlined } from '@ant-design/icons'
 import ApplicationTable from '../../../components/ApplicationView/ApplicationTable.component'
 import { getAllApplication } from '../../../services/application-controller/ApplicationControllerService'
 import PaginationComponent from '../../../components/PaginationComponent/Pagination.component'
-import {PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER} from "../../../constants/Paths/Path";
-import {COMPANY_EMPLOYEE, COMPANY_MANAGER} from "../../../constants/RoleType";
-
-const { Search } = Input
-
+import {
+  PATH_COMPANY_EMPLOYEE,
+  PATH_COMPANY_MANAGER
+} from '../../../constants/Paths/Path'
+import { COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../../constants/RoleType'
+// eslint-disable-next-line no-unused-vars
 const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
   //pagination
   const [totalRecord, setTotalRecord] = useState(0)
@@ -21,7 +22,12 @@ const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
   const [jobFairSearchValue, setJobfairSearchValue] = useState('')
   const [jobPositionSearchValue, setJobPositionSearchValue] = useState('')
 
-  const fetchData = async (currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue) => {
+  const fetchData = async (
+    currentPage,
+    pageSize,
+    jobFairSearchValue,
+    jobPositionSearchValue
+  ) => {
     const testStatus = filterStatus(tabStatus)
     try {
       const res = await getAllApplication(
@@ -36,7 +42,11 @@ const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
       if (res.status != 204) {
         if (data) {
           setApplicationData(
-            data.content.map((item, index) => ({ ...item, key: item.id, no: index + data.number * data.size + 1 }))
+            data.content.map((item, index) => ({
+              ...item,
+              key: item.id,
+              no: index + data.number * data.size + 1
+            }))
           )
           setTotalRecord(data.totalElements)
         }
@@ -64,10 +74,14 @@ const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
   const handleViewResumeDetail = (resumeId, role) => {
     switch (role) {
       case COMPANY_MANAGER:
-        history.push(PATH_COMPANY_MANAGER.RESUME_DETAIL_PAGE, { resumeId: resumeId })
+        history.push(PATH_COMPANY_MANAGER.RESUME_DETAIL_PAGE, {
+          resumeId: resumeId
+        })
         break
       case COMPANY_EMPLOYEE:
-        history.push(PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE, {resumeId: resumeId})
+        history.push(PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE, {
+          resumeId: resumeId
+        })
         break
       default:
         return null
@@ -120,8 +134,14 @@ const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
             }
           ]}
         />
-        <Space style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}>
-          <PaginationComponent data={applicationData} handlePageChange={handlePageChange} totalRecord={totalRecord} />
+        <Space
+          style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}
+        >
+          <PaginationComponent
+            data={applicationData}
+            handlePageChange={handlePageChange}
+            totalRecord={totalRecord}
+          />
         </Space>
       </div>
     </div>

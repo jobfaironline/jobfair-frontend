@@ -11,7 +11,9 @@ export const PickJobPositionFormValidation = {
       ({ getFieldValue }) => ({
         validator(_, value) {
           const minValue = parseInt(value)
-          const maxValue = parseInt(getFieldValue('jobPositions')[name].maxSalary)
+          const maxValue = parseInt(
+            getFieldValue('jobPositions')[name].maxSalary
+          )
           if (!value || minValue > maxValue) {
             return Promise.reject(new Error('Invalid min salary.'))
           }
@@ -32,7 +34,9 @@ export const PickJobPositionFormValidation = {
       ({ getFieldValue }) => ({
         validator(_, value) {
           const maxValue = parseInt(value)
-          const minValue = parseInt(getFieldValue('jobPositions')[name].minSalary)
+          const minValue = parseInt(
+            getFieldValue('jobPositions')[name].minSalary
+          )
           if (!value) {
             return Promise.resolve()
           }
@@ -54,5 +58,8 @@ export const PickJobPositionFormValidation = {
       })
     ]
   },
-  numberOfPosition: [REQUIRED_VALIDATOR('Number of position'), NUMBER_RANGE_VALIDATOR(1, 10000)]
+  numberOfPosition: [
+    REQUIRED_VALIDATOR('Number of position'),
+    NUMBER_RANGE_VALIDATOR(1, 10000)
+  ]
 }

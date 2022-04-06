@@ -1,8 +1,11 @@
-import { Drawer, List, Avatar, Divider, Col, Row } from 'antd'
+import { Col, Divider, Drawer, Row } from 'antd'
 
 const DescriptionItem = ({ title, content }) => (
   <div className="site-description-item-profile-wrapper">
-    <p className="site-description-item-profile-p-label" style={{ display: 'inline' }}>
+    <p
+      className="site-description-item-profile-p-label"
+      style={{ display: 'inline' }}
+    >
       {title}:
     </p>
     <span>{' ' + content}</span>
@@ -25,12 +28,22 @@ const EmployeeDrawer = ({ visible, onClose, data }) => {
   }
 
   const { firstname, middlename, lastname } = data.account
-  const fullName = firstname + ' ' + (middlename ? middlename + ' ' : '') + lastname
+  const fullName =
+    firstname + ' ' + (middlename ? middlename + ' ' : '') + lastname
 
   return (
     <>
-      <Drawer width={640} placement="right" closable={false} onClose={onClose} visible={visible}>
-        <p className="site-description-item-profile-p" style={{ marginBottom: 24 }}>
+      <Drawer
+        width={640}
+        placement="right"
+        closable={false}
+        onClose={onClose}
+        visible={visible}
+      >
+        <p
+          className="site-description-item-profile-p"
+          style={{ marginBottom: 24 }}
+        >
           User Profile
         </p>
         <p className="site-description-item-profile-p">Account</p>
@@ -49,10 +62,16 @@ const EmployeeDrawer = ({ visible, onClose, data }) => {
         </Row>
         <Row>
           <Col span={12}>
-            <DescriptionItem title="Gender" content={mappingGender[data.account.gender]} />
+            <DescriptionItem
+              title="Gender"
+              content={mappingGender[data.account.gender]}
+            />
           </Col>
           <Col span={12}>
-            <DescriptionItem title="Role" content={mappingRole[data.account.role]} />
+            <DescriptionItem
+              title="Role"
+              content={mappingRole[data.account.role]}
+            />
           </Col>
         </Row>
         <Divider />
@@ -67,10 +86,16 @@ const EmployeeDrawer = ({ visible, onClose, data }) => {
         </Row>
         <Row>
           <Col span={12}>
-            <DescriptionItem title="Address" content={data.companyDTO.address} />
+            <DescriptionItem
+              title="Address"
+              content={data.companyDTO.address}
+            />
           </Col>
           <Col span={12}>
-            <DescriptionItem title="Description" content={data.companyDTO.companyDescription} />
+            <DescriptionItem
+              title="Description"
+              content={data.companyDTO.companyDescription}
+            />
           </Col>
         </Row>
       </Drawer>

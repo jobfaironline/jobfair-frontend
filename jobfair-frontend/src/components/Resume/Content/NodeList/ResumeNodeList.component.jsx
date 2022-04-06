@@ -1,5 +1,5 @@
 import React from 'react'
-import { Timeline, Typography, Col, Row } from 'antd'
+import { Col, Row, Timeline, Typography } from 'antd'
 
 const NodeListComponent = props => {
   const { listData, titleSize, subTitleSize } = props

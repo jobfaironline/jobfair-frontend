@@ -5,8 +5,9 @@ import { signInAPI } from '../../services/auth-controller/AuthControllerService'
 import { useDispatch } from 'react-redux'
 import { SigninHandler } from '../../redux-flow/authentication/authentication-action'
 import { useHistory } from 'react-router-dom'
-import {PATH, PATH_ADMIN, PATH_ATTENDANT} from '../../constants/Paths/Path'
-const LoginContainer = props => {
+import { PATH, PATH_ADMIN, PATH_ATTENDANT } from '../../constants/Paths/Path'
+
+const LoginContainer = () => {
   const [form] = Form.useForm()
   const dispatch = useDispatch()
   const history = useHistory()
@@ -36,7 +37,7 @@ const LoginContainer = props => {
             return
         }
       })
-      .catch(err => {
+      .catch(() => {
         notification['error']({
           message: `Login failed - Invalid email or password.`,
           duration: 1

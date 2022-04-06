@@ -1,13 +1,13 @@
-import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
-import {GLTFExporter} from 'three/examples/jsm/exporters/GLTFExporter'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter'
 import * as THREE from 'three'
-import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
-import {IMAGE_PLANE_NAME} from "../../constants/DecorateBoothConstant";
-import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
+import { IMAGE_PLANE_NAME } from '../../constants/DecorateBoothConstant'
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 
 const loader = new GLTFLoader()
-const dracoLoader = new DRACOLoader();
-loader.setDRACOLoader(dracoLoader);
+const dracoLoader = new DRACOLoader()
+loader.setDRACOLoader(dracoLoader)
 const exporter = new GLTFExporter()
 
 export async function loadGLBModel(url) {
@@ -21,14 +21,14 @@ export async function loadGLBModel(url) {
   })
 }
 
-export const parseModel = async (mesh) => {
+export const parseModel = async mesh => {
   return new Promise(resolve => {
     exporter.parse(
       mesh,
       // called when the gltf has been generated
       function (gltf) {
-        const blob = new Blob([gltf], {type: 'application/octet-stream'})
-        resolve(blob);
+        const blob = new Blob([gltf], { type: 'application/octet-stream' })
+        resolve(blob)
       },
       // called when there is an error in the generation
       function (error) {
@@ -50,7 +50,7 @@ export const downloadModel = mesh => {
       const link = document.createElement('a')
       link.style.display = 'none'
       document.body.appendChild(link)
-      const blob = new Blob([gltf], {type: 'application/octet-stream'})
+      const blob = new Blob([gltf], { type: 'application/octet-stream' })
       link.href = URL.createObjectURL(blob)
       link.download = 'scene.glb'
       link.click()
@@ -69,23 +69,30 @@ export const downloadModel = mesh => {
 
 export const calculateMeshDimensionRange = mesh => {
   const borderBox = new THREE.Box3().setFromObject(mesh)
-  const x_range = {min: borderBox.min.x, max: borderBox.max.x}
-  const y_range = {min: borderBox.min.y, max: borderBox.max.y}
-  const z_range = {min: borderBox.min.z, max: borderBox.max.z}
-  return {x_range, y_range, z_range}
+  const x_range = { min: borderBox.min.x, max: borderBox.max.x }
+  const y_range = { min: borderBox.min.y, max: borderBox.max.y }
+  const z_range = { min: borderBox.min.z, max: borderBox.max.z }
+  return { x_range, y_range, z_range }
 }
 
 export const calculateMeshSize = mesh => {
   const meshSize = new THREE.Box3().setFromObject(mesh, true)
   const vector = new THREE.Vector3()
   meshSize.getSize(vector)
-  return {length: vector.x, height: vector.y, width: vector.z}
+  return { length: vector.x, height: vector.y, width: vector.z }
 }
 
 export const calculatePositionWithBoundary = ({
-                                                x, y, z, x_range, y_range, z_range,
-                                                length, width, height
-                                              }) => {
+  x,
+  y,
+  z,
+  x_range,
+  y_range,
+  z_range,
+  length,
+  width,
+  height
+}) => {
   let new_x = x
   let new_y = y
   let new_z = z
@@ -105,7 +112,9 @@ export const calculatePositionWithBoundary = ({
 
 export const addVideoTexture = (mesh, videoData) => {
   if (Object.keys(videoData).includes(mesh.name)) {
-    const imagePlane = mesh.children.filter(child => child.name.includes(IMAGE_PLANE_NAME))[0];
+    const imagePlane = mesh.children.filter(child =>
+      child.name.includes(IMAGE_PLANE_NAME)
+    )[0]
     const vid = document.createElement('video')
     vid.crossOrigin = 'Anonymous'
     vid.loop = true
@@ -116,23 +125,23 @@ export const addVideoTexture = (mesh, videoData) => {
     texture.flipY = false
     texture.encoding = THREE.sRGBEncoding
     if (imagePlane !== undefined) {
-      const newMaterial = imagePlane.material.clone();
+      const newMaterial = imagePlane.material.clone()
       newMaterial.map = texture
       imagePlane.material = newMaterial
     } else {
       texture.rotation = Math.PI / 2
-      const newMaterial = mesh.material.clone();
+      const newMaterial = mesh.material.clone()
       newMaterial.map = texture
       mesh.material = newMaterial
     }
   }
 }
 
-export const fixTextureOffset = (mesh) => {
+export const fixTextureOffset = mesh => {
   if (mesh?.material?.map !== null) {
     mesh?.material?.map?.center.set(0.5, 0.5)
   }
-  mesh.children.forEach(child => fixTextureOffset(child));
+  mesh.children.forEach(child => fixTextureOffset(child))
 }
 
 export const rotateModelLeft = (mesh, angleInDegree) => {
@@ -146,18 +155,26 @@ export const rotateModelRight = (mesh, angleInDegree) => {
 }
 
 export const moveModelUp = (mesh, distance) => {
-  mesh.position.set(mesh.position.x, mesh.position.y + distance, mesh.position.z)
+  mesh.position.set(
+    mesh.position.x,
+    mesh.position.y + distance,
+    mesh.position.z
+  )
 }
 
 export const moveModelDown = (mesh, distance) => {
-  mesh.position.set(mesh.position.x, mesh.position.y - distance, mesh.position.z)
+  mesh.position.set(
+    mesh.position.x,
+    mesh.position.y - distance,
+    mesh.position.z
+  )
 }
 
 export const extractTexture = (mesh, meshName) => {
   let result = []
   if (mesh.material.map !== null && mesh.material.map.isVideoTexture) {
-    result.push({texture: mesh.material.map, meshName: meshName})
-    const newMaterial = mesh.material.clone();
+    result.push({ texture: mesh.material.map, meshName: meshName })
+    const newMaterial = mesh.material.clone()
     newMaterial.map = null
     mesh.material = newMaterial
   }
@@ -165,30 +182,30 @@ export const extractTexture = (mesh, meshName) => {
   for (const child of mesh.children) {
     result = [...result, ...extractTexture(child, meshName)]
   }
-  return result;
+  return result
 }
 
 export const b64toBlob = async (b64Data, contentType = '', sliceSize = 512) => {
-  const byteCharacters = atob(b64Data);
-  const byteArrays = [];
+  const byteCharacters = atob(b64Data)
+  const byteArrays = []
 
   for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    const slice = byteCharacters.slice(offset, offset + sliceSize);
+    const slice = byteCharacters.slice(offset, offset + sliceSize)
 
-    const byteNumbers = new Array(slice.length);
+    const byteNumbers = new Array(slice.length)
     for (let i = 0; i < slice.length; i++) {
-      byteNumbers[i] = slice.charCodeAt(i);
+      byteNumbers[i] = slice.charCodeAt(i)
     }
 
-    const byteArray = new Uint8Array(byteNumbers);
-    byteArrays.push(byteArray);
+    const byteArray = new Uint8Array(byteNumbers)
+    byteArrays.push(byteArray)
   }
 
-  return new Blob(byteArrays, {type: contentType});
+  return new Blob(byteArrays, { type: contentType })
 }
 
-export const loadFBXModel = async (url) => {
-  const loader = new FBXLoader();
+export const loadFBXModel = async url => {
+  const loader = new FBXLoader()
   return new Promise((resolve, reject) => {
     loader.load(
       url,
@@ -199,19 +216,19 @@ export const loadFBXModel = async (url) => {
   })
 }
 
-export const getBase64Image = (img) => {
+export const getBase64Image = img => {
   // Create an empty canvas element
-  const canvas = document.createElement("canvas");
-  canvas.width = img.width;
-  canvas.height = img.height;
+  const canvas = document.createElement('canvas')
+  canvas.width = img.width
+  canvas.height = img.height
 
   // Copy the image contents to the canvas
-  const ctx = canvas.getContext("2d");
-  ctx.drawImage(img, 0, 0);
+  const ctx = canvas.getContext('2d')
+  ctx.drawImage(img, 0, 0)
 
   // Get the data-URL formatted image
   // Firefox supports PNG and JPEG. You could check img.src to
   // guess the original format, but be aware the using "image/jpg"
   // will re-encode the image.
-  return canvas.toDataURL("image/png");
+  return canvas.toDataURL('image/png')
 }

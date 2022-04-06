@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { Divider, Tabs, Typography } from 'antd'
 import AttendantApplicationView from '../../containers/ApplicationView/attendant/AttendantApplicationView.container'

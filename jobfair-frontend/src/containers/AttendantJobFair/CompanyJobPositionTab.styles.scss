@@ -2,10 +2,12 @@
   .ant-modal-confirm-content {
     margin: 0 !important;
   }
-  .ant-modal-confirm-btns{
+
+  .ant-modal-confirm-btns {
     display: none;
   }
-  label{
+
+  label {
     font-size: 1.5rem !important;
     margin-bottom: 1rem;
   }
@@ -15,18 +17,19 @@
   .ant-modal-confirm-content {
     margin: 0 !important;
   }
-  .ant-modal-confirm-btns{
+
+  .ant-modal-confirm-btns {
     display: none;
   }
 
-  .ant-form-item-label{
+  .ant-form-item-label {
     display: flex;
   }
 
 }
 
-.remove-resume{
-  .fa-trash:hover{
+.remove-resume {
+  .fa-trash:hover {
     color: red;
     cursor: pointer;
   }

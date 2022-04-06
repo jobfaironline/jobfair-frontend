@@ -2,11 +2,11 @@
 import * as yup from 'yup'
 import {
   REGEX_EMAIL,
+  REGEX_NEW_PASSWORD,
   REGEX_PASSWORD,
   REGEX_PHONE,
-  REGEX_XSS,
-  REGEX_NEW_PASSWORD,
-  REGEX_RE_NEW_PASSWORD
+  REGEX_RE_NEW_PASSWORD,
+  REGEX_XSS
 } from '../constants/AppConst'
 
 yup.addMethod(yup.string, 'password', function (message) {

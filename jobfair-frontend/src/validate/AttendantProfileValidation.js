@@ -1,5 +1,4 @@
 import { MinimumDateOfBirth } from '../constants/ApplicationConst'
-import { PHONE_REGEX } from '../constants/RegexConstant'
 import moment from 'moment'
 import {
   DATE_RANGE_VALIDATOR,
@@ -7,51 +6,50 @@ import {
   MAX_LENGTH_VALIDATOR,
   PHONE_VALIDATOR,
   REQUIRED_VALIDATOR,
-  URL_VALIDATOR, YEAR_VALIDATOR
-} from "./GeneralValidation";
+  URL_VALIDATOR,
+  YEAR_VALIDATOR
+} from './GeneralValidation'
 
 export const AttendantProfileValidation = {
   account: {
-    email: [
-      REQUIRED_VALIDATOR("Email"),
-      ...EMAIL_VALIDATOR()
-    ],
-    countryId: [
-      REQUIRED_VALIDATOR("Country")
-    ],
-    phone: [
-      REQUIRED_VALIDATOR("Phone"),
-      ...PHONE_VALIDATOR()
-    ],
+    email: [REQUIRED_VALIDATOR('Email'), ...EMAIL_VALIDATOR()],
+    countryId: [REQUIRED_VALIDATOR('Country')],
+    phone: [REQUIRED_VALIDATOR('Phone'), ...PHONE_VALIDATOR()],
     dob: [
-      REQUIRED_VALIDATOR("Birthday"),
+      REQUIRED_VALIDATOR('Birthday'),
       () => ({
         validator(_, value) {
           const dateValue = moment(value).toDate().getTime()
           if (!value || dateValue < Date.parse(MinimumDateOfBirth)) {
-            return Promise.reject(new Error('Age restriction required: at least 18 years'))
+            return Promise.reject(
+              new Error('Age restriction required: at least 18 years')
+            )
           }
           return Promise.resolve()
         }
       })
     ],
-    firstname: [REQUIRED_VALIDATOR("First name")],
+    firstname: [REQUIRED_VALIDATOR('First name')],
     middlename: [],
-    lastname: [REQUIRED_VALIDATOR("Last name")]
+    lastname: [REQUIRED_VALIDATOR('Last name')]
   },
   address: [
-    REQUIRED_VALIDATOR("Address"),
-    MAX_LENGTH_VALIDATOR("Address", 300)
+    REQUIRED_VALIDATOR('Address'),
+    MAX_LENGTH_VALIDATOR('Address', 300)
   ],
   yearOfExp: [
-    REQUIRED_VALIDATOR("Year of experience"),
+    REQUIRED_VALIDATOR('Year of experience'),
     () => ({
       validator(_, value) {
         if (!value || value > 50) {
-          return Promise.reject(new Error('The maximum year of experience is 50 years'))
+          return Promise.reject(
+            new Error('The maximum year of experience is 50 years')
+          )
         }
         if (value < 0) {
-          return Promise.reject(new Error('The minimum year of experience is 0 years'))
+          return Promise.reject(
+            new Error('The minimum year of experience is 0 years')
+          )
         }
 
         return Promise.resolve()
@@ -61,27 +59,27 @@ export const AttendantProfileValidation = {
   title: [REQUIRED_VALIDATOR('Title')],
   jobTitle: [REQUIRED_VALIDATOR('Job title')],
   skills: {
-    name: [REQUIRED_VALIDATOR("Skill name")]
+    name: [REQUIRED_VALIDATOR('Skill name')]
   },
   workHistories: {
-    company: [REQUIRED_VALIDATOR("Company")],
-    description: [REQUIRED_VALIDATOR("Description")],
-    position: [REQUIRED_VALIDATOR("Position")],
+    company: [REQUIRED_VALIDATOR('Company')],
+    description: [REQUIRED_VALIDATOR('Description')],
+    position: [REQUIRED_VALIDATOR('Position')],
     range: [
-      REQUIRED_VALIDATOR("Date range"),
+      REQUIRED_VALIDATOR('Date range'),
       DATE_RANGE_VALIDATOR(new Date(1940, 0, 1).getTime(), Date.now())
     ]
   },
   educations: {
-    subject: [REQUIRED_VALIDATOR("Subject")],
-    school: [REQUIRED_VALIDATOR("School")],
-    achievement: [REQUIRED_VALIDATOR("Achievement")]
+    subject: [REQUIRED_VALIDATOR('Subject')],
+    school: [REQUIRED_VALIDATOR('School')],
+    achievement: [REQUIRED_VALIDATOR('Achievement')]
   },
   certifications: {
     name: [REQUIRED_VALIDATOR("Certificate's name")],
-    institution: [REQUIRED_VALIDATOR("Institution")],
+    institution: [REQUIRED_VALIDATOR('Institution')],
     year: [
-      REQUIRED_VALIDATOR("Year"),
+      REQUIRED_VALIDATOR('Year'),
       YEAR_VALIDATOR(1940, new Date().getFullYear())
     ],
     certificationLink: [
@@ -91,23 +89,17 @@ export const AttendantProfileValidation = {
   },
   references: {
     company: [REQUIRED_VALIDATOR("Reference's company")],
-    email: [
-      REQUIRED_VALIDATOR("Reference's email"),
-      ...EMAIL_VALIDATOR()
-    ],
+    email: [REQUIRED_VALIDATOR("Reference's email"), ...EMAIL_VALIDATOR()],
     fullname: [REQUIRED_VALIDATOR("Reference's full name")],
-    phone: [
-      REQUIRED_VALIDATOR("Phone number"),
-      ...PHONE_VALIDATOR()
-    ],
+    phone: [REQUIRED_VALIDATOR('Phone number'), ...PHONE_VALIDATOR()],
     position: [REQUIRED_VALIDATOR("Reference's position")]
   },
   activities: {
     name: [REQUIRED_VALIDATOR("Activity's name")],
-    functionTitle: [REQUIRED_VALIDATOR("Function title")],
-    organization: [REQUIRED_VALIDATOR("Organization")],
-    fromDate: [REQUIRED_VALIDATOR("From date")],
-    toDate: [REQUIRED_VALIDATOR("To date")],
+    functionTitle: [REQUIRED_VALIDATOR('Function title')],
+    organization: [REQUIRED_VALIDATOR('Organization')],
+    fromDate: [REQUIRED_VALIDATOR('From date')],
+    toDate: [REQUIRED_VALIDATOR('To date')],
     description: [REQUIRED_VALIDATOR("Activity's description")]
   }
 }

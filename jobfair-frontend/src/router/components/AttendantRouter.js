@@ -4,6 +4,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Route } from 'react-router-dom'
 import ErrorPage from '../../pages/ErrorPage/ErrorPage'
+
 const AttendantRouter = ({ component: Component, ...rest }) => {
   const { user, isAuthUser } = useSelector(state => state.authentication)
   const resultComponent = props => {

@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
-import { Button, Checkbox, Divider, Form, Input, Select, Typography } from 'antd'
-import { Content, Footer, Header } from 'antd/es/layout/layout'
-import { Tabs } from 'antd'
+import { Button, Divider, Form, Input, Select, Tabs, Typography } from 'antd'
 import './Register.styles.scss'
-import { useForm } from 'react-hook-form'
-import { AttendantRegisterValidation, CompanyRegisterValidation } from '../../validate/RegisterValidation'
+import {
+  AttendantRegisterValidation,
+  CompanyRegisterValidation
+} from '../../validate/RegisterValidation'
 
 const { TabPane } = Tabs
 const { Option } = Select
@@ -20,7 +21,7 @@ const genderType = [
   }
 ]
 
-const RegisterComponent = ({ onFinish, form }) => {
+const RegisterComponent = ({ form }) => {
   return (
     <div className="register-container">
       <Divider orientation="center" plain>
@@ -46,13 +47,20 @@ const AttendantForm = () => {
       <Form.Item name="firstName" rules={AttendantRegisterValidation.firstName}>
         <Input placeholder="First name" />
       </Form.Item>
-      <Form.Item name="middleName" rules={AttendantRegisterValidation.middleName}>
+      <Form.Item
+        name="middleName"
+        rules={AttendantRegisterValidation.middleName}
+      >
         <Input placeholder="Middle name" />
       </Form.Item>
       <Form.Item name="lastName" rules={AttendantRegisterValidation.lastName}>
         <Input placeholder="Last name" />
       </Form.Item>
-      <Form.Item name="gender" label="Gender" rules={AttendantRegisterValidation.gender}>
+      <Form.Item
+        name="gender"
+        label="Gender"
+        rules={AttendantRegisterValidation.gender}
+      >
         <Select defaultValue="MALE" placeholder="select your gender">
           {genderType.map(gender => {
             return <Option value={gender.value}>{gender.title}</Option>
@@ -63,11 +71,20 @@ const AttendantForm = () => {
         <Input placeholder="Email" />
       </Form.Item>
 
-      <Form.Item name="password" rules={AttendantRegisterValidation.password} hasFeedback>
+      <Form.Item
+        name="password"
+        rules={AttendantRegisterValidation.password}
+        hasFeedback
+      >
         <Input.Password placeholder="Password" />
       </Form.Item>
 
-      <Form.Item name="confirm" dependencies={['password']} hasFeedback rules={AttendantRegisterValidation.rePassword}>
+      <Form.Item
+        name="confirm"
+        dependencies={['password']}
+        hasFeedback
+        rules={AttendantRegisterValidation.rePassword}
+      >
         <Input.Password placeholder="Confirm password" />
       </Form.Item>
       <Form.Item>
@@ -76,7 +93,8 @@ const AttendantForm = () => {
         </Button>
       </Form.Item>
       <Form.Item className="login-text">
-        <span>Already have an account?</span> <Button type="link">Login now!</Button>
+        <span>Already have an account?</span>{' '}
+        <Button type="link">Login now!</Button>
       </Form.Item>
     </Form>
   )
@@ -87,7 +105,10 @@ const CompanyForm = () => {
 
   return (
     <Form form={form} name="register" onFinish={() => {}} scrollToFirstError>
-      <Form.Item name="companyName" rules={CompanyRegisterValidation.companyName}>
+      <Form.Item
+        name="companyName"
+        rules={CompanyRegisterValidation.companyName}
+      >
         <Input placeholder="Your company name" />
       </Form.Item>
       <Form.Item name="email" rules={CompanyRegisterValidation.email}>
@@ -102,11 +123,20 @@ const CompanyForm = () => {
       <Form.Item name="phone" rules={CompanyRegisterValidation.phone}>
         <Input placeholder="Phone number" />
       </Form.Item>
-      <Form.Item name="password" rules={CompanyRegisterValidation.password} hasFeedback>
+      <Form.Item
+        name="password"
+        rules={CompanyRegisterValidation.password}
+        hasFeedback
+      >
         <Input.Password placeholder="Password" />
       </Form.Item>
 
-      <Form.Item name="confirm" dependencies={['password']} hasFeedback rules={CompanyRegisterValidation.rePassword}>
+      <Form.Item
+        name="confirm"
+        dependencies={['password']}
+        hasFeedback
+        rules={CompanyRegisterValidation.rePassword}
+      >
         <Input.Password placeholder="Confirm password" />
       </Form.Item>
       <Form.Item>
@@ -115,7 +145,8 @@ const CompanyForm = () => {
         </Button>
       </Form.Item>
       <Form.Item className="login-text">
-        <span>Already have an account?</span> <Button type="link">Login now!</Button>
+        <span>Already have an account?</span>{' '}
+        <Button type="link">Login now!</Button>
       </Form.Item>
     </Form>
   )

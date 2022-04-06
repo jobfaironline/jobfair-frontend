@@ -1,11 +1,11 @@
-import {CallAPI} from '../axiosBase'
+import { CallAPI } from '../axiosBase'
 import {
+  ENDPOINT_GET_JOB_FAIR_FOR_ATTENDANT,
   ENDPOINT_GET_JOB_FAIR_PLAN_OF_COMPANY,
   ENDPOINT_GET_LAYOUT_FOR_JOB_FAIR_PARK,
-  ENDPOINT_JOB_FAIR,
-  ENDPOINT_GET_JOB_FAIR_FOR_ATTENDANT
+  ENDPOINT_JOB_FAIR
 } from '../../constants/Endpoints/job-fair-controller/JobFairConTrollerEndpoint'
-import {JOB_FAIR_FOR_ADMIN_STATUS} from '../../constants/JobFairConst'
+import { JOB_FAIR_FOR_ADMIN_STATUS } from '../../constants/JobFairConst'
 
 export const getAvailableJobFairForCompany = (pageNumber, pageSize) =>
   CallAPI(
@@ -47,7 +47,8 @@ export const getAllJobFairAPI = (pageNumber, pageSize, sortBy, direction) =>
       sortBy: sortBy
     }
   )
-export const evaluateJobFairPlanAPI = body => CallAPI(`${ENDPOINT_JOB_FAIR}/evaluate`, 'POST', body)
+export const evaluateJobFairPlanAPI = body =>
+  CallAPI(`${ENDPOINT_JOB_FAIR}/evaluate`, 'POST', body)
 export const getJobFairAvailableForAttendant = (offset, pageSize) =>
   CallAPI(
     `${ENDPOINT_GET_JOB_FAIR_FOR_ATTENDANT}?filterStatus=HAPPENING&filterStatus=REGISTRABLE`,
@@ -92,14 +93,16 @@ export const getJobFairHappeningForAdmin = (offset, pageSize) =>
     }
   )
 
-export const getJobFairIncomingForAdmin = (offset, pageSize) => CallAPI(
-  `${ENDPOINT_JOB_FAIR}/admin?filterStatus=${JOB_FAIR_FOR_ADMIN_STATUS.NOT_YET}`,
-  'GET',
-  {},
-  {
-    offset: offset,
-    pageSize: pageSize
-  }
-)
+export const getJobFairIncomingForAdmin = (offset, pageSize) =>
+  CallAPI(
+    `${ENDPOINT_JOB_FAIR}/admin?filterStatus=${JOB_FAIR_FOR_ADMIN_STATUS.NOT_YET}`,
+    'GET',
+    {},
+    {
+      offset: offset,
+      pageSize: pageSize
+    }
+  )
 
-export const getJobFairPlanById = id => CallAPI(`${ENDPOINT_JOB_FAIR}/${id}`, 'GET')
+export const getJobFairPlanById = id =>
+  CallAPI(`${ENDPOINT_JOB_FAIR}/${id}`, 'GET')

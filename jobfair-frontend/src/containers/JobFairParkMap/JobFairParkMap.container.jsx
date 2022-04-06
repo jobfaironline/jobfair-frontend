@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import {addVideoTexture, fixTextureOffset, loadGLBModel} from '../../utils/ThreeJS/threeJSUtil'
+import {
+  addVideoTexture,
+  fixTextureOffset,
+  loadGLBModel
+} from '../../utils/ThreeJS/threeJSUtil'
 import * as THREE from 'three'
 import JobFairParkMapComponent from '../../components/JobFairParkMap/JobFairParkMap.component'
 import { getLayoutInformationForJobFairPark } from '../../services/job-fair-controller/JobFairConTrollerService'
-import {generatePath, useHistory} from 'react-router-dom'
+import { generatePath, useHistory } from 'react-router-dom'
 import { PATH } from '../../constants/Paths/Path'
-import ReactLoading from "react-loading";
-import {LoadingComponent} from "../../components/JobFairParkMap/Loading.component";
-const getBootMesh = async (position, foundationBox, url, companyBoothId, companyBoothLayoutVideos) => {
+import { LoadingComponent } from '../../components/JobFairParkMap/Loading.component'
+
+const getBootMesh = async (
+  position,
+  foundationBox,
+  url,
+  companyBoothId,
+  companyBoothLayoutVideos
+) => {
   const gltf = await loadGLBModel(url)
   const { x, y, z } = position
   let sceneMesh = gltf.scene
@@ -22,10 +32,13 @@ const getBootMesh = async (position, foundationBox, url, companyBoothId, company
   const meshBoundingBox = new THREE.Box3().setFromObject(sceneMesh)
   meshBoundingBox.getSize(meshSize)
 
-  const scale = Math.max(foundationSize.x / meshSize.x, foundationSize.z / meshSize.z)
+  const scale = Math.max(
+    foundationSize.x / meshSize.x,
+    foundationSize.z / meshSize.z
+  )
   sceneMesh.scale.setScalar(scale)
   sceneMesh.companyBoothId = companyBoothId
-  for (const mesh of sceneMesh.children){
+  for (const mesh of sceneMesh.children) {
     addVideoTexture(mesh, companyBoothLayoutVideos)
     fixTextureOffset(mesh)
   }
@@ -40,7 +53,9 @@ const JobFairParkMapContainer = props => {
   })
 
   useEffect(async () => {
-    const responseData = await getLayoutInformationForJobFairPark(jobFairId).then(response => response.data)
+    const responseData = await getLayoutInformationForJobFairPark(
+      jobFairId
+    ).then(response => response.data)
     const url = responseData.jobFairLayoutUrl
     const data = responseData.booths
     const glb = await loadGLBModel(url)
@@ -49,7 +64,7 @@ const JobFairParkMapContainer = props => {
     data.forEach(element => {
       const companyBoothLayoutVideos = {}
       element.companyBoothLayoutVideos?.forEach(data => {
-        companyBoothLayoutVideos[data.itemName] = data.url;
+        companyBoothLayoutVideos[data.itemName] = data.url
       })
       transformData[element.slotName] = {
         position: element.position,
@@ -66,7 +81,13 @@ const JobFairParkMapContainer = props => {
     }
     const newBoothMeshesPromise = []
     for (const slot of Object.values(transformData)) {
-      const boothMesh = getBootMesh(slot.position, slot.sizeBox, slot.boothUrl, slot.companyBoothId, slot.companyBoothLayoutVideos)
+      const boothMesh = getBootMesh(
+        slot.position,
+        slot.sizeBox,
+        slot.boothUrl,
+        slot.companyBoothId,
+        slot.companyBoothLayoutVideos
+      )
       newBoothMeshesPromise.push(boothMesh)
     }
     const meshes = await Promise.all(newBoothMeshesPromise)
@@ -78,17 +99,23 @@ const JobFairParkMapContainer = props => {
   }, [])
 
   if (state.mapMesh === null && state.boothMeshes.length === 0) {
-    return (
-      <LoadingComponent/>
-    )
+    return <LoadingComponent />
   }
 
   const clickHandle = companyBoothId => {
-    const url = generatePath(PATH.BOOTH_PAGE, {companyBoothId: companyBoothId})
+    const url = generatePath(PATH.BOOTH_PAGE, {
+      companyBoothId: companyBoothId
+    })
     history.push(url)
   }
 
-  return <JobFairParkMapComponent mapMesh={state.mapMesh} boothMeshes={state.boothMeshes} onClick={clickHandle} />
+  return (
+    <JobFairParkMapComponent
+      mapMesh={state.mapMesh}
+      boothMeshes={state.boothMeshes}
+      onClick={clickHandle}
+    />
+  )
 }
 
 export default JobFairParkMapContainer

@@ -1,38 +1,42 @@
-import React, {useLayoutEffect, useState} from 'react'
-import EvaluateBoothInformationTableComponent
-  from '../../components/EvaluateBoothInformation/EvaluateBoothInformationTable.component'
-import {notification, Pagination, Space} from 'antd'
-import {useHistory, useParams} from 'react-router-dom'
-import {
-  getRegistrationByJobFairId
-} from '../../services/company-registration-controller/CompanyRegistrationControllerService'
-import {convertToDateString} from '../../utils/common'
-import {PATH_ADMIN} from "../../constants/Paths/Path";
-import {getCompanyProfileAPI} from "../../services/company-controller/CompanyControllerService";
-import {CompanyRegistrationStatus} from "../../constants/CompanyRegistrationConst";
+import React, { useLayoutEffect, useState } from 'react'
+import EvaluateBoothInformationTableComponent from '../../components/EvaluateBoothInformation/EvaluateBoothInformationTable.component'
+import { notification, Pagination, Space } from 'antd'
+import { useHistory, useParams } from 'react-router-dom'
+import { getRegistrationByJobFairId } from '../../services/company-registration-controller/CompanyRegistrationControllerService'
+import { convertToDateString } from '../../utils/common'
+import { PATH_ADMIN } from '../../constants/Paths/Path'
+import { getCompanyProfileAPI } from '../../services/company-controller/CompanyControllerService'
 
 const EvaluateInformationBoothContainer = () => {
   const [data, setData] = useState([])
   //paging state
   const [currentPage, setCurrentPage] = useState(0)
   const [pageSize, setPageSize] = useState(10)
-  const {jobFairId} = useParams()
+  const { jobFairId } = useParams()
 
   const history = useHistory()
 
   const fetchData = async () => {
     if (jobFairId !== undefined) {
-      getRegistrationByJobFairId(jobFairId, currentPage, pageSize, 'createDate', 'DESC')
-        .then( async (res) => {
-          const result = await Promise.all(res.data.content.map(async (item, index) => {
-            const company = await getCompanyProfileAPI(item.companyId)
-            return {
-              ...item,
-              createDate: convertToDateString(item.createDate),
-              no: index + 1,
-              companyName: company.data.name
-            }
-          }))
+      getRegistrationByJobFairId(
+        jobFairId,
+        currentPage,
+        pageSize,
+        'createDate',
+        'DESC'
+      )
+        .then(async res => {
+          const result = await Promise.all(
+            res.data.content.map(async (item, index) => {
+              const company = await getCompanyProfileAPI(item.companyId)
+              return {
+                ...item,
+                createDate: convertToDateString(item.createDate),
+                no: index + 1,
+                companyName: company.data.name
+              }
+            })
+          )
           setData([...result])
           notification['success']({
             message: `All registration has been loaded`,
@@ -50,13 +54,11 @@ const EvaluateInformationBoothContainer = () => {
     } else {
       setData([])
     }
-
   }
 
   useLayoutEffect(() => {
     fetchData()
   }, [currentPage, pageSize])
-
 
   const handlePageChange = (page, pageSize) => {
     if (page > 0) {
@@ -67,8 +69,7 @@ const EvaluateInformationBoothContainer = () => {
     setPageSize(pageSize)
   }
 
-
-  const handleViewDetail = (id) => {
+  const handleViewDetail = id => {
     history.push(PATH_ADMIN.COMPANY_REGISTRATION_DETAIL_PAGE, {
       companyRegistration: data.find(item => item.id === id)
     })

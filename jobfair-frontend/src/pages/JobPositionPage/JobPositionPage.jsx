@@ -1,7 +1,7 @@
 import React from 'react'
 import JobPositionManagementContainer from '../../components/JobPosition/JobPositionManagement/JobPositionManagement.container'
 
-const JobPositionPage = props => {
+const JobPositionPage = () => {
   return (
     <div className="page">
       <div style={{ padding: '3rem 1rem' }}>

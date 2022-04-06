@@ -2,6 +2,7 @@ import React from 'react'
 import { Input } from 'antd'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
 import './PasswordInput.module.scss'
+
 const PasswordInput = ({ register, name, ...rest }) => {
   ;<Input.Password
     placeholder="input password"

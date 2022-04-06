@@ -1,15 +1,15 @@
 import React from 'react'
 import PopupFormComponent from '../../components/popup-form/popup-form.component'
 import {
+  confirmForm,
+  editForm,
+  hideForm,
   rejectForm,
   selectPopupFormData,
   selectPopupFormEditable,
-  selectPopupFormVisibility,
-  hideForm,
-  confirmForm,
-  editForm
+  selectPopupFormVisibility
 } from '../../redux/state-slices/popupFormSlice'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getForm } from '../../redux/state-slices/formSlice'
 import { Form, notification } from 'antd'
 

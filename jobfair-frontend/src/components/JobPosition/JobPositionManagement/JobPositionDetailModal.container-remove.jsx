@@ -1,25 +1,20 @@
-import React, {useEffect} from 'react';
-import {Form, Modal} from "antd";
-import JobPositionDetailFormComponent from "./JobPositionDetailForm.component";
+import React, { useEffect } from 'react'
+import { Form, Modal } from 'antd'
+import JobPositionDetailFormComponent from './JobPositionDetailForm.component'
 
 //hihi đồ chó chết
 const JobPositionDetailModalContainer = props => {
-  const {
-    visible,
-    setModalVisible,
-    jobPosition,
-    onFinish,
-    handleDelete
-  } = props
+  const { visible, setModalVisible, jobPosition, onFinish } = props
 
-  const [form] = Form.useForm();
+  const [form] = Form.useForm()
 
   const init = () => {
     jobPosition['skillTagIds'] = jobPosition['skillTagDTOS']
-    jobPosition['subCategoriesIds'] = jobPosition['subCategoryDTOs']?.map(item => item.id)
-    form.setFieldsValue({...jobPosition})
+    jobPosition['subCategoriesIds'] = jobPosition['subCategoryDTOs']?.map(
+      item => item.id
+    )
+    form.setFieldsValue({ ...jobPosition })
   }
-
 
   const handleOk = () => {
     setModalVisible(false)
@@ -30,7 +25,7 @@ const JobPositionDetailModalContainer = props => {
   }
 
   useEffect(() => {
-    init();
+    init()
   }, [jobPosition])
 
   return (
@@ -42,10 +37,9 @@ const JobPositionDetailModalContainer = props => {
       onCancel={handleCancel}
       footer={null}
     >
-      <JobPositionDetailFormComponent form={form} onFinish={onFinish}/>
+      <JobPositionDetailFormComponent form={form} onFinish={onFinish} />
     </Modal>
-  );
-};
+  )
+}
 
-
-export default JobPositionDetailModalContainer;
+export default JobPositionDetailModalContainer

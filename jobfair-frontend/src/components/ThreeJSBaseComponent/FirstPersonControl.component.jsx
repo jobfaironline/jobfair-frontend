@@ -1,80 +1,86 @@
-import {useFrame, useThree} from "@react-three/fiber";
-import React, {useMemo, useRef} from "react";
-import {calculateMeshSize} from "../../utils/ThreeJS/threeJSUtil";
-import {PointerLockControls} from "@react-three/drei";
-import BasicControlInput from "../../utils/ThreeJS/BasicControlInput";
-import * as THREE from "three";
+/* eslint-disable no-unused-vars */
+import { useFrame, useThree } from '@react-three/fiber'
+import React, { useMemo, useRef } from 'react'
+import { calculateMeshSize } from '../../utils/ThreeJS/threeJSUtil'
+import { PointerLockControls } from '@react-three/drei'
+import BasicControlInput from '../../utils/ThreeJS/BasicControlInput'
+import * as THREE from 'three'
 
-
-export const FirstPersonControl = (props) => {
-  const {model, isChangeCamera, collidableMeshListRef, geckoClientRef, zoom} = props;
-  const {camera, scene} = useThree();
-  const controlRef = useRef();
-  const speed = 0.1;
+export const FirstPersonControl = props => {
+  const { model, isChangeCamera, collidableMeshListRef, geckoClientRef, zoom } =
+    props
+  const { camera, scene } = useThree()
+  const controlRef = useRef()
+  const speed = 0.1
 
   const input = useMemo(() => {
-    return new BasicControlInput();
+    return new BasicControlInput()
   }, [])
 
-
   function control() {
-    const cameraOldPosition = new THREE.Vector3();
-    const modelOldPosition = new THREE.Vector3();
-    cameraOldPosition.copy(camera.position);
+    const cameraOldPosition = new THREE.Vector3()
+    const modelOldPosition = new THREE.Vector3()
+    cameraOldPosition.copy(camera.position)
     modelOldPosition.copy(model.position)
 
     if (input.keys.forward) {
       controlRef.current.moveForward(speed * zoom * 20)
     }
-    if (input.keys.backward) { // s
+    if (input.keys.backward) {
+      // s
       controlRef.current.moveForward(-speed * zoom * 20)
     }
-    if (input.keys.left) { // a
+    if (input.keys.left) {
+      // a
       controlRef.current.moveRight(-speed * zoom * 20)
     }
-    if (input.keys.right) { // d
+    if (input.keys.right) {
+      // d
       controlRef.current.moveRight(speed * zoom * 20)
     }
 
-    const oldQuaternion = new THREE.Quaternion();
-    oldQuaternion.copy(model.quaternion);
+    const oldQuaternion = new THREE.Quaternion()
+    oldQuaternion.copy(model.quaternion)
 
     //re-adjust model position
-    model.position.x = camera.position.x;
-    model.position.z = camera.position.z;
+    model.position.x = camera.position.x
+    model.position.z = camera.position.z
     //re-adjust model rotation
     const cameraLookAt = new THREE.Vector3()
-    camera.getWorldDirection(cameraLookAt);
-    const modelLookAt = new THREE.Vector3();
-    model.getWorldDirection(modelLookAt);
-    const plane = new THREE.Vector3(modelLookAt.x, 0, modelLookAt.z);
+    camera.getWorldDirection(cameraLookAt)
+    const modelLookAt = new THREE.Vector3()
+    model.getWorldDirection(modelLookAt)
+    const plane = new THREE.Vector3(modelLookAt.x, 0, modelLookAt.z)
     const newPlane = new THREE.Vector3(cameraLookAt.x, 0, cameraLookAt.z)
     const angle = newPlane.angleTo(plane)
-    const _R = model.quaternion.clone();
-    const _A = new THREE.Vector3(0, 1, 0);
-    const _Q = new THREE.Quaternion().setFromAxisAngle(_A, angle);
-    _R.multiply(_Q);
-    model.quaternion.copy(_R);
+    const _R = model.quaternion.clone()
+    const _A = new THREE.Vector3(0, 1, 0)
+    const _Q = new THREE.Quaternion().setFromAxisAngle(_A, angle)
+    _R.multiply(_Q)
+    model.quaternion.copy(_R)
 
-
-    const distance = Math.abs(model.position.x + model.position.y + model.position.z - modelOldPosition.x - modelOldPosition.y - modelOldPosition.z)
-    if (distance > 0.01){
+    const distance = Math.abs(
+      model.position.x +
+        model.position.y +
+        model.position.z -
+        modelOldPosition.x -
+        modelOldPosition.y -
+        modelOldPosition.z
+    )
+    if (distance > 0.01) {
       const obj = {
         position: model.position,
         quaternion: {
           x: model.quaternion._x,
           y: model.quaternion._y,
           z: model.quaternion._z,
-          w: model.quaternion._w,
+          w: model.quaternion._w
         }
       }
       geckoClientRef.current.move(obj)
     } else {
       geckoClientRef.current.stop()
     }
-
-
-
 
     //make model bouding box
     /*const skeleton = new THREE.SkeletonHelper(model);
@@ -122,26 +128,24 @@ export const FirstPersonControl = (props) => {
         }
       }
     }*/
-
   }
 
-  if (isChangeCamera.current){
-    const modelSize = calculateMeshSize(model);
-    camera.position.y = model.position.y + modelSize.height;
+  if (isChangeCamera.current) {
+    const modelSize = calculateMeshSize(model)
+    camera.position.y = model.position.y + modelSize.height
     camera.position.x = model.position.x
     camera.position.z = model.position.z
-
 
     camera.rotation.copy(model.rotation)
     camera.rotateOnWorldAxis(new THREE.Vector3(0, 1, 0), Math.PI)
   }
 
-  useFrame((state) => {
+  useFrame(state => {
     state.camera.zoom = 1
-    state.camera.updateProjectionMatrix();
+    state.camera.updateProjectionMatrix()
     controlRef.current.pointerSpeed = 0.01
-    control();
+    control()
   })
 
-  return <PointerLockControls ref={controlRef} pointerSpeed={0}/>;
+  return <PointerLockControls ref={controlRef} pointerSpeed={0} />
 }

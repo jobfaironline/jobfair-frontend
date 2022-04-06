@@ -1,20 +1,24 @@
 .container {
-    width: 40rem;
-    background-color: white;
-    border-radius: 0 0 1rem 1rem;
-    .icon {
-        font-size: 2rem;
-    }
-    .aboutCompany {
-        padding: 4rem;
-        text-align: justify;
-    }
-    .tabHeader {
-        padding: 10px 10px 10px 25px;
-        display: flex;
-        flex-direction: row;
-    }
-    .title {
-        margin-left: 30px;
-    }
+  width: 40rem;
+  background-color: white;
+  border-radius: 0 0 1rem 1rem;
+
+  .icon {
+    font-size: 2rem;
+  }
+
+  .aboutCompany {
+    padding: 4rem;
+    text-align: justify;
+  }
+
+  .tabHeader {
+    padding: 10px 10px 10px 25px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .title {
+    margin-left: 30px;
+  }
 }

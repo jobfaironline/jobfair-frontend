@@ -1,40 +1,49 @@
 import React, { useEffect, useState } from 'react'
 import { getAccountByIdAPI } from '../../../services/account-controller/AccountControllerService'
-import {Col, Modal, notification, Typography} from 'antd'
+import { Col, Modal, notification, Typography } from 'antd'
 import { evaluateJobFairPlanAPI } from '../../../services/job-fair-controller/JobFairConTrollerService'
-import {
-  getAllRegistractionForAdmin,
-  getRegistrationByJobFairId
-} from '../../../services/company-registration-controller/CompanyRegistrationControllerService'
+import { getRegistrationByJobFairId } from '../../../services/company-registration-controller/CompanyRegistrationControllerService'
 import { CompanyRegistrationStatus } from '../../../constants/CompanyRegistrationConst'
 import { getLayoutDetail } from '../../../services/layout-controller/LayoutControllerService'
 import { convertEnumToString } from '../../../utils/common'
 import { mapperJobFairDetail } from '../../../utils/mapperJobFairDetail'
-import JobFairDetailComponent from "../../JobFairDetail/JobFairDetail.component";
+import JobFairDetailComponent from '../../JobFairDetail/JobFairDetail.component'
+import { useHistory } from 'react-router-dom'
 
 const { Text } = Typography
 
-const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVisible, jobFairList }) => {
+const JobFairDetailModalContainer = ({
+  jobFairId,
+  creatorId,
+  visible,
+  setModalVisible,
+  jobFairList
+}) => {
   const [jobFairDetail, setJobFairDetail] = useState({})
   const [creatorInfo, setCreatorInfo] = useState('')
   const [totalApproval, setTotalApproval] = useState(0)
   const [totalRegistration, setTotalRegistration] = useState(0)
   const [totalBooth, setTotalBooth] = useState(0)
+  const history = useHistory()
 
   const fetchData = async () => {
-    if (jobFairList !== undefined && jobFairId !== undefined && jobFairList.length > 0) {
+    if (
+      jobFairList !== undefined &&
+      jobFairId !== undefined &&
+      jobFairList.length > 0
+    ) {
       const jobFair = jobFairList.find(item => item.id === jobFairId)
       setJobFairDetail(jobFair)
       //get creator name by creatorId
       getAccountByIdAPI(creatorId)
         .then(res => {
           setCreatorInfo(
-            `Full name: ${res.data.firstname} ${res.data.middlename} ${res.data.lastname}. Role: ${convertEnumToString(
-              res.data.role
-            )}`
+            `Full name: ${res.data.firstname} ${res.data.middlename} ${
+              res.data.lastname
+            }. Role: ${convertEnumToString(res.data.role)}`
           )
         })
-        .catch(err => {
+        .catch(() => {
           //
         })
     }
@@ -56,7 +65,7 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
 
   const onFinish = values => {
     evaluateJobFairPlanAPI(values)
-      .then(res => {
+      .then(() => {
         notification['success']({
           message: `Your evaluation has been submitted`,
           description: `Evaluate job fair plan successfully`
@@ -71,8 +80,6 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
       })
   }
 
-
-
   const getTotalCompanyRegistrationOfJobFair = async () => {
     if (jobFairId !== undefined) {
       //need API for getting company registrations have status APPROVE by jobfairId
@@ -85,7 +92,7 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
           const totalRegistrations = res.data.totalElements
           setTotalRegistration(totalRegistrations)
         })
-        .catch(err => {
+        .catch(() => {
           //
         })
     }
@@ -99,16 +106,22 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
           const totalBooth = res.data.booths.length
           setTotalBooth(totalBooth)
         })
-        .catch(err => {})
+        .catch(() => {})
     }
   }
 
-  const data = mapperJobFairDetail(jobFairDetail, creatorInfo);
+  const data = mapperJobFairDetail(jobFairDetail, creatorInfo)
   const { ...result } = data ? data : {}
 
-  return !visible ? null :
+  return !visible ? null : (
     <>
-      <Modal title="Job Fair Detail" visible={visible} onOk={onOk} onCancel={onCancel} width={1300}>
+      <Modal
+        title="Job Fair Detail"
+        visible={visible}
+        onOk={onOk}
+        onCancel={onCancel}
+        width={1300}
+      >
         <JobFairDetailComponent
           data={data}
           onFinish={onFinish}
@@ -122,6 +135,7 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
         </Col>
       </Modal>
     </>
+  )
 }
 
 export default JobFairDetailModalContainer

@@ -69,10 +69,14 @@ export const NUMBER_RANGE_VALIDATOR = (minValue, maxValue) => {
         return Promise.reject(new Error(`Invalid number value`))
       }
       if (!value || num > maxValue) {
-        return Promise.reject(new Error(`The maximum of position is ${maxValue}`))
+        return Promise.reject(
+          new Error(`The maximum of position is ${maxValue}`)
+        )
       }
       if (num < minValue) {
-        return Promise.reject(new Error(`The minimum of position is ${minValue}`))
+        return Promise.reject(
+          new Error(`The minimum of position is ${minValue}`)
+        )
       }
 
       return Promise.resolve()
@@ -86,16 +90,24 @@ export const DATE_RANGE_VALIDATOR = (minTime, maxTime) => {
       const fromDate = moment(value[0]).toDate().getTime()
       const toDate = moment(value[1]).toDate().getTime()
       if (fromDate > maxTime) {
-        return Promise.reject(new Error(`From date must be lower than ${maxTime}`))
+        return Promise.reject(
+          new Error(`From date must be lower than ${maxTime}`)
+        )
       }
       if (toDate > maxTime) {
-        return Promise.reject(new Error(`To date must be lower than ${maxTime}`))
+        return Promise.reject(
+          new Error(`To date must be lower than ${maxTime}`)
+        )
       }
       if (fromDate < minTime) {
-        return Promise.reject(new Error(`From date must be higher than ${minTime}`))
+        return Promise.reject(
+          new Error(`From date must be higher than ${minTime}`)
+        )
       }
       if (toDate < minTime) {
-        return Promise.reject(new Error(`To date must be higher than ${minTime}`))
+        return Promise.reject(
+          new Error(`To date must be higher than ${minTime}`)
+        )
       }
       if (toDate < fromDate) {
         return Promise.reject(new Error('Invalid date range'))

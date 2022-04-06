@@ -1,20 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import EvaluateInformationBoothContainer from "../../containers/EvaluateBoothInformation/EvaluateInformationBooth.container";
-import {Breadcrumb, Divider, notification, PageHeader, Typography} from 'antd';
-import {HomeOutlined, UnorderedListOutlined} from "@ant-design/icons";
-import {useHistory, useParams} from "react-router-dom";
-import {getJobFairPlanById} from "../../services/job-fair-controller/JobFairConTrollerService";
+import React, { useEffect, useState } from 'react'
+import EvaluateInformationBoothContainer from '../../containers/EvaluateBoothInformation/EvaluateInformationBooth.container'
+import { notification, PageHeader } from 'antd'
+import { useHistory, useParams } from 'react-router-dom'
+import { getJobFairPlanById } from '../../services/job-fair-controller/JobFairConTrollerService'
 
-const {Text, Title} = Typography
-
-const EvaluateBoothInformationPage = props => {
+const EvaluateBoothInformationPage = () => {
   const history = useHistory()
-  const {jobFairId} = useParams()
+  const { jobFairId } = useParams()
   const [jobFairDescription, setJobFairDescription] = useState('')
 
   if (jobFairId === undefined) {
     return (
-      <div className="page" style={{marginTop: 80}}>
+      <div className="page" style={{ marginTop: 80 }}>
         <PageHeader
           className="site-page-header"
           onBack={() => history.goBack()}
@@ -22,35 +19,37 @@ const EvaluateBoothInformationPage = props => {
           subTitle="Showing all company registrations"
         />
       </div>
-      )
+    )
   }
 
-  const getJobFairDetail = async (jobFairId) => {
+  const getJobFairDetail = async jobFairId => {
     getJobFairPlanById(jobFairId)
       .then(res => {
         setJobFairDescription(res.data.name)
-      }).catch(err => {
-      notification['error']({
-        message: 'Get job fair detail failed'
       })
-    })
+      .catch(() => {
+        notification['error']({
+          message: 'Get job fair detail failed'
+        })
+      })
   }
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     getJobFairDetail(jobFairId)
   }, [])
 
   return (
-    <div className="page" style={{marginTop: 80}}>
+    <div className="page" style={{ marginTop: 80 }}>
       <PageHeader
         className="site-page-header"
         onBack={() => history.goBack()}
         title="Company registrations"
         subTitle={`for job fair : ${jobFairDescription}`}
       />
-      <EvaluateInformationBoothContainer/>
+      <EvaluateInformationBoothContainer />
     </div>
-  );
-};
+  )
+}
 
-export default EvaluateBoothInformationPage;
+export default EvaluateBoothInformationPage

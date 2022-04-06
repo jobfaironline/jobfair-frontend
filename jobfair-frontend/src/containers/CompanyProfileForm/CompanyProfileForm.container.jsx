@@ -7,7 +7,7 @@ import {
 } from '../../services/company-controller/CompanyControllerService'
 import CompanyProfileForm from '../../components/CompanyProfileForm/CompanyProfileForm.component'
 
-const CompanyProfileFormContainer = props => {
+const CompanyProfileFormContainer = () => {
   const [form] = Form.useForm()
   const companyId = useSelector(state => state.authentication.user.companyId)
   const [data, setData] = useState({})
@@ -78,7 +78,13 @@ const CompanyProfileFormContainer = props => {
       {data === undefined || data === null || Object.keys(data).length === 0 ? (
         <Spin size="large" />
       ) : (
-        <Form form={form} onFinish={onFinish} requiredMark="required" autoComplete="off" scrollToFirstError={true}>
+        <Form
+          form={form}
+          onFinish={onFinish}
+          requiredMark="required"
+          autoComplete="off"
+          scrollToFirstError={true}
+        >
           <CompanyProfileForm urlValue={data.url} />
           <Form.Item>
             <Affix offsetBottom={10}>

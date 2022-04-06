@@ -6,7 +6,7 @@ const EmployeeTableColumn = getColumnSearchProps => {
       title: 'No',
       dataIndex: 'no',
       key: 'no',
-      render(text, record) {
+      render(text) {
         return {
           props: {
             style: { textAlign: 'end', width: '5px' }

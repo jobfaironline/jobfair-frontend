@@ -1,5 +1,4 @@
-import { Typography } from 'antd'
-import React, { useState } from 'react'
+import React from 'react'
 import { injectStyle } from 'react-toastify/dist/inject-style'
 import LoginContainer from '../../containers/Login/Login.container'
 import './LoginPage.styles.scss'

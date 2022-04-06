@@ -1,8 +1,9 @@
 import React from 'react'
-import { Button, Checkbox, Divider, Form, Input, Layout } from 'antd'
+import { Button, Divider, Form, Input } from 'antd'
 import { ForgetPasswordValidation } from '../../validate/ForgetPasswordValidation'
 import { PATH } from '../../constants/Paths/Path'
 import './ForgotPassword.scss'
+
 const ForgotPasswordComponent = ({ onFinish, form }) => {
   return (
     <div className="container">
@@ -12,8 +13,19 @@ const ForgotPasswordComponent = ({ onFinish, form }) => {
         </Divider>
       </div>
       <div className="form">
-        <Form labelCol={{ span: 8 }} wrapperCol={{ span: 8 }} form={form} onFinish={onFinish} autoComplete="off">
-          <Form.Item label="Email" name="email" hasFeedback rule={ForgetPasswordValidation.email}>
+        <Form
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 8 }}
+          form={form}
+          onFinish={onFinish}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Email"
+            name="email"
+            hasFeedback
+            rule={ForgetPasswordValidation.email}
+          >
             <Input />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

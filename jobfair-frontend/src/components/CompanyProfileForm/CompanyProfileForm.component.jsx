@@ -1,6 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { Form, Input, Button, Radio, Tooltip, Select, Divider, Typography, Space, AutoComplete, message } from 'antd'
-import { CopyOutlined, GiftOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
+import React, { useState } from 'react'
+import {
+  Button,
+  Divider,
+  Form,
+  Input,
+  message,
+  Select,
+  Tooltip,
+  Typography
+} from 'antd'
+import {
+  CopyOutlined,
+  GiftOutlined,
+  InfoCircleOutlined,
+  MinusCircleOutlined,
+  PlusOutlined
+} from '@ant-design/icons'
 import {
   benefitConst,
   CategoriesConst,
@@ -9,17 +24,13 @@ import {
   SubCategories
 } from '../../constants/CompanyProfileConstant'
 import ImageUploadComponent from '../ImageUpload/ImageUpload.component'
-import {
-  CompanyProfileValidation,
-  MAX_LENGTH_VALIDATOR,
-  REQUIRED_VALIDATOR
-} from '../../validate/CompanyProfileValidation'
-import { COMPANY_DEFAULT_MODEL } from '../../default_models-remove/CompanyProfileModel'
+import { CompanyProfileValidation } from '../../validate/CompanyProfileValidation'
 import TextArea from 'antd/es/input/TextArea'
 
 const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
   //state
   const [totalSelect, setTotalSelect] = useState(0)
+  // eslint-disable-next-line no-unused-vars
   const [benefitId, setBenefitId] = useState(0)
   const [url, setUrl] = useState(urlValue)
 
@@ -38,7 +49,11 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
         tooltip="This is required"
         rules={editable ? CompanyProfileValidation.name : []}
       >
-        {noStyle ? <Text>{data.name}</Text> : <Input placeholder="Company name" style={{ width: 300 }} />}
+        {noStyle ? (
+          <Text>{data.name}</Text>
+        ) : (
+          <Input placeholder="Company name" style={{ width: 300 }} />
+        )}
       </Form.Item>
       <Form.Item
         shouldUpdate
@@ -48,7 +63,11 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
         rules={editable ? CompanyProfileValidation.email : []}
         name="email"
       >
-        {noStyle ? <Text>{data.email}</Text> : <Input placeholder="Company email" style={{ width: 250 }} />}
+        {noStyle ? (
+          <Text>{data.email}</Text>
+        ) : (
+          <Input placeholder="Company email" style={{ width: 250 }} />
+        )}
       </Form.Item>
       <Form.Item
         shouldUpdate
@@ -57,7 +76,11 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
         hasFeedback
         rules={editable ? CompanyProfileValidation.phone : []}
       >
-        {noStyle ? <Text>{data.phone}</Text> : <Input placeholder="Company phone" style={{ width: 250 }} />}
+        {noStyle ? (
+          <Text>{data.phone}</Text>
+        ) : (
+          <Input placeholder="Company phone" style={{ width: 250 }} />
+        )}
       </Form.Item>
       <Form.Item
         shouldUpdate
@@ -69,7 +92,11 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
         name="address"
         rules={editable ? CompanyProfileValidation.address : []}
       >
-        {noStyle ? <Text>{data.address}</Text> : <Input placeholder="Company address" style={{ width: 350 }} />}
+        {noStyle ? (
+          <Text>{data.address}</Text>
+        ) : (
+          <Input placeholder="Company address" style={{ width: 350 }} />
+        )}
       </Form.Item>
       <Form.Item
         shouldUpdate
@@ -79,7 +106,11 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
         rules={editable ? CompanyProfileValidation.taxId : []}
         name="taxId"
       >
-        {noStyle ? <Text>{data.taxId}</Text> : <Input placeholder="Company Tax ID" style={{ width: 300 }} />}
+        {noStyle ? (
+          <Text>{data.taxId}</Text>
+        ) : (
+          <Input placeholder="Company Tax ID" style={{ width: 300 }} />
+        )}
       </Form.Item>
       <Form.Item
         shouldUpdate
@@ -92,7 +123,12 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
         {noStyle ? (
           <Text>{data.companyDescription}</Text>
         ) : (
-          <TextArea showCount maxLength={3000} placeholder="Company description" style={{ width: 300 }} />
+          <TextArea
+            showCount
+            maxLength={3000}
+            placeholder="Company description"
+            style={{ width: 300 }}
+          />
         )}
       </Form.Item>
       <div className="site-input-group-wrapper">
@@ -150,9 +186,7 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
         <Select
           hidden={noStyle}
           style={{ width: 150 }}
-          onChange={value => {
-            console.log(`size selected: ${value}`)
-          }}
+          onChange={() => {}}
           defaultValue="Select a size..."
         >
           {SizeConst.map(item => (
@@ -181,9 +215,7 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
             }
             setTotalSelect(value.length)
           }}
-          onSearch={value => {
-            console.log(value)
-          }}
+          onSearch={() => {}}
           dropdownRender={menu => (
             <>
               {menu}
@@ -191,14 +223,18 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
               <Text type={totalSelect > 3 ? 'danger' : 'success'}>
                 {totalSelect > 3
                   ? null
-                  : `You can select ${NUM_OF_SIZE_MAXIMUM} items only. (${NUM_OF_SIZE_MAXIMUM - totalSelect} left)`}
+                  : `You can select ${NUM_OF_SIZE_MAXIMUM} items only. (${
+                      NUM_OF_SIZE_MAXIMUM - totalSelect
+                    } left)`}
               </Text>
             </>
           )}
         >
           {CategoriesConst.map(category => (
             <OptGroup label={category.label}>
-              {SubCategories.filter(item => item.category_id === category.value).map(item => (
+              {SubCategories.filter(
+                item => item.category_id === category.value
+              ).map(item => (
                 <Option value={item.value}>{item.label}</Option>
               ))}
             </OptGroup>
@@ -211,7 +247,10 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
             <>
               {fields.map(({ key, name, ...restField }) => {
                 return (
-                  <div key={key} style={{ display: 'flex', flexDirection: 'row' }}>
+                  <div
+                    key={key}
+                    style={{ display: 'flex', flexDirection: 'row' }}
+                  >
                     <Form.Item
                       noStyle={noStyle}
                       {...restField}
@@ -239,12 +278,21 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
                       {...restField}
                       name={[name, 'description']}
                       label="Description"
-                      rules={editable ? CompanyProfileValidation.description : []}
+                      rules={
+                        editable ? CompanyProfileValidation.description : []
+                      }
                       style={{ width: 400 }}
                     >
-                      <TextArea hidden={noStyle} placeholder="Description" showCount maxLength={3000} />
+                      <TextArea
+                        hidden={noStyle}
+                        placeholder="Description"
+                        showCount
+                        maxLength={3000}
+                      />
                     </Form.Item>
-                    {noStyle !== true ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
+                    {noStyle !== true ? (
+                      <MinusCircleOutlined onClick={() => remove(name)} />
+                    ) : null}
                   </div>
                 )
               })}

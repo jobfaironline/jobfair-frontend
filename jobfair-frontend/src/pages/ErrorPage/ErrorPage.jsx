@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react'
-import { Result, Button } from 'antd'
+import { Button, Result } from 'antd'
 import { useHistory } from 'react-router-dom'
 import { PATH } from '../../constants/Paths/Path'
 import { useSelector } from 'react-redux'
+
 const ErrorPage = ({ code = 404 }) => {
   const { isAuthUser } = useSelector(state => state.authentication)
   const history = useHistory()

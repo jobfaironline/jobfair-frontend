@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import JobFairDetailComponent from '../../components/JobFairDetail/JobFairDetail.company.component'
-import {getJobFairPlanById} from '../../services/job-fair-controller/JobFairConTrollerService'
-import {notification} from "antd";
+import { getJobFairPlanById } from '../../services/job-fair-controller/JobFairConTrollerService'
+import { notification } from 'antd'
 
 const JobFairDetailCompanyContainer = props => {
-  const {id} = props
+  const { id } = props
   const [jobFairDetailData, setJobFairDetailData] = useState()
   const getJobFairDetail = async () => {
     getJobFairPlanById(id)
@@ -28,7 +28,7 @@ const JobFairDetailCompanyContainer = props => {
   }, [])
   return (
     <>
-      <JobFairDetailComponent data={jobFairDetailData}/>
+      <JobFairDetailComponent data={jobFairDetailData} />
     </>
   )
 }

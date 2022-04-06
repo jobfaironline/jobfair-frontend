@@ -11,7 +11,7 @@ const store = configureStore({
     jobPosition: jobPositionsReducer,
     agora: agoraReducer,
     decorateBooth: decorateBoothReducer,
-    inventory: inventoryReducer,
+    inventory: inventoryReducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

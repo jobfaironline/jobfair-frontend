@@ -1,5 +1,6 @@
 import { CallAPI } from '../axiosBase'
 import { ENDPOINT_APPLICATION } from '../../constants/Endpoints/application-controller/ApplicationControllerEndpoint'
+
 export const getAllApplication = (
   pageNumber,
   pageSize,
@@ -33,15 +34,18 @@ export const getAllApplication = (
 }
 
 export const getApplication = applicationId => {
-  return CallAPI(`${ENDPOINT_APPLICATION}/company-general/${applicationId}`, 'GET')
+  return CallAPI(
+    `${ENDPOINT_APPLICATION}/company-general/${applicationId}`,
+    'GET'
+  )
 }
 
 export const evaluateApplication = body => {
   return CallAPI(`${ENDPOINT_APPLICATION}/evaluate`, 'POST', body)
 }
 
-export const draftApplication = (body) => CallAPI(`${ENDPOINT_APPLICATION}/draft`, 'POST', body)
+export const draftApplication = body =>
+  CallAPI(`${ENDPOINT_APPLICATION}/draft`, 'POST', body)
 
-export const submitApplication = (applicationId) => CallAPI(`${ENDPOINT_APPLICATION}/submit/${applicationId}`, 'POST');
-
-
+export const submitApplication = applicationId =>
+  CallAPI(`${ENDPOINT_APPLICATION}/submit/${applicationId}`, 'POST')
