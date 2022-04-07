@@ -22,6 +22,7 @@ jobs:
           touch .env.production
           echo ${{secrets.REACT_APP_API_URL}} >> .env.production
           echo ${{secrets.REACT_APP_AGORA_APP_ID}} >> .env.production
+          pwd
      working-directory: ./jobfair-frontend
    - run: npm install
      working-directory: ./jobfair-frontend
