@@ -1,10 +1,10 @@
 import { Col, Modal, Typography, notification } from 'antd';
 import { CompanyRegistrationStatus } from '../../constants/CompanyRegistrationConst';
 import { convertEnumToString } from '../../utils/common';
-import { evaluateJobFairPlanAPI } from '../../services/job-fair-controller/JobFairConTrollerService';
-import { getAccountByIdAPI } from '../../services/account-controller/AccountControllerService';
-import { getLayoutDetail } from '../../services/layout-controller/LayoutControllerService';
-import { getRegistrationByJobFairId } from '../../services/company-registration-controller/CompanyRegistrationControllerService';
+import { evaluateJobFairPlanAPI } from '../../services/jobhub-api/JobFairConTrollerService';
+import { getAccountByIdAPI } from '../../services/jobhub-api/AccountControllerService';
+import { getLayoutDetail } from '../../services/jobhub-api/LayoutControllerService';
+import { getRegistrationByJobFairId } from '../../services/jobhub-api/CompanyRegistrationControllerService';
 import { mapperJobFairDetail } from '../../utils/mapperJobFairDetail';
 import { useHistory } from 'react-router-dom';
 import JobFairDetailComponent from '../../components/customized-components/JobFairDetail/JobFairDetail.component';

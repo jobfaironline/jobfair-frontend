@@ -1,7 +1,7 @@
 import { PATH, PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import { generatePath, useHistory } from 'react-router-dom';
-import { getCompanyBoothByJobFairId } from '../../../services/company-booth-controller/CompanyBoothControllerService';
-import { getJobFairForCompany } from '../../../services/job-fair-controller/JobFairConTrollerService';
+import { getCompanyBoothByJobFairId } from '../../../services/jobhub-api/CompanyBoothControllerService';
+import { getJobFairForCompany } from '../../../services/jobhub-api/JobFairConTrollerService';
 import { mapperJobFairDetail } from '../../../utils/mapperJobFairList';
 import { notification } from 'antd';
 import CompanyJobFairActionButton from '../../../components/lists/JobFairList/ActionButton/JobFairActionButton.component';

@@ -1,6 +1,6 @@
 import { Form, notification } from 'antd';
 import { PATH } from '../../../constants/Paths/Path';
-import { forgotPasswordAPI } from '../../../services/account-controller/AccountControllerService';
+import { forgotPasswordAPI } from '../../../services/jobhub-api/AccountControllerService';
 import { useHistory } from 'react-router-dom';
 import ForgotPasswordFormComponent from '../../../components/forms/ForgotPasswordForm/ForgotPasswordForm.component';
 import React from 'react';

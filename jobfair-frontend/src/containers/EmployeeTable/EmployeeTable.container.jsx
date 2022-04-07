@@ -1,8 +1,5 @@
 import { Button, Popconfirm, Space, notification } from 'antd';
-import {
-  deleteEmployeeAPI,
-  getEmployeesAPI
-} from '../../services/company-employee-controller/CompanyEmployeeControllerService';
+import { deleteEmployeeAPI, getEmployeesAPI } from '../../services/jobhub-api/CompanyEmployeeControllerService';
 import { useSelector } from 'react-redux';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import EmployeeDrawer from './EmployeeDrawer.container';

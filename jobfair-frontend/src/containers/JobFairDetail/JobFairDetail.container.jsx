@@ -1,7 +1,7 @@
 import { CompanyRegistrationStatus } from '../../constants/CompanyRegistrationConst';
-import { evaluateJobFairPlanAPI } from '../../services/job-fair-controller/JobFairConTrollerService';
-import { getLayoutDetail } from '../../services/layout-controller/LayoutControllerService';
-import { getRegistrationByJobFairId } from '../../services/company-registration-controller/CompanyRegistrationControllerService';
+import { evaluateJobFairPlanAPI } from '../../services/jobhub-api/JobFairConTrollerService';
+import { getLayoutDetail } from '../../services/jobhub-api/LayoutControllerService';
+import { getRegistrationByJobFairId } from '../../services/jobhub-api/CompanyRegistrationControllerService';
 import { notification } from 'antd';
 import { useHistory, useLocation } from 'react-router-dom';
 import JobFairDetailComponent from '../../components/customized-components/JobFairDetail/JobFairDetail.component';

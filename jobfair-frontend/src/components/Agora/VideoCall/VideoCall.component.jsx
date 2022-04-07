@@ -13,7 +13,7 @@ import PowerOffIcon from '@mui/icons-material/PowerOff';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 
-import { getAgoraRTCToken } from '../../../services/agora-token-controller/AgoraTokenControllerService';
+import { getAgoraRTCToken } from '../../../services/jobhub-api/AgoraTokenControllerService';
 import styles from './VideoCall.module.scss';
 
 const { REACT_APP_AGORA_APP_ID } = process.env;

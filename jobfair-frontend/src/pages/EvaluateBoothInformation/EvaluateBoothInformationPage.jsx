@@ -1,5 +1,5 @@
 import { PageHeader, notification } from 'antd';
-import { getJobFairPlanById } from '../../services/job-fair-controller/JobFairConTrollerService';
+import { getJobFairPlanById } from '../../services/jobhub-api/JobFairConTrollerService';
 import { useHistory, useParams } from 'react-router-dom';
 import EvaluateBoothInformationTableContainer from '../../containers/EvaluateBoothInformationTable/EvaluateBoothInformationTable.container';
 import React, { useEffect, useState } from 'react';

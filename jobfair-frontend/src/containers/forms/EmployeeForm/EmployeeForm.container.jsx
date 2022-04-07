@@ -1,5 +1,5 @@
 import { Form, notification } from 'antd';
-import { createEmployeesAPI } from '../../../services/company-employee-controller/CompanyEmployeeControllerService';
+import { createEmployeesAPI } from '../../../services/jobhub-api/CompanyEmployeeControllerService';
 import { useSelector } from 'react-redux';
 import EmployeeFormComponent from '../../../components/forms/EmployeeForm/EmployeeForm.component';
 import React from 'react';

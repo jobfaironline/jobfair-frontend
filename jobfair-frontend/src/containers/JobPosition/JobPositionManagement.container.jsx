@@ -1,8 +1,8 @@
 import { Button, Space, Typography, Upload, notification } from 'antd';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { UploadOutlined } from '@ant-design/icons';
-import { getEmployeesAPI } from '../../services/company-employee-controller/CompanyEmployeeControllerService';
-import { getJobPositionsAPI, uploadCSVFile } from '../../services/job-controller/JobControllerService';
+import { getEmployeesAPI } from '../../services/jobhub-api/CompanyEmployeeControllerService';
+import { getJobPositionsAPI, uploadCSVFile } from '../../services/jobhub-api/JobControllerService';
 import { handleCreateListEmailFromListAccount, handleCreateListNameFromListAccount } from '../../utils/common';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';

@@ -1,5 +1,5 @@
 import { COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../constants/RoleType';
-import { getJobFairPlanById } from '../../services/job-fair-controller/JobFairConTrollerService';
+import { getJobFairPlanById } from '../../services/jobhub-api/JobFairConTrollerService';
 import { notification } from 'antd';
 import JobFairDetailComponent, {
   JobFairDetailForCompany

@@ -2,7 +2,7 @@ import { COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../../constants/RoleType';
 import { EyeOutlined } from '@ant-design/icons';
 import { Input, Space, Tooltip, notification } from 'antd';
 import { PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path';
-import { getAllApplication } from '../../../services/application-controller/ApplicationControllerService';
+import { getAllApplication } from '../../../services/jobhub-api/ApplicationControllerService';
 import { useHistory } from 'react-router-dom';
 import ApplicationTableColumn from '../../CommonTableComponent/columns/ApplicationTable.column';
 import CommonTableContainer from '../../CommonTableComponent/CommonTableComponent.container';

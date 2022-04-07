@@ -3,7 +3,7 @@ import { convertToDateValue, handleConvertRangePicker } from '../../../utils/com
 import {
   getAttendantDetailAPI,
   updateAttendantProfileAPI
-} from '../../../services/attendant-controller/AttendantControllerService';
+} from '../../../services/jobhub-api/AttendantControllerService';
 import { useSelector } from 'react-redux';
 import AttendantProfileFormComponent from '../../../components/forms/AttendantProfileForm/AttendantProfileForm.component';
 import React, { useEffect, useState } from 'react';

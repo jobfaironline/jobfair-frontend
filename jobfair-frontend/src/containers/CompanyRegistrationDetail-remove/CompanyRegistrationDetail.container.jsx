@@ -1,4 +1,4 @@
-import { evaluateJobFairRegistrationAPI } from '../../services/company-registration-controller/CompanyRegistrationControllerService';
+import { evaluateJobFairRegistrationAPI } from '../../services/jobhub-api/CompanyRegistrationControllerService';
 import { notification } from 'antd';
 import { useHistory, useLocation } from 'react-router-dom';
 import CompanyRegistrationDetailComponent from '../../components/customized-components/CompanyRegistrationDetail/CompanyRegistrationDetail.component';

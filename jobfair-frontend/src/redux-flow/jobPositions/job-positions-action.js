@@ -1,4 +1,4 @@
-import { getJobPositionsAPI } from '../../services/job-controller/JobControllerService';
+import { getJobPositionsAPI } from '../../services/jobhub-api/JobControllerService';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchJobPositions = createAsyncThunk(

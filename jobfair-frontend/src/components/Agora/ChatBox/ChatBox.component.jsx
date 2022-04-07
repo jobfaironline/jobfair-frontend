@@ -1,7 +1,7 @@
 import { ArrowsAltOutlined, CloseOutlined, MinusOutlined } from '@ant-design/icons';
 import { Form, Input } from 'antd';
 import { REQUIRED_VALIDATOR } from '../../../validate/GeneralValidation';
-import { getAgoraRTMToken } from '../../../services/agora-token-controller/AgoraTokenControllerService';
+import { getAgoraRTMToken } from '../../../services/jobhub-api/AgoraTokenControllerService';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import AgoraRTC from 'agora-rtc-react';

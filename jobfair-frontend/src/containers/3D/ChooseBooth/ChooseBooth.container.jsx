@@ -1,5 +1,5 @@
 import { ChooseBoothCanvas } from '../../../components/3D/ChooseBooth/ChooseBoothCanvas.component';
-import { getLayoutAndAvailableSlotByJobFairId } from '../../../services/layout-controller/LayoutControllerService';
+import { getLayoutAndAvailableSlotByJobFairId } from '../../../services/jobhub-api/LayoutControllerService';
 import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import React, { useEffect, useState } from 'react';
 import ReactLoading from 'react-loading';

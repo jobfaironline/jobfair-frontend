@@ -1,8 +1,8 @@
 import { PATH_ADMIN } from '../../constants/Paths/Path';
 import { Pagination, Space, notification } from 'antd';
 import { convertToDateString } from '../../utils/common';
-import { getCompanyProfileAPI } from '../../services/company-controller/CompanyControllerService';
-import { getRegistrationByJobFairId } from '../../services/company-registration-controller/CompanyRegistrationControllerService';
+import { getCompanyProfileAPI } from '../../services/jobhub-api/CompanyControllerService';
+import { getRegistrationByJobFairId } from '../../services/jobhub-api/CompanyRegistrationControllerService';
 import { useHistory, useParams } from 'react-router-dom';
 import EvaluateBoothInformationTableComponentRefactor from '../../components/EvaluateBoothInformationTable/EvaluateBoothInformationTable.component-refactor';
 import React, { useLayoutEffect, useState } from 'react';

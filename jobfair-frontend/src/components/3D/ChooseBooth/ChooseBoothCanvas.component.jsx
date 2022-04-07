@@ -11,8 +11,8 @@ import { SkyComponent, SkyType } from '../ThreeJSBaseComponent/Sky.component';
 import { SkyTypeSelect } from '../ThreeJSBaseComponent/SelectSkyType.component';
 import { Stats } from '@react-three/drei';
 import { generatePath, useHistory } from 'react-router-dom';
-import { getLatestApproveRegistration } from '../../../services/company-registration-controller/CompanyRegistrationControllerService';
-import { purchaseBooth } from '../../../services/company-buy-booth-controller/CompanyBuyBoothControllerService';
+import { getLatestApproveRegistration } from '../../../services/jobhub-api/CompanyRegistrationControllerService';
+import { purchaseBooth } from '../../../services/jobhub-api/CompanyBuyBoothControllerService';
 import React, { Fragment, useState } from 'react';
 
 export const ChooseBoothCanvas = (props) => {

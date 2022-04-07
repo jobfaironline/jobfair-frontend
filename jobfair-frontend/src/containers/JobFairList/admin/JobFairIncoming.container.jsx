@@ -1,6 +1,6 @@
 import { MoreOutlined } from '@ant-design/icons';
 import { Space, Tooltip, notification } from 'antd';
-import { getJobFairIncomingForAdmin } from '../../../services/job-fair-controller/JobFairConTrollerService';
+import { getJobFairIncomingForAdmin } from '../../../services/jobhub-api/JobFairConTrollerService';
 import { mapperResponseJobFairForAdmin } from '../../../utils/mapperJobFairDetail';
 import JobFairDetailModalContainer from '../../JobFairDetail/JobFairDetailModal.container';
 import JobFairTableForAdminComponentRefactor from '../../../components/JobFairTable/JobFairTableForAdmin.component-refactor';

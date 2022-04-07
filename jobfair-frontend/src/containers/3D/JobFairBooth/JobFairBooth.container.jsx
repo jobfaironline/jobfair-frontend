@@ -8,7 +8,7 @@ import {
   loadFBXModel,
   loadGLBModel
 } from '../../../utils/ThreeJS/threeJSUtil';
-import { getCompanyBoothLatestLayout } from '../../../services/company-booth-layout-controller/CompanyBoothLayoutControllerService';
+import { getCompanyBoothLatestLayout } from '../../../services/jobhub-api/CompanyBoothLayoutControllerService';
 import { useSelector } from 'react-redux';
 import BasicCharacterControl from '../../../utils/ThreeJS/BasicCharacterControl';
 import BasicControlInput from '../../../utils/ThreeJS/BasicControlInput';

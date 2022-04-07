@@ -1,7 +1,7 @@
 import { Inventory } from '../../components/customized-components/Inventory/Inventory/Inventory.component';
 import { InventoryButton } from '../../components/customized-components/Inventory/InventoryButton/InventoryButton.component';
 import { Modal } from 'antd';
-import { getAttendantCv } from '../../services/cv-controller/CvControllerService';
+import { getAttendantCv } from '../../services/jobhub-api/CvControllerService';
 import { inventoryAction } from '../../redux-flow/inventory/inventory-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';

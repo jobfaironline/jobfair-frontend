@@ -1,5 +1,5 @@
 import { Form, notification } from 'antd';
-import { createJobPositionsAPI } from '../../../services/job-controller/JobControllerService';
+import { createJobPositionsAPI } from '../../../services/jobhub-api/JobControllerService';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import CreateJobPositionFormComponent from '../../../components/forms/CreateJobPositionForm/CreateJobPositionForm.component';

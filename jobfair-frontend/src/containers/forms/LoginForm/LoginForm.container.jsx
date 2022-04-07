@@ -1,7 +1,7 @@
 import { Form, notification } from 'antd';
 import { PATH, PATH_ADMIN } from '../../../constants/Paths/Path';
 import { SigninHandler } from '../../../redux-flow/authentication/authentication-action';
-import { signInAPI } from '../../../services/auth-controller/AuthControllerService';
+import { signInAPI } from '../../../services/jobhub-api/AuthControllerService';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import LoginFormComponent from '../../../components/forms/LoginForm/LoginForm.component';

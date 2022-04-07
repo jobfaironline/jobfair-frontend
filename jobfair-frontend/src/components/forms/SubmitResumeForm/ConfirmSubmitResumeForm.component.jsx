@@ -1,9 +1,6 @@
 import { ApplicationValidation } from '../../../validate/ApplicationValidation';
 import { Button, Form, Space, notification } from 'antd';
-import {
-  draftApplication,
-  submitApplication
-} from '../../../services/application-controller/ApplicationControllerService';
+import { draftApplication, submitApplication } from '../../../services/jobhub-api/ApplicationControllerService';
 import React from 'react';
 import TextArea from 'antd/es/input/TextArea';
 

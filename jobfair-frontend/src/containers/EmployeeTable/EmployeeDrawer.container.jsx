@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Spin, notification } from 'antd';
-import { getEmployeeByIdAPI } from '../../services/company-employee-controller/CompanyEmployeeControllerService';
+import { getEmployeeByIdAPI } from '../../services/jobhub-api/CompanyEmployeeControllerService';
 import EmployeeDrawerComponent from '../../components/customized-components/EmployeeDetailDrawer/EmployeeDetailDrawer.component';
 import React, { useLayoutEffect, useState } from 'react';
 

@@ -1,5 +1,5 @@
 import { Form, notification } from 'antd';
-import { changePasswordAPI } from '../../../services/account-controller/AccountControllerService';
+import { changePasswordAPI } from '../../../services/jobhub-api/AccountControllerService';
 import ChangePasswordFormComponent from '../../../components/forms/ChangePasswordForm/ChangePasswordForm.component';
 import React from 'react';
 

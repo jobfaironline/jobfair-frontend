@@ -1,5 +1,5 @@
 import { Form, notification } from 'antd';
-import { deleteJobPositionAPI, updateJobPositionAPI } from '../../../services/job-controller/JobControllerService';
+import { deleteJobPositionAPI, updateJobPositionAPI } from '../../../services/jobhub-api/JobControllerService';
 import { useHistory, useLocation } from 'react-router-dom';
 import JobPositionDetailFormComponent from '../../../components/forms/JobPositionDetailForm/JobPositionDetailForm.component';
 import React, { useEffect } from 'react';

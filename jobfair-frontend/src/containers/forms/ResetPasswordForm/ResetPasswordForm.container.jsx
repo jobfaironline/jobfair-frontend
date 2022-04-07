@@ -1,6 +1,6 @@
 import { Form, notification } from 'antd';
 import { PATH } from '../../../constants/Paths/Path';
-import { resetPasswordAPI } from '../../../services/reset-password-controller/ResetPasswordControllerService';
+import { resetPasswordAPI } from '../../../services/jobhub-api/ResetPasswordControllerService';
 import { useHistory, useLocation } from 'react-router-dom';
 import React, { useState } from 'react';
 import ResetPasswordFormComponent from '../../../components/forms/ResetPasswordForm/ResetPasswordForm.component';

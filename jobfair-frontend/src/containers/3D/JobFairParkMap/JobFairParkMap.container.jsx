@@ -3,7 +3,7 @@ import { LoadingComponent } from '../../../components/commons/Loading/Loading.co
 import { PATH } from '../../../constants/Paths/Path';
 import { addVideoTexture, fixTextureOffset, loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import { generatePath, useHistory } from 'react-router-dom';
-import { getLayoutInformationForJobFairPark } from '../../../services/job-fair-controller/JobFairConTrollerService';
+import { getLayoutInformationForJobFairPark } from '../../../services/jobhub-api/JobFairConTrollerService';
 import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
 import React, { useEffect, useState } from 'react';
 

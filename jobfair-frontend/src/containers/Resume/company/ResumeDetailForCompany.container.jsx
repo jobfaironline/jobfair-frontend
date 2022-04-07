@@ -1,9 +1,6 @@
 import { Form, Spin, notification } from 'antd';
 import { convertToDateValue } from '../../../utils/common';
-import {
-  evaluateApplication,
-  getApplication
-} from '../../../services/application-controller/ApplicationControllerService';
+import { evaluateApplication, getApplication } from '../../../services/jobhub-api/ApplicationControllerService';
 import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import ResumeDetailComponent from '../../../components/customized-components/Resume/ResumeDetail.component';

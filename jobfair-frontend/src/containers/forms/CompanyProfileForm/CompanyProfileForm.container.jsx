@@ -1,8 +1,5 @@
 import { Affix, Button, Form, Spin, notification } from 'antd';
-import {
-  getCompanyProfileAPI,
-  updateCompanyProfileAPI
-} from '../../../services/company-controller/CompanyControllerService';
+import { getCompanyProfileAPI, updateCompanyProfileAPI } from '../../../services/jobhub-api/CompanyControllerService';
 import { useSelector } from 'react-redux';
 import CompanyProfileForm from '../../../components/forms/CompanyProfileForm/CompanyProfileForm.component';
 import React, { useEffect, useState } from 'react';

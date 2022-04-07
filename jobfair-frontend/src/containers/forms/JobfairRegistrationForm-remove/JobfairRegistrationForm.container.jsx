@@ -4,8 +4,8 @@ import { PATH } from '../../../constants/Paths/Path';
 import {
   createDraftRegistrationAPI,
   submitRegistrationAPI
-} from '../../../services/company-registration-controller/CompanyRegistrationControllerService';
-import { getCompanyProfileAPI } from '../../../services/company-controller/CompanyControllerService';
+} from '../../../services/jobhub-api/CompanyRegistrationControllerService';
+import { getCompanyProfileAPI } from '../../../services/jobhub-api/CompanyControllerService';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ConfirmComponent from '../../../components/customized-components/Confirm/Confirm.component';

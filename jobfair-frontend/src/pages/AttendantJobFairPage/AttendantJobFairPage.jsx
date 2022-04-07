@@ -4,7 +4,7 @@ import { agoraAction } from '../../redux-flow/agora/agora-slice';
 import { createClient } from 'agora-rtc-react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import RTMClient from '../../services/RTMClient';
+import RTMClient from '../../services/agora/RTMClient';
 import React, { useEffect, useRef } from 'react';
 
 const config = {

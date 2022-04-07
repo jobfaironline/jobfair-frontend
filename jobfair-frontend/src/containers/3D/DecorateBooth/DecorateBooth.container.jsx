@@ -28,7 +28,7 @@ import {
   saveDecoratedBooth,
   saveLayoutVideoWithFile,
   saveLayoutVideoWithUrl
-} from '../../../services/company-booth-layout-controller/CompanyBoothLayoutControllerService';
+} from '../../../services/jobhub-api/CompanyBoothLayoutControllerService';
 import { notify } from '../../../utils/toastutil';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
