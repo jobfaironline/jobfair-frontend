@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import JobFairDetailComponent from '../../components/JobFairDetail/JobFairDetail.company.component'
+import JobFairDetailComponent, {
+  JobFairDetailForCompany
+} from '../../components/JobFairDetail/JobFairDetail.company.component'
 import { getJobFairPlanById } from '../../services/job-fair-controller/JobFairConTrollerService'
 import { notification } from 'antd'
+import { COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../constants/RoleType'
 
 const JobFairDetailCompanyContainer = props => {
-  const { id } = props
+  const { id, role } = props
   const [jobFairDetailData, setJobFairDetailData] = useState()
   const getJobFairDetail = async () => {
     getJobFairPlanById(id)
@@ -26,9 +29,19 @@ const JobFairDetailCompanyContainer = props => {
   useEffect(() => {
     getJobFairDetail()
   }, [])
+
+  const handleDetailForCompany = (role, data) => {
+    switch (role) {
+      case COMPANY_MANAGER:
+      case COMPANY_EMPLOYEE:
+        return <JobFairDetailForCompany data={data} />
+      default:
+        return null
+    }
+  }
   return (
     <>
-      <JobFairDetailComponent data={jobFairDetailData} />
+      <JobFairDetailComponent data={jobFairDetailData} role={role} handleDetailForCompany={handleDetailForCompany} />
     </>
   )
 }

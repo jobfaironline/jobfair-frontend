@@ -6,7 +6,7 @@ import CompanyManagerRouter from './components/CompanyManagerRouter'
 import { ResultSuccessPage } from '../pages/ResultPage/ResultSuccessPage'
 import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage'
 import JobFairTablePage from '../pages/JobFairTablePage/JobFairTablePage'
-import JobFairListPage from '../pages/JobFairListPage-remove/JobFairListPage'
+import JobFairListPage from '../pages/JobFairListPage/JobFairListPage'
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage'
 import FAQPage from '../pages/FAQPage/FAQPage'
 import ResultFailedPage from '../pages/ResultPage/ResultFailedPage'
@@ -32,7 +32,6 @@ import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegister
 import JobFairDetailPage from '../pages/JobFairDetailPage/JobFairDetailPage-remove'
 import JobFairPlanPage from '../pages/JobFairPlanPage-remove/JobFairPlanPage'
 import CompanyRegistrationDetailPage from '../pages/CompanyRegistrationDetailPage/CompanyRegistrationDetailPage'
-import JobFairAttendantListPage from '../pages/JobFairAttendantListPage-remove/JobFairAttendantListPage'
 import PublicRouter from './components/PublicRouter'
 import ErrorPage from '../pages/ErrorPage/ErrorPage'
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path'
@@ -119,9 +118,9 @@ const AppRouter = () => {
           exact
         />
         <AttendantRouter
-          key={PATH_ATTENDANT.JOB_FAIR_LIST_PAGE}
-          component={() => <JobFairAttendantListPage />}
-          path={PATH_ATTENDANT.JOB_FAIR_LIST_PAGE}
+          key={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}
+          component={() => <JobFairListPage />}
+          path={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}
           exact
         />
         <AttendantRouter
@@ -152,6 +151,12 @@ const AppRouter = () => {
           key={PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE}
           component={() => <ResumeDetailPage />}
           path={PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.JOB_FAIR_DETAIL_PAGE}
+          component={() => <PublicizeJobFairDetailPage />}
+          path={PATH_COMPANY_EMPLOYEE.JOB_FAIR_DETAIL_PAGE}
           exact
         />
         <CompanyManagerRouter

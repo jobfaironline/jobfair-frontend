@@ -1,54 +1,41 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import { generatePath, useHistory } from 'react-router-dom'
-import JobFairListManagementComponent from '../../../components/JobFairList/JobFairList.management.component'
-import { getAvailableJobFairForCompany } from '../../../services/job-fair-controller/JobFairConTrollerService'
+import { getJobFairForCompany } from '../../../services/job-fair-controller/JobFairConTrollerService'
 import { getCompanyBoothByJobFairId } from '../../../services/company-booth-controller/CompanyBoothControllerService'
 import { PATH, PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path'
-import { convertToDateString } from '../../../utils/common'
 import { notification } from 'antd'
+import JobFairListManagementComponent from '../../../components/JobFairList/JobFairList.management.component'
+import CompanyJobFairActionButton from '../../../components/JobFairList/CompanyJobFairActionButton.component'
+import { mapperJobFairDetail } from '../../../utils/mapperJobFairList'
 
-const JobFairListAvailableContainer = () => {
+const JobFairListManagerContainer = props => {
+  const { tabStatus } = props
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
   //paging state
+  // eslint-disable-next-line no-unused-vars
   const [currentPage, setCurrentPage] = useState(0)
+  // eslint-disable-next-line no-unused-vars
   const [pageSize, setPageSize] = useState(100)
 
   const [searchResult, setSearchResult] = useState([])
-  const [count, setCount] = useState(0)
 
   const history = useHistory()
+
+  const setResponseResult = res => {
+    const result = res.data.content.map(item => mapperJobFairDetail(item))
+    setData([...data, ...result])
+    setSearchResult([...data, ...result])
+    setLoading(false)
+  }
 
   const loadMoreData = () => {
     if (loading) {
       return
     }
     setLoading(true)
-    getAvailableJobFairForCompany(currentPage, pageSize)
-      .then(res => {
-        setCount(count + 1)
-        const result = res.data.content.map(item => {
-          return {
-            id: item.jobFair.id,
-            status: item.status,
-            companyId: item.companyId,
-            startTime: convertToDateString(item.jobFair.startTime),
-            endTime: convertToDateString(item.jobFair.endTime),
-            companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime),
-            description: item.jobFair.description,
-            layoutId: item.jobFair.layoutId,
-            thumbnail: item.jobFair.thumbnail,
-            name: item.jobFair.name,
-            estimateParticipant: item.jobFair.estimateParticipant,
-            targetCompany: item.jobFair.targetCompany,
-            targetAttendant: item.jobFair.targetAttendant
-          }
-        })
-        setData([...data, ...result])
-        setSearchResult([...data, ...result])
-        setLoading(false)
-      })
+    getJobFairForCompany(currentPage, pageSize, tabStatus)
+      .then(res => setResponseResult(res))
       .catch(() => {
         setLoading(false)
       })
@@ -99,25 +86,35 @@ const JobFairListAvailableContainer = () => {
     history.push(url)
   }
 
+  const jobFairListProps = {
+    handleFilterByStatus: handleFilterByStatus,
+    handleViewDetail: handleViewDetail,
+    handleClearFilter: handleClearFilter,
+    data: data,
+    loadMoreData: loadMoreData,
+    searchResult: searchResult,
+    getCompanyBoothId: getCompanyBoothId,
+    extraHeaderComponent: item => {
+      return [
+        <CompanyJobFairActionButton
+          getCompanyBoothId={getCompanyBoothId}
+          item={item}
+          handleRedirect={handleRedirect}
+          handleViewMap={handleViewMap}
+        />
+      ]
+    }
+  }
+
   useEffect(() => {
     loadMoreData()
   }, [])
 
   return (
     <>
-      <JobFairListManagementComponent
-        data={data}
-        handleRedirect={handleRedirect}
-        loadMoreData={loadMoreData}
-        handleFilterByStatus={handleFilterByStatus}
-        searchResult={searchResult}
-        getCompanyBoothId={getCompanyBoothId}
-        handleClearFilter={handleClearFilter}
-        handleViewDetail={handleViewDetail}
-        handleViewMap={handleViewMap}
-      />
+      <JobFairListManagementComponent {...jobFairListProps} />
     </>
   )
 }
 
-export default JobFairListAvailableContainer
+export default JobFairListManagerContainer

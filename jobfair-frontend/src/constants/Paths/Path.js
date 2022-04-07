@@ -40,7 +40,8 @@ export const PATH_ATTENDANT = {
 export const PATH_COMPANY_EMPLOYEE = {
   COMPANY_PROFILE_PAGE: '/employee/company-profile',
   APPLICATION_MANAGEMENT_PAGE: '/employee/application-management',
-  RESUME_DETAIL_PAGE: '/employee/resume-detail'
+  RESUME_DETAIL_PAGE: '/employee/resume-detail',
+  JOB_FAIR_DETAIL_PAGE: '/employee/job-fair-detail'
 }
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',

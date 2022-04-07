@@ -5,7 +5,7 @@ import { convertToDateString } from '../../utils/common'
 const { Text } = Typography
 
 const JobFairDetailCompanyComponent = props => {
-  const { data } = props
+  const { data, role, handleDetailForCompany } = props
   if (data === undefined) {
     return <Spin />
   }
@@ -39,36 +39,7 @@ const JobFairDetailCompanyComponent = props => {
                   </Text>
                 </Col>
               </Row>
-              <Row>
-                <Col span={24}>
-                  <Text strong>Company register time: </Text>
-                  <Text italic>
-                    {convertToDateString(data?.companyRegisterStartTime)}
-                    {' → '}
-                    {convertToDateString(data?.companyRegisterEndTime)}
-                  </Text>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={24}>
-                  <Text strong>Company buy booth time: </Text>
-                  <Text italic>
-                    {convertToDateString(data?.companyBuyBoothStartTime)}
-                    {' → '}
-                    {convertToDateString(data?.companyBuyBoothEndTime)}
-                  </Text>
-                </Col>
-              </Row>
-              <Row>
-                <Col span={24}>
-                  <Text strong>Estimated number of participants: </Text>
-                  <Text italic>{data?.estimateParticipant}</Text>
-                </Col>
-                <Col span={24}>
-                  <Text strong>Target company: </Text>
-                  <Text italic>{data?.targetCompany}</Text>
-                </Col>
-              </Row>
+              {handleDetailForCompany(role, data)}
               <Row>
                 <Col span={16}>
                   <Text strong>Target attendant: </Text>
@@ -79,6 +50,43 @@ const JobFairDetailCompanyComponent = props => {
           </Space>
         </Card>
       ) : null}
+    </>
+  )
+}
+
+export const JobFairDetailForCompany = data => {
+  return (
+    <>
+      <Row>
+        <Col span={24}>
+          <Text strong>Company register time: </Text>
+          <Text italic>
+            {convertToDateString(data?.companyRegisterStartTime)}
+            {' → '}
+            {convertToDateString(data?.companyRegisterEndTime)}
+          </Text>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24}>
+          <Text strong>Company buy booth time: </Text>
+          <Text italic>
+            {convertToDateString(data?.companyBuyBoothStartTime)}
+            {' → '}
+            {convertToDateString(data?.companyBuyBoothEndTime)}
+          </Text>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24}>
+          <Text strong>Estimated number of participants: </Text>
+          <Text italic>{data?.estimateParticipant}</Text>
+        </Col>
+        <Col span={24}>
+          <Text strong>Target company: </Text>
+          <Text italic>{data?.targetCompany}</Text>
+        </Col>
+      </Row>
     </>
   )
 }

@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useLayoutEffect, useState } from 'react'
 import { getEmployeeByIdAPI } from '../../services/company-employee-controller/CompanyEmployeeControllerService'
-import { useSelector } from 'react-redux'
 import { notification, Spin } from 'antd'
 import EmployeeDrawerComponent from '../../components/EmployeeDrawer/EmployeeDrawer.component'
 
