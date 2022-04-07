@@ -17,17 +17,13 @@ jobs:
    - uses: actions/setup-node@v2
      with:
       node-version: '14'
-   - name: Export .env file
+   - name: Build
      run: |
           touch .env.production
           echo ${{secrets.REACT_APP_API_URL}} >> .env.production
           echo ${{secrets.REACT_APP_AGORA_APP_ID}} >> .env.production
-          pwd
-     working-directory: ./jobfair-frontend
-   - run: npm install
-     working-directory: ./jobfair-frontend
-   - run: npm run build
-     working-directory: ./jobfair-frontend
+          npm install
+          npm run build
    - uses: actions/upload-artifact@v2
      with:
       name: frontend
