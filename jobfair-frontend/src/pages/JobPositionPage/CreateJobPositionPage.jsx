@@ -1,16 +1,16 @@
-import React from 'react'
-import CreateJobPositionContainer from '../../containers/CreateJobPosition/CreateJobPosition.container'
-import { PageHeader } from 'antd'
-import { useHistory } from 'react-router-dom'
+import { PageHeader } from 'antd';
+import { useHistory } from 'react-router-dom';
+import CreateJobPositionContainer from '../../containers/CreateJobPosition/CreateJobPosition.container';
+import React from 'react';
 
 const CreateJobPositionPage = () => {
-  const history = useHistory()
+  const history = useHistory();
 
   return (
-    <div className="page">
+    <div className='page'>
       <PageHeader
         style={{ borderBottom: '1px solid grey', width: '100vw' }}
-        className="site-page-header"
+        className='site-page-header'
         onBack={() => history.push('/company/job-position-management')}
         title="Job position's details"
       />
@@ -18,7 +18,7 @@ const CreateJobPositionPage = () => {
         <CreateJobPositionContainer />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreateJobPositionPage
+export default CreateJobPositionPage;

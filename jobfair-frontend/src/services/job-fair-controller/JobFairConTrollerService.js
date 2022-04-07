@@ -1,11 +1,11 @@
-import { CallAPI } from '../axiosBase'
+import { CallAPI } from '../axiosBase';
 import {
   ENDPOINT_GET_JOB_FAIR_FOR_ATTENDANT,
   ENDPOINT_GET_JOB_FAIR_PLAN_OF_COMPANY,
   ENDPOINT_GET_LAYOUT_FOR_JOB_FAIR_PARK,
   ENDPOINT_JOB_FAIR
-} from '../../constants/Endpoints/job-fair-controller/JobFairConTrollerEndpoint'
-import { JOB_FAIR_FOR_ADMIN_STATUS } from '../../constants/JobFairConst'
+} from '../../constants/Endpoints/job-fair-controller/JobFairConTrollerEndpoint';
+import { JOB_FAIR_FOR_ADMIN_STATUS } from '../../constants/JobFairConst';
 
 export const getJobFairForCompany = (pageNumber, pageSize, tabStatus) => {
   switch (tabStatus) {
@@ -17,11 +17,11 @@ export const getJobFairForCompany = (pageNumber, pageSize, tabStatus) => {
         {},
         {
           offset: pageNumber,
-          pageSize: pageSize,
+          pageSize,
           direction: 'DESC',
           sortBy: 'jobFair.createTime'
         }
-      )
+      );
     //history
     case 2:
       return CallAPI(
@@ -30,18 +30,18 @@ export const getJobFairForCompany = (pageNumber, pageSize, tabStatus) => {
         {},
         {
           offset: pageNumber,
-          pageSize: pageSize,
+          pageSize,
           direction: 'DESC',
           sortBy: 'jobFair.createTime'
         }
-      )
+      );
     default:
-      return null
+      return null;
   }
-}
+};
 
-export const getLayoutInformationForJobFairPark = jobFairId =>
-  CallAPI(ENDPOINT_GET_LAYOUT_FOR_JOB_FAIR_PARK + `/${jobFairId}`, 'GET')
+export const getLayoutInformationForJobFairPark = (jobFairId) =>
+  CallAPI(`${ENDPOINT_GET_LAYOUT_FOR_JOB_FAIR_PARK}/${jobFairId}`, 'GET');
 
 export const getAllJobFairAPI = (pageNumber, pageSize, sortBy, direction) =>
   CallAPI(
@@ -49,13 +49,13 @@ export const getAllJobFairAPI = (pageNumber, pageSize, sortBy, direction) =>
     'GET',
     {},
     {
-      direction: direction,
+      direction,
       offset: pageNumber,
-      pageSize: pageSize,
-      sortBy: sortBy
+      pageSize,
+      sortBy
     }
-  )
-export const evaluateJobFairPlanAPI = body => CallAPI(`${ENDPOINT_JOB_FAIR}/evaluate`, 'POST', body)
+  );
+export const evaluateJobFairPlanAPI = (body) => CallAPI(`${ENDPOINT_JOB_FAIR}/evaluate`, 'POST', body);
 export const getJobFairForAttendant = (offset, pageSize, tabStatus) => {
   switch (tabStatus) {
     //available
@@ -65,10 +65,10 @@ export const getJobFairForAttendant = (offset, pageSize, tabStatus) => {
         'GET',
         {},
         {
-          offset: offset,
-          pageSize: pageSize
+          offset,
+          pageSize
         }
-      )
+      );
     //history
     case 2:
       return CallAPI(
@@ -76,14 +76,14 @@ export const getJobFairForAttendant = (offset, pageSize, tabStatus) => {
         'GET',
         {},
         {
-          offset: offset,
-          pageSize: pageSize
+          offset,
+          pageSize
         }
-      )
+      );
     default:
-      return null
+      return null;
   }
-}
+};
 
 export const getJobFairOccurredForAdmin = (offset, pageSize) =>
   CallAPI(
@@ -91,10 +91,10 @@ export const getJobFairOccurredForAdmin = (offset, pageSize) =>
     'GET',
     {},
     {
-      offset: offset,
-      pageSize: pageSize
+      offset,
+      pageSize
     }
-  )
+  );
 
 export const getJobFairHappeningForAdmin = (offset, pageSize) =>
   CallAPI(
@@ -102,10 +102,10 @@ export const getJobFairHappeningForAdmin = (offset, pageSize) =>
     'GET',
     {},
     {
-      offset: offset,
-      pageSize: pageSize
+      offset,
+      pageSize
     }
-  )
+  );
 
 export const getJobFairIncomingForAdmin = (offset, pageSize) =>
   CallAPI(
@@ -113,9 +113,9 @@ export const getJobFairIncomingForAdmin = (offset, pageSize) =>
     'GET',
     {},
     {
-      offset: offset,
-      pageSize: pageSize
+      offset,
+      pageSize
     }
-  )
+  );
 
-export const getJobFairPlanById = id => CallAPI(`${ENDPOINT_JOB_FAIR}/${id}`, 'GET')
+export const getJobFairPlanById = (id) => CallAPI(`${ENDPOINT_JOB_FAIR}/${id}`, 'GET');

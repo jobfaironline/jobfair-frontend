@@ -1,55 +1,54 @@
-import React from 'react'
-import { Form, notification } from 'antd'
-import LoginComponent from '../../components/Login/Login.component'
-import { signInAPI } from '../../services/auth-controller/AuthControllerService'
-import { useDispatch } from 'react-redux'
-import { SigninHandler } from '../../redux-flow/authentication/authentication-action'
-import { useHistory } from 'react-router-dom'
-import { PATH, PATH_ADMIN } from '../../constants/Paths/Path'
+import { Form, notification } from 'antd';
+import { PATH, PATH_ADMIN } from '../../constants/Paths/Path';
+import { SigninHandler } from '../../redux-flow/authentication/authentication-action';
+import { signInAPI } from '../../services/auth-controller/AuthControllerService';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import LoginFormComponent from '../../components/forms/LoginForm/LoginForm.component';
+import React from 'react';
 
 const LoginContainer = () => {
-  const [form] = Form.useForm()
-  const dispatch = useDispatch()
-  const history = useHistory()
+  const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  const onFinish = async values => {
+  const onFinish = async (values) => {
     const body = {
       email: values.email,
       password: values.password
-    }
+    };
     signInAPI(body)
-      .then(res => {
+      .then((res) => {
         notification['success']({
           message: `Login successfully.`,
           duration: 1
-        })
-        dispatch(SigninHandler(res.data))
+        });
+        dispatch(SigninHandler(res.data));
         switch (res.data.roles) {
           case 'COMPANY_EMPLOYEE':
           case 'COMPANY_MANAGER':
-            history.push(PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE)
-            return
+            history.push(PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE);
+            return;
           case 'ATTENDANT':
-            history.push(PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE)
-            return
+            history.push(PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE);
+            return;
           case 'ADMIN':
-            history.push(PATH_ADMIN.JOB_FAIR_LIST_PAGE)
-            return
+            history.push(PATH_ADMIN.JOB_FAIR_LIST_PAGE);
         }
       })
       .catch(() => {
         notification['error']({
           message: `Login failed - Invalid email or password.`,
           duration: 1
-        })
-      })
-  }
+        });
+      });
+  };
 
   return (
     <>
-      <LoginComponent form={form} onFinish={onFinish} />
+      <LoginFormComponent form={form} onFinish={onFinish} />
     </>
-  )
-}
+  );
+};
 
-export default LoginContainer
+export default LoginContainer;

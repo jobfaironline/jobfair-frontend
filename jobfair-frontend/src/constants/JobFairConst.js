@@ -39,7 +39,7 @@ export const JOB_FAIR_PLAN_COMPANY_STATUS = [
     label: 'Pending',
     color: 'red'
   }
-]
+];
 
 export const JOB_FAIR_FOR_ATTENDANT_STATUS = [
   {
@@ -66,7 +66,7 @@ export const JOB_FAIR_FOR_ATTENDANT_STATUS = [
     value: 'UNAVAILABLE',
     label: 'Unavailable'
   }
-]
+];
 
 export const JOB_FAIR_PLAN_STATUS = {
   APPROVE: 'APPROVE',
@@ -75,7 +75,7 @@ export const JOB_FAIR_PLAN_STATUS = {
   DRAFT: 'DRAFT',
   PENDING: 'PENDING',
   REJECT: 'REJECT'
-}
+};
 
 export const JOB_FAIR_FOR_ADMIN_STATUS = {
   ATTENDANT_REGISTER: 'ATTENDANT_REGISTER',
@@ -86,4 +86,4 @@ export const JOB_FAIR_FOR_ADMIN_STATUS = {
   NOT_YET: 'NOT_YET',
   PROCESSING: 'PROCESSING',
   UNAVAILABLE: 'UNAVAILABLE'
-}
+};

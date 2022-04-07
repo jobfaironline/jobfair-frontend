@@ -1,8 +1,8 @@
-import React from 'react'
-import { Card, Typography } from 'antd'
+import { Card, Typography } from 'antd';
+import React from 'react';
 
 const PolicyComponent = () => {
-  const { Title, Text } = Typography
+  const { Title, Text } = Typography;
   return (
     <div style={{ textAlign: 'justify' }}>
       <Card title={<Title level={4}>TERMS OF USE OF THE SERVICE WITH CANDIDATES</Title>} bordered={true}>
@@ -211,6 +211,6 @@ const PolicyComponent = () => {
         </Text>
       </Card>
     </div>
-  )
-}
-export default PolicyComponent
+  );
+};
+export default PolicyComponent;

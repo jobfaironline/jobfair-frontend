@@ -1,17 +1,17 @@
-import React from 'react'
-import { Col, Row, Typography } from 'antd'
-import { ReadFilled } from '@ant-design/icons'
+import { Col, Row, Typography } from 'antd';
+import { ReadFilled } from '@ant-design/icons';
+import React from 'react';
 
-const EducationList = props => {
-  const { data } = props
-  const { Title, Text } = Typography
+const EducationList = (props) => {
+  const { data } = props;
+  const { Title, Text } = Typography;
   return (
     <>
       <Row>
         <ReadFilled style={{ fontSize: '4rem', marginRight: '2rem' }} />
         <Col span={20}>
           <div>
-            <Text type="secondary" style={{ fontWeight: 'bold' }}>
+            <Text type='secondary' style={{ fontWeight: 'bold' }}>
               {data?.time}
             </Text>
             <Row>
@@ -22,11 +22,11 @@ const EducationList = props => {
                 <Text>{data?.subName}</Text>
               </Col>
             </Row>
-            <Text type="secondary">{data?.description}</Text>
+            <Text type='secondary'>{data?.description}</Text>
           </div>
         </Col>
       </Row>
     </>
-  )
-}
-export default EducationList
+  );
+};
+export default EducationList;

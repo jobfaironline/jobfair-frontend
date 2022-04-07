@@ -1,4 +1,4 @@
-export const NUM_OF_SIZE_MAXIMUM = 3
+export const NUM_OF_SIZE_MAXIMUM = 3;
 
 export const SizeConst = [
   {
@@ -37,7 +37,7 @@ export const SizeConst = [
     value: 8,
     label: 'Over 50,000'
   }
-]
+];
 
 export const SubCategories = [
   {
@@ -385,7 +385,7 @@ export const SubCategories = [
     label: 'Chemical/Biochemical',
     category_id: 14
   }
-]
+];
 
 export const benefitDescriptionsConst = [
   {
@@ -421,7 +421,7 @@ export const benefitDescriptionsConst = [
   {
     value: 'e.g: $200 a month kindergarten allowance per child under 5 years old'
   }
-]
+];
 
 export const benefitConst = [
   {
@@ -494,7 +494,7 @@ export const benefitConst = [
     label: 'Training',
     description: 'e.g: Training Opportunities Aboard'
   }
-]
+];
 
 export const CategoriesConst = [
   {
@@ -557,4 +557,4 @@ export const CategoriesConst = [
     value: 14,
     label: 'Engineering'
   }
-]
+];

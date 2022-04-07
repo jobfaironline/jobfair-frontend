@@ -1,15 +1,13 @@
-import React, { useState } from 'react'
-import { Empty, Spin, Table } from 'antd'
-import getColumnSearchProps from '../TableSearchComponent/TableSearchComponent.component'
-import EvaluateBoothInformationTableColumn from './EvaluateBoothInformationTable.column'
+import { Empty, Spin, Table } from 'antd';
+import EvaluateBoothInformationTableColumn from '../../containers/CommonTableComponent/columns/EvaluateBoothInformationTable.column';
+import React, { useState } from 'react';
+import getColumnSearchProps from '../TableSearchComponent/TableSearchComponent.component';
 
 const EvaluateBoothInformationTableComponent = ({ data, extra, jobFairId }) => {
-  const [searchText, setSearchText] = useState('')
-  const [searchedColumn, setSearchedColumn] = useState('')
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
 
-  if (data === undefined || data === null) {
-    return <Spin size="large" />
-  }
+  if (data === undefined || data === null) return <Spin size='large' />;
 
   if (Object.keys(data).length === 0) {
     return (
@@ -17,15 +15,15 @@ const EvaluateBoothInformationTableComponent = ({ data, extra, jobFairId }) => {
         <h1>This job fair hasn't been registered yet!!!</h1>
         <Empty />
       </>
-    )
+    );
   }
 
   const defaultColumns = EvaluateBoothInformationTableColumn(
     getColumnSearchProps(searchText, setSearchText, searchedColumn, setSearchedColumn),
     jobFairId
-  )
+  );
 
-  const finalColumns = extra ? [...defaultColumns, extra] : [...defaultColumns]
+  const finalColumns = extra ? [...defaultColumns, extra] : [...defaultColumns];
 
   return (
     <>
@@ -36,7 +34,7 @@ const EvaluateBoothInformationTableComponent = ({ data, extra, jobFairId }) => {
         pagination={false}
       />
     </>
-  )
-}
+  );
+};
 
-export default EvaluateBoothInformationTableComponent
+export default EvaluateBoothInformationTableComponent;

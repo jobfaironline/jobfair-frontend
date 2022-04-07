@@ -1,16 +1,16 @@
-import React from 'react'
-import { Tag } from 'antd'
+import { Tag } from 'antd';
+import React from 'react';
 
-const SkillListComponent = props => {
-  const { listData } = props
+const SkillListComponent = (props) => {
+  const { listData } = props;
   return (
     <div style={{ display: 'flex', gap: '10px' }}>
-      {listData.map(data => (
+      {listData.map((data) => (
         <div>
-          <Tag color="blue">{data.name}</Tag>
+          <Tag color='blue'>{data.name}</Tag>
         </div>
       ))}
     </div>
-  )
-}
-export default SkillListComponent
+  );
+};
+export default SkillListComponent;

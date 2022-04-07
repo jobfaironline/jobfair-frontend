@@ -1,4 +1,4 @@
-import { EMAIL_VALIDATOR, REQUIRED_VALIDATOR } from './GeneralValidation'
+import { EMAIL_VALIDATOR, REQUIRED_VALIDATOR } from './GeneralValidation';
 
 export const ChangePasswordValidation = {
   email: [REQUIRED_VALIDATOR('email'), ...EMAIL_VALIDATOR()],
@@ -8,11 +8,10 @@ export const ChangePasswordValidation = {
     REQUIRED_VALIDATOR('Confirm password'),
     ({ getFieldValue }) => ({
       validator(_, value) {
-        if (!value || getFieldValue('newPassword') === value) {
-          return Promise.resolve()
-        }
-        return Promise.reject(new Error('Your confirm password does not match'))
+        if (!value || getFieldValue('newPassword') === value) return Promise.resolve();
+
+        return Promise.reject(new Error('Your confirm password does not match'));
       }
     })
   ]
-}
+};

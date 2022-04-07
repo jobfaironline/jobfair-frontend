@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
 
 export const notify = (state, message) => {
   if (state === 2) {
@@ -10,7 +10,7 @@ export const notify = (state, message) => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined
-    })
+    });
   }
   if (state === 0) {
     toast.error(message, {
@@ -21,7 +21,7 @@ export const notify = (state, message) => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined
-    })
+    });
   }
   if (state === 9) {
     toast.info(message, {
@@ -32,6 +32,6 @@ export const notify = (state, message) => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined
-    })
+    });
   }
-}
+};

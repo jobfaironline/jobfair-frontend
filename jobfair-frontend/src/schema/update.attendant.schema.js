@@ -1,3 +1,3 @@
-import yup from '../validate/yupGlobal'
+import yup from '../validate/yupGlobal';
 
-export const updateAttendantSchema = yup.object().shape({})
+export const updateAttendantSchema = yup.object().shape({});

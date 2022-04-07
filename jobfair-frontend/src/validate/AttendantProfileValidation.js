@@ -1,5 +1,3 @@
-import { MinimumDateOfBirth } from '../constants/ApplicationConst'
-import moment from 'moment'
 import {
   DATE_RANGE_VALIDATOR,
   EMAIL_VALIDATOR,
@@ -8,7 +6,9 @@ import {
   REQUIRED_VALIDATOR,
   URL_VALIDATOR,
   YEAR_VALIDATOR
-} from './GeneralValidation'
+} from './GeneralValidation';
+import { MinimumDateOfBirth } from '../constants/ApplicationConst';
+import moment from 'moment';
 
 export const AttendantProfileValidation = {
   account: {
@@ -19,11 +19,11 @@ export const AttendantProfileValidation = {
       REQUIRED_VALIDATOR('Birthday'),
       () => ({
         validator(_, value) {
-          const dateValue = moment(value).toDate().getTime()
-          if (!value || dateValue < Date.parse(MinimumDateOfBirth)) {
-            return Promise.reject(new Error('Age restriction required: at least 18 years'))
-          }
-          return Promise.resolve()
+          const dateValue = moment(value).toDate().getTime();
+          if (!value || dateValue < Date.parse(MinimumDateOfBirth))
+            return Promise.reject(new Error('Age restriction required: at least 18 years'));
+
+          return Promise.resolve();
         }
       })
     ],
@@ -36,14 +36,11 @@ export const AttendantProfileValidation = {
     REQUIRED_VALIDATOR('Year of experience'),
     () => ({
       validator(_, value) {
-        if (!value || value > 50) {
-          return Promise.reject(new Error('The maximum year of experience is 50 years'))
-        }
-        if (value < 0) {
-          return Promise.reject(new Error('The minimum year of experience is 0 years'))
-        }
+        if (!value || value > 50) return Promise.reject(new Error('The maximum year of experience is 50 years'));
 
-        return Promise.resolve()
+        if (value < 0) return Promise.reject(new Error('The minimum year of experience is 0 years'));
+
+        return Promise.resolve();
       }
     })
   ],
@@ -84,4 +81,4 @@ export const AttendantProfileValidation = {
     toDate: [REQUIRED_VALIDATOR('To date')],
     description: [REQUIRED_VALIDATOR("Activity's description")]
   }
-}
+};

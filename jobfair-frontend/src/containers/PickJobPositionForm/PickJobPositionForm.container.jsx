@@ -1,48 +1,48 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
-import PickJobPositionForm from '../../components/PickJobPositionForm/PickJobPositionForm.component'
-import AnchorComponent from '../../components/Anchor/Achor.component'
-import { Modal, Typography } from 'antd'
-import PickJobPositionTableContainer from '../JobPositionTable/JobPositionTable.container'
+import { Modal, Typography } from 'antd';
+import AnchorComponent from '../../components/commons/Anchor/Achor.component';
+import PickJobPositionForm from '../../components/forms/PickJobPositionForm/PickJobPositionForm.component';
+import PickJobPositionTableContainer from '../JobPosition/JobPositionTable.container';
+import React, { useState } from 'react';
 
 const PickJobPositionFormContainer = ({ form }) => {
-  const [modalVisibile, setModalVisible] = useState(false)
+  const [modalVisibile, setModalVisible] = useState(false);
   const [anchorList, setAnchorList] = useState(
     form.getFieldsValue().jobPositions
-      ? form.getFieldsValue().jobPositions.map(item => ({
-          href: '#' + item.id,
+      ? form.getFieldsValue().jobPositions.map((item) => ({
+          href: `#${item.id}`,
           title: item.title
         }))
       : []
-  )
+  );
 
   const handlePickJobPosition = (name, add) => {
-    setModalVisible(true)
-  }
+    setModalVisible(true);
+  };
 
   const handleRemove = (name, remove) => {
-    remove(name)
+    remove(name);
     setAnchorList(
       form.getFieldsValue().jobPositions
-        ? form.getFieldsValue().jobPositions.map(item => ({
-            href: '#' + item.id,
+        ? form.getFieldsValue().jobPositions.map((item) => ({
+            href: `#${item.id}`,
             title: item.title
           }))
         : []
-    )
-  }
+    );
+  };
 
   const handleCloseModal = () => {
-    setModalVisible(false)
+    setModalVisible(false);
     setAnchorList(
       form.getFieldsValue().jobPositions
-        ? form.getFieldsValue().jobPositions.map(item => ({
-            href: '#' + item.id,
+        ? form.getFieldsValue().jobPositions.map((item) => ({
+            href: `#${item.id}`,
             title: item.title
           }))
         : []
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -52,14 +52,13 @@ const PickJobPositionFormContainer = ({ form }) => {
           left: '0.8rem',
           top: '200px',
           zIndex: '1000'
-        }}
-      >
+        }}>
         <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Content list</Typography>
         <AnchorComponent
           listData={
             form.getFieldsValue().jobPositions
-              ? form.getFieldsValue().jobPositions.map(item => ({
-                  href: '#' + item.id,
+              ? form.getFieldsValue().jobPositions.map((item) => ({
+                  href: `#${item.id}`,
                   title: item.title
                 }))
               : []
@@ -70,17 +69,16 @@ const PickJobPositionFormContainer = ({ form }) => {
       </div>
       <Modal
         width={800}
-        title="Choose job position"
+        title='Choose job position'
         visible={modalVisibile}
         onCancel={handleCloseModal}
         footer={null}
-        destroyOnClose
-      >
+        destroyOnClose>
         {modalVisibile ? <PickJobPositionTableContainer form={form} selectable /> : null}
       </Modal>
       <PickJobPositionForm handlePickJobPosition={handlePickJobPosition} form={form} handleRemove={handleRemove} />
     </>
-  )
-}
+  );
+};
 
-export default PickJobPositionFormContainer
+export default PickJobPositionFormContainer;

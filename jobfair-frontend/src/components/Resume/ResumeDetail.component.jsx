@@ -1,30 +1,26 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
-import { Card, Spin } from 'antd'
-import ResumeHeader from './Header/ResumeHeader.component'
-import ResumeContent from './Content/ResumeContent.component'
-import EvaluationFormComponent from '../EvaluationForm/EvaluationForm.component'
-import { convertDobToAge, convertEnumToString } from '../../utils/common'
-import { QualificationConst } from '../AttendantProfileForm/AttendantConstants'
+import { Card, Spin } from 'antd';
+import { QualificationConst } from '../../constants/AttendantConstants';
+import { convertDobToAge, convertEnumToString } from '../../utils/common';
+import EvaluationFormComponent from '../forms/EvaluationForm/EvaluationForm.component';
+import React from 'react';
+import ResumeContent from './Content/ResumeContent.component';
+import ResumeHeader from './Header/ResumeHeader.component';
 
-const ResumeDetailComponent = props => {
-  const { onFinish, form, data, attendant } = props
+const ResumeDetailComponent = (props) => {
+  const { onFinish, form, data, attendant } = props;
 
-  if (data === undefined || data === null) {
-    return <Spin />
-  }
+  if (data === undefined || data === null) return <Spin />;
 
   //TODO: refactor mapping later
   const educations = !!data?.candidateEducation
-    ? data.candidateEducation.map((item, index) => {
-        return {
-          id: index,
-          time: `${item.fromDate}-${item.toDate}`,
-          titleName: item.school,
-          subName: `with subject ${item.subject}`,
-          description: `Achievement: ${item.achievement} - Qualification: ${convertEnumToString(item.qualificationId)}`
-        }
-      })
+    ? data.candidateEducation.map((item, index) => ({
+        id: index,
+        time: `${item.fromDate}-${item.toDate}`,
+        titleName: item.school,
+        subName: `with subject ${item.subject}`,
+        description: `Achievement: ${item.achievement} - Qualification: ${convertEnumToString(item.qualificationId)}`
+      }))
     : [
         {
           id: '1',
@@ -42,27 +38,26 @@ const ResumeDetailComponent = props => {
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
         }
-      ]
+      ];
 
   //get the highest education level
   const result = data.candidateEducation
-    ?.map(item => item.qualificationId)
-    .map(name => {
-      const result = QualificationConst.find(qualification => qualification.enumName === name)
-      return result.id
+    ?.map((item) => item.qualificationId)
+    .map((name) => {
+      const result = QualificationConst.find((qualification) => qualification.enumName === name);
+      return result.id;
     })
-    .sort()
-  const highestEducationLevel = result !== undefined ? QualificationConst.find(item => item.id === result[0])?.name : ''
+    .sort();
+  const highestEducationLevel =
+    result !== undefined ? QualificationConst.find((item) => item.id === result[0])?.name : '';
   const workExperiences = !!data?.candidateWorkHistories
-    ? data.candidateWorkHistories.map((item, index) => {
-        return {
-          id: index,
-          time: `${item.fromDate}-${item.toDate}`,
-          titleName: item.company,
-          subName: item.description,
-          description: `Position: ${item.position}`
-        }
-      })
+    ? data.candidateWorkHistories.map((item, index) => ({
+        id: index,
+        time: `${item.fromDate}-${item.toDate}`,
+        titleName: item.company,
+        subName: item.description,
+        description: `Position: ${item.position}`
+      }))
     : [
         {
           id: '1',
@@ -80,17 +75,15 @@ const ResumeDetailComponent = props => {
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
         }
-      ]
+      ];
   const adwards = !!data?.candidateCertifications
-    ? data.candidateCertifications.map((item, index) => {
-        return {
-          id: index,
-          time: item.year,
-          titleName: item.name,
-          subName: `Certification link: ${item.certificationLink}`,
-          description: `At institution: ${item.institution}`
-        }
-      })
+    ? data.candidateCertifications.map((item, index) => ({
+        id: index,
+        time: item.year,
+        titleName: item.name,
+        subName: `Certification link: ${item.certificationLink}`,
+        description: `At institution: ${item.institution}`
+      }))
     : [
         {
           id: '1',
@@ -116,7 +109,7 @@ const ResumeDetailComponent = props => {
           description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
         }
-      ]
+      ];
 
   const candidateOverView = {
     experience: `${data.candidateYearOfExp} Years`,
@@ -126,28 +119,24 @@ const ResumeDetailComponent = props => {
     gender: `${convertEnumToString(data.gender)}`,
     language: 'English, French',
     educationLevel: highestEducationLevel
-  }
+  };
   const skills = !!data?.candidateSkills
-    ? data.candidateSkills.map((item, index) => {
-        return {
-          id: index,
-          name: item.name
-        }
-      })
+    ? data.candidateSkills.map((item, index) => ({
+        id: index,
+        name: item.name
+      }))
     : [
         { id: '1', name: 'Creativity' },
         { id: '2', name: 'Problem Solving' }
-      ]
+      ];
   const references = !!data?.candidateReferences
-    ? data.candidateReferences.map((item, index) => {
-        return {
-          id: index,
-          time: item.phoneNumber,
-          titleName: `${item.fullName}-${item.company}`,
-          subName: `Email address: ${item.email}`,
-          description: `Current position: ${item.position}`
-        }
-      })
+    ? data.candidateReferences.map((item, index) => ({
+        id: index,
+        time: item.phoneNumber,
+        titleName: `${item.fullName}-${item.company}`,
+        subName: `Email address: ${item.email}`,
+        description: `Current position: ${item.position}`
+      }))
     : [
         {
           id: '1',
@@ -163,7 +152,7 @@ const ResumeDetailComponent = props => {
           subName: 'Master',
           description: 'Master at KMC'
         }
-      ]
+      ];
   const candidateAbout = `Hello my name is James Rogers and Painter from Miami. In pharetra orci dignissim, blandit mi semper,
   ultricies diam. Suspendisse malesuada suscipit nunc non volutpat. Sed porta nulla id orci laoreet tempor
   non consequat enim. Sed vitae aliquam velit. Aliquam ante erat, blandit at pretium et, accumsan ac est.
@@ -171,7 +160,7 @@ const ResumeDetailComponent = props => {
   Suspendisse condimentum lorem ut elementum aliquam. Mauris nec erat ut libero vulputate pulvinar. Aliquam
   ante erat, blandit at pretium et, accumsan ac est. Integer vehicula rhoncus molestie. Morbi ornare ipsum
   sed sem condimentum, et pulvinar tortor luctus. Suspendisse condimentum lorem ut elementum aliquam. Mauris
-  nec erat ut libero vulputate pulvinar.'`
+  nec erat ut libero vulputate pulvinar.'`;
   const dataInfo = {
     jobPosition: data.jobPositionTitle,
     name: data.candidateName,
@@ -181,10 +170,10 @@ const ResumeDetailComponent = props => {
     startYear: '2020',
     profileImageUrl: data?.imageUrl,
     jobTitle: data.candidateJobTitle
-  }
+  };
   return (
     <>
-      <Card title="Resume Detail">
+      <Card title='Resume Detail'>
         <ResumeHeader data={dataInfo} />
         <ResumeContent
           adwards={adwards}
@@ -199,18 +188,17 @@ const ResumeDetailComponent = props => {
       {data.status === 'PENDING' ? (
         <div style={{ paddingBottom: '5rem' }}>
           <Card
-            title="Evaluate this registration"
+            title='Evaluate this registration'
             style={{ width: 500, margin: '2rem auto' }}
-            headStyle={{ fontWeight: 700, fontSize: 24 }}
-          >
+            headStyle={{ fontWeight: 700, fontSize: 24 }}>
             <div style={{ marginLeft: '5rem' }}>
-              <EvaluationFormComponent onFinish={onFinish} name="applicationId" id={data.id} />
+              <EvaluationFormComponent onFinish={onFinish} name='applicationId' id={data.id} />
             </div>
           </Card>
         </div>
       ) : null}
     </>
-  )
-}
+  );
+};
 
-export default ResumeDetailComponent
+export default ResumeDetailComponent;

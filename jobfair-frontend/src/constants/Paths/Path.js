@@ -22,27 +22,27 @@ export const PATH = {
   PUBLICIZED_JOB_FAIR_LIST_PAGE: '/job-fair-list',
   HOME_PAGE: '/home',
   FINAL_ERROR_PAGE: '/error-500'
-}
+};
 export const PATH_ADMIN = {
   JOB_FAIR_LIST_PAGE: '/admin/job-fair-list',
   APPROVAL_REGISTRATION_PAGE: '/admin/approval-registration/:jobFairId',
   JOB_FAIR_DETAIL_PAGE: '/admin/job-fair-detail',
   JOB_FAIR_PLAN_LIST_PAGE: '/admin/job-fair-plan-list',
   COMPANY_REGISTRATION_DETAIL_PAGE: '/admin/company-registration-detail'
-}
+};
 export const PATH_ATTENDANT = {
   PROFILE_PAGE: `/attendant/profile`,
   JOB_FAIR_LIST_PAGE: '/attendant/job-fair-list',
   APPLICATION_MANAGEMENT_PAGE: '/attendant/application-management',
   JOB_FAIR_DETAIL_PAGE: '/attendant/job-fair-detail',
   RESUME_DETAIL_PAGE: '/attendant/resume-detail'
-}
+};
 export const PATH_COMPANY_EMPLOYEE = {
   COMPANY_PROFILE_PAGE: '/employee/company-profile',
   APPLICATION_MANAGEMENT_PAGE: '/employee/application-management',
   RESUME_DETAIL_PAGE: '/employee/resume-detail',
   JOB_FAIR_DETAIL_PAGE: '/employee/job-fair-detail'
-}
+};
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',
   EMPLOYEE_REGISTER_PAGE: '/company/employee-register',
@@ -54,4 +54,4 @@ export const PATH_COMPANY_MANAGER = {
   JOB_FAIR_DETAIL_PAGE: '/company/job-fair-detail',
   APPLICATION_MANAGEMENT_PAGE: '/company/application-management',
   RESUME_DETAIL_PAGE: '/company/resume-detail'
-}
+};

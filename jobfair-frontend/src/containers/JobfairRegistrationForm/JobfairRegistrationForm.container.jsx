@@ -1,56 +1,56 @@
 /* eslint-disable no-unused-vars */
-import { Button, Checkbox, Form, notification, Popconfirm, Steps } from 'antd'
-import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { getCompanyProfileAPI } from '../../services/company-controller/CompanyControllerService'
-import ConfirmContainer from '../Confirm/Confirm.container'
-import JobfairRegistrationFormComponent from '../../components/JobfairRegistrationForm/JobfairRegistrationForm.component'
-import { PATH } from '../../constants/Paths/Path'
-import PolicyComponent from '../../components/Policy/Policy.component'
-import JobFairDetailCompanyContainer from '../JobFairDetail/JobFairDetail.company.container'
+import { Button, Checkbox, Form, Popconfirm, Steps, notification } from 'antd';
+import { PATH } from '../../constants/Paths/Path';
 import {
   createDraftRegistrationAPI,
   submitRegistrationAPI
-} from '../../services/company-registration-controller/CompanyRegistrationControllerService'
+} from '../../services/company-registration-controller/CompanyRegistrationControllerService';
+import { getCompanyProfileAPI } from '../../services/company-controller/CompanyControllerService';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import ConfirmContainer from '../Confirm/Confirm.container';
+import JobFairDetailCompanyContainer from '../JobFairDetail/JobFairDetail.company.container';
+import JobfairRegistrationFormComponent from '../../components/forms/JobfairRegistrationForm/JobfairRegistrationForm.component';
+import PolicyComponent from '../../components/Policy/Policy.component';
+import React, { useEffect, useState } from 'react';
 
-const { Step } = Steps
-const JobfairRegistrationForm = props => {
-  const { jobFairId } = props
-  const history = useHistory()
-  const [form] = Form.useForm() //form for registration
-  const companyId = useSelector(state => state.authentication.user.companyId)
-  const [agreeStatus, setAgreeStatus] = useState(false)
-  const [companyInfo, setCompanyInfo] = useState({})
+const { Step } = Steps;
+const JobfairRegistrationForm = (props) => {
+  const { jobFairId } = props;
+  const history = useHistory();
+  const [form] = Form.useForm(); //form for registration
+  const companyId = useSelector((state) => state.authentication.user.companyId);
+  const [agreeStatus, setAgreeStatus] = useState(false);
+  const [companyInfo, setCompanyInfo] = useState({});
 
   //management step
-  const [currentStep, setCurrentStep] = useState(0)
+  const [currentStep, setCurrentStep] = useState(0);
 
-  const onSubmit = async values => {
+  const onSubmit = async (values) => {
     const body = {
       description: values.description,
-      jobFairId: jobFairId,
-      jobPositions: values.jobPositions.map(item => {
+      jobFairId,
+      jobPositions: values.jobPositions.map((item) => {
         const result = {
           jobPositionId: item.id,
           maxSalary: item.maxSalary,
           minSalary: item.minSalary,
           numOfPosition: item.numberOfPosition
-        }
-        return result
+        };
+        return result;
       })
-    }
-    const companyRegistrationId = await onCreateDraft(body)
+    };
+    const companyRegistrationId = await onCreateDraft(body);
     if (companyRegistrationId) {
       await submitRegistration(
         companyRegistrationId,
         () => {
-          history.push(PATH.RESULT_SUCCESS_PAGE)
+          history.push(PATH.RESULT_SUCCESS_PAGE);
         },
         () => history.push(PATH.RESULT_FAILED_PAGE)
-      )
+      );
     }
-  }
+  };
 
   const stepComponentList = [
     <>
@@ -60,7 +60,7 @@ const JobfairRegistrationForm = props => {
     </>,
     <>
       <PolicyComponent />
-      <Checkbox checked={agreeStatus} onChange={e => setAgreeStatus(e.target.checked)}>
+      <Checkbox checked={agreeStatus} onChange={(e) => setAgreeStatus(e.target.checked)}>
         I have read and accept the Job fair Policy
       </Checkbox>
     </>,
@@ -68,49 +68,49 @@ const JobfairRegistrationForm = props => {
     <>
       <ConfirmContainer data={form.getFieldsValue(true)} companyInfo={companyInfo} />
     </>
-  ]
+  ];
 
-  const nextStepButtonActions = step => {
+  const nextStepButtonActions = (step) => {
     switch (step) {
       case 3:
         return () => {
-          onSubmit(form.getFieldsValue(true))
-        }
+          onSubmit(form.getFieldsValue(true));
+        };
       case 2:
         return () => {
           form
             .validateFields()
             .then(() => {
-              setCurrentStep(currentStep + 1)
+              setCurrentStep(currentStep + 1);
             })
             .catch(() => {
               // notification['error']({
               //   message: 'job position must not be empty'
               // })
-              const errorsArray = form.getFieldsError()
+              const errorsArray = form.getFieldsError();
               for (const error of errorsArray) {
                 if (error.errors.length > 0) {
                   form.scrollToField(error.name, {
                     behavior: 'smooth',
                     block: 'center'
-                  })
-                  break
+                  });
+                  break;
                 }
               }
-            })
-        }
+            });
+        };
       default:
-        return () => setCurrentStep(currentStep + 1)
+        return () => setCurrentStep(currentStep + 1);
     }
-  }
+  };
 
   useEffect(() => {
-    getCompanyProfile(companyId, setCompanyInfo)
-  }, [])
+    getCompanyProfile(companyId, setCompanyInfo);
+  }, []);
 
   return (
     <div>
-      <div className="jobfair-registration-form-container" style={{ background: '#FFF' }}>
+      <div className='jobfair-registration-form-container' style={{ background: '#FFF' }}>
         <Steps
           current={currentStep}
           style={{
@@ -120,48 +120,45 @@ const JobfairRegistrationForm = props => {
             background: '#FFF',
             zIndex: '1000',
             padding: '1rem'
-          }}
-        >
+          }}>
           <Step title="Job fair's details" />
-          <Step title="Our policy" />
-          <Step title="Jobfair registration form" />
-          <Step title="Confirm registration" />
+          <Step title='Our policy' />
+          <Step title='Jobfair registration form' />
+          <Step title='Confirm registration' />
         </Steps>
         {stepComponentList[currentStep]}
-        <div className="step-buttons">
+        <div className='step-buttons'>
           {currentStep != 0 ? (
-            <div className="pre-step-button">
+            <div className='pre-step-button'>
               <Form.Item>
                 <Button
-                  size="large"
-                  type="primary"
+                  size='large'
+                  type='primary'
                   onClick={() => {
-                    setCurrentStep(currentStep - 1)
-                  }}
-                >
+                    setCurrentStep(currentStep - 1);
+                  }}>
                   Prev
                 </Button>
               </Form.Item>
             </div>
           ) : null}
-          <div className="next-step-button">
+          <div className='next-step-button'>
             <Form.Item>
-              <div className="submit-registration-popconfirm">
+              <div className='submit-registration-popconfirm'>
                 {currentStep == 3 ? (
                   <Popconfirm
-                    title="Are you sure to submit this form?"
+                    title='Are you sure to submit this form?'
                     onConfirm={nextStepButtonActions(currentStep)}
-                    okText="Yes"
-                    cancelText="No"
-                  >
-                    <Button size="large" type="primary">
+                    okText='Yes'
+                    cancelText='No'>
+                    <Button size='large' type='primary'>
                       Register
                     </Button>
                   </Popconfirm>
                 ) : currentStep == 1 && !agreeStatus ? (
                   <Button
-                    size="large"
-                    type="primary"
+                    size='large'
+                    type='primary'
                     onClick={nextStepButtonActions(currentStep)}
                     disabled={true}
                     style={{
@@ -170,12 +167,11 @@ const JobfairRegistrationForm = props => {
                       background: '#f5f5f5',
                       textShadow: 'none',
                       boxShadow: 'none'
-                    }}
-                  >
+                    }}>
                     Next
                   </Button>
                 ) : (
-                  <Button size="large" type="primary" onClick={nextStepButtonActions(currentStep)}>
+                  <Button size='large' type='primary' onClick={nextStepButtonActions(currentStep)}>
                     Next
                   </Button>
                 )}
@@ -185,12 +181,12 @@ const JobfairRegistrationForm = props => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const getCompanyProfile = async (companyId, setCompanyInfo) => {
   getCompanyProfileAPI(companyId)
-    .then(res => {
+    .then((res) => {
       // notification['success']({
       //   message: `Fetch company profile successfully`,
       //   description: `For company with ${companyId}`,
@@ -198,63 +194,61 @@ const getCompanyProfile = async (companyId, setCompanyInfo) => {
       // })
       const response = {
         ...res.data,
-        benefits: res.data.companyBenefitDTOS.map(item => {
-          return {
-            ...item,
-            id: item.benefitDTO.id,
-            description: item.benefitDTO.description
-          }
-        }),
+        benefits: res.data.companyBenefitDTOS.map((item) => ({
+          ...item,
+          id: item.benefitDTO.id,
+          description: item.benefitDTO.description
+        })),
         mediaUrls: res.data.mediaDTOS,
-        subCategoriesIds: res.data.subCategoryDTOs.map(item => item.id),
+        subCategoriesIds: res.data.subCategoryDTOs.map((item) => item.id),
         url: res.data.websiteUrl
-      }
-      setCompanyInfo({ ...response })
+      };
+      setCompanyInfo({ ...response });
     })
     .catch(() => {
       notification['error']({
         message: `Fetch company profile failed`,
         description: `Failed for company with ${companyId}`,
         duration: 2
-      })
-    })
-}
+      });
+    });
+};
 
 const submitRegistration = async (companyRegistrationId, successCallback, failedCallback) => {
   try {
-    const res = await submitRegistrationAPI(companyRegistrationId)
+    const res = await submitRegistrationAPI(companyRegistrationId);
     notification['success']({
       message: `Registration draft version has been submitted`,
       description: `Submitted successfully`,
       duration: 2
-    })
-    successCallback()
+    });
+    successCallback();
   } catch (err) {
     notification['error']({
       message: `An error has occurred while create draft`,
       description: `Create draft failed. Server response: ${err}`,
       duration: 2
-    })
-    failedCallback()
+    });
+    failedCallback();
   }
-}
+};
 
-const onCreateDraft = async body => {
+const onCreateDraft = async (body) => {
   try {
-    const res = await createDraftRegistrationAPI(body)
+    const res = await createDraftRegistrationAPI(body);
     // notification['success']({
     //   message: `Registration draft version has been created`,
     //   description: `Created draft successfully`,
     //   duration: 2
     // })
-    return res.data.companyRegistrationId
+    return res.data.companyRegistrationId;
   } catch (err) {
     notification['error']({
       message: `An error has occurred while create draft`,
       description: `Create draft failed. Server response: ${err}`,
       duration: 2
-    })
+    });
   }
-}
+};
 
-export default JobfairRegistrationForm
+export default JobfairRegistrationForm;

@@ -1,31 +1,26 @@
-import React, { useState } from 'react'
-import styles from '../../pages/AttendantJobFairPage/AttendantJobFairPage.module.scss'
-import { SideBarContainer } from '../../components/AttendantJobFair/SideBar/SideBar.container'
-import { ControlTipsModalContainer } from './ControlTipsModal.container'
-import { AttendantJobFairBoothContainer } from './AttendantJobFairBooth.container'
-import { InventoryContainer } from '../../components/AttendantJobFair/Inventory/Inventory.container'
-import ChatBox from '../../components/AttendantJobFair/ChatBox/ChatBox.component'
+import { AttendantJobFairBoothContainer } from './AttendantJobFairBooth.container';
+import { ControlTipsModalContainer } from './ControlTipsModal.container';
+import { InventoryContainer } from '../Inventory/Inventory.container';
+import { SideBarContainer } from '../SideBar/SideBar.container';
+import ChatBox from '../../components/Agora/ChatBox/ChatBox.component';
+import React, { useState } from 'react';
+import styles from '../../pages/AttendantJobFairPage/AttendantJobFairPage.module.scss';
 
-export const AttendantJobFairContainer = props => {
-  const { companyBoothId, geckoClientRef, communicationProps } = props
+export const AttendantJobFairContainer = (props) => {
+  const { companyBoothId, geckoClientRef, communicationProps } = props;
   const [tabState, setTabState] = useState({
     isShow: false,
     activeKey: '0'
-  })
+  });
   const handleOpenDetail = (status, tabIndex) => {
-    setTabState(prevState => {
-      return { ...prevState, isShow: status, activeKey: tabIndex }
-    })
-  }
+    setTabState((prevState) => ({ ...prevState, isShow: status, activeKey: tabIndex }));
+  };
 
-  const [inventoryVisible, setInventoryVisible] = useState(false)
-  const openInventory = status => {
-    if (status !== undefined) {
-      setInventoryVisible(status)
-    } else {
-      setInventoryVisible(prevState => !prevState)
-    }
-  }
+  const [inventoryVisible, setInventoryVisible] = useState(false);
+  const openInventory = (status) => {
+    if (status !== undefined) setInventoryVisible(status);
+    else setInventoryVisible((prevState) => !prevState);
+  };
 
   return (
     <div className={styles.container}>
@@ -49,5 +44,5 @@ export const AttendantJobFairContainer = props => {
         <ChatBox {...communicationProps} />
       </div>
     </div>
-  )
-}
+  );
+};

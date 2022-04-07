@@ -4,7 +4,7 @@ import {
   PHONE_VALIDATOR,
   REQUIRED_VALIDATOR,
   URL_VALIDATOR
-} from './GeneralValidation'
+} from './GeneralValidation';
 
 export const CompanyProfileValidation = {
   name: [REQUIRED_VALIDATOR('name'), MAX_LENGTH_VALIDATOR('name', 100)],
@@ -15,4 +15,4 @@ export const CompanyProfileValidation = {
   benefits: {
     description: [REQUIRED_VALIDATOR("benefit's description"), MAX_LENGTH_VALIDATOR("benefit's description", 300)]
   }
-}
+};
