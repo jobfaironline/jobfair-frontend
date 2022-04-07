@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { List, Tag, Typography } from 'antd';
-import { convertEnumToString } from '../../../utils/common';
+import { convertEnumToString } from '../../utils/common';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 

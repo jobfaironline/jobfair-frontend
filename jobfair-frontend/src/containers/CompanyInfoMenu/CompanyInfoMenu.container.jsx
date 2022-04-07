@@ -1,4 +1,4 @@
-import { CompanyInformation } from '../../components/AttendantJobFairSideBar/CompanyInformation/CompanyInformation.component';
+import { CompanyInformation } from '../../components/BoothInfoMenu/CompanyInformation/CompanyInformation.component';
 import { CompanyJobPositionTabContainer } from './CompanyJobPositionTab.container';
 import { Tabs, Typography } from 'antd';
 import { getCompanyBoothById } from '../../services/company-booth-controller/CompanyBoothControllerService';

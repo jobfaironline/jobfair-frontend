@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import './CompanyJobPositionTab.component.scss';
-import { JobPositionComponent } from '../JobPositionListItem/JobPositionListItem.component';
+import { JobPositionComponent } from '../../JobPositionListItem/JobPositionListItem.component';
 import { List } from 'antd';
 import React from 'react';
 
