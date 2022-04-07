@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React from 'react'
 import { Divider, Tabs, Typography } from 'antd'
 import { useSelector } from 'react-redux'
-import { ATTENDANT, COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../constants/RoleType'
 import JobFairListManagerContainer from '../../containers/JobFairList/commons/JobFairListManager.container'
 import JobFairListEmployeeContainer from '../../containers/JobFairList/commons/JobFairListEmployee.container'
 import JobFairListAttendantContainer from '../../containers/JobFairList/commons/JobFairListAttendant.container'

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import { generatePath, useHistory } from 'react-router-dom'
 import { mapperJobFairDetail } from '../../../utils/mapperJobFairList'
@@ -14,7 +13,9 @@ const JobFairListEmployeeContainer = props => {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
   //paging state
+  // eslint-disable-next-line no-unused-vars
   const [currentPage, setCurrentPage] = useState(0)
+  // eslint-disable-next-line no-unused-vars
   const [pageSize, setPageSize] = useState(100)
 
   const [searchResult, setSearchResult] = useState([])
