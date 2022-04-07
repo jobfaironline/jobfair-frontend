@@ -1,10 +1,10 @@
-import { CompanyInformation } from '../../components/BoothInfoMenu/CompanyInformation/CompanyInformation.component';
+import { CompanyInformation } from '../../components/customized-components/BoothInfoMenu/CompanyInformation/CompanyInformation.component';
 import { CompanyJobPositionTabContainer } from './CompanyJobPositionTab.container';
 import { Tabs, Typography } from 'antd';
 import { getCompanyBoothById } from '../../services/company-booth-controller/CompanyBoothControllerService';
 import { getCompanyProfileAPI } from '../../services/company-controller/CompanyControllerService';
 import React, { useEffect, useState } from 'react';
-import SideBar from '../../components/InfoMenu/InfoMenu.component';
+import SideBar from '../../components/commons/InfoMenu/InfoMenu.component';
 import styles from '../../pages/AttendantJobFairPage/AttendantJobFairPage.module.scss';
 
 export const CompanyInfoMenuContainer = (props) => {

@@ -1,5 +1,5 @@
 import { Card, Col, Empty, Row, Space, Spin, Typography } from 'antd';
-import { convertToDateString } from '../../utils/common';
+import { convertToDateString } from '../../../utils/common';
 import React from 'react';
 
 const { Text } = Typography;

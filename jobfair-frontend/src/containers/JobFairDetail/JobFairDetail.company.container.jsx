@@ -3,7 +3,7 @@ import { getJobFairPlanById } from '../../services/job-fair-controller/JobFairCo
 import { notification } from 'antd';
 import JobFairDetailComponent, {
   JobFairDetailForCompany
-} from '../../components/JobFairDetail/PublicizedJobFairDetail.component';
+} from '../../components/customized-components/JobFairDetail/PublicizedJobFairDetail.component';
 import React, { useEffect, useState } from 'react';
 
 const JobFairDetailCompanyContainer = (props) => {

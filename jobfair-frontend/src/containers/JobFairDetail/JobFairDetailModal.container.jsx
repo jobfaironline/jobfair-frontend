@@ -7,7 +7,7 @@ import { getLayoutDetail } from '../../services/layout-controller/LayoutControll
 import { getRegistrationByJobFairId } from '../../services/company-registration-controller/CompanyRegistrationControllerService';
 import { mapperJobFairDetail } from '../../utils/mapperJobFairDetail';
 import { useHistory } from 'react-router-dom';
-import JobFairDetailComponent from '../../components/JobFairDetail/JobFairDetail.component';
+import JobFairDetailComponent from '../../components/customized-components/JobFairDetail/JobFairDetail.component';
 import React, { useEffect, useState } from 'react';
 
 const { Text } = Typography;

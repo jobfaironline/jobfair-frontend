@@ -1,5 +1,5 @@
 import { Col, Row, Space, Tag, Typography } from 'antd';
-import { convertEnumToString } from '../../utils/common';
+import { convertEnumToString } from '../../../utils/common';
 import React from 'react';
 
 const { Text } = Typography;

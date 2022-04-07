@@ -1,7 +1,7 @@
 import { Button, Result, Space, Typography } from 'antd';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { Link, useHistory } from 'react-router-dom';
-import { PATH } from '../../constants/Paths/Path';
+import { PATH } from '../../../constants/Paths/Path';
 import React from 'react';
 
 const ResultFailedComponent = () => {

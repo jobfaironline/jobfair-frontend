@@ -1,4 +1,4 @@
-import ApplicationListComponent from '../../../components/ApplicationList/ApplicationList.component';
+import ApplicationListComponent from '../../../components/customized-components/ApplicationList/ApplicationList.component';
 import React from 'react';
 
 const AttendantApplicationView = () => (

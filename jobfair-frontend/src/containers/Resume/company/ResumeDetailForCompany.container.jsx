@@ -6,7 +6,7 @@ import {
 } from '../../../services/application-controller/ApplicationControllerService';
 import { useHistory } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import ResumeDetailComponent from '../../../components/Resume/ResumeDetail.component';
+import ResumeDetailComponent from '../../../components/customized-components/Resume/ResumeDetail.component';
 
 const ResumeDetailForCompanyContainer = ({ resumeId }) => {
   const history = useHistory();

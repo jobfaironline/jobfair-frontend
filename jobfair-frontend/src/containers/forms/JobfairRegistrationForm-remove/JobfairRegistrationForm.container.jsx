@@ -8,10 +8,10 @@ import {
 import { getCompanyProfileAPI } from '../../../services/company-controller/CompanyControllerService';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ConfirmComponent from '../../../components/Confirm/Confirm.component';
+import ConfirmComponent from '../../../components/customized-components/Confirm/Confirm.component';
 import JobFairDetailCompanyContainer from '../../JobFairDetail/JobFairDetail.company.container';
 import JobfairRegistrationFormComponent from '../../../components/forms/JobfairRegistrationForm/JobfairRegistrationForm.component';
-import PolicyComponent from '../../../components/Policy/Policy.component';
+import PolicyComponent from '../../../components/customized-components/Policy/Policy.component';
 import React, { useEffect, useState } from 'react';
 
 const { Step } = Steps;

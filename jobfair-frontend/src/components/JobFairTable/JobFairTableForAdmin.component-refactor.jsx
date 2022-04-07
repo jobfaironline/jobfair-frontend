@@ -2,9 +2,9 @@ import { Empty, Spin, Table } from 'antd';
 import { handleGetStatus } from '../../utils/common';
 import JobFairForAdminColumn from '../../containers/CommonTableComponent/columns/JobFairForAdmin.column';
 import React, { useState } from 'react';
-import getColumnSearchProps from '../TableSearchComponent/TableSearchComponent.component';
+import getColumnSearchProps from '../commons/CommonTableComponent/TableHelper/TableSearchComponent/TableSearchComponent.component';
 
-const JobFairTableForAdminComponent = (props) => {
+const JobFairTableForAdminComponentRefactor = (props) => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
 
@@ -38,4 +38,4 @@ const JobFairTableForAdminComponent = (props) => {
   );
 };
 
-export default JobFairTableForAdminComponent;
+export default JobFairTableForAdminComponentRefactor;

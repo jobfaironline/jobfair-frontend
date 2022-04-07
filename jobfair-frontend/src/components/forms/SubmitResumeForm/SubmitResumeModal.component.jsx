@@ -2,7 +2,7 @@ import { Divider, Typography } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import ConfirmSubmitResumeFormComponent from './ConfirmSubmitResumeForm.component';
-import JobPositionDetailModalComponent from '../../JobPositionDetailModal/JobPositionDetailModal.component';
+import JobPositionDetailModalComponent from '../../customized-components/JobPositionDetailModal/JobPositionDetailModal.component';
 import React, { useState } from 'react';
 
 const { Text } = Typography;

@@ -1,5 +1,5 @@
-import { Inventory } from '../../components/Inventory/Inventory/Inventory.component';
-import { InventoryButton } from '../../components/Inventory/InventoryButton/InventoryButton.component';
+import { Inventory } from '../../components/customized-components/Inventory/Inventory/Inventory.component';
+import { InventoryButton } from '../../components/customized-components/Inventory/InventoryButton/InventoryButton.component';
 import { Modal } from 'antd';
 import { getAttendantCv } from '../../services/cv-controller/CvControllerService';
 import { inventoryAction } from '../../redux-flow/inventory/inventory-slice';

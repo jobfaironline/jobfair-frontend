@@ -1,8 +1,8 @@
 import { Descriptions, Space, Tag } from 'antd';
-import { JOB_FAIR_FOR_ADMIN_STATUS, JOB_FAIR_PLAN_STATUS } from '../../constants/JobFairConst';
+import { JOB_FAIR_FOR_ADMIN_STATUS, JOB_FAIR_PLAN_STATUS } from '../../../constants/JobFairConst';
 import { Link } from 'react-router-dom';
-import { handleStatusTag } from '../../utils/common';
-import EvaluationFormComponent from '../forms/EvaluationForm/EvaluationForm.component';
+import { handleStatusTag } from '../../../utils/common';
+import EvaluationFormComponent from '../../forms/EvaluationForm/EvaluationForm.component';
 import React from 'react';
 
 const JobFairDetailComponent = (props) => {

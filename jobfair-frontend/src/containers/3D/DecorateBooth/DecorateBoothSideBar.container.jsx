@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import * as THREE from 'three';
-import { DecorateBoothSideBarComponent } from '../../../components/DecoratedBoothTool/DecoratedBoothSideBar/DecoratedBoothSideBar.component';
+import { DecorateBoothSideBarComponent } from '../../../components/customized-components/DecoratedBoothTool/DecoratedBoothSideBar/DecoratedBoothSideBar.component';
 import { IMAGE_PLANE_NAME } from '../../../constants/DecorateBoothConstant';
 import { getBase64 } from '../../../utils/common';
 import { notify } from '../../../utils/toastutil';

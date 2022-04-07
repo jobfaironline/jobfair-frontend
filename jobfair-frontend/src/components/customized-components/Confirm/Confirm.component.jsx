@@ -1,7 +1,7 @@
 import './Confirm.styles.scss';
 import { Card, Col, Collapse, Divider, Row, Space, Tag, Typography } from 'antd';
-import { convertEnumToString } from '../../utils/common';
-import AnchorComponent from '../commons/Anchor/Achor.component';
+import { convertEnumToString } from '../../../utils/common';
+import AnchorComponent from '../../commons/Anchor/Achor.component';
 import React from 'react';
 
 const { Panel } = Collapse;

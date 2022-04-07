@@ -4,7 +4,7 @@ import { getLayoutDetail } from '../../services/layout-controller/LayoutControll
 import { getRegistrationByJobFairId } from '../../services/company-registration-controller/CompanyRegistrationControllerService';
 import { notification } from 'antd';
 import { useHistory, useLocation } from 'react-router-dom';
-import JobFairDetailComponent from '../../components/JobFairDetail/JobFairDetail.component';
+import JobFairDetailComponent from '../../components/customized-components/JobFairDetail/JobFairDetail.component';
 import React, { useEffect, useState } from 'react';
 
 const JobFairDetailContainer = () => {

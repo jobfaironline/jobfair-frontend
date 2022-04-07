@@ -1,5 +1,5 @@
 import { Button, Result } from 'antd';
-import { PATH } from '../../constants/Paths/Path';
+import { PATH } from '../../../constants/Paths/Path';
 import { useHistory } from 'react-router-dom';
 import React from 'react';
 

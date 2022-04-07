@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { ControlButtonGroup } from '../../../components/DecoratedBoothTool/ControlButton/ControlButtonGroup.component';
+import { ControlButtonGroup } from '../../../components/customized-components/DecoratedBoothTool/ControlButton/ControlButtonGroup.component';
 import { DecorateBooth3DItemMenuContainer } from '../../SampleItemMenu/DecorateBooth3DItemMenu.container';
 import { DecorateBoothCanvas } from '../../../components/3D/DecorateBooth/DeoratedBoothCanvas/DecorateBoothCanavas.component';
 import { DecoratedBoothSideBarContainer } from './DecorateBoothSideBar.container';

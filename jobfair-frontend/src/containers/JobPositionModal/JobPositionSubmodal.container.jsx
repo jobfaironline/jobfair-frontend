@@ -1,6 +1,6 @@
 import { Modal } from 'antd';
 import { useSelector } from 'react-redux';
-import JobPositionSubmodalDetailComponent from '../../components/JobPositionModal/JobPositionSubmodalDetail.component';
+import JobPositionSubmodalDetailComponent from '../../components/customized-components/JobPositionModal/JobPositionSubmodalDetail.component';
 import React, { useEffect, useState } from 'react';
 
 const JobPositionSubmodalContainer = ({ jobPositionId, visible, handleCloseModal }) => {

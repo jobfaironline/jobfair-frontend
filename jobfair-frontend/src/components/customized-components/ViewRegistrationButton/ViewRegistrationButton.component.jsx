@@ -1,8 +1,8 @@
 import './ViewRegistrationButton.style.scss';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
-import { JOB_FAIR_FOR_ADMIN_STATUS } from '../../constants/JobFairConst';
+import { JOB_FAIR_FOR_ADMIN_STATUS } from '../../../constants/JobFairConst';
 import { Link, generatePath } from 'react-router-dom';
-import { PATH_ADMIN } from '../../constants/Paths/Path';
+import { PATH_ADMIN } from '../../../constants/Paths/Path';
 import { Tooltip } from 'antd';
 import React from 'react';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './CompanyJobPositionTab.styles.scss';
-import { CompanyJobPositionTab } from '../../components/BoothInfoMenu/CompanyJobPositionTab/CompanyJobPositionTab.component';
+import { CompanyJobPositionTab } from '../../components/customized-components/BoothInfoMenu/CompanyJobPositionTab/CompanyJobPositionTab.component';
 import { Modal } from 'antd';
 import { SubmitResumeModalComponent } from '../../components/forms/SubmitResumeForm/SubmitResumeModal.component';
 import { useSelector } from 'react-redux';

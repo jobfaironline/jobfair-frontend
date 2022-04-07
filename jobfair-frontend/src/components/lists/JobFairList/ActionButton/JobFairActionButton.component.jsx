@@ -1,6 +1,6 @@
 import { Button, Tooltip, notification } from 'antd';
-import { COMPANY_JOB_FAIR_STATUS } from '../../../constants/CompanyJobFairStatus';
-import { PATH } from '../../../constants/Paths/Path';
+import { COMPANY_JOB_FAIR_STATUS } from '../../../../constants/CompanyJobFairStatus';
+import { PATH } from '../../../../constants/Paths/Path';
 import { generatePath } from 'react-router-dom';
 import React from 'react';
 

@@ -1,7 +1,7 @@
 import { evaluateJobFairRegistrationAPI } from '../../services/company-registration-controller/CompanyRegistrationControllerService';
 import { notification } from 'antd';
 import { useHistory, useLocation } from 'react-router-dom';
-import CompanyRegistrationDetailComponent from '../../components/CompanyRegistrationDetail/CompanyRegistrationDetail.component';
+import CompanyRegistrationDetailComponent from '../../components/customized-components/CompanyRegistrationDetail/CompanyRegistrationDetail.component';
 import React from 'react';
 
 const CompanyRegistrationDetailContainer = () => {

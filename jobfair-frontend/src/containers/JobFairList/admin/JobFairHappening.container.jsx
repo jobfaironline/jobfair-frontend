@@ -3,10 +3,10 @@ import { Space, Tooltip, notification } from 'antd';
 import { getJobFairHappeningForAdmin } from '../../../services/job-fair-controller/JobFairConTrollerService';
 import { mapperResponseJobFairForAdmin } from '../../../utils/mapperJobFairDetail';
 import JobFairDetailModalContainer from '../../JobFairDetail/JobFairDetailModal.container';
-import JobFairTableForAdminComponent from '../../../components/JobFairTable/JobFairTableForAdmin.component';
+import JobFairTableForAdminComponentRefactor from '../../../components/JobFairTable/JobFairTableForAdmin.component-refactor';
 import PaginationComponent from '../../../components/commons/PaginationComponent/Pagination.component';
 import React, { useLayoutEffect, useState } from 'react';
-import ViewRegistrationButtonComponent from '../../../components/ViewRegistrationButton/ViewRegistrationButton.component';
+import ViewRegistrationButtonComponent from '../../../components/customized-components/ViewRegistrationButton/ViewRegistrationButton.component';
 
 const JobFairHappeningContainer = () => {
   const [data, setData] = useState([]);
@@ -63,7 +63,7 @@ const JobFairHappeningContainer = () => {
   return (
     <>
       <JobFairDetailModalContainer {...modalProps} />
-      <JobFairTableForAdminComponent
+      <JobFairTableForAdminComponentRefactor
         data={data}
         editable
         extra={{

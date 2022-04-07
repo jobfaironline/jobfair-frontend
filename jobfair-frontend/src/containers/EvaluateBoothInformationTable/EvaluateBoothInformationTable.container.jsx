@@ -4,7 +4,7 @@ import { convertToDateString } from '../../utils/common';
 import { getCompanyProfileAPI } from '../../services/company-controller/CompanyControllerService';
 import { getRegistrationByJobFairId } from '../../services/company-registration-controller/CompanyRegistrationControllerService';
 import { useHistory, useParams } from 'react-router-dom';
-import EvaluateBoothInformationTableComponent from '../../components/EvaluateBoothInformationTable/EvaluateBoothInformationTable.component';
+import EvaluateBoothInformationTableComponentRefactor from '../../components/EvaluateBoothInformationTable/EvaluateBoothInformationTable.component-refactor';
 import React, { useLayoutEffect, useState } from 'react';
 
 const EvaluateBoothInformationTableContainer = () => {
@@ -67,7 +67,7 @@ const EvaluateBoothInformationTableContainer = () => {
 
   return (
     <>
-      <EvaluateBoothInformationTableComponent
+      <EvaluateBoothInformationTableComponentRefactor
         data={data}
         jobFairId={jobFairId}
         editable

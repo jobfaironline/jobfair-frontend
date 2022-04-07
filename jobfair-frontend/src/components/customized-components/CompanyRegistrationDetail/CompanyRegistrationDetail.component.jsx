@@ -1,7 +1,7 @@
 import { Card, Col, Divider, Row, Space, Typography } from 'antd';
-import { CompanyRegistrationStatus } from '../../constants/CompanyRegistrationConst';
-import { convertEnumToString } from '../../utils/common';
-import EvaluationFormComponent from '../forms/EvaluationForm/EvaluationForm.component';
+import { CompanyRegistrationStatus } from '../../../constants/CompanyRegistrationConst';
+import { convertEnumToString } from '../../../utils/common';
+import EvaluationFormComponent from '../../forms/EvaluationForm/EvaluationForm.component';
 import React from 'react';
 
 const { Text } = Typography;

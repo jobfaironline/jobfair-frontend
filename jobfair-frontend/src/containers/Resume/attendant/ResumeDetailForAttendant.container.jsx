@@ -2,7 +2,7 @@ import { convertToDateValue } from '../../../utils/common';
 import { getAttendantDetailAPI } from '../../../services/attendant-controller/AttendantControllerService';
 import { mapperResumeDetail } from '../../../utils/mapperResumeDetailForAttendant';
 import React, { useEffect, useState } from 'react';
-import ResumeDetailComponent from '../../../components/Resume/ResumeDetail.component';
+import ResumeDetailComponent from '../../../components/customized-components/Resume/ResumeDetail.component';
 
 const ResumeDetailForAttendantContainer = (props) => {
   const { resume, attendantId } = props;

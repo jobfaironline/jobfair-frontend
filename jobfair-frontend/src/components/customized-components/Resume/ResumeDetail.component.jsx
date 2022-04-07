@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { Card, Spin } from 'antd';
-import { QualificationConst } from '../../constants/AttendantConstants';
-import { convertDobToAge, convertEnumToString } from '../../utils/common';
-import EvaluationFormComponent from '../forms/EvaluationForm/EvaluationForm.component';
+import { QualificationConst } from '../../../constants/AttendantConstants';
+import { convertDobToAge, convertEnumToString } from '../../../utils/common';
+import EvaluationFormComponent from '../../forms/EvaluationForm/EvaluationForm.component';
 import React from 'react';
 import ResumeContent from './Content/ResumeContent.component';
 import ResumeHeader from './Header/ResumeHeader.component';
