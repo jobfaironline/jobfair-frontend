@@ -4,7 +4,7 @@ import React from 'react';
 
 const { Text } = Typography;
 
-const JobPositionSubmodalDetailComponent = ({ data }) => (
+const JobPositionDetailModalComponent = ({ data }) => (
   <div style={{ height: 'max-content', fontSize: '1.2rem' }}>
     <div
       key='no'
@@ -115,4 +115,4 @@ const JobPositionSubmodalDetailComponent = ({ data }) => (
   </div>
 );
 
-export default JobPositionSubmodalDetailComponent;
+export default JobPositionDetailModalComponent;

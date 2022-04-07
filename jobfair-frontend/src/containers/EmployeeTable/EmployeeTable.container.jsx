@@ -5,7 +5,7 @@ import {
 } from '../../services/company-employee-controller/CompanyEmployeeControllerService';
 import { useSelector } from 'react-redux';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
-import EmployeeDrawer from '../../containers/EmployeeDrawer/EmployeeDrawer.container';
+import EmployeeDrawer from './EmployeeDrawer.container';
 import EmployeeTableColumn from '../CommonTableComponent/columns/EmployeeTable.column';
 import React, { useEffect, useState } from 'react';
 

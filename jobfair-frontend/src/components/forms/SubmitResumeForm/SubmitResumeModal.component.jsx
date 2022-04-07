@@ -2,7 +2,7 @@ import { Divider, Typography } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import ConfirmSubmitResumeFormComponent from './ConfirmSubmitResumeForm.component';
-import JobPositionSubmodalDetailComponent from '../../JobPositionDetailModal/JobPositionDetailModal.component';
+import JobPositionDetailModalComponent from '../../JobPositionDetailModal/JobPositionDetailModal.component';
 import React, { useState } from 'react';
 
 const { Text } = Typography;
@@ -24,7 +24,7 @@ export const SubmitResumeModalComponent = (props) => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <JobPositionSubmodalDetailComponent data={jobPosition} />
+      <JobPositionDetailModalComponent data={jobPosition} />
       {selectedResume === undefined ? (
         <div
           style={{

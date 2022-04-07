@@ -1,9 +1,9 @@
 import React from 'react';
-import ResetPasswordContainer from '../../containers/ResetPassword/ResetPassword.container';
+import ResetPasswordFormContainer from '../../containers/forms/ResetPasswordForm/ResetPasswordForm.container';
 
 const ResetPasswordPage = () => (
   <>
-    <ResetPasswordContainer />
+    <ResetPasswordFormContainer />
   </>
 );
 

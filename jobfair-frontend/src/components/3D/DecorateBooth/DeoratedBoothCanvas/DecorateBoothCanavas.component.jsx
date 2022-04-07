@@ -1,8 +1,8 @@
 import { CameraControls } from '../../ThreeJSBaseComponent/CameraControls.component';
 import { Canvas } from '@react-three/fiber';
 import { EffectComposer, Outline } from '@react-three/postprocessing';
-import { FloorMeshContainer } from '../../../../containers/DecorateBooth/FloorMesh.container';
-import { ItemMeshContainer } from '../../../../containers/DecorateBooth/ItemMesh.container';
+import { FloorMeshContainer } from '../../../../containers/3D/DecorateBooth/FloorMesh.container';
+import { ItemMeshContainer } from '../../../../containers/3D/DecorateBooth/ItemMesh.container';
 import { ModeConstant } from '../../../../constants/AppConst';
 import { ReactReduxContext, useSelector } from 'react-redux';
 import { Stage, useContextBridge } from '@react-three/drei';

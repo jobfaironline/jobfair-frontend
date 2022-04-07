@@ -1,6 +1,6 @@
 import { Modal } from 'antd';
 import { useSelector } from 'react-redux';
-import JobPositionSubmodalDetailComponent from '../../components/JobPositionDetailModal/JobPositionDetailModal.component';
+import JobPositionDetailModalComponent from '../../components/JobPositionDetailModal/JobPositionDetailModal.component';
 import React, { useEffect, useState } from 'react';
 
 const JobPositionSubmodalContainer = ({ jobPositionId, visible, handleCloseModal }) => {
@@ -20,7 +20,7 @@ const JobPositionSubmodalContainer = ({ jobPositionId, visible, handleCloseModal
       onCancel={handleCloseModal}
       footer={null}
       destroyOnClose>
-      <JobPositionSubmodalDetailComponent data={data} />
+      <JobPositionDetailModalComponent data={data} />
     </Modal>
   );
 };

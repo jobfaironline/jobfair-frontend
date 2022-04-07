@@ -1,5 +1,5 @@
 import { Card, Space } from 'antd';
-import CompanyProfileFormContainer from '../../../containers/CompanyProfileForm/CompanyProfileForm.container';
+import CompanyProfileFormContainer from '../../../containers/forms/CompanyProfileForm/CompanyProfileForm.container';
 import React from 'react';
 
 const CompanyProfile = () => (

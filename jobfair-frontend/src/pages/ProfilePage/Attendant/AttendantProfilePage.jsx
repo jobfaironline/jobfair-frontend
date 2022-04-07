@@ -1,4 +1,4 @@
-import AttendantProfileFormContainer from '../../../containers/AttendantProfileForm/AttendantProfileForm.container';
+import AttendantProfileFormContainer from '../../../containers/forms/AttendantProfileForm/AttendantProfileForm.container';
 import React from 'react';
 
 const AttendantProfile = () => (

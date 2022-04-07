@@ -1,6 +1,6 @@
 import './LoginPage.styles.scss';
 import { injectStyle } from 'react-toastify/dist/inject-style';
-import LoginContainer from '../../containers/Login/Login.container';
+import LoginFormContainer from '../../containers/forms/LoginForm/LoginForm.container';
 import React from 'react';
 
 if (typeof window !== 'undefined') injectStyle();
@@ -10,7 +10,7 @@ const LoginPage = () => (
     <div style={{ display: 'flex' }}>
       <div className='leftside-container'>
         <div className='login-container animate__fadeInDown'>
-          <LoginContainer />
+          <LoginFormContainer />
         </div>
       </div>
       <div className='rightside-container'>

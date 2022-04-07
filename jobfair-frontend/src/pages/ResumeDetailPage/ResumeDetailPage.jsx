@@ -2,7 +2,7 @@ import './ResumeDetailPage.styles.scss';
 import { PageHeader } from 'antd';
 import { useHistory, useLocation } from 'react-router-dom';
 import React from 'react';
-import ResumeDetailForCompanyContainer from '../../containers/Resume/ResumeDetailForCompany.container';
+import ResumeDetailForCompanyContainer from '../../containers/Resume/company/ResumeDetailForCompany.container';
 
 const ResumeDetailPage = () => {
   const history = useHistory();

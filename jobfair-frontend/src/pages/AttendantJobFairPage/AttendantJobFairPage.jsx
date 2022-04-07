@@ -1,4 +1,4 @@
-import { AttendantJobFairContainer } from '../../containers/AttendantJobFair/AttendantJobFair.container';
+import { AttendantJobFairBoothViewContainer } from '../../containers/3D/JobFairBooth/AttendantJobFairBoothView.container';
 import { GeckoClient } from '../../services/gecko-client/gecko-client';
 import { agoraAction } from '../../redux-flow/agora/agora-slice';
 import { createClient } from 'agora-rtc-react';
@@ -58,7 +58,7 @@ const AttendantJobFairPage = () => {
 
   return (
     <div className={'page'} style={{ overflow: 'hidden' }}>
-      <AttendantJobFairContainer
+      <AttendantJobFairBoothViewContainer
         companyBoothId={companyBoothId}
         geckoClientRef={geckoClientRef}
         communicationProps={communicationProps}

@@ -1,6 +1,6 @@
 import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
-import { ResultSuccessPage } from '../pages/ResultPage/ResultSuccessPage';
+import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
 import { Route, Switch } from 'react-router-dom';
 import AdminRouter from './components/AdminRouter';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
@@ -13,7 +13,7 @@ import CompanyManagerRouter from './components/CompanyManagerRouter';
 import CompanyProfile from '../pages/ProfilePage/Company/CompanyProfilePage';
 import CompanyRegistrationDetailPage from '../pages/CompanyRegistrationDetailPage/CompanyRegistrationDetailPage';
 import ContactPage from '../pages/ContactPage/ContactPage';
-import CreateJobPositionPage from '../pages/JobPositionPage/CreateJobPositionPage';
+import CreateJobPositionPage from '../pages/CreateJobPositonPage/CreateJobPositionPage';
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage';
 import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage';
 import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage';
@@ -26,7 +26,7 @@ import HomePage from '../pages/HomePage';
 import JobFairDetailPage from '../pages/JobFairDetailPage/JobFairDetailPage-remove';
 import JobFairListPage from '../pages/JobFairListPage/JobFairListPage';
 import JobFairTablePage from '../pages/JobFairTablePage/JobFairTablePage';
-import JobPositionDetailPage from '../pages/JobPositionPage/JobPositionDetailPage';
+import JobPositionDetailPage from '../pages/JobPositionDetailPage/JobPositionDetailPage';
 import JobPositionPage from '../pages/JobPositionPage/JobPositionPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavigationBar from '../components/commons/Navbar/Navbar';
@@ -36,7 +36,7 @@ import PublicizedBoothPage from '../pages/PublicizedBoothPage/PublicizedBoothPag
 import React from 'react';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
-import ResultFailedPage from '../pages/ResultPage/ResultFailedPage';
+import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
 
 const AppRouter = () => (

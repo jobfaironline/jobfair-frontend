@@ -1,6 +1,6 @@
 import './FillBoothGeneralInformationPage.styles.scss';
 import { useParams } from 'react-router-dom';
-import JobfairRegistrationForm from '../../containers/JobfairRegistrationForm/JobfairRegistrationForm.container';
+import JobfairRegistrationForm from '../../containers/forms/JobfairRegistrationForm-remove/JobfairRegistrationForm.container';
 import React from 'react';
 
 const FillBoothGeneralInformationPage = () => {

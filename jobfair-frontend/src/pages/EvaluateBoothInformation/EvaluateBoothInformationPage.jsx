@@ -1,7 +1,7 @@
 import { PageHeader, notification } from 'antd';
 import { getJobFairPlanById } from '../../services/job-fair-controller/JobFairConTrollerService';
 import { useHistory, useParams } from 'react-router-dom';
-import EvaluateInformationBoothContainer from '../../containers/EvaluateBoothInformation/EvaluateInformationBooth.container';
+import EvaluateBoothInformationTableContainer from '../../containers/EvaluateBoothInformationTable/EvaluateBoothInformationTable.container';
 import React, { useEffect, useState } from 'react';
 
 const EvaluateBoothInformationPage = () => {
@@ -47,7 +47,7 @@ const EvaluateBoothInformationPage = () => {
         title='Company registrations'
         subTitle={`for job fair : ${jobFairDescription}`}
       />
-      <EvaluateInformationBoothContainer />
+      <EvaluateBoothInformationTableContainer />
     </div>
   );
 };

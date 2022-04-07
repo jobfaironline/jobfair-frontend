@@ -2,7 +2,7 @@ import './JobfairRegistrationForm.styles.scss';
 import { CompanyProfileValidation } from '../../../validate/CompanyProfileValidation';
 import { Form, Typography } from 'antd';
 import { getLatestCompanyRegistration } from '../../../services/company-registration-controller/CompanyRegistrationControllerService';
-import PickJobPositionFormContainer from '../../../containers/PickJobPositionForm/PickJobPositionForm.container';
+import PickJobPositionFormContainer from '../../../containers/forms/PickJobPositionForm/PickJobPositionForm.container';
 import React, { useEffect, useState } from 'react';
 import TextArea from 'antd/es/input/TextArea';
 

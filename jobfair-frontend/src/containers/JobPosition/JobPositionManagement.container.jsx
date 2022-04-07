@@ -7,7 +7,7 @@ import { handleCreateListEmailFromListAccount, handleCreateListNameFromListAccou
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
-import JobPositionTableColumn from '../CommonTableComponent/columns/JobPositionTable.column';
+import PickJobPositionTableColumn from '../JobPositionTable/PickJobPositionTable.column';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 const JobPositionManagementContainer = () => {
@@ -110,7 +110,7 @@ const JobPositionManagementContainer = () => {
 
   const jobPositionTableProps = {
     tableData: data,
-    tableColumns: JobPositionTableColumn,
+    tableColumns: PickJobPositionTableColumn,
     onSearch: () => {
       //TODO: fetch data for search
     },

@@ -5,7 +5,7 @@ import { getAttendantCv } from '../../services/cv-controller/CvControllerService
 import { inventoryAction } from '../../redux-flow/inventory/inventory-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
-import ResumeDetailForAttendantContainer from '../Resume/ResumeDetailForAttendant.container';
+import ResumeDetailForAttendantContainer from '../Resume/attendant/ResumeDetailForAttendant.container';
 
 export const InventoryContainer = (props) => {
   const { onClick, inventoryVisible } = props;

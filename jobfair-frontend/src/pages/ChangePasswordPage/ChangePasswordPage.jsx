@@ -1,6 +1,6 @@
 import { PageHeader } from 'antd';
 import { useHistory } from 'react-router-dom';
-import ChangePasswordContainer from '../../containers/ChangePassword/ChangePassword.container';
+import ChangePasswordFormContainer from '../../containers/forms/ChangePasswordForm/ChangePasswordForm.container';
 import React from 'react';
 
 const ChangePasswordPage = () => {
@@ -13,7 +13,7 @@ const ChangePasswordPage = () => {
         title='Change your password'
         subTitle=''
       />
-      <ChangePasswordContainer />
+      <ChangePasswordFormContainer />
     </div>
   );
 };

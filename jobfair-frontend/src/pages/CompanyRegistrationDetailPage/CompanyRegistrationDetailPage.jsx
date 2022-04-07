@@ -1,6 +1,6 @@
 import { PageHeader } from 'antd';
 import { useHistory } from 'react-router-dom';
-import CompanyRegistrationDetailContainer from '../../containers/CompanyRegistrationDetail/CompanyRegistrationDetail.container';
+import CompanyRegistrationDetailContainer from '../../containers/CompanyRegistrationDetail-remove/CompanyRegistrationDetail.container';
 import React from 'react';
 
 const CompanyRegistrationDetailPage = () => {

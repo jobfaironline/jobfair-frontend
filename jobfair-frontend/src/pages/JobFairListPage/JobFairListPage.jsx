@@ -1,8 +1,8 @@
 import { Divider, Tabs, Typography } from 'antd';
 import { useSelector } from 'react-redux';
-import JobFairListAttendantContainer from '../../containers/JobFairList/commons/JobFairListAttendant.container';
-import JobFairListEmployeeContainer from '../../containers/JobFairList/commons/JobFairListEmployee.container';
-import JobFairListManagerContainer from '../../containers/JobFairList/commons/JobFairListManager.container';
+import JobFairListAttendantContainer from '../../containers/JobFairList/attendant/JobFairListAttendant.container';
+import JobFairListEmployeeContainer from '../../containers/JobFairList/employee/JobFairListEmployee.container';
+import JobFairListManagerContainer from '../../containers/JobFairList/manager/JobFairListManager.container';
 import React from 'react';
 
 const { TabPane } = Tabs;

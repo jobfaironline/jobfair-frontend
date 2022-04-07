@@ -1,4 +1,4 @@
-import { DecorateBoothContainer } from '../../containers/DecorateBooth/DecorateBooth.container';
+import { DecorateBoothContainer } from '../../containers/3D/DecorateBooth/DecorateBooth.container';
 import { decorateBoothAction } from '../../redux-flow/decorateBooth/decorate-booth-slice';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
