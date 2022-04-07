@@ -4,8 +4,8 @@ import { getCompanyBoothByJobFairId } from '../../../services/jobhub-api/Company
 import { getJobFairForAttendant } from '../../../services/jobhub-api/JobFairConTrollerService';
 import { mapperJobFairDetail } from '../../../utils/mapperJobFairList';
 import { notification } from 'antd';
-import CompanyJobFairActionButton from '../../../components/lists/JobFairList/ActionButton/JobFairActionButton.component';
-import JobFairListComponent from '../../../components/lists/JobFairList/JobFairList.component';
+import CompanyJobFairActionButton from '../../../components/customized-components/JobFairList/ActionButton/JobFairActionButton.component';
+import JobFairListComponent from '../../../components/customized-components/JobFairList/JobFairList.component';
 import React, { useEffect, useState } from 'react';
 
 const JobFairListAttendantContainer = (props) => {

@@ -1,5 +1,5 @@
 import { CallAPI } from '../axiosBase';
-import { ENDPOINT_GET_COMPANY_BOOTH } from '../../constants/Endpoints/company-booth-controller/CompanyBoothControllerEndpoint';
+import { ENDPOINT_GET_COMPANY_BOOTH } from '../../constants/Endpoints/jobhub-api/CompanyBoothControllerEndpoint';
 
 export const getCompanyBoothByJobFairId = (jobFairId) =>
   CallAPI(`${ENDPOINT_GET_COMPANY_BOOTH}?jobFairId=${jobFairId}`, 'GET');

@@ -2,7 +2,7 @@ import { CallAPI } from '../axiosBase';
 import {
   ENDPOINT_CRUD_EMPLOYEES,
   ENDPOINT_REGISTER_COMPANY
-} from '../../constants/Endpoints/company-employee-controller/CompanyEmployeeControllerEndpoint';
+} from '../../constants/Endpoints/jobhub-api/CompanyEmployeeControllerEndpoint';
 
 export const createEmployeesAPI = (data) => CallAPI(`${ENDPOINT_CRUD_EMPLOYEES}`, 'POST', data);
 //Get employees

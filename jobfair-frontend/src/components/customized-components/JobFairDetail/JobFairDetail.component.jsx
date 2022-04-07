@@ -1,26 +1,9 @@
-import { Descriptions, Space, Tag } from 'antd';
-import { JOB_FAIR_FOR_ADMIN_STATUS, JOB_FAIR_PLAN_STATUS } from '../../../constants/JobFairConst';
-import { Link } from 'react-router-dom';
+import { Descriptions, Tag } from 'antd';
 import { handleStatusTag } from '../../../utils/common';
-import EvaluationFormComponent from '../../forms/EvaluationForm/EvaluationForm.component';
 import React from 'react';
 
 const JobFairDetailComponent = (props) => {
-  const { data, onFinish, totalRegistration, totalBooth, totalApproval } = props;
-  const handleButton = (status) => {
-    if (status === undefined) return;
-
-    switch (status) {
-      case JOB_FAIR_PLAN_STATUS.PENDING:
-        return (
-          <>
-            <EvaluationFormComponent onFinish={onFinish} id={data.id} name='jobFairId' />
-          </>
-        );
-      case JOB_FAIR_FOR_ADMIN_STATUS.COMPANY_REGISTER:
-        return <Link to={`/approval-registration/${data.id}`}>View registrations</Link>;
-    }
-  };
+  const { data, totalRegistration, totalBooth, totalApproval } = props;
 
   return (
     <>
@@ -57,7 +40,6 @@ const JobFairDetailComponent = (props) => {
           {data.description}
         </Descriptions.Item>
       </Descriptions>
-      <Space>{handleButton(data.status)}</Space>
     </>
   );
 };

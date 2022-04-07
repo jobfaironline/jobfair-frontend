@@ -1,5 +1,5 @@
 import { CallAPI } from '../axiosBase';
-import { ENDPOINT_APPLICATION } from '../../constants/Endpoints/application-controller/ApplicationControllerEndpoint';
+import { ENDPOINT_APPLICATION } from '../../constants/Endpoints/jobhub-api/ApplicationControllerEndpoint';
 
 export const getAllApplication = (
   pageNumber,

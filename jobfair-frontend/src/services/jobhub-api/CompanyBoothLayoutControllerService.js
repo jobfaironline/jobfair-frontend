@@ -4,7 +4,7 @@ import {
   ENDPOINT_GET_COMPANY_BOOTH_LATEST_VERSION_LAYOUT,
   ENDPOINT_LAYOUT_VIDEO_WITH_FILE,
   ENDPOINT_LAYOUT_VIDEO_WITH_URL
-} from '../../constants/Endpoints/company-booth-layout-controller/CompanyBoothLayoutControllerEndpoint';
+} from '../../constants/Endpoints/jobhub-api/CompanyBoothLayoutControllerEndpoint';
 
 export const saveDecoratedBooth = async (formData) =>
   CallAPI(

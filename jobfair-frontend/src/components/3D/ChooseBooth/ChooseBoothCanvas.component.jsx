@@ -5,19 +5,15 @@ import { Canvas } from '@react-three/fiber';
 import { ChooseBoothGroundMesh } from './ChooseBoothGroundMesh.component';
 import { EffectComposer, Outline } from '@react-three/postprocessing';
 import { KernelSize, Resizer } from 'postprocessing';
-import { Modal, notification } from 'antd';
-import { PATH } from '../../../constants/Paths/Path';
+import { Modal } from 'antd';
 import { SkyComponent, SkyType } from '../ThreeJSBaseComponent/Sky.component';
 import { SkyTypeSelect } from '../ThreeJSBaseComponent/SelectSkyType.component';
 import { Stats } from '@react-three/drei';
-import { generatePath, useHistory } from 'react-router-dom';
-import { getLatestApproveRegistration } from '../../../services/jobhub-api/CompanyRegistrationControllerService';
-import { purchaseBooth } from '../../../services/jobhub-api/CompanyBuyBoothControllerService';
 import React, { Fragment, useState } from 'react';
 
 export const ChooseBoothCanvas = (props) => {
+  // eslint-disable-next-line no-unused-vars
   const { mesh, boothData, jobFairId } = props;
-  const history = useHistory();
   const [hoverRef, setHoverRef] = useState();
   const [selectionRef, setSelectionRef] = useState();
   const [modalState, setModalState] = useState({
@@ -26,26 +22,7 @@ export const ChooseBoothCanvas = (props) => {
   });
   const [skyType, setSkyType] = useState(SkyType.Morning);
   const handleOk = async () => {
-    let data = await getLatestApproveRegistration(jobFairId).then((response) => response.data);
-    const registrationId = data.id;
-    data = await purchaseBooth({
-      boothId: modalState.boothId,
-      companyRegistrationId: registrationId
-    })
-      .then(() => {
-        const url = generatePath(PATH.DECORATE_BOOTH_PAGE, {
-          jobFairId,
-          companyBoothId: modalState.boothId
-        });
-        history.push(url);
-      })
-      .catch((err) => {
-        notification['error']({
-          message: `Not found company registration by job fair ID: ${jobFairId}`,
-          description: `${err}`,
-          duration: 2
-        });
-      });
+    //TODO: handle assign employee to booth
   };
 
   const handleCancel = () => {

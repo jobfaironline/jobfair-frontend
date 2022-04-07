@@ -1,5 +1,5 @@
 import { ModeConstant } from '../../constants/AppConst';
-import { SampleItemMenu } from '../../components/lists/SampleItemList/SampleItemList.component';
+import { SampleItemMenu } from '../../components/commons/SampleItemList/SampleItemList.component';
 import { decorateBoothAction } from '../../redux-flow/decorateBooth/decorate-booth-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';

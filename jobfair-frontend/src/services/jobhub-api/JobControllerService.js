@@ -1,5 +1,5 @@
 import { CallAPI } from '../axiosBase';
-import { ENDPOINT_JOB_CONTROLLER } from '../../constants/Endpoints/job-controller/JobControllerEndpoint';
+import { ENDPOINT_JOB_CONTROLLER } from '../../constants/Endpoints/jobhub-api/JobControllerEndpoint';
 
 export const createJobPositionsAPI = (data) => CallAPI(`${ENDPOINT_JOB_CONTROLLER}`, 'POST', data);
 export const getJobPositionsAPI = (direction, offset, pageSize, sortBy) =>

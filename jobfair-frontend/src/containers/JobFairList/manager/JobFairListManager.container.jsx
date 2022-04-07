@@ -1,14 +1,14 @@
 import { PATH, PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getCompanyBoothByJobFairId } from '../../../services/jobhub-api/CompanyBoothControllerService';
-import { getJobFairForCompany } from '../../../services/jobhub-api/JobFairConTrollerService';
 import { mapperJobFairDetail } from '../../../utils/mapperJobFairList';
 import { notification } from 'antd';
-import CompanyJobFairActionButton from '../../../components/lists/JobFairList/ActionButton/JobFairActionButton.component';
-import JobFairListComponent from '../../../components/lists/JobFairList/JobFairList.component';
+import CompanyJobFairActionButton from '../../../components/customized-components/JobFairList/ActionButton/JobFairActionButton.component';
+import JobFairListComponent from '../../../components/customized-components/JobFairList/JobFairList.component';
 import React, { useEffect, useState } from 'react';
 
 const JobFairListManagerContainer = (props) => {
+  // eslint-disable-next-line no-unused-vars
   const { tabStatus } = props;
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -22,6 +22,7 @@ const JobFairListManagerContainer = (props) => {
 
   const history = useHistory();
 
+  // eslint-disable-next-line no-unused-vars
   const setResponseResult = (res) => {
     const result = res.data.content.map((item) => mapperJobFairDetail(item));
     setData([...data, ...result]);
@@ -33,14 +34,7 @@ const JobFairListManagerContainer = (props) => {
     if (loading) return;
 
     setLoading(true);
-    getJobFairForCompany(currentPage, pageSize, tabStatus)
-      .then((res) => setResponseResult(res))
-      .catch(() => {
-        setLoading(false);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    //TODO: handle API for get all job fair
   };
 
   const getCompanyBoothId = (jobFairId) => {

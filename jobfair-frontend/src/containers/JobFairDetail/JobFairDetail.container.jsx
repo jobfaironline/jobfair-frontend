@@ -1,36 +1,16 @@
-import { CompanyRegistrationStatus } from '../../constants/CompanyRegistrationConst';
-import { evaluateJobFairPlanAPI } from '../../services/jobhub-api/JobFairConTrollerService';
 import { getLayoutDetail } from '../../services/jobhub-api/LayoutControllerService';
-import { getRegistrationByJobFairId } from '../../services/jobhub-api/CompanyRegistrationControllerService';
 import { notification } from 'antd';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import JobFairDetailComponent from '../../components/customized-components/JobFairDetail/JobFairDetail.component';
 import React, { useEffect, useState } from 'react';
 
 const JobFairDetailContainer = () => {
   const location = useLocation();
   const jobFair = location.state.jobFair;
-  const history = useHistory();
-  const [totalRegistration, setTotalRegistration] = useState(0);
-  const [totalApproval, setTotalApproval] = useState(0);
   const [totalBooth, setTotalBooth] = useState(0);
 
   const getTotalCompanyRegistrationOfJobFair = async () => {
-    if (jobFair !== undefined && jobFair.id !== undefined) {
-      //need API for getting company registrations have status APPROVE by jobfairId
-      getRegistrationByJobFairId(jobFair.id, 0, 5000, 'createDate', 'DESC')
-        .then((res) => {
-          const approvalRegistrations = res.data.content.filter(
-            (item) => item.status === CompanyRegistrationStatus.APPROVE
-          ).length;
-          setTotalApproval(approvalRegistrations);
-          const totalRegistrations = res.data.totalElements;
-          setTotalRegistration(totalRegistrations);
-        })
-        .catch(() => {
-          //
-        });
-    }
+    //TODO: handle get total company registration
   };
 
   const getTotalBoothOfJobFair = async () => {
@@ -60,27 +40,10 @@ const JobFairDetailContainer = () => {
     getTotalBoothOfJobFair();
   }, []);
 
-  const onFinish = (values) => {
-    evaluateJobFairPlanAPI(values)
-      .then(() => {
-        notification['success']({
-          message: `Your evaluation has been submitted`,
-          description: `Evaluate job fair plan successfully`
-        });
-        history.goBack();
-      })
-      .catch((err) => {
-        notification['error']({
-          message: `An error occurred while submitting`,
-          description: `Evaluate job fair plan failed - ${err}`
-        });
-      });
-  };
   return (
     <>
       <JobFairDetailComponent
         data={jobFair}
-        onFinish={onFinish}
         totalApproval={totalApproval}
         totalRegistration={totalRegistration}
         totalBooth={totalBooth}

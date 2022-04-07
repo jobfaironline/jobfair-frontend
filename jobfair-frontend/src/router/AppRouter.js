@@ -11,16 +11,13 @@ import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage';
 import CompanyEmployeeRouter from './components/CompanyEmployeeRouter';
 import CompanyManagerRouter from './components/CompanyManagerRouter';
 import CompanyProfile from '../pages/ProfilePage/Company/CompanyProfilePage';
-import CompanyRegistrationDetailPage from '../pages/CompanyRegistrationDetailPage/CompanyRegistrationDetailPage';
 import ContactPage from '../pages/ContactPage/ContactPage';
 import CreateJobPositionPage from '../pages/CreateJobPositonPage/CreateJobPositionPage';
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage';
 import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage';
 import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
-import EvaluateBoothInformationPage from '../pages/EvaluateBoothInformation/EvaluateBoothInformationPage';
 import FAQPage from '../pages/FAQPage/FAQPage';
-import FillBoothGeneralInformationPage from '../pages/FillBoothGeneralInformationPage/FillBoothGeneralInformationPage';
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage';
 import HomePage from '../pages/HomePage';
 import JobFairDetailPage from '../pages/JobFairDetailPage/JobFairDetailPage-remove';
@@ -54,12 +51,6 @@ const AppRouter = () => (
       </Route>
       <Route path={PATH.BOOTH_PAGE} exact>
         <AttendantJobFairPage />
-      </Route>
-      <Route path={PATH.REGISTER_JOB_FAIR_PAGE} exact>
-        <FillBoothGeneralInformationPage />
-      </Route>
-      <Route path={PATH.REGISTER_JOB_FAIR_PAGE} exact>
-        <FillBoothGeneralInformationPage />
       </Route>
       <Route path={PATH.RESET_PASSWORD_PAGE} exact>
         <ResetPasswordPage />
@@ -211,21 +202,9 @@ const AppRouter = () => (
         exact
       />
       <AdminRouter
-        key={PATH_ADMIN.APPROVAL_REGISTRATION_PAGE}
-        component={() => <EvaluateBoothInformationPage />}
-        path={PATH_ADMIN.APPROVAL_REGISTRATION_PAGE}
-        exact
-      />
-      <AdminRouter
         key={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
         component={() => <JobFairDetailPage />}
         path={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
-        exact
-      />
-      <AdminRouter
-        key={PATH_ADMIN.COMPANY_REGISTRATION_DETAIL_PAGE}
-        component={() => <CompanyRegistrationDetailPage />}
-        path={PATH_ADMIN.COMPANY_REGISTRATION_DETAIL_PAGE}
         exact
       />
       <Route path='*' component={() => <ErrorPage code={404} />} />

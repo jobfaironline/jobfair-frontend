@@ -1,4 +1,4 @@
-import { CompanyInfoMenuContainer } from '../../CompanyInfoMenu/CompanyInfoMenu.container';
+import { BoothInfoMenuContainer } from '../../BoothInfoMenu/BoothInfoMenu.container';
 import { ControlTipsModalContainer } from '../../ControlTipModal/ControlTipsModal.container';
 import { InventoryContainer } from '../../Inventory/Inventory.container';
 import { JobFairBoothContainer } from './JobFairBooth.container';
@@ -24,7 +24,7 @@ export const AttendantJobFairBoothViewContainer = (props) => {
 
   return (
     <div className={styles.container}>
-      <CompanyInfoMenuContainer
+      <BoothInfoMenuContainer
         companyBoothId={companyBoothId}
         isShow={tabState.isShow}
         activeKey={tabState.activeKey}
