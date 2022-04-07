@@ -34,7 +34,7 @@ const JobFairDetailCompanyContainer = props => {
     switch (role) {
       case COMPANY_MANAGER:
       case COMPANY_EMPLOYEE:
-        return JobFairDetailForCompany(data)
+        return <JobFairDetailForCompany data={data} />
       default:
         return null
     }
