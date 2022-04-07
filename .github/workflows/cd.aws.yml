@@ -4,7 +4,7 @@
 name: CD
 on:
   push:
-    branches: [ main ]
+    branches: [ CI-CD ]
     
 jobs:
   build:
@@ -18,8 +18,8 @@ jobs:
    - name: Export .env file
      run: |
           touch .env
-          echo ${{secrets.REACT_APP_API_URL}} >> .env
-          echo ${{secrets.REACT_APP_AGORA_APP_ID}} >> .env
+          echo ${{secrets.REACT_APP_API_URL}} >> .env.production
+          echo ${{secrets.REACT_APP_AGORA_APP_ID}} >> .env.production
      working-directory: ./jobfair-frontend
    - run: npm install
      working-directory: ./jobfair-frontend
