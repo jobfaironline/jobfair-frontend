@@ -54,4 +54,41 @@ const JobFairDetailCompanyComponent = props => {
   )
 }
 
+export const JobFairDetailForCompany = data => {
+  return (
+    <>
+      <Row>
+        <Col span={24}>
+          <Text strong>Company register time: </Text>
+          <Text italic>
+            {convertToDateString(data?.companyRegisterStartTime)}
+            {' → '}
+            {convertToDateString(data?.companyRegisterEndTime)}
+          </Text>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24}>
+          <Text strong>Company buy booth time: </Text>
+          <Text italic>
+            {convertToDateString(data?.companyBuyBoothStartTime)}
+            {' → '}
+            {convertToDateString(data?.companyBuyBoothEndTime)}
+          </Text>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24}>
+          <Text strong>Estimated number of participants: </Text>
+          <Text italic>{data?.estimateParticipant}</Text>
+        </Col>
+        <Col span={24}>
+          <Text strong>Target company: </Text>
+          <Text italic>{data?.targetCompany}</Text>
+        </Col>
+      </Row>
+    </>
+  )
+}
+
 export default JobFairDetailCompanyComponent
