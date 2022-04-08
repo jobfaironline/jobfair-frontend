@@ -20,8 +20,8 @@ jobs:
           curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
           sudo apt -y install nodejs
    - name: Build
-     working-directory: jobfair-frontend
      run: |
+          cd jobfair-frontend/
           touch .env.production
           echo ${{secrets.REACT_APP_API_URL}} >> .env.production
           echo ${{secrets.REACT_APP_AGORA_APP_ID}} >> .env.production
