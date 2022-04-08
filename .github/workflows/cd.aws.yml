@@ -18,7 +18,7 @@ jobs:
      with:
       node-version: '14'
    - name: Build
-     working-directory: ./jobfair-frontend
+     working-directory: jobfair-frontend
      run: |
           touch .env.production
           echo ${{secrets.REACT_APP_API_URL}} >> .env.production
