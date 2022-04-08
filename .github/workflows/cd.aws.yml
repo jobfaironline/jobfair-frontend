@@ -27,6 +27,7 @@ jobs:
           echo ${{secrets.REACT_APP_AGORA_APP_ID}} >> .env.production
           npm install --force
           npm run build
+          rm -r node_modules
    - uses: actions/upload-artifact@v2
      with:
       name: frontend
