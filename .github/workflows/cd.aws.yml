@@ -13,7 +13,7 @@ jobs:
    steps:
    - uses: actions/checkout@v3
      with:
-      path: CI-CD
+      ref: 'CI-CD'
    - uses: actions/setup-node@v2
      with:
       node-version: '14'
