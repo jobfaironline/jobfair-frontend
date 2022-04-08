@@ -1,7 +1,6 @@
 import { PATH, PATH_ATTENDANT } from '../../../constants/Paths/Path';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getCompanyBoothByJobFairId } from '../../../services/jobhub-api/CompanyBoothControllerService';
-import { getJobFairForAttendant } from '../../../services/jobhub-api/JobFairConTrollerService';
 import { mapperJobFairDetail } from '../../../utils/mapperJobFairList';
 import { notification } from 'antd';
 import CompanyJobFairActionButton from '../../../components/customized-components/JobFairList/ActionButton/JobFairActionButton.component';
@@ -9,6 +8,7 @@ import JobFairListComponent from '../../../components/customized-components/JobF
 import React, { useEffect, useState } from 'react';
 
 const JobFairListAttendantContainer = (props) => {
+  // eslint-disable-next-line no-unused-vars
   const { tabStatus } = props;
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -22,6 +22,7 @@ const JobFairListAttendantContainer = (props) => {
 
   const history = useHistory();
 
+  // eslint-disable-next-line no-unused-vars
   const setResponseResult = (res) => {
     const result = res.data.content.map((item) => mapperJobFairDetail(item));
     setData([...data, ...result]);
@@ -32,15 +33,16 @@ const JobFairListAttendantContainer = (props) => {
   const loadMoreData = () => {
     if (loading) return;
 
-    setLoading(true);
-    getJobFairForAttendant(currentPage, pageSize, tabStatus)
+    //setLoading(true);
+    //TODO: change API
+    /*getJobFairForAttendant(currentPage, pageSize, tabStatus)
       .then((res) => setResponseResult(res))
       .catch(() => {
         setLoading(false);
       })
       .finally(() => {
         setLoading(false);
-      });
+      });*/
   };
 
   const getCompanyBoothId = (jobFairId) => {

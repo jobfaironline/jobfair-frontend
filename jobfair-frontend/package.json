@@ -73,7 +73,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "tien-start": "node node_modules/react-scripts/bin/react-scripts.js start",
-    "tien-format": "node node_modules/eslint/bin/eslint.js --quiet --fix . --ext .js,.jsx src/ && node node_modules/prettier/bin-prettier.js -- --write"
+    "tien-format": "node node_modules/eslint/bin/eslint.js --quiet --fix . --ext .js,.jsx src/ && node node_modules/prettier/bin-prettier.js -w src/"
   },
   "eslintConfig": {
     "extends": [
