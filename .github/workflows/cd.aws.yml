@@ -31,6 +31,10 @@ jobs:
      with:
       name: frontend
       path: ./jobfair-frontend/build
+   - uses: actions/upload-artifact@v2
+     with:
+      name: frontend-all
+      path: ./jobfair-frontend/
     
   
   deploy:
