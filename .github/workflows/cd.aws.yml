@@ -27,7 +27,7 @@ jobs:
           echo ${{secrets.REACT_APP_AGORA_APP_ID}} >> .env.production
           pwd
           cat .env.production
-          npm install
+          npm install --legacy-peer-deps
           npm run build
    - uses: actions/upload-artifact@v2
      with:
