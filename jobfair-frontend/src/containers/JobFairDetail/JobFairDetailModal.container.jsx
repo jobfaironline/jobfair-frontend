@@ -1,14 +1,14 @@
-import { Col, Modal, Typography } from 'antd';
+import { Col, Typography } from 'antd';
 import { convertEnumToString } from '../../utils/common';
 import { getAccountByIdAPI } from '../../services/jobhub-api/AccountControllerService';
 import { getLayoutDetail } from '../../services/jobhub-api/LayoutControllerService';
 import { mapperJobFairDetail } from '../../utils/mapperJobFairDetail';
-import JobFairDetailComponent from '../../components/customized-components/JobFairDetail/JobFairDetail.component';
+import DocumentJobFairDetailComponent from '../../components/customized-components/JobFairDetail/DocumentJobFairDetail.component';
 import React, { useEffect, useState } from 'react';
 
 const { Text } = Typography;
 
-const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVisible, jobFairList }) => {
+const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, jobFairList }) => {
   const [jobFairDetail, setJobFairDetail] = useState({});
   const [creatorInfo, setCreatorInfo] = useState('');
   const [totalBooth, setTotalBooth] = useState(0);
@@ -30,14 +30,6 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
           //
         });
     }
-  };
-
-  const onOk = () => {
-    setModalVisible(false);
-  };
-
-  const onCancel = () => {
-    setModalVisible(false);
   };
 
   useEffect(() => {
@@ -68,13 +60,11 @@ const JobFairDetailModalContainer = ({ jobFairId, creatorId, visible, setModalVi
 
   return !visible ? null : (
     <>
-      <Modal title='Job Fair Detail' visible={visible} onOk={onOk} onCancel={onCancel} width={1300}>
-        <JobFairDetailComponent data={data} totalBooth={totalBooth} />
-        <Col span={24}>
-          <Text strong>Creator Information: </Text>
-          <Text italic>{result.creatorInfo}</Text>
-        </Col>
-      </Modal>
+      <DocumentJobFairDetailComponent data={data} totalBooth={totalBooth} />
+      <Col span={24}>
+        <Text strong>Creator Information: </Text>
+        <Text italic>{result.creatorInfo}</Text>
+      </Col>
     </>
   );
 };

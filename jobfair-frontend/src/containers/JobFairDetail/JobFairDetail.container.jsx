@@ -1,7 +1,7 @@
 import { getLayoutDetail } from '../../services/jobhub-api/LayoutControllerService';
 import { notification } from 'antd';
 import { useLocation } from 'react-router-dom';
-import JobFairDetailComponent from '../../components/customized-components/JobFairDetail/JobFairDetail.component';
+import DocumentJobFairDetailComponent from '../../components/customized-components/JobFairDetail/DocumentJobFairDetail.component';
 import React, { useEffect, useState } from 'react';
 
 const JobFairDetailContainer = () => {
@@ -37,7 +37,7 @@ const JobFairDetailContainer = () => {
 
   return (
     <>
-      <JobFairDetailComponent data={jobFair} totalBooth={totalBooth} />
+      <DocumentJobFairDetailComponent data={jobFair} totalBooth={totalBooth} />
     </>
   );
 };

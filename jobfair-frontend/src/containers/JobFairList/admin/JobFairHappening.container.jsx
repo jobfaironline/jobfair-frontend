@@ -1,5 +1,5 @@
+import { Modal, Space, Tooltip, notification } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
-import { Space, Tooltip, notification } from 'antd';
 import { getJobFairHappeningForAdmin } from '../../../services/jobhub-api/JobFairConTrollerService';
 import { mapperResponseJobFairForAdmin } from '../../../utils/mapperJobFairDetail';
 import JobFairDetailModalContainer from '../../JobFairDetail/JobFairDetailModal.container';
@@ -46,12 +46,11 @@ const JobFairHappeningContainer = () => {
 
     setPageSize(pageSize);
   };
-  const modalProps = {
+  const jobFairDetailProps = {
     jobFairId,
     creatorId,
-    visible: modalVisible,
-    setModalVisible,
-    jobFairList: [...data]
+    jobFairList: [...data],
+    visible: modalVisible
   };
 
   const handleViewModal = (id, creatorId) => {
@@ -60,9 +59,19 @@ const JobFairHappeningContainer = () => {
     setCreatorId(creatorId);
   };
 
+  const onOk = () => {
+    setModalVisible(false);
+  };
+
+  const onCancel = () => {
+    setModalVisible(false);
+  };
+
   return (
     <>
-      <JobFairDetailModalContainer {...modalProps} />
+      <Modal title='Job Fair Detail' visible={modalVisible} onOk={onOk} onCancel={onCancel} width={1300}>
+        <JobFairDetailModalContainer {...jobFairDetailProps} />
+      </Modal>
       <JobFairTableForAdminComponentRefactor
         data={data}
         editable

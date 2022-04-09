@@ -2,7 +2,7 @@ import { Descriptions, Tag } from 'antd';
 import { handleStatusTag } from '../../../utils/common';
 import React from 'react';
 
-const JobFairDetailComponent = (props) => {
+const DocumentJobFairDetailComponent = (props) => {
   const { data, totalBooth } = props;
 
   return (
@@ -42,4 +42,4 @@ const JobFairDetailComponent = (props) => {
   );
 };
 
-export default JobFairDetailComponent;
+export default DocumentJobFairDetailComponent;
