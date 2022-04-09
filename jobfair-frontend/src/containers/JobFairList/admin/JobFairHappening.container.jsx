@@ -62,6 +62,7 @@ const JobFairHappeningContainer = () => {
     jobFairId,
     creatorId,
     jobFairList: [...data],
+    //TODO: check whether this prop would be used ?
     visible: modalVisible
   };
 
