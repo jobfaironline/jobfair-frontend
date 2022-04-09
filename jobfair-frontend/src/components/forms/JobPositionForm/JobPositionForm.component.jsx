@@ -1,5 +1,5 @@
 /* eslint-disable no-empty-function */
-import { AutoComplete, Button, Card, Divider, Form, Input, Select, Space, Typography } from 'antd';
+import { AutoComplete, Card, Divider, Form, Input, Select, Space, Typography } from 'antd';
 import { CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories } from '../../../constants/CompanyProfileConstant';
 import {
   JobLevelConst,
@@ -25,14 +25,14 @@ const formItemLayout = {
   }
 };
 
-const CreateJobPositionFormComponent = (props) => {
+const JobPositionFormComponent = (props) => {
   const location = useLocation();
   const [listContactPersonSuggestion, setListContactPersonSuggestion] = useState();
   const [listEmailSuggestion, setListEmailSuggestion] = useState();
   const [totalSelect, setTotalSelect] = useState(0);
   const [totalSkillTags, setTotalSkillTags] = useState(0);
   const { Text } = Typography;
-  const { form, onFinish } = props;
+  const { form, formItemButtons, onFinish } = props;
   const [resultNameSuggested, setResultNameSuggested] = useState([]);
   const [resultEmailSuggested, setResultEmailSuggested] = useState([]);
   useEffect(() => {
@@ -62,7 +62,7 @@ const CreateJobPositionFormComponent = (props) => {
 
   return (
     <div style={{ width: '80%' }}>
-      <Card title={`Create job position application`} style={{ width: '70%', margin: '3rem auto' }}>
+      <Card title={`Job position detail`} style={{ width: '70%', margin: '3rem auto' }}>
         <Form onFinish={onFinish} form={form} {...formItemLayout} layout='vertical' labelCol={21} wrapperCol={21}>
           <Form.Item
             label='Job title'
@@ -260,20 +260,21 @@ const CreateJobPositionFormComponent = (props) => {
               <Input placeholder='Email for receiving applications' />
             </AutoComplete>
           </Form.Item>
-          <Form.Item
-            label='Location for applications'
-            required
-            tooltip='This is required'
-            rules={JobPositionValidation.contactPerson}
-            name='locationId'
-            style={{
-              display: 'inline-block',
-              width: '96%',
-              marginLeft: '1rem',
-              marginRight: '1rem'
-            }}>
-            <Input placeholder='Location' />
-          </Form.Item>
+          {/*TODO: implement location later*/}
+          {/*<Form.Item*/}
+          {/*  label='Location for applications'*/}
+          {/*  required*/}
+          {/*  tooltip='This is required'*/}
+          {/*  rules={JobPositionValidation.contactPerson}*/}
+          {/*  name='locationId'*/}
+          {/*  style={{*/}
+          {/*    display: 'inline-block',*/}
+          {/*    width: '96%',*/}
+          {/*    marginLeft: '1rem',*/}
+          {/*    marginRight: '1rem'*/}
+          {/*  }}>*/}
+          {/*  <Input placeholder='Location' />*/}
+          {/*</Form.Item>*/}
           <Form.Item
             label='Description'
             required
@@ -293,11 +294,7 @@ const CreateJobPositionFormComponent = (props) => {
             <TextArea placeholder='Requirements' showCount maxLength={3000} autoSize={{ minRows: 5 }} />
           </Form.Item>
           <Form.Item style={{ display: 'flex', justifyContent: 'end' }}>
-            <Space style={{ display: 'flex', justifyContent: 'end' }}>
-              <Button type='primary' htmlType='submit' style={{ margin: '0 3rem', width: '7rem' }}>
-                Create
-              </Button>
-            </Space>
+            <Space style={{ display: 'flex', justifyContent: 'end' }}>{formItemButtons.map((button) => button)}</Space>
           </Form.Item>
         </Form>
       </Card>
@@ -305,4 +302,4 @@ const CreateJobPositionFormComponent = (props) => {
   );
 };
 
-export default CreateJobPositionFormComponent;
+export default JobPositionFormComponent;

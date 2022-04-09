@@ -33,7 +33,13 @@ export const AttendantJobFairBoothViewContainer = (props) => {
       />
       <div className={styles.booth}>
         <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />
-        <ControlTipsModalContainer />
+        <ControlTipsModalContainer>
+          <>
+            <p>Movement controls:</p>
+            <p>W/S: Translate Forward/Backward</p>
+            <p>A/D: Rotate Left/Right</p>
+          </>
+        </ControlTipsModalContainer>
         <JobFairBoothContainer
           companyBoothId={companyBoothId}
           handleOpenDetail={handleOpenDetail}
