@@ -15,6 +15,7 @@ const CreateJobPositionFormContainer = () => {
     createJobPositionsAPI({
       ...values,
       companyId,
+      //TODO: remove later
       locationId: fakeLocationId
     })
       .then(() => {

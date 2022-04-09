@@ -2,7 +2,7 @@ import { Button, Modal } from 'antd';
 import React from 'react';
 
 export const ControlTipsModal = (props) => {
-  const { openControlTips, isModalVisible, closeControlTips, controlMessage } = props;
+  const { openControlTips, isModalVisible, closeControlTips } = props;
   return (
     <>
       <Button
@@ -19,7 +19,7 @@ export const ControlTipsModal = (props) => {
         footer={null}
         onCancel={closeControlTips}
         centered={true}>
-        {controlMessage()}
+        {props.children}
       </Modal>
     </>
   );
