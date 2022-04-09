@@ -4,7 +4,7 @@
 name: CD
 on:
   push:
-    branches: [ CI-CD ]
+    branches: main
     
 jobs:
   build:
@@ -12,8 +12,6 @@ jobs:
    runs-on: ubuntu-latest
    steps:
    - uses: actions/checkout@v3
-     with:
-      ref: CI-CD
    - name: Setup nodejs
      run: | 
           sudo apt update
