@@ -2,9 +2,9 @@ import { MoreOutlined } from '@ant-design/icons';
 import { Space, Tooltip, notification } from 'antd';
 import { getJobFairIncomingForAdmin } from '../../../services/jobhub-api/JobFairConTrollerService';
 import { mapperResponseJobFairForAdmin } from '../../../utils/mapperJobFairDetail';
+import CommonTableContainer from '../../CommonTableComponent/CommonTableComponent.container';
 import JobFairDetailModalContainer from '../../JobFairDetail/JobFairDetailModal.container';
-import JobFairTableForAdminComponentRefactor from '../../../components/JobFairTable/JobFairTableForAdmin.component-refactor';
-import PaginationComponent from '../../../components/commons/PaginationComponent/Pagination.component';
+import JobFairForAdminColumn from '../../CommonTableComponent/columns/JobFairForAdmin.column';
 import React, { useLayoutEffect, useState } from 'react';
 import ViewRegistrationButtonComponent from '../../../components/customized-components/ViewRegistrationButton/ViewRegistrationButton.component';
 
@@ -60,31 +60,39 @@ const JobFairIncomingContainer = () => {
     setCreatorId(creatorId);
   };
 
+  const jobFairTableProps = {
+    tableData: data,
+    tableColumns: JobFairForAdminColumn,
+    onSearch: () => {
+      //TODO: fetch data for search
+    },
+    extra: [
+      {
+        title: 'Actions',
+        key: 'action',
+        width: '6rem',
+        render: (text, record) => (
+          <Space size='middle'>
+            <Tooltip placement='top' title='View detail'>
+              <a onClick={() => handleViewModal(record.id, record.creatorId)}>
+                <MoreOutlined />
+              </a>
+            </Tooltip>
+            <ViewRegistrationButtonComponent status={record.status} id={record.id} />
+          </Space>
+        )
+      }
+    ],
+    paginationObject: {
+      handlePageChange,
+      totalRecord: totalElements
+    }
+  };
+
   return (
     <>
       <JobFairDetailModalContainer {...modalProps} />
-      <JobFairTableForAdminComponentRefactor
-        data={data}
-        editable
-        extra={{
-          title: 'Actions',
-          key: 'action',
-          width: '6rem',
-          render: (text, record) => (
-            <Space size='middle'>
-              <Tooltip placement='top' title='View detail'>
-                <a onClick={() => handleViewModal(record.id, record.creatorId)}>
-                  <MoreOutlined />
-                </a>
-              </Tooltip>
-              <ViewRegistrationButtonComponent status={record.status} id={record.id} />
-            </Space>
-          )
-        }}
-      />
-      <div style={{ display: 'flex', justifyContent: 'end', padding: '1rem' }}>
-        <PaginationComponent data={data} handlePageChange={handlePageChange} totalRecord={totalElements} />
-      </div>
+      <CommonTableContainer {...jobFairTableProps} />
     </>
   );
 };

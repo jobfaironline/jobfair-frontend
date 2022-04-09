@@ -1,33 +1,10 @@
 import { ApplicationValidation } from '../../../validate/ApplicationValidation';
-import { Button, Form, Space, notification } from 'antd';
-import { draftApplication, submitApplication } from '../../../services/jobhub-api/ApplicationControllerService';
+import { Button, Form, Space } from 'antd';
 import React from 'react';
 import TextArea from 'antd/es/input/TextArea';
 
 const ConfirmSubmitResumeFormComponent = (props) => {
-  const { resume, jobPosition, closeModal } = props;
-
-  const onFinish = async (values) => {
-    const body = {
-      ...values,
-      cvId: resume.id,
-      registrationJobPositionId: jobPosition.id
-    };
-    try {
-      const response = await draftApplication(body);
-      const data = response.data;
-      await submitApplication(data.id);
-      notification['success']({
-        message: 'Your application has been submitted'
-      });
-    } catch (err) {
-      notification['error']({
-        message: err.response.data.message
-      });
-    }
-
-    closeModal();
-  };
+  const { onFinish } = props;
 
   const [form] = Form.useForm();
   return (
