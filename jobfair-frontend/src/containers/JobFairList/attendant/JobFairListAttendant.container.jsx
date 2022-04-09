@@ -8,14 +8,17 @@ import JobFairListComponent from '../../../components/customized-components/JobF
 import React, { useEffect, useState } from 'react';
 
 const JobFairListAttendantContainer = (props) => {
+  //TODO: for calling API
   // eslint-disable-next-line no-unused-vars
   const { tabStatus } = props;
-  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   //paging state
+  //TODO:  for paging
+
   // eslint-disable-next-line no-unused-vars
   const [currentPage, setCurrentPage] = useState(0);
+  //TODO:  for paging
   // eslint-disable-next-line no-unused-vars
   const [pageSize, setPageSize] = useState(100);
 
@@ -23,6 +26,7 @@ const JobFairListAttendantContainer = (props) => {
 
   const history = useHistory();
 
+  //TODO: for calling API
   // eslint-disable-next-line no-unused-vars
   const setResponseResult = (res) => {
     const result = res.data.content.map((item) => mapperJobFairDetail(item));
@@ -32,17 +36,18 @@ const JobFairListAttendantContainer = (props) => {
   };
 
   const loadMoreData = () => {
-    //TODO: implement get job fair list later
-    // if (loading)
-    // setLoading(true);
-    // getJobFairForAttendant(currentPage, pageSize, tabStatus)
-    //   .then((res) => setResponseResult(res))
-    //   .catch(() => {
-    //     setLoading(false);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
+    if (loading) return;
+
+    //setLoading(true);
+    //TODO: change API
+    /*getJobFairForAttendant(currentPage, pageSize, tabStatus)
+      .then((res) => setResponseResult(res))
+      .catch(() => {
+        setLoading(false);
+      })
+      .finally(() => {
+        setLoading(false);
+      });*/
   };
 
   const getCompanyBoothId = (jobFairId) => {
