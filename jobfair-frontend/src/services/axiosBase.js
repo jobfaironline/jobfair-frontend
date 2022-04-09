@@ -21,7 +21,7 @@ export const CallAPI = (
 
   return axios({
     method,
-    url: `${endpoint}`,
+    url: process.env.REACT_APP_API_URL + endpoint,
     headers,
     data: body,
     responseType,
