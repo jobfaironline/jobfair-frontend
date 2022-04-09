@@ -8,13 +8,17 @@ import JobFairListComponent from '../../../components/customized-components/JobF
 import React, { useEffect, useState } from 'react';
 
 const JobFairListAttendantContainer = (props) => {
+  //TODO: for calling API
   // eslint-disable-next-line no-unused-vars
   const { tabStatus } = props;
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   //paging state
+  //TODO:  for paging
+
   // eslint-disable-next-line no-unused-vars
   const [currentPage, setCurrentPage] = useState(0);
+  //TODO:  for paging
   // eslint-disable-next-line no-unused-vars
   const [pageSize, setPageSize] = useState(100);
 
@@ -22,6 +26,7 @@ const JobFairListAttendantContainer = (props) => {
 
   const history = useHistory();
 
+  //TODO: for calling API
   // eslint-disable-next-line no-unused-vars
   const setResponseResult = (res) => {
     const result = res.data.content.map((item) => mapperJobFairDetail(item));
