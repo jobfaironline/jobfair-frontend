@@ -1,5 +1,5 @@
+import { Modal, Space, Tooltip } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
-import { Space, Tooltip } from 'antd';
 import CommonTableContainer from '../../CommonTableComponent/CommonTableComponent.container';
 import JobFairDetailModalContainer from '../../JobFairDetail/JobFairDetailModal.container';
 import JobFairForAdminColumn from '../../CommonTableComponent/columns/JobFairForAdmin.column';
@@ -49,12 +49,20 @@ const JobFairHappeningContainer = () => {
 
     setPageSize(pageSize);
   };
-  const modalProps = {
+
+  const onOk = () => {
+    setModalVisible(false);
+  };
+
+  const onCancel = () => {
+    setModalVisible(false);
+  };
+
+  const jobFairDetailProps = {
     jobFairId,
     creatorId,
-    visible: modalVisible,
-    setModalVisible,
-    jobFairList: [...data]
+    jobFairList: [...data],
+    visible: modalVisible
   };
 
   const handleViewModal = (id, creatorId) => {
@@ -94,7 +102,9 @@ const JobFairHappeningContainer = () => {
 
   return (
     <>
-      <JobFairDetailModalContainer {...modalProps} />
+      <Modal title='Job Fair Detail' visible={modalVisible} onOk={onOk} onCancel={onCancel} width={1300}>
+        <JobFairDetailModalContainer {...jobFairDetailProps} />
+      </Modal>
       <CommonTableContainer {...jobFairTableProps} />
     </>
   );
