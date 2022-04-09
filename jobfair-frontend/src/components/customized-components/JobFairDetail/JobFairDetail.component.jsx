@@ -3,7 +3,7 @@ import { handleStatusTag } from '../../../utils/common';
 import React from 'react';
 
 const JobFairDetailComponent = (props) => {
-  const { data, totalRegistration, totalBooth, totalApproval } = props;
+  const { data, totalBooth } = props;
 
   return (
     <>
@@ -33,8 +33,6 @@ const JobFairDetailComponent = (props) => {
         <Descriptions.Item label='Estimated number of participants'>{data.estimateParticipant}</Descriptions.Item>
         <Descriptions.Item label='Target company'>{data.targetCompany}</Descriptions.Item>
         <Descriptions.Item label='Target attendant'>{data.targetAttendant}</Descriptions.Item>
-        <Descriptions.Item label='Total approval company registrations'>{totalApproval}</Descriptions.Item>
-        <Descriptions.Item label='Total company registrations'>{totalRegistration}</Descriptions.Item>
         <Descriptions.Item label='Total booths'>{totalBooth} slot(s)</Descriptions.Item>
         <Descriptions.Item label='Description' style={{ textAlign: 'start' }}>
           {data.description}

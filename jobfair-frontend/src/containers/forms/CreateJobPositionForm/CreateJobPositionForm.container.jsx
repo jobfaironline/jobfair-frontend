@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import JobPositionFormComponent from '../../../components/forms/JobPositionForm/JobPositionForm.component';
 import React from 'react';
 
+//TODO: remove later
 const fakeLocationId = 'ca597973-8f39-48c0-ab91-e6a3e1ff63df';
 const CreateJobPositionFormContainer = () => {
   const [form] = Form.useForm();

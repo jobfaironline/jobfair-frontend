@@ -30,7 +30,6 @@ const JobPositionDetailFormContainer = () => {
   };
 
   const onFinish = (values) => {
-    // eslint-disable-next-line no-console
     updateJobPositionAPI(values, jobPosition.id)
       .then(() => {
         notification['success']({
