@@ -10,7 +10,7 @@ export default class BasicControlInput {
       left: false,
       right: false,
       space: false,
-      shift: false,
+      shift: false
     };
     document.addEventListener('keydown', (e) => this._onKeyDown(e), false);
     document.addEventListener('keyup', (e) => this._onKeyUp(e), false);

@@ -1,4 +1,4 @@
-export const NUM_OF_SKILL_TAGS = 5
+export const NUM_OF_SKILL_TAGS = 5;
 
 export const JobLevelConst = [
   {
@@ -21,7 +21,7 @@ export const JobLevelConst = [
     value: 'DIRECTOR_AND_ABOVE',
     label: 'Director and above'
   }
-]
+];
 
 export const SalaryRangeConst = [
   {
@@ -56,7 +56,7 @@ export const SalaryRangeConst = [
     value: 10000,
     label: '10000$'
   }
-]
+];
 
 export const JobTypeConst = [
   {
@@ -83,7 +83,7 @@ export const JobTypeConst = [
     value: 'SEASONAL',
     label: 'Seasonal'
   }
-]
+];
 
 export const IsRequiredLetterConst = [
   {
@@ -98,7 +98,7 @@ export const IsRequiredLetterConst = [
     value: 2,
     label: 'No, it is never required'
   }
-]
+];
 
 export const SkillTagsConst = [
   {
@@ -133,7 +133,7 @@ export const SkillTagsConst = [
     id: 7,
     name: 'Bat dong san'
   }
-]
+];
 
 export const LanguageConst = [
   {
@@ -452,7 +452,7 @@ export const LanguageConst = [
     id: 'zu',
     value: 'Zulu'
   }
-]
+];
 
 export const EvaluateConst = [
   {
@@ -467,4 +467,4 @@ export const EvaluateConst = [
     id: 'REQUEST_CHANGE',
     name: 'Request change'
   }
-]
+];

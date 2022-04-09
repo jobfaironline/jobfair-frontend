@@ -1,0 +1,32 @@
+.message {
+  margin-top: 10px;
+  width: 100%;
+  text-align: right;
+  margin-left: -10px;
+
+  .personalMessage {
+    .namePerson {
+      margin-bottom: -10px;
+    }
+
+    .messageLine {
+      display: flex;
+      align-items: center;
+
+      .messageSent {
+        max-width: 100%;
+        margin: 2px 0 2px auto;
+        display: flex;
+
+        .messageSentText {
+          margin: auto;
+          padding: 5px;
+          min-height: 20px;
+          background: #d9cd48;
+          border-radius: 20px 20px 20px 20px;
+          color: white;
+        }
+      }
+    }
+  }
+}

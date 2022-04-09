@@ -138,7 +138,7 @@ home
 
 .header .ant-anchor-link:before,
 .header .ant-anchor-link:after {
-  content: "";
+  content: '';
   background: #1890ff;
   width: 1px;
   position: absolute;

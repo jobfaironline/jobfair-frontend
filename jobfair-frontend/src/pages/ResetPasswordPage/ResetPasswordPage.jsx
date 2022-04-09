@@ -1,12 +1,10 @@
-import React from 'react'
-import ResetPasswordContainer from '../../containers/ResetPassword/ResetPassword.container'
+import React from 'react';
+import ResetPasswordFormContainer from '../../containers/forms/ResetPasswordForm/ResetPasswordForm.container';
 
-const ResetPasswordPage = () => {
-  return (
-    <>
-      <ResetPasswordContainer />
-    </>
-  )
-}
+const ResetPasswordPage = () => (
+  <>
+    <ResetPasswordFormContainer />
+  </>
+);
 
-export default ResetPasswordPage
+export default ResetPasswordPage;

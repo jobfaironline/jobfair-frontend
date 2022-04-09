@@ -1,4 +1,4 @@
-export const NUM_OF_SIZE_MAXIMUM = 3
+export const NUM_OF_SIZE_MAXIMUM = 3;
 
 export const SizeConst = [
   {
@@ -37,7 +37,7 @@ export const SizeConst = [
     value: 8,
     label: 'Over 50,000'
   }
-]
+];
 
 export const SubCategories = [
   {
@@ -385,12 +385,11 @@ export const SubCategories = [
     label: 'Chemical/Biochemical',
     category_id: 14
   }
-]
+];
 
 export const benefitDescriptionsConst = [
   {
-    value:
-      'e.g: $200 a month kindergarten allowance per child under 5 years old'
+    value: 'e.g: $200 a month kindergarten allowance per child under 5 years old'
   },
   {
     value: 'e.g: Lunch and unlimited snacks'
@@ -405,30 +404,24 @@ export const benefitDescriptionsConst = [
     value: 'e.g: 13th payment'
   },
   {
-    value:
-      'e.g: $200 a month kindergarten allowance per child under 5 years old'
+    value: 'e.g: $200 a month kindergarten allowance per child under 5 years old'
   },
   {
-    value:
-      'e.g: $200 a month kindergarten allowance per child under 5 years old'
+    value: 'e.g: $200 a month kindergarten allowance per child under 5 years old'
   },
   {
-    value:
-      'e.g: $200 a month kindergarten allowance per child under 5 years old'
+    value: 'e.g: $200 a month kindergarten allowance per child under 5 years old'
   },
   {
-    value:
-      'e.g: $200 a month kindergarten allowance per child under 5 years old'
+    value: 'e.g: $200 a month kindergarten allowance per child under 5 years old'
   },
   {
-    value:
-      'e.g: $200 a month kindergarten allowance per child under 5 years old'
+    value: 'e.g: $200 a month kindergarten allowance per child under 5 years old'
   },
   {
-    value:
-      'e.g: $200 a month kindergarten allowance per child under 5 years old'
+    value: 'e.g: $200 a month kindergarten allowance per child under 5 years old'
   }
-]
+];
 
 export const benefitConst = [
   {
@@ -469,8 +462,7 @@ export const benefitConst = [
   {
     value: 8,
     label: 'Library',
-    description:
-      'e.g: Unlimited access to online library with more than 20,000 ebooks'
+    description: 'e.g: Unlimited access to online library with more than 20,000 ebooks'
   },
   {
     value: 9,
@@ -490,8 +482,7 @@ export const benefitConst = [
   {
     value: 12,
     label: 'Mobile',
-    description:
-      'e.g: New Iphone 12 for each employee with $20 allowance a month'
+    description: 'e.g: New Iphone 12 for each employee with $20 allowance a month'
   },
   {
     value: 13,
@@ -503,7 +494,7 @@ export const benefitConst = [
     label: 'Training',
     description: 'e.g: Training Opportunities Aboard'
   }
-]
+];
 
 export const CategoriesConst = [
   {
@@ -566,4 +557,4 @@ export const CategoriesConst = [
     value: 14,
     label: 'Engineering'
   }
-]
+];

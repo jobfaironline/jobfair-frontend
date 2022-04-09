@@ -1,12 +1,5 @@
+import { MAX_LENGTH_VALIDATOR, REQUIRED_VALIDATOR } from './GeneralValidation';
+
 export const ApplicationValidation = {
-  summary: [
-    {
-      max: 1000,
-      message: 'This field has max length is 1000 characters'
-    },
-    {
-      required: true,
-      message: 'This field is required'
-    },
-  ]
-}
+  summary: [MAX_LENGTH_VALIDATOR('summary', 1000), REQUIRED_VALIDATOR('summary')]
+};

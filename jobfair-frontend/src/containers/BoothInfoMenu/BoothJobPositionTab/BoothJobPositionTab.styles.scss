@@ -1,0 +1,35 @@
+.company-job-position-tab-modal {
+  .ant-modal-confirm-content {
+    margin: 0 !important;
+  }
+
+  .ant-modal-confirm-btns {
+    display: none;
+  }
+
+  label {
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem;
+  }
+}
+
+.confirm-submit-resume {
+  .ant-modal-confirm-content {
+    margin: 0 !important;
+  }
+
+  .ant-modal-confirm-btns {
+    display: none;
+  }
+
+  .ant-form-item-label {
+    display: flex;
+  }
+}
+
+.remove-resume {
+  .fa-trash:hover {
+    color: red;
+    cursor: pointer;
+  }
+}

@@ -1,10 +1,11 @@
 .container {
-    .sideBar {
-        position: absolute;
-        z-index: 2;
-    }
-    .booth {
-        z-index: 1;
-        height: 100%;
-    }
+  .sideBar {
+    position: absolute;
+    z-index: 2;
+  }
+
+  .booth {
+    z-index: 1;
+    height: 100%;
+  }
 }

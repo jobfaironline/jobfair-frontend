@@ -1,25 +1,24 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const agoraSlice = createSlice({
-    name: 'agora',
-    initialState: {
-        rtcClient: null,
-        rtmClient: null,
-        channelId: "",
+  name: 'agora',
+  initialState: {
+    rtcClient: null,
+    rtmClient: null,
+    channelId: ''
+  },
+  reducers: {
+    setRTMClient: (state, action) => {
+      state.rtmClient = action.payload;
     },
-    reducers:{
-        setRTMClient: (state, action) => {
-            state.rtmClient = action.payload;
-        },
-        setRTCClient: (state, action) => {
-            state.rtcClient = action.payload;
-        },
-        setChannelId: (state, action) => {
-            state.channelId = action.payload;
-        }
-
+    setRTCClient: (state, action) => {
+      state.rtcClient = action.payload;
+    },
+    setChannelId: (state, action) => {
+      state.channelId = action.payload;
     }
+  }
 });
-export const agoraAction = agoraSlice.actions
+export const agoraAction = agoraSlice.actions;
 
-export default agoraSlice.reducer
+export default agoraSlice.reducer;

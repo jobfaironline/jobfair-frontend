@@ -1,27 +1,17 @@
+import { EMAIL_VALIDATOR, REQUIRED_VALIDATOR } from './GeneralValidation';
+
 export const ChangePasswordValidation = {
-  email: [
-    {
-      required: true,
-      message: 'This field is required'
-    },
-    {
-      max: 322,
-      message: 'This field has max length is 322 characters'
-    },
-    {
-      type: 'email',
-      message: 'This field is not valid E-mail!'
-    }
-  ],
-  oldPassword: [{required: true, message: 'Please input your new password!'}],
-  newPassword: [{required: true, message: 'Please input your new password!'}],
-  rePassword: [{required: true, message: 'Please input your confirm password!'},
+  email: [REQUIRED_VALIDATOR('email'), ...EMAIL_VALIDATOR()],
+  oldPassword: [REQUIRED_VALIDATOR('Old password')],
+  newPassword: [REQUIRED_VALIDATOR('New password')],
+  rePassword: [
+    REQUIRED_VALIDATOR('Confirm password'),
     ({ getFieldValue }) => ({
-    validator(_, value) {
-      if (!value || getFieldValue('newPassword') === value) {
-        return Promise.resolve()
+      validator(_, value) {
+        if (!value || getFieldValue('newPassword') === value) return Promise.resolve();
+
+        return Promise.reject(new Error('Your confirm password does not match'));
       }
-      return Promise.reject(new Error('Your confirm password does not match'))
-    }
-  })]
-}
+    })
+  ]
+};
