@@ -12,6 +12,14 @@ export const ControlTipsModalContainer = () => {
     setIsModalVisible(false);
   };
 
-  const componentProps = { openControlTips, isModalVisible, closeControlTips };
+  const controlMessage = () => (
+    <>
+      <p>Movement controls:</p>
+      <p>W/S: Translate Forward/Backward</p>
+      <p>A/D: Rotate Left/Right</p>
+    </>
+  );
+
+  const componentProps = { openControlTips, isModalVisible, closeControlTips, controlMessage };
   return <ControlTipsModal {...componentProps} />;
 };
