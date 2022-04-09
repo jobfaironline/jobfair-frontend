@@ -1,7 +1,19 @@
-import React from 'react';
+import { getEmployeesAPI } from '../../services/jobhub-api/CompanyEmployeeControllerService';
+import { handleCreateListNameFromListAccount } from '../../utils/common';
+import React, { useEffect, useState } from 'react';
 import SuggestedItemContainer from './SuggestedItem.container';
 
-const SuggestedContactNameContainer = ({ suggestionList }) => {
+const SuggestedContactNameContainer = ({ companyId }) => {
+  const [suggestionList, setSuggestionList] = useState([]);
+  useEffect(() => {
+    getEmployeesAPI(companyId)
+      .then((res) => {
+        setSuggestionList(handleCreateListNameFromListAccount(res.data));
+      })
+      .catch(() => {
+        //
+      });
+  }, []);
   const handleContactNameSearch = (value) => {
     let res = [];
     if (!value) res = [];

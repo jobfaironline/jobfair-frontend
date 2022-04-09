@@ -1,7 +1,19 @@
-import React from 'react';
+import { getEmployeesAPI } from '../../services/jobhub-api/CompanyEmployeeControllerService';
+import { handleCreateListEmailFromListAccount } from '../../utils/common';
+import React, { useEffect, useState } from 'react';
 import SuggestedItemContainer from './SuggestedItem.container';
 
-const SuggestedContactEmailContainer = ({ suggestionList }) => {
+const SuggestedContactEmailContainer = ({ companyId }) => {
+  const [suggestionList, setSuggestionList] = useState([]);
+  useEffect(() => {
+    getEmployeesAPI(companyId)
+      .then((res) => {
+        setSuggestionList(handleCreateListEmailFromListAccount(res.data));
+      })
+      .catch(() => {
+        //
+      });
+  }, []);
   const handleContactNameSearch = (value) => {
     let res = [];
     if (!value || value.indexOf('@') >= 0) res = [];

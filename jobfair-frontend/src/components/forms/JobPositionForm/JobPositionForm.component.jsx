@@ -9,8 +9,8 @@ import {
   SkillTagsConst
 } from '../../../constants/JobPositionConst';
 import { JobPositionValidation } from '../../../validate/CreateJobPositionValidation';
-import { useLocation } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import SuggestedContactEmailContainer from '../../../containers/SuggestedComponent/SuggestedContactEmail.container';
 import SuggestedContactNameContainer from '../../../containers/SuggestedComponent/SuggestedContactName.container';
 import TextArea from 'antd/es/input/TextArea';
@@ -28,17 +28,11 @@ const formItemLayout = {
 };
 
 const JobPositionFormComponent = (props) => {
-  const location = useLocation();
-  const [listContactPersonSuggestion, setListContactPersonSuggestion] = useState();
-  const [listEmailSuggestion, setListEmailSuggestion] = useState();
   const [totalSelect, setTotalSelect] = useState(0);
   const [totalSkillTags, setTotalSkillTags] = useState(0);
   const { Text } = Typography;
   const { form, formItemButtons, onFinish } = props;
-  useEffect(() => {
-    setListContactPersonSuggestion(location.state?.listContactPersonSuggestion);
-    setListEmailSuggestion(location.state?.listEmailSuggestion);
-  }, [location]);
+  const companyId = useSelector((state) => state?.authentication?.user?.companyId);
 
   return (
     <div style={{ width: '80%' }}>
@@ -210,9 +204,7 @@ const JobPositionFormComponent = (props) => {
               marginLeft: '1rem',
               marginRight: '1.25rem'
             }}>
-            {listContactPersonSuggestion ? (
-              <SuggestedContactNameContainer suggestionList={listContactPersonSuggestion} />
-            ) : null}
+            <SuggestedContactNameContainer companyId={companyId} />
           </Form.Item>
           <Form.Item
             label='Email for applications'
@@ -226,7 +218,7 @@ const JobPositionFormComponent = (props) => {
               marginLeft: '1.25rem',
               marginRight: '1rem'
             }}>
-            {listEmailSuggestion ? <SuggestedContactEmailContainer suggestionList={listEmailSuggestion} /> : null}
+            <SuggestedContactEmailContainer companyId={companyId} />
           </Form.Item>
           {/*TODO: implement location later*/}
           {/*<Form.Item*/}
