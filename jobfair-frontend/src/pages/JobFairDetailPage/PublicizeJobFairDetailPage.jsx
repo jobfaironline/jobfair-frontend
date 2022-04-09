@@ -1,7 +1,7 @@
 import { PageHeader } from 'antd';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import JobFairDetailCompanyContainer from '../../containers/JobFairDetail/JobFairDetail.company.container';
+import PublicizedJobFairDetailContainer from '../../containers/JobFairDetail/PublicizedJobFairDetail.container';
 import React from 'react';
 
 const PublicizeJobFairDetailPage = () => {
@@ -13,7 +13,7 @@ const PublicizeJobFairDetailPage = () => {
   return (
     <div className='page' style={{ marginTop: 50 }}>
       <PageHeader className='site-page-header' onBack={() => history.goBack()} title='Job fair detail' subTitle='' />
-      <JobFairDetailCompanyContainer id={jobFairId} role={role} />
+      <PublicizedJobFairDetailContainer id={jobFairId} role={role} />
     </div>
   );
 };

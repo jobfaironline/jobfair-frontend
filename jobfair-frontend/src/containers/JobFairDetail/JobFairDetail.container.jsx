@@ -1,17 +1,13 @@
 import { getLayoutDetail } from '../../services/jobhub-api/LayoutControllerService';
 import { notification } from 'antd';
 import { useLocation } from 'react-router-dom';
-import JobFairDetailComponent from '../../components/customized-components/JobFairDetail/JobFairDetail.component';
+import DocumentJobFairDetailComponent from '../../components/customized-components/JobFairDetail/DocumentJobFairDetail.component';
 import React, { useEffect, useState } from 'react';
 
 const JobFairDetailContainer = () => {
   const location = useLocation();
   const jobFair = location.state.jobFair;
   const [totalBooth, setTotalBooth] = useState(0);
-  //TODO: Call API
-  // set default 0 for component's props
-  const totalApproval = 0;
-  const totalRegistration = 0;
 
   const getTotalBoothOfJobFair = async () => {
     //get total booth by layoutId
@@ -41,7 +37,7 @@ const JobFairDetailContainer = () => {
 
   return (
     <>
-      <JobFairDetailComponent data={jobFair} totalBooth={totalBooth} />
+      <DocumentJobFairDetailComponent data={jobFair} totalBooth={totalBooth} />
     </>
   );
 };

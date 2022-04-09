@@ -1,7 +1,5 @@
+import { Modal, Space, Tooltip } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
-import { Space, Tooltip, notification } from 'antd';
-import { getJobFairIncomingForAdmin } from '../../../services/jobhub-api/JobFairConTrollerService';
-import { mapperResponseJobFairForAdmin } from '../../../utils/mapperJobFairDetail';
 import CommonTableContainer from '../../CommonTableComponent/CommonTableComponent.container';
 import JobFairDetailModalContainer from '../../JobFairDetail/JobFairDetailModal.container';
 import JobFairForAdminColumn from '../../CommonTableComponent/columns/JobFairForAdmin.column';
@@ -9,6 +7,8 @@ import React, { useLayoutEffect, useState } from 'react';
 import ViewRegistrationButtonComponent from '../../../components/customized-components/ViewRegistrationButton/ViewRegistrationButton.component';
 
 const JobFairIncomingContainer = () => {
+  //TODO: fetch data
+  // eslint-disable-next-line no-unused-vars
   const [data, setData] = useState([]);
   //pagination
   const [currentPage, setCurrentPage] = useState(0);
@@ -17,23 +17,26 @@ const JobFairIncomingContainer = () => {
   const [jobFairId, setJobFairId] = useState('');
   const [creatorId, setCreatorId] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  //TODO:fetch API later
+  // eslint-disable-next-line no-unused-vars
   const [totalElements, setTotalElements] = useState(0);
 
   const fetchData = async () => {
-    getJobFairIncomingForAdmin(currentPage, pageSize)
-      .then((res) => {
-        setTotalElements(res.data.totalElements);
-        const result = mapperResponseJobFairForAdmin(res).map((item) => ({
-          ...item,
-          key: 'NOT_YET'
-        }));
-        setData([...result]);
-      })
-      .catch((err) => {
-        notification['error']({
-          message: `Error: ${err}`
-        });
-      });
+    //TODO: fetch API later
+    // getJobFairIncomingForAdmin(currentPage, pageSize)
+    //   .then((res) => {
+    //     setTotalElements(res.data.totalElements);
+    //     const result = mapperResponseJobFairForAdmin(res).map((item) => ({
+    //       ...item,
+    //       key: 'NOT_YET'
+    //     }));
+    //     setData([...result]);
+    //   })
+    //   .catch((err) => {
+    //     notification['error']({
+    //       message: `Error: ${err}`
+    //     });
+    //   });
   };
 
   useLayoutEffect(() => {
@@ -46,18 +49,25 @@ const JobFairIncomingContainer = () => {
 
     setPageSize(pageSize);
   };
-  const modalProps = {
+  const jobFairDetailProps = {
     jobFairId,
     creatorId,
-    visible: modalVisible,
-    setModalVisible,
-    jobFairList: [...data]
+    jobFairList: [...data],
+    //TODO: check whether this prop would be used ?
+    visible: modalVisible
   };
 
   const handleViewModal = (id, creatorId) => {
     setModalVisible(true);
     setJobFairId(id);
     setCreatorId(creatorId);
+  };
+  const onOk = () => {
+    setModalVisible(false);
+  };
+
+  const onCancel = () => {
+    setModalVisible(false);
   };
 
   const jobFairTableProps = {
@@ -91,7 +101,9 @@ const JobFairIncomingContainer = () => {
 
   return (
     <>
-      <JobFairDetailModalContainer {...modalProps} />
+      <Modal title='Job Fair Detail' visible={modalVisible} onOk={onOk} onCancel={onCancel} width={1300}>
+        <JobFairDetailModalContainer {...jobFairDetailProps} />
+      </Modal>
       <CommonTableContainer {...jobFairTableProps} />
     </>
   );
