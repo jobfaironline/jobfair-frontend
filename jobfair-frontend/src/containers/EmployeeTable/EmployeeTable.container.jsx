@@ -1,89 +1,84 @@
-import React, { useEffect, useState } from 'react'
-import EmployeeDrawer from '../../containers/EmployeeDrawer/EmployeeDrawer.container'
-import {
-  deleteEmployeeAPI,
-  getEmployeesAPI
-} from '../../services/company-employee-controller/CompanyEmployeeControllerService'
-import { Button, notification, Popconfirm, Space } from 'antd'
-import { useSelector } from 'react-redux'
-import EmployeeTableColumn from '../../components/EmployeeTable/EmployeeTable.column'
-import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container'
+import { Button, Popconfirm, Space, notification } from 'antd';
+import { deleteEmployeeAPI, getEmployeesAPI } from '../../services/jobhub-api/CompanyEmployeeControllerService';
+import { useSelector } from 'react-redux';
+import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
+import EmployeeDrawer from './EmployeeDrawer.container';
+import EmployeeTableColumn from '../CommonTableComponent/columns/EmployeeTable.column';
+import React, { useEffect, useState } from 'react';
 
 const EmployeeTable = () => {
   //pagination
   /* eslint-disable no-unused-vars */
 
-  const [totalRecord, setTotalRecord] = useState(0)
-  const [currentPage, setCurrentPage] = useState(0)
-  const [pageSize, setPageSize] = useState(10)
+  const [totalRecord, setTotalRecord] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
   //
-  const [employeeData, setEmployeeData] = useState([])
-  const [drawerVisibility, setDrawerVisibility] = useState(false)
-  const [neededEmployee, setNeededEmployee] = useState(null)
-  const companyId = useSelector(state => state.authentication.user.companyId)
+  const [employeeData, setEmployeeData] = useState([]);
+  const [drawerVisibility, setDrawerVisibility] = useState(false);
+  const [neededEmployee, setNeededEmployee] = useState(null);
+  const companyId = useSelector((state) => state.authentication.user.companyId);
 
   const fetchData = async () => {
     getEmployeesAPI(companyId)
-      .then(res => {
-        const { data } = res
+      .then((res) => {
+        const { data } = res;
 
         const newValues = data.map((employee, index) => {
-          const { firstname, middlename, lastname } = employee.account
-          const fullName = firstname + ' ' + (middlename ? middlename + ' ' : '') + lastname
+          const { firstname, middlename, lastname } = employee.account;
+          const fullName = `${firstname} ${middlename ? `${middlename} ` : ''}${lastname}`;
 
           return {
             id: employee.account.id,
             no: index + 1,
-            fullName: fullName,
+            fullName,
             email: employee.account.email,
             phone: employee.account.phone,
             status: employee.account.status
-          }
-        })
+          };
+        });
 
-        setEmployeeData(newValues)
+        setEmployeeData(newValues);
       })
       .catch(() => {
         notification['error']({
           message: `Get employee data failed`,
           description: `There is problem while deleting, try again later`
-        })
-      })
-  }
+        });
+      });
+  };
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
-  const handleDelete = employeeId => {
+  const handleDelete = (employeeId) => {
     deleteEmployeeAPI(employeeId)
       .then(() => {
         notification['success']({
           message: `Delete employee successfully`,
           description: `Deleted employee ${employeeId} successfully`
-        })
-        fetchData()
+        });
+        fetchData();
       })
       .catch(() => {
         notification['error']({
           message: `Delete employee failed`,
           description: `There is problem while deleting, try again later`
-        })
-      })
-  }
+        });
+      });
+  };
 
-  const handleGetDetail = employeeId => {
-    setDrawerVisibility(true)
-    setNeededEmployee(employeeId)
-  }
+  const handleGetDetail = (employeeId) => {
+    setDrawerVisibility(true);
+    setNeededEmployee(employeeId);
+  };
 
   const handlePageChange = (page, pageSize) => {
-    if (page > 0) {
-      setCurrentPage(page - 1)
-    } else {
-      setCurrentPage(page)
-    }
-    setPageSize(pageSize)
-  }
+    if (page > 0) setCurrentPage(page - 1);
+    else setCurrentPage(page);
+
+    setPageSize(pageSize);
+  };
 
   const employeeTableProps = {
     tableData: employeeData,
@@ -95,38 +90,34 @@ const EmployeeTable = () => {
       {
         title: 'Actions',
         key: 'action',
-        render: (text, record) => {
-          return (
-            <Space size="middle">
-              <a
-                onClick={() => {
-                  handleGetDetail(record.id)
-                }}
-              >
-                Detail
-              </a>
-              <Popconfirm
-                title="Are you sure？"
-                okText="Yes"
-                cancelText="No"
-                onConfirm={() => {
-                  handleDelete(record.id)
-                }}
-              >
-                <Button type="link" disabled={record.status === 'INACTIVE'}>
-                  Delete
-                </Button>
-              </Popconfirm>
-            </Space>
-          )
-        }
+        render: (text, record) => (
+          <Space size='middle'>
+            <a
+              onClick={() => {
+                handleGetDetail(record.id);
+              }}>
+              Detail
+            </a>
+            <Popconfirm
+              title='Are you sure？'
+              okText='Yes'
+              cancelText='No'
+              onConfirm={() => {
+                handleDelete(record.id);
+              }}>
+              <Button type='link' disabled={record.status === 'INACTIVE'}>
+                Delete
+              </Button>
+            </Popconfirm>
+          </Space>
+        )
       }
     ],
     paginationObject: {
       handlePageChange,
       totalRecord
     }
-  }
+  };
 
   return (
     <div>
@@ -144,7 +135,7 @@ const EmployeeTable = () => {
       />*/}
       <CommonTableContainer {...employeeTableProps} />
     </div>
-  )
-}
+  );
+};
 
-export default EmployeeTable
+export default EmployeeTable;

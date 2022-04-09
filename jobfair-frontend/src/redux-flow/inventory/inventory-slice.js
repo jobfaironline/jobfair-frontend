@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 const inventorySlice = createSlice({
   name: 'inventory',
@@ -7,10 +7,10 @@ const inventorySlice = createSlice({
   },
   reducers: {
     setInventory: (state, action) => {
-      state.data = action.payload
+      state.data = action.payload;
     }
   }
-})
-export const inventoryAction = inventorySlice.actions
+});
+export const inventoryAction = inventorySlice.actions;
 
-export default inventorySlice.reducer
+export default inventorySlice.reducer;

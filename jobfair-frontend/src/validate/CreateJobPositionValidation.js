@@ -1,4 +1,4 @@
-import { EMAIL_VALIDATOR, MAX_LENGTH_VALIDATOR, REQUIRED_VALIDATOR } from './GeneralValidation'
+import { EMAIL_VALIDATOR, MAX_LENGTH_VALIDATOR, REQUIRED_VALIDATOR } from './GeneralValidation';
 
 export const JobPositionValidation = {
   title: [REQUIRED_VALIDATOR('Title'), MAX_LENGTH_VALIDATOR('Title', 100)],
@@ -11,4 +11,4 @@ export const JobPositionValidation = {
   requirements: [REQUIRED_VALIDATOR('Requirements'), MAX_LENGTH_VALIDATOR('Requirements', 3000)],
   contactPerson: [REQUIRED_VALIDATOR('Contact person'), MAX_LENGTH_VALIDATOR('Contact person', 300)],
   email: [REQUIRED_VALIDATOR('Email'), ...EMAIL_VALIDATOR()]
-}
+};

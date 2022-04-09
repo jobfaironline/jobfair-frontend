@@ -1,11 +1,9 @@
-import React from 'react'
-import ForgotPasswordContainer from '../../containers/ForgotPassword/ForgotPassword.container'
+import ForgotPasswordFormContainer from '../../containers/forms/ForgotPasswordForm/ForgotPasswordForm.container';
+import React from 'react';
 
-const ForgotPasswordPage = () => {
-  return (
-    <div className="page">
-      <ForgotPasswordContainer />
-    </div>
-  )
-}
-export default ForgotPasswordPage
+const ForgotPasswordPage = () => (
+  <div className='page'>
+    <ForgotPasswordFormContainer />
+  </div>
+);
+export default ForgotPasswordPage;

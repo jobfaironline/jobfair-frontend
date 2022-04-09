@@ -6,4 +6,4 @@ export const CompanyRegistrationStatus = {
   APPROVE: 'APPROVE',
   REJECT: 'REJECT',
   REQUEST_CHANGE: 'REQUEST_CHANGE'
-}
+};

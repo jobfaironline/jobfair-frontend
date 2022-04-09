@@ -1,14 +1,12 @@
-import React from 'react'
-import ApplicationListComponent from '../../../components/ApplicationView/ApplicationList.component'
+import ApplicationListComponent from '../../../components/customized-components/ApplicationList/ApplicationList.component';
+import React from 'react';
 
-const AttendantApplicationView = () => {
-  return (
+const AttendantApplicationView = () => (
+  <div>
     <div>
-      <div>
-        <ApplicationListComponent />
-      </div>
+      <ApplicationListComponent />
     </div>
-  )
-}
+  </div>
+);
 
-export default AttendantApplicationView
+export default AttendantApplicationView;

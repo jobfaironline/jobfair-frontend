@@ -1,4 +1,4 @@
-import yup from '../validate/yupGlobal'
+import yup from '../validate/yupGlobal';
 
 export const changePasswordSchema = yup.object().shape({
   newPassword: yup.string().required('Please enter your new password').password(),
@@ -8,4 +8,4 @@ export const changePasswordSchema = yup.object().shape({
     .required('Please enter your confirm password')
     .password(),
   oldPassword: yup.string().required('Please enter your old password').password()
-})
+});

@@ -1,4 +1,4 @@
-export const handleFilterStatus = key => {
+export const handleFilterStatus = (key) => {
   switch (key) {
     case 'HAPPENING':
       return [
@@ -22,7 +22,7 @@ export const handleFilterStatus = key => {
           text: 'Processing',
           value: 'PROCESSING'
         }
-      ]
+      ];
     case 'TAKEN_PLACE':
       return [
         {
@@ -33,13 +33,13 @@ export const handleFilterStatus = key => {
           text: 'Closed',
           value: 'CLOSED'
         }
-      ]
+      ];
     default:
       return [
         {
           text: 'Not yet',
           value: 'NOT_YET'
         }
-      ]
+      ];
   }
-}
+};

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 const agoraSlice = createSlice({
   name: 'agora',
@@ -9,16 +9,16 @@ const agoraSlice = createSlice({
   },
   reducers: {
     setRTMClient: (state, action) => {
-      state.rtmClient = action.payload
+      state.rtmClient = action.payload;
     },
     setRTCClient: (state, action) => {
-      state.rtcClient = action.payload
+      state.rtcClient = action.payload;
     },
     setChannelId: (state, action) => {
-      state.channelId = action.payload
+      state.channelId = action.payload;
     }
   }
-})
-export const agoraAction = agoraSlice.actions
+});
+export const agoraAction = agoraSlice.actions;
 
-export default agoraSlice.reducer
+export default agoraSlice.reducer;

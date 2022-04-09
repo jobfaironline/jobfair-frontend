@@ -1,6 +1,6 @@
-import { convertToDateString } from './common'
+import { convertToDateString } from './common';
 
-export const mapperJobFairDetail = item => {
+export const mapperJobFairDetail = (item) => {
   if (item !== undefined) {
     return {
       id: item.jobFair.id,
@@ -16,6 +16,6 @@ export const mapperJobFairDetail = item => {
       estimateParticipant: item.jobFair.estimateParticipant,
       targetCompany: item.jobFair.targetCompany,
       targetAttendant: item.jobFair.targetAttendant
-    }
+    };
   }
-}
+};
