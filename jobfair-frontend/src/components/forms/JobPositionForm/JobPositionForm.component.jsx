@@ -1,5 +1,5 @@
 /* eslint-disable no-empty-function */
-import { AutoComplete, Card, Divider, Form, Input, Select, Space, Typography } from 'antd';
+import { Card, Divider, Form, Input, Select, Space, Typography } from 'antd';
 import { CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories } from '../../../constants/CompanyProfileConstant';
 import {
   JobLevelConst,
@@ -9,8 +9,10 @@ import {
   SkillTagsConst
 } from '../../../constants/JobPositionConst';
 import { JobPositionValidation } from '../../../validate/CreateJobPositionValidation';
-import { useLocation } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import SuggestedContactEmailContainer from '../../../containers/SuggestedComponent/SuggestedContactEmail.container';
+import SuggestedContactNameContainer from '../../../containers/SuggestedComponent/SuggestedContactName.container';
 import TextArea from 'antd/es/input/TextArea';
 
 const { Option, OptGroup } = Select;
@@ -26,39 +28,11 @@ const formItemLayout = {
 };
 
 const JobPositionFormComponent = (props) => {
-  const location = useLocation();
-  const [listContactPersonSuggestion, setListContactPersonSuggestion] = useState();
-  const [listEmailSuggestion, setListEmailSuggestion] = useState();
   const [totalSelect, setTotalSelect] = useState(0);
   const [totalSkillTags, setTotalSkillTags] = useState(0);
   const { Text } = Typography;
   const { form, formItemButtons, onFinish } = props;
-  const [resultNameSuggested, setResultNameSuggested] = useState([]);
-  const [resultEmailSuggested, setResultEmailSuggested] = useState([]);
-  useEffect(() => {
-    setListContactPersonSuggestion(location.state?.listContactPersonSuggestion);
-    setListEmailSuggestion(location.state?.listEmailSuggestion);
-  }, [location]);
-  const handleAutoCompleteContactPerson = (value) => {
-    let res = [];
-    if (!value) res = [];
-    else {
-      listContactPersonSuggestion.map((name) => {
-        if (name.toLowerCase().includes(value.toLowerCase())) res.push(name);
-      });
-    }
-    setResultNameSuggested(res);
-  };
-  const handleAutoCompleteEmail = (value) => {
-    let res = [];
-    if (!value || value.indexOf('@') >= 0) res = [];
-    else {
-      listEmailSuggestion.map((email) => {
-        if (email.toLowerCase().includes(value.toLowerCase())) res.push(email);
-      });
-    }
-    setResultEmailSuggested(res);
-  };
+  const companyId = useSelector((state) => state?.authentication?.user?.companyId);
 
   return (
     <div style={{ width: '80%' }}>
@@ -230,14 +204,7 @@ const JobPositionFormComponent = (props) => {
               marginLeft: '1rem',
               marginRight: '1.25rem'
             }}>
-            <AutoComplete onSearch={handleAutoCompleteContactPerson}>
-              {resultNameSuggested.map((name) => (
-                <AutoComplete.Option key={name} value={name}>
-                  {name}
-                </AutoComplete.Option>
-              ))}
-              <Input placeholder='Contact person name' />
-            </AutoComplete>
+            <SuggestedContactNameContainer companyId={companyId} />
           </Form.Item>
           <Form.Item
             label='Email for applications'
@@ -251,14 +218,7 @@ const JobPositionFormComponent = (props) => {
               marginLeft: '1.25rem',
               marginRight: '1rem'
             }}>
-            <AutoComplete onSearch={handleAutoCompleteEmail}>
-              {resultEmailSuggested.map((email) => (
-                <AutoComplete.Option key={email} value={email}>
-                  {email}
-                </AutoComplete.Option>
-              ))}
-              <Input placeholder='Email for receiving applications' />
-            </AutoComplete>
+            <SuggestedContactEmailContainer companyId={companyId} />
           </Form.Item>
           {/*TODO: implement location later*/}
           {/*<Form.Item*/}

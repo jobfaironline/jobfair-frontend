@@ -1,21 +1,15 @@
 import { Button, Space, Typography, Upload, notification } from 'antd';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { UploadOutlined } from '@ant-design/icons';
-import { getEmployeesAPI } from '../../services/jobhub-api/CompanyEmployeeControllerService';
 import { getJobPositionsAPI, uploadCSVFile } from '../../services/jobhub-api/JobControllerService';
-import { handleCreateListEmailFromListAccount, handleCreateListNameFromListAccount } from '../../utils/common';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import PickJobPositionTableColumn from '../JobPositionTable/PickJobPositionTable.column';
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 
 const JobPositionManagementContainer = () => {
-  const companyId = useSelector((state) => state?.authentication?.user?.companyId);
   const [data, setData] = useState([]);
   const [forceRerenderState, setForceRerenderState] = useState(false);
-  const [listContactPersonSuggestion, setListContactPersonSuggestion] = useState([]);
-  const [listEmailSuggestion, setListEmailSuggestion] = useState([]);
   //pagination
   const [totalRecord, setTotalRecord] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -40,16 +34,6 @@ const JobPositionManagementContainer = () => {
         //
       });
   };
-  useEffect(() => {
-    getEmployeesAPI(companyId)
-      .then((res) => {
-        setListContactPersonSuggestion(handleCreateListNameFromListAccount(res.data));
-        setListEmailSuggestion(handleCreateListEmailFromListAccount(res.data));
-      })
-      .catch(() => {
-        //
-      });
-  }, []);
   useLayoutEffect(() => {
     fetchData();
   }, [currentPage, pageSize, forceRerenderState]);
@@ -62,13 +46,7 @@ const JobPositionManagementContainer = () => {
   };
 
   const handleCreateOnClick = () => {
-    history.push({
-      pathname: PATH_COMPANY_MANAGER.CREATE_JOB_POSITION_PAGE,
-      state: {
-        listContactPersonSuggestion,
-        listEmailSuggestion
-      }
-    });
+    history.push(PATH_COMPANY_MANAGER.CREATE_JOB_POSITION_PAGE);
   };
 
   const handleViewDetailPage = (id) => {
