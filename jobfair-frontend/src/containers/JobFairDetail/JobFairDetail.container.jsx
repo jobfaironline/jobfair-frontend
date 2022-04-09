@@ -9,10 +9,6 @@ const JobFairDetailContainer = () => {
   const jobFair = location.state.jobFair;
   const [totalBooth, setTotalBooth] = useState(0);
 
-  const getTotalCompanyRegistrationOfJobFair = async () => {
-    //TODO: handle get total company registration
-  };
-
   const getTotalBoothOfJobFair = async () => {
     //get total booth by layoutId
     if (jobFair !== undefined && jobFair.layoutId !== undefined) {
@@ -36,18 +32,12 @@ const JobFairDetailContainer = () => {
   };
 
   useEffect(() => {
-    getTotalCompanyRegistrationOfJobFair();
     getTotalBoothOfJobFair();
   }, []);
 
   return (
     <>
-      <JobFairDetailComponent
-        data={jobFair}
-        totalApproval={totalApproval}
-        totalRegistration={totalRegistration}
-        totalBooth={totalBooth}
-      />
+      <JobFairDetailComponent data={jobFair} totalBooth={totalBooth} />
     </>
   );
 };

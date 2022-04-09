@@ -19,9 +19,7 @@ export const ControlTipsModal = (props) => {
         footer={null}
         onCancel={closeControlTips}
         centered={true}>
-        <p>Movement controls:</p>
-        <p>W/S: Translate Forward/Backward</p>
-        <p>A/D: Rotate Left/Right</p>
+        {props.children}
       </Modal>
     </>
   );
