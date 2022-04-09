@@ -1,7 +1,5 @@
 import { MoreOutlined } from '@ant-design/icons';
-import { Space, Tooltip, notification } from 'antd';
-import { getJobFairHappeningForAdmin } from '../../../services/jobhub-api/JobFairConTrollerService';
-import { mapperResponseJobFairForAdmin } from '../../../utils/mapperJobFairDetail';
+import { Space, Tooltip } from 'antd';
 import CommonTableContainer from '../../CommonTableComponent/CommonTableComponent.container';
 import JobFairDetailModalContainer from '../../JobFairDetail/JobFairDetailModal.container';
 import JobFairForAdminColumn from '../../CommonTableComponent/columns/JobFairForAdmin.column';
@@ -9,10 +7,14 @@ import React, { useLayoutEffect, useState } from 'react';
 import ViewRegistrationButtonComponent from '../../../components/customized-components/ViewRegistrationButton/ViewRegistrationButton.component';
 
 const JobFairHappeningContainer = () => {
+  //TODO: fetch API later
+  // eslint-disable-next-line no-unused-vars
   const [data, setData] = useState([]);
   //pagination
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+  //TODO: fetch API later
+  // eslint-disable-next-line no-unused-vars
   const [totalElements, setTotalElements] = useState(0);
   //modal
   const [jobFairId, setJobFairId] = useState('');
@@ -20,20 +22,21 @@ const JobFairHappeningContainer = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const fetchData = async () => {
-    getJobFairHappeningForAdmin(currentPage, pageSize)
-      .then((res) => {
-        setTotalElements(res.data.totalElements);
-        const result = mapperResponseJobFairForAdmin(res).map((item) => ({
-          ...item,
-          key: 'HAPPENING'
-        }));
-        setData([...result]);
-      })
-      .catch((err) => {
-        notification['error']({
-          message: `Error: ${err}`
-        });
-      });
+    //TODO: fetch API later
+    // getJobFairHappeningForAdmin(currentPage, pageSize)
+    //   .then((res) => {
+    //     setTotalElements(res.data.totalElements);
+    //     const result = mapperResponseJobFairForAdmin(res).map((item) => ({
+    //       ...item,
+    //       key: 'HAPPENING'
+    //     }));
+    //     setData([...result]);
+    //   })
+    //   .catch((err) => {
+    //     notification['error']({
+    //       message: `Error: ${err}`
+    //     });
+    //   });
   };
 
   useLayoutEffect(() => {
