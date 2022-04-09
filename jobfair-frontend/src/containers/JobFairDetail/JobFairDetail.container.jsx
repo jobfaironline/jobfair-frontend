@@ -8,6 +8,8 @@ const JobFairDetailContainer = () => {
   const location = useLocation();
   const jobFair = location.state.jobFair;
   const [totalBooth, setTotalBooth] = useState(0);
+  const totalApproval = 0;
+  const totalRegistration = 0;
 
   const getTotalCompanyRegistrationOfJobFair = async () => {
     //TODO: handle get total company registration
