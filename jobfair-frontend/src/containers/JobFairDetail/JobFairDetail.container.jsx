@@ -8,6 +8,8 @@ const JobFairDetailContainer = () => {
   const location = useLocation();
   const jobFair = location.state.jobFair;
   const [totalBooth, setTotalBooth] = useState(0);
+  //TODO: Call API
+  // set default 0 for component's props
   const totalApproval = 0;
   const totalRegistration = 0;
 
