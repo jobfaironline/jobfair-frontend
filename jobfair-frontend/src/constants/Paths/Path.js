@@ -21,7 +21,8 @@ export const PATH = {
   CONTRACTS_PAGE: '/contacts',
   PUBLICIZED_JOB_FAIR_LIST_PAGE: '/job-fair-list',
   HOME_PAGE: '/home',
-  FINAL_ERROR_PAGE: '/error-500'
+  FINAL_ERROR_PAGE: '/error-500',
+  ABOUT_APPLICATION_PAGE: '/about-application',
 };
 export const PATH_ADMIN = {
   JOB_FAIR_LIST_PAGE: '/admin/job-fair-list',
