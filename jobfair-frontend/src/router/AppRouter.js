@@ -1,7 +1,7 @@
 import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
 import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import AdminRouter from './components/AdminRouter';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage';
@@ -35,6 +35,7 @@ import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
+import AboutApplicationPage from '../pages/AboutApplicationPage';
 
 const AppRouter = () => (
   <>
@@ -45,6 +46,9 @@ const AppRouter = () => (
       </Route>
       <Route path={PATH.INDEX} exact>
         <HomePage />
+      </Route>
+      <Route path={PATH.ABOUT_APPLICATION_PAGE} exact>
+        <AboutApplicationPage />
       </Route>
       <Route path={PATH.PUBLICIZED_BOOTH_PAGE} exact>
         <PublicizedBoothPage />
@@ -208,7 +212,9 @@ const AppRouter = () => (
         exact
       />
       //to fix browserrouter problem
-      <Route path='/index.html' component={() => <HomePage />} />
+      <Route path='/index.html'>
+        <Redirect to='/' />
+      </Route>
       <Route path='*' component={() => <ErrorPage code={404} />} />
     </Switch>
   </>
