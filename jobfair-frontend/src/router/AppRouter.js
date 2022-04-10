@@ -207,6 +207,8 @@ const AppRouter = () => (
         path={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
         exact
       />
+      //to fix browserrouter problem
+      <Route path='/index.html' component={() => <HomePage />} />
       <Route path='*' component={() => <ErrorPage code={404} />} />
     </Switch>
   </>
