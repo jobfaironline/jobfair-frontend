@@ -1,6 +1,6 @@
-import { Divider, List, Skeleton } from "antd";
-import React from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { Card, Divider, List, Skeleton } from 'antd';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import React from 'react';
 
 //TODO: remove later because do not have template thumbnail
 const fakeThumbnail =
@@ -14,21 +14,25 @@ const SelectJobFairTemplateComponent = (props) => {
         dataLength={listData?.length}
         loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
         endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-        scrollableTarget='scrollableDiv'
-        style={{ height: '30rem' }}>
+        style={{ height: '65vh', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <List
           itemLayout='vertical'
           size='large'
           dataSource={listData}
           renderItem={(item) => (
-            <div
-              onClick={(e) => {
+            <Card
+              hoverable={true}
+              style={{ width: 300, margin: '10px' }}
+              cover={<img src={fakeThumbnail} alt={item.name} />}
+              onClick={() => {
                 handleLoad3DMap(item.url, item.id);
               }}>
-              <List.Item key={item.id} extra={<img width={272} alt='logo' src={fakeThumbnail} />}>
-                <List.Item.Meta title={item.name} description={item.description} />
-              </List.Item>
-            </div>
+              <div style={{ display: 'flex' }}>
+                <div>
+                  <Card.Meta title={item.name} />
+                </div>
+              </div>
+            </Card>
           )}
         />
       </InfiniteScroll>

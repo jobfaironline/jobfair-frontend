@@ -1,4 +1,9 @@
 import { getTemplateLayoutAPI } from '../../services/jobhub-api/TemplateControllerService';
+import { notification } from 'antd';
+import ChooseTemplateJobFairSideBarComponent from '../../components/customized-components/ChooseTemplateJobFairSideBar/ChooseTemplateJobFairSideBar.component';
+import React, { useEffect, useState } from 'react';
+import SideBarComponent from '../../components/commons/SideBar/SideBar.component';
+import UploadModalContainer from '../UploadModal/UploadModal.container';
 import ChooseTemplateJobFairSideBarComponent from '../../components/customized-components/ChooseTemplateJobFairSideBar/ChooseTemplateJobFairSideBar.component';
 import React, { useEffect, useState } from 'react';
 import SideBarComponent from '../../components/commons/SideBar/SideBar.component';
@@ -7,14 +12,17 @@ import { notification } from 'antd';
 const ChooseTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, onHandlePrev, templateId }) => {
   const [data, setData] = useState([]);
   const [forceRerenderState, setForceRerenderState] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const fetchData = async () => {
     const res = await getTemplateLayoutAPI();
     setData(res.data);
   };
 
+  // eslint-disable-next-line no-unused-vars
   const fetchOwnTemplate = async () => {
     //TODO: call API later setData(res.data)
+  };
   }
 
   useEffect(() => {
@@ -43,24 +51,20 @@ const ChooseTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, onHandl
       //force render to fetch data after upload
       setForceRerenderState((prevState) => !prevState);
     },
-    showUploadList: false,
-    onDrop(e) {
-      message.info(`Dropped files: `);
-      console.log('Dropped files', e.dataTransfer.files);
-    }
+    showUploadList: false
   };
-
+  const componentProps = {
+    data: data,
+    handleLoad3DMap: handleLoad3DMap,
+    onHandleNext: onHandleNext,
+    onHandlePrev: onHandlePrev,
+    templateId: templateId
+  };
   return (
     <>
       <SideBarComponent>
-        <ChooseTemplateJobFairSideBarComponent
-          {...uploadProps}
-          data={data}
-          handleLoad3DMap={handleLoad3DMap}
-          onHandleNext={onHandleNext}
-          onHandlePrev={onHandlePrev}
-          templateId={templateId}
-        />
+        <ChooseTemplateJobFairSideBarComponent {...componentProps} setVisible={setVisible} />
+        <UploadModalContainer {...uploadProps} visible={visible} setVisible={setVisible} />
       </SideBarComponent>
     </>
   );
