@@ -1,7 +1,8 @@
 import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
-import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
+import AboutApplicationPage from '../pages/AboutApplicationPage';
 import AdminRouter from './components/AdminRouter';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage';
@@ -27,6 +28,7 @@ import JobPositionDetailPage from '../pages/JobPositionDetailPage/JobPositionDet
 import JobPositionPage from '../pages/JobPositionPage/JobPositionPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavigationBar from '../components/commons/Navbar/Navbar';
+import OrganizeJobFairPage from '../pages/OrganizeJobFairPage/OrganizeJobFairPage';
 import PublicRouter from './components/PublicRouter';
 import PublicizeJobFairDetailPage from '../pages/JobFairDetailPage/PublicizeJobFairDetailPage';
 import PublicizedBoothPage from '../pages/PublicizedBoothPage/PublicizedBoothPage';
@@ -35,7 +37,6 @@ import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
-import AboutApplicationPage from '../pages/AboutApplicationPage';
 
 const AppRouter = () => (
   <>
@@ -203,6 +204,12 @@ const AppRouter = () => (
         key={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE}
         component={() => <PublicizeJobFairDetailPage />}
         path={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE}
+        exact
+      />
+      <CompanyManagerRouter
+        key={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}
+        component={() => <OrganizeJobFairPage />}
+        path={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}
         exact
       />
       <AdminRouter
