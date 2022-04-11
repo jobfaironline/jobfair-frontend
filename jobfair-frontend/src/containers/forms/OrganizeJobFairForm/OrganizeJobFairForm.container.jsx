@@ -5,6 +5,7 @@ import './OrganizeJobFairForm.styles.scss';
 import ChooseTemplateJobFairContainer from '../../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
 import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
 import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
+import OrganizeJobFairFormComponent from '../../../components/forms/OrganizeJobFairForm/OrganizeJobFairForm.component';
 
 const { Step } = Steps;
 const OrganizeJobFairFormContainer = () => {
@@ -84,7 +85,15 @@ const OrganizeJobFairFormContainer = () => {
         I have read and accept the Job fair Policy
       </Checkbox>
     </>,
-    <>Step 3</>,
+    <>
+      <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
+      <OrganizeJobFairFormComponent
+        onHandleNext={nextStepButtonActions(currentStep)}
+        onHandlePrev={handleOnPrev(currentStep)}
+        form={form}
+        handleLoad3DMap={handleLoad3DMap}
+      />
+    </>,
     <>Step 4</>
   ];
 
@@ -106,9 +115,9 @@ const OrganizeJobFairFormContainer = () => {
           padding: '1rem',
           display: 'none'
         }}>
-        <Step title='Our policy' />
         <Step title='Choose template' />
-        <Step title='Jobfair registration form' />
+        <Step title='Policy agreement' />
+        <Step title='Schedule job fair event' />
         <Step title='Confirm registration' />
       </Steps>
       {stepComponentList[currentStep]}
