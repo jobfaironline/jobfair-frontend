@@ -22,7 +22,7 @@ export const PATH = {
   PUBLICIZED_JOB_FAIR_LIST_PAGE: '/job-fair-list',
   HOME_PAGE: '/home',
   FINAL_ERROR_PAGE: '/error-500',
-  ABOUT_APPLICATION_PAGE: '/about-application',
+  ABOUT_APPLICATION_PAGE: '/about-application'
 };
 export const PATH_ADMIN = {
   JOB_FAIR_LIST_PAGE: '/admin/job-fair-list',
@@ -54,5 +54,6 @@ export const PATH_COMPANY_MANAGER = {
   CREATE_JOB_POSITION_PAGE: '/company/create-job-position',
   JOB_FAIR_DETAIL_PAGE: '/company/job-fair-detail',
   APPLICATION_MANAGEMENT_PAGE: '/company/application-management',
-  RESUME_DETAIL_PAGE: '/company/resume-detail'
+  RESUME_DETAIL_PAGE: '/company/resume-detail',
+  JOB_FAIR_GRID_PAGE: '/company/my-job-fair'
 };
