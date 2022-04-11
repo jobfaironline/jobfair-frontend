@@ -1,15 +1,14 @@
 import './ChooseTemplateJobFairSideBar.style.scss';
 
 import { Button, Divider, Tabs, Typography } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
 import SelectJobFairTemplateComponent from '../SelectJobFairTemplate/SelectJobFairTemplate.component';
 import UploadModalContainer from '../../../containers/UploadModal/UploadModal.container';
 
 const { TabPane } = Tabs;
 const { Title } = Typography;
 const ChooseTemplateJobFairSideBarComponent = (props) => {
-  const { data, onHandleNext, handleLoad3DMap, templateId, uploadProps } = props;
-  const [visible, setVisible] = useState(false);
+  const { data, onHandleNext, handleLoad3DMap, templateId, uploadProps, visible, setVisible } = props;
 
   return (
     <>

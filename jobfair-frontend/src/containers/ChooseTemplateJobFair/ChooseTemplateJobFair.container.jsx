@@ -7,6 +7,7 @@ import SideBarComponent from '../../components/commons/SideBar/SideBar.component
 const ChooseTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, onHandlePrev, templateId }) => {
   const [data, setData] = useState([]);
   const [forceRerenderState, setForceRerenderState] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const fetchData = async () => {
     const res = await getTemplateLayoutAPI();
@@ -46,7 +47,15 @@ const ChooseTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, onHandl
     },
     showUploadList: false
   };
-
+  const componentProps = {
+    data: data,
+    handleLoad3DMap: handleLoad3DMap,
+    onHandleNext: onHandleNext,
+    onHandlePrev: onHandlePrev,
+    templateId: templateId,
+    visible: visible,
+    setVisible: setVisible
+  };
   return (
     <>
       <SideBarComponent>
@@ -57,6 +66,8 @@ const ChooseTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, onHandl
           onHandleNext={onHandleNext}
           onHandlePrev={onHandlePrev}
           templateId={templateId}
+          visible={visible}
+          setVisible={setVisible}
         />
       </SideBarComponent>
     </>
