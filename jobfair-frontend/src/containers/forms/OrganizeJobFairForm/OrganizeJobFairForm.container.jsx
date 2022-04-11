@@ -1,8 +1,10 @@
-import { Button, Checkbox, Form, Steps } from 'antd';
+import { Checkbox, Form, Steps } from 'antd';
 import PolicyComponent from '../../../components/customized-components/Policy/Policy.component';
 import React, { useState } from 'react';
 import './OrganizeJobFairForm.styles.scss';
 import ChooseTemplateJobFairContainer from '../../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
+import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
+import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 
 const { Step } = Steps;
 const OrganizeJobFairFormContainer = () => {
@@ -11,6 +13,19 @@ const OrganizeJobFairFormContainer = () => {
 
   //management step
   const [currentStep, setCurrentStep] = useState(0);
+
+  const [layoutData, setLayoutData] = useState({
+    glb: undefined,
+    id: ''
+  });
+
+  const handleLoad3DMap = async (url, id) => {
+    const glb = await loadGLBModel(url);
+    setLayoutData({
+      glb: glb.scene,
+      id: id
+    });
+  };
 
   const nextStepButtonActions = (step) => {
     switch (step) {
@@ -42,12 +57,29 @@ const OrganizeJobFairFormContainer = () => {
         return () => setCurrentStep(currentStep + 1);
     }
   };
+  const handleOnPrev = (currentStep) => {
+    return () => {
+      if (currentStep !== 0) {
+        setCurrentStep(currentStep - 1);
+      }
+    };
+  };
+
   const stepComponentList = [
     <>
-      <ChooseTemplateJobFairContainer onHandleNext={nextStepButtonActions(currentStep)} />
+      <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
+      <ChooseTemplateJobFairContainer
+        onHandleNext={nextStepButtonActions(currentStep)}
+        templateId={layoutData.id}
+        handleLoad3DMap={handleLoad3DMap}
+      />
     </>,
     <>
-      <PolicyComponent />
+      <PolicyComponent
+        onHandleNext={nextStepButtonActions(currentStep)}
+        agreeStatus={agreeStatus}
+        onHandlePrev={handleOnPrev(currentStep)}
+      />
       <Checkbox checked={agreeStatus} onChange={(e) => setAgreeStatus(e.target.checked)}>
         I have read and accept the Job fair Policy
       </Checkbox>
@@ -74,64 +106,12 @@ const OrganizeJobFairFormContainer = () => {
           padding: '1rem',
           display: 'none'
         }}>
-        <Step title="Job fair's details" />
         <Step title='Our policy' />
+        <Step title='Choose template' />
         <Step title='Jobfair registration form' />
         <Step title='Confirm registration' />
       </Steps>
       {stepComponentList[currentStep]}
-      <div className='step-buttons'>
-        {currentStep != 0 ? (
-          <div className='pre-step-button'>
-            <Form.Item>
-              <Button
-                size='large'
-                type='primary'
-                onClick={() => {
-                  setCurrentStep(currentStep - 1);
-                }}>
-                Prev
-              </Button>
-            </Form.Item>
-          </div>
-        ) : null}
-        {/*<div className='next-step-button'>*/}
-        {/*  <Form.Item>*/}
-        {/*    <div className='submit-registration-popconfirm'>*/}
-        {/*      {currentStep == 3 ? (*/}
-        {/*        <Popconfirm*/}
-        {/*          title='Are you sure to submit this form?'*/}
-        {/*          onConfirm={nextStepButtonActions(currentStep)}*/}
-        {/*          okText='Yes'*/}
-        {/*          cancelText='No'>*/}
-        {/*          <Button size='large' type='primary'>*/}
-        {/*            Register*/}
-        {/*          </Button>*/}
-        {/*        </Popconfirm>*/}
-        {/*      ) : currentStep == 1 && !agreeStatus ? (*/}
-        {/*        <Button*/}
-        {/*          size='large'*/}
-        {/*          type='primary'*/}
-        {/*          onClick={nextStepButtonActions(currentStep)}*/}
-        {/*          disabled={true}*/}
-        {/*          style={{*/}
-        {/*            color: '#00000040',*/}
-        {/*            borderColor: '#d9d9d9',*/}
-        {/*            background: '#f5f5f5',*/}
-        {/*            textShadow: 'none',*/}
-        {/*            boxShadow: 'none'*/}
-        {/*          }}>*/}
-        {/*          Next*/}
-        {/*        </Button>*/}
-        {/*      ) : (*/}
-        {/*        <Button size='large' type='primary' onClick={nextStepButtonActions(currentStep)}>*/}
-        {/*          Next*/}
-        {/*        </Button>*/}
-        {/*      )}*/}
-        {/*    </div>*/}
-        {/*  </Form.Item>*/}
-        {/*</div>*/}
-      </div>
     </div>
   );
 };

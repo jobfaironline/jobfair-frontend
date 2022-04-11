@@ -8,7 +8,6 @@ const fakeThumbnail =
 const SelectJobFairTemplateComponent = (props) => {
   const { listData, handleLoad3DMap } = props;
 
-  console.log(listData);
   return (
     <>
       <InfiniteScroll
@@ -24,7 +23,7 @@ const SelectJobFairTemplateComponent = (props) => {
           renderItem={(item) => (
             <div
               onClick={(e) => {
-                handleLoad3DMap(item.url);
+                handleLoad3DMap(item.url, item.id);
               }}>
               <List.Item key={item.id} extra={<img width={272} alt='logo' src={fakeThumbnail} />}>
                 <List.Item.Meta title={item.name} description={item.description} />
