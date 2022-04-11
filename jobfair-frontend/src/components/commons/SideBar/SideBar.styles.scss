@@ -6,4 +6,7 @@
   position: absolute;
   top: 80px;
   z-index: 100;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }

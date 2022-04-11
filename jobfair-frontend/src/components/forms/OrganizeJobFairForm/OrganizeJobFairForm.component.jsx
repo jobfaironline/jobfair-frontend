@@ -1,18 +1,27 @@
-import React from 'react';
-import { Button, DatePicker, Divider, Form, Input, Space, Typography } from 'antd';
+import './OrganizeJobFairForm.style.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { Button, DatePicker, Divider, Form, Input, Typography } from 'antd';
 import { HourMinuteDateFormat } from '../../../constants/ApplicationConst';
-import SideBarComponent from '../../commons/SideBar/SideBar.component';
 import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairValidation';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+
+import SideBarComponent from '../../commons/SideBar/SideBar.component';
 
 const { RangePicker } = DatePicker;
 const { Title } = Typography;
-const OrganizeJobFairFormComponent = ({ form, onHandleNext, onHandlePrev, onFinish }) => {
-  return (
-    <div>
-      <SideBarComponent>
-        <Divider size='small' plain>
-          <Title>Schedule job fair event</Title>
-        </Divider>
+const OrganizeJobFairFormComponent = ({ form, onHandleNext, onHandlePrev, onFinish }) => (
+  <div className={'organize-job-fair-form'}>
+    <SideBarComponent>
+      <a className={'prev-button'} type='primary' onClick={onHandlePrev}>
+        <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '10px' }} />
+        <span>Back to choose job fair layout</span>
+      </a>
+      <Divider size='small' plain>
+        <Title>Schedule job fair event</Title>
+      </Divider>
+      <div className={'form-container'}>
         <Form
           form={form}
           requiredMark='required'
@@ -56,18 +65,15 @@ const OrganizeJobFairFormComponent = ({ form, onHandleNext, onHandlePrev, onFini
             }}>
             <RangePicker format={HourMinuteDateFormat} showTime />
           </Form.Item>
-          <Space style={{ marginLeft: '1rem' }}>
-            <Button type='primary' onClick={onHandleNext}>
-              Next
-            </Button>
-            <Button type='primary' onClick={onHandlePrev}>
-              Previous
-            </Button>
-          </Space>
         </Form>
-      </SideBarComponent>
-    </div>
-  );
-};
+      </div>
+      <div className={'button-container'}>
+        <Button className={'confirm-button'} type='primary' onClick={onHandleNext}>
+          Next
+        </Button>
+      </div>
+    </SideBarComponent>
+  </div>
+);
 
 export default OrganizeJobFairFormComponent;
