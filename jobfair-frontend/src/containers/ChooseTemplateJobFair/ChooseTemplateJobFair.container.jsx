@@ -59,9 +59,7 @@ const ChooseTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, onHandl
     <>
       <SideBarComponent>
         <ChooseTemplateJobFairSideBarComponent {...componentProps} setVisible={setVisible} />
-        <div className={'button-container'}>
-          <UploadModalContainer {...uploadProps} visible={visible} setVisible={setVisible} />
-        </div>
+        <UploadModalContainer {...uploadProps} visible={visible} setVisible={setVisible} />
       </SideBarComponent>
     </>
   );
