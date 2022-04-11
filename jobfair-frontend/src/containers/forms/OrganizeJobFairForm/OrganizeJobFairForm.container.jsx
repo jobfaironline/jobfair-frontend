@@ -1,9 +1,8 @@
 import './OrganizeJobFairForm.styles.scss';
-import { Checkbox, Form, Steps } from 'antd';
+import { Form, Steps } from 'antd';
 import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import ChooseTemplateJobFairContainer from '../../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
 import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
-import PolicyComponent from '../../../components/customized-components/Policy/Policy.component';
 import React, { useState } from 'react';
 
 const { Step } = Steps;
@@ -70,16 +69,6 @@ const OrganizeJobFairFormContainer = () => {
         handleLoad3DMap={handleLoad3DMap}
       />
     </div>,
-    <>
-      <PolicyComponent
-        onHandleNext={nextStepButtonActions(currentStep)}
-        agreeStatus={agreeStatus}
-        onHandlePrev={handleOnPrev(currentStep)}
-      />
-      <Checkbox checked={agreeStatus} onChange={(e) => setAgreeStatus(e.target.checked)}>
-        I have read and accept the Job fair Policy
-      </Checkbox>
-    </>,
     <>Step 3</>,
     <>Step 4</>
   ];

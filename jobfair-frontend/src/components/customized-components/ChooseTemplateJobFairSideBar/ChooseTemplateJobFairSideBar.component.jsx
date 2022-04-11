@@ -1,9 +1,9 @@
 import './ChooseTemplateJobFairSideBar.style.scss';
 
-import { Button, Divider, Modal, Tabs, Typography } from 'antd';
+import { Button, Divider, Tabs, Typography } from 'antd';
 import React, { useState } from 'react';
 import SelectJobFairTemplateComponent from '../SelectJobFairTemplate/SelectJobFairTemplate.component';
-import UploadComponent from '../../commons/UploadComponent/Upload.component';
+import UploadModalContainer from '../../../containers/UploadModal/UploadModal.container';
 
 const { TabPane } = Tabs;
 const { Title } = Typography;
@@ -47,7 +47,7 @@ const ChooseTemplateJobFairSideBarComponent = (props) => {
                   <Button className={'confirm-button'} type='primary' onClick={() => setVisible(true)}>
                     Upload template
                   </Button>
-                  <UploadModal {...uploadProps} visible={visible} setVisible={setVisible} />
+                  <UploadModalContainer {...uploadProps} visible={visible} setVisible={setVisible} />
                 </div>
               </SelectJobFairTemplateComponent>
             </div>
@@ -55,18 +55,6 @@ const ChooseTemplateJobFairSideBarComponent = (props) => {
         </Tabs>
       </div>
     </>
-  );
-};
-
-export const UploadModal = ({ uploadProps, visible, setVisible }) => {
-  const onCancel = () => {
-    setVisible(false);
-  };
-
-  return (
-    <Modal visible={visible} title={'Upload your template as .glb file'} footer={null} onCancel={onCancel}>
-      <UploadComponent {...uploadProps} />
-    </Modal>
   );
 };
 
