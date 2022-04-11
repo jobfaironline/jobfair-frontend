@@ -1,5 +1,4 @@
-import { Button, Checkbox, Form, notification, Steps } from 'antd';
-import PolicyComponent from '../../../components/customized-components/Policy/Policy.component';
+import { Form, notification, Steps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import './OrganizeJobFairForm.styles.scss';
 import ChooseTemplateJobFairContainer from '../../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
@@ -8,6 +7,7 @@ import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import OrganizeJobFairFormComponent from '../../../components/forms/OrganizeJobFairForm/OrganizeJobFairForm.component';
 import { convertToDateValue } from '../../../utils/common';
 import { draftJobFairAPI, updateJobFairAPI } from '../../../services/jobhub-api/JobFairConTrollerService';
+import JobFairLandingPageContainer from '../../JobFairLandingPage/JobFairLandingPage.container';
 
 const { Step } = Steps;
 const OrganizeJobFairFormContainer = () => {
@@ -123,29 +123,22 @@ const OrganizeJobFairFormContainer = () => {
       />
     </>,
     <>
-      <PolicyComponent
-        onHandleNext={nextStepButtonActions(currentStep)}
-        agreeStatus={agreeStatus}
-        onHandlePrev={handleOnPrev(currentStep)}
-      />
-      <Checkbox checked={agreeStatus} onChange={(e) => setAgreeStatus(e.target.checked)}>
-        I have read and accept the Job fair Policy
-      </Checkbox>
-    </>,
-    <>
       <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
       <OrganizeJobFairFormComponent
         onHandleNext={nextStepButtonActions(currentStep)}
         onHandlePrev={handleOnPrev(currentStep)}
         form={form}
-        onFinish={onDraftJobFair}
+        onFinish={updateJobFairAtScheduleScreen}
         handleLoad3DMap={handleLoad3DMap}
       />
     </>,
     <>
-      <Button type='primary' onClick={handleOnPrev(currentStep)}>
-        Previous
-      </Button>
+      <JobFairLandingPageContainer
+        onHandleNext={nextStepButtonActions(currentStep)}
+        onHandlePrev={handleOnPrev(currentStep)}
+        form={form}
+        onFinish={updateJobFairAtLandingPage}
+      />
     </>
   ];
 
