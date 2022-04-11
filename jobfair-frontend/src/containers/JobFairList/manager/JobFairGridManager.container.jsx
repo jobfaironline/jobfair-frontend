@@ -8,9 +8,7 @@ const JobFairGridManagerContainer = () => {
 
   const fetchData = async (searchValue) => {
     const res = await getJobFairAPI(searchValue);
-    console.log(res);
     const content = res.data.content;
-    console.log(content);
     setData(content);
   };
 
@@ -24,10 +22,16 @@ const JobFairGridManagerContainer = () => {
   };
 
   return data ? (
-    <>
-      <Input placeholder='Search by job fair title' onChange={(e) => handleOnSearch(e)} style={{ width: 200 }} />
+    <div>
+      <div style={{ display: 'flex', paddingBottom: '10px' }}>
+        <Input
+          placeholder='Search by job fair title'
+          onChange={(e) => handleOnSearch(e)}
+          style={{ width: 200, marginLeft: 'auto' }}
+        />
+      </div>
       <JobFairGridComponent data={data} />
-    </>
+    </div>
   ) : (
     <Spin />
   );

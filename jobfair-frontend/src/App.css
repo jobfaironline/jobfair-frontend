@@ -92,7 +92,7 @@ home
 
 .page {
   flex: 1;
-  padding-top: 80px; /*change this when navbar height is changed */
+  padding: 80px 20px 0 20px;/*change this when navbar height is changed */
 }
 
 .leftside-container {

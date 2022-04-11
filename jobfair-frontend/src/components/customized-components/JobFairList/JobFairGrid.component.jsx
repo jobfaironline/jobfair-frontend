@@ -8,21 +8,21 @@ const JobFairGridComponent = (props) => {
   return (
     <List
       grid={{
-        gutter: 16,
-        xs: 1,
-        sm: 2,
-        md: 4,
-        lg: 4,
-        xl: 6,
-        xxl: 3
+        gutter: 20
       }}
       dataSource={data}
       renderItem={(item) => (
         <List.Item>
-          <Card title={item.name}>
-            <img src={item.thumbnailUrl} />
-            <Text>{convertToDateString(item.createTime)}</Text>
-            <Text>{item.status}</Text>
+          <Card hoverable={true} style={{ width: 300 }} cover={<img src={item.thumbnailUrl} alt={item.name} />}>
+            <div style={{ display: 'flex' }}>
+              <div>
+                <Card.Meta title={item.name} />
+                <Text>{convertToDateString(item.createTime)}</Text>
+              </div>
+              <div style={{ marginLeft: 'auto' }}>
+                <Text>{item.status}</Text>
+              </div>
+            </div>
           </Card>
         </List.Item>
       )}
