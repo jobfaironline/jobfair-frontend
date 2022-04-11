@@ -1,10 +1,10 @@
-import { Checkbox, Form, Steps } from 'antd';
-import PolicyComponent from '../../../components/customized-components/Policy/Policy.component';
-import React, { useState } from 'react';
 import './OrganizeJobFairForm.styles.scss';
+import { Checkbox, Form, Steps } from 'antd';
+import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import ChooseTemplateJobFairContainer from '../../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
 import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
-import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
+import PolicyComponent from '../../../components/customized-components/Policy/Policy.component';
+import React, { useState } from 'react';
 
 const { Step } = Steps;
 const OrganizeJobFairFormContainer = () => {
@@ -23,7 +23,7 @@ const OrganizeJobFairFormContainer = () => {
     const glb = await loadGLBModel(url);
     setLayoutData({
       glb: glb.scene,
-      id: id
+      id
     });
   };
 
@@ -57,23 +57,19 @@ const OrganizeJobFairFormContainer = () => {
         return () => setCurrentStep(currentStep + 1);
     }
   };
-  const handleOnPrev = (currentStep) => {
-    return () => {
-      if (currentStep !== 0) {
-        setCurrentStep(currentStep - 1);
-      }
-    };
+  const handleOnPrev = (currentStep) => () => {
+    if (currentStep !== 0) setCurrentStep(currentStep - 1);
   };
 
   const stepComponentList = [
-    <>
+    <div>
       <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
       <ChooseTemplateJobFairContainer
         onHandleNext={nextStepButtonActions(currentStep)}
         templateId={layoutData.id}
         handleLoad3DMap={handleLoad3DMap}
       />
-    </>,
+    </div>,
     <>
       <PolicyComponent
         onHandleNext={nextStepButtonActions(currentStep)}
