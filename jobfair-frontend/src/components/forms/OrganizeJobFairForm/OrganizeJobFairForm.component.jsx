@@ -69,7 +69,7 @@ const OrganizeJobFairFormComponent = ({ form, onHandleNext, onHandlePrev, onFini
       </div>
       <div className={'button-container'}>
         <Button className={'confirm-button'} type='primary' onClick={onHandleNext}>
-          Next
+          Start assign employee
         </Button>
       </div>
     </SideBarComponent>
