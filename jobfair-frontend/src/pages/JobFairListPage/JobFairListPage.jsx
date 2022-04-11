@@ -35,6 +35,7 @@ const JobFairListPage = () => {
         </TabPane>
       </Tabs>
     </div>
+    //CAP-320
   );
 };
 
