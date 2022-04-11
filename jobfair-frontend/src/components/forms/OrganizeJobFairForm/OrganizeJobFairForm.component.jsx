@@ -6,7 +6,7 @@ import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairVali
 
 const { RangePicker } = DatePicker;
 const { Title } = Typography;
-const OrganizeJobFairFormComponent = ({ form, onHandleNext, onHandlePrev }) => {
+const OrganizeJobFairFormComponent = ({ form, onHandleNext, onHandlePrev, onFinish }) => {
   return (
     <div>
       <SideBarComponent>
@@ -17,6 +17,7 @@ const OrganizeJobFairFormComponent = ({ form, onHandleNext, onHandlePrev }) => {
           form={form}
           requiredMark='required'
           autoComplete='off'
+          onFinish={onFinish}
           scrollToFirstError={{ block: 'center', behavior: 'smooth' }}
           style={{ height: '20rem', width: '25rem' }}>
           <Form.Item

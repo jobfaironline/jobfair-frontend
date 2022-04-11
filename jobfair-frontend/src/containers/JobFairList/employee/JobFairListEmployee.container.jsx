@@ -1,7 +1,6 @@
 import { PATH, PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getCompanyBoothByJobFairId } from '../../../services/jobhub-api/CompanyBoothControllerService';
-import { getJobFairForCompany } from '../../../services/jobhub-api/JobFairConTrollerService';
 import { mapperJobFairDetail } from '../../../utils/mapperJobFairList';
 import { notification } from 'antd';
 import CompanyJobFairActionButton from '../../../components/customized-components/JobFairList/ActionButton/JobFairActionButton.component';
@@ -30,17 +29,18 @@ const JobFairListEmployeeContainer = (props) => {
   };
 
   const loadMoreData = () => {
-    if (loading) return;
-
-    setLoading(true);
-    getJobFairForCompany(currentPage, pageSize, tabStatus)
-      .then((res) => setResponseResult(res))
-      .catch(() => {
-        setLoading(false);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    //TODO: fetch API later
+    // if (loading) return;
+    //
+    // setLoading(true);
+    // getJobFairForCompany(currentPage, pageSize, tabStatus)
+    //   .then((res) => setResponseResult(res))
+    //   .catch(() => {
+    //     setLoading(false);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   };
 
   const getCompanyBoothId = (jobFairId) => {

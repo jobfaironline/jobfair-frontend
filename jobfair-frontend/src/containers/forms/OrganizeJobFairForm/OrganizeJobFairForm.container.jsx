@@ -1,11 +1,13 @@
-import { Checkbox, Form, Steps } from 'antd';
+import { Button, Checkbox, Form, notification, Steps } from 'antd';
 import PolicyComponent from '../../../components/customized-components/Policy/Policy.component';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './OrganizeJobFairForm.styles.scss';
 import ChooseTemplateJobFairContainer from '../../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
 import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
 import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import OrganizeJobFairFormComponent from '../../../components/forms/OrganizeJobFairForm/OrganizeJobFairForm.component';
+import { convertToDateValue } from '../../../utils/common';
+import { draftJobFairAPI, updateJobFairAPI } from '../../../services/jobhub-api/JobFairConTrollerService';
 
 const { Step } = Steps;
 const OrganizeJobFairFormContainer = () => {
@@ -20,6 +22,8 @@ const OrganizeJobFairFormContainer = () => {
     id: ''
   });
 
+  const [jobFairData, setJobFairData] = useState();
+
   const handleLoad3DMap = async (url, id) => {
     const glb = await loadGLBModel(url);
     setLayoutData({
@@ -32,7 +36,7 @@ const OrganizeJobFairFormContainer = () => {
     switch (step) {
       case 3:
         return () => {
-          onSubmit(form.getFieldsValue(true));
+          // onSubmit(form.getFieldsValue(true));
         };
       case 2:
         return () => {
@@ -53,6 +57,7 @@ const OrganizeJobFairFormContainer = () => {
                 }
               }
             });
+          updateJobFairAtScheduleScreen(form.getFieldsValue(true));
         };
       default:
         return () => setCurrentStep(currentStep + 1);
@@ -64,6 +69,48 @@ const OrganizeJobFairFormContainer = () => {
         setCurrentStep(currentStep - 1);
       }
     };
+  };
+  useEffect(() => {
+    onDraftJobFair();
+  }, []);
+
+  const onDraftJobFair = async () => {
+    const body = {};
+    const res = await draftJobFairAPI(body);
+    if (res.status === 200) {
+      setJobFairData(res.data);
+      notification['success']({
+        message: 'A job fair has been created'
+      });
+    }
+  };
+
+  const updateJobFairAtScheduleScreen = async (values) => {
+    const body = {
+      id: jobFairData?.id,
+      name: values.name,
+      decorateStartTime: convertToDateValue(values.decorateRange[0].format()),
+      decorateEndTime: convertToDateValue(values.decorateRange[1].format()),
+      publicEndTime: convertToDateValue(values.publicRange[0].format()),
+      publicStartTime: convertToDateValue(values.publicRange[1].format())
+    };
+    const res = await updateJobFairAPI(body);
+    if (res.status === 200) {
+      return true;
+    }
+  };
+
+  const updateJobFairAtLandingPage = async (values) => {
+    const body = {
+      id: jobFairData?.id,
+      description: values.description,
+      hostName: values.hostName,
+      targetAttendant: values.targetAttendant
+    };
+    const res = await updateJobFairAPI(body);
+    if (res.status === 200) {
+      return true;
+    }
   };
 
   const stepComponentList = [
@@ -91,16 +138,16 @@ const OrganizeJobFairFormContainer = () => {
         onHandleNext={nextStepButtonActions(currentStep)}
         onHandlePrev={handleOnPrev(currentStep)}
         form={form}
+        onFinish={onDraftJobFair}
         handleLoad3DMap={handleLoad3DMap}
       />
     </>,
-    <>Step 4</>
+    <>
+      <Button type='primary' onClick={handleOnPrev(currentStep)}>
+        Previous
+      </Button>
+    </>
   ];
-
-  const onSubmit = (values) => {
-    // eslint-disable-next-line no-console
-    console.log(values);
-  };
 
   return (
     <div>
