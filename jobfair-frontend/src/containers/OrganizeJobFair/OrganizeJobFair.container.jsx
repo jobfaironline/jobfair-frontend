@@ -1,12 +1,12 @@
-import './OrganizeJobFairForm.styles.scss';
+import './OrganizeJobFair.styles.scss';
 import { Form, Steps } from 'antd';
-import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
-import ChooseTemplateJobFairContainer from '../../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
-import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
+import { loadGLBModel } from '../../utils/ThreeJS/threeJSUtil';
+import ChooseTemplateJobFairContainer from '../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
+import JobFairParkMapComponent from '../../components/3D/JobFairParkMap/JobFairParkMap.component';
 import React, { useState } from 'react';
 
 const { Step } = Steps;
-const OrganizeJobFairFormContainer = () => {
+const OrganizeJobFairContainer = () => {
   const [form] = Form.useForm();
   const [agreeStatus, setAgreeStatus] = useState(false);
 
@@ -101,4 +101,4 @@ const OrganizeJobFairFormContainer = () => {
   );
 };
 
-export default OrganizeJobFairFormContainer;
+export default OrganizeJobFairContainer;

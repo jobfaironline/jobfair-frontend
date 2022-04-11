@@ -1,9 +1,9 @@
-import OrganizeJobFairFormContainer from '../../containers/forms/OrganizeJobFairForm/OrganizeJobFairForm.container';
+import OrganizeJobFairContainer from '../../containers/OrganizeJobFair/OrganizeJobFair.container';
 import React from 'react';
 
 const OrganizeJobFairPage = () => (
   <div className='page'>
-    <OrganizeJobFairFormContainer />
+    <OrganizeJobFairContainer />
   </div>
 );
 
