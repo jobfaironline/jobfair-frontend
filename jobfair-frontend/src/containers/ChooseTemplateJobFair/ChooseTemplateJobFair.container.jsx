@@ -59,16 +59,7 @@ const ChooseTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, onHandl
   return (
     <>
       <SideBarComponent>
-        <ChooseTemplateJobFairSideBarComponent
-          {...uploadProps}
-          data={data}
-          handleLoad3DMap={handleLoad3DMap}
-          onHandleNext={onHandleNext}
-          onHandlePrev={onHandlePrev}
-          templateId={templateId}
-          visible={visible}
-          setVisible={setVisible}
-        />
+        <ChooseTemplateJobFairSideBarComponent {...uploadProps} {...componentProps} />
       </SideBarComponent>
     </>
   );
