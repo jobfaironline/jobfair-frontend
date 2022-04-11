@@ -28,6 +28,7 @@ import JobPositionDetailPage from '../pages/JobPositionDetailPage/JobPositionDet
 import JobPositionPage from '../pages/JobPositionPage/JobPositionPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavigationBar from '../components/commons/Navbar/Navbar';
+import OrganizeJobFairPage from '../pages/OrganizeJobFairPage/OrganizeJobFairPage';
 import PublicRouter from './components/PublicRouter';
 import PublicizeJobFairDetailPage from '../pages/JobFairDetailPage/PublicizeJobFairDetailPage';
 import PublicizedBoothPage from '../pages/PublicizedBoothPage/PublicizedBoothPage';
@@ -203,6 +204,12 @@ const AppRouter = () => (
         key={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE}
         component={() => <PublicizeJobFairDetailPage />}
         path={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE}
+        exact
+      />
+      <CompanyManagerRouter
+        key={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}
+        component={() => <OrganizeJobFairPage />}
+        path={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}
         exact
       />
       <AdminRouter
