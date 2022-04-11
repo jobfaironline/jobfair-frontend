@@ -1,7 +1,8 @@
 import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
-import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
+import AboutApplicationPage from '../pages/AboutApplicationPage';
 import AdminRouter from './components/AdminRouter';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage';
@@ -12,7 +13,6 @@ import CompanyEmployeeRouter from './components/CompanyEmployeeRouter';
 import CompanyManagerRouter from './components/CompanyManagerRouter';
 import CompanyProfile from '../pages/ProfilePage/Company/CompanyProfilePage';
 import ContactPage from '../pages/ContactPage/ContactPage';
-import CreateJobPositionPage from '../pages/CreateJobPositonPage/CreateJobPositionPage';
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage';
 import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage';
 import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage';
@@ -21,6 +21,7 @@ import FAQPage from '../pages/FAQPage/FAQPage';
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage';
 import HomePage from '../pages/HomePage';
 import JobFairDetailPage from '../pages/JobFairDetailPage/JobFairDetailPage-remove';
+import JobFairGridManagerPage from '../pages/JobFairListPage/JobFairGridManagerPage';
 import JobFairListPage from '../pages/JobFairListPage/JobFairListPage';
 import JobFairTablePage from '../pages/JobFairTablePage/JobFairTablePage';
 import JobPositionDetailPage from '../pages/JobPositionDetailPage/JobPositionDetailPage';
@@ -35,7 +36,6 @@ import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
-import AboutApplicationPage from '../pages/AboutApplicationPage';
 
 const AppRouter = () => (
   <>
@@ -194,9 +194,9 @@ const AppRouter = () => (
         exact
       />
       <CompanyManagerRouter
-        key={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION_PAGE}
-        component={() => <CreateJobPositionPage />}
-        path={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION_PAGE}
+        key={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}
+        component={() => <JobFairGridManagerPage />}
+        path={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}
         exact
       />
       <CompanyManagerRouter
