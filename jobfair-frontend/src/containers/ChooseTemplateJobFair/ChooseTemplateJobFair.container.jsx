@@ -4,10 +4,6 @@ import ChooseTemplateJobFairSideBarComponent from '../../components/customized-c
 import React, { useEffect, useState } from 'react';
 import SideBarComponent from '../../components/commons/SideBar/SideBar.component';
 import UploadModalContainer from '../UploadModal/UploadModal.container';
-import ChooseTemplateJobFairSideBarComponent from '../../components/customized-components/ChooseTemplateJobFairSideBar/ChooseTemplateJobFairSideBar.component';
-import React, { useEffect, useState } from 'react';
-import SideBarComponent from '../../components/commons/SideBar/SideBar.component';
-import { notification } from 'antd';
 
 const ChooseTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, onHandlePrev, templateId }) => {
   const [data, setData] = useState([]);
@@ -23,7 +19,6 @@ const ChooseTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, onHandl
   const fetchOwnTemplate = async () => {
     //TODO: call API later setData(res.data)
   };
-  }
 
   useEffect(() => {
     fetchData();
@@ -54,11 +49,11 @@ const ChooseTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, onHandl
     showUploadList: false
   };
   const componentProps = {
-    data: data,
-    handleLoad3DMap: handleLoad3DMap,
-    onHandleNext: onHandleNext,
-    onHandlePrev: onHandlePrev,
-    templateId: templateId
+    data,
+    handleLoad3DMap,
+    onHandleNext,
+    onHandlePrev,
+    templateId
   };
   return (
     <>
