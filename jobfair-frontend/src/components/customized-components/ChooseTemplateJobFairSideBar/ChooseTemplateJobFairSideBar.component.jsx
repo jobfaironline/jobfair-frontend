@@ -3,12 +3,11 @@ import './ChooseTemplateJobFairSideBar.style.scss';
 import { Button, Divider, Tabs, Typography } from 'antd';
 import React from 'react';
 import SelectJobFairTemplateComponent from '../SelectJobFairTemplate/SelectJobFairTemplate.component';
-import UploadModalContainer from '../../../containers/UploadModal/UploadModal.container';
 
 const { TabPane } = Tabs;
 const { Title } = Typography;
 const ChooseTemplateJobFairSideBarComponent = (props) => {
-  const { data, onHandleNext, handleLoad3DMap, templateId, uploadProps, visible, setVisible } = props;
+  const { data, onHandleNext, handleLoad3DMap, templateId, setVisible } = props;
 
   return (
     <>
@@ -46,7 +45,6 @@ const ChooseTemplateJobFairSideBarComponent = (props) => {
                   <Button className={'confirm-button'} type='primary' onClick={() => setVisible(true)}>
                     Upload template
                   </Button>
-                  <UploadModalContainer {...uploadProps} visible={visible} setVisible={setVisible} />
                 </div>
               </SelectJobFairTemplateComponent>
             </div>

@@ -3,6 +3,7 @@ import { notification } from 'antd';
 import ChooseTemplateJobFairSideBarComponent from '../../components/customized-components/ChooseTemplateJobFairSideBar/ChooseTemplateJobFairSideBar.component';
 import React, { useEffect, useState } from 'react';
 import SideBarComponent from '../../components/commons/SideBar/SideBar.component';
+import UploadModalContainer from '../UploadModal/UploadModal.container';
 
 const ChooseTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, onHandlePrev, templateId }) => {
   const [data, setData] = useState([]);
@@ -52,14 +53,15 @@ const ChooseTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, onHandl
     handleLoad3DMap: handleLoad3DMap,
     onHandleNext: onHandleNext,
     onHandlePrev: onHandlePrev,
-    templateId: templateId,
-    visible: visible,
-    setVisible: setVisible
+    templateId: templateId
   };
   return (
     <>
       <SideBarComponent>
-        <ChooseTemplateJobFairSideBarComponent {...uploadProps} {...componentProps} />
+        <ChooseTemplateJobFairSideBarComponent {...componentProps} setVisible={setVisible} />
+        <div className={'button-container'}>
+          <UploadModalContainer {...uploadProps} visible={visible} setVisible={setVisible} />
+        </div>
       </SideBarComponent>
     </>
   );
