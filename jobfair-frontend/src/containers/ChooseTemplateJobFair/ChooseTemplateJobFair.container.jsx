@@ -49,11 +49,11 @@ const ChooseTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, onHandl
     showUploadList: false
   };
   const componentProps = {
-    data: data,
-    handleLoad3DMap: handleLoad3DMap,
-    onHandleNext: onHandleNext,
-    onHandlePrev: onHandlePrev,
-    templateId: templateId
+    data,
+    handleLoad3DMap,
+    onHandleNext,
+    onHandlePrev,
+    templateId
   };
   return (
     <>

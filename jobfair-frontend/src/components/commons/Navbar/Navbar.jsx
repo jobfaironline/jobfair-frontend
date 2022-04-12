@@ -2,9 +2,6 @@
 import './Navbar.styles.scss';
 import { Avatar, Button, Dropdown, Menu, Typography } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
-import { UserOutlined } from '@ant-design/icons';
-import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
-import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 
 import {
@@ -14,6 +11,9 @@ import {
   PATH_COMPANY_EMPLOYEE,
   PATH_COMPANY_MANAGER
 } from '../../../constants/Paths/Path';
+import { UserOutlined } from '@ant-design/icons';
+import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const AttendantMenu = [
   <Menu.Item key={PATH_ATTENDANT.PROFILE_PAGE}>
@@ -42,6 +42,7 @@ export const CompanyManagerMenu = [
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}>Organize job fair</Link>
+  </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}>My job fair</Link>
   </Menu.Item>

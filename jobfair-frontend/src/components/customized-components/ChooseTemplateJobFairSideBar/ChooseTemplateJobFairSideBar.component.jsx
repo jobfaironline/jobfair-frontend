@@ -8,7 +8,6 @@ const { TabPane } = Tabs;
 const { Title } = Typography;
 const ChooseTemplateJobFairSideBarComponent = (props) => {
   const { data, onHandleNext, handleLoad3DMap, templateId, setVisible } = props;
-
   return (
     <>
       <Divider size='small' plain>
@@ -54,5 +53,4 @@ const ChooseTemplateJobFairSideBarComponent = (props) => {
     </>
   );
 };
-
 export default ChooseTemplateJobFairSideBarComponent;

@@ -1,5 +1,5 @@
-import React from 'react';
 import { Modal } from 'antd';
+import React from 'react';
 import UploadComponent from '../../components/commons/UploadComponent/Upload.component';
 
 const UploadModalContainer = ({ uploadProps, visible, setVisible }) => {

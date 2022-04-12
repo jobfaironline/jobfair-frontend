@@ -14,3 +14,6 @@ export const getJobFairAPI = (name, direction = 'ASC', offset = '0', pageSize = 
       sortBy
     }
   );
+
+export const draftJobFairAPI = (body) => CallAPI(JOB_FAIR_END_POINT, 'POST', body, {});
+export const updateJobFairAPI = (body) => CallAPI(JOB_FAIR_END_POINT, 'PUT', body, {});
