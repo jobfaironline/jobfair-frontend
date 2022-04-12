@@ -1,4 +1,5 @@
 import { PHONE_REGEX } from '../constants/RegexConstant';
+import { convertToDateString } from '../utils/common';
 import moment from 'moment';
 import { convertToDateString } from '../utils/common';
 
@@ -65,6 +66,7 @@ export const NUMBER_RANGE_VALIDATOR = (minValue, maxValue) => () => ({
 
 export const DATE_RANGE_VALIDATOR = (minTime, maxTime) => () => ({
   validator(_, value) {
+    if (value === undefined) return Promise.resolve();
     const fromDate = moment(value[0]).toDate().getTime();
     const toDate = moment(value[1]).toDate().getTime();
     if (fromDate > maxTime)

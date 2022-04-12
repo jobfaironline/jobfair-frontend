@@ -55,5 +55,6 @@ export const PATH_COMPANY_MANAGER = {
   JOB_FAIR_DETAIL_PAGE: '/company/job-fair-detail',
   APPLICATION_MANAGEMENT_PAGE: '/company/application-management',
   RESUME_DETAIL_PAGE: '/company/resume-detail',
-  ORGANIZE_JOB_FAIR_PAGE: '/company/organize-job-fair'
+  ORGANIZE_JOB_FAIR_PAGE: '/company/organize-job-fair',
+  JOB_FAIR_GRID_PAGE: '/company/my-job-fair'
 };
