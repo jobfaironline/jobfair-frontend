@@ -1,3 +1,5 @@
+import { notification } from 'antd';
+
 export const JOB_FAIR_PLAN_COMPANY_STATUS = [
   {
     value: 'REGISTRABLE',
@@ -86,4 +88,29 @@ export const JOB_FAIR_FOR_ADMIN_STATUS = {
   NOT_YET: 'NOT_YET',
   PROCESSING: 'PROCESSING',
   UNAVAILABLE: 'UNAVAILABLE'
+};
+
+export const uploadProps = {
+  name: 'file',
+  multiple: true,
+  beforeUpload: () => false,
+  accept: '.glb',
+  onChange: async (info) => {
+    if (info.file.type !== 'model/gltf-binary') {
+      notification['error']({
+        message: `${info.file.name} is not glb file`
+      });
+      return;
+    }
+    const formData = new FormData();
+    formData.append('file', info.file);
+    //TODO: adding upload GLB API later
+    // await uploadCSVFile(formData);
+    notification['success']({
+      message: `${info.file.name} upload successfully`
+    });
+    //force render to fetch data after upload
+    setForceRerenderState((prevState) => !prevState);
+  },
+  showUploadList: false
 };

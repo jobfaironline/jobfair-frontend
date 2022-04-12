@@ -1,8 +1,6 @@
-import React from 'react';
 import './SideBar.styles.scss';
+import React from 'react';
 
-const SideBarComponent = (props) => {
-  return <div className='side-bar'>{props.children}</div>;
-};
+const SideBarComponent = (props) => <div className='side-bar'>{props.children}</div>;
 
 export default SideBarComponent;
