@@ -12,14 +12,13 @@ const { Step } = Steps;
 const OrganizeJobFairContainer = () => {
   const [form] = Form.useForm();
   const [jobFairData, setJobFairData] = useState();
-
   //management step
   const [currentStep, setCurrentStep] = useState(0);
-
   const [layoutData, setLayoutData] = useState({
     glb: undefined,
     id: ''
   });
+  const [isError, setIsError] = useState(true);
 
   const handleLoad3DMap = async (url, id) => {
     const glb = await loadGLBModel(url);
@@ -27,6 +26,12 @@ const OrganizeJobFairContainer = () => {
       glb: glb.scene,
       id
     });
+  };
+
+  const onValueChange = () => {
+    const isHasError =
+      !form.isFieldsTouched(true) || form.getFieldsError().filter(({ errors }) => errors.length).length > 0;
+    setIsError(isHasError);
   };
 
   const nextStepButtonActions = (step) => {
@@ -115,7 +120,8 @@ const OrganizeJobFairContainer = () => {
         onHandlePrev={handleOnPrev(currentStep)}
         form={form}
         onFinish={updateJobFairAtScheduleScreen}
-        handleLoad3DMap={handleLoad3DMap}
+        onValueChange={onValueChange}
+        isError={isError}
       />
     </>,
     <>Step 4</>
