@@ -1,8 +1,10 @@
 import './OrganizeJobFair.styles.scss';
+import { ChooseBoothPageContainer } from '../3D/ChooseBooth/ChooseBooth.container';
 import { Form, Steps, notification } from 'antd';
 import { convertToDateValue } from '../../utils/common';
 import { draftJobFairAPI, updateJobFairAPI } from '../../services/jobhub-api/JobFairConTrollerService';
 import { loadGLBModel } from '../../utils/ThreeJS/threeJSUtil';
+import { pickLayoutForJobFair } from '../../services/jobhub-api/LayoutControllerService';
 import ChooseTemplateJobFairContainer from '../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
 import JobFairParkMapComponent from '../../components/3D/JobFairParkMap/JobFairParkMap.component';
 import OrganizeJobFairFormComponent from '../../components/forms/OrganizeJobFairForm/OrganizeJobFairForm.component';
@@ -36,26 +38,26 @@ const OrganizeJobFairContainer = () => {
 
   const nextStepButtonActions = (step) => {
     switch (step) {
-      case 1:
-        return () => {
-          form
-            .validateFields()
-            .then(() => {
-              updateJobFairAtScheduleScreen(form.getFieldsValue(true));
-              setCurrentStep(currentStep + 1);
-            })
-            .catch(() => {
-              // notification['error']({
-              //   message: 'job position must not be empty'
-              // })
-              const errorsArray = form.getFieldsError();
-              for (const error of errorsArray) {
-                if (error.errors.length > 0) {
-                  form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
-                  break;
-                }
+      case 0:
+        return async () => {
+          await chooseLayoutForJobFair();
+          setCurrentStep(currentStep + 1);
+        };
+      case 2:
+        return async () => {
+          try {
+            await form.validateFields();
+            await updateJobFairAtScheduleScreen(form.getFieldsValue(true));
+            setCurrentStep(currentStep + 1);
+          } catch (e) {
+            const errorsArray = form.getFieldsError();
+            for (const error of errorsArray) {
+              if (error.errors.length > 0) {
+                form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
+                break;
               }
-            });
+            }
+          }
         };
       default:
         return () => setCurrentStep(currentStep + 1);
@@ -104,6 +106,22 @@ const OrganizeJobFairContainer = () => {
     const res = await updateJobFairAPI(body);
     if (res.status === 200) return true;
   };
+
+  const chooseLayoutForJobFair = async () => {
+    if (jobFairData === undefined || layoutData.id === '') return;
+    const body = {
+      jobFairId: jobFairData.id,
+      layoutId: layoutData.id
+    };
+    try {
+      await pickLayoutForJobFair(body);
+    } catch (e) {
+      notification['error']({
+        message: 'Error is created'
+      });
+    }
+  };
+
   const stepComponentList = [
     <div>
       <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
@@ -114,6 +132,13 @@ const OrganizeJobFairContainer = () => {
       />
     </div>,
     <>
+      {jobFairData !== undefined ? <ChooseBoothPageContainer jobFairId={jobFairData.id} /> : null}
+      {/*<AssignEmployeeContainer
+        onHandleNext={nextStepButtonActions(currentStep)}
+        onHandlePrev={handleOnPrev(currentStep)}
+      />*/}
+    </>,
+    <>
       <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
       <OrganizeJobFairFormComponent
         onHandleNext={nextStepButtonActions(currentStep)}
@@ -123,8 +148,7 @@ const OrganizeJobFairContainer = () => {
         onValueChange={onValueChange}
         isError={isError}
       />
-    </>,
-    <>Step 4</>
+    </>
   ];
 
   return (

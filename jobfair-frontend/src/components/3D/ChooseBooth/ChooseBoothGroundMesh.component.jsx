@@ -3,8 +3,9 @@ import { BasicMesh } from '../ThreeJSBaseComponent/ChildMesh.component';
 import React, { useRef } from 'react';
 
 export const ChooseBoothGroundMesh = (props) => {
-  const { mesh, onPointerOver, onPointerLeave, onClick, isAvailable, boothId } = props;
+  const { mesh, onPointerOver, onPointerLeave, onClick, isAvailable, boothId, boothMeshesRef } = props;
   const ref = useRef();
+  boothMeshesRef.current.push(ref);
   if (!isAvailable) {
     const newMaterial = mesh.material.clone();
     newMaterial.color.set(0xf54254);
@@ -30,11 +31,11 @@ export const ChooseBoothGroundMesh = (props) => {
       receiveShadow
       onPointerOver={(_) => {
         if (!isAvailable) return;
-        onPointerOver(ref);
+        onPointerOver(mesh.name);
       }}
       onPointerLeave={(_) => {
         if (!isAvailable) return;
-        onPointerLeave(ref);
+        onPointerLeave(mesh.name);
       }}
       onClick={() => {
         // eslint-disable-next-line no-unused-expressions
