@@ -1,7 +1,6 @@
 import { PHONE_REGEX } from '../constants/RegexConstant';
 import { convertToDateString } from '../utils/common';
 import moment from 'moment';
-import { convertToDateString } from '../utils/common';
 
 export const REQUIRED_VALIDATOR = (fieldName) => ({
   required: true,

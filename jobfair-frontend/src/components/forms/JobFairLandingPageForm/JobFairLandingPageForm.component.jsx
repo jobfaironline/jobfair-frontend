@@ -1,12 +1,21 @@
-import { Button, Card, Form, Input, Space } from 'antd';
+import './JobFairLandingPageForm.styles.scss';
+import { Button, Card, Form, Input } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairValidation';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import UploadComponent from '../../commons/UploadComponent/Upload.component';
 
+const { TextArea } = Input;
 const JobFairLandingPageFormComponent = ({ form, onFinish, onHandleNext, onHandlePrev, uploadProps }) => (
-  <div>
-    <Card
-      title='Create job fair landing page'
-      style={{ width: '35rem', height: '35rem', marginTop: '10rem', marginLeft: '43rem' }}>
+  <Card
+    title='Create job fair landing page'
+    style={{ width: '35rem', height: '40rem', marginTop: '10rem', marginLeft: '43rem' }}>
+    <div className='landing-page-form'>
+      <a className={'prev-button'} type='primary' onClick={onHandlePrev}>
+        <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '10px' }} />
+        <span>Back to assign employee</span>
+      </a>
       <Form
         form={form}
         requiredMark='required'
@@ -29,7 +38,7 @@ const JobFairLandingPageFormComponent = ({ form, onFinish, onHandleNext, onHandl
         <Form.Item
           label='Host name'
           name={'hostname'}
-          rules={[]}
+          rules={OrganizeJobFairValidation.hostname}
           style={{
             display: 'inline-block',
             width: '100%',
@@ -39,28 +48,37 @@ const JobFairLandingPageFormComponent = ({ form, onFinish, onHandleNext, onHandl
           <Input placeholder='Host name' />
         </Form.Item>
         <Form.Item
+          label='Target attendant'
+          name={'targetAttendant'}
+          rules={OrganizeJobFairValidation.targetAttendant}
+          style={{
+            display: 'inline-block',
+            width: '100%',
+            marginRight: '1rem',
+            marginLeft: '1rem'
+          }}>
+          <Input placeholder='Target attendant' />
+        </Form.Item>
+        <Form.Item
           label='Description'
           name={'description'}
-          rules={[]}
+          rules={OrganizeJobFairValidation.description}
           style={{
             display: 'inline-block',
             width: '25rem',
             marginRight: '1rem',
             marginLeft: '1rem'
           }}>
-          <Input placeholder='Description' />
+          <TextArea showCount maxLength={3000} placeholder='Description' />
         </Form.Item>
-        <Space style={{ marginLeft: '1rem' }}>
-          <Button type='primary' onClick={onHandleNext}>
+        <div className={'button-container'}>
+          <Button type='primary' onClick={onHandleNext} className={'confirm-button'}>
             Next
           </Button>
-          <Button type='primary' onClick={onHandlePrev}>
-            Previous
-          </Button>
-        </Space>
+        </div>
       </Form>
-    </Card>
-  </div>
+    </div>
+  </Card>
 );
 
 export default JobFairLandingPageFormComponent;
