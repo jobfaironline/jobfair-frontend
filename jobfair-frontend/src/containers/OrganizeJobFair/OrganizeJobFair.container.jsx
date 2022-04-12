@@ -31,11 +31,12 @@ const OrganizeJobFairContainer = () => {
 
   const nextStepButtonActions = (step) => {
     switch (step) {
-      case 2:
+      case 1:
         return () => {
           form
             .validateFields()
             .then(() => {
+              updateJobFairAtScheduleScreen(form.getFieldsValue(true));
               setCurrentStep(currentStep + 1);
             })
             .catch(() => {
@@ -50,7 +51,6 @@ const OrganizeJobFairContainer = () => {
                 }
               }
             });
-          updateJobFairAtScheduleScreen(form.getFieldsValue(true));
         };
       default:
         return () => setCurrentStep(currentStep + 1);

@@ -12,7 +12,8 @@ import SideBarComponent from '../../commons/SideBar/SideBar.component';
 const { RangePicker } = DatePicker;
 const { Title } = Typography;
 const OrganizeJobFairFormComponent = ({ form, onHandleNext, onHandlePrev, onFinish }) => {
-  const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useState(true);
+
   return (
     <div className={'organize-job-fair-form'}>
       <SideBarComponent>
@@ -29,16 +30,11 @@ const OrganizeJobFairFormComponent = ({ form, onHandleNext, onHandlePrev, onFini
             requiredMark='required'
             autoComplete='off'
             onFinish={onFinish}
-            // onFieldsChange={() => {
-            //   form.validateFields();
-            //   // form.validateFields().catch((errInfo) => {});
-            //   const isFormValid = form.getFieldsError().every((fieldErr) => fieldErr.errors.length === 0);
-            //   form.getFieldsError().forEach((fieldErr) => {
-            //     console.log(fieldErr);
-            //   });
-            //   console.log(isFormValid);
-            //   setIsError(!isFormValid);
-            // }}
+            onValuesChange={() => {
+              const isHasError =
+                !form.isFieldsTouched(true) || form.getFieldsError().filter(({ errors }) => errors.length).length > 0;
+              setIsError(isHasError);
+            }}
             scrollToFirstError={{ block: 'center', behavior: 'smooth' }}
             style={{ height: '20rem', width: '25rem' }}>
             <Form.Item
@@ -80,12 +76,7 @@ const OrganizeJobFairFormComponent = ({ form, onHandleNext, onHandlePrev, onFini
           </Form>
         </div>
         <div className={'button-container'}>
-          <Button
-            className={'confirm-button'}
-            type='primary'
-            onClick={() => {
-              onHandleNext();
-            }}>
+          <Button className={'confirm-button'} type='primary' onClick={onHandleNext} disabled={isError}>
             Start assign employee
           </Button>
         </div>
