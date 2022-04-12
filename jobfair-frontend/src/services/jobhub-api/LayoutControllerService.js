@@ -7,3 +7,4 @@ import {
 export const getLayoutAndAvailableSlotByJobFairId = (jobFairId) =>
   CallAPI(`${ENDPOINT_GET_LAYOUT_AND_AVAILABLE_SLOT_BY_JOB_FAIR_ID}/${jobFairId}`, 'GET', {});
 export const getLayoutDetail = (jobFairId) => CallAPI(`${ENDPOINT_LAYOUT}/${jobFairId}`, 'GET');
+export const getCompanyLayoutAPI = () => CallAPI(`${ENDPOINT_LAYOUT}/company-manager`, 'GET', {}, {});
