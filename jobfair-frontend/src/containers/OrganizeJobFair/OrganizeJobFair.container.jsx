@@ -141,7 +141,7 @@ const OrganizeJobFairContainer = () => {
   }, []);
 
   const onDraftJobFair = async () => {
-    const body = {};
+    const body = { name: 'Untitled' };
     const res = await draftJobFairAPI(body);
     if (res.status === 200) {
       setJobFairData(res.data);

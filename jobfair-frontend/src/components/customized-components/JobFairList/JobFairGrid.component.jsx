@@ -5,6 +5,7 @@ import React from 'react';
 const { Text } = Typography;
 const JobFairGridComponent = (props) => {
   const { data, onClick } = props;
+  const defaultImage = 'https://d3polnwtp0nqe6.cloudfront.net/General/jobhub.png';
   return (
     <List
       grid={{
@@ -15,8 +16,15 @@ const JobFairGridComponent = (props) => {
         <List.Item>
           <Card
             hoverable={true}
-            style={{ width: 300 }}
-            cover={<img src={item.thumbnailUrl} alt={item.name} onClick={() => onClick(item.id)} />}>
+            style={{ width: 300, height: 260 }}
+            cover={
+              <img
+                src={item.thumbnailUrl ? item.thumbnailUrl : defaultImage}
+                alt={item.name}
+                onClick={() => onClick(item.id)}
+                style={{ width: 300, height: 157 }}
+              />
+            }>
             <div style={{ display: 'flex' }}>
               <div>
                 <Card.Meta title={item.name} />
