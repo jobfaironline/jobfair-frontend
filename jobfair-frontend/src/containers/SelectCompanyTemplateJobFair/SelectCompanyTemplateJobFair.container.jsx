@@ -9,9 +9,10 @@ import React, { useEffect, useState } from 'react';
 import SelectJobFairTemplateComponent from '../../components/customized-components/SelectJobFairTemplate/SelectJobFairTemplate.component';
 import UploadModalContainer from '../UploadModal/UploadModal.container';
 
-const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, setVisible, visible, templateId }) => {
+const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, templateId }) => {
   const [data, setData] = useState([]);
   const [forceRerenderState, setForceRerenderState] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const formData = new FormData();
   const fetchData = async () => {

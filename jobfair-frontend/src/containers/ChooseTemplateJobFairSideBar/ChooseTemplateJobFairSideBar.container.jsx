@@ -8,7 +8,7 @@ import SelectDefaultTemplateJobFairContainer from '../SelectDefaultTemplateJobFa
 const { TabPane } = Tabs;
 const { Title } = Typography;
 const ChooseTemplateJobFairSideBarContainer = (props) => {
-  const { onHandleNext, handleLoad3DMap, templateId, setVisible, visible } = props;
+  const { onHandleNext, handleLoad3DMap, templateId } = props;
   return (
     <>
       <Divider size='small' plain>
@@ -31,8 +31,6 @@ const ChooseTemplateJobFairSideBarContainer = (props) => {
                 handleLoad3DMap={handleLoad3DMap}
                 onHandleNext={onHandleNext}
                 templateId={templateId}
-                setVisible={setVisible}
-                visible={visible}
               />
             </div>
           </TabPane>

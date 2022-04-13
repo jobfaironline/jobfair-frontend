@@ -4,7 +4,6 @@ import JobFairLandingPageFormComponent from '../../components/forms/JobFairLandi
 import React, { useState } from 'react';
 
 const JobFairLandingPageContainer = ({ onFinish, form, onHandleNext, onHandlePrev, templateId }) => {
-  // const [forceRerenderState, setForceRerenderState] = useState(false);
   const [isError, setIsError] = useState(false);
 
   const uploadProps = {
@@ -28,13 +27,9 @@ const JobFairLandingPageContainer = ({ onFinish, form, onHandleNext, onHandlePre
       notification['success']({
         message: `${info.file.name} upload successfully`
       });
-      //force render to fetch data after upload
-      // setForceRerenderState((prevState) => !prevState);
     },
     showUploadList: !isError
   };
-  // eslint-disable-next-line no-empty-function
-  // useEffect(() => {}, [forceRerenderState]);
   return (
     <JobFairLandingPageFormComponent
       form={form}
