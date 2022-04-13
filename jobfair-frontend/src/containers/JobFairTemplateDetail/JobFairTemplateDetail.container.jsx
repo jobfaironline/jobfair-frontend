@@ -5,6 +5,7 @@ import { loadGLBModel } from '../../utils/ThreeJS/threeJSUtil';
 import { useHistory, useParams } from 'react-router-dom';
 import JobFairParkMapComponent from '../../components/3D/JobFairParkMap/JobFairParkMap.component';
 import React, { useEffect, useState } from 'react';
+import ReactLoading from 'react-loading';
 
 const JobFairTemplateDetailContainer = () => {
   const template = useParams();
@@ -22,7 +23,22 @@ const JobFairTemplateDetailContainer = () => {
         <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '10px' }} />
         <span>Back to template page</span>
       </a>
-      <div>{glb ? <JobFairParkMapComponent mapMesh={glb} /> : null}</div>
+      <div>
+        {glb !== undefined ? (
+          <JobFairParkMapComponent mapMesh={glb} />
+        ) : (
+          <div
+            style={{
+              width: '100vw',
+              height: '100vh',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+            <ReactLoading type={'spin'} color={'#1890ff'} height={100} width={100} />
+          </div>
+        )}
+      </div>
     </>
   );
 };

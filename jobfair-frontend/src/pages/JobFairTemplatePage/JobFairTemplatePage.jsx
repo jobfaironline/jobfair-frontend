@@ -3,16 +3,13 @@ import JobFairTemplateContainer from '../../containers/JobFairTemplate/JobFairTe
 import React from 'react';
 
 const { Title } = Typography;
-const JobFairTemplatePage = () => {
-  const a = 0;
-  return (
-    <div className='page'>
-      <Divider size='small' plain>
-        <Title>My job fair template</Title>
-      </Divider>
-      <JobFairTemplateContainer />
-    </div>
-  );
-};
+const JobFairTemplatePage = () => (
+  <div className='page'>
+    <Divider size='small' plain>
+      <Title>My job fair template</Title>
+    </Divider>
+    <JobFairTemplateContainer />
+  </div>
+);
 
 export default JobFairTemplatePage;

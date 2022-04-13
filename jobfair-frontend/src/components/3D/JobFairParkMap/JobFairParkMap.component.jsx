@@ -41,7 +41,7 @@ const JobFairParkMapComponent = (props) => {
         <SkyComponent style={skyType} />
         <group dispose={null}>
           <BasicMesh mesh={mapMesh} />
-          {boothMeshes.map((mesh) => (
+          {boothMeshes?.map((mesh) => (
             <BoothMesh key={mesh.uuid} mesh={mesh} onclick={onClick} />
           ))}
         </group>

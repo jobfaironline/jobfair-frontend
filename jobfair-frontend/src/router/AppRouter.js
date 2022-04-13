@@ -1,7 +1,7 @@
-import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
-import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
+import AboutApplicationPage from '../pages/AboutApplicationPage';
 import AdminRouter from './components/AdminRouter';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage';
@@ -37,7 +37,6 @@ import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
-import AboutApplicationPage from '../pages/AboutApplicationPage';
 
 const AppRouter = () => (
   <>
@@ -84,9 +83,6 @@ const AppRouter = () => (
       </Route>
       <Route path={PATH_ADMIN.JOB_FAIR_LIST_PAGE} exact>
         <JobFairTablePage />
-      </Route>
-      <Route path={PATH.CHOOSE_BOOTH_PAGE} exact>
-        <ChooseBoothPage />
       </Route>
       <Route path={PATH.RESULT_SUCCESS_PAGE} exact>
         <ResultSuccessPage />
