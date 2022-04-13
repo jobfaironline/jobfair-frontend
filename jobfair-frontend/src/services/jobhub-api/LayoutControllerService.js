@@ -11,3 +11,11 @@ export const getCompanyLayoutAPI = () => CallAPI(`${ENDPOINT_LAYOUT}/company-man
 export const uploadTemplateAPI = async (id, formData) =>
   CallAPI(`${ENDPOINT_LAYOUT}/${id}/content`, 'POST', formData, {}, { 'content-type': 'multipart/form-data' });
 export const uploadTemplateMetaDataAPI = (body) => CallAPI(ENDPOINT_LAYOUT, 'POST', body, {});
+export const uploadThumbnailAPI = (body, layoutId) =>
+  CallAPI(
+    `${ENDPOINT_LAYOUT}/upload-thumbnail/${layoutId}`,
+    'POST',
+    body,
+    {},
+    { 'content-type': 'multipart/form-data' }
+  );

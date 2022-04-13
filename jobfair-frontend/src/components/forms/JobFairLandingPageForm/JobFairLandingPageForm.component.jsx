@@ -33,11 +33,11 @@ const JobFairLandingPageFormComponent = ({ form, onFinish, onHandleNext, onHandl
             marginRight: '1rem',
             marginLeft: '1rem'
           }}>
-          <UploadComponent {...uploadProps} />
+          <UploadComponent uploadProps={uploadProps} />
         </Form.Item>
         <Form.Item
           label='Host name'
-          name={'hostname'}
+          name={'hostName'}
           rules={OrganizeJobFairValidation.hostname}
           style={{
             display: 'inline-block',

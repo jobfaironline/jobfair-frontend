@@ -56,7 +56,7 @@ const OrganizeJobFairContainer = () => {
   const updateJobFairAtLandingPage = async (values) => {
     const body = {
       id: jobFairData?.id,
-      hostName: values.hostname,
+      hostName: values.hostName,
       description: values.description,
       targetAttendant: values.targetAttendant
     };
@@ -163,6 +163,7 @@ const OrganizeJobFairContainer = () => {
         onHandleNext={nextStepButtonActions(currentStep)}
         onHandlePrev={handleOnPrev(currentStep)}
         onFinish={updateJobFairAtLandingPage}
+        templateId={layoutData.id}
       />
     </>,
     <>
@@ -170,7 +171,6 @@ const OrganizeJobFairContainer = () => {
         data={form.getFieldsValue(true)}
         onFinish={publishJobFairEvent}
         onHandlePrev={handleOnPrev(currentStep)}
-        templateId={layoutData.id}
       />
     </>
   ];
