@@ -1,18 +1,12 @@
 import './OrganizeJobFair.styles.scss';
 import { Form, Steps, notification } from 'antd';
 import { convertToDateValue } from '../../utils/common';
-import {
-  draftJobFairAPI,
-  publishJobFairAPI,
-  updateJobFairAPI
-} from '../../services/jobhub-api/JobFairConTrollerService';
+import { draftJobFairAPI, updateJobFairAPI } from '../../services/jobhub-api/JobFairConTrollerService';
 import { loadGLBModel } from '../../utils/ThreeJS/threeJSUtil';
 import ChooseTemplateJobFairContainer from '../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
-import JobFairLandingPageContainer from '../JobFairLandingPage/JobFairLandingPage.container';
 import JobFairParkMapComponent from '../../components/3D/JobFairParkMap/JobFairParkMap.component';
-import PublishJobFairContainer from '../PublishJobFairContainer/PublishJobFair.container';
+import OrganizeJobFairFormComponent from '../../components/forms/OrganizeJobFairForm/OrganizeJobFairForm.component';
 import React, { useEffect, useState } from 'react';
-import ScheduleJobFairFormContainer from '../forms/ScheduleJobFairForm/ScheduleJobFairForm.container';
 
 const { Step } = Steps;
 const OrganizeJobFairContainer = () => {
@@ -75,41 +69,26 @@ const OrganizeJobFairContainer = () => {
 
   const nextStepButtonActions = (step) => {
     switch (step) {
-      case 1:
-        return () => {
-          form
-            .validateFields()
-            .then(() => {
-              updateJobFairAtScheduleScreen(form.getFieldsValue(true));
-              setCurrentStep(currentStep + 1);
-            })
-            .catch(() => {
-              const errorsArray = form.getFieldsError();
-              for (const error of errorsArray) {
-                if (error.errors.length > 0) {
-                  form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
-                  break;
-                }
-              }
-            });
+      case 0:
+        return async () => {
+          await chooseLayoutForJobFair();
+          setCurrentStep(currentStep + 1);
         };
-      case 2:
-        return () => {
-          form
-            .validateFields()
-            .then(() => {
-              updateJobFairAtLandingPage(form.getFieldsValue(true));
-              setCurrentStep(currentStep + 1);
-            })
-            .catch(() => {
-              const errorsArray = form.getFieldsError();
-              for (const error of errorsArray) {
-                if (error.errors.length > 0) {
-                  form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
-                  break;
-                }
+      case 1:
+        return async () => {
+          try {
+            await form.validateFields();
+            await updateJobFairAtScheduleScreen(form.getFieldsValue(true));
+            setCurrentStep(currentStep + 1);
+          } catch (e) {
+            const errorsArray = form.getFieldsError();
+            for (const error of errorsArray) {
+              if (error.errors.length > 0) {
+                form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
+                break;
               }
-            });
+            }
+          }
         };
       case 4:
         return () => {
@@ -137,6 +116,47 @@ const OrganizeJobFairContainer = () => {
       });
     }
   };
+
+  const updateJobFairAtScheduleScreen = async (values) => {
+    const body = {
+      id: jobFairData?.id,
+      name: values.name,
+      decorateStartTime: convertToDateValue(values.decorateRange[0].format()),
+      decorateEndTime: convertToDateValue(values.decorateRange[1].format()),
+      publicEndTime: convertToDateValue(values.publicRange[0].format()),
+      publicStartTime: convertToDateValue(values.publicRange[1].format())
+    };
+    const res = await updateJobFairAPI(body);
+    if (res.status === 200) return true;
+  };
+
+  // eslint-disable-next-line no-unused-vars
+  const updateJobFairAtLandingPage = async (values) => {
+    const body = {
+      id: jobFairData?.id,
+      description: values.description,
+      hostName: values.hostName,
+      targetAttendant: values.targetAttendant
+    };
+    const res = await updateJobFairAPI(body);
+    if (res.status === 200) return true;
+  };
+
+  const chooseLayoutForJobFair = async () => {
+    if (jobFairData === undefined || layoutData.id === '') return;
+    const body = {
+      jobFairId: jobFairData.id,
+      layoutId: layoutData.id
+    };
+    try {
+      await pickLayoutForJobFair(body);
+    } catch (e) {
+      notification['error']({
+        message: 'Error is created'
+      });
+    }
+  };
+
   const stepComponentList = [
     <div>
       <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
@@ -148,14 +168,23 @@ const OrganizeJobFairContainer = () => {
     </div>,
     <>
       <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
-      <ScheduleJobFairFormContainer
-        form={form}
+      <OrganizeJobFairFormComponent
         onHandleNext={nextStepButtonActions(currentStep)}
         onHandlePrev={handleOnPrev(currentStep)}
+        form={form}
+        onFinish={updateJobFairAtScheduleScreen}
         onValueChange={onValueChange}
         isError={isError}
-        onFinish={updateJobFairAtScheduleScreen}
       />
+    </>,
+    <>
+      {jobFairData !== undefined ? (
+        <AssignEmployeeContainer
+          jobFairId={jobFairData.id}
+          onHandleNext={nextStepButtonActions(currentStep)}
+          onHandlePrev={handleOnPrev(currentStep)}
+        />
+      ) : null}
     </>,
     <>
       <JobFairLandingPageContainer

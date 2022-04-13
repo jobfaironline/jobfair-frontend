@@ -17,7 +17,6 @@ export const PATH = {
   //decorate booth
   DECORATE_BOOTH_PAGE: '/decorate-booth/:jobFairId/:companyBoothId',
   //choose booth page
-  CHOOSE_BOOTH_PAGE: '/choose-booth/:jobFairId',
   CONTRACTS_PAGE: '/contacts',
   PUBLICIZED_JOB_FAIR_LIST_PAGE: '/job-fair-list',
   HOME_PAGE: '/home',

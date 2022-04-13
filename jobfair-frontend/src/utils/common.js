@@ -141,3 +141,5 @@ export const handleStatusTag = (status) => {
       return <Tag color='orange'>{convertEnumToString(status)}</Tag>;
   }
 };
+
+export const difference = (array1, array2) => array1.filter((item) => array2.includes(item));
