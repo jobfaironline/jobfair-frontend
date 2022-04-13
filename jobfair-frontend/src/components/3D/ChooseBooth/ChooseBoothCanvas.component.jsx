@@ -1,4 +1,3 @@
-import { ArrowHelper } from '../ArrowHelper/ArrowHelper.component';
 import { BasicMesh } from '../ThreeJSBaseComponent/ChildMesh.component';
 import { CameraControls } from '../ThreeJSBaseComponent/CameraControls.component';
 import { Canvas } from '@react-three/fiber';

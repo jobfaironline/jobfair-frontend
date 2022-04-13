@@ -13,5 +13,5 @@ export const AssigmentType = [
     value: 2,
     label: 'Interviewee',
     name: 'INTERVIEWER'
-  },
-]
+  }
+];

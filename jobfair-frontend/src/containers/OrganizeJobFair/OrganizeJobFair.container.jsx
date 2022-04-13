@@ -1,5 +1,5 @@
 import './OrganizeJobFair.styles.scss';
-import { ChooseBoothPageContainer } from '../3D/ChooseBooth/ChooseBooth.container';
+import { AssignEmployeeContainer } from '../3D/AssignEmployee/AssignEmployee.container';
 import { Form, Steps, notification } from 'antd';
 import { convertToDateValue } from '../../utils/common';
 import { draftJobFairAPI, updateJobFairAPI } from '../../services/jobhub-api/JobFairConTrollerService';
@@ -43,7 +43,7 @@ const OrganizeJobFairContainer = () => {
           await chooseLayoutForJobFair();
           setCurrentStep(currentStep + 1);
         };
-      case 2:
+      case 1:
         return async () => {
           try {
             await form.validateFields();
@@ -132,13 +132,6 @@ const OrganizeJobFairContainer = () => {
       />
     </div>,
     <>
-      {jobFairData !== undefined ? <ChooseBoothPageContainer jobFairId={jobFairData.id} /> : null}
-      {/*<AssignEmployeeModalContainer
-        onHandleNext={nextStepButtonActions(currentStep)}
-        onHandlePrev={handleOnPrev(currentStep)}
-      />*/}
-    </>,
-    <>
       <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
       <OrganizeJobFairFormComponent
         onHandleNext={nextStepButtonActions(currentStep)}
@@ -148,6 +141,15 @@ const OrganizeJobFairContainer = () => {
         onValueChange={onValueChange}
         isError={isError}
       />
+    </>,
+    <>
+      {jobFairData !== undefined ? (
+        <AssignEmployeeContainer
+          jobFairId={jobFairData.id}
+          onHandleNext={nextStepButtonActions(currentStep)}
+          onHandlePrev={handleOnPrev(currentStep)}
+        />
+      ) : null}
     </>
   ];
 

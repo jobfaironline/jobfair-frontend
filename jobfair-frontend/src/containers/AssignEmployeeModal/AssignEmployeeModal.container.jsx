@@ -13,7 +13,7 @@ const { Option } = Select;
 const { Text } = Typography;
 
 export const AssignEmployeeModalContainer = (props) => {
-  const { boothId, handleCancel, jobFairId, setVisible } = props;
+  const { boothId, handleCancel, jobFairId, handleOk } = props;
   const [state, setState] = useState({
     data: undefined,
     targetKeys: undefined,
@@ -131,15 +131,16 @@ export const AssignEmployeeModalContainer = (props) => {
       duration: 2
     });
 
-    setVisible(false);
+    handleOk();
   };
 
   if (state.data === undefined || state.targetKeys === undefined) return null;
 
   return (
     <Modal title='Assign Employee' onOk={onOK} onCancel={handleCancel} width={1000} visible={true}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
         <TableTransfer
+          titles={[<Text level={3}>Available employee</Text>, <Text level={3}>Assigned employee</Text>]}
           dataSource={state.data}
           targetKeys={state.targetKeys}
           disabled={false}
@@ -151,7 +152,11 @@ export const AssignEmployeeModalContainer = (props) => {
           leftColumns={leftTableColumns}
           rightColumns={rightTableColumns}
         />
-        {isError ? <Text type='danger' style={{fontSize: "1rem", marginTop: "10px"}}>Please assign employee</Text> : null}
+        {isError ? (
+          <Text type='danger' style={{ fontSize: '1rem', marginTop: '10px' }}>
+            Please assign employee
+          </Text>
+        ) : null}
       </div>
     </Modal>
   );

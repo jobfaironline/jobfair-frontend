@@ -1,15 +1,15 @@
 import { AssignEmployeeBoothList } from '../../../components/customized-components/AssignEmployeeBoothList/AssignEmployeeBoothList.component';
 import { AssignEmployeeModalContainer } from '../../AssignEmployeeModal/AssignEmployeeModal.container';
 import { ChooseBoothCanvas } from '../../../components/3D/ChooseBooth/ChooseBoothCanvas.component';
+import { getAssigmentByJobFairBoothId } from '../../../services/jobhub-api/AssignmentControllerService';
 import { getJobFairBoothByJobFairId } from '../../../services/jobhub-api/JobFairBoothControllerService';
 import { getLayoutByJobFairId } from '../../../services/jobhub-api/LayoutControllerService';
 import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import React, { useEffect, useRef, useState } from 'react';
 import ReactLoading from 'react-loading';
-import SideBarComponent from '../../../components/commons/SideBar/SideBar.component';
 
-export const ChooseBoothPageContainer = (props) => {
-  const { jobFairId } = props;
+export const AssignEmployeeContainer = (props) => {
+  const { jobFairId, onHandleNext, onHandlePrev } = props;
   const [state, setState] = useState({
     glbMesh: undefined,
     boothDataForMesh: {},
@@ -22,10 +22,6 @@ export const ChooseBoothPageContainer = (props) => {
   const [selectionRef, setSelectionRef] = useState();
   const [hoverRef, setHoverRef] = useState();
   const boothMeshesRef = useRef([]);
-
-  const setModalVisible = (value) => {
-    setModalState((prevState) => ({ ...prevState, isVisible: value }));
-  };
 
   const onBoothClick = (boothId, meshName) => {
     const ref = boothMeshesRef?.current?.filter((meshRef) => meshRef?.current?.name === meshName)[0];
@@ -45,11 +41,28 @@ export const ChooseBoothPageContainer = (props) => {
   const onBoothMouseOut = () => {
     setHoverRef(undefined);
   };
+  const handleModalOk = async () => {
+    const data = await fetchBoothAssigmentData();
+    setSelectionRef(undefined);
+    setModalState((prevState) => ({ ...prevState, boothId: '', isVisible: false }));
+    setState((prevState) => ({ ...prevState, boothData: data }));
+  };
+
+  const fetchBoothAssigmentData = async () => {
+    const data = await getJobFairBoothByJobFairId(jobFairId).then((response) => response.data);
+    const assignmentPromises = [];
+    for (const booth of data) {
+      const promise = getAssigmentByJobFairBoothId(booth.id).then((response) => response.data);
+      assignmentPromises.push(promise);
+    }
+    const assignments = await Promise.all(assignmentPromises);
+    for (let i = 0; i < assignments.length; i++) data[i].assignments = assignments[i] === '' ? [] : assignments[i];
+    return data;
+  };
 
   useEffect(async () => {
-    const data = await getJobFairBoothByJobFairId(jobFairId).then((response) => response.data);
+    const data = await fetchBoothAssigmentData();
     const layoutData = await getLayoutByJobFairId(jobFairId).then((response) => response.data);
-
     const url = layoutData.url;
 
     const glb = await loadGLBModel(url);
@@ -86,20 +99,18 @@ export const ChooseBoothPageContainer = (props) => {
         <AssignEmployeeModalContainer
           boothId={modalState.boothId}
           handleCancel={handleCancel}
+          handleOk={handleModalOk}
           jobFairId={jobFairId}
-          setVisible={setModalVisible}
         />
       ) : null}
-      <SideBarComponent>
-        {state.boothDataForMesh.length === 0 ? null : (
-          <AssignEmployeeBoothList
-            data={state.boothData}
-            onHoverIn={onBoothMouseOver}
-            onHoverOut={onBoothMouseOut}
-            onClick={onBoothClick}
-          />
-        )}
-      </SideBarComponent>
+      <AssignEmployeeBoothList
+        onHandleNext={onHandleNext}
+        onHandlePrev={onHandlePrev}
+        data={state.boothData}
+        onHoverIn={onBoothMouseOver}
+        onHoverOut={onBoothMouseOut}
+        onClick={onBoothClick}
+      />
       <div style={{ width: '75%' }}>
         <ChooseBoothCanvas
           mesh={state.glbMesh}
