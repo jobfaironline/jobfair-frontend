@@ -34,7 +34,7 @@ const JobFairListEmployeeContainer = (props) => {
   };
 
   const loadMoreData = () => {
-    //TODO: fetch data later
+    //TODO: fetch API later
     // if (loading) return;
     //
     // setLoading(true);

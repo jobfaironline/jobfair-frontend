@@ -1,9 +1,21 @@
 import { CallAPI } from '../axiosBase';
 import { JOB_FAIR_END_POINT } from '../../constants/Endpoints/jobhub-api/JobFairConTrollerEndpoint';
 
-export const getJobFairAPI = (name, direction = 'ASC', offset = '0', pageSize = '10', sortBy = 'createTime') =>
+export const getJobFairAPI = (direction = 'ASC', offset = '0', pageSize = '10', sortBy = 'createTime') =>
   CallAPI(
     `${JOB_FAIR_END_POINT}`,
+    'GET',
+    {},
+    {
+      direction,
+      offset,
+      pageSize,
+      sortBy
+    }
+  );
+export const searchJobFairAPI = (name, direction = 'ASC', offset = '0', pageSize = '10', sortBy = 'createTime') =>
+  CallAPI(
+    JOB_FAIR_END_POINT,
     'GET',
     {},
     {
@@ -17,3 +29,4 @@ export const getJobFairAPI = (name, direction = 'ASC', offset = '0', pageSize = 
 
 export const draftJobFairAPI = (body) => CallAPI(JOB_FAIR_END_POINT, 'POST', body, {});
 export const updateJobFairAPI = (body) => CallAPI(JOB_FAIR_END_POINT, 'PUT', body, {});
+export const publishJobFairAPI = (jobFairId) => CallAPI(`${JOB_FAIR_END_POINT}/publish/${jobFairId}`, 'POST', {}, {});

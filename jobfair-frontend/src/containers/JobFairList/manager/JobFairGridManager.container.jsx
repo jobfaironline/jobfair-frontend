@@ -1,24 +1,30 @@
 import { Input, Spin } from 'antd';
-import { getJobFairAPI } from '../../../services/jobhub-api/JobFairConTrollerService';
+import { getJobFairAPI, searchJobFairAPI } from '../../../services/jobhub-api/JobFairConTrollerService';
 import JobFairGridComponent from '../../../components/customized-components/JobFairList/JobFairGrid.component';
 import React, { useEffect, useState } from 'react';
 
 const JobFairGridManagerContainer = () => {
   const [data, setData] = useState();
 
-  const fetchData = async (searchValue) => {
-    const res = await getJobFairAPI(searchValue);
+  const fetchData = async () => {
+    const res = await getJobFairAPI();
+    const content = res.data.content;
+    setData(content);
+  };
+
+  const searchJobFair = async (searchValue) => {
+    const res = await searchJobFairAPI(searchValue);
     const content = res.data.content;
     setData(content);
   };
 
   useEffect(() => {
-    fetchData('');
+    fetchData();
   }, []);
 
   const handleOnSearch = (e) => {
     const searchValue = e.target.value;
-    fetchData(searchValue);
+    searchJobFair(searchValue);
   };
 
   return data ? (

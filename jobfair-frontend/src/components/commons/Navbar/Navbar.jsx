@@ -2,6 +2,9 @@
 import './Navbar.styles.scss';
 import { Avatar, Button, Dropdown, Menu, Typography } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
+import { UserOutlined } from '@ant-design/icons';
+import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
+import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 
 import {
@@ -11,9 +14,6 @@ import {
   PATH_COMPANY_EMPLOYEE,
   PATH_COMPANY_MANAGER
 } from '../../../constants/Paths/Path';
-import { UserOutlined } from '@ant-design/icons';
-import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
-import { useDispatch, useSelector } from 'react-redux';
 
 export const AttendantMenu = [
   <Menu.Item key={PATH_ATTENDANT.PROFILE_PAGE}>

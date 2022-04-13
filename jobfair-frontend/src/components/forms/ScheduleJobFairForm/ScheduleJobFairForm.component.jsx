@@ -1,4 +1,4 @@
-import './OrganizeJobFairForm.style.scss';
+import './ScheduleJobFairForm.style.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Button, DatePicker, Divider, Form, Input, Typography } from 'antd';
@@ -11,7 +11,7 @@ import SideBarComponent from '../../commons/SideBar/SideBar.component';
 
 const { RangePicker } = DatePicker;
 const { Title } = Typography;
-const OrganizeJobFairFormComponent = ({ form, onHandleNext, onHandlePrev, onFinish, isError, onValueChange }) => (
+const ScheduleJobFairFormComponent = ({ form, onHandleNext, onHandlePrev, onFinish, isError, onValueChange }) => (
   <div className={'organize-job-fair-form'}>
     <SideBarComponent>
       <a className={'prev-button'} type='primary' onClick={onHandlePrev}>
@@ -77,4 +77,4 @@ const OrganizeJobFairFormComponent = ({ form, onHandleNext, onHandlePrev, onFini
   </div>
 );
 
-export default OrganizeJobFairFormComponent;
+export default ScheduleJobFairFormComponent;

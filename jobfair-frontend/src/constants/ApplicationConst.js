@@ -13,5 +13,6 @@ export const USER_STORAGE = 'user';
 export const COMPANY_ID_DEMO = 'fe99c965-3dc7-4391-9665-1c7c72cce981';
 export const DateFormat = 'YYYY/MM/DD';
 export const HourMinuteDateFormat = 'YYYY-MM-DD HH:mm';
+export const CustomDateFormat = 'DD/MM/YYYY HH:mm';
 
 export const MinimumDateOfBirth = '01 Jan 2004'; //18 years old
