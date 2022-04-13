@@ -11,7 +11,7 @@ const PublishJobFairComponent = ({ onHandlePrev, onFinish, jobFairData, statisti
   <div>
     <Card
       title='Job fair summary detail'
-      style={{ width: '35rem', height: '45rem', marginTop: '5rem', marginLeft: '43rem' }}>
+      style={{ width: '35rem', height: '45rem', marginTop: '5rem', marginLeft: '45rem', border: 'none' }}>
       <div className='publish-job-fair'>
         {onHandlePrev ? (
           <a className={'prev-button'} type='primary' onClick={onHandlePrev}>
@@ -21,10 +21,10 @@ const PublishJobFairComponent = ({ onHandlePrev, onFinish, jobFairData, statisti
         ) : null}
         <Steps direction='vertical'>
           <Step
-            title='Choose job fair template'
+            title='Job fair thumbnail'
             description={
-              <div style={{ width: '100px', height: '200px' }}>
-                <img src={jobFairData.thumbnailUrl} />
+              <div>
+                <img src={jobFairData.thumbnailUrl} style={{ width: '300px' }} />
               </div>
             }
             status='finish'
