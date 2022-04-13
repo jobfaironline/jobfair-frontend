@@ -13,10 +13,12 @@ const PublishJobFairComponent = ({ onHandlePrev, onFinish, jobFairData, statisti
       title='Job fair summary detail'
       style={{ width: '35rem', height: '45rem', marginTop: '5rem', marginLeft: '43rem' }}>
       <div className='publish-job-fair'>
-        <a className={'prev-button'} type='primary' onClick={onHandlePrev}>
-          <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '10px' }} />
-          <span>Back to landing page</span>
-        </a>
+        {onHandlePrev ? (
+          <a className={'prev-button'} type='primary' onClick={onHandlePrev}>
+            <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '10px' }} />
+            <span>Back to landing page</span>
+          </a>
+        ) : null}
         <Steps direction='vertical'>
           <Step
             title='Choose job fair template'
@@ -92,13 +94,19 @@ const PublishJobFairComponent = ({ onHandlePrev, onFinish, jobFairData, statisti
             status='finish'
           />
         </Steps>
-        <div className={'button-container'}>
-          <Popconfirm title='Are you sure to publish this job fair?' onConfirm={onFinish} okText='Yes' cancelText='No'>
-            <Button type='primary' className={'confirm-button'}>
-              Publish job fair
-            </Button>
-          </Popconfirm>
-        </div>
+        {onFinish ? (
+          <div className={'button-container'}>
+            <Popconfirm
+              title='Are you sure to publish this job fair?'
+              onConfirm={onFinish}
+              okText='Yes'
+              cancelText='No'>
+              <Button type='primary' className={'confirm-button'}>
+                Publish job fair
+              </Button>
+            </Popconfirm>
+          </div>
+        ) : null}
       </div>
     </Card>
   </div>

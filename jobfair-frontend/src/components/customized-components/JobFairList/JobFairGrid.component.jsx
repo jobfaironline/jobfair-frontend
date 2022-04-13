@@ -4,7 +4,7 @@ import React from 'react';
 
 const { Text } = Typography;
 const JobFairGridComponent = (props) => {
-  const { data } = props;
+  const { data, onClick } = props;
   return (
     <List
       grid={{
@@ -13,7 +13,10 @@ const JobFairGridComponent = (props) => {
       dataSource={data}
       renderItem={(item) => (
         <List.Item>
-          <Card hoverable={true} style={{ width: 300 }} cover={<img src={item.thumbnailUrl} alt={item.name} />}>
+          <Card
+            hoverable={true}
+            style={{ width: 300 }}
+            cover={<img src={item.thumbnailUrl} alt={item.name} onClick={() => onClick(item.id)} />}>
             <div style={{ display: 'flex' }}>
               <div>
                 <Card.Meta title={item.name} />

@@ -19,7 +19,7 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import FAQPage from '../pages/FAQPage/FAQPage';
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage';
 import HomePage from '../pages/HomePage';
-import JobFairDetailPage from '../pages/JobFairDetailPage/JobFairDetailPage-remove';
+import JobFairDetailPage from '../pages/JobFairDetailPage/JobFairDetailPage';
 import JobFairGridManagerPage from '../pages/JobFairListPage/JobFairGridManagerPage';
 import JobFairListPage from '../pages/JobFairListPage/JobFairListPage';
 import JobFairTablePage from '../pages/JobFairTablePage/JobFairTablePage';
