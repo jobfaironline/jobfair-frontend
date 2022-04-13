@@ -22,6 +22,7 @@ const JobFairLandingPageContainer = ({ onFinish, form, onHandleNext, onHandlePre
       }
       const formData = new FormData();
       formData.append('file', info.file);
+      //TODO: change API please
       await uploadThumbnailAPI(formData, templateId);
       setIsError(false);
       notification['success']({

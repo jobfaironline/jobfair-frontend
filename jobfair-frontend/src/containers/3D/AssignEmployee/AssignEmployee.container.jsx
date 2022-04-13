@@ -49,7 +49,10 @@ export const AssignEmployeeContainer = (props) => {
   };
 
   const fetchBoothAssigmentData = async () => {
-    const data = await getJobFairBoothByJobFairId(jobFairId).then((response) => response.data);
+    let data = await getJobFairBoothByJobFairId(jobFairId).then((response) => response.data);
+
+    data = data.sort((booth1, booth2) => booth1.booth.name.localeCompare(booth2.booth.name));
+
     const assignmentPromises = [];
     for (const booth of data) {
       const promise = getAssigmentByJobFairBoothId(booth.id).then((response) => response.data);

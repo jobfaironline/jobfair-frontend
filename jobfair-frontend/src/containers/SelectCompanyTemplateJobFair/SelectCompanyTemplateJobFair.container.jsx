@@ -1,11 +1,13 @@
 import '../ChooseTemplateJobFairSideBar/ChooseTemplateJobFairSideBar.style.scss';
 import { Button, notification } from 'antd';
+import { getBase64 } from '../../utils/common';
 import {
   getCompanyLayoutAPI,
   uploadTemplateAPI,
-  uploadTemplateMetaDataAPI
+  uploadTemplateMetaDataAPI,
+  uploadThumbnailAPI
 } from '../../services/jobhub-api/LayoutControllerService';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SelectJobFairTemplateComponent from '../../components/customized-components/SelectJobFairTemplate/SelectJobFairTemplate.component';
 import UploadModalContainer from '../UploadModal/UploadModal.container';
 
@@ -13,14 +15,17 @@ const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, 
   const [data, setData] = useState([]);
   const [forceRerenderState, setForceRerenderState] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [thumbnailUrl, setThumbnailUrl] = useState();
+  const [isUploadGlb, setIsUploadGlb] = useState(false);
+  const glbFormData = useRef(new FormData());
+  const thumbnailFormData = useRef(new FormData());
 
-  const formData = new FormData();
   const fetchData = async () => {
     const res = await getCompanyLayoutAPI();
     setData(res.data);
   };
 
-  const uploadProps = {
+  const glbUploadProps = {
     name: 'file',
     beforeUpload: () => false,
     onChange: async (info) => {
@@ -31,9 +36,30 @@ const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, 
         });
         return;
       }
-      formData.append('file', info.file);
+      glbFormData.current.append('file', info.file);
+
+      if (info.fileList.length > 0) setIsUploadGlb(true);
     },
-    showUploadList: true
+    onRemove: async () => {
+      setIsUploadGlb(false);
+    },
+    showUploadList: true,
+    maxCount: 1
+  };
+
+  const thumbnailUploadProps = {
+    name: 'file',
+    beforeUpload: () => false,
+    onChange: async (info) => {
+      const url = await getBase64(info.file);
+      setThumbnailUrl(url);
+      thumbnailFormData.current.append('file', info.file);
+    },
+    onRemove: async () => {
+      setThumbnailUrl(undefined);
+    },
+    showUploadList: true,
+    maxCount: 1
   };
 
   const onFinish = async (values) => {
@@ -42,7 +68,8 @@ const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, 
       description: values.description
     };
     const res = await uploadTemplateMetaDataAPI(body);
-    await uploadTemplateAPI(res.data.id, formData);
+    await uploadTemplateAPI(res.data.id, glbFormData.current);
+    await uploadThumbnailAPI(res.data.id, thumbnailFormData.current);
     notification['success']({
       message: `upload successfully`
     });
@@ -51,12 +78,24 @@ const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, 
     setForceRerenderState((prevState) => !prevState);
   };
 
+  const onCancel = () => {
+    setVisible(false);
+  };
+
   useEffect(() => {
     fetchData();
   }, [forceRerenderState]);
   return (
     <div>
-      <UploadModalContainer uploadProps={uploadProps} visible={visible} setVisible={setVisible} onFinish={onFinish} />
+      <UploadModalContainer
+        glbUploadProps={glbUploadProps}
+        thumbnailUploadProps={thumbnailUploadProps}
+        visible={visible}
+        onFinish={onFinish}
+        onCancel={onCancel}
+        thumbnailUrl={thumbnailUrl}
+        isUploadGlb={isUploadGlb}
+      />
       <SelectJobFairTemplateComponent listData={data} handleLoad3DMap={handleLoad3DMap}>
         <div className={'button-container'}>
           <Button className={'confirm-button'} type='primary' onClick={onHandleNext} disabled={templateId === ''}>

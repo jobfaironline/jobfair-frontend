@@ -23,7 +23,7 @@ const SelectJobFairTemplateComponent = (props) => {
             <Card
               hoverable={true}
               style={{ width: 300, margin: '10px' }}
-              cover={<img src={fakeThumbnail} alt={item.name} />}
+              cover={<img src={item.thumbnailUrl ? item.thumbnailUrl : fakeThumbnail} alt={item.name} />}
               onClick={() => {
                 handleLoad3DMap(item.url, item.id);
               }}>

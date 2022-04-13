@@ -1,11 +1,11 @@
 import './AssignEmployeBoothList.style.scss';
 import { Button, Card, Divider, List, Skeleton, Typography } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCircleCheck, faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import React from 'react';
 import SideBarComponent from '../../commons/SideBar/SideBar.component';
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 export const AssignEmployeeBoothList = (props) => {
   const { data, onHoverIn, onHoverOut, onClick, onHandlePrev, onHandleNext } = props;
@@ -38,11 +38,19 @@ export const AssignEmployeeBoothList = (props) => {
                 onClick={() => {
                   onClick(item.id, item.booth.name);
                 }}>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Card.Meta title={item.booth.name} />
-                  {item.assignments.length > 0 ? (
-                    <FontAwesomeIcon icon={faCircleCheck} style={{ marginLeft: 'auto', color: 'green' }} />
-                  ) : null}
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ display: 'flex', alignItems: 'stretch' }}>
+                    <Text style={{ marginRight: '10px' }}>{`Booth name:`}</Text>
+                    <Card.Meta title={item.booth.name} />
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ marginRight: '10px' }}>{`Has assigned employee: `}</Text>
+                    {item.assignments.length > 0 ? (
+                      <FontAwesomeIcon icon={faCircleCheck} style={{ color: 'green' }} />
+                    ) : (
+                      <FontAwesomeIcon icon={faXmarkCircle} style={{ color: 'red' }} />
+                    )}
+                  </div>
                 </div>
               </Card>
             )}

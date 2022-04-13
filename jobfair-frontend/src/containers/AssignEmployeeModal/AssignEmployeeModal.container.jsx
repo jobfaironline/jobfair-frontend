@@ -126,8 +126,7 @@ export const AssignEmployeeModalContainer = (props) => {
     await Promise.all(assignPromise);
 
     notification['success']({
-      message: `Assign success`,
-      description: `Assign success`,
+      message: `Assign successfully`,
       duration: 2
     });
 
