@@ -1,4 +1,3 @@
-import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
@@ -83,9 +82,6 @@ const AppRouter = () => (
       </Route>
       <Route path={PATH_ADMIN.JOB_FAIR_LIST_PAGE} exact>
         <JobFairTablePage />
-      </Route>
-      <Route path={PATH.CHOOSE_BOOTH_PAGE} exact>
-        <ChooseBoothPage />
       </Route>
       <Route path={PATH.RESULT_SUCCESS_PAGE} exact>
         <ResultSuccessPage />
