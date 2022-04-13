@@ -1,12 +1,22 @@
 import { getBase64 } from '../../utils/common';
+import { getCompanyProfileAPI } from '../../services/jobhub-api/CompanyControllerService';
 import { notification } from 'antd';
 import { uploadJobFairThumbnailAPI } from '../../services/jobhub-api/JobFairControllerService';
+import { useSelector } from 'react-redux';
 import JobFairLandingPageFormComponent from '../../components/forms/JobFairLandingPageForm/JobFairLandingPageForm.component';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const JobFairLandingPageContainer = ({ onFinish, form, onHandleNext, onHandlePrev, jobFairId }) => {
   const [isError, setIsError] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState();
+  const [companyInformation, setCompanyInformation] = useState();
+
+  const companyId = useSelector((state) => state.authentication.user.companyId);
+
+  useEffect(async () => {
+    const companyInformation = await getCompanyProfileAPI(companyId).then((response) => response.data);
+    setCompanyInformation(companyInformation);
+  }, []);
 
   const uploadProps = {
     name: 'file',
@@ -31,7 +41,7 @@ const JobFairLandingPageContainer = ({ onFinish, form, onHandleNext, onHandlePre
     },
     showUploadList: !isError
   };
-  return (
+  return companyInformation ? (
     <JobFairLandingPageFormComponent
       form={form}
       onFinish={onFinish}
@@ -39,8 +49,9 @@ const JobFairLandingPageContainer = ({ onFinish, form, onHandleNext, onHandlePre
       onHandlePrev={onHandlePrev}
       uploadProps={uploadProps}
       thumbnailUrl={thumbnailUrl}
+      companyInformation={companyInformation}
     />
-  );
+  ) : null;
 };
 
 export default JobFairLandingPageContainer;

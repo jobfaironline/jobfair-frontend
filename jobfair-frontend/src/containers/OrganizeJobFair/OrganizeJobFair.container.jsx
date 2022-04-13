@@ -1,6 +1,7 @@
 import './OrganizeJobFair.styles.scss';
 import { AssignEmployeeContainer } from '../3D/AssignEmployee/AssignEmployee.container';
 import { Form, Steps, notification } from 'antd';
+import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { convertToDateValue } from '../../utils/common';
 import {
   draftJobFairAPI,
@@ -9,6 +10,7 @@ import {
 } from '../../services/jobhub-api/JobFairControllerService';
 import { loadGLBModel } from '../../utils/ThreeJS/threeJSUtil';
 import { pickLayoutForJobFair } from '../../services/jobhub-api/LayoutControllerService';
+import { useHistory } from 'react-router-dom';
 import ChooseTemplateJobFairContainer from '../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
 import JobFairLandingPageContainer from '../JobFairLandingPage/JobFairLandingPage.container';
 import JobFairParkMapComponent from '../../components/3D/JobFairParkMap/JobFairParkMap.component';
@@ -27,6 +29,7 @@ const OrganizeJobFairContainer = () => {
     id: ''
   });
   const [isError, setIsError] = useState(true);
+  const history = useHistory();
 
   const handleLoad3DMap = async (url, id) => {
     const glb = await loadGLBModel(url);
@@ -116,7 +119,14 @@ const OrganizeJobFairContainer = () => {
         };
       case 4:
         return async () => {
-          await publishJobFairEvent();
+          try {
+            await publishJobFairEvent();
+            history.push(PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE);
+          } catch (e) {
+            notification['error']({
+              message: 'Error is created'
+            });
+          }
         };
       default:
         return () => setCurrentStep(currentStep + 1);
@@ -201,7 +211,7 @@ const OrganizeJobFairContainer = () => {
       {jobFairData !== undefined ? (
         <PublishJobFairContainer
           jobFairId={jobFairData.id}
-          onFinish={publishJobFairEvent}
+          onFinish={nextStepButtonActions(currentStep)}
           onHandlePrev={handleOnPrev(currentStep)}
         />
       ) : null}

@@ -31,9 +31,6 @@ export const CompanyManagerMenu = [
   <Menu.Item key={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>Employee Management</Link>
   </Menu.Item>,
-  <Menu.Item key={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>
-    <Link to={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>Register to job fair</Link>
-  </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}>Job Position Management</Link>
   </Menu.Item>,
@@ -98,12 +95,6 @@ const NavigationBar = () => {
           </div>
         </Link>
         <Menu className='menu' mode='horizontal'>
-          <Menu.Item key={PATH.CONTRACTS_PAGE}>
-            <Link to={PATH.CONTRACTS_PAGE}>Contact</Link>
-          </Menu.Item>
-          <Menu.Item key={PATH.FAQ_PAGE}>
-            <Link to={PATH.FAQ_PAGE}>FAQ</Link>
-          </Menu.Item>
           {/* {!role ? (
             <Menu.Item key={PATH.LOGIN_PAGE}>
               <Link to={PATH.LOGIN_PAGE}>Log In</Link>

@@ -93,11 +93,7 @@ const PublishJobFairComponent = ({ onHandlePrev, onFinish, jobFairData, statisti
           />
         </Steps>
         <div className={'button-container'}>
-          <Popconfirm
-            title='Are you sure to publish this job fair?'
-            onConfirm={() => onFinish(jobFairData.id)}
-            okText='Yes'
-            cancelText='No'>
+          <Popconfirm title='Are you sure to publish this job fair?' onConfirm={onFinish} okText='Yes' cancelText='No'>
             <Button type='primary' className={'confirm-button'}>
               Publish job fair
             </Button>

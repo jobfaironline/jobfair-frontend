@@ -12,9 +12,8 @@ const UploadModalContainer = ({
   thumbnailUploadProps,
   thumbnailUrl,
   isUploadGlb
-}) => {
-  console.log(isUploadGlb)
-  return ( <Modal visible={visible} title={'Upload your template as .glb file'} footer={null} onCancel={onCancel} centered>
+}) => (
+  <Modal visible={visible} title={'Upload your template as .glb file'} footer={null} onCancel={onCancel} centered>
     <Form
       requiredMark='required'
       autoComplete='off'
@@ -74,8 +73,7 @@ const UploadModalContainer = ({
         </Button>
       </Form.Item>
     </Form>
-  </Modal>)
-}
-
+  </Modal>
+);
 
 export default UploadModalContainer;

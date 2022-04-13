@@ -9,7 +9,15 @@ import UploadComponent from '../../commons/UploadComponent/Upload.component';
 
 const { Title } = Typography;
 const { TextArea } = Input;
-const JobFairLandingPageFormComponent = ({ form, onFinish, onHandleNext, onHandlePrev, uploadProps, thumbnailUrl }) => (
+const JobFairLandingPageFormComponent = ({
+  form,
+  onFinish,
+  onHandleNext,
+  onHandlePrev,
+  uploadProps,
+  thumbnailUrl,
+  companyInformation
+}) => (
   <div className='landing-page-form'>
     <SideBarComponent>
       <a className={'prev-button'} type='primary' onClick={onHandlePrev}>
@@ -20,6 +28,7 @@ const JobFairLandingPageFormComponent = ({ form, onFinish, onHandleNext, onHandl
         <Title>Schedule job fair event</Title>
       </Divider>
       <Form
+        initialValues={{ hostName: companyInformation.name }}
         form={form}
         requiredMark='required'
         autoComplete='off'
@@ -44,11 +53,11 @@ const JobFairLandingPageFormComponent = ({ form, onFinish, onHandleNext, onHandl
           rules={OrganizeJobFairValidation.hostname}
           style={{
             display: 'inline-block',
-            width: '50%',
+            width: '70%',
             marginRight: '1rem',
             marginLeft: '1rem'
           }}>
-          <Input placeholder='Host name' />
+          <Input placeholder='Host name' defaultValue={companyInformation.name} />
         </Form.Item>
         <Form.Item
           label='Target attendant'
