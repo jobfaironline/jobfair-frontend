@@ -75,6 +75,8 @@ export const convertEnumToString = (data) => {
   return data;
 };
 
+export const convertToUTCString = (data) => new Date(data).toUTCString();
+
 //
 export const handleCreateListEmailFromListAccount = (arr) => {
   const listEmail = [];

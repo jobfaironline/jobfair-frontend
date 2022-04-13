@@ -10,7 +10,7 @@ const { TextArea } = Input;
 const JobFairLandingPageFormComponent = ({ form, onFinish, onHandleNext, onHandlePrev, uploadProps }) => (
   <Card
     title='Create job fair landing page'
-    style={{ width: '35rem', height: '40rem', marginTop: '10rem', marginLeft: '43rem' }}>
+    style={{ width: '35rem', height: '45rem', marginTop: '5rem', marginLeft: '43rem' }}>
     <div className='landing-page-form'>
       <a className={'prev-button'} type='primary' onClick={onHandlePrev}>
         <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '10px' }} />

@@ -29,3 +29,4 @@ export const searchJobFairAPI = (name, direction = 'ASC', offset = '0', pageSize
 
 export const draftJobFairAPI = (body) => CallAPI(JOB_FAIR_END_POINT, 'POST', body, {});
 export const updateJobFairAPI = (body) => CallAPI(JOB_FAIR_END_POINT, 'PUT', body, {});
+export const publishJobFairAPI = (jobFairId) => CallAPI(`${JOB_FAIR_END_POINT}/publish/${jobFairId}`, 'POST', {}, {});

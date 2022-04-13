@@ -1,4 +1,4 @@
-import '../../components/customized-components/ChooseTemplateJobFairSideBar/ChooseTemplateJobFairSideBar.style.scss';
+import '../ChooseTemplateJobFairSideBar/ChooseTemplateJobFairSideBar.style.scss';
 import { Button } from 'antd';
 import { getTemplateLayoutAPI } from '../../services/jobhub-api/TemplateControllerService';
 import React, { useEffect, useState } from 'react';

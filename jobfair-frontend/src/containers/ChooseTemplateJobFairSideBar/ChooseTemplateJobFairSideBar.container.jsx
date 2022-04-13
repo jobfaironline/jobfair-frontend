@@ -2,13 +2,13 @@ import './ChooseTemplateJobFairSideBar.style.scss';
 
 import { Divider, Tabs, Typography } from 'antd';
 import React from 'react';
-import SelectCompanyTemplateJobFairContainer from '../../../containers/SelectCompanyTemplateJobFair/SelectCompanyTemplateJobFair.container';
-import SelectDefaultTemplateJobFairContainer from '../../../containers/SelectDefaultTemplateJobFair/SelectDefaultTemplateJobFair.container';
+import SelectCompanyTemplateJobFairContainer from '../SelectCompanyTemplateJobFair/SelectCompanyTemplateJobFair.container';
+import SelectDefaultTemplateJobFairContainer from '../SelectDefaultTemplateJobFair/SelectDefaultTemplateJobFair.container';
 
 const { TabPane } = Tabs;
 const { Title } = Typography;
-const ChooseTemplateJobFairSideBarComponent = (props) => {
-  const { onHandleNext, handleLoad3DMap, templateId, setVisible } = props;
+const ChooseTemplateJobFairSideBarContainer = (props) => {
+  const { onHandleNext, handleLoad3DMap, templateId, setVisible, visible } = props;
   return (
     <>
       <Divider size='small' plain>
@@ -32,6 +32,7 @@ const ChooseTemplateJobFairSideBarComponent = (props) => {
                 onHandleNext={onHandleNext}
                 templateId={templateId}
                 setVisible={setVisible}
+                visible={visible}
               />
             </div>
           </TabPane>
@@ -40,4 +41,4 @@ const ChooseTemplateJobFairSideBarComponent = (props) => {
     </>
   );
 };
-export default ChooseTemplateJobFairSideBarComponent;
+export default ChooseTemplateJobFairSideBarContainer;

@@ -1,11 +1,16 @@
 import './OrganizeJobFair.styles.scss';
 import { Form, Steps, notification } from 'antd';
 import { convertToDateValue } from '../../utils/common';
-import { draftJobFairAPI, updateJobFairAPI } from '../../services/jobhub-api/JobFairConTrollerService';
+import {
+  draftJobFairAPI,
+  publishJobFairAPI,
+  updateJobFairAPI
+} from '../../services/jobhub-api/JobFairConTrollerService';
 import { loadGLBModel } from '../../utils/ThreeJS/threeJSUtil';
 import ChooseTemplateJobFairContainer from '../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
 import JobFairLandingPageContainer from '../JobFairLandingPage/JobFairLandingPage.container';
 import JobFairParkMapComponent from '../../components/3D/JobFairParkMap/JobFairParkMap.component';
+import PublishJobFairContainer from '../PublishJobFairContainer/PublishJobFair.container';
 import React, { useEffect, useState } from 'react';
 import ScheduleJobFairFormContainer from '../forms/ScheduleJobFairForm/ScheduleJobFairForm.container';
 
@@ -59,6 +64,15 @@ const OrganizeJobFairContainer = () => {
     if (res.status === 200) return true;
   };
 
+  const publishJobFairEvent = async () => {
+    const res = await publishJobFairAPI(jobFairData?.id);
+    if (res.status === 200) {
+      notification['success']({
+        message: 'Publish job fair successfully'
+      });
+    }
+  };
+
   const nextStepButtonActions = (step) => {
     switch (step) {
       case 1:
@@ -96,6 +110,10 @@ const OrganizeJobFairContainer = () => {
                 }
               }
             });
+        };
+      case 4:
+        return () => {
+          publishJobFairEvent(form.getFieldsValue(true));
         };
       default:
         return () => setCurrentStep(currentStep + 1);
@@ -147,7 +165,14 @@ const OrganizeJobFairContainer = () => {
         onFinish={updateJobFairAtLandingPage}
       />
     </>,
-    <>screen 5</>
+    <>
+      <PublishJobFairContainer
+        data={form.getFieldsValue(true)}
+        onFinish={publishJobFairEvent}
+        onHandlePrev={handleOnPrev(currentStep)}
+        templateId={layoutData.id}
+      />
+    </>
   ];
 
   return (
