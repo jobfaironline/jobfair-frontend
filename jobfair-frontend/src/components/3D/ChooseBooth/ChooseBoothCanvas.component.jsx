@@ -11,8 +11,17 @@ import { Stats } from '@react-three/drei';
 import React, { Fragment, useState } from 'react';
 
 export const ChooseBoothCanvas = (props) => {
-  const { mesh, boothData, onClick, selectionRef, onCompanyGroundPointerOver, onCompanyGroundPointerOut, hoverRef, boothMeshesRef } =
-    props;
+  const {
+    mesh,
+    boothData,
+    onClick,
+    selectionRef,
+    onCompanyGroundPointerOver,
+    onCompanyGroundPointerOut,
+    hoverRef,
+    boothMeshesRef
+  } = props;
+
   const [skyType, setSkyType] = useState(SkyType.Morning);
 
   const onChangeSkyType = (value) => {
@@ -62,11 +71,6 @@ export const ChooseBoothCanvas = (props) => {
             }
             return <BasicMesh key={childMesh.uuid} mesh={childMesh} />;
           })}
-          {/*{mesh.children.map((childMesh) => {
-            if (childMesh.name.includes('company') && boothData[childMesh.name] !== undefined)
-              return <ArrowHelper origin={childMesh.position} color={0x32a852} length={20} distance={23} />;
-            return null;
-          })}*/}
         </group>
         <EffectComposer multisampling={8} autoClear={false}>
           <Outline

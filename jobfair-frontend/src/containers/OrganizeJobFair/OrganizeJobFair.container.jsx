@@ -133,7 +133,7 @@ const OrganizeJobFairContainer = () => {
     </div>,
     <>
       {jobFairData !== undefined ? <ChooseBoothPageContainer jobFairId={jobFairData.id} /> : null}
-      {/*<AssignEmployeeContainer
+      {/*<AssignEmployeeModalContainer
         onHandleNext={nextStepButtonActions(currentStep)}
         onHandlePrev={handleOnPrev(currentStep)}
       />*/}

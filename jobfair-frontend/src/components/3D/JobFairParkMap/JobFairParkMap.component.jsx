@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import { SkyComponent, SkyType } from '../ThreeJSBaseComponent/Sky.component';
 import { SkyTypeSelect } from '../ThreeJSBaseComponent/SelectSkyType.component';
 import React, { useState } from 'react';
+import {Stats} from "@react-three/drei";
 
 const BoothMesh = React.forwardRef((props, ref) => {
   const { mesh, onclick } = props;
@@ -46,6 +47,7 @@ const JobFairParkMapComponent = (props) => {
           ))}
         </group>
       </Canvas>
+      <Stats></Stats>
     </>
   );
 };

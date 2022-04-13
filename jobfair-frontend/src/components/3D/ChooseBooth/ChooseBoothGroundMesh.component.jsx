@@ -39,7 +39,7 @@ export const ChooseBoothGroundMesh = (props) => {
       }}
       onClick={() => {
         // eslint-disable-next-line no-unused-expressions
-        isAvailable ? onClick(boothId, ref) : null;
+        isAvailable ? onClick(boothId, mesh.name) : null;
       }}>
       {mesh.children.map((child) => (
         <BasicMesh mesh={child} />
