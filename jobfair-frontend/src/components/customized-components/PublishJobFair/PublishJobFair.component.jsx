@@ -7,7 +7,7 @@ import React from 'react';
 
 const { Text } = Typography;
 const { Step } = Steps;
-const PublishJobFairComponent = ({ onHandlePrev, onFinish, data }) => (
+const PublishJobFairComponent = ({ onHandlePrev, onFinish, jobFairData, statistics }) => (
   <div>
     <Card
       title='Job fair summary detail'
@@ -22,7 +22,7 @@ const PublishJobFairComponent = ({ onHandlePrev, onFinish, data }) => (
             title='Choose job fair template'
             description={
               <div style={{ width: '100px', height: '200px' }}>
-                <img src='https://image.shutterstock.com/image-vector/default-word-digital-style-glowing-260nw-1668796114.jpg' />
+                <img src={jobFairData.thumbnailUrl} />
               </div>
             }
             status='finish'
@@ -33,36 +33,59 @@ const PublishJobFairComponent = ({ onHandlePrev, onFinish, data }) => (
               <div style={{ marginTop: '1rem' }}>
                 <div>
                   <Text strong>Decorate time: </Text>
-                  <Tag color='green'>{convertToUTCString(data.decorateRange[0])}</Tag>
+                  <Tag color='green'>{convertToUTCString(jobFairData.decorateStartTime)}</Tag>
                   <Tag color='orange'>-></Tag>
-                  <Tag color='green'>{convertToUTCString(data.decorateRange[1])}</Tag>
+                  <Tag color='green'>{convertToUTCString(jobFairData.decorateEndTime)}</Tag>
                 </div>
                 <div style={{ marginTop: '1rem' }}>
                   <Text strong>Public time: </Text>
-                  <Tag color='green'>{convertToUTCString(data.publicRange[0])}</Tag>
+                  <Tag color='green'>{convertToUTCString(jobFairData.publicStartTime)}</Tag>
                   <Tag color='orange'>-></Tag>
-                  <Tag color='green'>{convertToUTCString(data.publicRange[1])}</Tag>
+                  <Tag color='green'>{convertToUTCString(jobFairData.publicEndTime)}</Tag>
                 </div>
               </div>
             }
             status='finish'
           />
-          <Step title='Assign employee' description='This is a description.' status='finish' />
+          <Step
+            title='Assign employee'
+            description={
+              <div style={{ marginTop: '1rem' }}>
+                <div>
+                  <Text strong>Total of booth: </Text>
+                  <Text color='green'>{statistics.boothTotal}</Text>
+                </div>
+                <div style={{ marginTop: '1rem' }}>
+                  <Text strong>Number of assigned booth: </Text>
+                  <Text color='green'>{statistics.assignedBoothNum}</Text>
+                </div>
+                <div style={{ marginTop: '1rem' }}>
+                  <Text strong>Total of employee: </Text>
+                  <Text>{statistics.employeeTotal} </Text>
+                </div>
+                <div style={{ marginTop: '1rem' }}>
+                  <Text strong>Number of assigned employee: </Text>
+                  <Text>{statistics.assignedEmployeeNum} </Text>
+                </div>
+              </div>
+            }
+            status='finish'
+          />
           <Step
             title='Create landing page'
             description={
               <div style={{ marginTop: '1rem' }}>
                 <div>
                   <Text strong>Host name: </Text>
-                  <Text color='green'>{data.hostName}</Text>
+                  <Text color='green'>{jobFairData.hostName}</Text>
                 </div>
                 <div style={{ marginTop: '1rem' }}>
                   <Text strong>Description: </Text>
-                  <Text color='green'>{data.description}</Text>
+                  <Text color='green'>{jobFairData.description}</Text>
                 </div>
                 <div style={{ marginTop: '1rem' }}>
                   <Text strong>Target attendant: </Text>
-                  <Text>{data.targetAttendant} </Text>
+                  <Text>{jobFairData.targetAttendant} </Text>
                 </div>
               </div>
             }
@@ -72,7 +95,7 @@ const PublishJobFairComponent = ({ onHandlePrev, onFinish, data }) => (
         <div className={'button-container'}>
           <Popconfirm
             title='Are you sure to publish this job fair?'
-            onConfirm={() => onFinish(data.id)}
+            onConfirm={() => onFinish(jobFairData.id)}
             okText='Yes'
             cancelText='No'>
             <Button type='primary' className={'confirm-button'}>

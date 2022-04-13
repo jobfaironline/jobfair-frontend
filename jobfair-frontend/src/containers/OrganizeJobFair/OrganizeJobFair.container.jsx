@@ -6,7 +6,7 @@ import {
   draftJobFairAPI,
   publishJobFairAPI,
   updateJobFairAPI
-} from '../../services/jobhub-api/JobFairConTrollerService';
+} from '../../services/jobhub-api/JobFairControllerService';
 import { loadGLBModel } from '../../utils/ThreeJS/threeJSUtil';
 import { pickLayoutForJobFair } from '../../services/jobhub-api/LayoutControllerService';
 import ChooseTemplateJobFairContainer from '../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
@@ -186,20 +186,25 @@ const OrganizeJobFairContainer = () => {
       ) : null}
     </>,
     <>
-      <JobFairLandingPageContainer
-        form={form}
-        onHandleNext={nextStepButtonActions(currentStep)}
-        onHandlePrev={handleOnPrev(currentStep)}
-        onFinish={updateJobFairAtLandingPage}
-        templateId={layoutData.id}
-      />
+      <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
+      {jobFairData !== undefined ? (
+        <JobFairLandingPageContainer
+          form={form}
+          onHandleNext={nextStepButtonActions(currentStep)}
+          onHandlePrev={handleOnPrev(currentStep)}
+          onFinish={updateJobFairAtLandingPage}
+          jobFairId={jobFairData.id}
+        />
+      ) : null}
     </>,
     <>
-      <PublishJobFairContainer
-        data={form.getFieldsValue(true)}
-        onFinish={publishJobFairEvent}
-        onHandlePrev={handleOnPrev(currentStep)}
-      />
+      {jobFairData !== undefined ? (
+        <PublishJobFairContainer
+          jobFairId={jobFairData.id}
+          onFinish={publishJobFairEvent}
+          onHandlePrev={handleOnPrev(currentStep)}
+        />
+      ) : null}
     </>
   ];
 

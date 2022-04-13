@@ -1,10 +1,12 @@
+import { getBase64 } from '../../utils/common';
 import { notification } from 'antd';
-import { uploadThumbnailAPI } from '../../services/jobhub-api/LayoutControllerService';
+import { uploadJobFairThumbnailAPI } from '../../services/jobhub-api/JobFairControllerService';
 import JobFairLandingPageFormComponent from '../../components/forms/JobFairLandingPageForm/JobFairLandingPageForm.component';
 import React, { useState } from 'react';
 
-const JobFairLandingPageContainer = ({ onFinish, form, onHandleNext, onHandlePrev, templateId }) => {
+const JobFairLandingPageContainer = ({ onFinish, form, onHandleNext, onHandlePrev, jobFairId }) => {
   const [isError, setIsError] = useState(false);
+  const [thumbnailUrl, setThumbnailUrl] = useState();
 
   const uploadProps = {
     name: 'file',
@@ -22,12 +24,10 @@ const JobFairLandingPageContainer = ({ onFinish, form, onHandleNext, onHandlePre
       }
       const formData = new FormData();
       formData.append('file', info.file);
-      //TODO: change API please
-      await uploadThumbnailAPI(formData, templateId);
+      await uploadJobFairThumbnailAPI(jobFairId, formData);
       setIsError(false);
-      notification['success']({
-        message: `${info.file.name} upload successfully`
-      });
+      const url = await getBase64(info.file);
+      setThumbnailUrl(url);
     },
     showUploadList: !isError
   };
@@ -38,6 +38,7 @@ const JobFairLandingPageContainer = ({ onFinish, form, onHandleNext, onHandlePre
       onHandleNext={onHandleNext}
       onHandlePrev={onHandlePrev}
       uploadProps={uploadProps}
+      thumbnailUrl={thumbnailUrl}
     />
   );
 };

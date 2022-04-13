@@ -1,39 +1,42 @@
 import './JobFairLandingPageForm.styles.scss';
-import { Button, Card, Form, Input } from 'antd';
+import { Button, Divider, Form, Input, Typography } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairValidation';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
+import SideBarComponent from '../../commons/SideBar/SideBar.component';
 import UploadComponent from '../../commons/UploadComponent/Upload.component';
 
+const { Title } = Typography;
 const { TextArea } = Input;
-const JobFairLandingPageFormComponent = ({ form, onFinish, onHandleNext, onHandlePrev, uploadProps }) => (
-  <Card
-    title='Create job fair landing page'
-    style={{ width: '35rem', height: '45rem', marginTop: '5rem', marginLeft: '43rem' }}>
-    <div className='landing-page-form'>
+const JobFairLandingPageFormComponent = ({ form, onFinish, onHandleNext, onHandlePrev, uploadProps, thumbnailUrl }) => (
+  <div className='landing-page-form'>
+    <SideBarComponent>
       <a className={'prev-button'} type='primary' onClick={onHandlePrev}>
         <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '10px' }} />
         <span>Back to assign employee</span>
       </a>
+      <Divider size='small' plain>
+        <Title>Schedule job fair event</Title>
+      </Divider>
       <Form
         form={form}
         requiredMark='required'
         autoComplete='off'
         onFinish={onFinish}
-        scrollToFirstError={{ block: 'center', behavior: 'smooth' }}
-        style={{ height: '20rem', width: '25rem', marginLeft: '2rem' }}>
+        scrollToFirstError={{ block: 'center', behavior: 'smooth' }}>
         <Form.Item
           label='Thumbnail'
           name={'thumbnail'}
           rules={[]}
           style={{
             display: 'inline-block',
-            width: '100%',
             marginRight: '1rem',
             marginLeft: '1rem'
           }}>
-          <UploadComponent uploadProps={uploadProps} />
+          <UploadComponent uploadProps={uploadProps}>
+            {thumbnailUrl ? <img src={thumbnailUrl} alt='avatar' style={{ width: '100%' }} /> : undefined}
+          </UploadComponent>
         </Form.Item>
         <Form.Item
           label='Host name'
@@ -41,7 +44,7 @@ const JobFairLandingPageFormComponent = ({ form, onFinish, onHandleNext, onHandl
           rules={OrganizeJobFairValidation.hostname}
           style={{
             display: 'inline-block',
-            width: '100%',
+            width: '50%',
             marginRight: '1rem',
             marginLeft: '1rem'
           }}>
@@ -53,7 +56,7 @@ const JobFairLandingPageFormComponent = ({ form, onFinish, onHandleNext, onHandl
           rules={OrganizeJobFairValidation.targetAttendant}
           style={{
             display: 'inline-block',
-            width: '100%',
+            width: '90%',
             marginRight: '1rem',
             marginLeft: '1rem'
           }}>
@@ -65,20 +68,20 @@ const JobFairLandingPageFormComponent = ({ form, onFinish, onHandleNext, onHandl
           rules={OrganizeJobFairValidation.description}
           style={{
             display: 'inline-block',
-            width: '25rem',
+            width: '90%',
             marginRight: '1rem',
             marginLeft: '1rem'
           }}>
           <TextArea showCount maxLength={3000} placeholder='Description' />
         </Form.Item>
-        <div className={'button-container'}>
-          <Button type='primary' onClick={onHandleNext} className={'confirm-button'}>
-            Next
-          </Button>
-        </div>
       </Form>
-    </div>
-  </Card>
+      <div className={'button-container'}>
+        <Button type='primary' onClick={onHandleNext} className={'confirm-button'}>
+          Next
+        </Button>
+      </div>
+    </SideBarComponent>
+  </div>
 );
 
 export default JobFairLandingPageFormComponent;

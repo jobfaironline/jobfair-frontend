@@ -1,5 +1,5 @@
 import { Input, Spin } from 'antd';
-import { getJobFairAPI, searchJobFairAPI } from '../../../services/jobhub-api/JobFairConTrollerService';
+import { getAllJobFairAPI, searchJobFairAPI } from '../../../services/jobhub-api/JobFairControllerService';
 import JobFairGridComponent from '../../../components/customized-components/JobFairList/JobFairGrid.component';
 import React, { useEffect, useState } from 'react';
 
@@ -7,7 +7,7 @@ const JobFairGridManagerContainer = () => {
   const [data, setData] = useState();
 
   const fetchData = async () => {
-    const res = await getJobFairAPI();
+    const res = await getAllJobFairAPI();
     const content = res.data.content;
     setData(content);
   };
