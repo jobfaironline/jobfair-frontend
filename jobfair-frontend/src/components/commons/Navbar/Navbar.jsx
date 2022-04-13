@@ -88,10 +88,8 @@ const NavigationBar = () => {
     <div className='navbar-container container-fluid'>
       <div className='Navbar'>
         <Link to={PATH.INDEX} className='logo'>
-          <div>
-            <Typography.Title level={2} style={{ marginBottom: 0, padding: '0 1.5rem', color: '#FFF' }}>
-              Jobhub
-            </Typography.Title>
+          <div style={{ display: 'flex' }}>
+            <img src={'/logo/logo_with_text.svg'} style={{ width: '10rem' }} />
           </div>
         </Link>
         <Menu className='menu' mode='horizontal'>

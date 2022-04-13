@@ -23,8 +23,8 @@ const PublishJobFairComponent = ({ onHandlePrev, onFinish, jobFairData, statisti
           <Step
             title='Choose job fair template'
             description={
-              <div style={{ width: '100px', height: '200px' }}>
-                <img src={jobFairData.thumbnailUrl} />
+              <div>
+                <img style={{ width: '300px' }} src={jobFairData.thumbnailUrl} />
               </div>
             }
             status='finish'
