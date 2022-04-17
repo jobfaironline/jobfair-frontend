@@ -2,7 +2,6 @@ import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_M
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
 import AboutApplicationPage from '../pages/AboutApplicationPage';
-import AdminRouter from './components/AdminRouter';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage';
 import AttendantProfile from '../pages/ProfilePage/Attendant/AttendantProfilePage';
@@ -12,6 +11,7 @@ import CompanyEmployeeRouter from './components/CompanyEmployeeRouter';
 import CompanyManagerRouter from './components/CompanyManagerRouter';
 import CompanyProfile from '../pages/ProfilePage/Company/CompanyProfilePage';
 import ContactPage from '../pages/ContactPage/ContactPage';
+import CreateJobPositionPage from '../pages/CreateJobPositonPage/CreateJobPositionPage';
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage';
 import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage';
 import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage';
@@ -19,10 +19,11 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import FAQPage from '../pages/FAQPage/FAQPage';
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage';
 import HomePage from '../pages/HomePage';
-import JobFairDetailPage from '../pages/JobFairDetailPage/JobFairDetailPage';
 import JobFairGridManagerPage from '../pages/JobFairListPage/JobFairGridManagerPage';
 import JobFairListPage from '../pages/JobFairListPage/JobFairListPage';
 import JobFairTablePage from '../pages/JobFairTablePage/JobFairTablePage';
+import JobFairTemplateDetailPage from '../pages/JobFairTemplateDetailPage/JobFairTemplateDetailPage';
+import JobFairTemplatePage from '../pages/JobFairTemplatePage/JobFairTemplatePage';
 import JobPositionDetailPage from '../pages/JobPositionDetailPage/JobPositionDetailPage';
 import JobPositionPage from '../pages/JobPositionPage/JobPositionPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
@@ -191,6 +192,12 @@ const AppRouter = () => (
         exact
       />
       <CompanyManagerRouter
+        key={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION_PAGE}
+        component={() => <CreateJobPositionPage />}
+        path={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION_PAGE}
+        exact
+      />
+      <CompanyManagerRouter
         key={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}
         component={() => <JobFairGridManagerPage />}
         path={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}
@@ -208,10 +215,16 @@ const AppRouter = () => (
         path={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}
         exact
       />
-      <AdminRouter
-        key={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
-        component={() => <JobFairDetailPage />}
-        path={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
+      <CompanyManagerRouter
+        key={PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE}
+        component={() => <JobFairTemplatePage />}
+        path={PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE}
+        exact
+      />
+      <CompanyManagerRouter
+        key={PATH_COMPANY_MANAGER.TEMPLATE_DETAIL}
+        component={() => <JobFairTemplateDetailPage />}
+        path={PATH_COMPANY_MANAGER.TEMPLATE_DETAIL}
         exact
       />
       //to fix browserrouter problem

@@ -1,9 +1,7 @@
 import { CallAPI } from '../axiosBase';
 import {
   ENDPOINT_GET_LAYOUT_AND_AVAILABLE_SLOT_BY_JOB_FAIR_ID,
-  ENDPOINT_GET_LAYOUT_BY_JOB_FAIR,
-  ENDPOINT_LAYOUT,
-  ENDPOINT_PICK_LAYOUT_FOR_JOB_FAIR
+  ENDPOINT_LAYOUT
 } from '../../constants/Endpoints/jobhub-api/LayoutControllerEndPoint';
 
 export const getLayoutAndAvailableSlotByJobFairId = (jobFairId) =>
