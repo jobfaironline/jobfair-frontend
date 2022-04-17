@@ -75,6 +75,8 @@ export const convertEnumToString = (data) => {
   return data;
 };
 
+export const convertToUTCString = (data) => new Date(data).toUTCString();
+
 //
 export const handleCreateListEmailFromListAccount = (arr) => {
   const listEmail = [];
@@ -139,3 +141,5 @@ export const handleStatusTag = (status) => {
       return <Tag color='orange'>{convertEnumToString(status)}</Tag>;
   }
 };
+
+export const difference = (array1, array2) => array1.filter((item) => array2.includes(item));

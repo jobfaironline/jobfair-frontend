@@ -1,4 +1,5 @@
 import { PHONE_REGEX } from '../constants/RegexConstant';
+import { convertToDateString } from '../utils/common';
 import moment from 'moment';
 
 export const REQUIRED_VALIDATOR = (fieldName) => ({
@@ -64,15 +65,20 @@ export const NUMBER_RANGE_VALIDATOR = (minValue, maxValue) => () => ({
 
 export const DATE_RANGE_VALIDATOR = (minTime, maxTime) => () => ({
   validator(_, value) {
+    if (value === undefined) return Promise.resolve();
     const fromDate = moment(value[0]).toDate().getTime();
     const toDate = moment(value[1]).toDate().getTime();
-    if (fromDate > maxTime) return Promise.reject(new Error(`From date must be lower than ${maxTime}`));
+    if (fromDate > maxTime)
+      return Promise.reject(new Error(`From date must be lower than ${convertToDateString(maxTime)}`));
 
-    if (toDate > maxTime) return Promise.reject(new Error(`To date must be lower than ${maxTime}`));
+    if (toDate > maxTime)
+      return Promise.reject(new Error(`To date must be lower than ${convertToDateString(maxTime)}`));
 
-    if (fromDate < minTime) return Promise.reject(new Error(`From date must be higher than ${minTime}`));
+    if (fromDate < minTime)
+      return Promise.reject(new Error(`From date must be higher than ${convertToDateString(minTime)}`));
 
-    if (toDate < minTime) return Promise.reject(new Error(`To date must be higher than ${minTime}`));
+    if (toDate < minTime)
+      return Promise.reject(new Error(`To date must be higher than ${convertToDateString(minTime)}`));
 
     if (toDate < fromDate) return Promise.reject(new Error('Invalid date range'));
 
