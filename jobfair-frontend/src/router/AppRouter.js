@@ -1,8 +1,7 @@
-import { ChooseBoothPage } from '../pages/ChooseBoothPage/ChooseBoothPage';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
-import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import AdminRouter from './components/AdminRouter';
+import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
+import AboutApplicationPage from '../pages/AboutApplicationPage';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage';
 import AttendantProfile from '../pages/ProfilePage/Attendant/AttendantProfilePage';
@@ -20,13 +19,16 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import FAQPage from '../pages/FAQPage/FAQPage';
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage';
 import HomePage from '../pages/HomePage';
-import JobFairDetailPage from '../pages/JobFairDetailPage/JobFairDetailPage-remove';
+import JobFairGridManagerPage from '../pages/JobFairListPage/JobFairGridManagerPage';
 import JobFairListPage from '../pages/JobFairListPage/JobFairListPage';
 import JobFairTablePage from '../pages/JobFairTablePage/JobFairTablePage';
+import JobFairTemplateDetailPage from '../pages/JobFairTemplateDetailPage/JobFairTemplateDetailPage';
+import JobFairTemplatePage from '../pages/JobFairTemplatePage/JobFairTemplatePage';
 import JobPositionDetailPage from '../pages/JobPositionDetailPage/JobPositionDetailPage';
 import JobPositionPage from '../pages/JobPositionPage/JobPositionPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavigationBar from '../components/commons/Navbar/Navbar';
+import OrganizeJobFairPage from '../pages/OrganizeJobFairPage/OrganizeJobFairPage';
 import PublicRouter from './components/PublicRouter';
 import PublicizeJobFairDetailPage from '../pages/JobFairDetailPage/PublicizeJobFairDetailPage';
 import PublicizedBoothPage from '../pages/PublicizedBoothPage/PublicizedBoothPage';
@@ -35,7 +37,6 @@ import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
-import AboutApplicationPage from '../pages/AboutApplicationPage';
 
 const AppRouter = () => (
   <>
@@ -224,12 +225,6 @@ const AppRouter = () => (
         key={PATH_COMPANY_MANAGER.TEMPLATE_DETAIL}
         component={() => <JobFairTemplateDetailPage />}
         path={PATH_COMPANY_MANAGER.TEMPLATE_DETAIL}
-        exact
-      />
-      <AdminRouter
-        key={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
-        component={() => <JobFairDetailPage />}
-        path={PATH_ADMIN.JOB_FAIR_DETAIL_PAGE}
         exact
       />
       //to fix browserrouter problem
