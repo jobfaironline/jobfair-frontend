@@ -31,20 +31,17 @@ export const CompanyManagerMenu = [
   <Menu.Item key={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>Employee Management</Link>
   </Menu.Item>,
-  <Menu.Item key={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>
-    <Link to={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>Register to job fair</Link>
-  </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}>Job Position Management</Link>
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}>Applications management</Link>
   </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}>Organize job fair</Link>
-  </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}>My job fair</Link>
+  </Menu.Item>,
+  <Menu.Item key={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}>
+    <Link to={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}>Organize job fair</Link>
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE}>My template</Link>
@@ -94,19 +91,11 @@ const NavigationBar = () => {
     <div className='navbar-container container-fluid'>
       <div className='Navbar'>
         <Link to={PATH.INDEX} className='logo'>
-          <div>
-            <Typography.Title level={2} style={{ marginBottom: 0, padding: '0 1.5rem', color: '#FFF' }}>
-              Jobhub
-            </Typography.Title>
+          <div style={{ display: 'flex' }}>
+            <img src={'/logo/logo_with_text.svg'} style={{ width: '10rem' }} />
           </div>
         </Link>
         <Menu className='menu' mode='horizontal'>
-          <Menu.Item key={PATH.CONTRACTS_PAGE}>
-            <Link to={PATH.CONTRACTS_PAGE}>Contact</Link>
-          </Menu.Item>
-          <Menu.Item key={PATH.FAQ_PAGE}>
-            <Link to={PATH.FAQ_PAGE}>FAQ</Link>
-          </Menu.Item>
           {/* {!role ? (
             <Menu.Item key={PATH.LOGIN_PAGE}>
               <Link to={PATH.LOGIN_PAGE}>Log In</Link>

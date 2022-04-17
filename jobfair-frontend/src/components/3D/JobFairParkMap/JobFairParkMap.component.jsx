@@ -3,6 +3,7 @@ import { CameraControls } from '../ThreeJSBaseComponent/CameraControls.component
 import { Canvas } from '@react-three/fiber';
 import { SkyComponent, SkyType } from '../ThreeJSBaseComponent/Sky.component';
 import { SkyTypeSelect } from '../ThreeJSBaseComponent/SelectSkyType.component';
+import { Stats } from '@react-three/drei';
 import React, { useState } from 'react';
 
 const BoothMesh = React.forwardRef((props, ref) => {
@@ -36,7 +37,7 @@ const JobFairParkMapComponent = (props) => {
   return (
     <>
       <SkyTypeSelect onChange={onChangeSkyType} />
-      <Canvas dpr={[1, 2]} camera={{ far: 5000, fov: 50 }} style={{ width: '100%', height: '970px' }}>
+      <Canvas dpr={[1, 2]} camera={{ far: 5000, fov: 50 }} style={{ width: '100%', height: 'calc(100vh - 80px)' }}>
         <CameraControls />
         <SkyComponent style={skyType} />
         <group dispose={null}>
@@ -46,6 +47,7 @@ const JobFairParkMapComponent = (props) => {
           ))}
         </group>
       </Canvas>
+      <Stats></Stats>
     </>
   );
 };

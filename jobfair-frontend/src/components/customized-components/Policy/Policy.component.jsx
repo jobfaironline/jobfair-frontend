@@ -1,7 +1,7 @@
-import { Card, Typography } from 'antd';
+import { Button, Card, Space, Typography } from 'antd';
 import React from 'react';
 
-const PolicyComponent = () => {
+const PolicyComponent = ({ onHandleNext, agreeStatus, onHandlePrev }) => {
   const { Title, Text } = Typography;
   return (
     <div style={{ textAlign: 'justify' }}>
@@ -210,6 +210,14 @@ const PolicyComponent = () => {
           damages (If any) with JobHub.
         </Text>
       </Card>
+      <Space>
+        <Button type='primary' onClick={onHandleNext} disabled={!agreeStatus}>
+          Next
+        </Button>
+        <Button type='primary' onClick={onHandlePrev}>
+          Previous
+        </Button>
+      </Space>
     </div>
   );
 };
