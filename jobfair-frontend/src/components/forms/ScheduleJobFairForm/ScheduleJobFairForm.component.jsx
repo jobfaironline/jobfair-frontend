@@ -1,4 +1,3 @@
-
 import { DatePicker, Divider, Form, Input, Typography } from 'antd';
 import { HourMinuteDateFormat } from '../../../constants/ApplicationConst';
 import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairValidation';

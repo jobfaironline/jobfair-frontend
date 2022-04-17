@@ -1,6 +1,11 @@
 import { Input, Spin } from 'antd';
+import { JOB_FAIR_STATUS } from '../../../constants/JobFairConst';
 import { PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path';
-import { getAllJobFairAPI, searchJobFairAPI } from '../../../services/jobhub-api/JobFairControllerService';
+import {
+  getAllJobFairAPI,
+  getJobFairByIDAPI,
+  searchJobFairAPI
+} from '../../../services/jobhub-api/JobFairControllerService';
 import { useHistory } from 'react-router-dom';
 import JobFairGridComponent from '../../../components/customized-components/JobFairList/JobFairGrid.component';
 import React, { useEffect, useState } from 'react';
@@ -22,7 +27,10 @@ const JobFairGridManagerContainer = () => {
   };
 
   const onClick = async (jobFairId) => {
-    history.push(PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE, { jobFairId });
+    const jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
+    if (jobFairData.status === JOB_FAIR_STATUS.PUBLISH)
+      history.push(PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE, { jobFairId });
+    else history.push(PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE, { step: 4, jobFairId });
   };
 
   useEffect(() => {
