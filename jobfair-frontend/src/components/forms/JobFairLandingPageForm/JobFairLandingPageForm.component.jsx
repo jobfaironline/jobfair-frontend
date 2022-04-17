@@ -57,7 +57,7 @@ const JobFairLandingPageFormComponent = ({
             marginRight: '1rem',
             marginLeft: '1rem'
           }}>
-          <Input placeholder='Host name' defaultValue={companyInformation.name} />
+          <Input placeholder='Host name'/>
         </Form.Item>
         <Form.Item
           label='Target attendant'

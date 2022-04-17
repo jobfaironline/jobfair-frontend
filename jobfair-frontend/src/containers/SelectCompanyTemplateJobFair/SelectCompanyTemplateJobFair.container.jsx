@@ -1,5 +1,3 @@
-import '../ChooseTemplateJobFairSideBar/ChooseTemplateJobFairSideBar.style.scss';
-import { Button, notification } from 'antd';
 import { getBase64 } from '../../utils/common';
 import {
   getCompanyLayoutAPI,
@@ -7,21 +5,24 @@ import {
   uploadTemplateMetaDataAPI,
   uploadThumbnailAPI
 } from '../../services/jobhub-api/LayoutControllerService';
+import { getTemplateLayoutAPI } from '../../services/jobhub-api/TemplateControllerService';
+import { notification } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import SelectJobFairTemplateComponent from '../../components/customized-components/SelectJobFairTemplate/SelectJobFairTemplate.component';
 import UploadModalContainer from '../UploadModal/UploadModal.container';
 
-const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, templateId }) => {
+const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, visible, setVisible, isDefaultTemplate }) => {
   const [data, setData] = useState([]);
   const [forceRerenderState, setForceRerenderState] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState();
   const [isUploadGlb, setIsUploadGlb] = useState(false);
   const glbFormData = useRef(new FormData());
   const thumbnailFormData = useRef(new FormData());
 
   const fetchData = async () => {
-    const res = await getCompanyLayoutAPI();
+    let res;
+    if (isDefaultTemplate) res = await getTemplateLayoutAPI();
+    else res = await getCompanyLayoutAPI();
     setData(res.data);
   };
 
@@ -96,16 +97,7 @@ const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, onHandleNext, 
         thumbnailUrl={thumbnailUrl}
         isUploadGlb={isUploadGlb}
       />
-      <SelectJobFairTemplateComponent listData={data} handleLoad3DMap={handleLoad3DMap}>
-        <div className={'button-container'}>
-          <Button className={'confirm-button'} type='primary' onClick={onHandleNext} disabled={templateId === ''}>
-            Choose
-          </Button>
-          <Button className={'confirm-button'} type='primary' onClick={() => setVisible(true)}>
-            Upload template
-          </Button>
-        </div>
-      </SelectJobFairTemplateComponent>
+      <SelectJobFairTemplateComponent listData={data} handleLoad3DMap={handleLoad3DMap} />
     </div>
   );
 };

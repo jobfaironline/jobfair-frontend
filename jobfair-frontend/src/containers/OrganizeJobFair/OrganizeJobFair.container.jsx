@@ -1,7 +1,8 @@
 import './OrganizeJobFair.styles.scss';
 import { AssignEmployeeContainer } from '../3D/AssignEmployee/AssignEmployee.container';
-import { Form, Steps, notification } from 'antd';
+import { Button, Col, Form, Row, Steps, notification } from 'antd';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
+import { SideBarComponent } from '../../components/customized-components/SideBar/SideBar.component';
 import { convertToDateValue } from '../../utils/common';
 import {
   draftJobFairAPI,
@@ -16,7 +17,7 @@ import JobFairLandingPageContainer from '../JobFairLandingPage/JobFairLandingPag
 import JobFairParkMapComponent from '../../components/3D/JobFairParkMap/JobFairParkMap.component';
 import PublishJobFairContainer from '../PublishJobFairContainer/PublishJobFair.container';
 import React, { useEffect, useState } from 'react';
-import ScheduleJobFairFormContainer from '../forms/ScheduleJobFairForm/ScheduleJobFairForm.container';
+import ScheduleJobFairFormComponent from '../../components/forms/ScheduleJobFairForm/ScheduleJobFairForm.component';
 
 const { Step } = Steps;
 const OrganizeJobFairContainer = () => {
@@ -167,25 +168,31 @@ const OrganizeJobFairContainer = () => {
   };
 
   const stepComponentList = [
-    <div>
-      <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
-      <ChooseTemplateJobFairContainer
-        onHandleNext={nextStepButtonActions(currentStep)}
-        templateId={layoutData.id}
-        handleLoad3DMap={handleLoad3DMap}
-      />
-    </div>,
-    <>
-      <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
-      <ScheduleJobFairFormContainer
-        onHandleNext={nextStepButtonActions(currentStep)}
-        onHandlePrev={handleOnPrev(currentStep)}
-        form={form}
-        onFinish={updateJobFairAtScheduleScreen}
-        onValueChange={onValueChange}
-        isError={isError}
-      />
-    </>,
+    <SideBarComponent
+      leftSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
+      rightSide={<ChooseTemplateJobFairContainer handleLoad3DMap={handleLoad3DMap} />}
+      onNext={nextStepButtonActions(currentStep)}
+      isNextButtonDisable={layoutData.id === ''}
+      isPrevButtonDisable={true}
+      ratio={3 / 4}
+    />,
+    <SideBarComponent
+      leftSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
+      rightSide={
+        <ScheduleJobFairFormComponent
+          onFinish={updateJobFairAtScheduleScreen}
+          form={form}
+          onHandleNext={nextStepButtonActions(currentStep)}
+          onHandlePrev={handleOnPrev(currentStep)}
+          onValueChange={onValueChange}
+          isError={isError}
+        />
+      }
+      onNext={nextStepButtonActions(currentStep)}
+      isNextButtonDisable={layoutData.id === ''}
+      isPrevButtonDisable={true}
+      ratio={3 / 4}
+    />,
     <>
       {jobFairData !== undefined ? (
         <AssignEmployeeContainer
@@ -195,18 +202,20 @@ const OrganizeJobFairContainer = () => {
         />
       ) : null}
     </>,
-    <>
-      <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
-      {jobFairData !== undefined ? (
-        <JobFairLandingPageContainer
-          form={form}
-          onHandleNext={nextStepButtonActions(currentStep)}
-          onHandlePrev={handleOnPrev(currentStep)}
-          onFinish={updateJobFairAtLandingPage}
-          jobFairId={jobFairData.id}
-        />
-      ) : null}
-    </>,
+    <Row wrap={false} className={'organize-job-fair-side-bar'}>
+      <Col flex='3'>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div></div>}</Col>
+      <Col flex='1'>
+        {jobFairData !== undefined ? (
+          <JobFairLandingPageContainer
+            form={form}
+            onHandleNext={nextStepButtonActions(currentStep)}
+            onHandlePrev={handleOnPrev(currentStep)}
+            onFinish={updateJobFairAtLandingPage}
+            jobFairId={jobFairData.id}
+          />
+        ) : null}
+      </Col>
+    </Row>,
     <>
       {jobFairData !== undefined ? (
         <PublishJobFairContainer

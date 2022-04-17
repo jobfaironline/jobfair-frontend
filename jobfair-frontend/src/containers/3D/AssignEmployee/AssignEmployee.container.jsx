@@ -1,6 +1,7 @@
 import { AssignEmployeeBoothList } from '../../../components/customized-components/AssignEmployeeBoothList/AssignEmployeeBoothList.component';
 import { AssignEmployeeModalContainer } from '../../AssignEmployeeModal/AssignEmployeeModal.container';
 import { ChooseBoothCanvas } from '../../../components/3D/ChooseBooth/ChooseBoothCanvas.component';
+import { Col, Row } from 'antd';
 import { getAssigmentByJobFairBoothId } from '../../../services/jobhub-api/AssignmentControllerService';
 import { getJobFairBoothByJobFairId } from '../../../services/jobhub-api/JobFairBoothControllerService';
 import { getLayoutByJobFairId } from '../../../services/jobhub-api/LayoutControllerService';
@@ -98,6 +99,31 @@ export const AssignEmployeeContainer = (props) => {
 
   return (
     <>
+      <Row wrap={false} className={'organize-job-fair-side-bar'}>
+        <Col flex='3'>
+          <ChooseBoothCanvas
+            mesh={state.glbMesh}
+            boothData={state.boothDataForMesh}
+            jobFairId={jobFairId}
+            onClick={onBoothClick}
+            selectionRef={selectionRef}
+            onCompanyGroundPointerOver={onBoothMouseOver}
+            onCompanyGroundPointerOut={onBoothMouseOut}
+            hoverRef={hoverRef}
+            boothMeshesRef={boothMeshesRef}
+          />
+        </Col>
+        <Col flex='1'>
+          <AssignEmployeeBoothList
+            onHandleNext={onHandleNext}
+            onHandlePrev={onHandlePrev}
+            data={state.boothData}
+            onHoverIn={onBoothMouseOver}
+            onHoverOut={onBoothMouseOut}
+            onClick={onBoothClick}
+          />
+        </Col>
+      </Row>
       {modalState.isVisible ? (
         <AssignEmployeeModalContainer
           boothId={modalState.boothId}
@@ -106,27 +132,6 @@ export const AssignEmployeeContainer = (props) => {
           jobFairId={jobFairId}
         />
       ) : null}
-      <AssignEmployeeBoothList
-        onHandleNext={onHandleNext}
-        onHandlePrev={onHandlePrev}
-        data={state.boothData}
-        onHoverIn={onBoothMouseOver}
-        onHoverOut={onBoothMouseOut}
-        onClick={onBoothClick}
-      />
-      <div style={{ width: '75%' }}>
-        <ChooseBoothCanvas
-          mesh={state.glbMesh}
-          boothData={state.boothDataForMesh}
-          jobFairId={jobFairId}
-          onClick={onBoothClick}
-          selectionRef={selectionRef}
-          onCompanyGroundPointerOver={onBoothMouseOver}
-          onCompanyGroundPointerOut={onBoothMouseOut}
-          hoverRef={hoverRef}
-          boothMeshesRef={boothMeshesRef}
-        />
-      </div>
     </>
   );
 };
