@@ -5,13 +5,24 @@ import UploadComponent from '../../commons/UploadComponent/Upload.component';
 
 const { Title } = Typography;
 const { TextArea } = Input;
-const JobFairLandingPageFormComponent = ({ form, onFinish, uploadProps, thumbnailUrl, companyInformation }) => (
+const JobFairLandingPageFormComponent = ({
+  form,
+  onFinish,
+  uploadProps,
+  thumbnailUrl,
+  companyInformation,
+  jobFairData
+}) => (
   <>
     <Divider size='small' plain>
       <Title>Schedule job fair event</Title>
     </Divider>
     <Form
-      initialValues={{ hostName: companyInformation.name }}
+      initialValues={{
+        hostName: jobFairData.hostName === null ? companyInformation.name : jobFairData.hostName,
+        targetAttendant: jobFairData.targetAttendant,
+        description: jobFairData.description
+      }}
       form={form}
       requiredMark='required'
       autoComplete='off'

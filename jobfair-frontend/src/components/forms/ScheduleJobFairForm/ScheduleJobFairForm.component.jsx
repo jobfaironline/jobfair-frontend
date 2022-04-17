@@ -2,16 +2,28 @@ import { DatePicker, Divider, Form, Input, Typography } from 'antd';
 import { HourMinuteDateFormat } from '../../../constants/ApplicationConst';
 import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairValidation';
 import React from 'react';
+import moment from 'moment';
 
 const { RangePicker } = DatePicker;
 const { Title } = Typography;
-const ScheduleJobFairFormComponent = ({ form, onFinish, onValueChange }) => (
+const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChange }) => (
   <>
     <Divider size='small' plain>
       <Title>Schedule job fair event</Title>
     </Divider>
     <div className={'form-container'}>
       <Form
+        initialValues={{
+          name: jobFairData.name,
+          decorateRange: [
+            jobFairData.decorateStartTime ? moment.unix(jobFairData.decorateStartTime / 1000) : undefined,
+            jobFairData.decorateEndTime ? moment.unix(jobFairData.decorateEndTime / 1000) : undefined
+          ],
+          publicRange: [
+            jobFairData.publicStartTime ? moment.unix(jobFairData.publicStartTime / 1000) : undefined,
+            jobFairData.publicEndTime ? moment.unix(jobFairData.publicEndTime / 1000) : undefined
+          ]
+        }}
         form={form}
         requiredMark='required'
         autoComplete='off'

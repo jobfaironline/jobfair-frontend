@@ -75,10 +75,21 @@ const OrganizeJobFairContainer = () => {
     });
   };
 
-  const onValueChange = () => {
-    const isHasError =
-      !form.isFieldsTouched(true) || form.getFieldsError().filter(({ errors }) => errors.length).length > 0;
-    setIsError(isHasError);
+  const onValueChange = async () => {
+    try {
+      await form.validateFields();
+      setIsError(false);
+    } catch (e) {
+      const errorsArray = form.getFieldsError();
+      for (const error of errorsArray) {
+        if (error.errors.length > 0) {
+          form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
+          break;
+        }
+      }
+      const isHasError = form.getFieldsError().filter(({ errors }) => errors.length).length > 0;
+      setIsError(isHasError);
+    }
   };
 
   const updateJobFairAtScheduleScreen = async (values) => {
@@ -88,8 +99,8 @@ const OrganizeJobFairContainer = () => {
         name: values.name,
         decorateStartTime: convertToDateValue(values.decorateRange[0].format()),
         decorateEndTime: convertToDateValue(values.decorateRange[1].format()),
-        publicEndTime: convertToDateValue(values.publicRange[0].format()),
-        publicStartTime: convertToDateValue(values.publicRange[1].format())
+        publicStartTime: convertToDateValue(values.publicRange[0].format()),
+        publicEndTime: convertToDateValue(values.publicRange[1].format())
       };
       const res = await updateJobFairAPI(body);
       if (res.status === 200) return true;
@@ -145,6 +156,7 @@ const OrganizeJobFairContainer = () => {
             await form.validateFields();
             await updateJobFairAtScheduleScreen(form.getFieldsValue(true));
             setCurrentStep(currentStep + 1);
+            setIsError(false);
           } catch (e) {
             const errorsArray = form.getFieldsError();
             for (const error of errorsArray) {
@@ -161,6 +173,7 @@ const OrganizeJobFairContainer = () => {
             await form.validateFields();
             await updateJobFairAtLandingPage(form.getFieldsValue(true));
             setCurrentStep(currentStep + 1);
+            setIsError(false);
           } catch (e) {
             const errorsArray = form.getFieldsError();
             for (const error of errorsArray) {
@@ -188,7 +201,10 @@ const OrganizeJobFairContainer = () => {
   };
 
   const onPrev = (currentStep) => () => {
-    if (currentStep !== 0) setCurrentStep(currentStep - 1);
+    if (currentStep !== 0) {
+      setCurrentStep(currentStep - 1);
+      setIsError(false);
+    }
   };
 
   const chooseLayoutForJobFair = async () => {
@@ -221,6 +237,7 @@ const OrganizeJobFairContainer = () => {
       leftSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
       rightSide={
         <ScheduleJobFairFormComponent
+          jobFairData={jobFairData}
           onFinish={updateJobFairAtScheduleScreen}
           form={form}
           onValueChange={onValueChange}
@@ -248,16 +265,15 @@ const OrganizeJobFairContainer = () => {
       rightSide={
         jobFairData !== undefined ? (
           <JobFairLandingPageContainer
+            jobFairData={jobFairData}
             form={form}
-            onHandleNext={onNext(currentStep)}
-            onHandlePrev={onPrev(currentStep)}
             onFinish={updateJobFairAtLandingPage}
             jobFairId={jobFairData.id}
           />
         ) : null
       }
-      nextButtonContent={'Start assign employee'}
-      prevButtonContent={'Back to choose job fair layout'}
+      nextButtonContent={'Publish'}
+      prevButtonContent={'Back to assign employee'}
       onNext={onNext(currentStep)}
       isNextButtonDisable={isError}
       isPrevButtonDisable={false}
