@@ -1,7 +1,7 @@
 import { AssignEmployeeBoothList } from '../../../components/customized-components/AssignEmployeeBoothList/AssignEmployeeBoothList.component';
 import { AssignEmployeeModalContainer } from '../../AssignEmployeeModal/AssignEmployeeModal.container';
 import { ChooseBoothCanvas } from '../../../components/3D/ChooseBooth/ChooseBoothCanvas.component';
-import { Col, Row } from 'antd';
+import { SideBarComponent } from '../../../components/commons/SideBar/SideBar.component';
 import { getAssigmentByJobFairBoothId } from '../../../services/jobhub-api/AssignmentControllerService';
 import { getJobFairBoothByJobFairId } from '../../../services/jobhub-api/JobFairBoothControllerService';
 import { getLayoutByJobFairId } from '../../../services/jobhub-api/LayoutControllerService';
@@ -99,8 +99,8 @@ export const AssignEmployeeContainer = (props) => {
 
   return (
     <>
-      <Row wrap={false} className={'organize-job-fair-side-bar'}>
-        <Col flex='3'>
+      <SideBarComponent
+        leftSide={
           <ChooseBoothCanvas
             mesh={state.glbMesh}
             boothData={state.boothDataForMesh}
@@ -112,8 +112,8 @@ export const AssignEmployeeContainer = (props) => {
             hoverRef={hoverRef}
             boothMeshesRef={boothMeshesRef}
           />
-        </Col>
-        <Col flex='1'>
+        }
+        rightSide={
           <AssignEmployeeBoothList
             onHandleNext={onHandleNext}
             onHandlePrev={onHandlePrev}
@@ -122,8 +122,14 @@ export const AssignEmployeeContainer = (props) => {
             onHoverOut={onBoothMouseOut}
             onClick={onBoothClick}
           />
-        </Col>
-      </Row>
+        }
+        nextButtonContent={'Start design landing page'}
+        prevButtonContent={'Back to set booth timeline'}
+        onNext={onHandleNext}
+        isPrevButtonDisable={false}
+        onPrev={onHandlePrev}
+        ratio={3 / 4}
+      />
       {modalState.isVisible ? (
         <AssignEmployeeModalContainer
           boothId={modalState.boothId}

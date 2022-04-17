@@ -1,8 +1,8 @@
 import './OrganizeJobFair.styles.scss';
 import { AssignEmployeeContainer } from '../3D/AssignEmployee/AssignEmployee.container';
-import { Button, Col, Form, Row, Steps, notification } from 'antd';
+import { Col, Form, Row, notification } from 'antd';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
-import { SideBarComponent } from '../../components/customized-components/SideBar/SideBar.component';
+import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
 import { convertToDateValue } from '../../utils/common';
 import {
   draftJobFairAPI,
@@ -19,7 +19,6 @@ import PublishJobFairContainer from '../PublishJobFairContainer/PublishJobFair.c
 import React, { useEffect, useState } from 'react';
 import ScheduleJobFairFormComponent from '../../components/forms/ScheduleJobFairForm/ScheduleJobFairForm.component';
 
-const { Step } = Steps;
 const OrganizeJobFairContainer = () => {
   const [form] = Form.useForm();
   const [jobFairData, setJobFairData] = useState();
@@ -171,10 +170,12 @@ const OrganizeJobFairContainer = () => {
     <SideBarComponent
       leftSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
       rightSide={<ChooseTemplateJobFairContainer handleLoad3DMap={handleLoad3DMap} />}
+      nextButtonContent={'Choose template'}
       onNext={nextStepButtonActions(currentStep)}
       isNextButtonDisable={layoutData.id === ''}
       isPrevButtonDisable={true}
       ratio={3 / 4}
+      isDisplayPrevButton={false}
     />,
     <SideBarComponent
       leftSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
@@ -182,15 +183,15 @@ const OrganizeJobFairContainer = () => {
         <ScheduleJobFairFormComponent
           onFinish={updateJobFairAtScheduleScreen}
           form={form}
-          onHandleNext={nextStepButtonActions(currentStep)}
-          onHandlePrev={handleOnPrev(currentStep)}
           onValueChange={onValueChange}
-          isError={isError}
         />
       }
+      nextButtonContent={'Start assign employee'}
+      prevButtonContent={'Back to choose job fair layout'}
       onNext={nextStepButtonActions(currentStep)}
-      isNextButtonDisable={layoutData.id === ''}
-      isPrevButtonDisable={true}
+      isNextButtonDisable={isError}
+      isPrevButtonDisable={false}
+      onPrev={handleOnPrev(currentStep)}
       ratio={3 / 4}
     />,
     <>
@@ -202,10 +203,10 @@ const OrganizeJobFairContainer = () => {
         />
       ) : null}
     </>,
-    <Row wrap={false} className={'organize-job-fair-side-bar'}>
-      <Col flex='3'>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div></div>}</Col>
-      <Col flex='1'>
-        {jobFairData !== undefined ? (
+    <SideBarComponent
+      leftSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
+      rightSide={
+        jobFairData !== undefined ? (
           <JobFairLandingPageContainer
             form={form}
             onHandleNext={nextStepButtonActions(currentStep)}
@@ -213,9 +214,16 @@ const OrganizeJobFairContainer = () => {
             onFinish={updateJobFairAtLandingPage}
             jobFairId={jobFairData.id}
           />
-        ) : null}
-      </Col>
-    </Row>,
+        ) : null
+      }
+      nextButtonContent={'Start assign employee'}
+      prevButtonContent={'Back to choose job fair layout'}
+      onNext={nextStepButtonActions(currentStep)}
+      isNextButtonDisable={isError}
+      isPrevButtonDisable={false}
+      onPrev={handleOnPrev(currentStep)}
+      ratio={3 / 4}
+    />,
     <>
       {jobFairData !== undefined ? (
         <PublishJobFairContainer
@@ -227,27 +235,7 @@ const OrganizeJobFairContainer = () => {
     </>
   ];
 
-  return (
-    <div>
-      <Steps
-        current={currentStep}
-        style={{
-          marginBottom: '3rem',
-          position: 'sticky',
-          top: '80px',
-          background: '#FFF',
-          zIndex: '1000',
-          padding: '1rem',
-          display: 'none'
-        }}>
-        <Step title='Our policy' />
-        <Step title='Choose template' />
-        <Step title='Jobfair registration form' />
-        <Step title='Confirm registration' />
-      </Steps>
-      {stepComponentList[currentStep]}
-    </div>
-  );
+  return <div>{stepComponentList[currentStep]}</div>;
 };
 
 export default OrganizeJobFairContainer;

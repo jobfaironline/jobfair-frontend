@@ -1,22 +1,13 @@
-import './ScheduleJobFairForm.style.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { Button, DatePicker, Divider, Form, Input, Typography } from 'antd';
+import { DatePicker, Divider, Form, Input, Typography } from 'antd';
 import { HourMinuteDateFormat } from '../../../constants/ApplicationConst';
 import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairValidation';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
-
-import SideBarComponent from '../../commons/SideBar/SideBar.component';
 
 const { RangePicker } = DatePicker;
 const { Title } = Typography;
-const ScheduleJobFairFormComponent = ({ form, onHandleNext, onHandlePrev, onFinish, isError, onValueChange }) => (
-  <div className={'organize-job-fair-form'}>
-    <a className={'prev-button'} type='primary' onClick={onHandlePrev}>
-      <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '10px' }} />
-      <span>Back to choose job fair layout</span>
-    </a>
+const ScheduleJobFairFormComponent = ({ form, onFinish, onValueChange }) => (
+  <>
     <Divider size='small' plain>
       <Title>Schedule job fair event</Title>
     </Divider>
@@ -67,7 +58,7 @@ const ScheduleJobFairFormComponent = ({ form, onHandleNext, onHandlePrev, onFini
         </Form.Item>
       </Form>
     </div>
-  </div>
+  </>
 );
 
 export default ScheduleJobFairFormComponent;

@@ -1,4 +1,16 @@
-.organize-job-fair-form {
+
+.organize-job-fair-side-bar {
+  .button-container {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 10px;
+    align-content: space-around;
+    justify-content: space-around;
+    margin-bottom: 10px;
+  }
+
   .confirm-button {
     background-color: #1890ff;
     color: white;
@@ -10,7 +22,6 @@
     width: 90%;
     height: 40px;
     border-radius: 16px;
-    margin: 5px;
   }
 
   .confirm-button[disabled] {
@@ -21,22 +32,15 @@
     box-shadow: none;
   }
 
-  .form-container {
-  }
-
-  .button-container {
-    margin-top: auto;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding-top: 10px;
-    align-content: space-around;
-    justify-content: space-around;
-  }
-
-  .prev-button {
+  .prev-button{
     padding: 10px 20px;
     font-size: 17px;
+    color: #1890ff;
+    display: block;
+    background-color: transparent;
+    border: none;
+    text-shadow: none;
+    box-shadow: none;
+    text-align: left;
   }
 }

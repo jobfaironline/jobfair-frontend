@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import JobFairLandingPageFormComponent from '../../components/forms/JobFairLandingPageForm/JobFairLandingPageForm.component';
 import React, { useEffect, useState } from 'react';
 
-const JobFairLandingPageContainer = ({ onFinish, form, onHandleNext, onHandlePrev, jobFairId }) => {
+const JobFairLandingPageContainer = ({ onFinish, form, jobFairId }) => {
   const [isError, setIsError] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState();
   const [companyInformation, setCompanyInformation] = useState();
@@ -45,8 +45,6 @@ const JobFairLandingPageContainer = ({ onFinish, form, onHandleNext, onHandlePre
     <JobFairLandingPageFormComponent
       form={form}
       onFinish={onFinish}
-      onHandleNext={onHandleNext}
-      onHandlePrev={onHandlePrev}
       uploadProps={uploadProps}
       thumbnailUrl={thumbnailUrl}
       companyInformation={companyInformation}
