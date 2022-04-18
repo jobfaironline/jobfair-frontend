@@ -20,6 +20,7 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import FAQPage from '../pages/FAQPage/FAQPage';
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage';
 import HomePage from '../pages/HomePage';
+import JobFairAssignmentPage from '../pages/JobFairAssignmentPage/JobFairAssignmentPage';
 import JobFairGridManagerPage from '../pages/JobFairListPage/JobFairGridManagerPage';
 import JobFairListPage from '../pages/JobFairListPage/JobFairListPage';
 import JobFairTablePage from '../pages/JobFairTablePage/JobFairTablePage';
@@ -154,6 +155,12 @@ const AppRouter = () => (
         key={PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE}
         component={() => <EmployeeAssignBoothMapPage />}
         path={PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE}
+        exact
+      />
+      <CompanyEmployeeRouter
+        key={PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE}
+        component={() => <JobFairAssignmentPage />}
+        path={PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE}
         exact
       />
       <CompanyManagerRouter

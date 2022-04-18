@@ -1,5 +1,5 @@
 import { Form, notification } from 'antd';
-import { PATH, PATH_ADMIN, PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path';
+import { PATH, PATH_ADMIN, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path';
 import { SigninHandler } from '../../../redux-flow/authentication/authentication-action';
 import { signInAPI } from '../../../services/jobhub-api/AuthControllerService';
 import { useDispatch } from 'react-redux';
@@ -26,6 +26,8 @@ const LoginFormContainer = () => {
         dispatch(SigninHandler(res.data));
         switch (res.data.roles) {
           case 'COMPANY_EMPLOYEE':
+            history.push(PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE);
+            return;
           case 'COMPANY_MANAGER':
             history.push(PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE);
             return;
