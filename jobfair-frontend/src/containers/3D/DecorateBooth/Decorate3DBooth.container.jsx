@@ -33,7 +33,7 @@ import { notify } from '../../../utils/toastutil';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
 
-export const DecorateBoothContainer = (props) => {
+export const Decorate3DBoothContainer = (props) => {
   const { companyBoothId, jobFairId } = props;
   const history = useHistory();
   const dispatch = useDispatch();
