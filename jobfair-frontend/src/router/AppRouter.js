@@ -163,6 +163,12 @@ const AppRouter = () => (
         path={PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE}
         exact
       />
+      <CompanyEmployeeRouter
+        key={PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE}
+        component={() => <EmployeeAssignBoothMapPage />}
+        path={PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE}
+        exact
+      />
       <CompanyManagerRouter
         key={PATH_COMPANY_MANAGER.RESUME_DETAIL_PAGE}
         component={() => <ResumeDetailPage />}

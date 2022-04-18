@@ -1,12 +1,14 @@
 import { EmployeeAssignBoothMapCanvas } from '../../../components/3D/EmployeeAssignBoothMap/EmployeeAssignBoothMapCanvas.component';
+import { PATH } from '../../../constants/Paths/Path';
+import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { getAssignmentById } from '../../../services/jobhub-api/AssignmentControllerService';
 import { getLayoutByJobFairId } from '../../../services/jobhub-api/LayoutControllerService';
 import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
-import { useParams } from 'react-router-dom';
 import React, { useEffect, useRef, useState } from 'react';
 
 export const EmployeeAssignBoothMapContainer = () => {
   const { assignmentId } = useParams();
+  const history = useHistory();
   const [state, setState] = useState({
     glb: undefined,
     jobFairBoothData: undefined
@@ -49,9 +51,15 @@ export const EmployeeAssignBoothMapContainer = () => {
     setHoverRef(undefined);
   };
 
-  //TODO: redirect to decorate screen
-  // eslint-disable-next-line no-empty-function
-  const onClick = () => {};
+  const onClick = () => {
+    const jobFairId = state.jobFairBoothData.jobFair.id;
+    const boothId = state.jobFairBoothData.id;
+    const url = generatePath(PATH.DECORATE_BOOTH_PAGE, {
+      jobFairId,
+      companyBoothId: boothId
+    });
+    history.push(url);
+  };
 
   return state.glb ? (
     <EmployeeAssignBoothMapCanvas

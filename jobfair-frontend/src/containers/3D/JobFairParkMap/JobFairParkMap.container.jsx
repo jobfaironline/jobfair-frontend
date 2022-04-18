@@ -3,6 +3,7 @@ import { LoadingComponent } from '../../../components/commons/Loading/Loading.co
 import { PATH } from '../../../constants/Paths/Path';
 import { addVideoTexture, fixTextureOffset, loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import { generatePath, useHistory } from 'react-router-dom';
+import { getLayoutInformationForJobFairPark } from '../../../services/jobhub-api/JobFairControllerService';
 import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
 import React, { useEffect, useState } from 'react';
 
@@ -32,8 +33,6 @@ const getBootMesh = async (position, foundationBox, url, companyBoothId, company
 };
 const JobFairParkMapContainer = (props) => {
   const history = useHistory();
-  //TODO: for calling API
-  // eslint-disable-next-line no-unused-vars
   const { jobFairId } = props;
   const [state, setState] = useState({
     boothMeshes: [],
@@ -41,8 +40,7 @@ const JobFairParkMapContainer = (props) => {
   });
 
   useEffect(async () => {
-    //TODO: map API
-    const responseData = { jobFairLayoutUrl: '', booths: [] }; //await getLayoutInformationForJobFairPark(jobFairId).then((response) => response.data);
+    const responseData = await getLayoutInformationForJobFairPark(jobFairId).then((response) => response.data);
 
     const url = responseData.jobFairLayoutUrl;
     const data = responseData.booths;

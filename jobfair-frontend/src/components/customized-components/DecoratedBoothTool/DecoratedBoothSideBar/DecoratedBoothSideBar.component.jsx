@@ -88,18 +88,10 @@ export const DecorateBoothSideBarComponent = (props) => {
             Delete item
           </Button>
         </div>
-      </div>
-      <Descriptions
-        className='pick-color'
-        layout='vertical'
-        size='small'
-        bordered
-        style={{ padding: '1rem' }}
-        contentStyle={{ textAlign: 'center' }}>
-        <Descriptions.Item>
+        <div>
           <SketchPicker color={selectedItem?.material.color.getHexString()} onChangeComplete={handleOnChangeColor} />
-        </Descriptions.Item>
-      </Descriptions>
+        </div>
+      </div>
     </>
   );
 };
