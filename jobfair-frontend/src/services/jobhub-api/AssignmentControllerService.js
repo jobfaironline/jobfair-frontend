@@ -1,6 +1,7 @@
 import {
   ASSIGNMENT,
   ASSIGNMENT_BY_BOOTH_ID,
+  ASSIGNMENT_BY_EMPLOYEE_ID,
   AVAILABLE_COMPANY_EMPLOYEE,
   STATISTICS,
   UNASSIGNMENT
@@ -15,3 +16,5 @@ export const assignEmployee = (employeeId, jobFairBoothId, type) =>
 export const unAssignEmployee = (employeeId, jobFairBoothId) =>
   CallAPI(`${UNASSIGNMENT}`, 'DELETE', { employeeId, jobFairBoothId });
 export const getStatisticsByJobFair = (jobFairId) => CallAPI(`${STATISTICS}/${jobFairId}`, 'GET');
+export const getAssignmentByEmployeeId = (direction = 'ASC', offset = '0', pageSize = '10', sortBy = 'createTime') =>
+  CallAPI(`${ASSIGNMENT_BY_EMPLOYEE_ID}`, 'GET', {}, { direction, offset, pageSize, sortBy });

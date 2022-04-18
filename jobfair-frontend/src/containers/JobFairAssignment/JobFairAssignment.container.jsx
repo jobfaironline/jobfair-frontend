@@ -1,4 +1,6 @@
 import { Space, Typography } from 'antd';
+import { getAssignmentByEmployeeId } from '../../services/jobhub-api/AssignmentControllerService';
+import { mapperJobFairAssignment } from '../../utils/mapperJobFairAssignment';
 import { useHistory } from 'react-router-dom';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import JobFairAssignmentTableColumn from '../JobFairAssignmentTable/JobFairAssignmentTable.column';
@@ -17,7 +19,7 @@ const fakeData = [
   },
   {
     jobFairName: 'demo 1',
-    assignmentType: '',
+    assignmentType: 'RECEPTIONIST',
     status: 'FINISHED'
   }
 ];
@@ -35,21 +37,9 @@ const JobFairAssignmentContainer = () => {
   const history = useHistory();
 
   const fetchData = async () => {
-    // getJobPositionsAPI('DESC', currentPage, pageSize, 'createdDate')
-    //   .then((res) => {
-    //     const totalRecord = res.data.totalElements;
-    //     setTotalRecord(totalRecord);
-    //     setData([
-    //       ...res.data.content.map((item, index) => ({
-    //         key: item.id,
-    //         no: index + res.data.number * 10 + 1,
-    //         ...item
-    //       }))
-    //     ]);
-    //   })
-    //   .catch(() => {
-    //     //
-    //   });
+    const res = await getAssignmentByEmployeeId('', currentPage, pageSize, '');
+    setTotalRecord(res.data.totalElements);
+    setData([...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))]);
   };
   useLayoutEffect(() => {
     fetchData();
@@ -69,7 +59,7 @@ const JobFairAssignmentContainer = () => {
   const handleReview = (id) => {};
 
   const jobFairAssignmentTableProps = {
-    tableData: fakeData,
+    tableData: data,
     tableColumns: JobFairAssignmentTableColumn,
     onSearch: () => {
       //TODO: fetch data for search
@@ -80,8 +70,7 @@ const JobFairAssignmentContainer = () => {
         key: 'action',
         render: (text, record) => (
           <Space size='middle'>
-            <a onClick={() => handleReview(record.id)}>Enter to review</a>
-            <a onClick={() => handleStartDecorateBooth(record.id)}>Start decorate booth</a>
+            <a onClick={() => handleStartDecorateBooth(record.id)}>Decorate booth</a>
           </Space>
         )
       }

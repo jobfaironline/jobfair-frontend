@@ -28,7 +28,12 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
     title: 'Assignment type',
     dataIndex: 'assignmentType',
     key: 'assignmentType',
-    ...getColumnSearchProps('assignmentType')
+    ...getColumnSearchProps('assignmentType'),
+    render: (assignmentType) => (
+      <>
+        <Tag color={'green'}>{assignmentType}</Tag>
+      </>
+    )
   },
   {
     title: 'Decorate range time',
@@ -52,15 +57,15 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
     children: [
       {
         title: 'Start time',
-        dataIndex: 'startTime',
-        key: 'startTime',
-        ...getColumnSearchProps('startTime')
+        dataIndex: 'publicStartTime',
+        key: 'publicStartTime',
+        ...getColumnSearchProps('publicStartTime')
       },
       {
         title: 'End time',
-        dataIndex: 'endTime',
-        key: 'endTime',
-        ...getColumnSearchProps('endTime')
+        dataIndex: 'publicEndTime',
+        key: 'publicEndTime',
+        ...getColumnSearchProps('publicEndTime')
       }
     ]
   },
