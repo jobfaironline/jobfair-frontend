@@ -7,34 +7,13 @@ import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.c
 import JobFairAssignmentTableColumn from '../JobFairAssignmentTable/JobFairAssignmentTable.column';
 import React, { useLayoutEffect, useState } from 'react';
 
-const fakeData = [
-  {
-    jobFairName: 'demo',
-    assignmentType: 'INTERVIEWEE',
-    status: 'PENDING'
-  },
-  {
-    jobFairName: 'demo 1',
-    assignmentType: 'IN CHARGE',
-    status: 'FINISHED'
-  },
-  {
-    jobFairName: 'demo 1',
-    assignmentType: 'RECEPTIONIST',
-    status: 'FINISHED'
-  }
-];
-
 const JobFairAssignmentContainer = () => {
-  // eslint-disable-next-line no-unused-vars
   const [data, setData] = useState([]);
   //pagination
-  // eslint-disable-next-line no-unused-vars
   const [totalRecord, setTotalRecord] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   //
-  // eslint-disable-next-line no-unused-vars
   const history = useHistory();
 
   const fetchData = async () => {
@@ -59,9 +38,6 @@ const JobFairAssignmentContainer = () => {
     });
     history.push(url);
   };
-
-  // eslint-disable-next-line no-unused-vars
-  const handleReview = (id) => {};
 
   const handleDecorateAction = (record) => {
     const now = new Date().getTime();
