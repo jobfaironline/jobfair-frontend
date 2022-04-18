@@ -1,25 +1,13 @@
-.chooseTemplateJobFairSideBar {
-  flex: 1;
-  display: flex;
-
-  > div {
-    flex: 1;
-  }
-
-  .ant-list-items {
-    display: flex;
-    flex-direction: column;
-  }
-
+.organize-job-fair-side-bar {
   .button-container {
     margin-top: auto;
-    margin-bottom: 10px;
     display: flex;
     align-items: center;
     flex-direction: column;
     padding-top: 10px;
     align-content: space-around;
     justify-content: space-around;
+    margin-bottom: 10px;
   }
 
   .confirm-button {
@@ -33,7 +21,6 @@
     width: 90%;
     height: 40px;
     border-radius: 16px;
-    margin: 5px;
   }
 
   .confirm-button[disabled] {
@@ -44,28 +31,22 @@
     box-shadow: none;
   }
 
-  .ant-tabs-content-holder {
-    display: flex;
-    flex: 1;
+  .prev-button {
+    padding: 10px 20px;
+    font-size: 17px;
+    color: #1890ff;
+    display: block;
+    background-color: transparent;
+    border: none;
+    text-shadow: none;
+    box-shadow: none;
+    text-align: left;
   }
 
-  .ant-tabs-tabpane {
-    display: flex;
-    flex: 1;
-    align-content: center;
-    justify-content: center;
-    align-items: stretch;
-  }
-
-  .infinity-container {
+  .side-bar-right-side-container {
     display: flex;
     flex-direction: column;
-    align-content: center;
-    align-items: center;
-    flex: 1;
-
-    > div {
-      width: 100%;
-    }
+    height: calc(100vh - 80px);
+    overflow-y: auto;
   }
 }

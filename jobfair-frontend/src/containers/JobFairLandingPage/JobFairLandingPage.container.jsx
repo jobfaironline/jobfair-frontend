@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux';
 import JobFairLandingPageFormComponent from '../../components/forms/JobFairLandingPageForm/JobFairLandingPageForm.component';
 import React, { useEffect, useState } from 'react';
 
-const JobFairLandingPageContainer = ({ onFinish, form, onHandleNext, onHandlePrev, jobFairId }) => {
+const JobFairLandingPageContainer = ({ jobFairData, onFinish, form, jobFairId }) => {
   const [isError, setIsError] = useState(false);
-  const [thumbnailUrl, setThumbnailUrl] = useState();
+  const [thumbnailUrl, setThumbnailUrl] = useState(jobFairData.thumbnailUrl);
   const [companyInformation, setCompanyInformation] = useState();
 
   const companyId = useSelector((state) => state.authentication.user.companyId);
@@ -43,10 +43,9 @@ const JobFairLandingPageContainer = ({ onFinish, form, onHandleNext, onHandlePre
   };
   return companyInformation ? (
     <JobFairLandingPageFormComponent
+      jobFairData={jobFairData}
       form={form}
       onFinish={onFinish}
-      onHandleNext={onHandleNext}
-      onHandlePrev={onHandlePrev}
       uploadProps={uploadProps}
       thumbnailUrl={thumbnailUrl}
       companyInformation={companyInformation}

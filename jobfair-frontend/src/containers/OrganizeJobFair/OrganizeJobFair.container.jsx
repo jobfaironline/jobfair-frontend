@@ -1,35 +1,71 @@
 import './OrganizeJobFair.styles.scss';
 import { AssignEmployeeContainer } from '../3D/AssignEmployee/AssignEmployee.container';
-import { Form, Steps, notification } from 'antd';
+import { Form, notification } from 'antd';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
+import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
 import { convertToDateValue } from '../../utils/common';
 import {
   draftJobFairAPI,
+  getJobFairByIDAPI,
   publishJobFairAPI,
   updateJobFairAPI
 } from '../../services/jobhub-api/JobFairControllerService';
+import { getLayoutByJobFairId, pickLayoutForJobFair } from '../../services/jobhub-api/LayoutControllerService';
 import { loadGLBModel } from '../../utils/ThreeJS/threeJSUtil';
-import { pickLayoutForJobFair } from '../../services/jobhub-api/LayoutControllerService';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import ChooseTemplateJobFairContainer from '../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
 import JobFairLandingPageContainer from '../JobFairLandingPage/JobFairLandingPage.container';
 import JobFairParkMapComponent from '../../components/3D/JobFairParkMap/JobFairParkMap.component';
 import PublishJobFairContainer from '../PublishJobFairContainer/PublishJobFair.container';
 import React, { useEffect, useState } from 'react';
-import ScheduleJobFairFormContainer from '../forms/ScheduleJobFairForm/ScheduleJobFairForm.container';
+import ScheduleJobFairFormComponent from '../../components/forms/ScheduleJobFairForm/ScheduleJobFairForm.component';
 
-const { Step } = Steps;
 const OrganizeJobFairContainer = () => {
+  const history = useHistory();
+  const location = useLocation();
+  const step = location.state?.step ?? 0;
+  const jobFairId = location.state?.jobFairId;
+
   const [form] = Form.useForm();
-  const [jobFairData, setJobFairData] = useState();
   //management step
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(step);
+  const [jobFairData, setJobFairData] = useState();
   const [layoutData, setLayoutData] = useState({
     glb: undefined,
     id: ''
   });
   const [isError, setIsError] = useState(true);
-  const history = useHistory();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      if (step === 0) {
+        const body = { name: 'Untitled' };
+        const data = (await draftJobFairAPI(body)).data;
+        setJobFairData(data);
+        notification['success']({
+          message: 'A job fair has been created'
+        });
+      } else {
+        const jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
+
+        const layoutData = (await getLayoutByJobFairId(jobFairId)).data;
+        const glb = await loadGLBModel(layoutData.url);
+        setLayoutData({
+          glb: glb.scene,
+          id: layoutData.id
+        });
+        setJobFairData(jobFairData);
+      }
+    } catch (e) {
+      notification['error']({
+        message: 'Something went wrong'
+      });
+    }
+  };
 
   const handleLoad3DMap = async (url, id) => {
     const glb = await loadGLBModel(url);
@@ -39,46 +75,75 @@ const OrganizeJobFairContainer = () => {
     });
   };
 
-  const onValueChange = () => {
-    const isHasError =
-      !form.isFieldsTouched(true) || form.getFieldsError().filter(({ errors }) => errors.length).length > 0;
-    setIsError(isHasError);
+  const onValueChange = async () => {
+    try {
+      await form.validateFields();
+      setIsError(false);
+    } catch (e) {
+      const errorsArray = form.getFieldsError();
+      for (const error of errorsArray) {
+        if (error.errors.length > 0) {
+          form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
+          break;
+        }
+      }
+      const isHasError = form.getFieldsError().filter(({ errors }) => errors.length).length > 0;
+      setIsError(isHasError);
+    }
   };
 
   const updateJobFairAtScheduleScreen = async (values) => {
-    const body = {
-      id: jobFairData?.id,
-      name: values.name,
-      decorateStartTime: convertToDateValue(values.decorateRange[0].format()),
-      decorateEndTime: convertToDateValue(values.decorateRange[1].format()),
-      publicEndTime: convertToDateValue(values.publicRange[0].format()),
-      publicStartTime: convertToDateValue(values.publicRange[1].format())
-    };
-    const res = await updateJobFairAPI(body);
-    if (res.status === 200) return true;
+    try {
+      const body = {
+        id: jobFairData?.id,
+        name: values.name,
+        decorateStartTime: convertToDateValue(values.decorateRange[0].format()),
+        decorateEndTime: convertToDateValue(values.decorateRange[1].format()),
+        publicStartTime: convertToDateValue(values.publicRange[0].format()),
+        publicEndTime: convertToDateValue(values.publicRange[1].format())
+      };
+      const res = await updateJobFairAPI(body);
+      if (res.status === 200) return true;
+    } catch (e) {
+      notification['error']({
+        message: 'Error is created'
+      });
+      return false;
+    }
   };
 
   const updateJobFairAtLandingPage = async (values) => {
-    const body = {
-      id: jobFairData?.id,
-      hostName: values.hostName,
-      description: values.description,
-      targetAttendant: values.targetAttendant
-    };
-    const res = await updateJobFairAPI(body);
-    if (res.status === 200) return true;
+    try {
+      const body = {
+        id: jobFairData?.id,
+        hostName: values.hostName,
+        description: values.description,
+        targetAttendant: values.targetAttendant
+      };
+      const res = await updateJobFairAPI(body);
+      if (res.status === 200) return true;
+    } catch (e) {
+      notification['error']({
+        message: 'Error is created'
+      });
+      return false;
+    }
   };
 
   const publishJobFairEvent = async () => {
-    const res = await publishJobFairAPI(jobFairData?.id);
-    if (res.status === 200) {
+    try {
+      await publishJobFairAPI(jobFairData?.id);
       notification['success']({
         message: 'Publish job fair successfully'
+      });
+    } catch (e) {
+      notification['error']({
+        message: 'Error is created'
       });
     }
   };
 
-  const nextStepButtonActions = (step) => {
+  const onNext = (step) => {
     switch (step) {
       case 0:
         return async () => {
@@ -91,6 +156,7 @@ const OrganizeJobFairContainer = () => {
             await form.validateFields();
             await updateJobFairAtScheduleScreen(form.getFieldsValue(true));
             setCurrentStep(currentStep + 1);
+            setIsError(false);
           } catch (e) {
             const errorsArray = form.getFieldsError();
             for (const error of errorsArray) {
@@ -107,6 +173,7 @@ const OrganizeJobFairContainer = () => {
             await form.validateFields();
             await updateJobFairAtLandingPage(form.getFieldsValue(true));
             setCurrentStep(currentStep + 1);
+            setIsError(false);
           } catch (e) {
             const errorsArray = form.getFieldsError();
             for (const error of errorsArray) {
@@ -132,22 +199,11 @@ const OrganizeJobFairContainer = () => {
         return () => setCurrentStep(currentStep + 1);
     }
   };
-  const handleOnPrev = (currentStep) => () => {
-    if (currentStep !== 0) setCurrentStep(currentStep - 1);
-  };
 
-  useEffect(() => {
-    onDraftJobFair();
-  }, []);
-
-  const onDraftJobFair = async () => {
-    const body = { name: 'Untitled' };
-    const res = await draftJobFairAPI(body);
-    if (res.status === 200) {
-      setJobFairData(res.data);
-      notification['success']({
-        message: 'A job fair has been created'
-      });
+  const onPrev = (currentStep) => () => {
+    if (currentStep !== 0) {
+      setCurrentStep(currentStep - 1);
+      setIsError(false);
     }
   };
 
@@ -167,78 +223,75 @@ const OrganizeJobFairContainer = () => {
   };
 
   const stepComponentList = [
-    <div>
-      <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
-      <ChooseTemplateJobFairContainer
-        onHandleNext={nextStepButtonActions(currentStep)}
-        templateId={layoutData.id}
-        handleLoad3DMap={handleLoad3DMap}
-      />
-    </div>,
-    <>
-      <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
-      <ScheduleJobFairFormContainer
-        onHandleNext={nextStepButtonActions(currentStep)}
-        onHandlePrev={handleOnPrev(currentStep)}
-        form={form}
-        onFinish={updateJobFairAtScheduleScreen}
-        onValueChange={onValueChange}
-        isError={isError}
-      />
-    </>,
+    <SideBarComponent
+      leftSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
+      rightSide={<ChooseTemplateJobFairContainer handleLoad3DMap={handleLoad3DMap} />}
+      nextButtonContent={'Choose template'}
+      onNext={onNext(currentStep)}
+      isNextButtonDisable={layoutData.id === ''}
+      isPrevButtonDisable={true}
+      ratio={3 / 4}
+      isDisplayPrevButton={false}
+    />,
+    <SideBarComponent
+      leftSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
+      rightSide={
+        <ScheduleJobFairFormComponent
+          jobFairData={jobFairData}
+          onFinish={updateJobFairAtScheduleScreen}
+          form={form}
+          onValueChange={onValueChange}
+        />
+      }
+      nextButtonContent={'Start assign employee'}
+      prevButtonContent={'Back to choose job fair layout'}
+      onNext={onNext(currentStep)}
+      isNextButtonDisable={isError}
+      isPrevButtonDisable={false}
+      onPrev={onPrev(currentStep)}
+      ratio={3 / 4}
+    />,
     <>
       {jobFairData !== undefined ? (
         <AssignEmployeeContainer
           jobFairId={jobFairData.id}
-          onHandleNext={nextStepButtonActions(currentStep)}
-          onHandlePrev={handleOnPrev(currentStep)}
+          onHandleNext={onNext(currentStep)}
+          onHandlePrev={onPrev(currentStep)}
         />
       ) : null}
     </>,
-    <>
-      <div style={{ width: '75%' }}>{layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : null}</div>
-      {jobFairData !== undefined ? (
-        <JobFairLandingPageContainer
-          form={form}
-          onHandleNext={nextStepButtonActions(currentStep)}
-          onHandlePrev={handleOnPrev(currentStep)}
-          onFinish={updateJobFairAtLandingPage}
-          jobFairId={jobFairData.id}
-        />
-      ) : null}
-    </>,
+    <SideBarComponent
+      leftSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
+      rightSide={
+        jobFairData !== undefined ? (
+          <JobFairLandingPageContainer
+            jobFairData={jobFairData}
+            form={form}
+            onFinish={updateJobFairAtLandingPage}
+            jobFairId={jobFairData.id}
+          />
+        ) : null
+      }
+      nextButtonContent={'Publish'}
+      prevButtonContent={'Back to assign employee'}
+      onNext={onNext(currentStep)}
+      isNextButtonDisable={isError}
+      isPrevButtonDisable={false}
+      onPrev={onPrev(currentStep)}
+      ratio={3 / 4}
+    />,
     <>
       {jobFairData !== undefined ? (
         <PublishJobFairContainer
           jobFairId={jobFairData.id}
-          onFinish={nextStepButtonActions(currentStep)}
-          onHandlePrev={handleOnPrev(currentStep)}
+          onFinish={onNext(currentStep)}
+          onHandlePrev={onPrev(currentStep)}
         />
       ) : null}
     </>
   ];
 
-  return (
-    <div>
-      <Steps
-        current={currentStep}
-        style={{
-          marginBottom: '3rem',
-          position: 'sticky',
-          top: '80px',
-          background: '#FFF',
-          zIndex: '1000',
-          padding: '1rem',
-          display: 'none'
-        }}>
-        <Step title='Our policy' />
-        <Step title='Choose template' />
-        <Step title='Jobfair registration form' />
-        <Step title='Confirm registration' />
-      </Steps>
-      {stepComponentList[currentStep]}
-    </div>
-  );
+  return <div>{stepComponentList[currentStep]}</div>;
 };
 
 export default OrganizeJobFairContainer;
