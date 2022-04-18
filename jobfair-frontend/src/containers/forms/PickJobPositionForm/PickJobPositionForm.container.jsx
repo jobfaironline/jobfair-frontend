@@ -6,7 +6,7 @@ import PickJobPositionTableContainer from '../../JobPositionTable/JobPositionTab
 import React, { useState } from 'react';
 
 const PickJobPositionFormContainer = ({ form }) => {
-  const [modalVisibile, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const [anchorList, setAnchorList] = useState(
     form.getFieldsValue().jobPositions
       ? form.getFieldsValue().jobPositions.map((item) => ({
@@ -16,7 +16,7 @@ const PickJobPositionFormContainer = ({ form }) => {
       : []
   );
 
-  const handlePickJobPosition = (name, add) => {
+  const handlePickJobPosition = () => {
     setModalVisible(true);
   };
 
@@ -64,17 +64,17 @@ const PickJobPositionFormContainer = ({ form }) => {
               : []
           }
           href={'#description'}
-          title={'Registration description'}
+          title={'Booth description'}
         />
       </div>
       <Modal
         width={800}
         title='Choose job position'
-        visible={modalVisibile}
+        visible={modalVisible}
         onCancel={handleCloseModal}
         footer={null}
         destroyOnClose>
-        {modalVisibile ? <PickJobPositionTableContainer form={form} selectable /> : null}
+        {modalVisible ? <PickJobPositionTableContainer form={form} selectable /> : null}
       </Modal>
       <PickJobPositionForm handlePickJobPosition={handlePickJobPosition} form={form} handleRemove={handleRemove} />
     </>

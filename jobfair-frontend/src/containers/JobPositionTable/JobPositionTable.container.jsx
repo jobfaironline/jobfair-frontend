@@ -110,7 +110,7 @@ const PickJobPositionTable = ({ selectable, form }) => {
       handlePageChange,
       totalRecord
     },
-    rowSelection: selectable ? { ...rowSelection } : null
+    rowSelection: { ...rowSelection }
   };
 
   return (

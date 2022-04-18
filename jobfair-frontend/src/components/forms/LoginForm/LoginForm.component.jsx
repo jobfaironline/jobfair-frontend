@@ -14,11 +14,11 @@ const LoginFormComponent = ({ onFinish, form }) => {
       </Divider>
       <div className='input-container'>
         <Form className='login-form' form={form} onFinish={onFinish} autoComplete='off'>
-          <Form.Item name='email' hasFeedback rules={LoginValidation.email}>
-            <Input placeholder='Email' />
+          <Form.Item label='Email' name='email' hasFeedback rules={LoginValidation.email}>
+            <Input style={{ marginLeft: '2rem' }} />
           </Form.Item>
-          <Form.Item name='password' hasFeedback rules={LoginValidation.password}>
-            <Input.Password placeholder='Password' />
+          <Form.Item label='Password' name='password' hasFeedback rules={LoginValidation.password}>
+            <Input.Password style={{ marginLeft: '0.5rem' }} />
           </Form.Item>
           <Form.Item className='login'>
             <Button type='primary' htmlType='submit'>
