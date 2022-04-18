@@ -35,7 +35,7 @@ const PickJobPositionForm = (props) => {
           {(fields, { remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => {
-                const id = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions[key].id : undefined;
+                const id = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions[key]?.id : undefined;
                 const item = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions[key] : {};
 
                 return (
@@ -70,27 +70,27 @@ const PickJobPositionForm = (props) => {
                                 <div key='title'>
                                   <Space>
                                     <Text strong>Job title: </Text>
-                                    <Text>{item.title}</Text>
+                                    <Text>{item?.title}</Text>
                                   </Space>
                                 </div>
                               </Row>
                               <div key='language'>
                                 <Space>
                                   <Text strong>Prefer language: </Text>
-                                  <Text>{item.language}</Text>
+                                  <Text>{item?.language}</Text>
                                 </Space>
                               </div>
                               <Row gutter={[100, 0]}>
                                 <Col span={8} key='level'>
                                   <Space>
                                     <Text strong>Job level: </Text>
-                                    <Text>{convertEnumToString(item.level)}</Text>
+                                    <Text>{convertEnumToString(item?.level)}</Text>
                                   </Space>
                                 </Col>
                                 <Col span={12} key='type'>
                                   <Space>
                                     <Text strong>Job type: </Text>
-                                    <Text>{convertEnumToString(item.jobType)}</Text>
+                                    <Text>{convertEnumToString(item?.jobType)}</Text>
                                   </Space>
                                 </Col>
                               </Row>
@@ -99,7 +99,7 @@ const PickJobPositionForm = (props) => {
                                   <div key='contact-name'>
                                     <Space>
                                       <Text strong>Contact Person:</Text>
-                                      <Text>{item.contactPersonName}</Text>
+                                      <Text>{item?.contactPersonName}</Text>
                                     </Space>
                                   </div>
                                 </Col>
@@ -107,7 +107,7 @@ const PickJobPositionForm = (props) => {
                                   <div key='contact-email'>
                                     <Space>
                                       <Text strong>Contact Email:</Text>
-                                      <Text>{item.contactEmail}</Text>
+                                      <Text>{item?.contactEmail}</Text>
                                     </Space>
                                   </div>
                                 </Col>
@@ -115,7 +115,7 @@ const PickJobPositionForm = (props) => {
                                   <div key='skills'>
                                     <Space>
                                       <Text strong>Required skills: </Text>
-                                      {item.skillTagDTOS.map((skill) => (
+                                      {item?.skillTagDTOS.map((skill) => (
                                         <Tag
                                           color='blue'
                                           style={{
@@ -130,7 +130,7 @@ const PickJobPositionForm = (props) => {
                                   <div key='category'>
                                     <Space>
                                       <Text strong>Category: </Text>
-                                      {item.subCategoryDTOs.map((category) => (
+                                      {item?.subCategoryDTOs.map((category) => (
                                         <Tag
                                           color='blue'
                                           style={{
@@ -150,13 +150,13 @@ const PickJobPositionForm = (props) => {
                                     <div key='description'>
                                       <Space align='start' direction='vertical' size={0}>
                                         <Text strong>Job description: </Text>
-                                        <Text>{item.description}</Text>
+                                        <Text>{item?.description}</Text>
                                       </Space>
                                     </div>
                                     <div key='requirement'>
                                       <Space align='start' direction='vertical' size={0}>
                                         <Text strong>Job requirements: </Text>
-                                        <Text>{item.requirements}</Text>
+                                        <Text>{item?.requirements}</Text>
                                       </Space>
                                     </div>
                                   </div>
