@@ -1,5 +1,4 @@
 import { Decorate3DBoothContainer } from '../3D/DecorateBooth/Decorate3DBooth.container';
-import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
 import { decorateBoothAction } from '../../redux-flow/decorateBooth/decorate-booth-slice';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -26,16 +25,11 @@ export const DecorateBoothContainer = () => {
   };
 
   const stepComponentList = [
-    <SideBarComponent
-      leftSide={<Decorate3DBoothContainer companyBoothId={companyBoothId} jobFairId={jobFairId} />}
-      rightSide={<div>Hello mr Son ga</div>}
-      nextButtonContent={'Choose template'}
+    <Decorate3DBoothContainer
+      companyBoothId={companyBoothId}
+      jobFairId={jobFairId}
       onNext={onNext(currentStep)}
       onPrev={onPrev(currentStep)}
-      isNextButtonDisable={false}
-      isPrevButtonDisable={true}
-      ratio={3 / 4}
-      isDisplayPrevButton={false}
     />
   ];
 

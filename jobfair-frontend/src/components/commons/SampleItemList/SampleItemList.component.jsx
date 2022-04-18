@@ -54,7 +54,7 @@ function Card({ onClick, selected, title }) {
       </div>
       <div
         style={{
-          height: '160px'
+          height: '50px'
         }}
       />
     </div>
