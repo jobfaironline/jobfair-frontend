@@ -63,6 +63,13 @@ const JobFairAssignmentContainer = () => {
   // eslint-disable-next-line no-unused-vars
   const handleReview = (id) => {};
 
+  const handleDecorateAction = (record) => {
+    const now = new Date().getTime();
+    return record.decorateStartTimeValue <= now <= record.decorateEndTimeValue ? (
+      <a onClick={() => handleStartDecorateBooth(record.id)}>Decorate booth</a>
+    ) : null;
+  };
+
   const jobFairAssignmentTableProps = {
     tableData: data,
     tableColumns: JobFairAssignmentTableColumn,
@@ -73,11 +80,7 @@ const JobFairAssignmentContainer = () => {
       {
         title: 'Actions',
         key: 'action',
-        render: (text, record) => (
-          <Space size='middle'>
-            <a onClick={() => handleStartDecorateBooth(record.id)}>Decorate booth</a>
-          </Space>
-        )
+        render: (text, record) => <Space size='middle'>{handleDecorateAction(record)}</Space>
       }
     ],
     paginationObject: {
