@@ -5,6 +5,9 @@ import { decorateBoothAction } from '../../redux-flow/decorateBooth/decorate-boo
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import PickJobPositionFormContainer from '../forms/PickJobPositionForm/PickJobPositionForm.container';
+import { decorateBoothAction } from '../../redux-flow/decorateBooth/decorate-booth-slice';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 
 export const DecorateBoothContainer = () => {
@@ -47,28 +50,14 @@ export const DecorateBoothContainer = () => {
   };
 
   const stepComponentList = [
-    <SideBarComponent
-      leftSide={<Decorate3DBoothContainer companyBoothId={companyBoothId} jobFairId={jobFairId} />}
-      rightSide={<div>Hello mr Son ga</div>}
-      nextButtonContent={'Pick job position'}
+    <Decorate3DBoothContainer
+      companyBoothId={companyBoothId}
+      jobFairId={jobFairId}
       onNext={onNext(currentStep)}
       onPrev={onPrev(currentStep)}
-      isNextButtonDisable={false}
-      isPrevButtonDisable={true}
-      ratio={3 / 4}
-      isDisplayPrevButton={false}
     />,
-    <SideBarComponent
-      leftSide={<div></div>}
-      rightSide={<PickJobPositionFormContainer form={form} />}
-      nextButtonContent={'Next'}
-      onNext={onNext(currentStep)}
-      onPrev={onPrev(currentStep)}
-      isNextButtonDisable={isError}
-      isPrevButtonDisable={false}
-      ratio={0}
-      isDisplayPrevButton={false}
-    />
+    <PickJobPositionFormContainer form={form}       onNext={onNext(currentStep)}
+                                  onPrev={onPrev(currentStep)} isNextButtonDisable={isError} isPrevButtonDisable={false} isDisplayPrevButton={false}/>
   ];
 
   return <div>{stepComponentList[currentStep]}</div>;

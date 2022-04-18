@@ -89,10 +89,9 @@ export const DecorateBoothSideBarComponent = (props) => {
           </Button>
         </div>
         <div>
-              <SketchPicker color={selectedItem?.material.color.getHexString()} onChangeComplete={handleOnChangeColor} />
+          <SketchPicker color={selectedItem?.material.color.getHexString()} onChangeComplete={handleOnChangeColor} />
         </div>
       </div>
-
     </>
   );
 };

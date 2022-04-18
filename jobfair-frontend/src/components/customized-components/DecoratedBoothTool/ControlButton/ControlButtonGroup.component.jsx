@@ -1,24 +1,25 @@
-import { Affix, Button, Space } from 'antd';
+import { Button, Space } from 'antd';
 import React from 'react';
 
 export const ControlButtonGroup = (props) => {
-  const { addMoreComponentHandle, saveHandle, reviewHandle } = props;
+  const { addMoreComponentHandle, saveHandle, reviewHandle, onNext } = props;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <Affix offsetBottom={10}>
-        <Space>
-          <Button type='primary' onClick={addMoreComponentHandle}>
-            Add more component
-          </Button>
-          <Button onClick={saveHandle} type='primary'>
-            Save
-          </Button>
-          <Button type='primary' onClick={reviewHandle}>
-            Review
-          </Button>
-        </Space>
-      </Affix>
+    <div style={{ position: 'absolute', top: '90px', right: '10px' }}>
+      <Space>
+        <Button type='primary' onClick={addMoreComponentHandle}>
+          Add more component
+        </Button>
+        <Button onClick={saveHandle} type='primary'>
+          Save
+        </Button>
+        <Button type='primary' onClick={reviewHandle}>
+          Review
+        </Button>
+        <Button type='primary' onClick={onNext}>
+          Start description
+        </Button>
+      </Space>
     </div>
   );
 };

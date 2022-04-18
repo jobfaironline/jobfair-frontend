@@ -35,7 +35,7 @@ export const DecorateBooth3DItemMenuContainer = () => {
 
   if (sampleItems.length === 0) return null;
   return (
-    <div style={{ display: mode === ModeConstant.ADD ? 'block' : 'none' }}>
+    <div style={{ display: mode === ModeConstant.ADD ? 'block' : 'none', flex: 1 }}>
       <SampleItemMenu {...sampleItemMenuProps} />
     </div>
   );
