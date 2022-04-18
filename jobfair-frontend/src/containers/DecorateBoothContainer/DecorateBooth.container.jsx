@@ -59,14 +59,14 @@ export const DecorateBoothContainer = () => {
       isDisplayPrevButton={false}
     />,
     <SideBarComponent
-      leftSide={<Decorate3DBoothContainer companyBoothId={companyBoothId} jobFairId={jobFairId} />}
+      leftSide={<div></div>}
       rightSide={<PickJobPositionFormContainer form={form} />}
       nextButtonContent={'Next'}
       onNext={onNext(currentStep)}
       onPrev={onPrev(currentStep)}
       isNextButtonDisable={isError}
       isPrevButtonDisable={false}
-      ratio={2 / 3}
+      ratio={0}
       isDisplayPrevButton={false}
     />
   ];
