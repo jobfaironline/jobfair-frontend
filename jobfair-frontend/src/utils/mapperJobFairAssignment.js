@@ -3,6 +3,7 @@ import { convertEnumToString, convertToUTCString } from './common';
 export const mapperJobFairAssignment = (item, index) => ({
   key: item.id,
   no: index + 1,
+  id: item.id,
   booth: item.jobFairBooth?.booth,
   jobFair: item.jobFairBooth?.jobFair,
   jobFairName: item.jobFairBooth?.jobFair?.name,

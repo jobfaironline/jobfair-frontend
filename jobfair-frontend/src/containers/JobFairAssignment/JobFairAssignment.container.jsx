@@ -1,7 +1,8 @@
+import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
 import { Space, Typography } from 'antd';
+import { generatePath, useHistory } from 'react-router-dom';
 import { getAssignmentByEmployeeId } from '../../services/jobhub-api/AssignmentControllerService';
 import { mapperJobFairAssignment } from '../../utils/mapperJobFairAssignment';
-import { useHistory } from 'react-router-dom';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import JobFairAssignmentTableColumn from '../JobFairAssignmentTable/JobFairAssignmentTable.column';
 import React, { useLayoutEffect, useState } from 'react';
@@ -52,8 +53,12 @@ const JobFairAssignmentContainer = () => {
     setPageSize(pageSize);
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const handleStartDecorateBooth = (id) => {};
+  const handleStartDecorateBooth = (id) => {
+    const url = generatePath(PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE, {
+      assignmentId: id
+    });
+    history.push(url);
+  };
 
   // eslint-disable-next-line no-unused-vars
   const handleReview = (id) => {};
