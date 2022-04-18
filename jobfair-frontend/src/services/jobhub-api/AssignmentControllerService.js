@@ -1,4 +1,5 @@
 import {
+  ASSIGN,
   ASSIGNMENT,
   ASSIGNMENT_BY_BOOTH_ID,
   ASSIGNMENT_BY_EMPLOYEE_ID,
@@ -12,9 +13,10 @@ export const getAvailableCompanyEmployee = (jobFairId) => CallAPI(`${AVAILABLE_C
 export const getAssigmentByJobFairBoothId = (jobFairBoothId) =>
   CallAPI(`${ASSIGNMENT_BY_BOOTH_ID}/${jobFairBoothId}`, 'GET');
 export const assignEmployee = (employeeId, jobFairBoothId, type) =>
-  CallAPI(`${ASSIGNMENT}`, 'POST', { employeeId, jobFairBoothId, type });
+  CallAPI(`${ASSIGN}`, 'POST', { employeeId, jobFairBoothId, type });
 export const unAssignEmployee = (employeeId, jobFairBoothId) =>
   CallAPI(`${UNASSIGNMENT}`, 'DELETE', { employeeId, jobFairBoothId });
 export const getStatisticsByJobFair = (jobFairId) => CallAPI(`${STATISTICS}/${jobFairId}`, 'GET');
 export const getAssignmentByEmployeeId = (direction = 'ASC', offset = '0', pageSize = '10', sortBy = 'createTime') =>
   CallAPI(`${ASSIGNMENT_BY_EMPLOYEE_ID}`, 'GET', {}, { direction, offset, pageSize, sortBy });
+export const getAssignmentById = (assignmentId) => CallAPI(`${ASSIGNMENT}/${assignmentId}`, 'GET');
