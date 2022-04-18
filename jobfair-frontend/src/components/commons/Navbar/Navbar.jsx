@@ -54,6 +54,9 @@ export const CompanyEmployeeMenu = [
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}>
     <Link to={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}>Applications management</Link>
+  </Menu.Item>,
+  <Menu.Item key={PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE}>
+    <Link to={PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE}>My assignment</Link>
   </Menu.Item>
 ];
 
