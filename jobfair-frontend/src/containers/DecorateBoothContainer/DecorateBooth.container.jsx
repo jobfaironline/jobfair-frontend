@@ -23,7 +23,6 @@ export const DecorateBoothContainer = () => {
         return async () => {
           try {
             await form.validateFields();
-            //TODO: call API create draft
             setCurrentStep(currentStep + 1);
             setIsError(false);
           } catch (e) {
