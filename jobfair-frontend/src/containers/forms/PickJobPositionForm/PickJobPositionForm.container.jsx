@@ -71,10 +71,17 @@ const PickJobPositionFormContainer = ({ form, companyBoothId }) => {
         testNumOfQuestion: item.testNumOfQuestion
       }))
     };
-    const res = await assignJobPositionToBooth(body);
-    if (res.status === 200) {
-      notification['success']({
-        message: `submitted successfully`
+    try {
+      const res = await assignJobPositionToBooth(body);
+      if (res.status === 200) {
+        notification['success']({
+          message: `submitted successfully`
+        });
+      }
+    } catch (e) {
+      notification['error']({
+        message: `Assign job position failed`,
+        description: `${e.response.data}`
       });
     }
   };
