@@ -9,7 +9,12 @@ const DefaultTableComponent = ({ tableData, defaultColumns, extra, paginationObj
 
   return (
     <Fragment>
-      <Table columns={finalColumns} dataSource={tableData} pagination={false} />
+      <Table
+        columns={finalColumns}
+        dataSource={tableData}
+        pagination={false}
+        rowSelection={otherTableProps?.rowSelection}
+      />
       <Space style={{ margin: '1rem', display: 'flex', justifyContent: 'end' }}>
         <PaginationComponent
           data={tableData}

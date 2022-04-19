@@ -1,8 +1,8 @@
-import { BOOTH_NAME_PREFIX } from '../../../constants/3DConst';
+import { ArrowHelper } from '../ArrowHelper/ArrowHelper.component';
 import { BasicMesh } from '../ThreeJSBaseComponent/ChildMesh.component';
 import { CameraControls } from '../ThreeJSBaseComponent/CameraControls.component';
 import { Canvas } from '@react-three/fiber';
-import { ChooseBoothGroundMesh } from './ChooseBoothGroundMesh.component';
+import { ChooseBoothGroundMesh } from '../ChooseBooth/ChooseBoothGroundMesh.component';
 import { EffectComposer, Outline } from '@react-three/postprocessing';
 import { KernelSize, Resizer } from 'postprocessing';
 import { SkyComponent, SkyType } from '../ThreeJSBaseComponent/Sky.component';
@@ -10,32 +10,15 @@ import { SkyTypeSelect } from '../ThreeJSBaseComponent/SelectSkyType.component';
 import { Stats } from '@react-three/drei';
 import React, { Fragment, useState } from 'react';
 
-export const ChooseBoothCanvas = (props) => {
-  const {
-    mesh,
-    boothData,
-    onClick,
-    selectionRef,
-    onCompanyGroundPointerOver,
-    onCompanyGroundPointerOut,
-    hoverRef,
-    boothMeshesRef
-  } = props;
-
+export const EmployeeAssignBoothMapCanvas = (props) => {
+  const { mapMesh, jobFairBoothData, boothMeshesRef, onBoothMouseOver, onBoothMouseOut, hoverRef, onClick } = props;
   const [skyType, setSkyType] = useState(SkyType.Morning);
 
   const onChangeSkyType = (value) => {
     setSkyType(value.value);
   };
 
-  const calculateOutline = () => {
-    const result = [];
-    if (selectionRef !== undefined && selectionRef?.current !== undefined) result.push(selectionRef);
-
-    if (hoverRef !== undefined && hoverRef?.current !== undefined) result.push(hoverRef);
-
-    return result.length === 0 ? null : result;
-  };
+  const boothName = jobFairBoothData.booth.name;
 
   return (
     <Fragment>
@@ -51,19 +34,18 @@ export const ChooseBoothCanvas = (props) => {
         camera={{ far: 5000, fov: 50 }}>
         <CameraControls />
         <SkyComponent style={skyType} />
-
         <group dispose={null}>
-          {mesh.children.map((childMesh) => {
-            if (childMesh.name.includes(BOOTH_NAME_PREFIX)) {
-              const id = boothData[childMesh.name]?.id;
+          {mapMesh.children.map((childMesh) => {
+            if (childMesh.name.includes(boothName)) {
+              const id = jobFairBoothData.id;
               return (
                 <ChooseBoothGroundMesh
                   key={childMesh.uuid}
                   mesh={childMesh}
                   boothId={id}
-                  isAvailable={boothData[childMesh.name] !== undefined}
-                  onPointerOver={onCompanyGroundPointerOver}
-                  onPointerLeave={onCompanyGroundPointerOut}
+                  isAvailable={true}
+                  onPointerOver={onBoothMouseOver}
+                  onPointerLeave={onBoothMouseOut}
                   onClick={onClick}
                   boothMeshesRef={boothMeshesRef}
                 />
@@ -71,10 +53,15 @@ export const ChooseBoothCanvas = (props) => {
             }
             return <BasicMesh key={childMesh.uuid} mesh={childMesh} />;
           })}
+          {mapMesh.children.map((childMesh) => {
+            if (childMesh.name.includes(boothName))
+              return <ArrowHelper origin={childMesh.position} color={0x32a852} length={20} distance={23} />;
+            return null;
+          })}
         </group>
         <EffectComposer multisampling={8} autoClear={false}>
           <Outline
-            selection={calculateOutline()}
+            selection={hoverRef}
             edgeStrength={10000}
             width={Resizer.AUTO_SIZE} // render width
             height={Resizer.AUTO_SIZE} // render height
@@ -84,7 +71,7 @@ export const ChooseBoothCanvas = (props) => {
           />
         </EffectComposer>
       </Canvas>
-      <Stats></Stats>
+      <Stats />
     </Fragment>
   );
 };

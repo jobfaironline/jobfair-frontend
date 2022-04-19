@@ -33,8 +33,8 @@ import { notify } from '../../../utils/toastutil';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
 
-export const DecorateBoothContainer = (props) => {
-  const { companyBoothId, jobFairId } = props;
+export const Decorate3DBoothContainer = (props) => {
+  const { companyBoothId, jobFairId, onNext } = props;
   const history = useHistory();
   const dispatch = useDispatch();
   const { mode, selectedItem } = useSelector((state) => state.decorateBooth);
@@ -187,7 +187,8 @@ export const DecorateBoothContainer = (props) => {
   const controlButtonsProps = {
     addMoreComponentHandle,
     saveHandle,
-    reviewHandle
+    reviewHandle,
+    onNext
   };
   const sideBarProps = {
     handleOnRotationLeft,
@@ -197,20 +198,19 @@ export const DecorateBoothContainer = (props) => {
 
   if (modelItems.length === 0) return <LoadingComponent />;
   return (
-    <>
+    <div style={{ height: 'calc(100vh - 80px)' }}>
       <Stats />
       <div
         style={{
           display: 'flex',
-          maxHeight: mode === ModeConstant.ADD ? '70vh' : '90vh'
+          height: mode === ModeConstant.ADD ? 'calc(100vh - 80px - 94px)' : 'calc(100vh - 80px)'
         }}>
         <DecoratedBoothSideBarContainer {...sideBarProps} />
         <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd} ref={meshGroupRef} />
       </div>
-
-      <ControlButtonGroup {...controlButtonsProps} />
       <DecorateBooth3DItemMenuContainer />
+      <ControlButtonGroup {...controlButtonsProps} />
       <ToastContainer />
-    </>
+    </div>
   );
 };

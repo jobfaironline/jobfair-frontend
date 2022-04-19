@@ -30,7 +30,7 @@ export const DecorateBoothCanvas = React.forwardRef((props, ref) => {
       camera={{ fov: 40, zoom: 1.2, position: [-1, 1, -1] }}
       style={{
         width: '100vw',
-        height: mode === ModeConstant.ADD ? '70vh' : '90vh'
+        height: '100%'
       }}>
       <ContextBridge>
         <CameraControls enabled={mode !== ModeConstant.DRAGGING} />

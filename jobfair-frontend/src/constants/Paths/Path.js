@@ -41,7 +41,9 @@ export const PATH_COMPANY_EMPLOYEE = {
   COMPANY_PROFILE_PAGE: '/employee/company-profile',
   APPLICATION_MANAGEMENT_PAGE: '/employee/application-management',
   RESUME_DETAIL_PAGE: '/employee/resume-detail',
-  JOB_FAIR_DETAIL_PAGE: '/employee/job-fair-detail'
+  JOB_FAIR_DETAIL_PAGE: '/employee/job-fair-detail',
+  ASSIGN_BOOTH_MAP_PAGE: '/employee/assign-map/:assignmentId',
+  JOB_FAIR_ASSIGNMENT_PAGE: '/employee/job-fair-assignment'
 };
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',

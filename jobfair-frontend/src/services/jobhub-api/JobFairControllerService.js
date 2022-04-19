@@ -1,5 +1,8 @@
 import { CallAPI } from '../axiosBase';
-import { JOB_FAIR_END_POINT } from '../../constants/Endpoints/jobhub-api/JobFairConTrollerEndpoint';
+import {
+  JOB_FAIR_END_POINT,
+  JOB_FAIR_INFORMATION_FOR_3D_MAP
+} from '../../constants/Endpoints/jobhub-api/JobFairConTrollerEndpoint';
 
 export const getAllJobFairAPI = (direction = 'DESC', offset = '0', pageSize = '10', sortBy = 'createTime') =>
   CallAPI(
@@ -39,3 +42,6 @@ export const uploadJobFairThumbnailAPI = (jobFairId, body) =>
     {},
     { 'content-type': 'multipart/form-data' }
   );
+
+export const getLayoutInformationForJobFairPark = (jobFairId) =>
+  CallAPI(`${JOB_FAIR_INFORMATION_FOR_3D_MAP}/${jobFairId}`, 'GET');
