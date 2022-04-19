@@ -54,6 +54,7 @@ export const DecorateBoothContainer = () => {
     />,
     <PickJobPositionFormContainer
       form={form}
+      companyBoothId={companyBoothId}
       onNext={onNext(currentStep)}
       onPrev={onPrev(currentStep)}
       isNextButtonDisable={isError}

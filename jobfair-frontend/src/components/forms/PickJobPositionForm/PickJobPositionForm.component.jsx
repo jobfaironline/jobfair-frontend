@@ -1,7 +1,24 @@
 /* eslint-disable no-unused-vars */
 import './PickJobPositionForm.styles.scss';
-import { Button, Col, Collapse, Divider, Form, Input, Popconfirm, Row, Space, Tag, Typography } from 'antd';
+import {
+  Button,
+  Checkbox,
+  Col,
+  Collapse,
+  Divider,
+  Form,
+  Input,
+  InputNumber,
+  Popconfirm,
+  Row,
+  Space,
+  Tag,
+  TimePicker,
+  Typography
+} from 'antd';
+import { MAXIMUM_MARK, MAXIMUM_QUESTION, MINIMUM_MARK, MINIMUM_QUESTION } from '../../../constants/CreateTestConst';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinuteFormat } from '../../../constants/ApplicationConst';
 import { PickJobPositionFormValidation } from '../../../validate/PickJobPositionForm';
 import { convertEnumToString } from '../../../utils/common';
 import React from 'react';
@@ -11,13 +28,14 @@ const { Text } = Typography;
 const { TextArea } = Input;
 
 const PickJobPositionForm = (props) => {
-  const { handlePickJobPosition, form, handleRemove } = props;
+  const { handlePickJobPosition, form, handleRemove, onChangeHaveTest, arrKey, onFinish } = props;
 
   return (
     <>
       <Form
         form={form}
         layout='vertical'
+        onFinish={onFinish}
         requiredMark='required'
         autoComplete='off'
         scrollToFirstError
@@ -169,7 +187,7 @@ const PickJobPositionForm = (props) => {
                           <Form.Item
                             label='Number of position'
                             {...restField}
-                            name={[name, 'numberOfPosition']}
+                            name={[name, 'numOfPosition']}
                             rules={PickJobPositionFormValidation.numberOfPosition}
                             style={{ maxWidth: '14rem', width: '14rem' }}>
                             <Input placeholder='Number of position' style={{ width: '12rem' }} />
@@ -199,6 +217,50 @@ const PickJobPositionForm = (props) => {
                                 <Input prefix='$' className='site-input-right' placeholder='Max salary' />
                               </Form.Item>
                             </Input.Group>
+                            <div style={arrKey.includes(key) ? {} : { display: 'none' }}>
+                              <Form.Item
+                                label='Test duration'
+                                required
+                                tooltip='The length of the test'
+                                rules={[]}
+                                name={[name, 'testLength']}>
+                                <TimePicker format={MinuteFormat} style={{ width: '20rem' }} />
+                              </Form.Item>
+                              <Form.Item
+                                label='Number of questions'
+                                required
+                                tooltip='The number of the questions'
+                                rules={[]}
+                                name={[name, 'testNumOfQuestion']}>
+                                <InputNumber
+                                  style={{ width: '25rem' }}
+                                  type='number'
+                                  min={MINIMUM_QUESTION}
+                                  max={MAXIMUM_QUESTION}
+                                />
+                              </Form.Item>
+                              <Form.Item
+                                label='Pass mark'
+                                required
+                                tooltip='The minimum mark to pass'
+                                rules={[]}
+                                name={[name, 'passMark']}>
+                                <InputNumber
+                                  style={{ width: '25rem' }}
+                                  type='number'
+                                  min={MINIMUM_MARK}
+                                  max={MAXIMUM_MARK}
+                                />
+                              </Form.Item>
+                              <Form.Item
+                                label='Note'
+                                required
+                                tooltip='A small description about the test'
+                                rules={[]}
+                                name={[name, 'note']}>
+                                <TextArea showCount maxLength={300} />
+                              </Form.Item>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -210,6 +272,9 @@ const PickJobPositionForm = (props) => {
                         cancelText='No'>
                         <MinusCircleOutlined />
                       </Popconfirm>
+                      <Form.Item name={[name, 'isHaveTest']} {...restField}>
+                        <Checkbox onChange={(e) => onChangeHaveTest(e, key)}>Have test</Checkbox>
+                      </Form.Item>
                     </div>
                   </div>
                 );
@@ -222,6 +287,11 @@ const PickJobPositionForm = (props) => {
             </>
           )}
         </Form.List>
+        <Form.Item>
+          <Button type='primary' htmlType='submit'>
+            Submit
+          </Button>
+        </Form.Item>
       </Form>
     </>
   );
