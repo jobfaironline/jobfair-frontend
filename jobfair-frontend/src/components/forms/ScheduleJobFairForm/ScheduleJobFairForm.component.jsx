@@ -1,4 +1,5 @@
-import { DatePicker, Divider, Form, Input, Typography } from 'antd';
+import './ScheduleJobFairFormComponent.styles.scss';
+import { DatePicker, Form, Input, Typography } from 'antd';
 import { HourMinuteDateFormat } from '../../../constants/ApplicationConst';
 import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairValidation';
 import React from 'react';
@@ -7,10 +8,10 @@ import moment from 'moment';
 const { RangePicker } = DatePicker;
 const { Title } = Typography;
 const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChange }) => (
-  <>
-    <Divider size='small' plain>
-      <Title>Schedule job fair event</Title>
-    </Divider>
+  <div className={'schedule-job-fair-form'}>
+    <div style={{ textAlign: 'center' }}>
+      <Title level={5}>Schedule job fair event</Title>
+    </div>
     <div className={'form-container'}>
       <Form
         initialValues={{
@@ -29,47 +30,27 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
         autoComplete='off'
         onFinish={onFinish}
         onValuesChange={onValueChange}
-        scrollToFirstError={{ block: 'center', behavior: 'smooth' }}
-        style={{ height: '20rem', width: '25rem' }}>
-        <Form.Item
-          label='Name'
-          name={'name'}
-          rules={OrganizeJobFairValidation.name}
-          style={{
-            display: 'inline-block',
-            width: '100%',
-            marginRight: '1rem',
-            marginLeft: '1rem'
-          }}>
+        scrollToFirstError={{ block: 'center', behavior: 'smooth' }}>
+        <Form.Item label='Name' name={'name'} rules={OrganizeJobFairValidation.name} className={'form-item'}>
           <Input placeholder='Job fair name' />
         </Form.Item>
         <Form.Item
           label='Decoration booth time range'
           name={'decorateRange'}
           rules={OrganizeJobFairValidation.decorateRange}
-          style={{
-            display: 'inline-block',
-            width: '100%',
-            marginRight: '1rem',
-            marginLeft: '1rem'
-          }}>
+          className={'form-item'}>
           <RangePicker format={HourMinuteDateFormat} showTime />
         </Form.Item>
         <Form.Item
+          className={'form-item'}
           label='Public time range'
           name={'publicRange'}
-          rules={OrganizeJobFairValidation.publicRange}
-          style={{
-            display: 'inline-block',
-            width: '25rem',
-            marginRight: '1rem',
-            marginLeft: '1rem'
-          }}>
+          rules={OrganizeJobFairValidation.publicRange}>
           <RangePicker format={HourMinuteDateFormat} showTime />
         </Form.Item>
       </Form>
     </div>
-  </>
+  </div>
 );
 
 export default ScheduleJobFairFormComponent;

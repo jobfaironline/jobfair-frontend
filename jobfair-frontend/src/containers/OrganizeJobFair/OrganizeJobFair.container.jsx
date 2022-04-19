@@ -231,7 +231,9 @@ const OrganizeJobFairContainer = () => {
         style={{
           background: '#FFF',
           zIndex: '1000',
-          padding: '1rem 3rem'
+          padding: '1rem 3rem',
+          borderBottom: '0.5px solid gray',
+          marginBottom: '1rem'
         }}>
         <Step />
         <Step />
