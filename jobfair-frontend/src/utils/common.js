@@ -143,3 +143,9 @@ export const handleStatusTag = (status) => {
 };
 
 export const difference = (array1, array2) => array1.filter((item) => array2.includes(item));
+
+export const convertHH_mmToMinute = (moment) => {
+  const arr = moment.format().split('T')[1].split(':');
+  const result = arr[0] * 60 + parseInt(arr[1]);
+  return result;
+};
