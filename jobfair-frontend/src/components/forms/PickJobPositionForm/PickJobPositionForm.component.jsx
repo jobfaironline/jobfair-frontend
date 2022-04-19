@@ -40,7 +40,7 @@ const PickJobPositionForm = (props) => {
         autoComplete='off'
         scrollToFirstError
         initialValues={{ description: undefined, jobPositions: [] }} //will go
-      >
+        className={'pick-job-position-form'}>
         <Form.Item
           label='Booth description'
           required
@@ -58,7 +58,7 @@ const PickJobPositionForm = (props) => {
 
                 return (
                   <div>
-                    <Divider></Divider>
+                    <Divider />
                     <div id={id} key={key} style={{ width: '100%', display: 'flex' }}>
                       <div className='job-position-input-container '>
                         <div className='job-position-row-container'>
@@ -78,6 +78,7 @@ const PickJobPositionForm = (props) => {
                         </div>
                         <Collapse bordered={false} defaultActiveKey={['1']} style={{ marginBottom: '1rem' }}>
                           <Panel
+                            key={item?.id}
                             header={
                               <Text strong style={{ fontSize: '1rem' }}>
                                 General information
@@ -217,6 +218,9 @@ const PickJobPositionForm = (props) => {
                                 <Input prefix='$' className='site-input-right' placeholder='Max salary' />
                               </Form.Item>
                             </Input.Group>
+                            <Form.Item name={[name, 'isHaveTest']} {...restField}>
+                              <Checkbox onChange={(e) => onChangeHaveTest(e, key)}>Have test</Checkbox>
+                            </Form.Item>
                             <div style={arrKey.includes(key) ? {} : { display: 'none' }}>
                               <Form.Item
                                 label='Test duration'
@@ -272,9 +276,6 @@ const PickJobPositionForm = (props) => {
                         cancelText='No'>
                         <MinusCircleOutlined />
                       </Popconfirm>
-                      <Form.Item name={[name, 'isHaveTest']} {...restField}>
-                        <Checkbox onChange={(e) => onChangeHaveTest(e, key)}>Have test</Checkbox>
-                      </Form.Item>
                     </div>
                   </div>
                 );

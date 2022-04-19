@@ -88,27 +88,6 @@ const PickJobPositionFormContainer = ({ form, companyBoothId }) => {
 
   return (
     <>
-      <div
-        style={{
-          position: 'fixed',
-          left: '0.8rem',
-          top: '200px',
-          zIndex: '1000'
-        }}>
-        <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Content list</Typography>
-        <AnchorComponent
-          listData={
-            form.getFieldsValue().jobPositions
-              ? form.getFieldsValue().jobPositions.map((item) => ({
-                  href: `#${item.id}`,
-                  title: item.title
-                }))
-              : []
-          }
-          href={'#description'}
-          title={'Booth description'}
-        />
-      </div>
       <Modal
         width={800}
         title='Choose job position'
@@ -118,14 +97,33 @@ const PickJobPositionFormContainer = ({ form, companyBoothId }) => {
         destroyOnClose>
         {modalVisible ? <PickJobPositionTableContainer form={form} selectable /> : null}
       </Modal>
-      <PickJobPositionForm
-        handlePickJobPosition={handlePickJobPosition}
-        form={form}
-        onFinish={onFinish}
-        handleRemove={handleRemove}
-        onChangeHaveTest={onChangeHaveTest}
-        arrKey={arrKey}
-      />
+      <div style={{ display: 'flex', margin: '5rem 1rem' }}>
+        <div style={{ padding: '1rem' }}>
+          <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Content list</Typography>
+          <AnchorComponent
+            listData={
+              form.getFieldsValue().jobPositions
+                ? form.getFieldsValue().jobPositions.map((item) => ({
+                    href: `#${item.id}`,
+                    title: item.title
+                  }))
+                : []
+            }
+            href={'#description'}
+            title={'Booth description'}
+          />
+        </div>
+        <div style={{ flex: '1', padding: '0 5rem' }}>
+          <PickJobPositionForm
+            handlePickJobPosition={handlePickJobPosition}
+            form={form}
+            onFinish={onFinish}
+            handleRemove={handleRemove}
+            onChangeHaveTest={onChangeHaveTest}
+            arrKey={arrKey}
+          />
+        </div>
+      </div>
     </>
   );
 };
