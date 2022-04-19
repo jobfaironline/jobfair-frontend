@@ -1,5 +1,5 @@
 import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
-import { Space, Typography } from 'antd';
+import { Space, Typography, notification } from 'antd';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getAssignmentByEmployeeId } from '../../services/jobhub-api/AssignmentControllerService';
 import { mapperJobFairAssignment } from '../../utils/mapperJobFairAssignment';
@@ -8,18 +8,26 @@ import JobFairAssignmentTableColumn from '../JobFairAssignmentTable/JobFairAssig
 import React, { useLayoutEffect, useState } from 'react';
 
 const JobFairAssignmentContainer = () => {
+  const history = useHistory();
+
   const [data, setData] = useState([]);
   //pagination
   const [totalRecord, setTotalRecord] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  //
-  const history = useHistory();
 
   const fetchData = async () => {
-    const res = await getAssignmentByEmployeeId('', currentPage, pageSize, '');
-    setTotalRecord(res.data.totalElements);
-    setData([...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))]);
+    try {
+      const res = await getAssignmentByEmployeeId('', currentPage, pageSize, '');
+      setTotalRecord(res.data.totalElements);
+      setData([...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))]);
+    } catch (e) {
+      notification['error']({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching data, try again later`,
+        duration: 2
+      });
+    }
   };
   useLayoutEffect(() => {
     fetchData();

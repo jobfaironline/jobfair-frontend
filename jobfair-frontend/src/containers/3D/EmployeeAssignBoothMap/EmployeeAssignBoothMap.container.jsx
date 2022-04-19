@@ -4,6 +4,7 @@ import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { getAssignmentById } from '../../../services/jobhub-api/AssignmentControllerService';
 import { getLayoutByJobFairId } from '../../../services/jobhub-api/LayoutControllerService';
 import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
+import { notification } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 
 export const EmployeeAssignBoothMapContainer = () => {
@@ -21,26 +22,34 @@ export const EmployeeAssignBoothMapContainer = () => {
   }, []);
 
   const fetchData = async () => {
-    const assigmentData = (await getAssignmentById(assignmentId)).data;
-    const jobFairId = assigmentData.jobFairBooth.jobFair.id;
-    const layoutData = (await getLayoutByJobFairId(jobFairId)).data;
-    const glb = await loadGLBModel(layoutData.url);
-    const boothName = assigmentData.jobFairBooth.booth.name;
+    try {
+      const assigmentData = (await getAssignmentById(assignmentId)).data;
+      const jobFairId = assigmentData.jobFairBooth.jobFair.id;
+      const layoutData = (await getLayoutByJobFairId(jobFairId)).data;
+      const glb = await loadGLBModel(layoutData.url);
+      const boothName = assigmentData.jobFairBooth.booth.name;
 
-    //change color for booth base
-    glb.scene.children.forEach((child) => {
-      if (child.name.includes(boothName)) {
-        const newMaterial = child.material.clone();
-        newMaterial.color.set(0x42f56f);
-        newMaterial.transparent = true;
-        child.material = newMaterial;
-      }
-    });
+      //change color for booth base
+      glb.scene.children.forEach((child) => {
+        if (child.name.includes(boothName)) {
+          const newMaterial = child.material.clone();
+          newMaterial.color.set(0x42f56f);
+          newMaterial.transparent = true;
+          child.material = newMaterial;
+        }
+      });
 
-    setState({
-      glb: glb.scene,
-      jobFairBoothData: assigmentData.jobFairBooth
-    });
+      setState({
+        glb: glb.scene,
+        jobFairBoothData: assigmentData.jobFairBooth
+      });
+    } catch (e) {
+      notification['error']({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching data, try again later`,
+        duration: 2
+      });
+    }
   };
 
   const onBoothMouseOver = (meshName) => {
