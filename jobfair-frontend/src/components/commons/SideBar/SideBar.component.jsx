@@ -18,9 +18,8 @@ export const SideBarComponent = ({
   isDisplayPrevButton = true
 }) => (
   <Row wrap={false} className={'organize-job-fair-side-bar'}>
-    <Col flex={ratio.toString()}>{leftSide}</Col>
-    <Col flex={(1 - ratio).toString()}>
-      <div className={'side-bar-right-side-container'}>
+    <Col flex={ratio.toString()}>
+      <div className={'side-bar-left-side-container'}>
         <Button
           className={'prev-button'}
           type='primary'
@@ -30,7 +29,7 @@ export const SideBarComponent = ({
           <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '10px' }} />
           <span>{prevButtonContent}</span>
         </Button>
-        {rightSide}
+        {leftSide}
         <div className={'button-container'} style={{ display: isDisplayNextButton ? 'flex' : 'none' }}>
           <Button className={'confirm-button'} type='primary' onClick={onNext} disabled={isNextButtonDisable}>
             {nextButtonContent}
@@ -38,5 +37,6 @@ export const SideBarComponent = ({
         </div>
       </div>
     </Col>
+    <Col flex={(1 - ratio).toString()}>{rightSide}</Col>
   </Row>
 );

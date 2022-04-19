@@ -3,11 +3,11 @@
     margin-top: auto;
     display: flex;
     align-items: center;
-    flex-direction: column;
     padding-top: 10px;
     align-content: space-around;
-    justify-content: space-around;
+    justify-content: space-evenly;
     margin-bottom: 10px;
+    border-top: 0.5px solid gray;
   }
 
   .confirm-button {
@@ -17,9 +17,8 @@
     align-content: center;
     justify-content: center;
     align-items: center;
-    padding: 0 16px;
-    width: 90%;
-    height: 40px;
+    padding: 0 32px;
+    height: 44px;
     border-radius: 16px;
   }
 
@@ -43,10 +42,12 @@
     text-align: left;
   }
 
-  .side-bar-right-side-container {
+  .side-bar-left-side-container {
     display: flex;
     flex-direction: column;
     height: calc(100vh - 80px);
     overflow-y: auto;
+    border: 0.5px solid gray;
+    border-radius: 5px;
   }
 }
