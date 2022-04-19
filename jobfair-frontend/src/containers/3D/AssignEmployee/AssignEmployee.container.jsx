@@ -10,7 +10,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import ReactLoading from 'react-loading';
 
 export const AssignEmployeeContainer = (props) => {
-  const { jobFairId, onHandleNext, onHandlePrev } = props;
+  const { jobFairId, onHandleNext, onHandlePrev, currentStep } = props;
   const [state, setState] = useState({
     glbMesh: undefined,
     boothDataForMesh: {},
@@ -100,7 +100,7 @@ export const AssignEmployeeContainer = (props) => {
   return (
     <>
       <SideBarComponent
-        leftSide={
+        rightSide={
           <ChooseBoothCanvas
             mesh={state.glbMesh}
             boothData={state.boothDataForMesh}
@@ -113,7 +113,7 @@ export const AssignEmployeeContainer = (props) => {
             boothMeshesRef={boothMeshesRef}
           />
         }
-        rightSide={
+        leftSide={
           <AssignEmployeeBoothList
             onHandleNext={onHandleNext}
             onHandlePrev={onHandlePrev}
@@ -128,7 +128,8 @@ export const AssignEmployeeContainer = (props) => {
         onNext={onHandleNext}
         isPrevButtonDisable={false}
         onPrev={onHandlePrev}
-        ratio={3 / 4}
+        ratio={450 / 1728}
+        currentStep={currentStep}
       />
       {modalState.isVisible ? (
         <AssignEmployeeModalContainer

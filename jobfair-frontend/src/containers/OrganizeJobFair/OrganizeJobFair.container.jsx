@@ -1,6 +1,6 @@
 import './OrganizeJobFair.styles.scss';
 import { AssignEmployeeContainer } from '../3D/AssignEmployee/AssignEmployee.container';
-import { Form, Steps, notification } from 'antd';
+import { Form, notification } from 'antd';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
 import { convertToDateValue } from '../../utils/common';
@@ -19,8 +19,6 @@ import JobFairParkMapComponent from '../../components/3D/JobFairParkMap/JobFairP
 import PublishJobFairContainer from '../PublishJobFairContainer/PublishJobFair.container';
 import React, { useEffect, useState } from 'react';
 import ScheduleJobFairFormComponent from '../../components/forms/ScheduleJobFairForm/ScheduleJobFairForm.component';
-
-const { Step } = Steps;
 
 const OrganizeJobFairContainer = () => {
   const history = useHistory();
@@ -224,36 +222,16 @@ const OrganizeJobFairContainer = () => {
     }
   };
 
-  const breadcrumbWrapper = (component) => (
-    <>
-      <Steps
-        current={currentStep}
-        style={{
-          background: '#FFF',
-          zIndex: '1000',
-          padding: '1rem 3rem',
-          borderBottom: '0.5px solid gray',
-          marginBottom: '1rem'
-        }}>
-        <Step />
-        <Step />
-        <Step />
-        <Step />
-      </Steps>
-      {component}
-    </>
-  );
-
   const stepComponentList = [
     <SideBarComponent
       rightSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
-      leftSide={breadcrumbWrapper(
+      leftSide={
         <ChooseTemplateJobFairContainer
           handleLoad3DMap={handleLoad3DMap}
           onNext={onNext(currentStep)}
           layoutData={layoutData}
         />
-      )}
+      }
       nextButtonContent={'Choose template'}
       onNext={onNext(currentStep)}
       isNextButtonDisable={layoutData.id === ''}
@@ -261,17 +239,18 @@ const OrganizeJobFairContainer = () => {
       ratio={450 / 1728}
       isDisplayPrevButton={false}
       isDisplayNextButton={false}
+      currentStep={currentStep}
     />,
     <SideBarComponent
       rightSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
-      leftSide={breadcrumbWrapper(
+      leftSide={
         <ScheduleJobFairFormComponent
           jobFairData={jobFairData}
           onFinish={updateJobFairAtScheduleScreen}
           form={form}
           onValueChange={onValueChange}
         />
-      )}
+      }
       nextButtonContent={'Start assign employee'}
       prevButtonContent={'Back to choose job fair layout'}
       onNext={onNext(currentStep)}
@@ -279,6 +258,7 @@ const OrganizeJobFairContainer = () => {
       isPrevButtonDisable={false}
       onPrev={onPrev(currentStep)}
       ratio={450 / 1728}
+      currentStep={currentStep}
     />,
     <>
       {jobFairData !== undefined ? (
@@ -286,6 +266,7 @@ const OrganizeJobFairContainer = () => {
           jobFairId={jobFairData.id}
           onHandleNext={onNext(currentStep)}
           onHandlePrev={onPrev(currentStep)}
+          currentStep={currentStep}
         />
       ) : null}
     </>,
