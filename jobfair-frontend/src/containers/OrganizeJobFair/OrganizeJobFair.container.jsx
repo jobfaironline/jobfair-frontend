@@ -62,7 +62,7 @@ const OrganizeJobFairContainer = () => {
       }
     } catch (e) {
       notification['error']({
-        message: 'Something went wrong'
+        message: `Something went wrong: ${e.response.data.message}`
       });
     }
   };
@@ -106,7 +106,7 @@ const OrganizeJobFairContainer = () => {
       if (res.status === 200) return true;
     } catch (e) {
       notification['error']({
-        message: 'Error is created'
+        message: `${e.response.data.message}`
       });
       return false;
     }
@@ -124,7 +124,7 @@ const OrganizeJobFairContainer = () => {
       if (res.status === 200) return true;
     } catch (e) {
       notification['error']({
-        message: 'Error is created'
+        message: `${e.response.data.message}`
       });
       return false;
     }
@@ -138,7 +138,8 @@ const OrganizeJobFairContainer = () => {
       });
     } catch (e) {
       notification['error']({
-        message: 'Error is created'
+        message: `Failed to publish job fair`,
+        description: `${e.response.data.message}`
       });
     }
   };
@@ -191,7 +192,7 @@ const OrganizeJobFairContainer = () => {
             history.push(PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE);
           } catch (e) {
             notification['error']({
-              message: 'Error is created'
+              message: `Fail to publish job fair: ${e.response.message}`
             });
           }
         };
