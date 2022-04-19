@@ -10,27 +10,34 @@ const LoginFormComponent = ({ onFinish, form }) => {
   return (
     <>
       <Divider orientation='center' plain>
-        <Typography.Title level={4}>Job Fair Online - Login</Typography.Title>
+        <Typography.Title level={4}>JobHub - Login</Typography.Title>
       </Divider>
-      <div className='input-container'>
-        <Form className='login-form' form={form} onFinish={onFinish} autoComplete='off' requiredMark={false}>
+      <div>
+        <Form
+          form={form}
+          onFinish={onFinish}
+          autoComplete='off'
+          requiredMark={false}
+          labelCol={{ span: 5 }}
+          wrapperCol={{ span: 20 }}>
           <Form.Item label='Email' name='email' hasFeedback rules={LoginValidation.email}>
-            <Input style={{ marginLeft: '2rem' }} />
+            <Input />
           </Form.Item>
           <Form.Item label='Password' name='password' hasFeedback rules={LoginValidation.password}>
-            <Input.Password style={{ marginLeft: '0.5rem' }} />
+            <Input.Password />
           </Form.Item>
-          <Form.Item className='login'>
+          <Form.Item className='login' wrapperCol={{ offset: 5, span: 20 }}>
             <Button type='primary' htmlType='submit'>
               Login
             </Button>
           </Form.Item>
-          <Form.Item className='forgot-password'>
-            <Button type='link' onClick={() => history.push(PATH.FORGOT_PASSWORD_PAGE)}>
+          <Form.Item className='forgot-password' wrapperCol={{ offset: 5, span: 20 }}>
+            <Button type='link' style={{ padding: 0 }} onClick={() => history.push(PATH.FORGOT_PASSWORD_PAGE)}>
               Forgot password?
             </Button>
           </Form.Item>
-          <Form.Item className='register'>
+          <Divider style={{ margin: '1rem' }} />
+          <Form.Item className='register' style={{ flexDirection: 'column', alignItems: 'center' }}>
             <span>Don't you have an account?</span> <Button type='link'>Register</Button>
           </Form.Item>
         </Form>
