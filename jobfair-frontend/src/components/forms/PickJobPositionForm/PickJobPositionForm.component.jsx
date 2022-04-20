@@ -13,12 +13,19 @@ import {
   Row,
   Space,
   Tag,
-  TimePicker,
   Typography
 } from 'antd';
-import { MAXIMUM_MARK, MAXIMUM_QUESTION, MINIMUM_MARK, MINIMUM_QUESTION } from '../../../constants/CreateTestConst';
+import {
+  MAXIMUM_MARK,
+  MAXIMUM_NUM_OF_POSITION,
+  MAXIMUM_QUESTION,
+  MAXIMUM_TEST_DURATION,
+  MINIMUM_MARK,
+  MINIMUM_NUM_OF_POSITION,
+  MINIMUM_QUESTION,
+  MINIMUM_TEST_DURATION
+} from '../../../constants/CreateTestConst';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { MinuteFormat } from '../../../constants/ApplicationConst';
 import { PickJobPositionFormValidation } from '../../../validate/PickJobPositionForm';
 import { convertEnumToString } from '../../../utils/common';
 import React from 'react';
@@ -191,7 +198,12 @@ const PickJobPositionForm = (props) => {
                             name={[name, 'numOfPosition']}
                             rules={PickJobPositionFormValidation.numberOfPosition}
                             style={{ maxWidth: '14rem', width: '14rem' }}>
-                            <Input placeholder='Number of position' style={{ width: '12rem' }} />
+                            <InputNumber
+                              placeholder='Number of position'
+                              style={{ width: '12rem' }}
+                              max={MAXIMUM_NUM_OF_POSITION}
+                              min={MINIMUM_NUM_OF_POSITION}
+                            />
                           </Form.Item>
                           <div style={{ width: 'fit-content', flex: 'none' }}>
                             <Input.Group compact>
@@ -225,16 +237,21 @@ const PickJobPositionForm = (props) => {
                               <Form.Item
                                 label='Test duration'
                                 required
-                                tooltip='The length of the test'
-                                rules={[]}
+                                tooltip='Hour:Minute'
+                                rules={PickJobPositionFormValidation.testLength}
                                 name={[name, 'testLength']}>
-                                <TimePicker format={MinuteFormat} style={{ width: '20rem' }} />
+                                <InputNumber
+                                  placeholder='Test duration'
+                                  style={{ width: '20rem' }}
+                                  max={MAXIMUM_TEST_DURATION}
+                                  min={MINIMUM_TEST_DURATION}
+                                />
                               </Form.Item>
                               <Form.Item
                                 label='Number of questions'
                                 required
                                 tooltip='The number of the questions'
-                                rules={[]}
+                                rules={PickJobPositionFormValidation.numberOfQuestion}
                                 name={[name, 'testNumOfQuestion']}>
                                 <InputNumber
                                   style={{ width: '25rem' }}
@@ -247,7 +264,7 @@ const PickJobPositionForm = (props) => {
                                 label='Pass mark'
                                 required
                                 tooltip='The minimum mark to pass'
-                                rules={[]}
+                                rules={PickJobPositionFormValidation.passMark}
                                 name={[name, 'passMark']}>
                                 <InputNumber
                                   style={{ width: '25rem' }}
@@ -260,7 +277,7 @@ const PickJobPositionForm = (props) => {
                                 label='Note'
                                 required
                                 tooltip='A small description about the test'
-                                rules={[]}
+                                rules={PickJobPositionFormValidation.note}
                                 name={[name, 'note']}>
                                 <TextArea showCount maxLength={300} />
                               </Form.Item>

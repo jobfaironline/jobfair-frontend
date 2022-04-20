@@ -6,6 +6,7 @@ import { getLayoutByJobFairId } from '../../../services/jobhub-api/LayoutControl
 import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import { notification } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
+import ReactLoading from 'react-loading';
 
 export const EmployeeAssignBoothMapContainer = () => {
   const { assignmentId } = useParams();
@@ -80,5 +81,16 @@ export const EmployeeAssignBoothMapContainer = () => {
       hoverRef={hoverRef}
       onClick={onClick}
     />
-  ) : null;
+  ) : (
+    <div
+      style={{
+        width: '100vw',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+      <ReactLoading type={'spin'} color={'#1890ff'} height={100} width={100} />
+    </div>
+  );
 };

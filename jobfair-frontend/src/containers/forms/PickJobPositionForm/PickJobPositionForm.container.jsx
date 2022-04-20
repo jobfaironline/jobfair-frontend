@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { Modal, Typography, notification } from 'antd';
+import { PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import { assignJobPositionToBooth } from '../../../services/jobhub-api/JobFairBoothControllerService';
-import { convertHH_mmToMinute } from '../../../utils/common';
+import { useHistory } from 'react-router-dom';
 import AnchorComponent from '../../../components/commons/Anchor/Achor.component';
 import PickJobPositionForm from '../../../components/forms/PickJobPositionForm/PickJobPositionForm.component';
 import PickJobPositionTableContainer from '../../JobPositionTable/JobPositionTable.container';
@@ -10,6 +11,7 @@ import React, { useState } from 'react';
 const PickJobPositionFormContainer = ({ form, companyBoothId }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [arrKey, setArrKey] = useState([]);
+  const history = useHistory();
 
   const [anchorList, setAnchorList] = useState(
     form.getFieldsValue().jobPositions
@@ -67,21 +69,22 @@ const PickJobPositionFormContainer = ({ form, companyBoothId }) => {
         note: item.note,
         numOfPosition: item.numOfPosition,
         passMark: item.passMark,
-        testLength: convertHH_mmToMinute(item.testLength),
+        testLength: item.testLength,
         testNumOfQuestion: item.testNumOfQuestion
       }))
     };
     try {
       const res = await assignJobPositionToBooth(body);
       if (res.status === 200) {
+        history.push(PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE);
         notification['success']({
-          message: `submitted successfully`
+          message: `Decorate booth successfully.`
         });
       }
     } catch (e) {
       notification['error']({
         message: `Assign job position failed`,
-        description: `${e.response.data}`
+        description: `${e.response.data.message}`
       });
     }
   };
