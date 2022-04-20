@@ -56,7 +56,7 @@ export const PickJobPositionFormValidation = {
   ],
   testLength: [
     REQUIRED_VALIDATOR('Test duration')
-    // NUMBER_RANGE_VALIDATOR(MINIMUM_TEST_DURATION, MAXIMUM_TEST_DURATION)
+    NUMBER_RANGE_VALIDATOR(MINIMUM_TEST_DURATION, MAXIMUM_TEST_DURATION)
   ],
   passMark: [REQUIRED_VALIDATOR('Pass mark')],
   note: [REQUIRED_VALIDATOR('Note')]
