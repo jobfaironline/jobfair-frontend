@@ -64,17 +64,19 @@ export const AssignEmployeeModalContainer = (props) => {
   const leftTableColumns = [
     {
       dataIndex: 'fullName',
-      title: 'Name'
+      title: 'Name',
+      sorter: (a, b) => a.fullName.localeCompare(b.fullName)
     }
   ];
   const rightTableColumns = [
     {
       dataIndex: 'fullName',
-      title: 'Name'
+      title: 'Name',
+      sorter: (a, b) => a.fullName.localeCompare(b.fullName)
     },
     {
       dataIndex: 'assignmentType',
-      title: 'type',
+      title: 'Type',
       render: (type, record) => {
         const value = AssigmentType.filter((item) => item.name === type)[0];
         return (

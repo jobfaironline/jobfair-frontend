@@ -15,3 +15,9 @@ export const AssigmentType = [
     name: 'INTERVIEWER'
   }
 ];
+
+export const AssignmentConst = {
+  IN_CHARGE: 'IN_CHARGE',
+  RECEPTION: 'RECEPTION',
+  INTERVIEWER: 'INTERVIEWER'
+};

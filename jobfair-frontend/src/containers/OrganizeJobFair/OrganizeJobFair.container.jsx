@@ -225,18 +225,26 @@ const OrganizeJobFairContainer = () => {
 
   const stepComponentList = [
     <SideBarComponent
-      leftSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
-      rightSide={<ChooseTemplateJobFairContainer handleLoad3DMap={handleLoad3DMap} />}
+      rightSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
+      leftSide={
+        <ChooseTemplateJobFairContainer
+          handleLoad3DMap={handleLoad3DMap}
+          onNext={onNext(currentStep)}
+          layoutData={layoutData}
+        />
+      }
       nextButtonContent={'Choose template'}
       onNext={onNext(currentStep)}
       isNextButtonDisable={layoutData.id === ''}
       isPrevButtonDisable={true}
-      ratio={3 / 4}
+      ratio={450 / 1728}
       isDisplayPrevButton={false}
+      isDisplayNextButton={false}
+      currentStep={currentStep}
     />,
     <SideBarComponent
-      leftSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
-      rightSide={
+      rightSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
+      leftSide={
         <ScheduleJobFairFormComponent
           jobFairData={jobFairData}
           onFinish={updateJobFairAtScheduleScreen}
@@ -250,7 +258,8 @@ const OrganizeJobFairContainer = () => {
       isNextButtonDisable={isError}
       isPrevButtonDisable={false}
       onPrev={onPrev(currentStep)}
-      ratio={3 / 4}
+      ratio={450 / 1728}
+      currentStep={currentStep}
     />,
     <>
       {jobFairData !== undefined ? (
@@ -258,12 +267,13 @@ const OrganizeJobFairContainer = () => {
           jobFairId={jobFairData.id}
           onHandleNext={onNext(currentStep)}
           onHandlePrev={onPrev(currentStep)}
+          currentStep={currentStep}
         />
       ) : null}
     </>,
     <SideBarComponent
-      leftSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
-      rightSide={
+      rightSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
+      leftSide={
         jobFairData !== undefined ? (
           <JobFairLandingPageContainer
             jobFairData={jobFairData}
@@ -279,7 +289,8 @@ const OrganizeJobFairContainer = () => {
       isNextButtonDisable={isError}
       isPrevButtonDisable={false}
       onPrev={onPrev(currentStep)}
-      ratio={3 / 4}
+      ratio={450 / 1728}
+      currentStep={currentStep}
     />,
     <>
       {jobFairData !== undefined ? (
