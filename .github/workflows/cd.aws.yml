@@ -26,26 +26,11 @@ jobs:
           echo ${{secrets.ESLINT}} >> .env.production
           npm install --force
           npm run build
-          rm -r node_modules
-   - uses: actions/upload-artifact@v2
+   - name: Deploy
+     uses: aws-actions/configure-aws-credentials@v1
      with:
-      name: frontend
-      path: ./jobfair-frontend/build
-      retention-days: 1
-    
-  
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
        aws-region: ap-northeast-2
-    - uses: actions/download-artifact@v2
-      with:
-       name: frontend
-       path: build
-    - run: aws s3 sync ./build s3://job-fair-online-frontend/
+   - run: aws s3 sync ./jobfair-frontend/build s3://job-fair-online-frontend/
 
