@@ -34,6 +34,7 @@ import OrganizeJobFairPage from '../pages/OrganizeJobFairPage/OrganizeJobFairPag
 import PublicRouter from './components/PublicRouter';
 import PublicizeJobFairDetailPage from '../pages/JobFairDetailPage/PublicizeJobFairDetailPage';
 import PublicizedBoothPage from '../pages/PublicizedBoothPage/PublicizedBoothPage';
+import QuestionBankPage from '../pages/QuestionBankPage/QuestionBankPage';
 import React from 'react';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
@@ -245,6 +246,12 @@ const AppRouter = () => (
         key={PATH_COMPANY_MANAGER.TEMPLATE_DETAIL}
         component={() => <JobFairTemplateDetailPage />}
         path={PATH_COMPANY_MANAGER.TEMPLATE_DETAIL}
+        exact
+      />
+      <CompanyManagerRouter
+        key={PATH_COMPANY_MANAGER.QUESTION_BANK}
+        component={() => <QuestionBankPage />}
+        path={PATH_COMPANY_MANAGER.QUESTION_BANK}
         exact
       />
       //to fix browserrouter problem
