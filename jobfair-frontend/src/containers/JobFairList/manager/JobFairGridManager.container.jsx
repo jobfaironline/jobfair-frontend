@@ -1,4 +1,4 @@
-import { Input, Spin } from 'antd';
+import { Input, Spin, notification } from 'antd';
 import { JOB_FAIR_STATUS } from '../../../constants/JobFairConst';
 import { PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path';
 import {
@@ -7,7 +7,7 @@ import {
   searchJobFairAPI
 } from '../../../services/jobhub-api/JobFairControllerService';
 import { useHistory } from 'react-router-dom';
-import JobFairGridComponent from '../../../components/customized-components/JobFairList/JobFairGrid.component';
+import JobFairGridComponent from '../../../components/customized-components/JobFairGrid/JobFairGrid.component';
 import React, { useEffect, useState } from 'react';
 
 const JobFairGridManagerContainer = () => {
@@ -21,16 +21,28 @@ const JobFairGridManagerContainer = () => {
   };
 
   const searchJobFair = async (searchValue) => {
-    const res = await searchJobFairAPI(searchValue);
-    const content = res.data.content;
-    setData(content);
+    try {
+      const res = await searchJobFairAPI(searchValue);
+      const content = res.data.content;
+      setData(content);
+    } catch (e) {
+      notification['error']({
+        message: `Error occurred: ${e.response.data.message}`
+      });
+    }
   };
 
   const onClick = async (jobFairId) => {
-    const jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
-    if (jobFairData.status === JOB_FAIR_STATUS.PUBLISH)
-      history.push(PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE, { jobFairId });
-    else history.push(PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE, { step: 4, jobFairId });
+    try {
+      const jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
+      if (jobFairData.status === JOB_FAIR_STATUS.PUBLISH)
+        history.push(PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE, { jobFairId });
+      else history.push(PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE, { step: 4, jobFairId });
+    } catch (e) {
+      notification['error']({
+        message: `Error occurred: ${e.response.data.message}`
+      });
+    }
   };
 
   useEffect(() => {
@@ -51,7 +63,7 @@ const JobFairGridManagerContainer = () => {
           style={{ width: 200, marginLeft: 'auto' }}
         />
       </div>
-      <JobFairGridComponent data={data} onClick={onClick} />
+      <JobFairGridComponent data={data} onClick={onClick} role='COMPANY_MANAGER' />
     </div>
   ) : (
     <Spin />
