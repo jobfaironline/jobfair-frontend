@@ -126,6 +126,7 @@ const PickJobPositionFormContainer = ({ form, companyBoothId }) => {
             arrKey={arrKey}
           />
         </div>
+        <></>
       </div>
     </>
   );
