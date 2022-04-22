@@ -10,7 +10,17 @@ const notificationSlice = createSlice({
       state.data = action.payload;
     },
     addNotification: (state, action) => {
-      state.data.push(action.payload)
+      state.data.push(action.payload);
+    },
+    readNotification: (state, action) => {
+      const id = action.payload;
+      const notification = state.data.find((noti) => noti.id === id);
+      if (notification) {
+        notification.read = true;
+      }
+    },
+    readAll: (state) => {
+      state.data.forEach((noti) => (noti.read = true));
     }
   }
 });

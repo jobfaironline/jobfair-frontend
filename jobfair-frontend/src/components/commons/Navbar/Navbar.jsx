@@ -1,13 +1,7 @@
 import './Navbar.styles.scss';
 import { Avatar, Button, Dropdown, Menu, Typography } from 'antd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, useHistory } from 'react-router-dom';
-import { UserOutlined } from '@ant-design/icons';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
-import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
-import { useDispatch, useSelector } from 'react-redux';
-import React from 'react';
-
+import { NotificationContainer } from '../../../containers/NotificationContainer/Notification.container';
 import {
   PATH,
   PATH_ADMIN,
@@ -15,6 +9,10 @@ import {
   PATH_COMPANY_EMPLOYEE,
   PATH_COMPANY_MANAGER
 } from '../../../constants/Paths/Path';
+import { UserOutlined } from '@ant-design/icons';
+import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
+import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
 export const AttendantMenu = [
   <Menu.Item key={PATH_ATTENDANT.PROFILE_PAGE}>
@@ -67,17 +65,6 @@ export const AdminMenu = [
   </Menu.Item>
 ];
 
-const NotificationIcon = () => {
-  const notificationData = useSelector((state) => state.notification.data);
-
-  return (
-    <div className={'notification'}>
-      <FontAwesomeIcon className={'icon'} size={'xl'} icon={faBell} />
-      <div className={'number'}>{notificationData.length}</div>
-    </div>
-  );
-};
-
 const NavigationBar = () => {
   const role = useSelector((state) => state.authentication?.user?.roles);
   const webSocketClient = useSelector((state) => state.webSocket.client);
@@ -117,7 +104,7 @@ const NavigationBar = () => {
           {extraMenu() ? extraMenu().map((item) => item) : null}
         </Menu>
         {!role ? <AuthenticationButtonGroups handleRedirect={handleRedirect} /> : null}
-        {role ? <NotificationIcon /> : null}
+        {role ? <NotificationContainer /> : null}
         {role ? <AvatarMenu logoutFunction={handleClick} handleRedirect={handleRedirect} /> : null}
       </div>
     </div>

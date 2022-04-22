@@ -1,3 +1,4 @@
+import { notification } from 'antd';
 import { notificationAction } from '../../redux-flow/notification/notification-slice';
 import store from '../../redux-flow/index';
 
@@ -11,6 +12,11 @@ export class WebSocketClient {
   init() {
     this.socket.onmessage = function (event) {
       const notificationData = JSON.parse(event.data);
+      notification['success']({
+        message: notificationData.title,
+        description: notificationData.message,
+        duration: 2
+      });
       store.dispatch(notificationAction.addNotification(notificationData));
     };
   }
