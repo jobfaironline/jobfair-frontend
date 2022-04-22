@@ -39,3 +39,25 @@
   width: fit-content;
   position: absolute;
 }
+
+.notification{
+  display: flex;
+
+  .number{
+    background: red;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 0.7rem;
+    position: relative;
+    left: -10px;
+    top: -8px;
+  }
+  .icon{
+    color: white;
+  }
+}
