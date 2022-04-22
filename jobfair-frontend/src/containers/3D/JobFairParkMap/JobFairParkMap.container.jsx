@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { PATH } from '../../../constants/Paths/Path';
 import { addVideoTexture, fixTextureOffset, loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
-import { generatePath, useHistory } from 'react-router-dom';
+import { generatePath, useHistory, useLocation } from 'react-router-dom';
 import { getLayoutInformationForJobFairPark } from '../../../services/jobhub-api/JobFairControllerService';
 import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
 import React, { useEffect, useState } from 'react';
@@ -31,9 +31,10 @@ const getBootMesh = async (position, foundationBox, url, companyBoothId, company
   }
   return sceneMesh;
 };
-const JobFairParkMapContainer = (props) => {
+const JobFairParkMapContainer = () => {
   const history = useHistory();
-  const { jobFairId } = props;
+  const location = useLocation();
+  const jobFairId = location.state?.jobFairId;
   const [state, setState] = useState({
     boothMeshes: [],
     mapMesh: null

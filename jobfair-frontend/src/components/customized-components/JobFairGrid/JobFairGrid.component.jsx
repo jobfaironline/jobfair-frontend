@@ -70,7 +70,7 @@ const JobFairGridComponent = (props) => {
       grid={{
         gutter: 20
       }}
-      dataSource={data ? data : fakeJobFairForAttendant}
+      dataSource={data}
       renderItem={(item) => (
         <List.Item>
           <Card

@@ -1,9 +1,8 @@
 import { CategoriesConst, SubCategories } from '../../../constants/CompanyProfileConstant';
 import { CountryConst } from '../../../constants/AttendantConstants';
-import { Input, Select } from 'antd';
-import { JOB_FAIR_STATUS } from '../../../constants/JobFairConst';
-import { PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path';
-import { getJobFairByIDAPI, searchJobFairAPI } from '../../../services/jobhub-api/JobFairControllerService';
+import { Input, Select, notification } from 'antd';
+import { PATH } from '../../../constants/Paths/Path';
+import { getJobFairForAttendant, searchJobFairAPI } from '../../../services/jobhub-api/JobFairControllerService';
 import { useHistory } from 'react-router-dom';
 import JobFairGridComponent from '../../../components/customized-components/JobFairGrid/JobFairGrid.component';
 import React, { useEffect, useState } from 'react';
@@ -15,9 +14,14 @@ const JobFairGridAttendantContainer = () => {
   const history = useHistory();
 
   const fetchData = async () => {
-    // const res = await getAllJobFairAPI();
-    // const content = res.data.content;
-    // setData(content);
+    try {
+      const res = await getJobFairForAttendant();
+      setData(res.data.content);
+    } catch (e) {
+      notification['error']({
+        message: `Error occurred: ${e.response.data.message}`
+      });
+    }
   };
 
   const searchJobFair = async (searchValue) => {
@@ -27,10 +31,9 @@ const JobFairGridAttendantContainer = () => {
   };
 
   const onClick = async (jobFairId) => {
-    const jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
-    if (jobFairData.status === JOB_FAIR_STATUS.PUBLISH)
-      history.push(PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE, { jobFairId });
-    else history.push(PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE, { step: 4, jobFairId });
+    history.push(PATH.PUBLICIZED_BOOTH_PAGE, {
+      jobFairId
+    });
   };
 
   useEffect(() => {
