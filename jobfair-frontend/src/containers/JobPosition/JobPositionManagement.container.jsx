@@ -1,7 +1,8 @@
-import { Button, Space, Typography, Upload, notification } from 'antd';
+import { Button, Space, Typography, Upload } from 'antd';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { UploadOutlined } from '@ant-design/icons';
-import { getJobPositionsAPI, uploadCSVFile } from '../../services/jobhub-api/JobControllerService';
+import { getJobPositionsAPI } from '../../services/jobhub-api/JobControllerService';
+import { loadCSVFile, uploadUtil } from '../../utils/uploadCSVUtil';
 import { useHistory } from 'react-router-dom';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import PickJobPositionTableColumn from '../JobPositionTable/PickJobPositionTable.column';
@@ -55,35 +56,15 @@ const JobPositionManagementContainer = () => {
     });
   };
 
-  const loadFile = {
-    name: 'file',
-    accept: '.csv',
-    beforeUpload: () => false,
-    onChange: async (info) => {
-      if (info.file.type !== 'text/csv') {
-        notification['error']({
-          message: `${info.file.name} is not csv`
-        });
-        return;
-      }
-      const formData = new FormData();
-      formData.append('file', info.file);
-      await uploadCSVFile(formData);
-      notification['success']({
-        message: `${info.file.name} upload successfully`
-      });
-      //force render to fetch data after upload
-      setForceRerenderState((prevState) => !prevState);
-    },
-    showUploadList: false,
-    progress: {
-      strokeColor: {
-        '0%': '#108ee9',
-        '100%': '#87d068'
-      },
-      strokeWidth: 3,
-      format: (percent) => `${parseFloat(percent.toFixed(2))}%`
-    }
+  const handleViewQuestionBank = (id) => {
+    history.push(PATH_COMPANY_MANAGER.QUESTION_BANK, {
+      jobPosition: data.find((item) => item.id === id)
+    });
+  };
+
+  const onChangeUpload = async (info) => {
+    await uploadUtil(info);
+    setForceRerenderState((prevState) => !prevState);
   };
 
   const jobPositionTableProps = {
@@ -99,6 +80,7 @@ const JobPositionManagementContainer = () => {
         render: (text, record) => (
           <Space size='middle'>
             <a onClick={() => handleViewDetailPage(record.id)}>View detail</a>
+            <a onClick={() => handleViewQuestionBank(record.id)}>Nguồn câu hỏi</a>
           </Space>
         )
       }
@@ -124,7 +106,7 @@ const JobPositionManagementContainer = () => {
           <Button type='primary' onClick={() => handleCreateOnClick()}>
             Create job position
           </Button>
-          <Upload {...loadFile}>
+          <Upload {...loadCSVFile(onChangeUpload)}>
             <Button icon={<UploadOutlined />}>Upload CSV</Button>{' '}
           </Upload>
         </Space>
