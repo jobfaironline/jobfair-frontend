@@ -45,9 +45,6 @@ export const CompanyManagerMenu = [
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE}>My template</Link>
-  </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_MANAGER.QUESTION_BANK}>
-    <Link to={PATH_COMPANY_MANAGER.QUESTION_BANK}>Question bank</Link>
   </Menu.Item>
 ];
 

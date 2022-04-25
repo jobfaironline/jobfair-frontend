@@ -1,79 +1,61 @@
-import { Button, Form, Input } from 'antd';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Form } from 'antd';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { handleAlphabeticalOrder } from '../../../utils/questionUtil';
 import React from 'react';
+import TextArea from 'antd/es/input/TextArea';
 
-const { TextArea } = Input;
-const CreateQuestionFormComponent = ({ form, onFinish }) => (
-  <div>
-    <Form
-      form={form}
-      onFinish={onFinish}
-      requiredMark='required'
-      autoComplete='off'
-      scrollToFirstError={{ block: 'center', behavior: 'smooth' }}>
-      <Form.List name='questions' label='Questions'>
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name, ...restField }) => (
-              <div key={key} style={{ display: 'flex', flexDirection: 'row' }}>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <Form.Item
-                    {...restField}
-                    label='Câu hỏi'
-                    name={[name, 'name']}
-                    hasFeedback
-                    rules={[]}
-                    style={{ width: 250 }}>
-                    <TextArea placeholder='Nhập câu hỏi' />
-                  </Form.Item>
-                  <Form.List name={[name.answer, 'answerList']}>
-                    {(fields, { add, remove }) => (
-                      <>
-                        {fields.map(({ key, name, ...field }) => (
-                          <div key={`${name.answer}-${key}`} style={{ display: 'flex', flexDirection: 'row' }}>
-                            <Form.Item
-                              {...field}
-                              label={'a'}
-                              name={[name, 'name']}
-                              hasFeedback
-                              rules={[]}
-                              style={{ width: 250 }}>
-                              <TextArea placeholder={'Nhập đáp án...'} />
-                            </Form.Item>
-                            <MinusCircleOutlined
-                              onClick={() => {
-                                remove(name);
-                              }}
-                            />
-                          </div>
-                        ))}
-                        <Form.Item>
-                          <Button
-                            type='dashed'
-                            onClick={() => add()}
-                            block
-                            icon={<PlusOutlined />}
-                            style={{ width: '15%' }}>
-                            Add new answer
-                          </Button>
-                        </Form.Item>
-                      </>
-                    )}
-                  </Form.List>
-                </div>
-                <MinusCircleOutlined onClick={() => remove(name)} />
+const CreateQuestionFormComponent = (key, name, restField) => (
+  <>
+    <Form.Item
+      {...restField}
+      label={`${key + 1}. Câu hỏi`}
+      name={[name, 'content']}
+      hasFeedback
+      rules={[]}
+      style={{ width: 400, marginBottom: '1rem' }}>
+      <TextArea placeholder='Nhập câu hỏi' autoSize={{ minRows: 1 }} className={'text-area'} />
+    </Form.Item>
+    <Form.List name={[name, 'choicesList']}>
+      {(answers, { add, remove }) => (
+        <>
+          {answers.map(({ key, name, ...field }) => (
+            <div key={key} style={{ display: 'flex', flexDirection: 'row' }}>
+              <Form.Item {...field} name={[name, 'isCorrect']} style={{ display: 'inline-block' }}>
+                <Checkbox defaultChecked={true} />
+              </Form.Item>
+              <Form.Item
+                {...field}
+                label={handleAlphabeticalOrder(key + 1)}
+                name={[name, 'content']}
+                hasFeedback
+                rules={[]}
+                style={{ width: 370, marginLeft: '1rem' }}>
+                <TextArea placeholder={'Nhập đáp án...'} autoSize={{ minRows: 1 }} className={'text-area'} />
+              </Form.Item>
+              <div className={'minus-div'}>
+                <Button
+                  size='small'
+                  className={'minus-button'}
+                  onClick={() => {
+                    remove(name);
+                  }}>
+                  <MinusOutlined />
+                </Button>
               </div>
-            ))}
-            <Form.Item>
-              <Button type='dashed' onClick={() => add()} block icon={<PlusOutlined />} style={{ width: '15%' }}>
-                Add new question
-              </Button>
-            </Form.Item>
-          </>
-        )}
-      </Form.List>
-    </Form>
-  </div>
+            </div>
+          ))}
+          <Form.Item>
+            <Button
+              onClick={() => add()}
+              block
+              icon={<PlusOutlined />}
+              style={{ width: '400px', borderRadius: '10px', backgroundColor: '#C4C4C4' }}
+            />
+          </Form.Item>
+        </>
+      )}
+    </Form.List>
+  </>
 );
 
 export default CreateQuestionFormComponent;

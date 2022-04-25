@@ -1,12 +1,10 @@
 import './QuestionBank.styles.scss';
-import { Button, Input, Space, Tooltip, Upload } from 'antd';
-import { DeleteOutlined, EyeOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Input, Space, Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 import { loadCSVFile, uploadUtil } from '../../utils/uploadCSVUtil';
 import { useLocation } from 'react-router-dom';
-import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import CreateQuestionFormContainer from '../forms/CreateQuestionForm/CreateQuestionForm.container';
 import JobPositionDetailCollapseComponent from '../../components/customized-components/JobPositionDetailCollapse/JobPositionDetailCollapse.component';
-import QuestionBankTableColumn from '../QuestionBankTable/QuestionBankTable.column';
 import React, { useLayoutEffect, useState } from 'react';
 import ViewQuestionDetailModalContainer from '../ViewQuestionDetailModal/ViewQuestionDetailModal.container';
 
@@ -51,8 +49,6 @@ const QuestionBankContainer = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
 
-  //add question modal
-  const [addModalVisible, setAddModalVisible] = useState(false);
   //view detail and edit modal
   const [detailModalVisible, setDetailModalVisible] = useState(false);
 
@@ -80,14 +76,6 @@ const QuestionBankContainer = () => {
     //TODO: call API to search
   };
 
-  const onCloseAddModal = () => {
-    setAddModalVisible(false);
-  };
-
-  const handleViewDetail = () => {
-    setDetailModalVisible(true);
-  };
-
   const onCloseDetailModal = () => {
     setDetailModalVisible(false);
   };
@@ -100,45 +88,6 @@ const QuestionBankContainer = () => {
     await uploadUtil(info);
     //force render to fetch data after upload
     setReRender((prevState) => !prevState);
-  };
-
-  const questionBankTableProps = {
-    tableData: fakeData,
-    tableColumns: QuestionBankTableColumn,
-    onSearch: () => {
-      //TODO: fetch data for search
-    },
-    extra: [
-      {
-        title: 'Actions',
-        key: 'action',
-        render: (text, record) => ({
-          props: {
-            style: { textAlign: 'center', width: '10rem' }
-          },
-          children: (
-            <Space size='middle'>
-              <>
-                <a onClick={() => handleViewDetail()}>
-                  <Tooltip title='View question detail'>
-                    <EyeOutlined />
-                  </Tooltip>
-                </a>
-                <a onClick={() => handleDeleteQuestion(record.id)}>
-                  <Tooltip title='Delete the question'>
-                    <DeleteOutlined />
-                  </Tooltip>
-                </a>
-              </>
-            </Space>
-          )
-        })
-      }
-    ],
-    paginationObject: {
-      handlePageChange,
-      totalRecord
-    }
   };
 
   return (
@@ -154,9 +103,6 @@ const QuestionBankContainer = () => {
       <ViewQuestionDetailModalContainer visible={detailModalVisible} onCancel={onCloseDetailModal} />
       <JobPositionDetailCollapseComponent jobPosition={jobPosition} />
       <CreateQuestionFormContainer />
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <CommonTableContainer {...questionBankTableProps} />
-      </div>
     </div>
   );
 };

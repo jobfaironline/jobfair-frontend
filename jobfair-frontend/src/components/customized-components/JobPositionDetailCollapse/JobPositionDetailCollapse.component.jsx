@@ -1,3 +1,4 @@
+import './JobPositionDetailCollapse.styles.scss';
 import { Col, Collapse, Row, Space, Tag, Typography } from 'antd';
 import { convertEnumToString } from '../../../utils/common';
 import React from 'react';
@@ -5,12 +6,12 @@ import React from 'react';
 const { Text } = Typography;
 const { Panel } = Collapse;
 const JobPositionDetailCollapseComponent = ({ jobPosition }) => (
-  <Collapse bordered={false} defaultActiveKey={['1']} style={{ marginBottom: '1rem' }}>
+  <Collapse bordered={false} defaultActiveKey={['1']} className={'collapse'}>
     <Panel
       key={jobPosition?.id}
       header={
         <Text strong style={{ fontSize: '1rem' }}>
-          General information
+          Thông tin cơ bản job tuyển dụng
         </Text>
       }>
       <Col style={{ marginLeft: '1rem' }}>

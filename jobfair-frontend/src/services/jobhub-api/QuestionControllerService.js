@@ -1,0 +1,30 @@
+import { CallAPI } from '../axiosBase';
+import { ENDPOINT_QUESTION } from '../../constants/Endpoints/jobhub-api/QuestionControllerEndpoint';
+
+export const getQuestionByCriteria = (
+  direction = 'DESC',
+  fromDate = '0',
+  offset = '0',
+  pageSize = '10',
+  questionContent = '',
+  sortBy = 'createDate',
+  status = 'ACTIVE',
+  toDate = '0'
+) =>
+  CallAPI(
+    ENDPOINT_QUESTION,
+    'GET',
+    {},
+    {
+      direction,
+      fromDate,
+      offset,
+      pageSize,
+      questionContent,
+      sortBy,
+      status,
+      toDate
+    }
+  );
+
+export const createQuestions = (body) => CallAPI(ENDPOINT_QUESTION, 'POST', body, {});
