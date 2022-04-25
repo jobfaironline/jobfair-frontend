@@ -1,8 +1,8 @@
 import './QuestionBank.styles.scss';
-import { Button, Card, Checkbox, Form, Input, List, Space, Upload, notification } from 'antd';
+import { Button, Card, Form, Input, List, Space, Upload, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
-import { QuestionValidation } from '../../validate/QuestionValidation';
+import { QuestionForm } from '../../components/forms/QuestionForm/QuestionForm.component';
 import { UploadOutlined } from '@ant-design/icons';
 import {
   createQuestion,
@@ -10,7 +10,7 @@ import {
   getQuestionByCriteria,
   updateQuestion
 } from '../../services/jobhub-api/QuestionControllerService';
-import { faPen, faX } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { getJobPositionByIDAPI } from '../../services/jobhub-api/JobControllerService';
 import { loadCSVFile, uploadUtil } from '../../utils/uploadCSVUtil';
 import { v4 as uuidv4 } from 'uuid';
@@ -20,91 +20,6 @@ import React, { useEffect, useState } from 'react';
 
 const { Search } = Input;
 
-const QuestionForm = (props) => {
-  const {
-    form,
-    error,
-    question,
-    onEditQuestion,
-    isEdit,
-    onChangeIsCorrect,
-    onDeleteAnswer,
-    onAddAnswer,
-    onDeleteQuestion,
-    onQuestionContentChange,
-    onAnswerContentChange
-  } = props;
-
-  const initialFormValue = {};
-  initialFormValue[question.id] = question.content;
-  question.choicesList?.forEach((answer) => {
-    initialFormValue[answer.id] = answer.content;
-  });
-  form.setFieldsValue(initialFormValue);
-  return (
-    <Card key={question.id}>
-      <div className={'disable-form'}>
-        <Form form={form}>
-          <Form.Item label='Content' name={`${question.id}`} required rules={QuestionValidation.questionContent}>
-            <Input.TextArea
-              placeholder='Question Content'
-              disabled={!isEdit}
-              onChange={(e) => {
-                onQuestionContentChange(question.id, e.target.value);
-              }}
-            />
-          </Form.Item>
-          {question.choicesList?.map((answer) => (
-            <div>
-              <Checkbox
-                checked={answer.isCorrect}
-                disabled={!isEdit}
-                onChange={(e) => {
-                  onChangeIsCorrect(question.id, answer.id, e.target.checked);
-                }}
-              />
-              <Form.Item
-                label={`Answer ${answer.order}`}
-                name={`${answer.id}`}
-                required
-                rules={QuestionValidation.answerContent}>
-                <Input.TextArea
-                  placeholder={`Answer content`}
-                  disabled={!isEdit}
-                  onChange={(e) => onAnswerContentChange(question.id, answer.id, e.target.value)}
-                />
-              </Form.Item>
-              <div
-                style={{ display: isEdit ? 'block' : 'none', height: 50, width: 50, backgroundColor: 'blue' }}
-                onClick={() => {
-                  onDeleteAnswer(question.id, answer.id);
-                }}>
-                -
-              </div>
-            </div>
-          ))}
-        </Form>
-      </div>
-      <div
-        style={{ display: isEdit ? 'block' : 'none', height: 50, width: 50, backgroundColor: 'blue' }}
-        onClick={() => {
-          onAddAnswer(question.id);
-        }}>
-        +
-      </div>
-      {error ? <div>{error}</div> : null}
-      <div>
-        <a onClick={() => onEditQuestion(question.id, true)}>
-          <FontAwesomeIcon icon={faPen} size={'2x'} color={'black'} />
-        </a>
-        <a onClick={() => onDeleteQuestion(question.id)}>
-          <FontAwesomeIcon icon={faX} size={'2x'} color={'black'} />
-        </a>
-      </div>
-    </Card>
-  );
-};
-
 const QuestionBankContainer = ({ jobPositionId }) => {
   const [data, setData] = useState({
     jobPosition: undefined,
@@ -112,7 +27,8 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     editingQuestionIds: [],
     newQuestionIds: [],
     errors: {},
-    deletedQuestionIds: []
+    deletedQuestionIds: [],
+    editedQuestionsIds: []
   });
 
   //pagination
@@ -161,6 +77,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
   };
 
   const onEditQuestion = (questionId, isAdd) => {
+    data.editedQuestionsIds.push(questionId);
     let editingQuestionIds = data.editingQuestionIds;
     if (isAdd) editingQuestionIds.push(questionId);
     else editingQuestionIds = editingQuestionIds.filter((id) => id !== questionId);
@@ -231,6 +148,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     }
     data.newQuestionIds.push(question.id);
     data.editingQuestionIds.push(question.id);
+    data.editedQuestionsIds.push(question.id);
     setData((prevState) => ({ ...prevState, ...data }));
   };
 
@@ -266,7 +184,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
 
     const updatedQuestion = data.questions.filter(
       (question) =>
-        data.editingQuestionIds.includes(question.id) &&
+        data.editedQuestionsIds.includes(question.id) &&
         !data.newQuestionIds.includes(question.id) &&
         !data.deletedQuestionIds.includes(question.id)
     );
@@ -298,7 +216,13 @@ const QuestionBankContainer = ({ jobPositionId }) => {
 
     try {
       await Promise.all(promises);
-      setData((prevState) => ({ ...prevState, editingQuestionIds: [], newQuestionIds: [], errors: {} }));
+      setData((prevState) => ({
+        ...prevState,
+        editingQuestionIds: [],
+        newQuestionIds: [],
+        errors: {},
+        editedQuestionsIds: []
+      }));
       setReRender((prevState) => !prevState);
       notification['success']({
         message: `Save successfully`
@@ -312,7 +236,13 @@ const QuestionBankContainer = ({ jobPositionId }) => {
   };
 
   const onCancel = () => {
-    setData((prevState) => ({ ...prevState, editingQuestionIds: [], newQuestionIds: [], errors: {} }));
+    setData((prevState) => ({
+      ...prevState,
+      editingQuestionIds: [],
+      newQuestionIds: [],
+      errors: {},
+      editedQuestionsIds: []
+    }));
   };
 
   const handlePageChange = (page, pageSize) => {
@@ -325,7 +255,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
   if (data.questions === undefined || data.jobPosition === undefined) return <LoadingComponent />;
 
   return (
-    <div>
+    <div className={'question-bank'}>
       <div className={'header'}>
         <Search placeholder='Search question' className={'search-bar'} />
         <Space className={'upload-section'}>
@@ -335,13 +265,14 @@ const QuestionBankContainer = ({ jobPositionId }) => {
         </Space>
       </div>
       <JobPositionDetailCollapseComponent jobPosition={data.jobPosition} />
-      <div
-        style={{ height: 50, width: 50, backgroundColor: 'blue' }}
+      <Card
+        hoverable={true}
+        className={'add-more-question'}
         onClick={() => {
           onAddQuestion();
         }}>
-        +
-      </div>
+        <FontAwesomeIcon icon={faPlus} size={'2x'} color={'black'} />
+      </Card>
       <List
         dataSource={data.questions}
         renderItem={(item) => {
@@ -364,15 +295,17 @@ const QuestionBankContainer = ({ jobPositionId }) => {
           );
         }}
       />
-      <div>
-        <Button className={'button'} onClick={onSave}>
+      <div className={'button-container'}>
+        <Button className={'button'} style={{ marginLeft: 'auto'}} onClick={onSave}>
           Save
         </Button>
-        <Button className={'button'} onClick={onCancel}>
+        <Button className={'button'} style={{ marginLeft: '20px', marginRight: '10rem' }} onClick={onCancel}>
           Cancel
         </Button>
       </div>
-      <PaginationComponent handlePageChange={handlePageChange} totalRecord={totalRecord} />
+      <div className={'paging'}>
+        <PaginationComponent handlePageChange={handlePageChange} totalRecord={totalRecord} />
+      </div>
     </div>
   );
 };
