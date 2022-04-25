@@ -2,7 +2,6 @@ import './QuestionBank.styles.scss';
 import { Button, Input, Space, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { loadCSVFile, uploadUtil } from '../../utils/uploadCSVUtil';
-import { useLocation } from 'react-router-dom';
 import CreateQuestionFormContainer from '../forms/CreateQuestionForm/CreateQuestionForm.container';
 import JobPositionDetailCollapseComponent from '../../components/customized-components/JobPositionDetailCollapse/JobPositionDetailCollapse.component';
 import React, { useLayoutEffect, useState } from 'react';
@@ -38,7 +37,7 @@ const fakeData = [
 
 const { Search } = Input;
 
-const QuestionBankContainer = () => {
+const QuestionBankContainer = ({ jobPositionId }) => {
   //TODO: for set data when fetch API
   // eslint-disable-next-line no-unused-vars
   const [data, setData] = useState([]);
@@ -54,9 +53,6 @@ const QuestionBankContainer = () => {
 
   //re-render
   const [reRender, setReRender] = useState(false);
-  //useLocation
-  const location = useLocation();
-  const jobPosition = location.state?.jobPosition;
 
   const fetchData = async () => {
     //
