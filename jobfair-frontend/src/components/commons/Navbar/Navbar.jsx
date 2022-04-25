@@ -106,13 +106,15 @@ const NavigationBar = () => {
           {role ? <AvatarMenu logoutFunction={handleClick} handleRedirect={handleRedirect} /> : null}
         </div>
       </div>
-      <div className={'sub-navbar-container'}>
-        <div className='Navbar'>
-          <Menu className='menu' mode='horizontal'>
-            {extraMenu()}
-          </Menu>
+      {extraMenu() ? (
+        <div className={'sub-navbar-container'}>
+          <div className='Navbar'>
+            <Menu className='menu' mode='horizontal'>
+              {extraMenu()}
+            </Menu>
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 };

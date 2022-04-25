@@ -1,0 +1,66 @@
+.job-position-card {
+  margin: 10px 40px;
+  border-radius: 8px;
+
+  :hover {
+    .content-container {
+      opacity: 0.1;
+      color: white;
+      /*no select text*/
+      -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+      -khtml-user-select: none; /* Konqueror HTML */
+      -moz-user-select: none; /* Old versions of Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+      user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+    }
+    .mask {
+      opacity: 1;
+      z-index: 1000;
+      .icon:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .ant-card-body {
+    padding: 0px;
+  }
+  .content-container {
+    padding: 12px 24px;
+  }
+  .mask {
+    transition: 0.2s;
+    height: calc(100% - 50px);
+    width: 100%;
+    background-color: #000000ab;
+    position: absolute;
+    opacity: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 8px;
+  }
+  .ant-card-actions {
+    height: 50px;
+  }
+  .ant-descriptions-title {
+    font-size: 20px;
+  }
+  .ant-descriptions-header {
+    margin-bottom: 6px;
+  }
+  .ant-descriptions-row > td,
+  .ant-descriptions-row > th {
+    padding-bottom: 11px;
+  }
+}
+
+.add-container {
+  width: calc(100% - 82px);
+  height: calc(100% - 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

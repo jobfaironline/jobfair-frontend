@@ -9,7 +9,7 @@ import AttendantRouter from './components/AttendantRouter';
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage';
 import CompanyEmployeeRouter from './components/CompanyEmployeeRouter';
 import CompanyManagerRouter from './components/CompanyManagerRouter';
-import CompanyProfile from '../pages/ProfilePage/Company/CompanyProfilePage';
+import CompanyProfilePage from '../pages/ProfilePage/Company/CompanyProfilePage';
 import ContactPage from '../pages/ContactPage/ContactPage';
 import CreateJobPositionPage from '../pages/CreateJobPositonPage/CreateJobPositionPage';
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage';
@@ -135,7 +135,7 @@ const AppRouter = () => (
       />
       <CompanyEmployeeRouter
         key={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}
-        component={() => <CompanyProfile />}
+        component={() => <CompanyProfilePage />}
         path={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}
         exact
       />
@@ -195,7 +195,7 @@ const AppRouter = () => (
       />
       <CompanyManagerRouter
         key={PATH_COMPANY_MANAGER.COMPANY_PROFILE_PAGE}
-        component={() => <CompanyProfile />}
+        component={() => <CompanyProfilePage />}
         path={PATH_COMPANY_MANAGER.COMPANY_PROFILE_PAGE}
         exact
       />

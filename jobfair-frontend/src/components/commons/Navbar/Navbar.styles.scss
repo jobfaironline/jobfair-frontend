@@ -13,7 +13,8 @@
   position: fixed;
   top: 80px;
   width: 100vw;
-  background-color: #1890ffd1;
+  background-color: #2586df;
+  z-index: 1000;
 }
 
 .Navbar {
@@ -47,7 +48,7 @@
   width: fit-content;
 }
 
-.avatar{
+.avatar {
   padding: 0 1rem;
   display: flex;
 }
