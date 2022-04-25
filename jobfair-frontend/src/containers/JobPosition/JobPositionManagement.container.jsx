@@ -1,22 +1,33 @@
-import { Button, Space, Typography, Upload } from 'antd';
-import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
+import { Button, Space, Typography, Upload, notification } from 'antd';
+import { JobPositionList } from '../../components/customized-components/JobPositionListCard/JobPositionListCard.component';
 import { UploadOutlined } from '@ant-design/icons';
-import { getJobPositionsAPI } from '../../services/jobhub-api/JobControllerService';
-import { loadCSVFile, uploadUtil } from '../../utils/uploadCSVUtil';
-import { useHistory } from 'react-router-dom';
-import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
-import PickJobPositionTableColumn from '../JobPositionTable/PickJobPositionTable.column';
-import React, { useLayoutEffect, useState } from 'react';
+import {
+  deleteJobPositionAPI,
+  getJobPositionsAPI,
+  uploadCSVFile
+} from '../../services/jobhub-api/JobControllerService';
+import CreateJobPositionFormContainer from '../forms/CreateJobPositionForm/CreateJobPositionForm.container';
+import JobPositionDetailFormContainer from '../forms/JobPositionDetailForm/JobPositionDetailForm.container';
+import React, { useEffect, useState } from 'react';
+
+const JobPositionMode = {
+  VIEW_LIST: 'VIEW_LIST',
+  ADD: 'ADD',
+  UPDATE: 'UPDATE',
+  VIEW_DETAIL: 'VIEW_DETAIL'
+};
 
 const JobPositionManagementContainer = () => {
   const [data, setData] = useState([]);
   const [forceRerenderState, setForceRerenderState] = useState(false);
   //pagination
+  // eslint-disable-next-line no-unused-vars
   const [totalRecord, setTotalRecord] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   //
-  const history = useHistory();
+  const [mode, setMode] = useState(JobPositionMode.VIEW_LIST);
+  const [selectedJobPosition, setSelectJobPosition] = useState();
 
   const fetchData = async () => {
     getJobPositionsAPI('DESC', currentPage, pageSize, 'createdDate')
@@ -24,6 +35,7 @@ const JobPositionManagementContainer = () => {
         const totalRecord = res.data.totalElements;
         setTotalRecord(totalRecord);
         setData([
+          { isFirst: true },
           ...res.data.content.map((item, index) => ({
             key: item.id,
             no: index + res.data.number * 10 + 1,
@@ -35,10 +47,11 @@ const JobPositionManagementContainer = () => {
         //
       });
   };
-  useLayoutEffect(() => {
+  useEffect(() => {
     fetchData();
   }, [currentPage, pageSize, forceRerenderState]);
 
+  // eslint-disable-next-line no-unused-vars
   const handlePageChange = (page, pageSize) => {
     if (page > 0) setCurrentPage(page - 1);
     else setCurrentPage(page);
@@ -47,47 +60,104 @@ const JobPositionManagementContainer = () => {
   };
 
   const handleCreateOnClick = () => {
-    history.push(PATH_COMPANY_MANAGER.CREATE_JOB_POSITION_PAGE);
+    setMode(JobPositionMode.ADD);
   };
 
   const handleViewDetailPage = (id) => {
-    history.push(PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL_PAGE, {
-      jobPosition: data.find((item) => item.id === id)
-    });
+    const jobPosition = data.find((item) => item.id === id);
+    setSelectJobPosition(jobPosition);
+    setMode(JobPositionMode.VIEW_DETAIL);
   };
 
-  const handleViewQuestionBank = (id) => {
-    history.push(PATH_COMPANY_MANAGER.QUESTION_BANK, {
-      jobPosition: data.find((item) => item.id === id)
-    });
+  const loadFile = {
+    name: 'file',
+    accept: '.csv',
+    beforeUpload: () => false,
+    onChange: async (info) => {
+      if (info.file.type !== 'text/csv') {
+        notification['error']({
+          message: `${info.file.name} is not csv`
+        });
+        return;
+      }
+      const formData = new FormData();
+      formData.append('file', info.file);
+      await uploadCSVFile(formData);
+      notification['success']({
+        message: `${info.file.name} upload successfully`
+      });
+      //force render to fetch data after upload
+      setForceRerenderState((prevState) => !prevState);
+    },
+    showUploadList: false,
+    progress: {
+      strokeColor: {
+        '0%': '#108ee9',
+        '100%': '#87d068'
+      },
+      strokeWidth: 3,
+      format: (percent) => `${parseFloat(percent.toFixed(2))}%`
+    }
   };
 
-  const onChangeUpload = async (info) => {
-    await uploadUtil(info);
+  const onCancelForm = () => {
+    setMode(JobPositionMode.VIEW_LIST);
+    setSelectJobPosition(undefined);
     setForceRerenderState((prevState) => !prevState);
   };
 
-  const jobPositionTableProps = {
-    tableData: data,
-    tableColumns: PickJobPositionTableColumn,
-    onSearch: () => {
-      //TODO: fetch data for search
-    },
-    extra: [
-      {
-        title: 'Actions',
-        key: 'action',
-        render: (text, record) => (
-          <Space size='middle'>
-            <a onClick={() => handleViewDetailPage(record.id)}>View detail</a>
-            <a onClick={() => handleViewQuestionBank(record.id)}>Nguồn câu hỏi</a>
-          </Space>
-        )
-      }
-    ],
-    paginationObject: {
-      handlePageChange,
-      totalRecord
+  const onClickUpdate = () => {
+    setMode(JobPositionMode.UPDATE);
+  };
+
+  const handleOnDelete = async (id) => {
+    try {
+      await deleteJobPositionAPI(id);
+      notification['success']({
+        message: `Delete job position successfully`
+      });
+      setForceRerenderState((prevState) => !prevState);
+    } catch (e) {
+      notification['error']({
+        message: `Update job position failed`,
+        description: `Error detail: ${e}`
+      });
+    }
+  };
+
+  const renderJobPosition = () => {
+    switch (mode) {
+      case JobPositionMode.VIEW_LIST:
+        return (
+          <JobPositionList
+            handleCreateOnClick={handleCreateOnClick}
+            handleViewDetailPage={handleViewDetailPage}
+            data={data}
+            handleOnDelete={handleOnDelete}
+          />
+        );
+      case JobPositionMode.ADD:
+        return <CreateJobPositionFormContainer onCancel={onCancelForm} />;
+      case JobPositionMode.VIEW_DETAIL:
+        return (
+          <JobPositionDetailFormContainer
+            jobPosition={selectedJobPosition}
+            onCancel={onCancelForm}
+            isDisplayDetail={JobPositionMode.VIEW_DETAIL === mode}
+            onClickUpdate={onClickUpdate}
+          />
+        );
+      case JobPositionMode.UPDATE:
+        return (
+          <JobPositionDetailFormContainer
+            jobPosition={selectedJobPosition}
+            onCancel={onCancelForm}
+            isDisplayDetail={JobPositionMode.VIEW_DETAIL === mode}
+            onClickUpdate={onClickUpdate}
+          />
+        );
+      default:
+        return null;
     }
   };
 
@@ -103,18 +173,12 @@ const JobPositionManagementContainer = () => {
           Job positions
         </Typography.Title>
         <Space>
-          <Button type='primary' onClick={() => handleCreateOnClick()}>
-            Create job position
-          </Button>
-          <Upload {...loadCSVFile(onChangeUpload)}>
+          <Upload {...loadFile}>
             <Button icon={<UploadOutlined />}>Upload CSV</Button>{' '}
           </Upload>
         </Space>
       </Space>
-
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <CommonTableContainer {...jobPositionTableProps} />
-      </div>
+      {renderJobPosition()}
     </div>
   );
 };

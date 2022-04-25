@@ -1,5 +1,4 @@
 .navbar-container {
-  background-color: #1890ff;
   position: fixed;
   top: 0;
   z-index: 1000;
@@ -7,13 +6,23 @@
   height: 80px;
   display: flex;
   align-items: center;
+  background-color: #1890ff;
+}
+
+.sub-navbar-container {
+  position: fixed;
+  top: 80px;
+  width: 100vw;
+  background-color: #2586df;
+  z-index: 1000;
 }
 
 .Navbar {
   flex: 1;
   display: flex;
-  padding: 0;
+  padding: 0 5rem;
   align-items: center;
+  width: 100%;
 }
 
 .menu {
@@ -37,5 +46,9 @@
 
 .logo {
   width: fit-content;
-  position: absolute;
+}
+
+.avatar {
+  padding: 0 1rem;
+  display: flex;
 }

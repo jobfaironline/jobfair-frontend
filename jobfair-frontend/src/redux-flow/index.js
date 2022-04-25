@@ -4,6 +4,8 @@ import jobPositionsReducer from './jobPositions/job-positions-slice';
 import agoraReducer from './agora/agora-slice';
 import decorateBoothReducer from './decorateBooth/decorate-booth-slice';
 import inventoryReducer from './inventory/inventory-slice';
+import webSocketReducer from './web-socket/web-socket-slice';
+import notificationReducer from './notification/notification-slice';
 
 const store = configureStore({
   reducer: {
@@ -11,7 +13,9 @@ const store = configureStore({
     jobPosition: jobPositionsReducer,
     agora: agoraReducer,
     decorateBooth: decorateBoothReducer,
-    inventory: inventoryReducer
+    inventory: inventoryReducer,
+    webSocket: webSocketReducer,
+    notification: notificationReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

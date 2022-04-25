@@ -149,3 +149,19 @@ export const convertHH_mmToMinute = (moment) => {
   const result = arr[0] * 60 + parseInt(arr[1]);
   return result;
 };
+
+export const getDateDifferent = (timeStamp) => {
+  const milli = new Date() - timeStamp;
+  const days = Math.round(milli / 1000 / 60 / 60 / 24);
+  if (days <= 1) return '1 day ago';
+  if (days < 7) return `${Math.round(days)} days ago`;
+  const weeks = Math.round(days / 7);
+  if (weeks <= 1) return '1 week ago';
+  if (weeks < 4) return `${Math.round(weeks)} weeks ago`;
+  const months = Math.round(weeks / 4);
+  if (months <= 1) return '1 month ago';
+  if (months <= 12) return `${Math.round(months)} year ago`;
+  const years = Math.round(months / 12);
+  if (years <= 1) return '1 year ago';
+  return `${years} years ago`;
+};
