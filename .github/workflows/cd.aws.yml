@@ -24,7 +24,7 @@ jobs:
           echo ${{secrets.REACT_APP_AGORA_APP_ID}} >> .env.production
           echo ${{secrets.REACT_APP_API_URL}} >> .env.production
           echo ${{secrets.ESLINT}} >> .env.production
-          npm install
+          npm install --force
           npm run build
    - name: Deploy
      uses: aws-actions/configure-aws-credentials@v1
