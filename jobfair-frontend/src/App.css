@@ -92,7 +92,14 @@ home
 
 .page {
   flex: 1;
-  padding-top: 80px; /*change this when navbar height is changed */
+  padding-top: 126px; /*change this when navbar height is changed */
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+.fullscreen-page{
+  padding-right: 0!important;
+  padding-left: 0!important;
 }
 
 .leftside-container {

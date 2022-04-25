@@ -1,11 +1,10 @@
-import { Divider, Tabs, Typography } from 'antd';
+import { Divider, Typography } from 'antd';
 import { useSelector } from 'react-redux';
 import JobFairGridAttendantContainer from '../../containers/JobFairList/attendant/JobFairGridAttendant.container';
 import JobFairListEmployeeContainer from '../../containers/JobFairList/employee/JobFairListEmployee.container';
 import JobFairListManagerContainer from '../../containers/JobFairList/manager/JobFairListManager.container';
 import React from 'react';
 
-const { TabPane } = Tabs;
 const { Title } = Typography;
 const JobFairListPage = () => {
   const role = useSelector((state) => state.authentication.user.roles);
