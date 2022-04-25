@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
 import AboutApplicationPage from '../pages/AboutApplicationPage';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
+import AttendantAttemptTestPage from '../pages/AttendantAttemptTestPage/AttendantAttemptTestPage';
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage';
 import AttendantProfile from '../pages/ProfilePage/Attendant/AttendantProfilePage';
 import AttendantRouter from './components/AttendantRouter';
@@ -122,6 +123,12 @@ const AppRouter = () => (
         key={PATH_ATTENDANT.RESUME_DETAIL_PAGE}
         component={() => <ResumeDetailPage />}
         path={PATH_ATTENDANT.RESUME_DETAIL_PAGE}
+        exact
+      />
+      <AttendantRouter
+        key={PATH_ATTENDANT.ATTEMPT_TEST_PAGE}
+        component={() => <AttendantAttemptTestPage />}
+        path={PATH_ATTENDANT.ATTEMPT_TEST_PAGE}
         exact
       />
       <CompanyEmployeeRouter
