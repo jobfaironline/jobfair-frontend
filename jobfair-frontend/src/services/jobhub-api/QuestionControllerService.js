@@ -27,4 +27,6 @@ export const getQuestionByCriteria = (
     }
   );
 
-export const createQuestions = (body) => CallAPI(ENDPOINT_QUESTION, 'POST', body, {});
+export const updateQuestion = (body) => CallAPI(ENDPOINT_QUESTION, 'PUT', body);
+export const createQuestion = (body) => CallAPI(ENDPOINT_QUESTION, 'POST', body);
+export const deleteQuestion = (questionId) => CallAPI(`${ENDPOINT_QUESTION}/${questionId}`, 'DELETE');
