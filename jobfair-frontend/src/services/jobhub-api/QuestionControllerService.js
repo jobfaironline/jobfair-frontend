@@ -1,7 +1,7 @@
 import { CallAPI } from '../axiosBase';
 import { ENDPOINT_QUESTION } from '../../constants/Endpoints/jobhub-api/QuestionControllerEndpoint';
 
-export const getQuestionByCriteria = (
+export const getQuestionByCriteria = ({
   direction = 'DESC',
   fromDate = '0',
   offset = '0',
@@ -10,7 +10,7 @@ export const getQuestionByCriteria = (
   sortBy = 'createDate',
   status = 'ACTIVE',
   toDate = '0'
-) =>
+}) =>
   CallAPI(
     ENDPOINT_QUESTION,
     'GET',

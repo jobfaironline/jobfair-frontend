@@ -15,6 +15,7 @@ import { getJobPositionByIDAPI } from '../../services/jobhub-api/JobControllerSe
 import { loadCSVFile, uploadUtil } from '../../utils/uploadCSVUtil';
 import { v4 as uuidv4 } from 'uuid';
 import JobPositionDetailCollapseComponent from '../../components/customized-components/JobPositionDetailCollapse/JobPositionDetailCollapse.component';
+import PaginationComponent from '../../components/commons/PaginationComponent/Pagination.component';
 import React, { useEffect, useState } from 'react';
 
 const { Search } = Input;
@@ -114,6 +115,11 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     deletedQuestionIds: []
   });
 
+  //pagination
+  const [totalRecord, setTotalRecord] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+
   //re-render
   const [reRender, setReRender] = useState(false);
 
@@ -123,10 +129,11 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     try {
       const promises = [];
       promises.push(getJobPositionByIDAPI(jobPositionId));
-      promises.push(getQuestionByCriteria());
+      promises.push(getQuestionByCriteria({ pageSize, offset: currentPage }));
       const responses = await Promise.all(promises);
       const jobPositionData = responses[0].data;
       const questionData = responses[1].data.content;
+      setTotalRecord(responses[1].data.totalElements);
       for (let i = 0; i < questionData.length; i++) {
         const question = questionData[i];
         question.order = i + 1;
@@ -145,7 +152,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
 
   useEffect(() => {
     fetchData();
-  }, [reRender]);
+  }, [reRender, currentPage, pageSize]);
 
   const onChangeUpload = async (info) => {
     await uploadUtil(info);
@@ -292,6 +299,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     try {
       await Promise.all(promises);
       setData((prevState) => ({ ...prevState, editingQuestionIds: [], newQuestionIds: [], errors: {} }));
+      setReRender((prevState) => !prevState);
       notification['success']({
         message: `Save successfully`
       });
@@ -305,6 +313,13 @@ const QuestionBankContainer = ({ jobPositionId }) => {
 
   const onCancel = () => {
     setData((prevState) => ({ ...prevState, editingQuestionIds: [], newQuestionIds: [], errors: {} }));
+  };
+
+  const handlePageChange = (page, pageSize) => {
+    if (page > 0) setCurrentPage(page - 1);
+    else setCurrentPage(page);
+
+    setPageSize(pageSize);
   };
 
   if (data.questions === undefined || data.jobPosition === undefined) return <LoadingComponent />;
@@ -357,6 +372,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
           Cancel
         </Button>
       </div>
+      <PaginationComponent handlePageChange={handlePageChange} totalRecord={totalRecord} />
     </div>
   );
 };
