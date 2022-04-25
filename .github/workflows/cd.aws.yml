@@ -15,7 +15,7 @@ jobs:
    - name: Setup nodejs
      run: | 
           sudo apt update
-          curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
+          curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
           sudo apt -y install nodejs
    - name: Build
      run: |
@@ -24,7 +24,7 @@ jobs:
           echo ${{secrets.REACT_APP_AGORA_APP_ID}} >> .env.production
           echo ${{secrets.REACT_APP_API_URL}} >> .env.production
           echo ${{secrets.ESLINT}} >> .env.production
-          npm install --force
+          npm install
           npm run build
    - name: Deploy
      uses: aws-actions/configure-aws-credentials@v1
