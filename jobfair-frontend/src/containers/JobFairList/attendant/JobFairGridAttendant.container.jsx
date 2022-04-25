@@ -25,9 +25,15 @@ const JobFairGridAttendantContainer = () => {
   };
 
   const searchJobFair = async (searchValue) => {
-    const res = await searchJobFairAPI(searchValue);
-    const content = res.data.content;
-    setData(content);
+    try {
+      const res = await searchJobFairAPI(searchValue);
+      const content = res.data.content;
+      setData(content);
+    } catch (e) {
+      notification['error']({
+        message: `Error occurred: ${e.response.data.message}`
+      });
+    }
   };
 
   const onClick = async (jobFairId) => {

@@ -5,30 +5,6 @@ import { convertToDateString } from '../../../utils/common';
 import React from 'react';
 
 const { Text } = Typography;
-//TODO: remove later
-const fakeJobFairForAttendant = [
-  {
-    thumbnailUrl: 'https://d3polnwtp0nqe6.cloudfront.net/General/jobhub.png',
-    name: 'fake job fair',
-    companyName: 'Apple dai de',
-    hearts: 101,
-    eyes: 1000
-  },
-  {
-    thumbnailUrl: 'https://d3polnwtp0nqe6.cloudfront.net/General/jobhub.png',
-    name: 'fake job fair',
-    companyName: 'Apple dai de',
-    hearts: 102,
-    eyes: 2000
-  },
-  {
-    thumbnailUrl: 'https://d3polnwtp0nqe6.cloudfront.net/General/jobhub.png',
-    name: 'fake job fair',
-    companyName: 'Apple dai de',
-    hearts: 103,
-    eyes: 3000
-  }
-];
 
 const handleCardContent = (role, jobFair) => {
   switch (role) {
