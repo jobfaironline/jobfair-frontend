@@ -92,7 +92,14 @@ home
 
 .page {
   flex: 1;
-  padding-top: 80px; /*change this when navbar height is changed */
+  margin-top: 126px; /*change this when navbar height is changed */
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+.fullscreen-page {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
 }
 
 .leftside-container {
@@ -164,4 +171,42 @@ home
 .header .ant-anchor-link:hover:after {
   right: 5%;
   opacity: 1;
+}
+
+.button {
+  height: 44px !important;
+  padding: 10px 32px !important;
+  border-radius: 8px !important;
+}
+
+.disable-form {
+  .ant-input[disabled] {
+    color: black;
+    background-color: white;
+    box-shadow: none;
+    border: none;
+    cursor: default;
+    opacity: 1;
+  }
+
+  .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    color: black;
+    background: white !important;
+    cursor: default;
+    border: none;
+  }
+
+  .ant-select-disabled .ant-select-arrow {
+    display: none;
+  }
+
+  .ant-select-disabled.ant-select-multiple .ant-select-selection-item {
+    color: black;
+    border-color: #d9d9d9;
+    cursor: default;
+  }
+
+  .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector input {
+    cursor: default;
+  }
 }

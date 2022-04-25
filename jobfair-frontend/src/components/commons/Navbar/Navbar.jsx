@@ -30,9 +30,6 @@ export const CompanyManagerMenu = [
   <Menu.Item key={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>Employee Management</Link>
   </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}>Job Position Management</Link>
-  </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}>Applications management</Link>
   </Menu.Item>,
@@ -93,20 +90,28 @@ const NavigationBar = () => {
 
   const handleRedirect = (path) => history.push(path);
   return (
-    <div className='navbar-container container-fluid'>
-      <div className='Navbar'>
-        <Link to={PATH.INDEX} className='logo'>
-          <div style={{ display: 'flex' }}>
-            <img src={'/logo/logo_with_text.svg'} style={{ width: '10rem' }} />
-          </div>
-        </Link>
-        <Menu className='menu' mode='horizontal'>
-          {extraMenu() ? extraMenu().map((item) => item) : null}
-        </Menu>
-        {!role ? <AuthenticationButtonGroups handleRedirect={handleRedirect} /> : null}
-        {role ? <NotificationContainer /> : null}
-        {role ? <AvatarMenu logoutFunction={handleClick} handleRedirect={handleRedirect} /> : null}
+    <div>
+      <div className='navbar-container container-fluid'>
+        <div className='Navbar'>
+          <Link to={PATH.INDEX} className='logo'>
+            <div style={{ display: 'flex' }}>
+              <img src={'/logo/logo_with_text.svg'} style={{ width: '10rem' }} />
+            </div>
+          </Link>
+          {!role ? <AuthenticationButtonGroups handleRedirect={handleRedirect} /> : null}
+          {role ? <NotificationContainer /> : null}
+          {role ? <AvatarMenu logoutFunction={handleClick} handleRedirect={handleRedirect} /> : null}
+        </div>
       </div>
+      {extraMenu() ? (
+        <div className={'sub-navbar-container'}>
+          <div className='Navbar'>
+            <Menu className='menu' mode='horizontal'>
+              {extraMenu()}
+            </Menu>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };
@@ -147,7 +152,7 @@ const AvatarMenu = ({ logoutFunction }) => {
   );
 
   return (
-    <div style={{ zIndex: 10000000, padding: '0 1rem', display: 'flex' }}>
+    <div className={'avatar'}>
       <div style={{ display: 'flex', alignItems: 'center', padding: '0 1rem' }}>
         <Typography style={{ color: '#fff' }}>{name}</Typography>
       </div>

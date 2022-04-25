@@ -1,49 +1,28 @@
 import { Button, Form, notification } from 'antd';
-import { deleteJobPositionAPI, updateJobPositionAPI } from '../../../services/jobhub-api/JobControllerService';
-import { useHistory, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { updateJobPositionAPI } from '../../../services/jobhub-api/JobControllerService';
 import JobPositionFormComponent from '../../../components/forms/JobPositionForm/JobPositionForm.component';
 import React, { useEffect } from 'react';
 
-const JobPositionDetailFormContainer = () => {
-  const location = useLocation();
-  const jobPosition = location.state.jobPosition;
+const JobPositionDetailFormContainer = (props) => {
+  const { jobPosition, onCancel, isDisplayDetail = false, onClickUpdate } = props;
 
   const [form] = Form.useForm();
-  const history = useHistory();
 
-  const handleDelete = (e) => {
-    e.preventDefault();
-    deleteJobPositionAPI(jobPosition.id)
-      .then(() => {
-        notification['success']({
-          message: `Delete job position successfully`
-        });
-        //after delete success, push back to list page
-        history.goBack();
-      })
-      .catch((err) => {
-        notification['error']({
-          message: `Update job position failed`,
-          description: `Error detail: ${err}`
-        });
+  const onFinish = async (values) => {
+    try {
+      await updateJobPositionAPI(values, jobPosition.id);
+      notification['success']({
+        message: `Update job position successfully`
       });
-  };
-
-  const onFinish = (values) => {
-    updateJobPositionAPI(values, jobPosition.id)
-      .then(() => {
-        notification['success']({
-          message: `Update job position successfully`
-        });
-        //after update success, go back
-        history.goBack();
-      })
-      .catch((err) => {
-        notification['error']({
-          message: `Update job position failed`,
-          description: `Error detail: ${err}`
-        });
+      onCancel();
+    } catch (e) {
+      notification['error']({
+        message: `Update job position failed`,
+        description: `Error detail: ${e}`
       });
+    }
   };
 
   const init = () => {
@@ -61,17 +40,22 @@ const JobPositionDetailFormContainer = () => {
     form,
     onFinish,
     formItemButtons: [
-      <Button type='primary' htmlType='submit' style={{ margin: '0 3rem', width: '7rem' }}>
-        Update
+      <Button type='primary' className={'button'} onClick={onCancel}>
+        Cancel
       </Button>,
-      <Button
-        type='primary'
-        htmlType='submit'
-        style={{ margin: '0 3rem', width: '7rem' }}
-        onClick={(e) => handleDelete(e)}>
-        Delete
+      <Button type='primary' htmlType='submit' className={'button'}>
+        Update
       </Button>
-    ]
+    ],
+    onCancel,
+    isDisplayDetail,
+    extra: isDisplayDetail
+      ? [
+          <a href={'#'} onClick={onClickUpdate}>
+            <FontAwesomeIcon icon={faPen} size={'2x'} color={'black'} />
+          </a>
+        ]
+      : undefined
   };
 
   return (

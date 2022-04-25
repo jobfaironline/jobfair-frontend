@@ -1,21 +1,33 @@
 import { Button, Space, Typography, Upload, notification } from 'antd';
-import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
+import { JobPositionList } from '../../components/customized-components/JobPositionListCard/JobPositionListCard.component';
 import { UploadOutlined } from '@ant-design/icons';
-import { getJobPositionsAPI, uploadCSVFile } from '../../services/jobhub-api/JobControllerService';
-import { useHistory } from 'react-router-dom';
-import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
-import PickJobPositionTableColumn from '../JobPositionTable/PickJobPositionTable.column';
-import React, { useLayoutEffect, useState } from 'react';
+import {
+  deleteJobPositionAPI,
+  getJobPositionsAPI,
+  uploadCSVFile
+} from '../../services/jobhub-api/JobControllerService';
+import CreateJobPositionFormContainer from '../forms/CreateJobPositionForm/CreateJobPositionForm.container';
+import JobPositionDetailFormContainer from '../forms/JobPositionDetailForm/JobPositionDetailForm.container';
+import React, { useEffect, useState } from 'react';
+
+const JobPositionMode = {
+  VIEW_LIST: 'VIEW_LIST',
+  ADD: 'ADD',
+  UPDATE: 'UPDATE',
+  VIEW_DETAIL: 'VIEW_DETAIL'
+};
 
 const JobPositionManagementContainer = () => {
   const [data, setData] = useState([]);
   const [forceRerenderState, setForceRerenderState] = useState(false);
   //pagination
+  // eslint-disable-next-line no-unused-vars
   const [totalRecord, setTotalRecord] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   //
-  const history = useHistory();
+  const [mode, setMode] = useState(JobPositionMode.VIEW_LIST);
+  const [selectedJobPosition, setSelectJobPosition] = useState();
 
   const fetchData = async () => {
     getJobPositionsAPI('DESC', currentPage, pageSize, 'createdDate')
@@ -23,6 +35,7 @@ const JobPositionManagementContainer = () => {
         const totalRecord = res.data.totalElements;
         setTotalRecord(totalRecord);
         setData([
+          { isFirst: true },
           ...res.data.content.map((item, index) => ({
             key: item.id,
             no: index + res.data.number * 10 + 1,
@@ -34,10 +47,11 @@ const JobPositionManagementContainer = () => {
         //
       });
   };
-  useLayoutEffect(() => {
+  useEffect(() => {
     fetchData();
   }, [currentPage, pageSize, forceRerenderState]);
 
+  // eslint-disable-next-line no-unused-vars
   const handlePageChange = (page, pageSize) => {
     if (page > 0) setCurrentPage(page - 1);
     else setCurrentPage(page);
@@ -46,13 +60,13 @@ const JobPositionManagementContainer = () => {
   };
 
   const handleCreateOnClick = () => {
-    history.push(PATH_COMPANY_MANAGER.CREATE_JOB_POSITION_PAGE);
+    setMode(JobPositionMode.ADD);
   };
 
   const handleViewDetailPage = (id) => {
-    history.push(PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL_PAGE, {
-      jobPosition: data.find((item) => item.id === id)
-    });
+    const jobPosition = data.find((item) => item.id === id);
+    setSelectJobPosition(jobPosition);
+    setMode(JobPositionMode.VIEW_DETAIL);
   };
 
   const loadFile = {
@@ -86,26 +100,64 @@ const JobPositionManagementContainer = () => {
     }
   };
 
-  const jobPositionTableProps = {
-    tableData: data,
-    tableColumns: PickJobPositionTableColumn,
-    onSearch: () => {
-      //TODO: fetch data for search
-    },
-    extra: [
-      {
-        title: 'Actions',
-        key: 'action',
-        render: (text, record) => (
-          <Space size='middle'>
-            <a onClick={() => handleViewDetailPage(record.id)}>View detail</a>
-          </Space>
-        )
-      }
-    ],
-    paginationObject: {
-      handlePageChange,
-      totalRecord
+  const onCancelForm = () => {
+    setMode(JobPositionMode.VIEW_LIST);
+    setSelectJobPosition(undefined);
+    setForceRerenderState((prevState) => !prevState);
+  };
+
+  const onClickUpdate = () => {
+    setMode(JobPositionMode.UPDATE);
+  };
+
+  const handleOnDelete = async (id) => {
+    try {
+      await deleteJobPositionAPI(id);
+      notification['success']({
+        message: `Delete job position successfully`
+      });
+      setForceRerenderState((prevState) => !prevState);
+    } catch (e) {
+      notification['error']({
+        message: `Update job position failed`,
+        description: `Error detail: ${e}`
+      });
+    }
+  };
+
+  const renderJobPosition = () => {
+    switch (mode) {
+      case JobPositionMode.VIEW_LIST:
+        return (
+          <JobPositionList
+            handleCreateOnClick={handleCreateOnClick}
+            handleViewDetailPage={handleViewDetailPage}
+            data={data}
+            handleOnDelete={handleOnDelete}
+          />
+        );
+      case JobPositionMode.ADD:
+        return <CreateJobPositionFormContainer onCancel={onCancelForm} />;
+      case JobPositionMode.VIEW_DETAIL:
+        return (
+          <JobPositionDetailFormContainer
+            jobPosition={selectedJobPosition}
+            onCancel={onCancelForm}
+            isDisplayDetail={JobPositionMode.VIEW_DETAIL === mode}
+            onClickUpdate={onClickUpdate}
+          />
+        );
+      case JobPositionMode.UPDATE:
+        return (
+          <JobPositionDetailFormContainer
+            jobPosition={selectedJobPosition}
+            onCancel={onCancelForm}
+            isDisplayDetail={JobPositionMode.VIEW_DETAIL === mode}
+            onClickUpdate={onClickUpdate}
+          />
+        );
+      default:
+        return null;
     }
   };
 
@@ -121,18 +173,12 @@ const JobPositionManagementContainer = () => {
           Job positions
         </Typography.Title>
         <Space>
-          <Button type='primary' onClick={() => handleCreateOnClick()}>
-            Create job position
-          </Button>
           <Upload {...loadFile}>
             <Button icon={<UploadOutlined />}>Upload CSV</Button>{' '}
           </Upload>
         </Space>
       </Space>
-
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <CommonTableContainer {...jobPositionTableProps} />
-      </div>
+      {renderJobPosition()}
     </div>
   );
 };
