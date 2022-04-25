@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import 'animate.css';
 import 'antd/dist/antd.min.css';
 import { BrowserRouter } from 'react-router-dom';

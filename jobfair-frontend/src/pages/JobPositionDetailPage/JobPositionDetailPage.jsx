@@ -1,10 +1,12 @@
 import { PageHeader } from 'antd';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import JobPositionDetailFormContainer from '../../containers/forms/JobPositionDetailForm/JobPositionDetailForm.container';
 import React from 'react';
 
 const JobPositionDetailPage = () => {
   const history = useHistory();
+  const location = useLocation();
+  const jobPosition = location.state.jobPosition;
 
   return (
     <div className='page'>
@@ -21,7 +23,7 @@ const JobPositionDetailPage = () => {
           alignItems: 'center',
           padding: '4rem 0'
         }}>
-        <JobPositionDetailFormContainer />
+        <JobPositionDetailFormContainer jobPosition={jobPosition} />
       </div>
     </div>
   );

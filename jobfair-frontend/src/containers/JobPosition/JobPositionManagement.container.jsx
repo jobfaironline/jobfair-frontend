@@ -1,17 +1,20 @@
 import './JobPositionManagement.styles.scss';
 import { Button, Card, Descriptions, List, Space, Typography, Upload, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { UploadOutlined } from '@ant-design/icons';
 import { convertEnumToString } from '../../utils/common';
+import {
+  deleteJobPositionAPI,
+  getJobPositionsAPI,
+  uploadCSVFile
+} from '../../services/jobhub-api/JobControllerService';
 import { faEye, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { getJobPositionsAPI, uploadCSVFile } from '../../services/jobhub-api/JobControllerService';
-import { useHistory } from 'react-router-dom';
 import CreateJobPositionFormContainer from '../forms/CreateJobPositionForm/CreateJobPositionForm.container';
+import JobPositionDetailFormContainer from '../forms/JobPositionDetailForm/JobPositionDetailForm.container';
 import React, { useEffect, useState } from 'react';
 
 export const JobPositionList = (props) => {
-  const { handleCreateOnClick, handleViewDetailPage, data } = props;
+  const { handleCreateOnClick, handleViewDetailPage, data, handleOnDelete } = props;
   return (
     <div>
       <List
@@ -31,7 +34,13 @@ export const JobPositionList = (props) => {
           return (
             <Card className={'job-position-card'} actions={[<div style={{ height: 30 }}>Question bank</div>]}>
               <div className={'mask'}>
-                <FontAwesomeIcon icon={faTrash} size={'4x'} color={'white'} className={'icon'} />
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  size={'4x'}
+                  color={'white'}
+                  className={'icon'}
+                  onClick={() => handleOnDelete(item.id)}
+                />
                 <FontAwesomeIcon
                   icon={faEye}
                   size={'4x'}
@@ -55,9 +64,10 @@ export const JobPositionList = (props) => {
 };
 
 const JobPositionMode = {
-  VIEW_DETAIL: 'VIEW_DETAIL',
+  VIEW_LIST: 'VIEW_LIST',
   ADD: 'ADD',
-  UPDATE: 'UPDATE'
+  UPDATE: 'UPDATE',
+  VIEW_DETAIL: 'VIEW_DETAIL'
 };
 
 const JobPositionManagementContainer = () => {
@@ -69,8 +79,8 @@ const JobPositionManagementContainer = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   //
-  const history = useHistory();
-  const [mode, setMode] = useState(JobPositionMode.ADD);
+  const [mode, setMode] = useState(JobPositionMode.VIEW_LIST);
+  const [selectedJobPosition, setSelectJobPosition] = useState();
 
   const fetchData = async () => {
     getJobPositionsAPI('DESC', currentPage, pageSize, 'createdDate')
@@ -107,9 +117,9 @@ const JobPositionManagementContainer = () => {
   };
 
   const handleViewDetailPage = (id) => {
-    history.push(PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL_PAGE, {
-      jobPosition: data.find((item) => item.id === id)
-    });
+    const jobPosition = data.find((item) => item.id === id);
+    setSelectJobPosition(jobPosition);
+    setMode(JobPositionMode.VIEW_DETAIL);
   };
 
   const loadFile = {
@@ -144,21 +154,63 @@ const JobPositionManagementContainer = () => {
   };
 
   const onCancelForm = () => {
-    setMode(JobPositionMode.VIEW_DETAIL);
+    setMode(JobPositionMode.VIEW_LIST);
+    setSelectJobPosition(undefined);
+    setForceRerenderState((prevState) => !prevState);
+  };
+
+  const onClickUpdate = () => {
+    setMode(JobPositionMode.UPDATE);
+  };
+
+  const handleOnDelete = async (id) => {
+    try {
+      await deleteJobPositionAPI(id);
+      notification['success']({
+        message: `Delete job position successfully`
+      });
+      setForceRerenderState((prevState) => !prevState);
+    } catch (e) {
+      notification['error']({
+        message: `Update job position failed`,
+        description: `Error detail: ${e}`
+      });
+    }
   };
 
   const renderJobPosition = () => {
     switch (mode) {
-      case JobPositionMode.VIEW_DETAIL:
+      case JobPositionMode.VIEW_LIST:
         return (
           <JobPositionList
             handleCreateOnClick={handleCreateOnClick}
             handleViewDetailPage={handleViewDetailPage}
             data={data}
+            handleOnDelete={handleOnDelete}
           />
         );
       case JobPositionMode.ADD:
         return <CreateJobPositionFormContainer onCancel={onCancelForm} />;
+      case JobPositionMode.VIEW_DETAIL:
+        return (
+          <JobPositionDetailFormContainer
+            jobPosition={selectedJobPosition}
+            onCancel={onCancelForm}
+            isDisplayDetail={JobPositionMode.VIEW_DETAIL === mode}
+            onClickUpdate={onClickUpdate}
+          />
+        );
+      case JobPositionMode.UPDATE:
+        return (
+          <JobPositionDetailFormContainer
+            jobPosition={selectedJobPosition}
+            onCancel={onCancelForm}
+            isDisplayDetail={JobPositionMode.VIEW_DETAIL === mode}
+            onClickUpdate={onClickUpdate}
+          />
+        );
+      default:
+        return null;
     }
   };
 
