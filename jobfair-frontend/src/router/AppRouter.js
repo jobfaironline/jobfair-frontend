@@ -9,9 +9,8 @@ import AttendantRouter from './components/AttendantRouter';
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage';
 import CompanyEmployeeRouter from './components/CompanyEmployeeRouter';
 import CompanyManagerRouter from './components/CompanyManagerRouter';
-import CompanyProfile from '../pages/ProfilePage/Company/CompanyProfilePage';
+import CompanyProfilePage from '../pages/ProfilePage/Company/CompanyProfilePage';
 import ContactPage from '../pages/ContactPage/ContactPage';
-import CreateJobPositionPage from '../pages/CreateJobPositonPage/CreateJobPositionPage';
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage';
 import EmployeeAssignBoothMapPage from '../pages/EmployeeAssignBoothMapPage/EmployeeAssignBoothMapPage';
 import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage';
@@ -26,14 +25,13 @@ import JobFairListPage from '../pages/JobFairListPage/JobFairListPage';
 import JobFairTablePage from '../pages/JobFairTablePage/JobFairTablePage';
 import JobFairTemplateDetailPage from '../pages/JobFairTemplateDetailPage/JobFairTemplateDetailPage';
 import JobFairTemplatePage from '../pages/JobFairTemplatePage/JobFairTemplatePage';
-import JobPositionDetailPage from '../pages/JobPositionDetailPage/JobPositionDetailPage';
-import JobPositionPage from '../pages/JobPositionPage/JobPositionPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavigationBar from '../components/commons/Navbar/Navbar';
 import OrganizeJobFairPage from '../pages/OrganizeJobFairPage/OrganizeJobFairPage';
 import PublicRouter from './components/PublicRouter';
 import PublicizeJobFairDetailPage from '../pages/JobFairDetailPage/PublicizeJobFairDetailPage';
 import PublicizedBoothPage from '../pages/PublicizedBoothPage/PublicizedBoothPage';
+import QuestionBankPage from '../pages/QuestionBankPage/QuestionBankPage';
 import React from 'react';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
@@ -135,7 +133,7 @@ const AppRouter = () => (
       />
       <CompanyEmployeeRouter
         key={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}
-        component={() => <CompanyProfile />}
+        component={() => <CompanyProfilePage />}
         path={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}
         exact
       />
@@ -195,26 +193,8 @@ const AppRouter = () => (
       />
       <CompanyManagerRouter
         key={PATH_COMPANY_MANAGER.COMPANY_PROFILE_PAGE}
-        component={() => <CompanyProfile />}
+        component={() => <CompanyProfilePage />}
         path={PATH_COMPANY_MANAGER.COMPANY_PROFILE_PAGE}
-        exact
-      />
-      <CompanyManagerRouter
-        key={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}
-        component={() => <JobPositionPage />}
-        path={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}
-        exact
-      />
-      <CompanyManagerRouter
-        key={PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL_PAGE}
-        component={() => <JobPositionDetailPage />}
-        path={PATH_COMPANY_MANAGER.JOB_POSITION_DETAIL_PAGE}
-        exact
-      />
-      <CompanyManagerRouter
-        key={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION_PAGE}
-        component={() => <CreateJobPositionPage />}
-        path={PATH_COMPANY_MANAGER.CREATE_JOB_POSITION_PAGE}
         exact
       />
       <CompanyManagerRouter
@@ -245,6 +225,12 @@ const AppRouter = () => (
         key={PATH_COMPANY_MANAGER.TEMPLATE_DETAIL}
         component={() => <JobFairTemplateDetailPage />}
         path={PATH_COMPANY_MANAGER.TEMPLATE_DETAIL}
+        exact
+      />
+      <CompanyManagerRouter
+        key={PATH_COMPANY_MANAGER.QUESTION_BANK}
+        component={() => <QuestionBankPage />}
+        path={PATH_COMPANY_MANAGER.QUESTION_BANK}
         exact
       />
       //to fix browserrouter problem

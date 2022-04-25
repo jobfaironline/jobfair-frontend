@@ -1,20 +1,22 @@
-.ant-descriptions-item-content {
-  padding: 0 !important;
-}
+.decorate-booth-side-bar {
+  .ant-descriptions-item-content {
+    padding: 0 !important;
+  }
 
-.ant-descriptions {
-  padding: 0.3rem !important;
-}
+  .ant-descriptions {
+    padding: 0.3rem !important;
+  }
 
-.pick-color {
-  position: absolute;
-  right: 20px;
-  top: 90px;
-  border: none;
-  z-index: 1000000;
-}
+  .pick-color {
+    position: absolute;
+    right: 20px;
+    top: 90px;
+    border: none;
+    z-index: 1000000;
+  }
 
-.sketch-picker {
-  width: 180px !important;
-  margin-left: 1rem;
+  .sketch-picker {
+    width: 180px !important;
+    margin-left: 1rem;
+  }
 }

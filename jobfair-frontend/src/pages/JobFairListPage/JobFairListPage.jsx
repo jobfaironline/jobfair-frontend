@@ -1,22 +1,21 @@
-import { Divider, Tabs, Typography } from 'antd';
+import { Divider, Typography } from 'antd';
 import { useSelector } from 'react-redux';
-import JobFairListAttendantContainer from '../../containers/JobFairList/attendant/JobFairListAttendant.container';
+import JobFairGridAttendantContainer from '../../containers/JobFairList/attendant/JobFairGridAttendant.container';
 import JobFairListEmployeeContainer from '../../containers/JobFairList/employee/JobFairListEmployee.container';
 import JobFairListManagerContainer from '../../containers/JobFairList/manager/JobFairListManager.container';
 import React from 'react';
 
-const { TabPane } = Tabs;
 const { Title } = Typography;
 const JobFairListPage = () => {
   const role = useSelector((state) => state.authentication.user.roles);
-  const ViewComponent = ({ role, tabStatus }) => {
+  const ViewComponent = ({ role }) => {
     switch (role) {
       case 'COMPANY_EMPLOYEE':
-        return <JobFairListEmployeeContainer tabStatus={tabStatus} />;
+        return <JobFairListEmployeeContainer />;
       case 'COMPANY_MANAGER':
-        return <JobFairListManagerContainer tabStatus={tabStatus} />;
+        return <JobFairListManagerContainer />;
       case 'ATTENDANT':
-        return <JobFairListAttendantContainer tabStatus={tabStatus} />;
+        return <JobFairGridAttendantContainer />;
       default:
         return null;
     }
@@ -24,16 +23,9 @@ const JobFairListPage = () => {
   return (
     <div className='page'>
       <Divider size='small' plain>
-        <Title>Job Fair List</Title>
+        <Title>Job Fair Park</Title>
       </Divider>
-      <Tabs defaultActiveKey='1' centered destroyInactiveTabPane>
-        <TabPane tab={'Happening job fairs'} key={1}>
-          <ViewComponent tabStatus={1} role={role} />
-        </TabPane>
-        <TabPane tab={'My job fair history'} key={2}>
-          <ViewComponent tabStatus={2} role={role} />
-        </TabPane>
-      </Tabs>
+      <ViewComponent role={role} />
     </div>
   );
 };

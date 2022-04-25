@@ -1,12 +1,7 @@
-/* eslint-disable no-unused-vars */
 import './Navbar.styles.scss';
 import { Avatar, Button, Dropdown, Menu, Typography } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
-import { UserOutlined } from '@ant-design/icons';
-import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
-import { useDispatch, useSelector } from 'react-redux';
-import React from 'react';
-
+import { NotificationContainer } from '../../../containers/NotificationContainer/Notification.container';
 import {
   PATH,
   PATH_ADMIN,
@@ -14,6 +9,10 @@ import {
   PATH_COMPANY_EMPLOYEE,
   PATH_COMPANY_MANAGER
 } from '../../../constants/Paths/Path';
+import { UserOutlined } from '@ant-design/icons';
+import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
+import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
 export const AttendantMenu = [
   <Menu.Item key={PATH_ATTENDANT.PROFILE_PAGE}>
@@ -30,9 +29,6 @@ export const CompanyManagerMenu = [
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>Employee Management</Link>
-  </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.JOB_POSITION_MANAGEMENT_PAGE}>Job Position Management</Link>
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}>Applications management</Link>
@@ -68,6 +64,7 @@ export const AdminMenu = [
 
 const NavigationBar = () => {
   const role = useSelector((state) => state.authentication?.user?.roles);
+  const webSocketClient = useSelector((state) => state.webSocket.client);
   const history = useHistory();
   const dispatch = useDispatch();
   const extraMenu = () => {
@@ -85,36 +82,36 @@ const NavigationBar = () => {
     }
   };
   const handleClick = () => {
+    webSocketClient?.close();
+
     dispatch(logoutHandler());
     history.push(PATH.INDEX);
   };
 
   const handleRedirect = (path) => history.push(path);
   return (
-    <div className='navbar-container container-fluid'>
-      <div className='Navbar'>
-        <Link to={PATH.INDEX} className='logo'>
-          <div style={{ display: 'flex' }}>
-            <img src={'/logo/logo_with_text.svg'} style={{ width: '10rem' }} />
-          </div>
-        </Link>
-        <Menu className='menu' mode='horizontal'>
-          {/* {!role ? (
-            <Menu.Item key={PATH.LOGIN_PAGE}>
-              <Link to={PATH.LOGIN_PAGE}>Log In</Link>
-            </Menu.Item>
-          ) : null}
-          {!role ? (
-            <Menu.Item key={PATH.REGISTER_PAGE}>
-              <Link to={PATH.REGISTER_PAGE}>Register</Link>
-            </Menu.Item>
-          ) : null} }*/}
-          {extraMenu() ? extraMenu().map((item) => item) : null}
-          {/* {role ? <Button onClick={handleClick}>Logout</Button> : null} */}
-        </Menu>
-        {!role ? <AuthenticationButtonGroups handleRedirect={handleRedirect} /> : null}
-        {role ? <AvatarMenu logoutFunction={handleClick} handleRedirect={handleRedirect} /> : null}
+    <div>
+      <div className='navbar-container container-fluid'>
+        <div className='Navbar'>
+          <Link to={PATH.INDEX} className='logo'>
+            <div style={{ display: 'flex' }}>
+              <img src={'/logo/logo_with_text.svg'} style={{ width: '10rem' }} />
+            </div>
+          </Link>
+          {!role ? <AuthenticationButtonGroups handleRedirect={handleRedirect} /> : null}
+          {role ? <NotificationContainer /> : null}
+          {role ? <AvatarMenu logoutFunction={handleClick} handleRedirect={handleRedirect} /> : null}
+        </div>
       </div>
+      {extraMenu() ? (
+        <div className={'sub-navbar-container'}>
+          <div className='Navbar'>
+            <Menu className='menu' mode='horizontal'>
+              {extraMenu()}
+            </Menu>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };
@@ -142,19 +139,6 @@ const AvatarMenu = ({ logoutFunction }) => {
   const history = useHistory();
   const name = useSelector((state) => state.authentication.user.fullName);
 
-  //TODO: remove later
-  const getUsername = () => {
-    switch (name) {
-      case 'ADMIN':
-        return 'Admin';
-      case 'COMPANY_MANAGER':
-        return 'Company manager';
-      case 'COMPANY_EMPLOYEE':
-        return 'Company employee';
-      case 'ATTENDANT':
-        return 'Attendant';
-    }
-  };
   const menu = (
     <Menu
       onClick={(e) => {
@@ -168,7 +152,7 @@ const AvatarMenu = ({ logoutFunction }) => {
   );
 
   return (
-    <div style={{ zIndex: 10000000, padding: '0 1rem', display: 'flex' }}>
+    <div className={'avatar'}>
       <div style={{ display: 'flex', alignItems: 'center', padding: '0 1rem' }}>
         <Typography style={{ color: '#fff' }}>{name}</Typography>
       </div>

@@ -1,15 +1,17 @@
-import { Card, Space } from 'antd';
-import CompanyProfileFormContainer from '../../../containers/forms/CompanyProfileForm/CompanyProfileForm.container';
+import './CompanyProfilePage.scss';
+import { CompanyProfileContainer } from '../../../containers/CompanyProfile/CompanyProfile.container';
+import JobPositionManagementContainer from '../../../containers/JobPosition/JobPositionManagement.container';
 import React from 'react';
 
-const CompanyProfile = () => (
-  <div>
-    <Space direction='vertical' size='large'>
-      <Card title='Company profile' style={{ width: 1400 }} headStyle={{ fontWeight: 700, fontSize: 24 }}>
-        <CompanyProfileFormContainer />
-      </Card>
-    </Space>
+const CompanyProfilePage = () => (
+  <div className={'page company-profile-page'}>
+    <div className={'company-profile'}>
+      <CompanyProfileContainer />
+    </div>
+    <div className={'job-positions'}>
+      <JobPositionManagementContainer />
+    </div>
   </div>
 );
 
-export default CompanyProfile;
+export default CompanyProfilePage;

@@ -15,7 +15,7 @@ jobs:
    - name: Setup nodejs
      run: | 
           sudo apt update
-          curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
+          curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
           sudo apt -y install nodejs
    - name: Build
      run: |
@@ -26,29 +26,14 @@ jobs:
           echo ${{secrets.ESLINT}} >> .env.production
           npm install --force
           npm run build
-          rm -r node_modules
-   - uses: actions/upload-artifact@v2
+   - name: Deploy
+     uses: aws-actions/configure-aws-credentials@v1
      with:
-      name: frontend
-      path: ./jobfair-frontend/build
-   - uses: actions/upload-artifact@v2
-     with:
-      name: frontend-all
-      path: ./jobfair-frontend/
-    
-  
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
        aws-region: ap-northeast-2
-    - uses: actions/download-artifact@v2
-      with:
-       name: frontend
-       path: build
-    - run: aws s3 sync ./build s3://job-fair-online-frontend/
+   - name: Upload to S3
+     run: aws s3 sync ./jobfair-frontend/build s3://job-fair-online-frontend/
+   - name: Invalidate CloudFront
+     run: aws cloudfront create-invalidation --distribution-id E26WIWU3XNUH4 --path "/*"
 

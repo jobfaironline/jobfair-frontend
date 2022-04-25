@@ -45,3 +45,5 @@ export const uploadJobFairThumbnailAPI = (jobFairId, body) =>
 
 export const getLayoutInformationForJobFairPark = (jobFairId) =>
   CallAPI(`${JOB_FAIR_INFORMATION_FOR_3D_MAP}/${jobFairId}`, 'GET');
+export const getJobFairForAttendant = (name, direction = 'ASC', offset = '0', pageSize = '10', sortBy = 'createTime') =>
+  CallAPI(`${JOB_FAIR_END_POINT}/attendants`, 'GET', {}, { name, direction, offset, pageSize, sortBy });

@@ -50,14 +50,12 @@ export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_REGISTER_PAGE: '/company/employee-register',
   REGISTER_JOB_FAIR_FORM_PAGE: '/company/register-job-fair',
   COMPANY_PROFILE_PAGE: '/company/company-profile',
-  JOB_POSITION_MANAGEMENT_PAGE: '/company/job-position-management',
-  JOB_POSITION_DETAIL_PAGE: '/company/job-position-detail',
-  CREATE_JOB_POSITION_PAGE: '/company/create-job-position',
   JOB_FAIR_DETAIL_PAGE: '/company/job-fair-detail',
   APPLICATION_MANAGEMENT_PAGE: '/company/application-management',
   RESUME_DETAIL_PAGE: '/company/resume-detail',
   ORGANIZE_JOB_FAIR_PAGE: '/company/organize-job-fair',
   JOB_FAIR_GRID_PAGE: '/company/my-job-fair',
   TEMPLATE_GRID_PAGE: '/company/my-template',
-  TEMPLATE_DETAIL: '/company/my-template/:templateId'
+  TEMPLATE_DETAIL: '/company/my-template/:templateId',
+  QUESTION_BANK: '/company/question-bank'
 };

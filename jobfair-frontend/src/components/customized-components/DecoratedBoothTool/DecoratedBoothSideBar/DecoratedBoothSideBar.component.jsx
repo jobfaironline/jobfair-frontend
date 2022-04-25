@@ -21,7 +21,7 @@ export const DecorateBoothSideBarComponent = (props) => {
   } = props;
 
   return (
-    <>
+    <div className={'decorate-booth-side-bar'}>
       <div style={{ position: 'absolute', zIndex: 100000 }}>
         <div style={{ padding: '1rem' }}>
           <p>
@@ -92,6 +92,6 @@ export const DecorateBoothSideBarComponent = (props) => {
           <SketchPicker color={selectedItem?.material.color.getHexString()} onChangeComplete={handleOnChangeColor} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
