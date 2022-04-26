@@ -1,32 +1,13 @@
-import { Button, Typography } from 'antd';
-import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
-import { useHistory } from 'react-router-dom';
-import EmployeeTable from '../../containers/EmployeeTable/EmployeeTable.container';
+import { Typography } from 'antd';
+import EmployeeManagementContainer from '../../containers/EmployeeManagement/EmployeeManagement.container';
 
-const EmployeeManagementPage = () => {
-  const history = useHistory();
-
-  return (
-    <div className='page'>
-      <div style={{ padding: '1rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Typography.Title level={2}>Employee management</Typography.Title>
-          <div
-            style={{
-              flex: 1,
-              display: 'flex',
-              justifyContent: 'end',
-              alignItems: 'center'
-            }}>
-            <Button type='primary' onClick={() => history.push(PATH_COMPANY_MANAGER.EMPLOYEE_REGISTER_PAGE)}>
-              Create employee account
-            </Button>
-          </div>
-        </div>
-        <EmployeeTable />
-      </div>
+const EmployeeManagementPage = () => (
+  <div className='page'>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Typography.Title level={2}>Employee management</Typography.Title>
     </div>
-  );
-};
+    <EmployeeManagementContainer />
+  </div>
+);
 
 export default EmployeeManagementPage;

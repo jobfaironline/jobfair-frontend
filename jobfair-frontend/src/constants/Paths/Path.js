@@ -47,7 +47,6 @@ export const PATH_COMPANY_EMPLOYEE = {
 };
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',
-  EMPLOYEE_REGISTER_PAGE: '/company/employee-register',
   REGISTER_JOB_FAIR_FORM_PAGE: '/company/register-job-fair',
   COMPANY_PROFILE_PAGE: '/company/company-profile',
   JOB_FAIR_DETAIL_PAGE: '/company/job-fair-detail',
