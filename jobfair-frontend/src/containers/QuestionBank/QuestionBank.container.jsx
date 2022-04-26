@@ -238,6 +238,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
       notification['success']({
         message: `Save successfully`
       });
+      setReRender((prevState) => !prevState);
     } catch (e) {
       notification['error']({
         message: `Update question fail`,
