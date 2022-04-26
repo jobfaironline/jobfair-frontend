@@ -54,6 +54,7 @@ export const QuestionForm = (props) => {
               style={{
                 width: '50rem'
               }}
+              className={'text-area'}
               placeholder='Question Content'
               disabled={!isEdit}
               autoSize={{ minRows: isEdit ? 5 : 1 }}
@@ -80,6 +81,7 @@ export const QuestionForm = (props) => {
                 colon={false}
                 rules={QuestionValidation.answerContent}>
                 <Input.TextArea
+                  className={'text-area'}
                   style={{ width: '46rem' }}
                   placeholder={`Answer content`}
                   disabled={!isEdit}
