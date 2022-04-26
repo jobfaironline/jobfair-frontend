@@ -120,6 +120,7 @@ const EmployeeManagementContainer = () => {
         });
         form.resetFields();
         setIsAddEmployeeModalVisible(false);
+        setReRender((prevState) => !prevState);
       })
       .catch(() => {
         notification['error']({
@@ -156,7 +157,7 @@ const EmployeeManagementContainer = () => {
                 handleDelete(record.id);
               }}>
               <Button type='link' disabled={record.status === 'INACTIVE'}>
-                Delete
+                Deactivate
               </Button>
             </Popconfirm>
           </Space>
