@@ -1,34 +1,33 @@
 import './styles.scss';
 import { Alert, Badge } from 'antd';
-import { convertToDateString } from '../../utils/common';
 import InterviewScheduleCalendarComponent from '../../components/customized-components/InterviewScheduleCalendar/InterviewScheduleCalendar.component';
 import React, { useState } from 'react';
 import moment from 'moment';
 
 const InterviewScheduleContainer = () => {
   const [value, setValue] = useState({
-    value: moment(convertToDateString(1650946163305)),
-    selectedValue: moment(convertToDateString(1650946163305))
+    value: moment('26-04-2022'),
+    selectedValue: moment('26-04-2022')
   });
   const getData = (value) => {
     let listData;
     switch (value.date()) {
       case 16:
         listData = [
-          { type: 'warning', content: 'Hold up, wait the minute' },
-          { type: 'success', content: 'Ok bitch' }
+          { type: 'warning', content: 'hold up' },
+          { type: 'success', content: 'Ok conde' }
         ];
         break;
       case 18:
         listData = [
-          { type: 'success', content: 'Ok con de' },
+          { type: 'success', content: 'Ok conde' },
           { type: 'error', content: 'Chet me m roi con' }
         ];
         break;
       default:
         listData = [
           { type: 'error', content: 'Chet me m roi con' },
-          { type: 'error', content: 'Hahaha' }
+          { type: 'error', content: 'ok conde' }
         ];
         break;
     }
