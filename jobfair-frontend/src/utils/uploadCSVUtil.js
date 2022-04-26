@@ -16,7 +16,7 @@ export const loadCSVFileAntdProps = (onChange) => ({
   }
 });
 
-export const uploadUtil = async (info, apiCall) => {
+export const uploadUtil = async (info, apiCall, ...args) => {
   if (info.file.type !== 'text/csv') {
     notification['error']({
       message: `${info.file.name} is not csv`
@@ -25,7 +25,7 @@ export const uploadUtil = async (info, apiCall) => {
   }
   const formData = new FormData();
   formData.append('file', info.file);
-  await apiCall(formData);
+  await apiCall(formData, ...args);
   notification['success']({
     message: `${info.file.name} upload successfully`
   });
