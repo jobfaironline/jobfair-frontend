@@ -165,3 +165,29 @@ export const getDateDifferent = (timeStamp) => {
   if (years <= 1) return '1 year ago';
   return `${years} years ago`;
 };
+
+export const handleType = (status) => {
+  switch (status) {
+    case 'PENDING':
+      return 'warning';
+    case 'FINISH':
+      return 'success';
+    case 'CANCEL':
+      return 'error';
+    default:
+      return 'default';
+  }
+};
+
+export const handleTag = (status) => {
+  switch (status) {
+    case 'PENDING':
+      return 'warning';
+    case 'FINISH':
+      return 'success';
+    case 'CANCEL':
+      return 'error';
+    default:
+      return 'default';
+  }
+};
