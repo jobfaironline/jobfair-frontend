@@ -174,6 +174,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
       return;
     }
     //additional error
+    data.errors = {};
     data.questions.forEach((question) => {
       if (question.choicesList.length === 0) {
         data.errors[question.id] = 'Cannot have empty choice';
