@@ -102,6 +102,10 @@ home
   padding-left: 0 !important;
 }
 
+.non-sub-nav-bar {
+  margin-top: 80px !important;
+}
+
 .leftside-container {
   flex: 1;
   min-width: 500px;
@@ -207,6 +211,10 @@ home
   }
 
   .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector input {
+    cursor: default;
+  }
+
+  .ant-checkbox-disabled .ant-checkbox-inner {
     cursor: default;
   }
 }

@@ -18,3 +18,4 @@ export const updateJobPositionAPI = (body, id) => CallAPI(`${ENDPOINT_JOB_CONTRO
 export const deleteJobPositionAPI = (id) => CallAPI(`${ENDPOINT_JOB_CONTROLLER}/${id}`, 'DELETE');
 export const uploadCSVFile = async (formData) =>
   CallAPI(`${ENDPOINT_JOB_CONTROLLER}/csv`, 'POST', formData, {}, { 'content-type': 'multipart/form-data' });
+export const getJobPositionByIDAPI = (id) => CallAPI(`${ENDPOINT_JOB_CONTROLLER}/${id}`, 'GET');

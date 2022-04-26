@@ -6,7 +6,7 @@ import { faEye, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
 export const JobPositionList = (props) => {
-  const { handleCreateOnClick, handleViewDetailPage, data, handleOnDelete } = props;
+  const { handleCreateOnClick, handleViewDetailPage, data, handleOnDelete, onClickQuestionBank } = props;
   return (
     <div>
       <List
@@ -24,7 +24,17 @@ export const JobPositionList = (props) => {
           }
 
           return (
-            <Card className={'job-position-card'} actions={[<div style={{ height: 30 }}>Question bank</div>]}>
+            <Card
+              className={'job-position-card'}
+              actions={[
+                <div
+                  style={{ height: 30 }}
+                  onClick={() => {
+                    onClickQuestionBank(item.id);
+                  }}>
+                  Question bank
+                </div>
+              ]}>
               <div className={'mask'}>
                 <FontAwesomeIcon
                   icon={faTrash}
