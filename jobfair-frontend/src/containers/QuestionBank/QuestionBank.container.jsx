@@ -196,7 +196,9 @@ const QuestionBankContainer = ({ jobPositionId }) => {
         !data.newQuestionIds.includes(question.id) &&
         !data.deletedQuestionIds.includes(question.id)
     );
-    const newQuestion = data.questions.filter((question) => data.newQuestionIds.includes(question.id));
+    const newQuestion = data.questions.filter(
+      (question) => data.newQuestionIds.includes(question.id) && !data.deletedQuestionIds.includes(question.id)
+    );
     const promises = [];
     updatedQuestion.forEach((question) => {
       const body = {
@@ -218,6 +220,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
       promises.push(promise);
     });
     data.deletedQuestionIds.forEach((questionId) => {
+      if (data.newQuestionIds.includes(questionId)) return;
       const promise = deleteQuestion(questionId);
       promises.push(promise);
     });
@@ -229,9 +232,9 @@ const QuestionBankContainer = ({ jobPositionId }) => {
         editingQuestionIds: [],
         newQuestionIds: [],
         errors: {},
-        editedQuestionsIds: []
+        editedQuestionsIds: [],
+        deletedQuestionIds: []
       }));
-      setReRender((prevState) => !prevState);
       notification['success']({
         message: `Save successfully`
       });
@@ -249,7 +252,8 @@ const QuestionBankContainer = ({ jobPositionId }) => {
       editingQuestionIds: [],
       newQuestionIds: [],
       errors: {},
-      editedQuestionsIds: []
+      editedQuestionsIds: [],
+      deletedQuestionIds: []
     }));
   };
 
@@ -280,7 +284,12 @@ const QuestionBankContainer = ({ jobPositionId }) => {
 
   const onSearch = async (value) => {
     let result = true;
-    if (data.editedQuestionsIds.length > 0 || data.deletedQuestionIds.length > 0 || data.newQuestionIds.length > 0)
+    if (
+      data.editedQuestionsIds.length > 0 ||
+      data.deletedQuestionIds.length > 0 ||
+      data.newQuestionIds.length > 0 ||
+      data.editedQuestionsIds.length > 0
+    )
       result = await confirm();
 
     if (result) {
@@ -347,14 +356,20 @@ const QuestionBankContainer = ({ jobPositionId }) => {
         </Button>
       </div>
       <div className={'paging'}>
-        {data.editedQuestionsIds.length > 0 || data.deletedQuestionIds.length > 0 || data.newQuestionIds.length > 0 ? (
+        {data.editedQuestionsIds.length > 0 ||
+        data.deletedQuestionIds.length > 0 ||
+        data.newQuestionIds.length > 0 ||
+        data.editedQuestionsIds.length > 0 ? (
           <span className={'warning'}>You have unsaved changes</span>
         ) : null}
         <PaginationComponent
           handlePageChange={handlePageChange}
           totalRecord={totalRecord}
           disable={
-            data.editedQuestionsIds.length > 0 || data.deletedQuestionIds.length > 0 || data.newQuestionIds.length > 0
+            data.editedQuestionsIds.length > 0 ||
+            data.deletedQuestionIds.length > 0 ||
+            data.newQuestionIds.length > 0 ||
+            data.editedQuestionsIds.length > 0
           }
         />
       </div>
