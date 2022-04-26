@@ -14,7 +14,7 @@ const CommonTableContainer = ({ onSearch, tableColumns, ...otherTableProps }) =>
   useEffect(() => {
     const searchObject = {};
     searchObject[searchedColumn] = searchText;
-    onSearch(searchObject);
+    if (onSearch) onSearch(searchObject);
   }, [searchText, searchedColumn, onSearch]);
 
   return (

@@ -14,7 +14,6 @@ import ContactPage from '../pages/ContactPage/ContactPage';
 import DecorateBoothPage from '../pages/DecorateBoothPage/DecorateBoothPage';
 import EmployeeAssignBoothMapPage from '../pages/EmployeeAssignBoothMapPage/EmployeeAssignBoothMapPage';
 import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeManagementPage';
-import EmployeeRegisterPage from '../pages/EmployeeRegisterPage/EmployeeRegisterPage';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import FAQPage from '../pages/FAQPage/FAQPage';
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage';
@@ -183,12 +182,6 @@ const AppRouter = () => (
         key={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}
         component={() => <EmployeeManagementPage />}
         path={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}
-        exact
-      />
-      <CompanyManagerRouter
-        key={PATH_COMPANY_MANAGER.EMPLOYEE_REGISTER_PAGE}
-        component={() => <EmployeeRegisterPage />}
-        path={PATH_COMPANY_MANAGER.EMPLOYEE_REGISTER_PAGE}
         exact
       />
       <CompanyManagerRouter
