@@ -20,6 +20,9 @@ export const AttendantMenu = [
   </Menu.Item>,
   <Menu.Item key={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>
     <Link to={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>Job Fair List</Link>
+  </Menu.Item>,
+  <Menu.Item key={PATH_ATTENDANT.INTERVIEW_SCHEDULE}>
+    <Link to={PATH_ATTENDANT.INTERVIEW_SCHEDULE}>My interview schedule</Link>
   </Menu.Item>
 ];
 
@@ -53,6 +56,9 @@ export const CompanyEmployeeMenu = [
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE}>
     <Link to={PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE}>My assignment</Link>
+  </Menu.Item>,
+  <Menu.Item key={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}>
+    <Link to={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}>My interview schedule</Link>
   </Menu.Item>
 ];
 

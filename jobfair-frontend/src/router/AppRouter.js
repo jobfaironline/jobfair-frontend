@@ -19,6 +19,7 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import FAQPage from '../pages/FAQPage/FAQPage';
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage';
 import HomePage from '../pages/HomePage';
+import InterviewSchedulePage from '../pages/InterviewSchedulePage/InterviewSchedulePage';
 import JobFairAssignmentPage from '../pages/JobFairAssignmentPage/JobFairAssignmentPage';
 import JobFairGridManagerPage from '../pages/JobFairListPage/JobFairGridManagerPage';
 import JobFairListPage from '../pages/JobFairListPage/JobFairListPage';
@@ -124,6 +125,12 @@ const AppRouter = () => (
         path={PATH_ATTENDANT.RESUME_DETAIL_PAGE}
         exact
       />
+      <AttendantRouter
+        key={PATH_ATTENDANT.INTERVIEW_SCHEDULE}
+        component={() => <InterviewSchedulePage />}
+        path={PATH_ATTENDANT.INTERVIEW_SCHEDULE}
+        exact
+      />
       <CompanyEmployeeRouter
         key={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}
         component={() => <ApplicationManagementPage />}
@@ -164,6 +171,12 @@ const AppRouter = () => (
         key={PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE}
         component={() => <EmployeeAssignBoothMapPage />}
         path={PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE}
+        exact
+      />
+      <CompanyEmployeeRouter
+        key={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}
+        component={() => <InterviewSchedulePage />}
+        path={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}
         exact
       />
       <CompanyManagerRouter
