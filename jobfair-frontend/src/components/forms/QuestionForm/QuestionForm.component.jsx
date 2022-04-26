@@ -2,7 +2,7 @@ import './QuestionForm.styles.scss';
 import { Card, Checkbox, Form, Input } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { QuestionValidation } from '../../../validate/QuestionValidation';
-import { faMinus, faPen, faPlus, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
+import { faDownLeftAndUpRightToCenter, faMinus, faPen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
 export const QuestionForm = (props) => {
@@ -31,7 +31,7 @@ export const QuestionForm = (props) => {
       <div className={'button-container'}>
         {isEdit ? (
           <a onClick={() => onEditQuestion(question.id, false)}>
-            <FontAwesomeIcon icon={faX} size={'1x'} color={'black'} />
+            <FontAwesomeIcon icon={faDownLeftAndUpRightToCenter} size={'1x'} color={'black'} />
           </a>
         ) : (
           <a onClick={() => onEditQuestion(question.id, true)}>
