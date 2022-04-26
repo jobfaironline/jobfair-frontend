@@ -2,7 +2,7 @@ import './QuestionForm.styles.scss';
 import { Card, Checkbox, Form, Input } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { QuestionValidation } from '../../../validate/QuestionValidation';
-import { faMinus, faPen, faPlus, faX, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPen, faPlus, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
 export const QuestionForm = (props) => {
@@ -105,9 +105,9 @@ export const QuestionForm = (props) => {
             }}>
             <FontAwesomeIcon icon={faPlus} color={'black'} />
           </div>
+          {error ? <div className={'error'}>{error}</div> : null}
         </Form>
       </div>
-      {error ? <div>{error}</div> : null}
     </Card>
   );
 };

@@ -1,5 +1,5 @@
 import './QuestionBank.styles.scss';
-import { Button, Card, Form, Input, List, Space, Upload, notification } from 'antd';
+import { Button, Card, Form, Input, List, Modal, Space, Upload, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { QuestionForm } from '../../components/forms/QuestionForm/QuestionForm.component';
@@ -7,12 +7,13 @@ import { UploadOutlined } from '@ant-design/icons';
 import {
   createQuestion,
   deleteQuestion,
-  getQuestionByCriteria,
-  updateQuestion
+  getQuestionByJobPositionIdAndCriteria,
+  updateQuestion,
+  uploadCSVFile
 } from '../../services/jobhub-api/QuestionControllerService';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { getJobPositionByIDAPI } from '../../services/jobhub-api/JobControllerService';
-import { loadCSVFile, uploadUtil } from '../../utils/uploadCSVUtil';
+import { loadCSVFileAntdProps, uploadUtil } from '../../utils/uploadCSVUtil';
 import { v4 as uuidv4 } from 'uuid';
 import JobPositionDetailCollapseComponent from '../../components/customized-components/JobPositionDetailCollapse/JobPositionDetailCollapse.component';
 import PaginationComponent from '../../components/commons/PaginationComponent/Pagination.component';
@@ -38,24 +39,30 @@ const QuestionBankContainer = ({ jobPositionId }) => {
 
   //re-render
   const [reRender, setReRender] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
 
   const [form] = Form.useForm();
 
   const fetchData = async () => {
     try {
-      const promises = [];
-      promises.push(getJobPositionByIDAPI(jobPositionId));
-      promises.push(getQuestionByCriteria({ pageSize, offset: currentPage }));
-      const responses = await Promise.all(promises);
-      const jobPositionData = responses[0].data;
-      const questionData = responses[1].data.content;
-      setTotalRecord(responses[1].data.totalElements);
-      for (let i = 0; i < questionData.length; i++) {
-        const question = questionData[i];
-        question.order = i + 1;
-        for (let j = 0; j < question.choicesList.length ?? 0; j++) {
-          const choice = question.choicesList[j];
-          choice.order = j + 1;
+      const jobPositionData = (await getJobPositionByIDAPI(jobPositionId)).data;
+      const questionResponse = await getQuestionByJobPositionIdAndCriteria({
+        pageSize,
+        offset: currentPage,
+        questionContent: searchValue,
+        jobPositionId: jobPositionData.id
+      });
+      let questionData = [];
+      if (questionResponse.status === 200) {
+        questionData = questionResponse.data.content;
+        setTotalRecord(questionResponse.data.totalElements);
+        for (let i = 0; i < questionData.length; i++) {
+          const question = questionData[i];
+          question.order = i + 1;
+          for (let j = 0; j < question.choicesList.length ?? 0; j++) {
+            const choice = question.choicesList[j];
+            choice.order = j + 1;
+          }
         }
       }
       setData((prevState) => ({ ...prevState, jobPosition: jobPositionData, questions: questionData }));
@@ -68,10 +75,10 @@ const QuestionBankContainer = ({ jobPositionId }) => {
 
   useEffect(() => {
     fetchData();
-  }, [reRender, currentPage, pageSize]);
+  }, [reRender, currentPage, pageSize, searchValue]);
 
   const onChangeUpload = async (info) => {
-    await uploadUtil(info);
+    await uploadUtil(info, uploadCSVFile);
     //force render to fetch data after upload
     setReRender((prevState) => !prevState);
   };
@@ -245,11 +252,46 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     }));
   };
 
-  const handlePageChange = (page, pageSize) => {
-    if (page > 0) setCurrentPage(page - 1);
-    else setCurrentPage(page);
+  const handlePageChange = async (page, pageSize) => {
+    let result = true;
+    if (data.editedQuestionsIds.length > 0 || data.deletedQuestionIds.length > 0 || data.newQuestionIds.length > 0)
+      result = await confirm();
+    if (result) {
+      if (page > 0) setCurrentPage(page - 1);
+      else setCurrentPage(page);
+      setPageSize(pageSize);
+    }
+  };
 
-    setPageSize(pageSize);
+  const confirm = async () =>
+    new Promise((resolve) => {
+      Modal.confirm({
+        title: 'Are you sure?',
+        content: 'You have unsaved changes. If you proceed the it will not be save!',
+        onOk: () => {
+          resolve(true);
+        },
+        onCancel: () => {
+          resolve(false);
+        }
+      });
+    });
+
+  const onSearch = async (value) => {
+    let result = true;
+    if (data.editedQuestionsIds.length > 0 || data.deletedQuestionIds.length > 0 || data.newQuestionIds.length > 0)
+      result = await confirm();
+
+    if (result) {
+      setSearchValue(value);
+      setData((prevState) => ({
+        ...prevState,
+        editingQuestionIds: [],
+        newQuestionIds: [],
+        errors: {},
+        editedQuestionsIds: []
+      }));
+    }
   };
 
   if (data.questions === undefined || data.jobPosition === undefined) return <LoadingComponent />;
@@ -257,9 +299,9 @@ const QuestionBankContainer = ({ jobPositionId }) => {
   return (
     <div className={'question-bank'}>
       <div className={'header'}>
-        <Search placeholder='Search question' className={'search-bar'} />
+        <Search placeholder='Search question' className={'search-bar'} onSearch={onSearch} />
         <Space className={'upload-section'}>
-          <Upload {...loadCSVFile(onChangeUpload)}>
+          <Upload {...loadCSVFileAntdProps(onChangeUpload)}>
             <Button icon={<UploadOutlined />}>Upload CSV</Button>{' '}
           </Upload>
         </Space>
@@ -296,7 +338,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
         }}
       />
       <div className={'button-container'}>
-        <Button className={'button'} style={{ marginLeft: 'auto'}} onClick={onSave}>
+        <Button className={'button'} style={{ marginLeft: 'auto' }} onClick={onSave}>
           Save
         </Button>
         <Button className={'button'} style={{ marginLeft: '20px', marginRight: '10rem' }} onClick={onCancel}>
@@ -304,7 +346,16 @@ const QuestionBankContainer = ({ jobPositionId }) => {
         </Button>
       </div>
       <div className={'paging'}>
-        <PaginationComponent handlePageChange={handlePageChange} totalRecord={totalRecord} />
+        {data.editedQuestionsIds.length > 0 || data.deletedQuestionIds.length > 0 || data.newQuestionIds.length > 0 ? (
+          <span className={'warning'}>You have unsaved changes</span>
+        ) : null}
+        <PaginationComponent
+          handlePageChange={handlePageChange}
+          totalRecord={totalRecord}
+          disable={
+            data.editedQuestionsIds.length > 0 || data.deletedQuestionIds.length > 0 || data.newQuestionIds.length > 0
+          }
+        />
       </div>
     </div>
   );

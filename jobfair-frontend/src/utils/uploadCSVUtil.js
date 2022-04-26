@@ -1,7 +1,6 @@
 import { notification } from 'antd';
-import { uploadCSVFile } from '../services/jobhub-api/JobControllerService';
 
-export const loadCSVFile = (onChange) => ({
+export const loadCSVFileAntdProps = (onChange) => ({
   name: 'file',
   accept: '.csv',
   beforeUpload: () => false,
@@ -17,7 +16,7 @@ export const loadCSVFile = (onChange) => ({
   }
 });
 
-export const uploadUtil = async (info) => {
+export const uploadUtil = async (info, apiCall) => {
   if (info.file.type !== 'text/csv') {
     notification['error']({
       message: `${info.file.name} is not csv`
@@ -26,7 +25,7 @@ export const uploadUtil = async (info) => {
   }
   const formData = new FormData();
   formData.append('file', info.file);
-  await uploadCSVFile(formData);
+  await apiCall(formData);
   notification['success']({
     message: `${info.file.name} upload successfully`
   });
