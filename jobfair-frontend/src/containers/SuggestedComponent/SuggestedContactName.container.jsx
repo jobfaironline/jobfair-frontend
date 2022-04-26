@@ -6,9 +6,9 @@ import SuggestedItemContainer from './SuggestedItem.container';
 const SuggestedContactNameContainer = ({ companyId, onChange, disabled }) => {
   const [suggestionList, setSuggestionList] = useState([]);
   useEffect(() => {
-    getEmployeesAPI(companyId)
+    getEmployeesAPI({ companyId })
       .then((res) => {
-        setSuggestionList(handleCreateListNameFromListAccount(res.data));
+        setSuggestionList(handleCreateListNameFromListAccount(res.data.content));
       })
       .catch(() => {
         //

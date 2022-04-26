@@ -1,13 +1,13 @@
 import './EmployeeManagement.styles.scss';
-import { Button, Form, Input, Modal, Popconfirm, Space, Upload, notification } from 'antd';
+import { Button, Form, Input, Modal, Popconfirm, Space, Typography, Upload, notification } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import {
   createEmployeesAPI,
   deleteEmployeeAPI,
-  getEmployeesAPI
+  getEmployeesAPI,
+  uploadCSVFile
 } from '../../services/jobhub-api/CompanyEmployeeControllerService';
 import { loadCSVFileAntdProps, uploadUtil } from '../../utils/uploadCSVUtil';
-import { uploadCSVFile } from '../../services/jobhub-api/QuestionControllerService';
 import { useSelector } from 'react-redux';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import EmployeeDrawer from './EmployeeDrawer.container';
@@ -32,11 +32,17 @@ const EmployeeManagementContainer = () => {
   const [neededEmployee, setNeededEmployee] = useState(null);
   const [reRender, setReRender] = useState(false);
   const [isAddEmployeeModalVisible, setIsAddEmployeeModalVisible] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+
+  useEffect(() => {
+    fetchData();
+  }, [reRender, currentPage, pageSize, searchValue]);
 
   const fetchData = async () => {
     try {
-      const data = (await getEmployeesAPI(companyId)).data;
-      const newValues = data.map((employee, index) => {
+      const data = (await getEmployeesAPI({ companyId, searchContent: searchValue, pageSize, offset: currentPage }))
+        .data;
+      const newValues = data.content.map((employee, index) => {
         const { firstname, middlename, lastname } = employee.account;
         const fullName = `${firstname} ${middlename ? `${middlename} ` : ''}${lastname}`;
         return {
@@ -44,10 +50,12 @@ const EmployeeManagementContainer = () => {
           no: index + 1,
           fullName,
           email: employee.account.email,
-          phone: employee.account.phone,
-          status: employee.account.status
+          status: employee.account.status,
+          department: employee.department,
+          employeeId: employee.employeeId
         };
       });
+      setTotalRecord(data.totalElements);
       setEmployeeData(newValues);
     } catch (e) {
       notification['error']({
@@ -56,9 +64,6 @@ const EmployeeManagementContainer = () => {
       });
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const handleDelete = (employeeId) => {
     deleteEmployeeAPI(employeeId)
@@ -124,12 +129,13 @@ const EmployeeManagementContainer = () => {
       });
   };
 
+  const onSearch = async (value) => {
+    setSearchValue(value);
+  };
+
   const employeeTableProps = {
     tableData: employeeData,
     tableColumns: EmployeeTableColumn,
-    onSearch: () => {
-      //TODO: fetch data for search
-    },
     extra: [
       {
         title: 'Actions',
@@ -164,7 +170,7 @@ const EmployeeManagementContainer = () => {
   };
 
   return (
-    <div className={'employee-management'}>
+    <>
       <Modal
         className={'add-employee-modal'}
         visible={isAddEmployeeModalVisible}
@@ -178,25 +184,36 @@ const EmployeeManagementContainer = () => {
         width={700}>
         <EmployeeFormComponent form={form} onFinish={onFinish} />
       </Modal>
-      <div>
-        <Upload {...loadCSVFileAntdProps(onChangeUpload)}>
-          <Button icon={<UploadOutlined />}>Upload CSV</Button>
-        </Upload>
-        <Button onClick={onAddClick}>Create employee account</Button>
-      </div>
-      <div>
-        <Search placeholder='Search employee' className={'search-bar'} />
-      </div>
+      <div className={'employee-management'}>
+        <div className={'header'}>
+          <Typography.Title level={2} style={{ marginRight: '2rem' }}>
+            Employee management
+          </Typography.Title>
+          <Button style={{ marginRight: '2rem', borderRadius: 8 }} onClick={onAddClick}>
+            Create employee account
+          </Button>
+          <div style={{ marginRight: '2rem' }}>
+            <Upload {...loadCSVFileAntdProps(onChangeUpload)}>
+              <Button style={{ borderRadius: 8 }} icon={<UploadOutlined />}>
+                Upload CSV
+              </Button>
+            </Upload>
+          </div>
+        </div>
+        <div className={'search-filter-container'}>
+          <Search placeholder='Search employee' className={'search-bar'} onSearch={onSearch} />
+        </div>
 
-      {neededEmployee != null ? (
-        <EmployeeDrawer
-          drawerVisibility={drawerVisibility}
-          setDrawerVisibility={setDrawerVisibility}
-          employeeId={neededEmployee}
-        />
-      ) : null}
-      <CommonTableContainer {...employeeTableProps} />
-    </div>
+        {neededEmployee != null ? (
+          <EmployeeDrawer
+            drawerVisibility={drawerVisibility}
+            setDrawerVisibility={setDrawerVisibility}
+            employeeId={neededEmployee}
+          />
+        ) : null}
+        <CommonTableContainer {...employeeTableProps} />
+      </div>
+    </>
   );
 };
 

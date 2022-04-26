@@ -1,10 +1,30 @@
-.employee-management{
+.employee-management {
+  .header {
+    display: flex;
+    align-items: center;
+    padding-top: 1rem;
 
+    h2 {
+      margin-bottom: 0;
+    }
+  }
+
+  .search-filter-container {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+
+  .search-bar {
+    width: 30rem;
+  }
 }
-.add-employee-modal{
-  .ant-modal-footer .ant-btn{
+.add-employee-modal {
+  .ant-modal-footer .ant-btn {
     height: 44px !important;
     padding: 10px 32px !important;
+    border-radius: 8px !important;
+  }
+  .ant-input {
     border-radius: 8px !important;
   }
 }
