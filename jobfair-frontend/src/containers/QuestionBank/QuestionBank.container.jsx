@@ -78,7 +78,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
   }, [reRender, currentPage, pageSize, searchValue]);
 
   const onChangeUpload = async (info) => {
-    await uploadUtil(info, uploadCSVFile);
+    await uploadUtil(info, uploadCSVFile, data.jobPosition.id);
     //force render to fetch data after upload
     setReRender((prevState) => !prevState);
   };

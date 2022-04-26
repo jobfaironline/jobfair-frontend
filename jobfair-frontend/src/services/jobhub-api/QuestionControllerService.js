@@ -31,5 +31,5 @@ export const getQuestionByJobPositionIdAndCriteria = ({
 export const updateQuestion = (body) => CallAPI(ENDPOINT_QUESTION, 'PUT', body);
 export const createQuestion = (body) => CallAPI(ENDPOINT_QUESTION, 'POST', body);
 export const deleteQuestion = (questionId) => CallAPI(`${ENDPOINT_QUESTION}/${questionId}`, 'DELETE');
-export const uploadCSVFile = async (formData) =>
-  CallAPI(`${ENDPOINT_QUESTION}/csv`, 'POST', formData, {}, { 'content-type': 'multipart/form-data' });
+export const uploadCSVFile = async (formData, jobPositionId) =>
+  CallAPI(`${ENDPOINT_QUESTION}/csv/${jobPositionId}`, 'POST', formData, {}, { 'content-type': 'multipart/form-data' });
