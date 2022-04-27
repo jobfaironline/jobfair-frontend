@@ -2,7 +2,7 @@ import OrganizeJobFairContainer from '../../containers/OrganizeJobFair/OrganizeJ
 import React from 'react';
 
 const OrganizeJobFairPage = () => (
-  <div className='page'>
+  <div className='page fullscreen-page'>
     <OrganizeJobFairContainer />
   </div>
 );
