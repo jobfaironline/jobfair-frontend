@@ -23,30 +23,32 @@ export const AttendantJobFairBoothViewContainer = (props) => {
   };
 
   return (
-    <div className={'attendant-job-fair-booth-view'}>
-      <BoothInfoMenuContainer
-        companyBoothId={companyBoothId}
-        isShow={tabState.isShow}
-        activeKey={tabState.activeKey}
-        handleOpenDetail={handleOpenDetail}
-        openInventory={openInventory}
-      />
-      <div className={'booth'}>
-        <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />
-        <ControlTipsModalContainer>
-          <>
-            <p>Movement controls:</p>
-            <p>W/S: Translate Forward/Backward</p>
-            <p>A/D: Rotate Left/Right</p>
-          </>
-        </ControlTipsModalContainer>
-        <JobFairBoothContainer
+    <>
+      <div className={'attendant-job-fair-booth-view'}>
+        <BoothInfoMenuContainer
           companyBoothId={companyBoothId}
+          isShow={tabState.isShow}
+          activeKey={tabState.activeKey}
           handleOpenDetail={handleOpenDetail}
-          geckoClientRef={geckoClientRef}
+          openInventory={openInventory}
         />
+        <div className={'booth'}>
+          <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />
+          <ControlTipsModalContainer>
+            <>
+              <p>Movement controls:</p>
+              <p>W/S: Translate Forward/Backward</p>
+              <p>A/D: Rotate Left/Right</p>
+            </>
+          </ControlTipsModalContainer>
+          <JobFairBoothContainer
+            companyBoothId={companyBoothId}
+            handleOpenDetail={handleOpenDetail}
+            geckoClientRef={geckoClientRef}
+          />
+        </div>
       </div>
       <ChatBox {...communicationProps} />
-    </div>
+    </>
   );
 };

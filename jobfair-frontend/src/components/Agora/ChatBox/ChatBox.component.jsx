@@ -109,42 +109,36 @@ const ChatBox = (props) => {
 
   const videoProps = { audioReady, audioTrack, cameraReady, cameraTrack };
 
-  return (
+  return isShowChatBox ? (
     <div className={'chat-box'}>
-      {isShowChatBox ? (
-        <div className={'chatBubble'}>
-          <div className={'chatContainer'}>
-            <div className={'chatHeader'}>
-              <div className={'iconHeader'}>
-                <ArrowsAltOutlined />
-                <MinusOutlined />
-                <CloseOutlined onClick={() => setIsShowChatBox(false)} />
-              </div>
-            </div>
-            <div className={'videoContainer'}>
-              <VideoCall {...videoProps} />
-            </div>
-            <div className={'chatZone'}>
-              <ChatField messageList={messageList} />
-            </div>
-          </div>
-          <div className={'chatInput'}>
-            <Form form={form} onFinish={onSubmit} disabled={!isChatReady}>
-              <Form.Item name='message' rules={[REQUIRED_VALIDATOR('Message')]}>
-                <Input
-                  autoFocus
-                  style={{ borderRadius: '5rem 5rem 5rem 5rem' }}
-                  placeholder='Type message...'
-                  suffix={<SendIcon />}
-                />
-              </Form.Item>
-            </Form>
+      <div className={'chatContainer'}>
+        <div className={'chatHeader'}>
+          <div className={'iconHeader'}>
+            <ArrowsAltOutlined />
+            <MinusOutlined />
+            <CloseOutlined onClick={() => setIsShowChatBox(false)} />
           </div>
         </div>
-      ) : (
-        <></>
-      )}
+        <div className={'videoContainer'}>
+          <VideoCall {...videoProps} />
+        </div>
+        <div className={'chatZone'}>
+          <ChatField messageList={messageList} />
+        </div>
+      </div>
+      <div className={'chatInput'}>
+        <Form form={form} onFinish={onSubmit} disabled={!isChatReady}>
+          <Form.Item name='message' rules={[REQUIRED_VALIDATOR('Message')]}>
+            <Input
+              autoFocus
+              style={{ borderRadius: '5rem 5rem 5rem 5rem' }}
+              placeholder='Type message...'
+              suffix={<SendIcon />}
+            />
+          </Form.Item>
+        </Form>
+      </div>
     </div>
-  );
+  ) : null;
 };
 export default ChatBox;

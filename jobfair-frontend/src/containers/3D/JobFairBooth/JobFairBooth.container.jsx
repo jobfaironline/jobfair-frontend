@@ -249,7 +249,7 @@ export const JobFairBoothContainer = (props) => {
     process();
   }, []);
 
-  if (state.boothMesh === undefined) return <LoadingComponent />;
+  if (state.boothMesh === undefined) return <LoadingComponent isWholePage={true} />;
   const boothSize = calculateMeshSize(state.boothMesh);
   const cProps = {
     boothMesh: state.boothMesh,
