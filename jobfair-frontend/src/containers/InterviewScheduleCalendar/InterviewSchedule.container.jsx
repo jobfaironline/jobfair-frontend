@@ -4,6 +4,7 @@ import { EyeOutlined } from '@ant-design/icons';
 import { handleType } from '../../utils/common';
 import InterviewScheduleCalendarComponent from '../../components/customized-components/InterviewScheduleCalendar/InterviewScheduleCalendar.component';
 import InterviewScheduleModalDetailComponent from '../../components/customized-components/InterviewScheduleModalDetail/InterviewScheduleModalDetail.component';
+import InterviewScheduleModalRequestChangeComponent from '../../components/customized-components/InterviewScheduleModalRequestChange/InterviewScheduleModalRequestChange.component';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
@@ -52,7 +53,10 @@ const InterviewScheduleContainer = () => {
     selectedValue: moment('2022-04-26')
   });
   const [interviewSchedule, setInterviewSchedule] = useState([]);
+  //modals state
   const [visible, setVisible] = useState(false);
+  const [requestChangeVisible, setRequestChangeVisible] = useState(false);
+  //modal detail
   const [modalDetail, setModalDetail] = useState();
 
   useEffect(() => {
@@ -150,10 +154,32 @@ const InterviewScheduleContainer = () => {
     setVisible(false);
   };
 
+  const onCancelRequestChangeModal = () => {
+    setRequestChangeVisible(false);
+  };
+
+  const handleRequestChange = () => {
+    setVisible(false);
+    setRequestChangeVisible(true);
+  };
+
+  const disabledDate = (current) => current && current < moment().startOf('day');
+
   return (
     <div>
       <Alert message={`You selected date: ${value.selectedValue && value.selectedValue.format('YYYY-MM-DD')}`} />
-      <InterviewScheduleModalDetailComponent visible={visible} onCancel={onCancelModal} data={modalDetail} />
+      <InterviewScheduleModalDetailComponent
+        visible={visible}
+        onCancel={onCancelModal}
+        data={modalDetail}
+        handleRequestChange={handleRequestChange}
+      />
+      <InterviewScheduleModalRequestChangeComponent
+        data={modalDetail}
+        visible={requestChangeVisible}
+        onCancel={onCancelRequestChangeModal}
+        disabledDate={disabledDate}
+      />
       <InterviewScheduleCalendarComponent
         dateCellRender={dateCellRender}
         monthCellRender={monthCellRender}
