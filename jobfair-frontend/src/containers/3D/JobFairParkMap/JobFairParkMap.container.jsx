@@ -84,7 +84,7 @@ const JobFairParkMapContainer = () => {
     });
   }, []);
 
-  if (state.mapMesh === null && state.boothMeshes.length === 0) return <LoadingComponent />;
+  if (state.mapMesh === null && state.boothMeshes.length === 0) return <LoadingComponent isWholePage={true} />;
 
   const clickHandle = (companyBoothId) => {
     const url = generatePath(PATH.BOOTH_PAGE, {
