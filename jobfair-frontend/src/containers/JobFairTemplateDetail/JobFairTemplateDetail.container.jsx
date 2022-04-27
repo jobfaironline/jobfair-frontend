@@ -19,10 +19,10 @@ const JobFairTemplateDetailContainer = () => {
   }, []);
   return (
     <>
-      <a className={'prev-button'} type='primary' onClick={() => history.goBack()}>
+      {/*<a className={'prev-button'} type='primary' onClick={() => history.goBack()}>
         <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '10px' }} />
         <span>Back to template page</span>
-      </a>
+      </a>*/}
       <div>
         {glb !== undefined ? (
           <JobFairParkMapComponent mapMesh={glb} />
