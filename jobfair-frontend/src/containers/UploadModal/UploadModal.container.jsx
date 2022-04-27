@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal } from 'antd';
+import { Button, Form, Input, Modal, Spin } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import React from 'react';
 import UploadComponent from '../../components/commons/UploadComponent/Upload.component';
@@ -11,7 +11,8 @@ const UploadModalContainer = ({
   glbUploadProps,
   thumbnailUploadProps,
   thumbnailUrl,
-  isUploadGlb
+  isUploadGlb,
+  isUploading
 }) => (
   <Modal visible={visible} title={'Upload your template as .glb file'} footer={null} onCancel={onCancel} centered>
     <Form
@@ -63,15 +64,15 @@ const UploadModalContainer = ({
           </UploadComponent>
         </ImgCrop>
       </Form.Item>
-      <Form.Item
-        style={{
-          display: 'inline-block',
-          marginRight: '1rem'
-        }}>
-        <Button type='primary' htmlType='submit' style={{ width: '100%' }}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Button type='primary' htmlType='submit' style={{ marginRight: '1rem' }}>
           Upload
         </Button>
-      </Form.Item>
+        <div style={{ display: isUploading ? 'flex' : 'none', alignItems: 'center', justifyContent: 'center' }}>
+          <span style={{ marginRight: '10px' }}>Is uploading</span>
+          <Spin style={{ display: 'flex' }} />
+        </div>
+      </div>
     </Form>
   </Modal>
 );

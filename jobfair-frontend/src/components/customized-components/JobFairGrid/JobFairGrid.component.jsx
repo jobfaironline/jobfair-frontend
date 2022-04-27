@@ -1,7 +1,9 @@
 import './JobFairGrid.styles.scss';
 import { Card, List, Typography } from 'antd';
 import { EyeOutlined, HeartOutlined } from '@ant-design/icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { convertToDateString } from '../../../utils/common';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
 const { Text } = Typography;
@@ -39,32 +41,39 @@ const handleCardContent = (role, jobFair) => {
   }
 };
 const JobFairGridComponent = (props) => {
-  const { data, onClick, role } = props;
+  const { data, onClick, role, onAddJobFair } = props;
   const defaultImage = 'https://d3polnwtp0nqe6.cloudfront.net/General/jobhub.png';
   return (
-    <List
-      grid={{
-        gutter: 20
-      }}
-      dataSource={data}
-      renderItem={(item) => (
-        <List.Item>
-          <Card
-            hoverable={true}
-            style={{ width: 300, height: 260 }}
-            cover={
-              <img
-                src={item.thumbnailUrl ? item.thumbnailUrl : defaultImage}
-                alt={item.name}
-                onClick={() => onClick(item.id)}
-                style={{ width: 300, height: 157 }}
-              />
-            }>
-            <div style={{ display: 'flex' }}>{handleCardContent(role, item)}</div>
-          </Card>
-        </List.Item>
-      )}
-    />
+    <div className={'job-fair-grid'}>
+      <List
+        grid={{ gutter: 20, xs: 1, sm: 3, md: 3, lg: 5, xl: 5, xxl: 5 }}
+        dataSource={data}
+        renderItem={(item) => {
+          if (item.isFirst) {
+            return (
+              <Card className={'card add-card'} hoverable={true} onClick={onAddJobFair}>
+                <FontAwesomeIcon icon={faPlus} size={'xl'} />
+              </Card>
+            );
+          }
+          return (
+            <Card
+              hoverable={true}
+              className={'card'}
+              cover={
+                <img
+                  src={item.thumbnailUrl ? item.thumbnailUrl : defaultImage}
+                  alt={item.name}
+                  onClick={() => onClick(item.id)}
+                  className={'cover'}
+                />
+              }>
+              <div style={{ display: 'flex' }}>{handleCardContent(role, item)}</div>
+            </Card>
+          );
+        }}
+      />
+    </div>
   );
 };
 

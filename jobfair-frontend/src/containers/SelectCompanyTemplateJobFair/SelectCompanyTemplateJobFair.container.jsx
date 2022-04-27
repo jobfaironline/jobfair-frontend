@@ -18,6 +18,7 @@ const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, visible, setVi
   const [isUploadGlb, setIsUploadGlb] = useState(false);
   const glbFormData = useRef(new FormData());
   const thumbnailFormData = useRef(new FormData());
+  const [uploadState, setUploadState] = useState(false);
 
   const fetchData = async () => {
     let res;
@@ -68,6 +69,7 @@ const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, visible, setVi
       name: values.name,
       description: values.description
     };
+    setUploadState(true);
     const res = await uploadTemplateMetaDataAPI(body);
     await uploadTemplateAPI(res.data.id, glbFormData.current);
     await uploadThumbnailAPI(res.data.id, thumbnailFormData.current);
@@ -75,6 +77,7 @@ const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, visible, setVi
       message: `upload successfully`
     });
     setVisible(false);
+    setUploadState(false);
     //force render to fetch data after upload
     setForceRerenderState((prevState) => !prevState);
   };
@@ -96,6 +99,7 @@ const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, visible, setVi
         onCancel={onCancel}
         thumbnailUrl={thumbnailUrl}
         isUploadGlb={isUploadGlb}
+        isUploading={uploadState}
       />
       <SelectJobFairTemplateComponent listData={data} handleLoad3DMap={handleLoad3DMap} />
     </div>

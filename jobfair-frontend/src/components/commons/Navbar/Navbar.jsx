@@ -33,9 +33,6 @@ export const CompanyManagerMenu = [
   <Menu.Item key={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}>My job fair</Link>
   </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}>Organize job fair</Link>
-  </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE}>My template</Link>
   </Menu.Item>
