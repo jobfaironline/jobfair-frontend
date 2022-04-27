@@ -1,6 +1,7 @@
 import { Badge, Button, Card, Col, DatePicker, Form, Modal, Row, Space, TimePicker, Typography } from 'antd';
 import { CalendarOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import { DateFormat, MinuteFormat } from '../../../constants/ApplicationConst';
+import { InterviewScheduleValidation } from '../../../validate/InterviewScheduleValidation';
 import { convertToDateString, convertToDateValue, convertToUTCString, handleType } from '../../../utils/common';
 import React from 'react';
 import TextArea from 'antd/es/input/TextArea';
@@ -8,6 +9,14 @@ import moment from 'moment';
 
 const InterviewScheduleModalRequestChangeComponent = (props) => {
   const { data, visible, onCancel, form, onFinish, disabledDate } = props;
+
+  const defaultData = {
+    interviewDate: moment(convertToDateString(data?.interviewDate), DateFormat),
+    timeStart: moment(convertToUTCString(data?.timeStart).split('GMT')[0].split(' ')[4], MinuteFormat),
+    timeEnd: moment(convertToUTCString(data?.timeEnd).split('GMT')[0].split(' ')[4], MinuteFormat)
+  };
+  form.setFieldsValue({ ...defaultData });
+
   return (
     <Modal visible={visible} onCancel={onCancel} footer={null} centered={true}>
       <Card title={'Request to change interview schedule'} bordered={false}>
@@ -44,10 +53,9 @@ const InterviewScheduleModalRequestChangeComponent = (props) => {
                       </Typography.Text>
                     }
                     name={'interviewDate'}
-                    rules={[]}
+                    rules={InterviewScheduleValidation.interviewDate}
                     style={{ display: 'inline-block' }}>
                     <DatePicker
-                      defaultValue={moment(convertToDateString(data?.interviewDate), DateFormat)}
                       format={DateFormat}
                       onChange={(date, dateString) => convertToDateValue(dateString)}
                       disabledDate={disabledDate}
@@ -66,16 +74,10 @@ const InterviewScheduleModalRequestChangeComponent = (props) => {
                       Start time <ClockCircleOutlined />
                     </Typography.Text>
                   }
-                  name={'startTime'}
-                  rules={[]}
+                  name={'timeStart'}
+                  rules={InterviewScheduleValidation.startTime}
                   style={{ display: 'inline-block' }}>
-                  <TimePicker
-                    defaultValue={moment(
-                      convertToUTCString(data?.timeStart).split('GMT')[0].split(' ')[4],
-                      MinuteFormat
-                    )}
-                    format={MinuteFormat}
-                  />
+                  <TimePicker format={MinuteFormat} />
                 </Form.Item>
               </Col>
               <Col span={12}>
@@ -85,13 +87,10 @@ const InterviewScheduleModalRequestChangeComponent = (props) => {
                       End time <ClockCircleOutlined />
                     </Typography.Text>
                   }
-                  name={'endTime'}
-                  rules={[]}
+                  name={'timeEnd'}
+                  rules={InterviewScheduleValidation.endTime}
                   style={{ display: 'inline-block' }}>
-                  <TimePicker
-                    defaultValue={moment(convertToUTCString(data?.timeEnd).split('GMT')[0].split(' ')[4], MinuteFormat)}
-                    format={MinuteFormat}
-                  />
+                  <TimePicker format={MinuteFormat} />
                 </Form.Item>
               </Col>
             </Row>
@@ -103,9 +102,9 @@ const InterviewScheduleModalRequestChangeComponent = (props) => {
                   <Form.Item
                     label={<Typography.Text strong>Reason to change</Typography.Text>}
                     name={'reason'}
-                    rules={[]}
+                    rules={InterviewScheduleValidation.reason}
                     style={{ display: 'inline-block' }}>
-                    <TextArea placeholder='Input reason' />
+                    <TextArea placeholder='Input reason' showCount maxLength={3000} />
                   </Form.Item>
                 </Space>
               </Col>

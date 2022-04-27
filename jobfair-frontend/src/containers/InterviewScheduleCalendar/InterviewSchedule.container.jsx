@@ -1,5 +1,5 @@
 import './styles.scss';
-import { Alert, Badge, Popover, Typography } from 'antd';
+import { Alert, Badge, Form, Popover, Typography } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
 import { handleType } from '../../utils/common';
 import InterviewScheduleCalendarComponent from '../../components/customized-components/InterviewScheduleCalendar/InterviewScheduleCalendar.component';
@@ -58,6 +58,8 @@ const InterviewScheduleContainer = () => {
   const [requestChangeVisible, setRequestChangeVisible] = useState(false);
   //modal detail
   const [modalDetail, setModalDetail] = useState();
+
+  const [form] = Form.useForm();
 
   useEffect(() => {
     setInterviewSchedule(fakeData);
@@ -165,6 +167,9 @@ const InterviewScheduleContainer = () => {
 
   const disabledDate = (current) => current && current < moment().startOf('day');
 
+  const onFinish = (values) => {
+    console.log(values);
+  };
   return (
     <div>
       <Alert message={`You selected date: ${value.selectedValue && value.selectedValue.format('YYYY-MM-DD')}`} />
@@ -179,6 +184,8 @@ const InterviewScheduleContainer = () => {
         visible={requestChangeVisible}
         onCancel={onCancelRequestChangeModal}
         disabledDate={disabledDate}
+        form={form}
+        onFinish={onFinish}
       />
       <InterviewScheduleCalendarComponent
         dateCellRender={dateCellRender}
