@@ -57,7 +57,7 @@ const AttendantJobFairPage = () => {
   };
 
   return (
-    <div className={'page'} style={{ overflow: 'hidden' }}>
+    <div className={'page fullscreen-page'} style={{ overflow: 'hidden' }}>
       <AttendantJobFairBoothViewContainer
         companyBoothId={companyBoothId}
         geckoClientRef={geckoClientRef}

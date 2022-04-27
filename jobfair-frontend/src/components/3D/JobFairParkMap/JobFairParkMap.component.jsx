@@ -20,6 +20,12 @@ const BoothMesh = React.forwardRef((props, ref) => {
       rotation={mesh.rotation}
       scale={mesh.scale}
       castShadow={true}
+      onPointerOver={() => {
+        document.body.style.cursor = 'pointer';
+      }}
+      onPointerLeave={() => {
+        document.body.style.cursor = 'default';
+      }}
       receiveShadow={true}>
       {mesh.children.map((child) => (
         <BasicMesh mesh={child} key={child.uuid} />

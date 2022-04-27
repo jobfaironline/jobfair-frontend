@@ -3,9 +3,9 @@ import { ATTENDANT } from '../../../constants/RoleType';
 import { CategoriesConst, SubCategories } from '../../../constants/CompanyProfileConstant';
 import { Divider, Input, Select, notification } from 'antd';
 import { PATH } from '../../../constants/Paths/Path';
+import { generatePath, useHistory } from 'react-router-dom';
 import { getCountryOrder } from '../../../utils/common';
 import { getJobFairForAttendant } from '../../../services/jobhub-api/JobFairControllerService';
-import {generatePath, useHistory} from 'react-router-dom';
 import JobFairGridComponent from '../../../components/customized-components/JobFairGrid/JobFairGrid.component';
 import React, { useEffect, useState } from 'react';
 

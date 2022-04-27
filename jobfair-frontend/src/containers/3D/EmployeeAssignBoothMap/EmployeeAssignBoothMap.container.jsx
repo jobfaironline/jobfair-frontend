@@ -7,7 +7,6 @@ import { getLayoutByJobFairId } from '../../../services/jobhub-api/LayoutControl
 import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import { notification } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
-import ReactLoading from 'react-loading';
 
 export const EmployeeAssignBoothMapContainer = () => {
   const { assignmentId } = useParams();

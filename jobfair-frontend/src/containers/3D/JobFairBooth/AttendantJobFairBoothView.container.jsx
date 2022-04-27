@@ -1,10 +1,10 @@
+import './AttendantJobFairBoothView.styles.scss';
 import { BoothInfoMenuContainer } from '../../BoothInfoMenu/BoothInfoMenu.container';
 import { ControlTipsModalContainer } from '../../ControlTipModal/ControlTipsModal.container';
 import { InventoryContainer } from '../../Inventory/Inventory.container';
 import { JobFairBoothContainer } from './JobFairBooth.container';
 import ChatBox from '../../../components/Agora/ChatBox/ChatBox.component';
 import React, { useState } from 'react';
-import styles from '../../../pages/AttendantJobFairPage/AttendantJobFairPage.module.scss';
 
 export const AttendantJobFairBoothViewContainer = (props) => {
   const { companyBoothId, geckoClientRef, communicationProps } = props;
@@ -23,7 +23,7 @@ export const AttendantJobFairBoothViewContainer = (props) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={'attendant-job-fair-booth-view'}>
       <BoothInfoMenuContainer
         companyBoothId={companyBoothId}
         isShow={tabState.isShow}
@@ -31,7 +31,7 @@ export const AttendantJobFairBoothViewContainer = (props) => {
         handleOpenDetail={handleOpenDetail}
         openInventory={openInventory}
       />
-      <div className={styles.booth}>
+      <div className={'booth'}>
         <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />
         <ControlTipsModalContainer>
           <>
@@ -46,9 +46,7 @@ export const AttendantJobFairBoothViewContainer = (props) => {
           geckoClientRef={geckoClientRef}
         />
       </div>
-      <div>
-        <ChatBox {...communicationProps} />
-      </div>
+      <ChatBox {...communicationProps} />
     </div>
   );
 };

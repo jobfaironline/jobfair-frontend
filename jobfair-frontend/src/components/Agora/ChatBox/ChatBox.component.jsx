@@ -1,3 +1,4 @@
+import './ChatBox.styles.scss';
 import { ArrowsAltOutlined, CloseOutlined, MinusOutlined } from '@ant-design/icons';
 import { Form, Input } from 'antd';
 import { REQUIRED_VALIDATOR } from '../../../validate/GeneralValidation';
@@ -8,7 +9,6 @@ import AgoraRTC from 'agora-rtc-react';
 import ChatField from '../ChatField/ChatField.component';
 import SendIcon from '@mui/icons-material/Send';
 import VideoCall from '../VideoCall/VideoCall.component';
-import styles from './ChatBox.module.scss';
 
 class Message {
   constructor(accountName, content, isMyMessage) {
@@ -110,25 +110,25 @@ const ChatBox = (props) => {
   const videoProps = { audioReady, audioTrack, cameraReady, cameraTrack };
 
   return (
-    <>
+    <div className={'chat-box'}>
       {isShowChatBox ? (
-        <div className={styles.chatBubble}>
-          <div className={styles.chatContainer}>
-            <div className={styles.chatHeader}>
-              <div className={styles.iconHeader}>
+        <div className={'chatBubble'}>
+          <div className={'chatContainer'}>
+            <div className={'chatHeader'}>
+              <div className={'iconHeader'}>
                 <ArrowsAltOutlined />
                 <MinusOutlined />
                 <CloseOutlined onClick={() => setIsShowChatBox(false)} />
               </div>
             </div>
-            <div className={styles.videoContainer}>
+            <div className={'videoContainer'}>
               <VideoCall {...videoProps} />
             </div>
-            <div className={styles.chatZone}>
+            <div className={'chatZone'}>
               <ChatField messageList={messageList} />
             </div>
           </div>
-          <div className={styles.chatInput}>
+          <div className={'chatInput'}>
             <Form form={form} onFinish={onSubmit} disabled={!isChatReady}>
               <Form.Item name='message' rules={[REQUIRED_VALIDATOR('Message')]}>
                 <Input
@@ -144,7 +144,7 @@ const ChatBox = (props) => {
       ) : (
         <></>
       )}
-    </>
+    </div>
   );
 };
 export default ChatBox;

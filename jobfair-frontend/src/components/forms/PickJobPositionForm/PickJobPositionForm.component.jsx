@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import './PickJobPositionForm.styles.scss';
-import { Button, Checkbox, Collapse, Divider, Form, Input, InputNumber, Popconfirm, Typography } from 'antd';
+import { Button, Checkbox, Divider, Form, Input, InputNumber, Popconfirm, Typography } from 'antd';
 import {
   MAXIMUM_MARK,
   MAXIMUM_NUM_OF_POSITION,
@@ -16,8 +15,6 @@ import { PickJobPositionFormValidation } from '../../../validate/PickJobPosition
 import JobPositionDetailCollapseComponent from '../../customized-components/JobPositionDetailCollapse/JobPositionDetailCollapse.component';
 import React from 'react';
 
-const { Panel } = Collapse;
-const { Text } = Typography;
 const { TextArea } = Input;
 
 const PickJobPositionForm = (props) => {
@@ -117,7 +114,7 @@ const PickJobPositionForm = (props) => {
                                 label='Test duration'
                                 required
                                 tooltip='Hour:Minute'
-                                rules={PickJobPositionFormValidation.testLength}
+                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.testLength : null}
                                 name={[name, 'testLength']}>
                                 <InputNumber
                                   placeholder='Test duration'
@@ -130,7 +127,7 @@ const PickJobPositionForm = (props) => {
                                 label='Number of questions'
                                 required
                                 tooltip='The number of the questions'
-                                rules={PickJobPositionFormValidation.numberOfQuestion}
+                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.numberOfQuestion : null}
                                 name={[name, 'testNumOfQuestion']}>
                                 <InputNumber
                                   style={{ width: '25rem' }}
@@ -143,7 +140,7 @@ const PickJobPositionForm = (props) => {
                                 label='Pass mark'
                                 required
                                 tooltip='The minimum mark to pass'
-                                rules={PickJobPositionFormValidation.passMark}
+                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.passMark : null}
                                 name={[name, 'passMark']}>
                                 <InputNumber
                                   style={{ width: '25rem' }}
@@ -156,7 +153,7 @@ const PickJobPositionForm = (props) => {
                                 label='Note'
                                 required
                                 tooltip='A small description about the test'
-                                rules={PickJobPositionFormValidation.note}
+                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.note : null}
                                 name={[name, 'note']}>
                                 <TextArea showCount maxLength={300} />
                               </Form.Item>

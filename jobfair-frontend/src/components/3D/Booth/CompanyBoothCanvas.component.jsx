@@ -77,7 +77,7 @@ export const CompanyBoothCanvasComponent = (props) => {
   };
 
   return (
-    <div style={{ width: '100%', height: '100vh' }}>
+    <div style={{ width: '100%', height: '100%' }}>
       <ViewSelect onChange={onChange} />
       <Canvas
         dpr={[1, 2]}
