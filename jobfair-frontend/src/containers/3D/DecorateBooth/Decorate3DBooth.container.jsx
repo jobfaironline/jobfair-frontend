@@ -198,12 +198,12 @@ export const Decorate3DBoothContainer = (props) => {
 
   if (modelItems.length === 0) return <LoadingComponent />;
   return (
-    <div style={{ height: 'calc(100vh - 80px)' }}>
+    <div style={{ height: 'calc(100vh - 126px)' }}>
       <Stats />
       <div
         style={{
           display: 'flex',
-          height: mode === ModeConstant.ADD ? 'calc(100vh - 80px - 94px)' : 'calc(100vh - 80px)'
+          height: mode === ModeConstant.ADD ? 'calc(100vh - 126x - 94px)' : 'calc(100vh - 126px)'
         }}>
         <DecoratedBoothSideBarContainer {...sideBarProps} />
         <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd} ref={meshGroupRef} />

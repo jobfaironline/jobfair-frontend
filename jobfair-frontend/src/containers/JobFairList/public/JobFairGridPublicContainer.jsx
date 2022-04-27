@@ -5,7 +5,7 @@ import { Divider, Input, Select, notification } from 'antd';
 import { PATH } from '../../../constants/Paths/Path';
 import { getCountryOrder } from '../../../utils/common';
 import { getJobFairForAttendant } from '../../../services/jobhub-api/JobFairControllerService';
-import { useHistory } from 'react-router-dom';
+import {generatePath, useHistory} from 'react-router-dom';
 import JobFairGridComponent from '../../../components/customized-components/JobFairGrid/JobFairGrid.component';
 import React, { useEffect, useState } from 'react';
 
@@ -43,9 +43,10 @@ const JobFairGridPublicContainer = ({ role }) => {
   };
 
   const onClick = async (jobFairId) => {
-    history.push(PATH.PUBLICIZED_BOOTH_PAGE, {
+    const url = generatePath(PATH.PUBLICIZED_BOOTH_PAGE, {
       jobFairId
     });
+    history.push(url);
   };
 
   const handleOnSearch = (searchValue) => {

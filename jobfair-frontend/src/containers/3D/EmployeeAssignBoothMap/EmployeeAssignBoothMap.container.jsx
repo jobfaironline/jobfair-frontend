@@ -1,4 +1,5 @@
 import { EmployeeAssignBoothMapCanvas } from '../../../components/3D/EmployeeAssignBoothMap/EmployeeAssignBoothMapCanvas.component';
+import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { PATH } from '../../../constants/Paths/Path';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { getAssignmentById } from '../../../services/jobhub-api/AssignmentControllerService';
@@ -82,15 +83,6 @@ export const EmployeeAssignBoothMapContainer = () => {
       onClick={onClick}
     />
   ) : (
-    <div
-      style={{
-        width: '100vw',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-      <ReactLoading type={'spin'} color={'#1890ff'} height={100} width={100} />
-    </div>
+    <LoadingComponent isWholePage={true} />
   );
 };

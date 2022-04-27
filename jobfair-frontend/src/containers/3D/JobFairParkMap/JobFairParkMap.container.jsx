@@ -1,11 +1,18 @@
+import './JobFairParkMap.styles.scss';
 import * as THREE from 'three';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { PATH } from '../../../constants/Paths/Path';
+import { Typography } from 'antd';
 import { addVideoTexture, fixTextureOffset, loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
-import { generatePath, useHistory, useLocation } from 'react-router-dom';
-import { getLayoutInformationForJobFairPark } from '../../../services/jobhub-api/JobFairControllerService';
+import { generatePath, useHistory } from 'react-router-dom';
+import {
+  getJobFairByIDAPI,
+  getLayoutInformationForJobFairPark
+} from '../../../services/jobhub-api/JobFairControllerService';
 import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
 import React, { useEffect, useState } from 'react';
+
+const { Title } = Typography;
 
 const getBootMesh = async (position, foundationBox, url, companyBoothId, companyBoothLayoutVideos) => {
   const gltf = await loadGLBModel(url);
@@ -31,18 +38,18 @@ const getBootMesh = async (position, foundationBox, url, companyBoothId, company
   }
   return sceneMesh;
 };
-const JobFairParkMapContainer = () => {
+
+const JobFairParkMapContainer = ({ jobFairId }) => {
   const history = useHistory();
-  const location = useLocation();
-  const jobFairId = location.state?.jobFairId;
   const [state, setState] = useState({
     boothMeshes: [],
-    mapMesh: null
+    mapMesh: null,
+    jobFairData: undefined
   });
 
   useEffect(async () => {
-    const responseData = await getLayoutInformationForJobFairPark(jobFairId).then((response) => response.data);
-
+    const jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
+    const responseData = (await getLayoutInformationForJobFairPark(jobFairId)).data;
     const url = responseData.jobFairLayoutUrl;
     const data = responseData.booths;
     const glb = await loadGLBModel(url);
@@ -80,7 +87,8 @@ const JobFairParkMapContainer = () => {
 
     setState({
       boothMeshes: meshes,
-      mapMesh: glb.scene
+      mapMesh: glb.scene,
+      jobFairData
     });
   }, []);
 
@@ -93,7 +101,14 @@ const JobFairParkMapContainer = () => {
     history.push(url);
   };
 
-  return <JobFairParkMapComponent mapMesh={state.mapMesh} boothMeshes={state.boothMeshes} onClick={clickHandle} />;
+  return (
+    <div className={'job-fair-park-map'}>
+      <div className={'job-fair-name'}>
+        <Title level={5}>{state.jobFairData.name}</Title>
+      </div>
+      <JobFairParkMapComponent mapMesh={state.mapMesh} boothMeshes={state.boothMeshes} onClick={clickHandle} />;
+    </div>
+  );
 };
 
 export default JobFairParkMapContainer;

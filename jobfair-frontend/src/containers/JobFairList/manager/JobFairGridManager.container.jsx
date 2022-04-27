@@ -15,7 +15,7 @@ const JobFairGridManagerContainer = () => {
   const history = useHistory();
 
   const fetchData = async () => {
-    const res = await getAllJobFairAPI();
+    const res = await getAllJobFairAPI({});
     const content = res.data.content;
     content.unshift({ isFirst: true });
     setData(content);

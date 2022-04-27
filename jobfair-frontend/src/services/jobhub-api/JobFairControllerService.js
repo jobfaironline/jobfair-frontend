@@ -23,19 +23,6 @@ export const getAllJobFairAPI = ({
       name
     }
   );
-export const searchJobFairAPI = (name, direction = 'DESC', offset = '0', pageSize = '10', sortBy = 'createTime') =>
-  CallAPI(
-    JOB_FAIR_END_POINT,
-    'GET',
-    {},
-    {
-      name,
-      direction,
-      offset,
-      pageSize,
-      sortBy
-    }
-  );
 
 export const draftJobFairAPI = (body) => CallAPI(JOB_FAIR_END_POINT, 'POST', body, {});
 export const updateJobFairAPI = (body) => CallAPI(JOB_FAIR_END_POINT, 'PUT', body, {});

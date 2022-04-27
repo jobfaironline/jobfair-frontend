@@ -2,7 +2,7 @@ import { DecorateBoothContainer } from '../../containers/DecorateBoothContainer/
 import React from 'react';
 
 const DecorateBoothPage = () => (
-  <div className={'page'}>
+  <div className={'page fullscreen-page'}>
     <DecorateBoothContainer />
   </div>
 );
