@@ -30,7 +30,7 @@ const LoginFormContainer = () => {
             history.push(PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE);
             return;
           case 'COMPANY_MANAGER':
-            history.push(PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE);
+            history.push(PATH_COMPANY_MANAGER.COMPANY_PROFILE_PAGE);
             return;
           case 'ATTENDANT':
             history.push(PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE);
