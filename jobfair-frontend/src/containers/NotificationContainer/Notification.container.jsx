@@ -7,13 +7,15 @@ import {
 import { notification } from 'antd';
 import { notificationAction } from '../../redux-flow/notification/notification-slice';
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useState } from 'react';
+import { useOnClickOutside } from '../../hooks/useOnClickOutside';
+import React, { useRef, useState } from 'react';
 
 export const NotificationContainer = () => {
   const notificationData = useSelector((state) => state.notification.data);
   const unreadNotification = notificationData.filter((notification) => !notification.read);
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(false);
+  const dialogRef = useRef();
   const onClick = async () => {
     try {
       const notificationData = (await getNotification()).data;
@@ -54,7 +56,11 @@ export const NotificationContainer = () => {
     }
   };
 
-  const props = { onClick, unreadNotification, isVisible, onReadAll, notificationData, onRead };
+  useOnClickOutside(dialogRef, () => {
+    setIsVisible(false);
+  });
+
+  const props = { onClick, unreadNotification, isVisible, onReadAll, notificationData, onRead, dialogRef };
 
   return <NotificationComponent {...props} />;
 };
