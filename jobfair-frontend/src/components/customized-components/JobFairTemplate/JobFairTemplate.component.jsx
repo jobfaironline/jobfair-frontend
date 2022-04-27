@@ -13,7 +13,15 @@ const JobFairTemplateComponent = ({ data, handleViewDetail, onAddClick }) => (
           <List.Item>
             <Card
               onClick={onAddClick}
-              style={{ width: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', height: '260px' }}
+              style={{
+                width: 300,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '260px',
+                borderRadius: '8px',
+                border: '1px solid #dddddd'
+              }}
               hoverable={true}>
               <FontAwesomeIcon icon={faPlus} size={'xl'} />
             </Card>
@@ -24,7 +32,7 @@ const JobFairTemplateComponent = ({ data, handleViewDetail, onAddClick }) => (
         <List.Item>
           <Card
             hoverable={true}
-            style={{ width: 300, height: '260px' }}
+            style={{ width: 300, height: '260px', borderRadius: '8px', border: '1px solid #dddddd' }}
             cover={<img src={item.thumbnailUrl} alt={item.name} />}
             onClick={() => handleViewDetail(item.id)}>
             <div>

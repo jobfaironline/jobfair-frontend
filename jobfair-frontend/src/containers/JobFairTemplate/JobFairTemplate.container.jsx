@@ -1,7 +1,7 @@
 import './JobFairTemplate.styles.scss';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
-import { Typography } from 'antd';
+import { Typography, notification } from 'antd';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getCompanyLayoutAPI } from '../../services/jobhub-api/LayoutControllerService';
 import JobFairTemplateComponent from '../../components/customized-components/JobFairTemplate/JobFairTemplate.component';
@@ -15,10 +15,19 @@ const JobFairTemplateContainer = () => {
   const history = useHistory();
 
   const fetchData = async () => {
-    const res = await getCompanyLayoutAPI();
-    const content = res.data;
-    content.unshift({ isFirst: true });
-    setData(content);
+    try {
+      const res = await getCompanyLayoutAPI();
+      let content = [];
+      if (res.status === 200) content = res.data;
+
+      content.unshift({ isFirst: true });
+      setData(content);
+    } catch (e) {
+      notification['error']({
+        message: `Fetch layout data failed`,
+        description: `Error detail: ${e}`
+      });
+    }
   };
 
   useEffect(() => {
@@ -52,7 +61,7 @@ const JobFairTemplateContainer = () => {
           </Typography.Title>
         </div>
         {!data ? (
-          <LoadingComponent />
+          <LoadingComponent isWholePage={true} />
         ) : (
           <JobFairTemplateComponent data={data} handleViewDetail={handleViewDetail} onAddClick={onAddClick} />
         )}

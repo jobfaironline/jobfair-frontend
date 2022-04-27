@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactLoading from 'react-loading';
 
-export const LoadingComponent = () => (
+export const LoadingComponent = ({ isWholePage = false }) => (
   <div
     style={{
       display: 'flex',
-      width: '100%',
-      height: '100%',
+      width: isWholePage ? '100vw' : '100%',
+      height: isWholePage ? '100vh' : '100%',
       justifyContent: 'center',
       alignItems: 'center'
     }}>

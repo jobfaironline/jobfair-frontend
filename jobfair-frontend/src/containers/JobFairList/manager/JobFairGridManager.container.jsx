@@ -78,7 +78,7 @@ const JobFairGridManagerContainer = () => {
       <JobFairGridComponent data={data} onClick={onClick} onAddJobFair={onAddJobFair} role='COMPANY_MANAGER' />
     </div>
   ) : (
-    <LoadingComponent />
+    <LoadingComponent isWholePage={true} />
   );
 };
 
