@@ -1,3 +1,4 @@
+import { NotificationType } from '../../constants/NotificationType';
 import { notification } from 'antd';
 import { notificationAction } from '../../redux-flow/notification/notification-slice';
 import store from '../../redux-flow/index';
@@ -8,12 +9,14 @@ export class WebSocketClient {
     this.socket = new WebSocket(`wss://d8jkn5uxre.execute-api.ap-southeast-1.amazonaws.com/production?token=${token}`);
     this.eventHandlers = {
       default: (notificationData) => {
-        notification['success']({
-          message: notificationData.title,
-          description: notificationData.message,
-          duration: 2
-        });
-        store.dispatch(notificationAction.addNotification(notificationData));
+        if (notificationData?.notificationType === NotificationType.NOTI) {
+          notification['success']({
+            message: notificationData.title,
+            description: notificationData.message,
+            duration: 2
+          });
+          store.dispatch(notificationAction.addNotification(notificationData));
+        }
       }
     };
     this.setHandlers();
