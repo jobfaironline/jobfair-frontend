@@ -47,8 +47,8 @@ export const AttendantJobFairBoothViewContainer = (props) => {
             geckoClientRef={geckoClientRef}
           />
         </div>
+        <ChatBox {...communicationProps} />
       </div>
-      <ChatBox {...communicationProps} />
     </>
   );
 };
