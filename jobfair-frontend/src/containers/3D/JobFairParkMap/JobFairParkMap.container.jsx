@@ -17,7 +17,7 @@ import React, { useEffect, useState } from 'react';
 
 const { Title, Text, Paragraph } = Typography;
 
-const getBootMesh = async (position, foundationBox, url, companyBoothId, companyBoothLayoutVideos) => {
+const getBootMesh = async (position, foundationBox, url, companyBoothId, companyBoothLayoutVideos, boothName) => {
   const gltf = await loadGLBModel(url);
   const { x, y, z } = position;
   const sceneMesh = gltf.scene;
@@ -35,6 +35,7 @@ const getBootMesh = async (position, foundationBox, url, companyBoothId, company
   const scale = Math.max(foundationSize.x / meshSize.x, foundationSize.z / meshSize.z);
   sceneMesh.scale.setScalar(scale);
   sceneMesh.companyBoothId = companyBoothId;
+  sceneMesh.boothName = boothName;
   for (const mesh of sceneMesh.children) {
     addVideoTexture(mesh, companyBoothLayoutVideos);
     fixTextureOffset(mesh);
@@ -72,7 +73,8 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
         boothUrl: element.boothUrl,
         companyBoothId: element.companyBoothId,
         sizeBox: null,
-        companyBoothLayoutVideos
+        companyBoothLayoutVideos,
+        boothName: element.boothName
       };
     });
     for (const mesh of glb.scene.children) {
@@ -86,7 +88,8 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
         slot.sizeBox,
         slot.boothUrl,
         slot.companyBoothId,
-        slot.companyBoothLayoutVideos
+        slot.companyBoothLayoutVideos,
+        slot.boothName
       );
       newBoothMeshesPromise.push(boothMesh);
     }
