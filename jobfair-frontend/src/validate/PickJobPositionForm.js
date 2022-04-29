@@ -6,11 +6,12 @@ import {
   MINIMUM_QUESTION,
   MINIMUM_TEST_DURATION
 } from '../constants/CreateTestConst';
-import { NUMBER_RANGE_VALIDATOR, REQUIRED_VALIDATOR } from './GeneralValidation';
+import { MAX_LENGTH_VALIDATOR, NUMBER_RANGE_VALIDATOR, REQUIRED_VALIDATOR } from './GeneralValidation';
 
 export const PickJobPositionFormValidation = {
   jobTitle: [REQUIRED_VALIDATOR('Job title')],
-  description: [REQUIRED_VALIDATOR('Description')],
+  description: [REQUIRED_VALIDATOR('Description'), MAX_LENGTH_VALIDATOR('Description', 500)],
+  name: [REQUIRED_VALIDATOR('Name'), MAX_LENGTH_VALIDATOR('Name', 100)],
   requirement: [REQUIRED_VALIDATOR('Requirement')],
   minSalary: (name) => [
     REQUIRED_VALIDATOR('Min salary'),
@@ -61,5 +62,5 @@ export const PickJobPositionFormValidation = {
     NUMBER_RANGE_VALIDATOR(MINIMUM_TEST_DURATION, MAXIMUM_TEST_DURATION)
   ],
   passMark: [REQUIRED_VALIDATOR('Pass mark')],
-  note: [REQUIRED_VALIDATOR('Note')]
+  note: [MAX_LENGTH_VALIDATOR('Note'), 100]
 };

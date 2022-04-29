@@ -32,6 +32,14 @@ const PickJobPositionForm = (props) => {
         initialValues={{ description: undefined, jobPositions: [] }} //will go
         className={'pick-job-position-form'}>
         <Form.Item
+          label='Booth name'
+          required
+          tooltip='This is the name of the booth'
+          rules={PickJobPositionFormValidation.description}
+          name='name'>
+          <Input placeholder="Booth's name" style={{ width: '50%' }} />
+        </Form.Item>
+        <Form.Item
           label='Booth description'
           required
           tooltip='This description will be shown during the job fair'
@@ -43,8 +51,10 @@ const PickJobPositionForm = (props) => {
           {(fields, { remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => {
-                const id = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions[key]?.id : undefined;
-                const item = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions[key] : {};
+                const id = form.getFieldsValue(true).jobPositions
+                  ? form.getFieldsValue(true).jobPositions[key]?.id
+                  : undefined;
+                const item = form.getFieldsValue(true).jobPositions ? form.getFieldsValue(true).jobPositions[key] : {};
 
                 return (
                   <div>
@@ -107,7 +117,11 @@ const PickJobPositionForm = (props) => {
                               </Form.Item>
                             </Input.Group>
                             <Form.Item name={[name, 'isHaveTest']} {...restField}>
-                              <Checkbox onChange={(e) => onChangeHaveTest(e, key)}>Have test</Checkbox>
+                              <Checkbox.Group>
+                                <Checkbox onChange={(e) => onChangeHaveTest(e, key)} value={true}>
+                                  Have test
+                                </Checkbox>
+                              </Checkbox.Group>
                             </Form.Item>
                             <div style={arrKey.includes(key) ? {} : { display: 'none' }}>
                               <Form.Item
@@ -151,11 +165,10 @@ const PickJobPositionForm = (props) => {
                               </Form.Item>
                               <Form.Item
                                 label='Note'
-                                required
                                 tooltip='A small description about the test'
                                 rules={arrKey.includes(key) ? PickJobPositionFormValidation.note : null}
                                 name={[name, 'note']}>
-                                <TextArea showCount maxLength={300} />
+                                <TextArea showCount maxLength={100} />
                               </Form.Item>
                             </div>
                           </div>
