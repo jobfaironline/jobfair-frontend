@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { Modal, Typography, notification } from 'antd';
-import { PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import {
   assignJobPositionToBooth,
   getCompanyBoothById
@@ -42,7 +41,7 @@ const PickJobPositionFormContainer = ({ form, companyBoothId }) => {
         id: position.originJobPosition,
         key: position.originJobPosition,
         no: index,
-        isHaveTest: position.isHaveTest,
+        isHaveTest: position.isHaveTest ? [true] : [],
         testLength: position.testTimeLength,
         testNumOfQuestion: position.numOfQuestion
       }))
@@ -98,7 +97,7 @@ const PickJobPositionFormContainer = ({ form, companyBoothId }) => {
         maxSalary: item.maxSalary,
         minSalary: item.minSalary,
         numOfPosition: item.numOfPosition,
-        isHaveTest: item.isHaveTest !== undefined,
+        isHaveTest: item.isHaveTest && item.isHaveTest.length > 0,
         passMark: item.passMark,
         testLength: item.testLength,
         testNumOfQuestion: item.testNumOfQuestion,
