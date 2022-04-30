@@ -1102,7 +1102,7 @@ export const QualificationConst = [
   {
     id: 2,
     name: 'Doctorate',
-    enumName: 'ASSOCIATE_DEGREE'
+    enumName: 'DECORATE'
   },
   {
     id: 3,
