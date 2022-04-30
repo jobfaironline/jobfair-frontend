@@ -94,7 +94,7 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
                 name='countryId'
                 hasFeedback
                 shouldUpdate
-                rules={AttendantProfileValidation.countryId}>
+                rules={AttendantProfileValidation.account.countryId}>
                 <Select
                   showSearch
                   style={{ width: 250 }}
@@ -132,7 +132,7 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
               <Form.Item label='Gender' name={['account', 'gender']}>
                 <Radio.Group>
                   {GenderConst.map((item) => (
-                    <Radio.Button value={item.value}>{item.label}</Radio.Button>
+                    <Radio.Button value={item.enumName}>{item.name}</Radio.Button>
                   ))}
                 </Radio.Group>
               </Form.Item>
