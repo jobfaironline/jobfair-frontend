@@ -6,9 +6,10 @@ import { getBase64 } from '../../../utils/common';
 import { notify } from '../../../utils/toastutil';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import { useThree } from '@react-three/fiber';
 
 export const DecoratedBoothSideBarContainer = (props) => {
-  const { handleOnRotationLeft, handleOnRotationRight, handleDelete } = props;
+  const { handleOnRotationLeft, handleOnRotationRight, handleDelete, rendererRef } = props;
 
   const selectedItem = useSelector((state) => state.decorateBooth.selectedItem);
 
@@ -84,12 +85,23 @@ export const DecoratedBoothSideBarContainer = (props) => {
       else width = screenSize.z / screenMesh.scale.z;
 
       let plane;
+
       //create new plane
       const geometry = new THREE.PlaneGeometry(width, screenSize.y / screenMesh.scale.y);
-      const material = new THREE.MeshBasicMaterial({
+      const material = new THREE.MeshStandardMaterial({
         side: THREE.DoubleSide,
         map: texture
       });
+
+      //make material shapper
+      material.map.minFilter = THREE.LinearFilter;
+      //make texture sharper
+      //texture.anisotropy = rendererRef.current.getMaxAnisotropy();
+      //make material darker
+      //material.color = new THREE.Color(0x000000);
+      //make material lighter
+      //material.emissive = new THREE.Color(0xffffff);
+
       // eslint-disable-next-line prefer-const
       plane = new THREE.Mesh(geometry, material);
       plane.name = IMAGE_PLANE_NAME;
@@ -108,6 +120,7 @@ export const DecoratedBoothSideBarContainer = (props) => {
         plane.position.setX(-screenSize.x / 2 / screenMesh.scale.x - 0.05);
       }
 
+      //remove previous plane-image
       const prevPlane = selectedItem?.getObjectByName(IMAGE_PLANE_NAME);
       if (prevPlane !== undefined) selectedItem?.remove(prevPlane);
 
