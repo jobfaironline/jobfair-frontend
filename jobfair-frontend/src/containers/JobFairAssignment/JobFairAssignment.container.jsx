@@ -3,6 +3,7 @@ import { Space, Typography, notification } from 'antd';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getAssignmentByEmployeeId } from '../../services/jobhub-api/AssignmentControllerService';
 import { mapperJobFairAssignment } from '../../utils/mapperJobFairAssignment';
+import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import JobFairAssignmentTableColumn from '../JobFairAssignmentTable/JobFairAssignmentTable.column';
@@ -10,7 +11,7 @@ import React, { useEffect, useState } from 'react';
 
 const JobFairAssignmentContainer = () => {
   const history = useHistory();
-  const webSocketClient = useSelector((state) => state.webSocket.client);
+  const webSocketClient = useSelector(selectWebSocket);
 
   const [data, setData] = useState([]);
   const [reRender, setRerender] = useState(false);
