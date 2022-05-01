@@ -9,13 +9,16 @@ export class WebSocketClient {
     this.socket = new WebSocket(`wss://d8jkn5uxre.execute-api.ap-southeast-1.amazonaws.com/production?token=${token}`);
     this.eventHandlers = {
       default: (notificationData) => {
-        if (notificationData?.notificationType === NotificationType.NOTI) {
-          notification['success']({
-            message: notificationData.title,
-            description: notificationData.message,
-            duration: 2
-          });
-          store.dispatch(notificationAction.addNotification(notificationData));
+        switch (notificationData?.notificationType) {
+          case NotificationType.NOTI: {
+            notification['success']({
+              message: notificationData.title,
+              description: notificationData.message,
+              duration: 2
+            });
+            store.dispatch(notificationAction.addNotification(notificationData));
+            break;
+          }
         }
       }
     };

@@ -2,16 +2,20 @@ import './JobFairGridPublicContainer.styles.scss';
 import { ATTENDANT } from '../../../constants/RoleType';
 import { CategoriesConst, SubCategories } from '../../../constants/CompanyProfileConstant';
 import { Divider, Input, Select, notification } from 'antd';
+import { NotificationType } from '../../../constants/NotificationType';
 import { PATH } from '../../../constants/Paths/Path';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getCountryOrder } from '../../../utils/common';
 import { getJobFairForAttendant } from '../../../services/jobhub-api/JobFairControllerService';
+import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
+import { useSelector } from 'react-redux';
 import JobFairGridComponent from '../../../components/customized-components/JobFairGrid/JobFairGrid.component';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const { Search } = Input;
 const { Option, OptGroup } = Select;
 const JobFairGridPublicContainer = ({ role }) => {
+  const webSocketClient = useSelector(selectWebSocket);
   const [data, setData] = useState();
   const history = useHistory();
   const [searchAndFilterValue, setSearchAndFilterValue] = useState({
@@ -19,10 +23,30 @@ const JobFairGridPublicContainer = ({ role }) => {
     category: '',
     country: ''
   });
+  const latestData = useRef(data);
 
   useEffect(() => {
     fetchData();
   }, [searchAndFilterValue]);
+
+  useEffect(() => {
+    webSocketClient.addEvent('chang-job-fair-view', changeJobFairView);
+    return () => {
+      webSocketClient.removeEvent('chang-job-fair-view');
+    };
+  }, []);
+
+  const changeJobFairView = (notificationData) => {
+    if (!latestData.current || !notificationData) return;
+    if (notificationData.notificationType === NotificationType.VISIT_JOB_FAIR) {
+      const messageObject = JSON.parse(notificationData.message);
+      const { jobFairId, count } = messageObject;
+      const jobFair = latestData.current.find((jobFair) => jobFair.id === jobFairId);
+      if (!jobFair) return;
+      jobFair.visitCount = count;
+      setData([...latestData.current]);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -33,6 +57,7 @@ const JobFairGridPublicContainer = ({ role }) => {
           categoryId: searchAndFilterValue.category,
           countryId: searchAndFilterValue.country
         });
+        latestData.current = res.data.content;
         setData(res.data.content);
       }
     } catch (e) {

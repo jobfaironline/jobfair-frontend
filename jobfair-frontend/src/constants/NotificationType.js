@@ -1,3 +1,4 @@
 export const NotificationType = {
-  NOTI: 'NOTI'
+  NOTI: 'NOTI',
+  VISIT_JOB_FAIR: 'VISIT_JOB_FAIR'
 };
