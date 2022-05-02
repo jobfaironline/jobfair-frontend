@@ -13,6 +13,7 @@ import {
   getJobFairByIDAPI,
   getLayoutInformationForJobFairPark
 } from '../../../services/jobhub-api/JobFairControllerService';
+import { leaveJobFair, visitJobFair } from '../../../services/jobhub-api/VisitControllerService';
 import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
@@ -61,8 +62,10 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
   const boothDialogLatestState = useRef(boothDialogState);
 
   useEffect(() => {
+    visitJobFair(jobFairId);
     webSocketClient.addEvent('change-job-fair-booth-view', changeJobFairBoothView);
     return () => {
+      leaveJobFair(jobFairId);
       webSocketClient.removeEvent('change-job-fair-booth-view');
     };
   }, []);
