@@ -9,6 +9,7 @@ import { ResumeSubmitMeshComponent } from './ResumeSubmitMesh.component';
 import { Select } from 'antd';
 import { SkyComponent, SkyType } from '../ThreeJSBaseComponent/Sky.component';
 import React, { useRef, useState } from 'react';
+import { Physics, useBox, usePlane } from '@react-three/cannon';
 
 const { Option } = Select;
 
@@ -86,62 +87,64 @@ export const CompanyBoothCanvasComponent = (props) => {
         onCreated={(state) => {
           cameraRef.current = state.camera;
         }}>
-        <SkyComponent style={SkyType.Sunset} />
-        {view ? (
-          <FirstPersonControl
-            model={model}
-            isChangeCamera={isChangeCamera}
-            collidableMeshListRef={sceneMeshRef}
-            geckoClientRef={geckoClientRef}
-            zoom={zoom}
-          />
-        ) : (
-          <OrbitControls enableZoom={true} maxPolarAngle={Math.PI / 2 - Math.PI / 10} minPolarAngle={0} />
-        )}
-        <Stage adjustCamera={false} preset='rembrandt' intensity={0.4} environment='city' contactShadow={false}>
-          <group ref={sceneMeshRef}>
-            {boothMesh.children.map((child) => {
-              if (child.name === 'rostrum' || child.name === 'reception_desk') {
-                return (
-                  <ResumeSubmitMeshComponent
-                    mesh={child}
-                    resumeSubmitRef={resumeSubmitRef}
-                    onHover={resumeSubmitItemOnHover}
-                    handleOpenDetail={handleOpenDetail}
-                    isHover={isHover}
-                  />
-                );
-              }
-              return <BasicMesh mesh={child} />;
-            })}
-            {boothMesh.children.map((child) => {
-              if (child.name === 'rostrum' || child.name === 'reception_desk') {
-                return (
-                  <ArrowHelper
-                    origin={child.position}
-                    color={0xe05522}
-                    length={8 * zoom * 50}
-                    distance={13 * zoom * 50}
-                  />
-                );
-              }
-            })}
-          </group>
-          {view ? null : <Character {...modelProps} />}
-          {user.map((u) => (
-            <AiCharacter state={u} />
-          ))}
-        </Stage>
-        <ContactShadows frames={10} position={[0, -1.05, 0]} scale={10} blur={2} far={10} />
-        <EffectComposer multisampling={8} autoClear={false}>
-          <Outline
-            selection={isHover ? resumeSubmitRef : undefined}
-            visibleEdgeColor='yellow'
-            hiddenEdgeColor='yellow'
-            edgeStrength={100}
-            width={1000}
-          />
-        </EffectComposer>
+        <Physics gravity={[0, 0, 0]}>
+          <SkyComponent style={SkyType.Sunset} />
+          {view ? (
+            <FirstPersonControl
+              model={model}
+              isChangeCamera={isChangeCamera}
+              collidableMeshListRef={sceneMeshRef}
+              geckoClientRef={geckoClientRef}
+              zoom={zoom}
+            />
+          ) : (
+            <OrbitControls enableZoom={true} maxPolarAngle={Math.PI / 2 - Math.PI / 10} minPolarAngle={0} />
+          )}
+          <Stage adjustCamera={false} preset='rembrandt' intensity={0.4} environment='city' contactShadow={false}>
+            <group ref={sceneMeshRef}>
+              {boothMesh.children.map((child) => {
+                if (child.name === 'rostrum' || child.name === 'reception_desk') {
+                  return (
+                    <ResumeSubmitMeshComponent
+                      mesh={child}
+                      resumeSubmitRef={resumeSubmitRef}
+                      onHover={resumeSubmitItemOnHover}
+                      handleOpenDetail={handleOpenDetail}
+                      isHover={isHover}
+                    />
+                  );
+                }
+                return <BasicMesh mesh={child} />;
+              })}
+              {boothMesh.children.map((child) => {
+                if (child.name === 'rostrum' || child.name === 'reception_desk') {
+                  return (
+                    <ArrowHelper
+                      origin={child.position}
+                      color={0xe05522}
+                      length={8 * zoom * 50}
+                      distance={13 * zoom * 50}
+                    />
+                  );
+                }
+              })}
+            </group>
+            {view ? null : <Character {...modelProps} />}
+            {user.map((u) => (
+              <AiCharacter state={u} />
+            ))}
+          </Stage>
+          <ContactShadows frames={10} position={[0, -1.05, 0]} scale={10} blur={2} far={10} />
+          <EffectComposer multisampling={8} autoClear={false}>
+            <Outline
+              selection={isHover ? resumeSubmitRef : undefined}
+              visibleEdgeColor='yellow'
+              hiddenEdgeColor='yellow'
+              edgeStrength={100}
+              width={1000}
+            />
+          </EffectComposer>
+        </Physics>
       </Canvas>
     </div>
   );

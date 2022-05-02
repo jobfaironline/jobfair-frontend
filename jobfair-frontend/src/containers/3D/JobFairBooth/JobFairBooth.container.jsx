@@ -84,7 +84,7 @@ export const JobFairBoothContainer = (props) => {
     const floorMesh = boothMesh.children.filter((child) => child.name === 'sand')[0];
     const floorHeight = calculateMeshSize(floorMesh).height;
     //load model
-    const model = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx');
+    const model = await loadFBXModel('/WalkingModel.fbx');
     //const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx");
 
     const boothSize = calculateMeshSize(boothMesh);
@@ -105,8 +105,8 @@ export const JobFairBoothContainer = (props) => {
     //load animation
     /* const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx");
     const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking4.fbx")*/
-    const idleModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx');
-    const walkingModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx');
+    const idleModel = await loadFBXModel('/ModelIdle.fbx');
+    const walkingModel = await loadFBXModel('/WalkingModel.fbx');
     const mixer = new THREE.AnimationMixer(model);
     const animations = {
       walk: mixer.clipAction(walkingModel.animations[0]),
