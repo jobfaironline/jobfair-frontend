@@ -22,11 +22,11 @@ const PickJobPositionTable = ({ selectable, form }) => {
 
   //select table logic
   const [initialSelectedValues, setInitialSelectedValues] = useState(() =>
-    form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions.map((item) => item.key)] : []
+    form.getFieldsValue(true).jobPositions ? [...form.getFieldsValue(true).jobPositions.map((item) => item.key)] : []
   );
   const [selectedRowKeys, setSelectedRowKeys] = useState(() => [...initialSelectedValues]);
   const [selectedRows, setSelectedRows] = useState(
-    form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions] : []
+    form.getFieldsValue(true).jobPositions ? [...form.getFieldsValue(true).jobPositions] : []
   );
 
   //handle choose job button
@@ -37,9 +37,11 @@ const PickJobPositionTable = ({ selectable, form }) => {
       if (!initialSelectedValues.includes(item.id)) mappedData.push(item);
     });
 
-    const currentJobPositionsInForm = form.getFieldsValue().jobPositions ? [...form.getFieldsValue().jobPositions] : [];
+    const currentJobPositionsInForm = form.getFieldsValue(true).jobPositions
+      ? [...form.getFieldsValue(true).jobPositions]
+      : [];
     form.setFieldsValue({
-      ...form.getFieldsValue(),
+      ...form.getFieldsValue(true),
       jobPositions: [...currentJobPositionsInForm, ...mappedData]
     });
     setInitialSelectedValues(selectedRowKeys);

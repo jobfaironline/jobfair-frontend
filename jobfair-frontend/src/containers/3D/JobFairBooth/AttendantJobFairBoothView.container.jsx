@@ -1,10 +1,10 @@
+import './AttendantJobFairBoothView.styles.scss';
 import { BoothInfoMenuContainer } from '../../BoothInfoMenu/BoothInfoMenu.container';
 import { ControlTipsModalContainer } from '../../ControlTipModal/ControlTipsModal.container';
 import { InventoryContainer } from '../../Inventory/Inventory.container';
 import { JobFairBoothContainer } from './JobFairBooth.container';
 import ChatBox from '../../../components/Agora/ChatBox/ChatBox.component';
 import React, { useState } from 'react';
-import styles from '../../../pages/AttendantJobFairPage/AttendantJobFairPage.module.scss';
 
 export const AttendantJobFairBoothViewContainer = (props) => {
   const { companyBoothId, geckoClientRef, communicationProps } = props;
@@ -23,32 +23,32 @@ export const AttendantJobFairBoothViewContainer = (props) => {
   };
 
   return (
-    <div className={styles.container}>
-      <BoothInfoMenuContainer
-        companyBoothId={companyBoothId}
-        isShow={tabState.isShow}
-        activeKey={tabState.activeKey}
-        handleOpenDetail={handleOpenDetail}
-        openInventory={openInventory}
-      />
-      <div className={styles.booth}>
-        <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />
-        <ControlTipsModalContainer>
-          <>
-            <p>Movement controls:</p>
-            <p>W/S: Translate Forward/Backward</p>
-            <p>A/D: Rotate Left/Right</p>
-          </>
-        </ControlTipsModalContainer>
-        <JobFairBoothContainer
+    <>
+      <div className={'attendant-job-fair-booth-view'}>
+        <BoothInfoMenuContainer
           companyBoothId={companyBoothId}
+          isShow={tabState.isShow}
+          activeKey={tabState.activeKey}
           handleOpenDetail={handleOpenDetail}
-          geckoClientRef={geckoClientRef}
+          openInventory={openInventory}
         />
-      </div>
-      <div>
+        <div className={'booth'}>
+          <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />
+          <ControlTipsModalContainer>
+            <>
+              <p>Movement controls:</p>
+              <p>W/S: Translate Forward/Backward</p>
+              <p>A/D: Rotate Left/Right</p>
+            </>
+          </ControlTipsModalContainer>
+          <JobFairBoothContainer
+            companyBoothId={companyBoothId}
+            handleOpenDetail={handleOpenDetail}
+            geckoClientRef={geckoClientRef}
+          />
+        </div>
         <ChatBox {...communicationProps} />
       </div>
-    </div>
+    </>
   );
 };

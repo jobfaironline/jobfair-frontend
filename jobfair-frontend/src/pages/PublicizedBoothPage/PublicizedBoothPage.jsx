@@ -1,4 +1,3 @@
-import { ToastContainer } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import JobFairParkMapContainer from '../../containers/3D/JobFairParkMap/JobFairParkMap.container';
 import React from 'react';
@@ -6,9 +5,8 @@ import React from 'react';
 const PublicizedBoothPage = () => {
   const { jobFairId } = useParams();
   return (
-    <div className={'page'}>
+    <div className={'page fullscreen-page'}>
       <JobFairParkMapContainer jobFairId={jobFairId} />
-      <ToastContainer />
     </div>
   );
 };

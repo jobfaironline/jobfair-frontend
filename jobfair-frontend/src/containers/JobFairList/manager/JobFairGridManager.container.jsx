@@ -3,11 +3,7 @@ import { Input, Typography, notification } from 'antd';
 import { JOB_FAIR_STATUS } from '../../../constants/JobFairConst';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path';
-import {
-  getAllJobFairAPI,
-  getJobFairByIDAPI,
-  searchJobFairAPI
-} from '../../../services/jobhub-api/JobFairControllerService';
+import { getAllJobFairAPI, getJobFairByIDAPI } from '../../../services/jobhub-api/JobFairControllerService';
 import { useHistory } from 'react-router-dom';
 import JobFairGridComponent from '../../../components/customized-components/JobFairGrid/JobFairGrid.component';
 import React, { useEffect, useState } from 'react';
@@ -19,7 +15,7 @@ const JobFairGridManagerContainer = () => {
   const history = useHistory();
 
   const fetchData = async () => {
-    const res = await getAllJobFairAPI();
+    const res = await getAllJobFairAPI({});
     const content = res.data.content;
     content.unshift({ isFirst: true });
     setData(content);
@@ -27,7 +23,7 @@ const JobFairGridManagerContainer = () => {
 
   const searchJobFair = async (searchValue) => {
     try {
-      const res = await searchJobFairAPI(searchValue);
+      const res = await getAllJobFairAPI({ name: searchValue });
       const content = res.data.content;
       content.unshift({ isFirst: true });
       setData(content);

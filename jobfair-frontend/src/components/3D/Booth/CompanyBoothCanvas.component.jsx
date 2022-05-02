@@ -77,12 +77,12 @@ export const CompanyBoothCanvasComponent = (props) => {
   };
 
   return (
-    <div style={{ width: '100%', height: '100vh' }}>
+    <div style={{ width: '100%', height: '100%' }}>
       <ViewSelect onChange={onChange} />
       <Canvas
         dpr={[1, 2]}
         camera={{ fov: 45, zoom: 0.04 / zoom }}
-        style={{ width: '100%', height: '100vh' }}
+        style={{ width: '100%', height: 'calc(100vh - 126px)' }}
         onCreated={(state) => {
           cameraRef.current = state.camera;
         }}>

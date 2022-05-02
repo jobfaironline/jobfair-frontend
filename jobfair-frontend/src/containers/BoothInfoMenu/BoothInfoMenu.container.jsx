@@ -5,7 +5,7 @@ import { getCompanyBoothById } from '../../services/jobhub-api/CompanyBoothContr
 import { getCompanyProfileAPI } from '../../services/jobhub-api/CompanyControllerService';
 import React, { useEffect, useState } from 'react';
 import SideBar from '../../components/commons/InfoMenu/InfoMenu.component';
-import styles from '../../pages/AttendantJobFairPage/AttendantJobFairPage.module.scss';
+import styles from '../3D/JobFairBooth/AttendantJobFairBoothView.styles.scss';
 
 export const BoothInfoMenuContainer = (props) => {
   const { companyBoothId, handleOpenDetail, isShow, activeKey, openInventory } = props;

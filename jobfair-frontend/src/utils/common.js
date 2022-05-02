@@ -1,3 +1,4 @@
+import { CountryConst } from '../constants/AttendantConstants';
 import { JOB_FAIR_PLAN_STATUS } from '../constants/JobFairConst';
 import { Progress, Tag } from 'antd';
 import React from 'react';
@@ -165,3 +166,5 @@ export const getDateDifferent = (timeStamp) => {
   if (years <= 1) return '1 year ago';
   return `${years} years ago`;
 };
+
+export const getCountryOrder = () => CountryConst.sort((o1, o2) => o1.name.localeCompare(o2.name));

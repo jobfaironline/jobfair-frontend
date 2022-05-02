@@ -3,14 +3,18 @@ import { Space, Typography, notification } from 'antd';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getAssignmentByEmployeeId } from '../../services/jobhub-api/AssignmentControllerService';
 import { mapperJobFairAssignment } from '../../utils/mapperJobFairAssignment';
+import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
+import { useSelector } from 'react-redux';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import JobFairAssignmentTableColumn from '../JobFairAssignmentTable/JobFairAssignmentTable.column';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const JobFairAssignmentContainer = () => {
   const history = useHistory();
+  const webSocketClient = useSelector(selectWebSocket);
 
   const [data, setData] = useState([]);
+  const [reRender, setRerender] = useState(false);
   //pagination
   const [totalRecord, setTotalRecord] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -29,9 +33,16 @@ const JobFairAssignmentContainer = () => {
       });
     }
   };
-  useLayoutEffect(() => {
+  useEffect(() => {
     fetchData();
-  }, [currentPage, pageSize]);
+    return () => {
+      webSocketClient.removeEvent('refresh-assignment-list');
+    };
+  }, [currentPage, pageSize, reRender]);
+
+  webSocketClient.addEvent('refresh-assignment-list', () => {
+    setRerender((prevState) => !prevState);
+  });
 
   const handlePageChange = (page, pageSize) => {
     if (page > 0) setCurrentPage(page - 1);

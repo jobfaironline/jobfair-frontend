@@ -4,7 +4,13 @@ import {
   JOB_FAIR_INFORMATION_FOR_3D_MAP
 } from '../../constants/Endpoints/jobhub-api/JobFairConTrollerEndpoint';
 
-export const getAllJobFairAPI = (direction = 'DESC', offset = '0', pageSize = '10', sortBy = 'createTime') =>
+export const getAllJobFairAPI = ({
+  name = '',
+  direction = 'DESC',
+  offset = '0',
+  pageSize = '10',
+  sortBy = 'createTime'
+}) =>
   CallAPI(
     `${JOB_FAIR_END_POINT}`,
     'GET',
@@ -13,20 +19,8 @@ export const getAllJobFairAPI = (direction = 'DESC', offset = '0', pageSize = '1
       direction,
       offset,
       pageSize,
-      sortBy
-    }
-  );
-export const searchJobFairAPI = (name, direction = 'DESC', offset = '0', pageSize = '10', sortBy = 'createTime') =>
-  CallAPI(
-    JOB_FAIR_END_POINT,
-    'GET',
-    {},
-    {
-      name,
-      direction,
-      offset,
-      pageSize,
-      sortBy
+      sortBy,
+      name
     }
   );
 
@@ -45,5 +39,18 @@ export const uploadJobFairThumbnailAPI = (jobFairId, body) =>
 
 export const getLayoutInformationForJobFairPark = (jobFairId) =>
   CallAPI(`${JOB_FAIR_INFORMATION_FOR_3D_MAP}/${jobFairId}`, 'GET');
-export const getJobFairForAttendant = (name, direction = 'ASC', offset = '0', pageSize = '10', sortBy = 'createTime') =>
-  CallAPI(`${JOB_FAIR_END_POINT}/attendants`, 'GET', {}, { name, direction, offset, pageSize, sortBy });
+export const getJobFairForAttendant = ({
+  name = '',
+  countryId = '',
+  categoryId = '',
+  direction = 'ASC',
+  offset = '0',
+  pageSize = '10',
+  sortBy = 'createTime'
+}) =>
+  CallAPI(
+    `${JOB_FAIR_END_POINT}/attendants`,
+    'GET',
+    {},
+    { name, countryId, categoryId, direction, offset, pageSize, sortBy }
+  );

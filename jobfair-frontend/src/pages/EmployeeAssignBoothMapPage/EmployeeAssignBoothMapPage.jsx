@@ -2,7 +2,7 @@ import { EmployeeAssignBoothMapContainer } from '../../containers/3D/EmployeeAss
 import React from 'react';
 
 const EmployeeAssignBoothMapPage = () => (
-  <div className='page'>
+  <div className='page fullscreen-page'>
     <EmployeeAssignBoothMapContainer />
   </div>
 );

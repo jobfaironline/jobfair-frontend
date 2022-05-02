@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
 import './PickJobPositionForm.styles.scss';
-import { Button, Checkbox, Collapse, Divider, Form, Input, InputNumber, Popconfirm, Typography } from 'antd';
+import { Button, Checkbox, Divider, Form, Input, InputNumber, Popconfirm, Typography } from 'antd';
 import {
   MAXIMUM_MARK,
   MAXIMUM_NUM_OF_POSITION,
@@ -16,8 +15,6 @@ import { PickJobPositionFormValidation } from '../../../validate/PickJobPosition
 import JobPositionDetailCollapseComponent from '../../customized-components/JobPositionDetailCollapse/JobPositionDetailCollapse.component';
 import React from 'react';
 
-const { Panel } = Collapse;
-const { Text } = Typography;
 const { TextArea } = Input;
 
 const PickJobPositionForm = (props) => {
@@ -35,6 +32,14 @@ const PickJobPositionForm = (props) => {
         initialValues={{ description: undefined, jobPositions: [] }} //will go
         className={'pick-job-position-form'}>
         <Form.Item
+          label='Booth name'
+          required
+          tooltip='This is the name of the booth'
+          rules={PickJobPositionFormValidation.description}
+          name='name'>
+          <Input placeholder="Booth's name" style={{ width: '50%' }} />
+        </Form.Item>
+        <Form.Item
           label='Booth description'
           required
           tooltip='This description will be shown during the job fair'
@@ -46,8 +51,10 @@ const PickJobPositionForm = (props) => {
           {(fields, { remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => {
-                const id = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions[key]?.id : undefined;
-                const item = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions[key] : {};
+                const id = form.getFieldsValue(true).jobPositions
+                  ? form.getFieldsValue(true).jobPositions[key]?.id
+                  : undefined;
+                const item = form.getFieldsValue(true).jobPositions ? form.getFieldsValue(true).jobPositions[key] : {};
 
                 return (
                   <div>
@@ -110,14 +117,18 @@ const PickJobPositionForm = (props) => {
                               </Form.Item>
                             </Input.Group>
                             <Form.Item name={[name, 'isHaveTest']} {...restField}>
-                              <Checkbox onChange={(e) => onChangeHaveTest(e, key)}>Have test</Checkbox>
+                              <Checkbox.Group>
+                                <Checkbox onChange={(e) => onChangeHaveTest(e, key)} value={true}>
+                                  Have test
+                                </Checkbox>
+                              </Checkbox.Group>
                             </Form.Item>
                             <div style={arrKey.includes(key) ? {} : { display: 'none' }}>
                               <Form.Item
                                 label='Test duration'
                                 required
                                 tooltip='Hour:Minute'
-                                rules={PickJobPositionFormValidation.testLength}
+                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.testLength : null}
                                 name={[name, 'testLength']}>
                                 <InputNumber
                                   placeholder='Test duration'
@@ -130,7 +141,7 @@ const PickJobPositionForm = (props) => {
                                 label='Number of questions'
                                 required
                                 tooltip='The number of the questions'
-                                rules={PickJobPositionFormValidation.numberOfQuestion}
+                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.numberOfQuestion : null}
                                 name={[name, 'testNumOfQuestion']}>
                                 <InputNumber
                                   style={{ width: '25rem' }}
@@ -143,7 +154,7 @@ const PickJobPositionForm = (props) => {
                                 label='Pass mark'
                                 required
                                 tooltip='The minimum mark to pass'
-                                rules={PickJobPositionFormValidation.passMark}
+                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.passMark : null}
                                 name={[name, 'passMark']}>
                                 <InputNumber
                                   style={{ width: '25rem' }}
@@ -154,11 +165,10 @@ const PickJobPositionForm = (props) => {
                               </Form.Item>
                               <Form.Item
                                 label='Note'
-                                required
                                 tooltip='A small description about the test'
-                                rules={PickJobPositionFormValidation.note}
+                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.note : null}
                                 name={[name, 'note']}>
-                                <TextArea showCount maxLength={300} />
+                                <TextArea showCount maxLength={100} />
                               </Form.Item>
                             </div>
                           </div>
