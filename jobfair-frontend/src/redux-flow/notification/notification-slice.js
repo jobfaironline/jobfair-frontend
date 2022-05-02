@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {fetchNotification} from "./notification-action";
+import { fetchNotification } from './notification-action';
 
 const notificationSlice = createSlice({
   name: 'notification',
@@ -24,11 +24,11 @@ const notificationSlice = createSlice({
       state.data.forEach((noti) => (noti.read = true));
     }
   },
-   extraReducers: builder => {
+  extraReducers: (builder) => {
     builder.addCase(fetchNotification.fulfilled, (state, action) => {
       state.data = action.payload;
-    })
-   }
+    });
+  }
 });
 export const notificationAction = notificationSlice.actions;
 

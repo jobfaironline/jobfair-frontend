@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
 import './DecoratedBoothSideBar.style.scss';
-import {Button, Descriptions, InputNumber, Slider, Upload} from 'antd';
+import { Button, Descriptions, InputNumber, Slider, Upload } from 'antd';
 import { DeleteOutlined, LeftOutlined, RightOutlined, UploadOutlined } from '@ant-design/icons';
-import {Description} from "@mui/icons-material";
+import { Description } from '@mui/icons-material';
 import { SketchPicker } from 'react-color';
 import Divider from '@mui/material/Divider';
-import ImgCrop from "antd-img-crop";
+import ImgCrop from 'antd-img-crop';
 import Typography from '@mui/material/Typography';
 
 export const DecorateBoothSideBarComponent = (props) => {
@@ -93,7 +93,7 @@ export const DecorateBoothSideBarComponent = (props) => {
           </Descriptions>
         </div>
         <div style={{ margin: '1rem 0' }}>
-          <ImgCrop aspect={ratio} beforeCrop={handleUpVideoCropImage}	>
+          <ImgCrop aspect={ratio} beforeCrop={handleUpVideoCropImage}>
             <Upload {...loadFile}>
               <Button icon={<UploadOutlined />}>Upload Media</Button>{' '}
             </Upload>
@@ -112,7 +112,6 @@ export const DecorateBoothSideBarComponent = (props) => {
         <div>
           <SketchPicker color={selectedItem?.material.color.getHexString()} onChangeComplete={handleOnChangeColor} />
         </div>
-
       </div>
     </div>
   );
