@@ -803,260 +803,260 @@ export const CountryConst = [
 
 export const ResidenceConst = [
   {
-    id: '014cea47-48fb-4f1a-8c84-561df19e5c5e',
-    name: 'Đà Nẵng\r'
+    id: 0,
+    name: 'Đà Nẵng'
   },
   {
-    id: '0b1f6b13-0e4a-4d1a-81c8-11501f95e229',
-    name: 'Sóc Trăng\r'
+    id: 1,
+    name: 'Sóc Trăng'
   },
   {
-    id: '0ea00bd8-5878-42ca-8693-5a3cc2289f16',
-    name: 'Bình Phước\r'
+    id: 2,
+    name: 'Bình Phước'
   },
   {
-    id: '119f602a-115b-4073-b4cc-516ff40c7d8e',
-    name: 'Điện Biên\r'
+    id: 3,
+    name: 'Điện Biên'
   },
   {
-    id: '19c664be-90e2-4bd7-9ace-1ca58c0de3a2',
-    name: 'Ninh Thuận\r'
+    id: 4,
+    name: 'Ninh Thuận'
   },
   {
-    id: '1c367c94-b621-4460-b882-0f92d8a4c114',
-    name: 'Ninh Bình\r'
+    id: 5,
+    name: 'Ninh Bình'
   },
   {
-    id: '1e7e7848-e349-4435-be52-cf2910c2439d',
-    name: 'Long An\r'
+    id: 6,
+    name: 'Long An'
   },
   {
-    id: '1f4ddc7a-aa28-4de1-858c-549da040d73c',
-    name: 'Đồng Nai\r'
+    id: 7,
+    name: 'Đồng Nai'
   },
   {
-    id: '23617d47-dfd2-4028-8525-539301507e06',
-    name: 'Vĩnh Long\r'
+    id: 8,
+    name: 'Vĩnh Long'
   },
   {
-    id: '2403698b-5767-4d68-9f1c-976d9446869c',
-    name: 'Hòa Bình\r'
+    id: 9,
+    name: 'Hòa Bình'
   },
   {
-    id: '26fa8c16-ab88-43f1-ba87-d2bea2010b70',
-    name: 'Bắc Ninh\r'
+    id: 10,
+    name: 'Bắc Ninh'
   },
   {
-    id: '303ce166-52aa-4976-b8ed-c6bdc2295862',
-    name: 'Bình Định\r'
+    id: 11,
+    name: 'Bình Định'
   },
   {
-    id: '33251e28-b14f-484c-82db-66fa2fd5e471',
-    name: 'TP Hồ Chí Minh\r'
+    id: 12,
+    name: 'TP Hồ Chí Minh'
   },
   {
-    id: '38041775-bfff-4ab4-b764-501d59e47fc8',
-    name: 'Bạc Liêu\r'
+    id: 13,
+    name: 'Bạc Liêu'
   },
   {
-    id: '3bb9ef89-582a-45cf-8f97-2e7aae9306dc',
-    name: 'Đắk Lắk\r'
+    id: 14,
+    name: 'Đắk Lắk'
   },
   {
-    id: '401aeab5-6205-455f-b583-8919e8729108',
-    name: 'Đắk Nông\r'
+    id: 15,
+    name: 'Đắk Nông'
   },
   {
-    id: '4a7919a9-8c6a-4a67-bc49-39f87b318aa3',
-    name: 'Hà Giang\r'
+    id: 16,
+    name: 'Hà Giang'
   },
   {
-    id: '4b1bb216-9b0b-4198-bb48-8faed45fb012',
-    name: 'Bình Dương\r'
+    id: 17,
+    name: 'Bình Dương'
   },
   {
-    id: '4f7a51ad-ede4-463a-a8fb-85cccf0ce365',
-    name: 'Thái Bình\r'
+    id: 18,
+    name: 'Thái Bình'
   },
   {
-    id: '54c406e1-ff08-4f3f-a2c7-d45c78863f3c',
-    name: 'An Giang\r'
+    id: 19,
+    name: 'An Giang'
   },
   {
-    id: '55c24339-a004-4abc-b4bb-c6beb7f151a3',
-    name: 'Cao Bằng\r'
+    id: 20,
+    name: 'Cao Bằng'
   },
   {
-    id: '55d5b9b9-64d9-454b-88af-308d4073d96b',
-    name: 'Bà Rịa – Vũng Tàu\r'
+    id: 21,
+    name: 'Bà Rịa – Vũng Tàu'
   },
   {
-    id: '5d51be1a-de1d-4d4a-b2b6-bcf4359c1844',
-    name: 'Thừa Thiên Huế\r'
+    id: 22,
+    name: 'Thừa Thiên Huế'
   },
   {
-    id: '63dbec64-b5cd-475f-ba11-061f64ba29df',
-    name: 'Phú Yên\r'
+    id: 23,
+    name: 'Phú Yên'
   },
   {
-    id: '64b41d70-575e-4cae-aeb6-08366f3c533e',
-    name: 'Hải Dương\r'
+    id: 24,
+    name: 'Hải Dương'
   },
   {
-    id: '69f25602-d5da-4b75-952a-2b1720d6ac12',
-    name: 'Bình Thuận\r'
+    id: 25,
+    name: 'Bình Thuận'
   },
   {
-    id: '6dfc4b99-44bc-49d9-b18f-2ecd0e06b70c',
-    name: 'Tuyên Quang\r'
+    id: 26,
+    name: 'Tuyên Quang'
   },
   {
-    id: '734082ea-d723-41da-9785-fee496a7f120',
-    name: 'Quảng Bình\r'
+    id: 27,
+    name: 'Quảng Bình'
   },
   {
-    id: '7343b30a-0fd3-48e9-8b66-767565f3b230',
-    name: 'Đồng Tháp\r'
+    id: 28,
+    name: 'Đồng Tháp'
   },
   {
-    id: '7619eaa1-f739-4f25-9511-644ec383dac9',
-    name: 'Quảng Nam\r'
+    id: 29,
+    name: 'Quảng Nam'
   },
   {
-    id: '7d8f9444-a681-4d90-8126-661bc774d468',
-    name: 'Hải Phòng\r'
+    id: 30,
+    name: 'Hải Phòng'
   },
   {
-    id: '80944aa7-9f6e-4caa-8c0f-e00a75358ea0',
-    name: 'Trà Vinh\r'
+    id: 31,
+    name: 'Trà Vinh'
   },
   {
-    id: '82472459-0085-41fe-9994-cc9606337445',
-    name: 'Khánh Hòa\r'
+    id: 32,
+    name: 'Khánh Hòa'
   },
   {
-    id: '85396965-1367-4106-8fc6-239f056e9bab',
-    name: 'Tây Ninh\r'
+    id: 33,
+    name: 'Tây Ninh'
   },
   {
-    id: '86125c66-58d5-49c4-8c8b-87c749fbc1f5',
-    name: 'Yên Bái\r'
+    id: 34,
+    name: 'Yên Bái'
   },
   {
-    id: '87a512ed-6897-4206-8269-dc62f0ccb888',
-    name: 'Tiền Giang\r'
+    id: 35,
+    name: 'Tiền Giang'
   },
   {
-    id: '8b8df0eb-f2b2-4480-a695-d55135f73029',
-    name: 'Sơn La\r'
+    id: 36,
+    name: 'Sơn La'
   },
   {
-    id: '92d487c9-86e5-44ef-a94f-7453de74475d',
-    name: 'Hà Nội\r'
+    id: 37,
+    name: 'Hà Nội'
   },
   {
-    id: '9884988b-ab0a-4e43-b71a-6326a68e33a7',
-    name: 'Lào Cai\r'
+    id: 38,
+    name: 'Lào Cai'
   },
   {
-    id: '9a0ce960-03ca-4947-90e6-560607198d62',
-    name: 'Cà Mau\r'
+    id: 39,
+    name: 'Cà Mau'
   },
   {
-    id: 'a333ef87-3dc8-406d-9b6d-f37355cc23c7',
-    name: 'Quảng Ngãi\r'
+    id: 40,
+    name: 'Quảng Ngãi'
   },
   {
-    id: 'ae93e09f-0652-4e95-8f53-2eb77c7b5cec',
-    name: 'Cần Thơ\r'
+    id: 41,
+    name: 'Cần Thơ'
   },
   {
-    id: 'af469f01-21e9-43ef-8ee0-0227a70799be',
-    name: 'Bến Tre\r'
+    id: 42,
+    name: 'Bến Tre'
   },
   {
-    id: 'b1592ee6-6223-4798-9a1b-238a25dd7131',
-    name: 'Vĩnh Phúc\r'
+    id: 43,
+    name: 'Vĩnh Phúc'
   },
   {
-    id: 'b5cde4b9-f570-4bf4-aac6-d72dfad1f171',
-    name: 'Kiên Giang\r'
+    id: 44,
+    name: 'Kiên Giang'
   },
   {
-    id: 'b5d0ac26-a04e-43e6-8501-1dae438e1a82',
-    name: 'Quảng Trị\r'
+    id: 45,
+    name: 'Quảng Trị'
   },
   {
-    id: 'b67ccf56-357a-4dbc-9bc1-fcbfd0e8c528',
-    name: 'Nghệ An\r'
+    id: 46,
+    name: 'Nghệ An'
   },
   {
-    id: 'b859eaad-5505-4b60-8b79-06c8ac8cd5e5',
-    name: 'Lai Châu\r'
+    id: 47,
+    name: 'Lai Châu'
   },
   {
-    id: 'b95f7ff3-a5a5-491e-b464-d1b1a7077da8',
-    name: 'Gia Lai\r'
+    id: 48,
+    name: 'Gia Lai'
   },
   {
-    id: 'bea1f872-229d-4784-9187-6ca060ed8d68',
-    name: 'Lâm Đồng\r'
+    id: 49,
+    name: 'Lâm Đồng'
   },
   {
-    id: 'bf65e34f-cefb-4fc3-ac21-ae84a84a558c',
-    name: 'Lạng Sơn\r'
+    id: 50,
+    name: 'Lạng Sơn'
   },
   {
-    id: 'cc77b072-4c38-4458-a884-d8a527d988c1',
-    name: 'Phú Thọ\r'
+    id: 51,
+    name: 'Phú Thọ'
   },
   {
-    id: 'd6c18992-8864-425a-992e-a2d831229187',
-    name: 'Hưng Yên\r'
+    id: 52,
+    name: 'Hưng Yên'
   },
   {
-    id: 'd7e65200-06b5-499a-b296-c4e7e0146061',
-    name: 'Kon Tum\r'
+    id: 53,
+    name: 'Kon Tum'
   },
   {
-    id: 'd9993e10-5ba5-4ea6-98cf-8ca8a8b3426b',
-    name: 'Nam Định\r'
+    id: 54,
+    name: 'Nam Định'
   },
   {
-    id: 'dd140f5b-93b8-4f5e-b009-4504db399bf0',
-    name: 'Hà Tĩnh\r'
+    id: 55,
+    name: 'Hà Tĩnh'
   },
   {
-    id: 'dd4f5699-97ab-4bef-9de8-c91eb6d7ac91',
-    name: 'Hà Nam\r'
+    id: 56,
+    name: 'Hà Nam'
   },
   {
-    id: 'ddce0336-dd98-4ed4-88ad-b85f18001551',
-    name: 'Bắc Giang\r'
+    id: 57,
+    name: 'Bắc Giang'
   },
   {
-    id: 'e55c522a-b595-4992-a2a6-9abb9aa8cc69',
-    name: 'Bắc Kạn\r'
+    id: 58,
+    name: 'Bắc Kạn'
   },
   {
-    id: 'ed31e302-b5ee-4b15-8910-1883a1b76107',
-    name: 'Thái Nguyên\r'
+    id: 59,
+    name: 'Thái Nguyên'
   },
   {
-    id: 'ed5dad32-3366-4e0a-8d85-b7811db9f6f2',
-    name: 'Hậu Giang\r'
+    id: 60,
+    name: 'Hậu Giang'
   },
   {
-    id: 'f1523770-1606-48c0-942a-6b43ca443494',
-    name: 'Thanh Hóa\r'
+    id: 61,
+    name: 'Thanh Hóa'
   },
   {
-    id: 'fac2e4cd-73fc-4751-be0b-5b9ff52bc3d4',
+    id: 62,
     name: 'International'
   },
   {
-    id: 'ffe754fe-c5d8-4ace-b16b-b892456580e9',
-    name: 'Quảng Ninh\r'
+    id: 63,
+    name: 'Quảng Ninh'
   }
 ];
 
@@ -1091,28 +1091,28 @@ export const JobLevelConst = [
 export const QualificationConst = [
   {
     id: 0,
-    name: 'Others',
-    enumName: 'OTHERS'
-  },
-  {
-    id: 1,
-    name: 'High school',
-    enumName: 'HIGH_SCHOOL'
-  },
-  {
-    id: 2,
-    name: 'Associate Degree',
-    enumName: 'ASSOCIATE_DEGREE'
-  },
-  {
-    id: 3,
     name: 'College',
     enumName: 'COLLEGE'
   },
   {
-    id: 4,
+    id: 1,
     name: 'Bachelors',
     enumName: 'BACHELORS'
+  },
+  {
+    id: 2,
+    name: 'Doctorate',
+    enumName: 'DECORATE'
+  },
+  {
+    id: 3,
+    name: 'High school',
+    enumName: 'HIGH_SCHOOL'
+  },
+  {
+    id: 4,
+    name: 'Others',
+    enumName: 'OTHERS'
   },
   {
     id: 5,
@@ -1121,18 +1121,25 @@ export const QualificationConst = [
   },
   {
     id: 6,
-    name: 'Doctorate',
-    enumName: 'DOCTORATE'
+    name: 'Associate Degree',
+    enumName: 'ASSOCIATE_DEGREE'
   }
 ];
 export const GenderConst = [
   {
-    value: 'FEMALE',
-    label: 'Female'
+    id: 0,
+    name: 'Male',
+    enumName: 'MALE'
   },
   {
-    value: 'MALE',
-    label: 'Male'
+    id: 1,
+    name: 'Female',
+    enumName: 'FEMALE'
+  },
+  {
+    id: 2,
+    name: 'Other',
+    enumName: 'OTHER'
   }
 ];
 

@@ -1,4 +1,5 @@
 import { NotificationComponent } from '../../components/customized-components/Notification/Notification.component';
+import { fetchNotification } from '../../redux-flow/notification/notification-action';
 import {
   getNotification,
   readAllNotification,
@@ -8,7 +9,7 @@ import { notification } from 'antd';
 import { notificationAction } from '../../redux-flow/notification/notification-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
-import React, { useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 
 export const NotificationContainer = () => {
   const notificationData = useSelector((state) => state.notification.data);
@@ -16,6 +17,11 @@ export const NotificationContainer = () => {
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(false);
   const dialogRef = useRef();
+
+  useLayoutEffect(() => {
+    dispatch(fetchNotification());
+  }, []);
+
   const onClick = async () => {
     try {
       const notificationData = (await getNotification()).data;

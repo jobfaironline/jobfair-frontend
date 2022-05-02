@@ -11,6 +11,7 @@ import {
 } from '../../../constants/Paths/Path';
 import { UserOutlined } from '@ant-design/icons';
 import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
+import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 
@@ -55,7 +56,7 @@ export const AdminMenu = [
 
 const NavigationBar = () => {
   const role = useSelector((state) => state.authentication?.user?.roles);
-  const webSocketClient = useSelector((state) => state.webSocket.client);
+  const webSocketClient = useSelector(selectWebSocket);
   const history = useHistory();
   const dispatch = useDispatch();
   const extraMenu = () => {
