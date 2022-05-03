@@ -2,6 +2,7 @@ import { AttendantJobFairBoothViewContainer } from '../../containers/3D/JobFairB
 import { GeckoClient } from '../../services/gecko-client/gecko-client';
 import { agoraAction } from '../../redux-flow/agora/agora-slice';
 import { createClient } from 'agora-rtc-react';
+import { leaveJobFairBooth, visitJobFairBooth } from '../../services/jobhub-api/VisitControllerService';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import RTMClient from '../../services/agora/RTMClient';
@@ -50,6 +51,13 @@ const AttendantJobFairPage = () => {
     rtm.removeAllListeners();
     geckoClientRef.current.close();
   });
+
+  useEffect(() => {
+    visitJobFairBooth(companyBoothId);
+    return () => {
+      leaveJobFairBooth(companyBoothId);
+    };
+  }, []);
 
   const communicationProps = {
     audioTrackRef,

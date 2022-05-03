@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { Card, List, Typography } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
+import { NotificationType } from '../../../constants/NotificationType';
 import { PATH } from '../../../constants/Paths/Path';
 import { addVideoTexture, fixTextureOffset, loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import { faHeart, faUsers, faX } from '@fortawesome/free-solid-svg-icons';
@@ -12,8 +13,11 @@ import {
   getJobFairByIDAPI,
   getLayoutInformationForJobFairPark
 } from '../../../services/jobhub-api/JobFairControllerService';
+import { leaveJobFair, visitJobFair } from '../../../services/jobhub-api/VisitControllerService';
+import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
+import { useSelector } from 'react-redux';
 import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -45,6 +49,7 @@ const getBootMesh = async (position, foundationBox, url, companyBoothId, company
 
 const JobFairParkMapContainer = ({ jobFairId }) => {
   const history = useHistory();
+  const webSocketClient = useSelector(selectWebSocket);
   const [state, setState] = useState({
     boothMeshes: [],
     mapMesh: null,
@@ -54,6 +59,28 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
     boothData: undefined,
     visible: false
   });
+  const boothDialogLatestState = useRef(boothDialogState);
+
+  useEffect(() => {
+    visitJobFair(jobFairId);
+    webSocketClient.addEvent('change-job-fair-booth-view', changeJobFairBoothView);
+    return () => {
+      leaveJobFair(jobFairId);
+      webSocketClient.removeEvent('change-job-fair-booth-view');
+    };
+  }, []);
+
+  const changeJobFairBoothView = (notificationData) => {
+    if (!boothDialogLatestState.current || !notificationData) return;
+    if (notificationData.notificationType === NotificationType.VISIT_JOB_FAIR_BOOTH) {
+      const messageObject = JSON.parse(notificationData.message);
+      const { jobFairId: messageJobFairId, count, jobFairBoothId } = messageObject;
+      if (messageJobFairId !== jobFairId) return;
+      if (boothDialogLatestState.current.boothData.id !== jobFairBoothId) return;
+      boothDialogLatestState.current.boothData.visitCount = count;
+      setBoothDialogState({ ...boothDialogLatestState.current });
+    }
+  };
 
   useEffect(async () => {
     const jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
@@ -106,11 +133,18 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
 
   const clickHandle = async (companyBoothId) => {
     const data = (await getCompanyBoothById(companyBoothId)).data;
-    setBoothDialogState((prevState) => ({ ...prevState, boothData: data, visible: true }));
+
+    setBoothDialogState((prevState) => {
+      boothDialogLatestState.current = { ...prevState, boothData: data, visible: true };
+      return { ...prevState, boothData: data, visible: true };
+    });
   };
 
   const closeDialog = () => {
-    setBoothDialogState((prevState) => ({ ...prevState, visible: false }));
+    setBoothDialogState((prevState) => {
+      boothDialogLatestState.current = { ...prevState, visible: false };
+      return { ...prevState, visible: false };
+    });
   };
 
   const handleJoinBooth = () => {
@@ -139,6 +173,9 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
             title={
               <div className={'header-status'}>
                 <div>
+                  <Title level={3} style={{ marginBottom: '0', marginRight: '10px' }}>
+                    {boothDialogState.boothData?.visitCount}
+                  </Title>
                   <FontAwesomeIcon icon={faUsers} size={'xl'} />
                 </div>
                 <div>

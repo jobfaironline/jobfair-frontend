@@ -33,7 +33,7 @@ const handleCardContent = (role, jobFair) => {
             </div>
             <div className={'card-footer-item'}>
               <EyeOutlined />
-              <Text>{jobFair?.eyes}</Text>
+              <Text>{jobFair?.visitCount}</Text>
             </div>
           </div>
         </>
