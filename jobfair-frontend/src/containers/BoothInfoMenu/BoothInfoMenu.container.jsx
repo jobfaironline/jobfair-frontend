@@ -1,11 +1,11 @@
+import '../3D/JobFairBooth/AttendantJobFairBoothView.styles.scss';
 import { BoothJobPositionTabContainer } from './BoothJobPositionTab/BoothJobPositionTab.container';
 import { CompanyInformation } from '../../components/customized-components/BoothInfoMenu/BoothInformationTab/BoothInformationTab.component';
-import { Tabs, Typography } from 'antd';
+import { Tabs, Typography, notification } from 'antd';
 import { getCompanyBoothById } from '../../services/jobhub-api/CompanyBoothControllerService';
 import { getCompanyProfileAPI } from '../../services/jobhub-api/CompanyControllerService';
 import React, { useEffect, useState } from 'react';
 import SideBar from '../../components/commons/InfoMenu/InfoMenu.component';
-import styles from '../3D/JobFairBooth/AttendantJobFairBoothView.styles.scss';
 
 export const BoothInfoMenuContainer = (props) => {
   const { companyBoothId, handleOpenDetail, isShow, activeKey, openInventory } = props;
@@ -15,15 +15,23 @@ export const BoothInfoMenuContainer = (props) => {
   });
 
   const fetchData = async () => {
-    let response = await getCompanyBoothById(companyBoothId);
-    const companyId = response.data.order.companyRegistration.companyId;
-    const jobPositions = response.data.order.companyRegistration.registrationJobPositions;
-    response = await getCompanyProfileAPI(companyId);
-    setState((prevState) => ({
-      ...prevState,
-      companyInformation: response.data,
-      jobPositions
-    }));
+    try {
+      let data = (await getCompanyBoothById(companyBoothId)).data;
+      const companyId = data.companyId;
+      const jobPositions = data.boothJobPositions;
+      data = (await getCompanyProfileAPI(companyId)).data;
+      setState((prevState) => ({
+        ...prevState,
+        companyInformation: data,
+        jobPositions
+      }));
+    } catch (e) {
+      notification['error']({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching data, try again later`,
+        duration: 2
+      });
+    }
   };
 
   useEffect(() => {
@@ -47,7 +55,7 @@ export const BoothInfoMenuContainer = (props) => {
           </div>
         }
         key='0'>
-        <div className={styles.aboutCompany}>
+        <div className={'aboutCompany'}>
           <Typography variant='button'>About Company</Typography>
           <CompanyInformation data={state.companyInformation} />
         </div>
@@ -59,7 +67,7 @@ export const BoothInfoMenuContainer = (props) => {
   };
 
   return (
-    <div className={styles.sideBar}>
+    <div className={'sideBar'}>
       <SideBar {...sideBarProps} />
     </div>
   );

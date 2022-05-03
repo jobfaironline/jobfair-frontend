@@ -48,7 +48,7 @@ export const BoothJobPositionTabContainer = (props) => {
     const body = {
       ...values,
       cvId: selectedResume.id,
-      registrationJobPositionId: selectedJobPosition.id
+      boothJobPositionId: selectedJobPosition.id
     };
     try {
       const response = await draftApplication(body);
