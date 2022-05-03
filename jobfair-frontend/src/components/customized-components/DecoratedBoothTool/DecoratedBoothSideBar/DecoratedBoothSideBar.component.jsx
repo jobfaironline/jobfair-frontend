@@ -1,9 +1,7 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
 import './DecoratedBoothSideBar.style.scss';
 import { Button, Descriptions, InputNumber, Slider, Upload } from 'antd';
 import { DeleteOutlined, LeftOutlined, RightOutlined, UploadOutlined } from '@ant-design/icons';
-import { Description } from '@mui/icons-material';
+import { SHARPNESS_MARK } from '../../../../constants/DecorateConst';
 import { SketchPicker } from 'react-color';
 import Divider from '@mui/material/Divider';
 import ImgCrop from 'antd-img-crop';
@@ -25,12 +23,6 @@ export const DecorateBoothSideBarComponent = (props) => {
     ratio,
     handleUpVideoCropImage
   } = props;
-
-  const sharpnessMarks = {
-    0: 'normal',
-    1: 'sharper',
-    2: 'sharpest'
-  };
 
   return (
     <div className={'decorate-booth-side-bar'}>
@@ -107,7 +99,7 @@ export const DecorateBoothSideBarComponent = (props) => {
           <Descriptions.Item>Image brightness</Descriptions.Item>
           <Slider defaultValue={50} onChange={onChangeBrightness} />
           <Descriptions.Item>Image sharpness</Descriptions.Item>
-          <Slider min={0} max={2} defaultValue={0} marks={sharpnessMarks} onChange={onChangeSharpness} />
+          <Slider min={0} max={2} defaultValue={0} marks={SHARPNESS_MARK} onChange={onChangeSharpness} />
         </div>
         <div>
           <SketchPicker color={selectedItem?.material.color.getHexString()} onChangeComplete={handleOnChangeColor} />
