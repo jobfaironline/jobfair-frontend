@@ -2,12 +2,10 @@
 import * as THREE from 'three';
 import { DecorateBoothSideBarComponent } from '../../../components/customized-components/DecoratedBoothTool/DecoratedBoothSideBar/DecoratedBoothSideBar.component';
 import { IMAGE_PLANE_NAME } from '../../../constants/DecorateBoothConstant';
-import { LinearMipMapLinearFilter } from 'three';
 import { getBase64 } from '../../../utils/common';
 import { notify } from '../../../utils/toastutil';
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useThree } from '@react-three/fiber';
 
 export const DecoratedBoothSideBarContainer = (props) => {
   const { handleOnRotationLeft, handleOnRotationRight, handleDelete, rendererRef } = props;
@@ -187,9 +185,29 @@ export const DecoratedBoothSideBarContainer = (props) => {
       screenMesh.geometry.boundingBox.max.x - screenMesh.geometry.boundingBox.min.x === 0 ||
       screenMesh.geometry.boundingBox.max.y - screenMesh.geometry.boundingBox.min.y === 0 ||
       screenMesh.geometry.boundingBox.max.z - screenMesh.geometry.boundingBox.min.z === 0
-    )
+    ) {
       imagePlane = screenMesh;
-    else imagePlane = selectedItem.getObjectByName(IMAGE_PLANE_NAME);
+      if (!imagePlane) return;
+      if (value < 50) {
+        const blackVal = Math.round((value * 255) / 50);
+        const bkgrnd = `rgb(${blackVal}, ${blackVal}, ${blackVal})`;
+        imagePlane.material.color = new THREE.Color(bkgrnd);
+        imagePlane.material.emissive = new THREE.Color(0x000000);
+      } else {
+        const white = Math.round(((value - 50) * 255) / 50);
+        const bkgrnd = `rgb(${white}, ${white}, ${white})`;
+        imagePlane.material.emissive = new THREE.Color(bkgrnd);
+        imagePlane.material.color = new THREE.Color(0xffffff);
+      }
+      return;
+    }
+    //if screenMesh is not a plane
+    for (const child of selectedItem.children) {
+      if (child.name.includes(IMAGE_PLANE_NAME)) {
+        imagePlane = child;
+        break;
+      }
+    }
     if (!imagePlane) return;
     let newMaterial;
     if (imagePlane.material.isMeshBasicMaterial) {
