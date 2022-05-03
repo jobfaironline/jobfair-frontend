@@ -191,17 +191,27 @@ export const DecoratedBoothSideBarContainer = (props) => {
       imagePlane = screenMesh;
     else imagePlane = selectedItem.getObjectByName(IMAGE_PLANE_NAME);
     if (!imagePlane) return;
+    let newMaterial;
+    if (imagePlane.material.isMeshBasicMaterial) {
+      newMaterial = new THREE.MeshStandardMaterial({
+        side: THREE.DoubleSide,
+        map: imagePlane.material.map
+      });
+    } else newMaterial = imagePlane.material.clone();
+
     if (value < 50) {
       const blackVal = Math.round((value * 255) / 50);
       const bkgrnd = `rgb(${blackVal}, ${blackVal}, ${blackVal})`;
-      imagePlane.material.color = new THREE.Color(bkgrnd);
-      imagePlane.material.emissive = new THREE.Color(0x000000);
+      newMaterial.color = new THREE.Color(bkgrnd);
+      newMaterial.emissive = new THREE.Color(0x000000);
     } else {
       const white = Math.round(((value - 50) * 255) / 50);
       const bkgrnd = `rgb(${white}, ${white}, ${white})`;
-      imagePlane.material.emissive = new THREE.Color(bkgrnd);
-      imagePlane.material.color = new THREE.Color(0xffffff);
+      newMaterial.emissive = new THREE.Color(bkgrnd);
+      newMaterial.color = new THREE.Color(0xffffff);
     }
+
+    imagePlane.material = newMaterial;
   };
 
   const onChangeSharpness = (value) => {
