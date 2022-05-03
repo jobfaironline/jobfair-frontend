@@ -9,7 +9,7 @@ import { Stage, useContextBridge } from '@react-three/drei';
 import React from 'react';
 
 export const DecorateBoothCanvas = React.forwardRef((props, ref) => {
-  const { modelItems, handleAdd } = props;
+  const { modelItems, handleAdd, renderRef } = props;
   const ContextBridge = useContextBridge(ReactReduxContext);
   const { hoverItem, selectedItem, mode } = useSelector((state) => state.decorateBooth);
 
@@ -31,6 +31,9 @@ export const DecorateBoothCanvas = React.forwardRef((props, ref) => {
       style={{
         width: '100vw',
         height: '100%'
+      }}
+      onCreated={(state) => {
+        renderRef.current = state.gl;
       }}>
       <ContextBridge>
         <CameraControls enabled={mode !== ModeConstant.DRAGGING} />
