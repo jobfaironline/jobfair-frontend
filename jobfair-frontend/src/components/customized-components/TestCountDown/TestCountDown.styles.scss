@@ -3,7 +3,6 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1rem 1rem;
-
   }
 
   .count-down-card {
@@ -14,7 +13,7 @@
     border-radius: 8px;
   }
 
-  .ant-card-actions{
+  .ant-card-actions {
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
   }
@@ -35,5 +34,3 @@
     color: white;
   }
 }
-
-

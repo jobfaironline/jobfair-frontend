@@ -74,7 +74,7 @@ const ConfirmTest = (props) => {
 };
 
 const AttendantAttemptTestContainer = (props) => {
-  const { quizId } = props;
+  const { quizId, fromUrl } = props;
   const history = useHistory();
   const [testData, setTestData] = useState();
   const [isConfirm, setIsConfirm] = useState(false);
@@ -176,6 +176,14 @@ const AttendantAttemptTestContainer = (props) => {
       notification['success']({
         message: `Submit test successfully`
       });
+      if (fromUrl) {
+        history.push(fromUrl, {
+          from: window.location.pathname,
+          applicationId: testData.applicationId,
+          cvId: testData.cvId,
+          boothJobPositionId: testData.boothJobPositionId
+        });
+      } else history.goBack();
     } catch (e) {
       notification['error']({
         message: `Something went wrong! Try again latter!`,
