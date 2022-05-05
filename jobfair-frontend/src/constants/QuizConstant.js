@@ -2,3 +2,5 @@ export const QuestionType = {
   ONE_CHOICE: 'ONE_CHOICE',
   MULTIPLE_CHOICE: 'MULTIPLE_CHOICE'
 };
+
+export const QUIZ_SAVE_INTERVAL_IN_SECOND = 60;

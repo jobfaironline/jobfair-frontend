@@ -1,6 +1,6 @@
 import './TestQuestionComponent.styles.scss';
 import { Card, Checkbox, Radio, Typography } from 'antd';
-import { QuestionType } from '../../../constants/QuestionTypeConstant';
+import { QuestionType } from '../../../constants/QuizConstant';
 import React from 'react';
 
 const { Title } = Typography;

@@ -1,17 +1,18 @@
 import './TestCountDown.styles.scss';
 import { Card, Typography } from 'antd';
+import { QUIZ_SAVE_INTERVAL_IN_SECOND } from '../../../constants/QuizConstant';
 import Countdown from 'react-countdown';
 import React, { useMemo, useRef } from 'react';
 
 const { Title } = Typography;
 const TestCountDownComponent = (props) => {
-  const { data, isConfirm, handleFinish, handleSubmit } = props;
-  const { duration, questions } = data;
-  const clockRef = useRef();
+  const { data, isConfirm, handleFinish, handleSubmit, handleSave } = props;
+  const { questions, endTime } = data;
+  const minuteInterval = useRef(0);
 
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
-      //TODO: call API when count down is complete
+      handleSubmit();
       return <Title level={3}>Out of time!!!</Title>;
     } else {
       return (
@@ -24,8 +25,21 @@ const TestCountDownComponent = (props) => {
   };
 
   const countDown = useMemo(
-    () => <Countdown date={Date.now() + duration * 60000} renderer={renderer} ref={clockRef} />,
-    [duration]
+    () => (
+      <Countdown
+        date={endTime}
+        renderer={renderer}
+        onTick={() => {
+          if (minuteInterval.current === QUIZ_SAVE_INTERVAL_IN_SECOND) {
+            handleSave();
+            minuteInterval.current = 0;
+            return;
+          }
+          minuteInterval.current += 1;
+        }}
+      />
+    ),
+    [endTime]
   );
 
   const actions = isConfirm

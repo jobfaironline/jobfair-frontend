@@ -137,6 +137,28 @@ const AttendantAttemptTestContainer = (props) => {
     setIsConfirm(false);
   };
 
+  const handleSave = async () => {
+    const answers = {};
+    const selectedChoiceIds = testData.questions
+      .map((question) => question.selected)
+      .reduce((prev, current) => {
+        prev.push(...current);
+        return prev;
+      }, []);
+    selectedChoiceIds.forEach((choiceId) => {
+      answers[choiceId] = true;
+    });
+    try {
+      await saveQuiz(testData.id, { answers });
+    } catch (e) {
+      notification['error']({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while saving data, try again later`,
+        duration: 2
+      });
+    }
+  };
+
   const handleSubmit = async () => {
     const answers = {};
     const selectedChoiceIds = testData.questions
@@ -179,6 +201,7 @@ const AttendantAttemptTestContainer = (props) => {
         isConfirm={isConfirm}
         handleFinish={handleFinish}
         handleSubmit={handleSubmit}
+        handleSave={handleSave}
       />
       {isConfirm ? (
         <ConfirmTest testData={testData} handleReturn={handleReturn} handleSubmit={handleSubmit} />
