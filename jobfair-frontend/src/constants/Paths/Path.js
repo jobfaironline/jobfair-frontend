@@ -36,7 +36,7 @@ export const PATH_ATTENDANT = {
   APPLICATION_MANAGEMENT_PAGE: '/attendant/application-management',
   JOB_FAIR_DETAIL_PAGE: '/attendant/job-fair-detail',
   RESUME_DETAIL_PAGE: '/attendant/resume-detail',
-  ATTEMPT_TEST_PAGE: '/attendant/attempt-test'
+  ATTEMPT_TEST_PAGE: '/attendant/attempt-test/:quizId'
 };
 export const PATH_COMPANY_EMPLOYEE = {
   COMPANY_PROFILE_PAGE: '/employee/company-profile',

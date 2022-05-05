@@ -1,13 +1,12 @@
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import AttendantAttemptTestContainer from '../../containers/AttendantAttemptTest/AttendantAttemptTest.container';
 import React from 'react';
 
 const AttendantAttemptTestPage = () => {
-  const location = useLocation();
-  const testId = location.state?.testId;
+  const { quizId } = useParams();
   return (
     <div className='page padding-bottom-page'>
-      <AttendantAttemptTestContainer testId={testId} />
+      <AttendantAttemptTestContainer quizId={quizId} />
     </div>
   );
 };

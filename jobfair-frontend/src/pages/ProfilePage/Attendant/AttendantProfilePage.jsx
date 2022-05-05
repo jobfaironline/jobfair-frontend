@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import { PATH_ATTENDANT } from '../../../constants/Paths/Path';
-import { useHistory } from 'react-router-dom';
+import { generatePath, useHistory } from 'react-router-dom';
 import AttendantProfileFormContainer from '../../../containers/forms/AttendantProfileForm/AttendantProfileForm.container';
 import React from 'react';
 
@@ -9,7 +9,13 @@ const AttendantProfile = () => {
 
   return (
     <div className='page'>
-      <Button onClick={() => history.push(PATH_ATTENDANT.ATTEMPT_TEST_PAGE, { testId: 'acb123xyz' })}>
+      <Button
+        onClick={() => {
+          const url = generatePath(PATH_ATTENDANT.ATTEMPT_TEST_PAGE, {
+            quizId: `38b4ed45-a092-4585-8a94-b6cf7a8cc688`
+          });
+          history.push(url);
+        }}>
         Attempt test
       </Button>
       <AttendantProfileFormContainer />

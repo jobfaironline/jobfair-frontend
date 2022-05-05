@@ -1,5 +1,6 @@
 import './TestQuestionComponent.styles.scss';
 import { Card, Checkbox, Radio, Typography } from 'antd';
+import { QuestionType } from '../../../constants/QuestionTypeConstant';
 import React from 'react';
 
 const { Title } = Typography;
@@ -11,12 +12,14 @@ const TestQuestionComponent = (props) => {
     <div>
       {choicesList.map(({ id, content, order }) => (
         <div key={id} className={'answer'}>
-          <Checkbox
-            checked={selected.includes(id)}
-            onChange={(e) => handleSelect(questionId, e.target.value, e.target.checked, true)}
-            value={id}>
-            {`${order}. ${content}`}
-          </Checkbox>
+          <Checkbox.Group defaultValue={selected}>
+            <Checkbox
+              checked={selected.includes(id)}
+              onChange={(e) => handleSelect(questionId, e.target.value, e.target.checked, true)}
+              value={id}>
+              {`${order}. ${content}`}
+            </Checkbox>
+          </Checkbox.Group>
         </div>
       ))}
     </div>
@@ -39,8 +42,8 @@ const TestQuestionComponent = (props) => {
   return (
     <Card id={questionId} className={'test-question-component'}>
       <Title level={4}>{`${order}. ${title}`}</Title>
-      {type === '0' ? 'Choose 1 answer' : 'Choose multiple answers'}
-      {type === '0' ? (
+      {type === QuestionType.ONE_CHOICE ? 'Choose 1 answer' : 'Choose multiple answers'}
+      {type === QuestionType.ONE_CHOICE ? (
         <OneAnswerChoiceList choicesList={choicesList} />
       ) : (
         <MultipleAnswerChoiceList choicesList={choicesList} />
