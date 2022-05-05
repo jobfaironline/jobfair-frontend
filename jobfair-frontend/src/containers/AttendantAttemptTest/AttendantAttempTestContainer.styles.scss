@@ -1,0 +1,23 @@
+.attendant-attempt-test-container {
+  padding-top: 2rem;
+  margin: 0 20rem;
+
+  .test-description {
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .button-container {
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+
+    .finish {
+      margin-left: auto;
+      background-color: #1890ff;
+      color: white;
+    }
+  }
+
+
+}
