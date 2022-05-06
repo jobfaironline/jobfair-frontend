@@ -20,6 +20,8 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import FAQPage from '../pages/FAQPage/FAQPage';
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage';
 import HomePage from '../pages/HomePage';
+import InterviewLandingPage from '../pages/InterviewLandingPage/InterviewLandingPage';
+import InterviewRoomPage from '../pages/InterviewRoomPage/InterviewRoomPage';
 import JobFairAssignmentPage from '../pages/JobFairAssignmentPage/JobFairAssignmentPage';
 import JobFairGridManagerPage from '../pages/JobFairListPage/JobFairGridManagerPage';
 import JobFairListPage from '../pages/JobFairListPage/JobFairListPage';
@@ -138,6 +140,18 @@ const AppRouter = () => {
           key={PATH_ATTENDANT.RESUME_DETAIL_PAGE}
           component={() => <ResumeDetailPage />}
           path={PATH_ATTENDANT.RESUME_DETAIL_PAGE}
+          exact
+        />
+        <AttendantRouter
+          key={PATH.INTERVIEW_LANDING_PAGE}
+          component={() => <InterviewLandingPage />}
+          path={PATH.INTERVIEW_LANDING_PAGE}
+          exact
+        />
+        <AttendantRouter
+          key={PATH_ATTENDANT.INTERVIEW_ROOM_PAGE}
+          component={() => <InterviewRoomPage />}
+          path={PATH_ATTENDANT.INTERVIEW_ROOM_PAGE}
           exact
         />
         <CompanyEmployeeRouter

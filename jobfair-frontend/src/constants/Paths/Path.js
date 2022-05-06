@@ -21,7 +21,8 @@ export const PATH = {
   PUBLICIZED_JOB_FAIR_LIST_PAGE: '/job-fair-list',
   HOME_PAGE: '/home',
   FINAL_ERROR_PAGE: '/error-500',
-  ABOUT_APPLICATION_PAGE: '/about-application'
+  ABOUT_APPLICATION_PAGE: '/about-application',
+  INTERVIEW_LANDING_PAGE: '/interview-landing'
 };
 export const PATH_ADMIN = {
   JOB_FAIR_LIST_PAGE: '/admin/job-fair-list',
@@ -35,7 +36,8 @@ export const PATH_ATTENDANT = {
   JOB_FAIR_LIST_PAGE: '/attendant/job-fair-list',
   APPLICATION_MANAGEMENT_PAGE: '/attendant/application-management',
   JOB_FAIR_DETAIL_PAGE: '/attendant/job-fair-detail',
-  RESUME_DETAIL_PAGE: '/attendant/resume-detail'
+  RESUME_DETAIL_PAGE: '/attendant/resume-detail',
+  INTERVIEW_ROOM_PAGE: '/attendant/interview/:roomId'
 };
 export const PATH_COMPANY_EMPLOYEE = {
   COMPANY_PROFILE_PAGE: '/employee/company-profile',

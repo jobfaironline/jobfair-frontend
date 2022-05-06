@@ -53,3 +53,22 @@
     margin-top: 3%;
   }
 }
+
+.chat-box-minimize {
+  height: 50px !important;
+  min-width: 300px;
+  background-color: #fff;
+  position: absolute;
+  bottom: 0;
+  right: 50px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: 1px solid #e4e4e4;
+
+  .iconHeader {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    margin-right: 10px
+  }
+}
