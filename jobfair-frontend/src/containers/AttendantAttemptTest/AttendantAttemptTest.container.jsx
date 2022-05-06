@@ -1,77 +1,15 @@
 import './AttendantAttempTestContainer.styles.scss';
-import { Button, Card, Checkbox, List, Typography, notification } from 'antd';
+import { Card, Typography, notification } from 'antd';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { getInProgressQuiz, saveQuiz, submitQuiz } from '../../services/jobhub-api/QuizControllerService';
 import { useHistory } from 'react-router-dom';
+import ConfirmTestComponent from '../../components/customized-components/ConfirmTest/ConfirmTest.component';
+import DoTestComponent from '../../components/customized-components/DoTest/DoTest.component';
 import React, { useEffect, useState } from 'react';
 import TestCountDownComponent from '../../components/customized-components/TestCountDown/TestCountDown.component';
-import TestQuestionComponent from '../../components/customized-components/TestQuestion/TestQuestion.component';
 
 const { Text, Title } = Typography;
 const { Meta } = Card;
-
-const DoTest = (props) => {
-  const { handleSelect, testData, handleFinish } = props;
-  return (
-    <div>
-      <List
-        grid={{
-          gutter: 20,
-          column: 1
-        }}
-        dataSource={testData.questions}
-        renderItem={(item) => (
-          <List.Item>
-            <TestQuestionComponent data={item} handleSelect={handleSelect} />
-          </List.Item>
-        )}
-      />
-      <div className={'button-container'}>
-        <Button className={'button submit'} onClick={handleFinish}>
-          Finish
-        </Button>
-      </div>
-    </div>
-  );
-};
-
-const ConfirmTest = (props) => {
-  const { testData, handleSubmit, handleReturn } = props;
-  return (
-    <div>
-      <List
-        grid={{
-          gutter: 20,
-          column: 1
-        }}
-        dataSource={testData.questions}
-        renderItem={(item) => {
-          const { order, title, id: questionId, selected } = item;
-          return (
-            <List.Item>
-              <Card key={questionId} id={item.id} className={'test-question-component'}>
-                <div style={{ display: 'flex' }}>
-                  <Title level={4}>{`${order}. ${title}`}</Title>
-                  <Checkbox style={{ marginLeft: 'auto', minWidth: '150px' }} checked={selected.length > 0}>
-                    Has answered
-                  </Checkbox>
-                </div>
-              </Card>
-            </List.Item>
-          );
-        }}
-      />
-      <div className={'button-container'}>
-        <Button className={'button submit'} onClick={handleReturn}>
-          Return to test
-        </Button>
-        <Button className={'button submit'} onClick={handleSubmit}>
-          Submit
-        </Button>
-      </div>
-    </div>
-  );
-};
 
 const AttendantAttemptTestContainer = (props) => {
   const { quizId, fromUrl } = props;
@@ -213,9 +151,9 @@ const AttendantAttemptTestContainer = (props) => {
         handleSave={handleSave}
       />
       {isConfirm ? (
-        <ConfirmTest testData={testData} handleReturn={handleReturn} handleSubmit={handleSubmit} />
+        <ConfirmTestComponent testData={testData} handleReturn={handleReturn} handleSubmit={handleSubmit} />
       ) : (
-        <DoTest handleSelect={handleSelect} testData={testData} handleFinish={handleFinish} />
+        <DoTestComponent handleSelect={handleSelect} testData={testData} handleFinish={handleFinish} />
       )}
     </div>
   );
