@@ -1,12 +1,16 @@
 import { getAgoraRTCToken } from '../../../services/jobhub-api/AgoraTokenControllerService';
 import { useSelector } from 'react-redux';
+import AgoraRTC from 'agora-rtc-react';
 import InterviewVideoFieldComponent from './InterviewVideoField.component';
 import React, { useEffect, useState } from 'react';
 
 const { REACT_APP_AGORA_APP_ID } = process.env;
 
-const InterviewVideoFieldContainer = (props) => {
-  const { audioReady, audioTrack, cameraReady, cameraTrack } = props;
+const InterviewVideoFieldContainer = ({ audioTrackRef, cameraTrackRef }) => {
+  const [audioReady, setAudioReady] = useState(false);
+  const [audioTrack, setAudioTrack] = useState(null);
+  const [cameraReady, setCameraReady] = useState(false);
+  const [cameraTrack, setCameraTrack] = useState(null);
   const [isRTCClientReady, setIsRTCClientReady] = useState(false);
   const [users, setUsers] = useState([]);
   const [muteState, setMuteState] = useState({ video: false, audio: false });
@@ -53,6 +57,19 @@ const InterviewVideoFieldContainer = (props) => {
     if (isRTCClientReady && audioReady && audioTrack) await rtcClient.publish(audioTrack);
     if (isRTCClientReady && cameraReady && cameraTrack) await rtcClient.publish(cameraTrack);
   }, [cameraReady, audioReady, isRTCClientReady]);
+
+  useEffect(() => {
+    AgoraRTC.createMicrophoneAudioTrack().then((track) => {
+      audioTrackRef.current = track;
+      setAudioTrack(track);
+      setAudioReady(true);
+    });
+    AgoraRTC.createCameraVideoTrack().then((track) => {
+      cameraTrackRef.current = track;
+      setCameraTrack(track);
+      setCameraReady(true);
+    });
+  }, []);
 
   const handleMute = async (type) => {
     if (type === 'audio') {

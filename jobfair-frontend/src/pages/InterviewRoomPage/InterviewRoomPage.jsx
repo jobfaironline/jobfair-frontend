@@ -46,13 +46,9 @@ const InterviewRoomPage = () => {
     rtm.removeAllListeners();
   };
 
-  const communicationProps = {
-    audioTrackRef,
-    cameraTrackRef
-  };
   return (
     <div className='page'>
-      <InterviewRoomContainer communicationProps={communicationProps} />
+      <InterviewRoomContainer audioTrackRef={audioTrackRef} cameraTrackRef={cameraTrackRef} />
     </div>
   );
 };

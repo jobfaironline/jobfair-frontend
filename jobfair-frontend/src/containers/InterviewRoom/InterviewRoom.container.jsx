@@ -1,21 +1,16 @@
 import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
 import InterviewChatFieldContainer from '../../components/Agora/ChatBox/InterviewChatField.container';
+import InterviewVideoFieldContainer from '../../components/Agora/VideoCall/InterviewVideoField.container';
 import React from 'react';
-import VideoCallContainer from '../../components/Agora/VideoCall/VideoCall.container';
 
 const InterviewRoomContainer = (props) => {
-  const { communicationProps } = props;
+  const { audioTrackRef, cameraTrackRef } = props;
 
   return (
     <SideBarComponent
       rightSide={
         <>
-          <VideoCallContainer
-            audioReady={audioReady}
-            audioTrack={audioTrack}
-            cameraReady={cameraReady}
-            cameraTrack={cameraTrack}
-          />
+          <InterviewVideoFieldContainer audioTrackRef={audioTrackRef} cameraTrackRef={cameraTrackRef} />
         </>
       }
       leftSide={<InterviewChatFieldContainer />}
