@@ -17,3 +17,12 @@ export const CustomDateFormat = 'DD/MM/YYYY HH:mm';
 export const MinuteFormat = 'HH:mm';
 
 export const MinimumDateOfBirth = '01 Jan 2004'; //18 years old
+
+export const TestStatus = {
+  PASS: 'PASS',
+  FAIL: 'FAIL',
+  IN_PROGRESS: 'IN_PROGRESS',
+  NOT_TAKEN: 'NOT_TAKEN',
+  NO_TEST: 'NO_TEST',
+  DONE: 'DONE'
+};

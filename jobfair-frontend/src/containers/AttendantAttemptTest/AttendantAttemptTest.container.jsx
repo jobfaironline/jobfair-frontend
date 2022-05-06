@@ -181,7 +181,8 @@ const AttendantAttemptTestContainer = (props) => {
           from: window.location.pathname,
           applicationId: testData.applicationId,
           cvId: testData.cvId,
-          boothJobPositionId: testData.boothJobPositionId
+          boothJobPositionId: testData.boothJobPositionId,
+          quizId
         });
       } else history.goBack();
     } catch (e) {

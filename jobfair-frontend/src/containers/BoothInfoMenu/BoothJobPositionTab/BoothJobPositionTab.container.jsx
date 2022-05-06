@@ -6,6 +6,7 @@ import { DragAndDropResumeComponent } from '../../../components/customized-compo
 import { Modal, notification } from 'antd';
 import { PATH_ATTENDANT } from '../../../constants/Paths/Path';
 import { RemoveResumeComponent } from '../../../components/customized-components/DragAndDropResume/RemoveResume.component';
+import { TestStatus } from '../../../constants/ApplicationConst';
 import { createQuiz } from '../../../services/jobhub-api/QuizControllerService';
 import {
   draftApplication,
@@ -20,7 +21,7 @@ import JobPositionDetailModalComponent from '../../../components/customized-comp
 export const BoothJobPositionTabContainer = (props) => {
   const { jobPositions, openInventory } = props;
   const location = useLocation();
-  const { boothJobPositionId, cvId, applicationId } = location.state ?? {};
+  const { boothJobPositionId, cvId, applicationId, quizId } = location.state ?? {};
   const history = useHistory();
   const inventory = useSelector((state) => state.inventory.data);
   const [selectedJobPosition, setSelectedJobPosition] = useState();
@@ -102,9 +103,14 @@ export const BoothJobPositionTabContainer = (props) => {
       boothJobPositionId: selectedJobPosition.id
     };
     try {
+      if (applicationData) {
+        if (applicationData.testStatus === TestStatus.PASS) await submitApplication(applicationData.id);
+        return;
+      }
+
       const response = await draftApplication(body);
       const data = response.data;
-      if (!applicationData && selectedJobPosition.isHaveTest) {
+      if (selectedJobPosition.isHaveTest) {
         const result = await confirmMakeTest();
         if (result) {
           const quizData = (await createQuiz(data.id)).data;
@@ -117,6 +123,7 @@ export const BoothJobPositionTabContainer = (props) => {
       }
 
       await submitApplication(data.id);
+      setApplicationData(undefined);
       notification['success']({
         message: 'Your application has been submitted'
       });
@@ -153,7 +160,11 @@ export const BoothJobPositionTabContainer = (props) => {
           ) : (
             <>
               <RemoveResumeComponent selectedResume={selectedResume} onRemoveResume={onRemoveResume} />
-              <ConfirmSubmitResumeFormComponent onFinish={onFinishSubmitForm} applicationData={applicationData} />
+              <ConfirmSubmitResumeFormComponent
+                onFinish={onFinishSubmitForm}
+                applicationData={applicationData}
+                quizId={quizId}
+              />
             </>
           )}
         </div>
