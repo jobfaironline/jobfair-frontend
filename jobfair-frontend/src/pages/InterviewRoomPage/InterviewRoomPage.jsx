@@ -1,4 +1,3 @@
-import { GeckoClient } from '../../services/gecko-client/gecko-client';
 import { agoraAction } from '../../redux-flow/agora/agora-slice';
 import { createClient } from 'agora-rtc-react';
 import { useDispatch } from 'react-redux';
@@ -17,10 +16,6 @@ const { REACT_APP_AGORA_APP_ID } = process.env;
 const useClient = createClient(config);
 const rtm = new RTMClient();
 rtm.init(REACT_APP_AGORA_APP_ID);
-const geckoClient = new GeckoClient();
-window.addEventListener('beforeunload', () => {
-  geckoClient.close();
-});
 
 const InterviewRoomPage = () => {
   const { roomId } = useParams();
@@ -33,7 +28,10 @@ const InterviewRoomPage = () => {
   dispatch(agoraAction.setRTCClient(useClient()));
   dispatch(agoraAction.setChannelId(channelId));
 
-  useEffect(() => () => {
+  useEffect(() => initializeRoomChat(), []);
+
+  const initializeRoomChat = () => {
+    //close all audio and camera tracks
     audioTrackRef.current?.close();
     cameraTrackRef.current?.close();
 
@@ -46,7 +44,7 @@ const InterviewRoomPage = () => {
 
     rtm.logout();
     rtm.removeAllListeners();
-  });
+  };
 
   const communicationProps = {
     audioTrackRef,
