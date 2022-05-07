@@ -1,8 +1,8 @@
 import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
 import AgoraRTC from 'agora-rtc-react';
-import InterviewChatFieldContainer from '../../components/Agora/ChatBox/InterviewChatField.container';
+import ChatBoxContainer from '../Agora/ChatBox/ChatBox.container';
 import React, { useEffect, useState } from 'react';
-import VideoCallContainer from '../../components/Agora/VideoCall/VideoCall.container';
+import VideoCallContainer from '../Agora/VideoCall/VideoCall.container';
 
 const InterviewRoomContainer = (props) => {
   const { audioTrackRef, cameraTrackRef } = props;
@@ -36,7 +36,7 @@ const InterviewRoomContainer = (props) => {
           />
         </>
       }
-      leftSide={<InterviewChatFieldContainer />}
+      leftSide={<ChatBoxContainer type={'INTERVIEW_ROOM'} />}
       ratio={450 / 1728}
       isOrganizeJobFair={false}
     />

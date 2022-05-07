@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import './VideoCall.styles.scss';
+import '../../../components/Agora/VideoCall/VideoCall.styles.scss';
 import { getAgoraRTCToken } from '../../../services/jobhub-api/AgoraTokenControllerService';
-import VideoCallComponent from './VideoCall.component';
+import VideoCallComponent from '../../../components/Agora/VideoCall/VideoCall.component';
 
 const { REACT_APP_AGORA_APP_ID } = process.env;
 const VideoCallContainer = (props) => {

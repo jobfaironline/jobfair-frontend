@@ -1,9 +1,10 @@
-import './ChatBox.styles.scss';
+import '../../../components/Agora/ChatBox/ChatBox.styles.scss';
 import { Form } from 'antd';
 import { getAgoraRTMToken } from '../../../services/jobhub-api/AgoraTokenControllerService';
 import { useSelector } from 'react-redux';
 import AgoraRTC from 'agora-rtc-react';
-import ChatBoxComponent from './ChatBox.component';
+import ChatBoxComponent from '../../../components/Agora/ChatBox/ChatBox.component';
+import InterviewChatFieldComponent from '../../../components/Agora/InterviewChatField/InterviewChatField.component';
 import React, { useEffect, useState } from 'react';
 
 class Message {
@@ -15,7 +16,7 @@ class Message {
 }
 
 const ChatBoxContainer = (props) => {
-  const { type, audioTrackRef, cameraTrackRef } = props;
+  const { audioTrackRef, cameraTrackRef, type } = props;
   const [audioReady, setAudioReady] = useState(false);
   const [audioTrack, setAudioTrack] = useState(null);
   const [cameraReady, setCameraReady] = useState(false);
@@ -103,19 +104,30 @@ const ChatBoxContainer = (props) => {
     });
   }, []);
 
-  return (
-    <ChatBoxComponent
-      isShowChatBox={isShowChatBox}
-      setIsShowChatBox={setIsShowChatBox}
-      messageList={messageList}
-      form={form}
-      onSubmit={onSubmit}
-      isChatReady={isChatReady}
-      audioReady={audioReady}
-      audioTrack={audioTrack}
-      cameraReady={cameraReady}
-      cameraTrack={cameraTrack}
-    />
-  );
+  if (type === 'INTERVIEW_ROOM') {
+    return (
+      <InterviewChatFieldComponent
+        messageList={messageList}
+        form={form}
+        onSubmit={onSubmit}
+        isChatReady={isChatReady}
+      />
+    );
+  } else {
+    return (
+      <ChatBoxComponent
+        isShowChatBox={isShowChatBox}
+        setIsShowChatBox={setIsShowChatBox}
+        messageList={messageList}
+        form={form}
+        onSubmit={onSubmit}
+        isChatReady={isChatReady}
+        audioReady={audioReady}
+        audioTrack={audioTrack}
+        cameraReady={cameraReady}
+        cameraTrack={cameraTrack}
+      />
+    );
+  }
 };
 export default ChatBoxContainer;

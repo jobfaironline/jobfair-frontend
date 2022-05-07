@@ -3,7 +3,7 @@ import { BoothInfoMenuContainer } from '../../BoothInfoMenu/BoothInfoMenu.contai
 import { ControlTipsModalContainer } from '../../ControlTipModal/ControlTipsModal.container';
 import { InventoryContainer } from '../../Inventory/Inventory.container';
 import { JobFairBoothContainer } from './JobFairBooth.container';
-import ChatBoxContainer from '../../../components/Agora/ChatBox/ChatBox.container';
+import ChatBoxContainer from '../../Agora/ChatBox/ChatBox.container';
 import React, { useState } from 'react';
 
 export const AttendantJobFairBoothViewContainer = (props) => {

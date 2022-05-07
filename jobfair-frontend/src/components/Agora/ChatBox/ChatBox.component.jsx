@@ -4,7 +4,7 @@ import { REQUIRED_VALIDATOR } from '../../../validate/GeneralValidation';
 import ChatField from '../ChatField/ChatField.component';
 import React from 'react';
 import SendIcon from '@mui/icons-material/Send';
-import VideoCallContainer from '../VideoCall/VideoCall.container';
+import VideoCallContainer from '../../../containers/Agora/VideoCall/VideoCall.container';
 
 const ChatBoxComponent = (props) => {
   const {
