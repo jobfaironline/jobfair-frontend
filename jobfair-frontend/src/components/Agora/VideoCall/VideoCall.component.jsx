@@ -10,7 +10,7 @@ import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 
 const VideoCallComponent = (props) => {
-  const { cameraReady, muteState, users, audioTrack, cameraTrack, handleMute } = props;
+  const { cameraReady, muteState, users, audioTrack, cameraTrack, handleMute, type } = props;
   return (
     <div className={'video-call'}>
       <div className={'topVideoCall'}>
@@ -19,6 +19,7 @@ const VideoCallComponent = (props) => {
             <MailOutlined /> 90
           </Tag>
         </div>
+        {/*TODO: the 'type' props will decide the style of component*/}
         <div className={'videoCall'}>
           {cameraReady && !muteState.video ? (
             <AgoraVideoPlayer style={{ height: '95%', width: '95%' }} className='vid' videoTrack={cameraTrack} />
