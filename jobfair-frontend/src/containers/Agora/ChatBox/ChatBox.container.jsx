@@ -23,6 +23,7 @@ const ChatBoxContainer = (props) => {
   const [cameraTrack, setCameraTrack] = useState(null);
   const [messageList, setMessageList] = useState([]);
   const [isChatReady, setIsChatReady] = useState(false);
+  const [text, setText] = useState('');
   const rtm = useSelector((state) => state.agora.rtmClient);
   const userId = useSelector((state) => state.authentication.user.userId);
   const channelId = useSelector((state) => state.agora.channelId);
@@ -87,9 +88,9 @@ const ChatBoxContainer = (props) => {
 
   const [form] = Form.useForm();
   const onSubmit = (values) => {
-    if (values.message.length > 0) {
-      rtm.sendChannelMessage(values.message, channelId);
-      setMessageList((prevState) => [...prevState, new Message(userId, values.message, true)]);
+    if (values !== undefined && values.length > 0) {
+      rtm.sendChannelMessage(values, channelId);
+      setMessageList((prevState) => [...prevState, new Message(userId, values, true)]);
       form.resetFields();
     }
   };
@@ -108,27 +109,33 @@ const ChatBoxContainer = (props) => {
 
   if (type === 'INTERVIEW_ROOM') {
     return (
-      <InterviewChatFieldComponent
-        messageList={messageList}
-        form={form}
-        onSubmit={onSubmit}
-        isChatReady={isChatReady}
-      />
+      <>
+        <InterviewChatFieldComponent
+          messageList={messageList}
+          form={form}
+          onEnter={onSubmit}
+          isChatReady={isChatReady}
+          text={text}
+          setText={setText}
+        />
+      </>
     );
   } else {
     return (
-      <ChatBoxComponent
-        isShowChatBox={isShowChatBox}
-        setIsShowChatBox={setIsShowChatBox}
-        messageList={messageList}
-        form={form}
-        onSubmit={onSubmit}
-        isChatReady={isChatReady}
-        audioReady={audioReady}
-        audioTrack={audioTrack}
-        cameraReady={cameraReady}
-        cameraTrack={cameraTrack}
-      />
+      <>
+        <ChatBoxComponent
+          isShowChatBox={isShowChatBox}
+          setIsShowChatBox={setIsShowChatBox}
+          messageList={messageList}
+          form={form}
+          onSubmit={onSubmit}
+          isChatReady={isChatReady}
+          audioReady={audioReady}
+          audioTrack={audioTrack}
+          cameraReady={cameraReady}
+          cameraTrack={cameraTrack}
+        />
+      </>
     );
   }
 };
