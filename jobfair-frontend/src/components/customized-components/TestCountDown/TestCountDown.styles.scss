@@ -1,0 +1,36 @@
+.test-count-down {
+  .question-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem 1rem;
+  }
+
+  .count-down-card {
+    position: fixed;
+    top: 160px;
+    right: 50px;
+    border: 2px solid #c5c5c5;
+    border-radius: 8px;
+  }
+
+  .ant-card-actions {
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .question-box {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #c5c5c5;
+    border-radius: 4px;
+  }
+
+  .answered {
+    background-color: #1890ff;
+    color: white;
+  }
+}

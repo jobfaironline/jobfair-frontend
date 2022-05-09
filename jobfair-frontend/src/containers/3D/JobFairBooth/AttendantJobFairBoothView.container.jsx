@@ -3,11 +3,14 @@ import { BoothInfoMenuContainer } from '../../BoothInfoMenu/BoothInfoMenu.contai
 import { ControlTipsModalContainer } from '../../ControlTipModal/ControlTipsModal.container';
 import { InventoryContainer } from '../../Inventory/Inventory.container';
 import { JobFairBoothContainer } from './JobFairBooth.container';
+import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import ChatBoxContainer from '../../Agora/ChatBox/ChatBox.container';
-import React, { useState } from 'react';
 
 export const AttendantJobFairBoothViewContainer = (props) => {
   const { companyBoothId, geckoClientRef, communicationProps } = props;
+  const location = useLocation();
+  const { applicationId } = location.state ?? {};
   const [tabState, setTabState] = useState({
     isShow: false,
     activeKey: '0'
@@ -17,6 +20,11 @@ export const AttendantJobFairBoothViewContainer = (props) => {
   };
 
   const [inventoryVisible, setInventoryVisible] = useState(false);
+
+  useEffect(() => {
+    if (applicationId) handleOpenDetail(true, '1');
+  }, []);
+
   const openInventory = (status) => {
     if (status !== undefined) setInventoryVisible(status);
     else setInventoryVisible((prevState) => !prevState);

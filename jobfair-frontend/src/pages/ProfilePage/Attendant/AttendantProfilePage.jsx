@@ -2,7 +2,7 @@ import AttendantProfileFormContainer from '../../../containers/forms/AttendantPr
 import React from 'react';
 
 const AttendantProfile = () => (
-  <div>
+  <div className='page'>
     <AttendantProfileFormContainer />
   </div>
 );
