@@ -87,9 +87,11 @@ const ChatBoxContainer = (props) => {
 
   const [form] = Form.useForm();
   const onSubmit = (values) => {
-    rtm.sendChannelMessage(values.message, channelId);
-    setMessageList((prevState) => [...prevState, new Message(userId, values.message, true)]);
-    form.resetFields();
+    if (values.message.length > 0) {
+      rtm.sendChannelMessage(values.message, channelId);
+      setMessageList((prevState) => [...prevState, new Message(userId, values.message, true)]);
+      form.resetFields();
+    }
   };
   useEffect(() => {
     AgoraRTC.createMicrophoneAudioTrack().then((track) => {

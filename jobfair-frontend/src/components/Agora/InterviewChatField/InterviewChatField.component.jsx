@@ -1,8 +1,9 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Input } from 'antd';
 import { REQUIRED_VALIDATOR } from '../../../validate/GeneralValidation';
+import { faImage, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import ChatField from '../ChatField/ChatField.component';
 import React from 'react';
-import SendIcon from '@mui/icons-material/Send';
 
 const InterviewChatFieldComponent = (props) => {
   const { messageList, form, onSubmit, isChatReady } = props;
@@ -15,7 +16,12 @@ const InterviewChatFieldComponent = (props) => {
             autoFocus
             style={{ borderRadius: '5rem 5rem 5rem 5rem' }}
             placeholder='Type message...'
-            suffix={<SendIcon onClick={() => onSubmit(form.getFieldsValue(true))} />}
+            suffix={
+              <div>
+                <FontAwesomeIcon icon={faPaperPlane} onClick={() => onSubmit(form.getFieldsValue(true))} />
+                <FontAwesomeIcon icon={faImage} />
+              </div>
+            }
           />
         </Form.Item>
       </Form>
