@@ -1,16 +1,19 @@
 import { AgoraVideoPlayer } from 'agora-rtc-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MailOutlined } from '@ant-design/icons';
-import { Tag } from 'antd';
-import MicIcon from '@mui/icons-material/Mic';
-import MicOffIcon from '@mui/icons-material/MicOff';
+import { Tag, Tooltip } from 'antd';
+import {
+  faMicrophone,
+  faMicrophoneSlash,
+  faPhone,
+  faVideoCamera,
+  faVideoSlash
+} from '@fortawesome/free-solid-svg-icons';
 import NoPhotographyIcon from '@mui/icons-material/NoPhotography';
-import PowerOffIcon from '@mui/icons-material/PowerOff';
 import React from 'react';
-import VideocamIcon from '@mui/icons-material/Videocam';
-import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 
 const VideoCallComponent = (props) => {
-  const { cameraReady, muteState, users, audioTrack, cameraTrack, handleMute, type } = props;
+  const { cameraReady, muteState, users, audioTrack, cameraTrack, handleMute, type, handleClose } = props;
   return (
     <div className={'video-call'}>
       <div className={'topVideoCall'}>
@@ -54,20 +57,39 @@ const VideoCallComponent = (props) => {
           />
         )}
         <div className={'videoIcon'}>
-          {audioTrack ? (
-            <div className={muteState.audio ? 'on' : ''} onClick={() => handleMute('audio')}>
-              {!muteState.audio ? <MicIcon /> : <MicOffIcon />}
-            </div>
-          ) : (
-            <PowerOffIcon />
-          )}
           {cameraTrack ? (
             <div className={muteState.video ? 'on' : ''} onClick={() => handleMute('video')}>
-              {!muteState.video ? <VideocamIcon /> : <VideocamOffIcon />}
+              {!muteState.video ? (
+                <Tooltip title='Turn off camera'>
+                  <FontAwesomeIcon icon={faVideoCamera} />
+                </Tooltip>
+              ) : (
+                <Tooltip title='Turn on camera'>
+                  <FontAwesomeIcon icon={faVideoSlash} />
+                </Tooltip>
+              )}
             </div>
           ) : (
             <NoPhotographyIcon />
           )}
+          {audioTrack ? (
+            <div className={muteState.audio ? 'on' : ''} onClick={() => handleMute('audio')}>
+              {!muteState.audio ? (
+                <Tooltip title='Turn off microphone'>
+                  <FontAwesomeIcon icon={faMicrophone} />
+                </Tooltip>
+              ) : (
+                <Tooltip title='Turn on microphone'>
+                  <FontAwesomeIcon icon={faMicrophoneSlash} />
+                </Tooltip>
+              )}
+            </div>
+          ) : null}
+          <div className={'close'} onClick={handleClose}>
+            <Tooltip title='Leave call'>
+              <FontAwesomeIcon icon={faPhone} />
+            </Tooltip>
+          </div>
         </div>
       </div>
     </div>

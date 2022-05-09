@@ -1,24 +1,15 @@
-import { Form, Input } from 'antd';
-import { REQUIRED_VALIDATOR } from '../../../validate/GeneralValidation';
 import ChatField from '../ChatField/ChatField.component';
+import InputEmoji from 'react-input-emoji';
 import React from 'react';
-import SendIcon from '@mui/icons-material/Send';
 
 const InterviewChatFieldComponent = (props) => {
-  const { messageList, form, onSubmit, isChatReady } = props;
+  const { messageList, isChatReady, text, onEnter } = props;
   return (
     <>
       <ChatField messageList={messageList} />
-      <Form form={form} onFinish={onSubmit} disabled={!isChatReady}>
-        <Form.Item name='message' rules={[REQUIRED_VALIDATOR('Message')]}>
-          <Input
-            autoFocus
-            style={{ borderRadius: '5rem 5rem 5rem 5rem' }}
-            placeholder='Type message...'
-            suffix={<SendIcon onClick={() => onSubmit(form.getFieldsValue(true))} />}
-          />
-        </Form.Item>
-      </Form>
+      <div style={{ marginTop: '40rem', display: !isChatReady ? 'none' : '' }}>
+        <InputEmoji value={text} cleanOnEnter onEnter={onEnter} placeholder='Type a message' />
+      </div>
     </>
   );
 };
