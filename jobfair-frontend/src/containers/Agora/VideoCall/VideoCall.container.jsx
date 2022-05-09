@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import '../../../components/Agora/VideoCall/VideoCall.styles.scss';
+import { PATH } from '../../../constants/Paths/Path';
 import { getAgoraRTCToken } from '../../../services/jobhub-api/AgoraTokenControllerService';
+import { notification } from 'antd';
+import { useHistory } from 'react-router-dom';
 import VideoCallComponent from '../../../components/Agora/VideoCall/VideoCall.component';
 
 const { REACT_APP_AGORA_APP_ID } = process.env;
 const VideoCallContainer = (props) => {
+  const history = useHistory();
   const { audioReady, audioTrack, cameraReady, cameraTrack, type } = props;
   const [isRTCClientReady, setIsRTCClientReady] = useState(false);
   const [users, setUsers] = useState([]);
@@ -64,6 +68,13 @@ const VideoCallContainer = (props) => {
       setMuteState((ps) => ({ ...ps, video: !ps.video }));
     }
   };
+  const handleClose = async () => {
+    await rtcClient.leave();
+    notification.success({
+      description: 'You have left the channel'
+    });
+    history.push(PATH.INTERVIEW_LANDING_PAGE);
+  };
   return (
     <VideoCallComponent
       cameraReady={cameraReady}
@@ -72,6 +83,7 @@ const VideoCallContainer = (props) => {
       audioTrack={audioTrack}
       cameraTrack={cameraTrack}
       handleMute={handleMute}
+      handleClose={handleClose}
       type={type}
     />
   );
