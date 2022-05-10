@@ -1,5 +1,6 @@
 import '../3D/JobFairBooth/AttendantJobFairBoothView.styles.scss';
 import { BoothJobPositionTabContainer } from './BoothJobPositionTab/BoothJobPositionTab.container';
+import { CommentOutlined, ProfileOutlined, SettingOutlined, SolutionOutlined } from '@ant-design/icons';
 import { CompanyInformation } from '../../components/customized-components/BoothInfoMenu/BoothInformationTab/BoothInformationTab.component';
 import { Tabs, Typography, notification } from 'antd';
 import { getCompanyBoothById } from '../../services/jobhub-api/CompanyBoothControllerService';
@@ -51,16 +52,50 @@ export const BoothInfoMenuContainer = (props) => {
       <Tabs.TabPane
         tab={
           <div style={{ textAlign: 'center' }}>
-            Company <br /> Information
+            <Typography.Text strong>
+              <CommentOutlined /> Chat & Video
+            </Typography.Text>
           </div>
         }
         key='0'>
+        <div className={'aboutCompany'}>
+          <Typography variant='button'>Chat & Video call</Typography>
+        </div>
+      </Tabs.TabPane>,
+      <Tabs.TabPane
+        tab={
+          <div style={{ textAlign: 'center' }}>
+            <Typography.Text strong>
+              <ProfileOutlined /> Company profile
+            </Typography.Text>
+          </div>
+        }
+        key='1'>
         <div className={'aboutCompany'}>
           <Typography variant='button'>About Company</Typography>
           <CompanyInformation data={state.companyInformation} />
         </div>
       </Tabs.TabPane>,
-      <Tabs.TabPane tab='Job positions' key='1'>
+      <Tabs.TabPane
+        tab={
+          <div style={{ textAlign: 'center' }}>
+            <Typography.Text strong>
+              <SolutionOutlined /> Job positions
+            </Typography.Text>
+          </div>
+        }
+        key='2'>
+        <BoothJobPositionTabContainer jobPositions={state.jobPositions} openInventory={openInventory} />
+      </Tabs.TabPane>,
+      <Tabs.TabPane
+        tab={
+          <div style={{ textAlign: 'center' }}>
+            <Typography.Text strong>
+              <SettingOutlined /> Settings
+            </Typography.Text>
+          </div>
+        }
+        key='3'>
         <BoothJobPositionTabContainer jobPositions={state.jobPositions} openInventory={openInventory} />
       </Tabs.TabPane>
     ]

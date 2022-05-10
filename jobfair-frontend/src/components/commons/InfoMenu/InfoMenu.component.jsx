@@ -1,5 +1,6 @@
-import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tabs, Typography } from 'antd';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import styles from './InfoMenu.module.scss';
 
@@ -12,9 +13,13 @@ const SideBar = (props) => {
       <div className={styles.tabHeader}>
         <span>
           {isShow ? (
-            <CloseOutlined onClick={() => handleOpenDetail(false, activeKey)} className={styles.icon} />
+            <a className={styles.icon} onClick={() => handleOpenDetail(false, activeKey)}>
+              <FontAwesomeIcon icon={faArrowLeft} size={'1x'} color={'black'} />
+            </a>
           ) : (
-            <MenuOutlined onClick={() => handleOpenDetail(true, activeKey)} className={styles.icon} />
+            <a className={styles.icon} onClick={() => handleOpenDetail(true, activeKey)}>
+              <FontAwesomeIcon icon={faArrowRight} size={'1x'} color={'black'} />
+            </a>
           )}
         </span>
         <Text strong className={styles.title}>
