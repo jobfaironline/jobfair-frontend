@@ -1,0 +1,2 @@
+export const ENDPOINT_INTERVIEW_CONTROLLER = '/api/v1/interview';
+export const ENDPOINT_INTERVIEW_SCHEDULE = `${ENDPOINT_INTERVIEW_CONTROLLER}/schedule`;

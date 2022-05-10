@@ -2,7 +2,7 @@ import { Badge, Button, Card, Col, DatePicker, Form, Modal, Row, Space, TimePick
 import { CalendarOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import { DateFormat, MinuteFormat } from '../../../constants/ApplicationConst';
 import { InterviewScheduleValidation } from '../../../validate/InterviewScheduleValidation';
-import { convertToDateString, convertToDateValue, convertToUTCString, handleType } from '../../../utils/common';
+import { convertToDateString, convertToDateValue, convertToUTCString } from '../../../utils/common';
 import React from 'react';
 import TextArea from 'antd/es/input/TextArea';
 import moment from 'moment';
@@ -11,7 +11,7 @@ const InterviewScheduleModalRequestChangeComponent = (props) => {
   const { data, visible, onCancel, form, onFinish, disabledDate } = props;
 
   const defaultData = {
-    interviewDate: moment(convertToDateString(data?.interviewDate), DateFormat),
+    interviewDate: moment(convertToDateString(data?.timeStart), DateFormat),
     timeStart: moment(convertToUTCString(data?.timeStart).split('GMT')[0].split(' ')[4], MinuteFormat),
     timeEnd: moment(convertToUTCString(data?.timeEnd).split('GMT')[0].split(' ')[4], MinuteFormat)
   };
@@ -25,7 +25,7 @@ const InterviewScheduleModalRequestChangeComponent = (props) => {
           description={
             <div>
               <Badge
-                status={handleType(data?.status)}
+                status={data?.badgeType}
                 text={
                   <Typography.Text>
                     {data?.title} ({convertToUTCString(data?.timeStart).split('GMT')[0].split(' ')[4]} -{' '}

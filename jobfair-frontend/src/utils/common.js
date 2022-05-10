@@ -1,4 +1,5 @@
 import { CountryConst } from '../constants/AttendantConstants';
+import { DateFormat } from '../constants/ApplicationConst';
 import { JOB_FAIR_PLAN_STATUS } from '../constants/JobFairConst';
 import { Progress, Tag } from 'antd';
 import React from 'react';
@@ -37,7 +38,7 @@ export const getBase64 = (file) =>
 
 export const convertToDateString = (dateValue) => {
   try {
-    return new Date(dateValue).toISOString().replace(/T.*/, '').split('-').reverse().join('-');
+    return moment(dateValue).format(DateFormat);
   } catch (err) {
     return '01-01-1970';
   }
@@ -168,29 +169,3 @@ export const getDateDifferent = (timeStamp) => {
 };
 
 export const getCountryOrder = () => CountryConst.sort((o1, o2) => o1.name.localeCompare(o2.name));
-
-export const handleType = (status) => {
-  switch (status) {
-    case 'PENDING':
-      return 'warning';
-    case 'FINISH':
-      return 'success';
-    case 'CANCEL':
-      return 'error';
-    default:
-      return 'default';
-  }
-};
-
-export const handleTag = (status) => {
-  switch (status) {
-    case 'PENDING':
-      return 'warning';
-    case 'FINISH':
-      return 'success';
-    case 'CANCEL':
-      return 'error';
-    default:
-      return 'default';
-  }
-};

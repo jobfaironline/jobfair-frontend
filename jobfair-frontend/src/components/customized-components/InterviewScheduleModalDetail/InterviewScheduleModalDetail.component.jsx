@@ -1,13 +1,20 @@
 import { Badge, Button, Card, Col, Modal, Row, Space, Typography } from 'antd';
 import { CalendarOutlined, ClockCircleOutlined, LinkOutlined } from '@ant-design/icons';
-import {
-  convertEnumToString,
-  convertToDateString,
-  convertToUTCString,
-  handleTag,
-  handleType
-} from '../../../utils/common';
+import { convertEnumToString, convertToDateString, convertToUTCString } from '../../../utils/common';
 import React from 'react';
+
+export const handleTag = (status) => {
+  switch (status) {
+    case 'PENDING':
+      return 'warning';
+    case 'FINISH':
+      return 'success';
+    case 'CANCEL':
+      return 'error';
+    default:
+      return 'default';
+  }
+};
 
 const InterviewScheduleModalDetailComponent = (props) => {
   const { data, visible, onCancel, handleRequestChange } = props;
@@ -20,7 +27,7 @@ const InterviewScheduleModalDetailComponent = (props) => {
             <div>
               <Typography.Text strong>Status: </Typography.Text>
               <Badge
-                status={handleType(data?.status)}
+                status={data?.badgeType}
                 text={
                   <Typography.Text type={handleTag(data?.status)}>{convertEnumToString(data?.status)}</Typography.Text>
                 }
@@ -43,7 +50,7 @@ const InterviewScheduleModalDetailComponent = (props) => {
                 <Typography.Text strong>
                   Interview date <CalendarOutlined />
                 </Typography.Text>
-                <Typography.Text>{convertToDateString(data?.interviewDate)}</Typography.Text>
+                <Typography.Text>{convertToDateString(data?.timeStart)}</Typography.Text>
               </Space>
             </Col>
             <Col span={8}>

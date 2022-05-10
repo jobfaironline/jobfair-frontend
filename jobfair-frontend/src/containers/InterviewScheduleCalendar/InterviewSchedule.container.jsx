@@ -1,199 +1,110 @@
 import './styles.scss';
-import { Alert, Badge, Form, Popover, Typography } from 'antd';
-import { EyeOutlined } from '@ant-design/icons';
-import { handleType } from '../../utils/common';
-import InterviewScheduleCalendarComponent from '../../components/customized-components/InterviewScheduleCalendar/InterviewScheduleCalendar.component';
+import { Form } from 'antd';
+import { INTERVIEW_SCHEDULE_STATUS } from '../../constants/InterviewScheduleConst';
+import { InterviewScheduleCalendar } from '../../components/customized-components/InterviewScheduleCalendar/InterviewScheduleCalendar.component';
+import { getSchedule } from '../../services/jobhub-api/InterviewControllerService';
 import InterviewScheduleModalDetailComponent from '../../components/customized-components/InterviewScheduleModalDetail/InterviewScheduleModalDetail.component';
 import InterviewScheduleModalRequestChangeComponent from '../../components/customized-components/InterviewScheduleModalRequestChange/InterviewScheduleModalRequestChange.component';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
-const { Text } = Typography;
-const fakeData = [
-  {
-    title: 'Interview with Google',
-    status: 'PENDING',
-    description: 'something you want to write',
-    interviewDate: 1650964804000,
-    timeStart: 1651047604000,
-    timeEnd: 1651051204000,
-    interviewLink: 'https://google.com'
-  },
-  {
-    title: 'Have fun with Google',
-    status: 'FINISH',
-    description: 'something you want to write',
-    interviewDate: 1650964804000,
-    timeStart: 1651047604000,
-    timeEnd: 1651051204000,
-    interviewLink: 'https://google.com'
-  },
-  {
-    title: 'Interview with Twitter',
-    status: 'FINISH',
-    description: 'something you want to write',
-    interviewDate: 1651051204000,
-    timeStart: 1651047604000,
-    timeEnd: 1651051204000,
-    interviewLink: 'https://twitter.com'
-  },
-  {
-    title: 'Interview with Facebook',
-    status: 'CANCEL',
-    description: 'something you want to write',
-    interviewDate: 1651137604000,
-    timeStart: 1651047604000,
-    timeEnd: 1651051204000,
-    interviewLink: 'https://facebook.com'
-  }
-];
 const InterviewScheduleContainer = () => {
-  const [value, setValue] = useState({
-    value: moment('2022-04-26'),
-    selectedValue: moment('2022-04-26')
-  });
+  const [pivotDate, setPivotDate] = useState(moment());
   const [interviewSchedule, setInterviewSchedule] = useState([]);
   //modals state
-  const [visible, setVisible] = useState(false);
-  const [requestChangeVisible, setRequestChangeVisible] = useState(false);
+  const [scheduleDetailModalVisible, setScheduleDetailModalVisible] = useState(false);
+  const [requestChangeModalVisible, setRequestChangeModalVisible] = useState(false);
   //modal detail
   const [modalDetail, setModalDetail] = useState();
 
   const [form] = Form.useForm();
 
   useEffect(() => {
-    setInterviewSchedule(fakeData);
-  }, []);
+    fetchData();
+  }, [pivotDate]);
 
-  const handleContent = (item) => (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Popover
-        content={
-          <div
-            onClick={() => {
-              setVisible(true);
-              setModalDetail(item);
-            }}>
-            <span>
-              {' '}
-              <EyeOutlined /> View detail
-            </span>
-          </div>
-        }
-        title={item.title}>
-        <Text mark>{item.title}</Text>
-      </Popover>
-      <Text italic>{item.interviewLink}</Text>
-    </div>
-  );
+  const getBadgeType = (status) => {
+    switch (status) {
+      case INTERVIEW_SCHEDULE_STATUS.NOT_YET:
+        return 'warning';
+      case INTERVIEW_SCHEDULE_STATUS.DONE:
+        return 'success';
+      case INTERVIEW_SCHEDULE_STATUS.REQUEST_CHANGE:
+        return 'error';
+      case INTERVIEW_SCHEDULE_STATUS.INTERVIEWING:
+        return 'processing';
+      default:
+        return 'default';
+    }
+  };
 
-  const getScheduleArray = () => {
-    const result = {};
-    fakeData
-      .map((item) => {
-        item['day'] = new Date(item.interviewDate).getUTCDate();
-        return item;
+  const fetchData = async () => {
+    let data = (
+      await getSchedule({
+        beginTime: pivotDate.subtract(15, 'd').unix() * 1000,
+        endTime: pivotDate.add(15, 'd').unix() * 1000
       })
-      .forEach((item) => {
-        if (!result[item.day]) result[item.day] = [];
-        result[item.day].push(item);
-      });
-    return result;
-  };
+    ).data;
 
-  const getListData = (value) => {
-    //value.date() will display all date on the screen
-    const result = getScheduleArray();
-    const listData = result[value.date()];
-    const render = listData?.map((item) => ({
-      content: handleContent(item),
-      type: handleType(item.status)
-    }));
-    return render || [];
-  };
-
-  const dateCellRender = (value) => {
-    const listData = getListData(value);
-    return (
-      <ul className='events'>
-        {listData.map((item) => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} />
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
-  const getMonthData = (value) => {
-    if (value.month() === 1) return 2021;
-  };
-
-  const handleSelect = (value) => {
-    setValue({ value, selectedValue: value });
-  };
-
-  const handlePanelChange = (value) => {
-    setValue({ value });
-  };
-
-  const monthCellRender = (value) => {
-    const num = getMonthData(value);
-    return num ? (
-      <div className='notes-month'>
-        <section>{num}</section>
-        <span>Demo day:</span>
-      </div>
-    ) : null;
-  };
-
-  const disableDate = (value) => {
-    if (value.date() === 30) return true;
-    return false;
+    data = data.map((item) => {
+      const date = moment.unix(item.beginTime / 1000);
+      return {
+        ...item,
+        day: date.date(),
+        month: date.month(),
+        year: date.year(),
+        title: item.name,
+        timeStart: item.beginTime,
+        timeEnd: item.endTime,
+        interviewLink: item.url,
+        badgeType: getBadgeType(item.status)
+      };
+    });
+    setInterviewSchedule(data);
   };
 
   const onCancelModal = () => {
-    setVisible(false);
+    setScheduleDetailModalVisible(false);
   };
 
   const onCancelRequestChangeModal = () => {
-    setRequestChangeVisible(false);
+    setRequestChangeModalVisible(false);
   };
 
   const handleRequestChange = () => {
-    setVisible(false);
-    setRequestChangeVisible(true);
+    setScheduleDetailModalVisible(false);
+    setRequestChangeModalVisible(true);
   };
 
   const disabledDate = (current) => current && current < moment().startOf('day');
 
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = null;
+
+  const onPanelChange = (value) => {
+    setPivotDate(value);
   };
+
   return (
     <div>
-      <Alert message={`You selected date: ${value.selectedValue && value.selectedValue.format('YYYY-MM-DD')}`} />
       <InterviewScheduleModalDetailComponent
-        visible={visible}
+        visible={scheduleDetailModalVisible}
         onCancel={onCancelModal}
         data={modalDetail}
         handleRequestChange={handleRequestChange}
       />
       <InterviewScheduleModalRequestChangeComponent
         data={modalDetail}
-        visible={requestChangeVisible}
+        visible={requestChangeModalVisible}
         onCancel={onCancelRequestChangeModal}
         disabledDate={disabledDate}
         form={form}
         onFinish={onFinish}
       />
-      <InterviewScheduleCalendarComponent
-        dateCellRender={dateCellRender}
-        monthCellRender={monthCellRender}
-        value={value.value}
-        onSelect={handleSelect}
-        onPanelChange={handlePanelChange}
-        disabledDate={disableDate}
+      <InterviewScheduleCalendar
+        setScheduleModalVisible={setScheduleDetailModalVisible}
+        setScheduleModalDetail={setModalDetail}
+        data={interviewSchedule}
+        onPanelChange={onPanelChange}
       />
     </div>
   );
