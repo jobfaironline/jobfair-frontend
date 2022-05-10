@@ -89,7 +89,19 @@ const InterviewScheduleModalDetailComponent = (props) => {
             </Col>
           </Row>
         </div>
-        {data?.status !== INTERVIEW_SCHEDULE_STATUS.NOT_YET ? null : (
+        {data?.status !== INTERVIEW_SCHEDULE_STATUS.NOT_YET ? (
+          data?.status === INTERVIEW_SCHEDULE_STATUS.REQUEST_CHANGE ? (
+            <div style={{ marginTop: '2rem' }}>
+              <Row>
+                <Col span={24}>
+                  <Space direction='horizontal'>
+                    <Typography.Text italic>You already sent a request change </Typography.Text>
+                  </Space>
+                </Col>
+              </Row>
+            </div>
+          ) : null
+        ) : (
           <div style={{ marginTop: '2rem' }}>
             <Row>
               <Col span={24}>
