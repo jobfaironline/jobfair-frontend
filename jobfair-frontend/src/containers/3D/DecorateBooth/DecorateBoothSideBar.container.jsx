@@ -4,11 +4,11 @@ import { DecorateBoothSideBarComponent } from '../../../components/customized-co
 import { IMAGE_PLANE_NAME } from '../../../constants/DecorateBoothConstant';
 import { getBase64 } from '../../../utils/common';
 import { notify } from '../../../utils/toastutil';
+import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
 
 export const DecoratedBoothSideBarContainer = (props) => {
-  const { handleOnRotationLeft, handleOnRotationRight, handleDelete } = props;
+  const { handleOnRotationLeft, handleOnRotationRight, handleDelete, rendererRef } = props;
 
   const selectedItem = useSelector((state) => state.decorateBooth.selectedItem);
 
@@ -18,17 +18,32 @@ export const DecoratedBoothSideBarContainer = (props) => {
     y: selectedItem?.position.y ?? 0,
     z: selectedItem?.position.z ?? 0
   });
+
+  const uploadFileRef = useRef();
+
+  const handleUpVideoCropImage = (file) => {
+    if (file.type.includes('video')) {
+      uploadFileRef.current = file;
+      return false;
+    }
+    return true;
+  };
+
   const loadFile = {
-    beforeUpload: (file) => false,
+    beforeUpload: (file) => {
+      uploadFileRef.current = file;
+      return false;
+    },
     onChange: async (info) => {
-      if (info.file.type !== 'image/png' && info.file.type !== 'image/jpeg' && info.file.type !== 'video/mp4') {
+      const file = uploadFileRef.current;
+      if (file.type !== 'image/png' && file.type !== 'image/jpeg' && file.type !== 'video/mp4') {
         notify(0, `Upload file must be png, jpg or mp4`);
         return;
       }
       if (selectedItem === undefined) return;
 
       let texture;
-      if (info.file.type === 'video/mp4') {
+      if (file.type === 'video/mp4') {
         const vid = document.createElement('video');
 
         const reader = new FileReader();
@@ -38,13 +53,12 @@ export const DecoratedBoothSideBarContainer = (props) => {
         vid.muted = true;
         vid.play();
         texture = new THREE.VideoTexture(vid);
-        const meshName = selectedItem?.name;
         reader.onload = function (e) {
           vid.src = e.target.result;
         };
-        reader.readAsDataURL(info.file);
+        reader.readAsDataURL(file);
       } else {
-        const base64Url = await getBase64(info.file);
+        const base64Url = await getBase64(file);
         texture = new THREE.TextureLoader().load(base64Url);
       }
       texture.flipY = false;
@@ -54,7 +68,6 @@ export const DecoratedBoothSideBarContainer = (props) => {
       screenMesh.clear();
 
       //check if screenMesh is a plane
-
       if (
         screenMesh.geometry.boundingBox.max.x - screenMesh.geometry.boundingBox.min.x === 0 ||
         screenMesh.geometry.boundingBox.max.y - screenMesh.geometry.boundingBox.min.y === 0 ||
@@ -66,6 +79,8 @@ export const DecoratedBoothSideBarContainer = (props) => {
         texture.rotation = Math.PI / 2;
 
         const newMaterial = selectedItem?.material.clone();
+        newMaterial.color = new THREE.Color(0xffffff);
+        newMaterial.emissive = new THREE.Color(0x000000);
         newMaterial.size = THREE.DoubleSide;
         newMaterial.map = texture;
         selectedItem.material = newMaterial;
@@ -84,12 +99,14 @@ export const DecoratedBoothSideBarContainer = (props) => {
       else width = screenSize.z / screenMesh.scale.z;
 
       let plane;
+
       //create new plane
       const geometry = new THREE.PlaneGeometry(width, screenSize.y / screenMesh.scale.y);
-      const material = new THREE.MeshBasicMaterial({
+      const material = new THREE.MeshStandardMaterial({
         side: THREE.DoubleSide,
         map: texture
       });
+
       // eslint-disable-next-line prefer-const
       plane = new THREE.Mesh(geometry, material);
       plane.name = IMAGE_PLANE_NAME;
@@ -108,6 +125,7 @@ export const DecoratedBoothSideBarContainer = (props) => {
         plane.position.setX(-screenSize.x / 2 / screenMesh.scale.x - 0.05);
       }
 
+      //remove previous plane-image
       const prevPlane = selectedItem?.getObjectByName(IMAGE_PLANE_NAME);
       if (prevPlane !== undefined) selectedItem?.remove(prevPlane);
 
@@ -157,6 +175,121 @@ export const DecoratedBoothSideBarContainer = (props) => {
     setCurrentSelectedColor(color);
   };
 
+  const onChangeBrightness = (value) => {
+    if (selectedItem === undefined) return;
+    let imagePlane;
+    const screenMesh = selectedItem?.clone(false);
+    screenMesh.clear();
+    //check if screenMesh is a plane
+    if (
+      screenMesh.geometry.boundingBox.max.x - screenMesh.geometry.boundingBox.min.x === 0 ||
+      screenMesh.geometry.boundingBox.max.y - screenMesh.geometry.boundingBox.min.y === 0 ||
+      screenMesh.geometry.boundingBox.max.z - screenMesh.geometry.boundingBox.min.z === 0
+    ) {
+      imagePlane = screenMesh;
+      if (!imagePlane) return;
+      if (value < 50) {
+        const blackVal = Math.round((value * 255) / 50);
+        const bkgrnd = `rgb(${blackVal}, ${blackVal}, ${blackVal})`;
+        imagePlane.material.color = new THREE.Color(bkgrnd);
+        imagePlane.material.emissive = new THREE.Color(0x000000);
+      } else {
+        const white = Math.round(((value - 50) * 255) / 50);
+        const bkgrnd = `rgb(${white}, ${white}, ${white})`;
+        imagePlane.material.emissive = new THREE.Color(bkgrnd);
+        imagePlane.material.color = new THREE.Color(0xffffff);
+      }
+      return;
+    }
+    //if screenMesh is not a plane
+    for (const child of selectedItem.children) {
+      if (child.name.includes(IMAGE_PLANE_NAME)) {
+        imagePlane = child;
+        break;
+      }
+    }
+    if (!imagePlane) return;
+    let newMaterial;
+    if (imagePlane.material.isMeshBasicMaterial) {
+      newMaterial = new THREE.MeshStandardMaterial({
+        side: THREE.DoubleSide,
+        map: imagePlane.material.map
+      });
+    } else newMaterial = imagePlane.material.clone();
+
+    if (value < 50) {
+      const blackVal = Math.round((value * 255) / 50);
+      const bkgrnd = `rgb(${blackVal}, ${blackVal}, ${blackVal})`;
+      newMaterial.color = new THREE.Color(bkgrnd);
+      newMaterial.emissive = new THREE.Color(0x000000);
+    } else {
+      const white = Math.round(((value - 50) * 255) / 50);
+      const bkgrnd = `rgb(${white}, ${white}, ${white})`;
+      newMaterial.emissive = new THREE.Color(bkgrnd);
+      newMaterial.color = new THREE.Color(0xffffff);
+    }
+
+    imagePlane.material = newMaterial;
+  };
+
+  const onChangeSharpness = (value) => {
+    if (selectedItem === undefined) return;
+    let imagePlane;
+    const screenMesh = selectedItem?.clone(false);
+    screenMesh.clear();
+    //check if screenMesh is a plane
+    if (
+      screenMesh.geometry.boundingBox.max.x - screenMesh.geometry.boundingBox.min.x === 0 ||
+      screenMesh.geometry.boundingBox.max.y - screenMesh.geometry.boundingBox.min.y === 0 ||
+      screenMesh.geometry.boundingBox.max.z - screenMesh.geometry.boundingBox.min.z === 0
+    )
+      imagePlane = screenMesh;
+    else imagePlane = selectedItem.getObjectByName(IMAGE_PLANE_NAME);
+
+    if (!imagePlane) return;
+    switch (value) {
+      case 0:
+        imagePlane.material.map.minFilter = THREE.LinearMipMapLinearFilter;
+        imagePlane.material.map.anisotropy = 1;
+        imagePlane.material.map.needsUpdate = true;
+        break;
+      case 1:
+        imagePlane.material.map.minFilter = THREE.LinearMipMapLinearFilter;
+        imagePlane.material.map.anisotropy = rendererRef.current.getMaxAnisotropy();
+        imagePlane.material.map.needsUpdate = true;
+        break;
+      case 2:
+        imagePlane.material.map.minFilter = THREE.LinearFilter;
+        imagePlane.material.map.anisotropy = 1;
+        imagePlane.material.map.needsUpdate = true;
+        break;
+    }
+  };
+
+  const calculateScreenRation = () => {
+    const screenMesh = selectedItem?.clone(false);
+    screenMesh.clear();
+    //check if screenMesh is a plane
+    if (
+      screenMesh.geometry.boundingBox.max.x - screenMesh.geometry.boundingBox.min.x === 0 ||
+      screenMesh.geometry.boundingBox.max.y - screenMesh.geometry.boundingBox.min.y === 0 ||
+      screenMesh.geometry.boundingBox.max.z - screenMesh.geometry.boundingBox.min.z === 0
+    ) {
+      const scale = screenMesh.scale;
+      const width = scale.x < scale.z ? scale.x : scale.z;
+      return scale.y / width;
+    }
+
+    const scale = screenMesh.scale;
+    const localSize = new THREE.Vector3();
+    screenMesh.geometry.boundingBox.getSize(localSize);
+    const screenSize = new THREE.Vector3(scale.x * localSize.x, scale.y * localSize.y, scale.z * localSize.z);
+
+    const width = screenSize.x > screenSize.z ? screenSize.x : screenSize.z;
+
+    return width / screenSize.y;
+  };
+
   if (!selectedItem) return null;
 
   const componentProps = {
@@ -168,7 +301,11 @@ export const DecoratedBoothSideBarContainer = (props) => {
     handleOnRotationRight,
     loadFile,
     handleDelete,
-    handleOnChangeColor
+    handleOnChangeColor,
+    onChangeBrightness,
+    onChangeSharpness,
+    ratio: calculateScreenRation(),
+    handleUpVideoCropImage
   };
 
   return <DecorateBoothSideBarComponent {...componentProps} />;

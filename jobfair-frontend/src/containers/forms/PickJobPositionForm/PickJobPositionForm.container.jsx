@@ -1,16 +1,21 @@
 /* eslint-disable no-unused-vars */
+import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { Modal, Typography, notification } from 'antd';
-import { PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
-import { assignJobPositionToBooth } from '../../../services/jobhub-api/JobFairBoothControllerService';
+import {
+  assignJobPositionToBooth,
+  getCompanyBoothById
+} from '../../../services/jobhub-api/JobFairBoothControllerService';
 import { useHistory } from 'react-router-dom';
 import AnchorComponent from '../../../components/commons/Anchor/Achor.component';
 import PickJobPositionForm from '../../../components/forms/PickJobPositionForm/PickJobPositionForm.component';
 import PickJobPositionTableContainer from '../../JobPositionTable/JobPositionTable.container';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const PickJobPositionFormContainer = ({ form, companyBoothId }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [arrKey, setArrKey] = useState([]);
+  const [formData, setFormData] = useState();
+  const hasFetchData = useRef(false);
   const history = useHistory();
 
   const [anchorList, setAnchorList] = useState(
@@ -21,6 +26,30 @@ const PickJobPositionFormContainer = ({ form, companyBoothId }) => {
         }))
       : []
   );
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const data = (await getCompanyBoothById(companyBoothId)).data;
+    const formData = {
+      name: data.name,
+      description: data.description,
+      jobPositions: data.boothJobPositions.map((position, index) => ({
+        ...position,
+        id: position.originJobPosition,
+        key: position.originJobPosition,
+        no: index,
+        isHaveTest: position.isHaveTest ? [true] : [],
+        testLength: position.testTimeLength,
+        testNumOfQuestion: position.numOfQuestion
+      }))
+    };
+    const hasTestArr = formData.jobPositions?.filter((position) => position.isHasTest).map((position) => position.no);
+    setArrKey(hasTestArr);
+    setFormData(formData);
+  };
 
   const handlePickJobPosition = () => {
     setModalVisible(true);
@@ -61,22 +90,23 @@ const PickJobPositionFormContainer = ({ form, companyBoothId }) => {
   const onFinish = async (values) => {
     const body = {
       boothId: companyBoothId,
+      name: values.name,
       description: values.description,
       jobPositions: values.jobPositions.map((item) => ({
         id: item.id,
         maxSalary: item.maxSalary,
         minSalary: item.minSalary,
-        note: item.note,
         numOfPosition: item.numOfPosition,
+        isHaveTest: item.isHaveTest !== undefined && item.isHaveTest.length > 0,
         passMark: item.passMark,
         testLength: item.testLength,
-        testNumOfQuestion: item.testNumOfQuestion
+        testNumOfQuestion: item.testNumOfQuestion,
+        note: item.note
       }))
     };
     try {
       const res = await assignJobPositionToBooth(body);
       if (res.status === 200) {
-        history.push(PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE);
         notification['success']({
           message: `Decorate booth successfully.`
         });
@@ -88,6 +118,13 @@ const PickJobPositionFormContainer = ({ form, companyBoothId }) => {
       });
     }
   };
+
+  if (!formData) return <LoadingComponent isWholePage={true} />;
+
+  if (hasFetchData.current === false) {
+    form.setFieldsValue({ ...formData });
+    hasFetchData.current = true;
+  }
 
   return (
     <>

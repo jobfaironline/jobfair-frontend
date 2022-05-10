@@ -1,6 +1,7 @@
 import './OrganizeJobFair.styles.scss';
 import { AssignEmployeeContainer } from '../3D/AssignEmployee/AssignEmployee.container';
 import { Form, notification } from 'antd';
+import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
 import { convertToDateValue } from '../../utils/common';
@@ -35,6 +36,7 @@ const OrganizeJobFairContainer = () => {
     id: ''
   });
   const [isError, setIsError] = useState(true);
+  const [isLoadMap, setIsLoadMap] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -68,6 +70,11 @@ const OrganizeJobFairContainer = () => {
   };
 
   const handleLoad3DMap = async (url, id) => {
+    setIsLoadMap(true);
+    setLayoutData({
+      glb: undefined,
+      id: ''
+    });
     const glb = await loadGLBModel(url);
     setLayoutData({
       glb: glb.scene,
@@ -225,7 +232,15 @@ const OrganizeJobFairContainer = () => {
 
   const stepComponentList = [
     <SideBarComponent
-      rightSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
+      rightSide={
+        layoutData.glb ? (
+          <JobFairParkMapComponent mapMesh={layoutData.glb} />
+        ) : isLoadMap ? (
+          <LoadingComponent />
+        ) : (
+          <div />
+        )
+      }
       leftSide={
         <ChooseTemplateJobFairContainer
           handleLoad3DMap={handleLoad3DMap}

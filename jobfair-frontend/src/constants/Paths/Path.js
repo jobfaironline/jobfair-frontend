@@ -35,8 +35,9 @@ export const PATH_ATTENDANT = {
   JOB_FAIR_LIST_PAGE: '/attendant/job-fair-list',
   APPLICATION_MANAGEMENT_PAGE: '/attendant/application-management',
   JOB_FAIR_DETAIL_PAGE: '/attendant/job-fair-detail',
+  INTERVIEW_SCHEDULE: '/attendant/interview-schedule',
   RESUME_DETAIL_PAGE: '/attendant/resume-detail',
-  INTERVIEW_SCHEDULE: '/attendant/interview-schedule'
+  ATTEMPT_TEST_PAGE: '/attendant/attempt-test/:quizId'
 };
 export const PATH_COMPANY_EMPLOYEE = {
   COMPANY_PROFILE_PAGE: '/employee/company-profile',
@@ -49,7 +50,6 @@ export const PATH_COMPANY_EMPLOYEE = {
 };
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',
-  EMPLOYEE_REGISTER_PAGE: '/company/employee-register',
   REGISTER_JOB_FAIR_FORM_PAGE: '/company/register-job-fair',
   COMPANY_PROFILE_PAGE: '/company/company-profile',
   JOB_FAIR_DETAIL_PAGE: '/company/job-fair-detail',
@@ -58,5 +58,6 @@ export const PATH_COMPANY_MANAGER = {
   ORGANIZE_JOB_FAIR_PAGE: '/company/organize-job-fair',
   JOB_FAIR_GRID_PAGE: '/company/my-job-fair',
   TEMPLATE_GRID_PAGE: '/company/my-template',
-  TEMPLATE_DETAIL: '/company/my-template/:templateId'
+  TEMPLATE_DETAIL: '/company/my-template/:templateId',
+  QUESTION_BANK: '/company/question-bank'
 };

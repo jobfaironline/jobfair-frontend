@@ -40,6 +40,7 @@ export const Decorate3DBoothContainer = (props) => {
   const { mode, selectedItem } = useSelector((state) => state.decorateBooth);
   const [modelItems, setModelItems] = useState([]);
   const meshGroupRef = useRef();
+  const rendererRef = useRef();
 
   useEffect(async () => {
     let url = GENERIC_BOOTH_LAYOUT_URL;
@@ -193,20 +194,21 @@ export const Decorate3DBoothContainer = (props) => {
   const sideBarProps = {
     handleOnRotationLeft,
     handleOnRotationRight,
-    handleDelete
+    handleDelete,
+    rendererRef
   };
 
   if (modelItems.length === 0) return <LoadingComponent />;
   return (
-    <div style={{ height: 'calc(100vh - 80px)' }}>
+    <div style={{ height: 'calc(100vh - 126px)' }}>
       <Stats />
       <div
         style={{
           display: 'flex',
-          height: mode === ModeConstant.ADD ? 'calc(100vh - 80px - 94px)' : 'calc(100vh - 80px)'
+          height: mode === ModeConstant.ADD ? 'calc(100vh - 126x - 94px)' : 'calc(100vh - 126px)'
         }}>
         <DecoratedBoothSideBarContainer {...sideBarProps} />
-        <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd} ref={meshGroupRef} />
+        <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd} ref={meshGroupRef} renderRef={rendererRef} />
       </div>
       <DecorateBooth3DItemMenuContainer />
       <ControlButtonGroup {...controlButtonsProps} />

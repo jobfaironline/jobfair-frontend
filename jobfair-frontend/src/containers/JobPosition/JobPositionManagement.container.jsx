@@ -1,11 +1,13 @@
 import { Button, Space, Typography, Upload, notification } from 'antd';
 import { JobPositionList } from '../../components/customized-components/JobPositionListCard/JobPositionListCard.component';
+import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { UploadOutlined } from '@ant-design/icons';
 import {
   deleteJobPositionAPI,
   getJobPositionsAPI,
   uploadCSVFile
 } from '../../services/jobhub-api/JobControllerService';
+import { useHistory } from 'react-router-dom';
 import CreateJobPositionFormContainer from '../forms/CreateJobPositionForm/CreateJobPositionForm.container';
 import JobPositionDetailFormContainer from '../forms/JobPositionDetailForm/JobPositionDetailForm.container';
 import React, { useEffect, useState } from 'react';
@@ -18,6 +20,7 @@ const JobPositionMode = {
 };
 
 const JobPositionManagementContainer = () => {
+  const history = useHistory();
   const [data, setData] = useState([]);
   const [forceRerenderState, setForceRerenderState] = useState(false);
   //pagination
@@ -125,6 +128,12 @@ const JobPositionManagementContainer = () => {
     }
   };
 
+  const onClickQuestionBank = (questionId) => {
+    history.push(PATH_COMPANY_MANAGER.QUESTION_BANK, {
+      jobPositionId: questionId
+    });
+  };
+
   const renderJobPosition = () => {
     switch (mode) {
       case JobPositionMode.VIEW_LIST:
@@ -134,6 +143,7 @@ const JobPositionManagementContainer = () => {
             handleViewDetailPage={handleViewDetailPage}
             data={data}
             handleOnDelete={handleOnDelete}
+            onClickQuestionBank={onClickQuestionBank}
           />
         );
       case JobPositionMode.ADD:

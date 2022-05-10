@@ -1,37 +1,47 @@
-import { Card, List, Typography } from 'antd';
-import { MoreOutlined } from '@ant-design/icons';
+import { Card, List } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
-const { Text } = Typography;
-const JobFairTemplateComponent = ({ data, handleViewDetail }) => (
+const JobFairTemplateComponent = ({ data, handleViewDetail, onAddClick }) => (
   <List
-    grid={{
-      gutter: 20
-    }}
+    grid={{ gutter: 20, xs: 1, sm: 3, md: 3, lg: 5, xl: 5, xxl: 5 }}
     dataSource={data}
-    renderItem={(item) => (
-      <List.Item>
-        <Card
-          hoverable={true}
-          style={{ width: 300 }}
-          cover={<img src={item.thumbnailUrl} alt={item.name} />}
-          extra={
-            <a onClick={() => handleViewDetail(item.id)}>
-              <MoreOutlined />
-            </a>
-          }>
-          <div style={{ display: 'flex' }}>
+    renderItem={(item) => {
+      if (item.isFirst) {
+        return (
+          <List.Item>
+            <Card
+              onClick={onAddClick}
+              style={{
+                width: 300,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '260px',
+                borderRadius: '8px',
+                border: '1px solid #dddddd'
+              }}
+              hoverable={true}>
+              <FontAwesomeIcon icon={faPlus} size={'xl'} />
+            </Card>
+          </List.Item>
+        );
+      }
+      return (
+        <List.Item>
+          <Card
+            hoverable={true}
+            style={{ width: 300, height: '260px', borderRadius: '8px', border: '1px solid #dddddd' }}
+            cover={<img src={item.thumbnailUrl} alt={item.name} />}
+            onClick={() => handleViewDetail(item.id)}>
             <div>
-              <Card.Meta title={item.name} />
-              <Text>{item.name}</Text>
+              <Card.Meta title={item.name} description={item.description} />
             </div>
-            <div style={{ marginLeft: 'auto' }}>
-              <Text>{item.description}</Text>
-            </div>
-          </div>
-        </Card>
-      </List.Item>
-    )}
+          </Card>
+        </List.Item>
+      );
+    }}
   />
 );
 

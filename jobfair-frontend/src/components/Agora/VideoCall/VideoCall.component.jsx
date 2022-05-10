@@ -13,8 +13,8 @@ import PowerOffIcon from '@mui/icons-material/PowerOff';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 
+import './VideoCall.styles.scss';
 import { getAgoraRTCToken } from '../../../services/jobhub-api/AgoraTokenControllerService';
-import styles from './VideoCall.module.scss';
 
 const { REACT_APP_AGORA_APP_ID } = process.env;
 const VideoCall = (props) => {
@@ -76,14 +76,14 @@ const VideoCall = (props) => {
     }
   };
   return (
-    <div className={styles.container}>
-      <div className={styles.topVideoCall}>
-        <div className={styles.iconMail}>
+    <div className={'video-call'}>
+      <div className={'topVideoCall'}>
+        <div className={'iconMail'}>
           <Tag color='default'>
             <MailOutlined /> 90
           </Tag>
         </div>
-        <div className={styles.videoCall}>
+        <div className={'videoCall'}>
           {cameraReady && !muteState.video ? (
             <AgoraVideoPlayer style={{ height: '95%', width: '95%' }} className='vid' videoTrack={cameraTrack} />
           ) : (
@@ -91,7 +91,7 @@ const VideoCall = (props) => {
           )}
         </div>
       </div>
-      <div className={styles.mainVideo}>
+      <div className={'mainVideo'}>
         {users.length > 0 ? (
           <div style={{ height: '100%' }}>
             {users.length > 0 &&
@@ -116,7 +116,7 @@ const VideoCall = (props) => {
             height='100%'
           />
         )}
-        <div className={styles.videoIcon}>
+        <div className={'videoIcon'}>
           {audioTrack ? (
             <div className={muteState.audio ? 'on' : ''} onClick={() => handleMute('audio')}>
               {!muteState.audio ? <MicIcon /> : <MicOffIcon />}

@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   padding: 0;
 
@@ -88,6 +92,15 @@ home
 #root {
   height: 100vh;
   display: flex;
+
+  > div:first-child {
+    > div:first-child {
+      position: absolute !important;
+      inset: 0 !important;
+      overflow-x: hidden !important;
+      margin-bottom: 0 !important;
+    }
+  }
 }
 
 .page {
@@ -95,11 +108,20 @@ home
   margin-top: 126px; /*change this when navbar height is changed */
   padding-left: 5rem;
   padding-right: 5rem;
+  scroll-margin: 200px;
 }
 
 .fullscreen-page {
   padding-right: 0 !important;
   padding-left: 0 !important;
+}
+
+.non-sub-nav-bar {
+  margin-top: 80px !important;
+}
+
+.padding-bottom-page {
+  padding-bottom: 5rem;
 }
 
 .leftside-container {
@@ -207,6 +229,10 @@ home
   }
 
   .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector input {
+    cursor: default;
+  }
+
+  .ant-checkbox-disabled .ant-checkbox-inner {
     cursor: default;
   }
 }

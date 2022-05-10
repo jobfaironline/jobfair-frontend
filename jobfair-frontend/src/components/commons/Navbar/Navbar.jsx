@@ -11,6 +11,7 @@ import {
 } from '../../../constants/Paths/Path';
 import { UserOutlined } from '@ant-design/icons';
 import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
+import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 
@@ -33,24 +34,15 @@ export const CompanyManagerMenu = [
   <Menu.Item key={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>Employee Management</Link>
   </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.APPLICATION_MANAGEMENT_PAGE}>Applications management</Link>
-  </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}>
     <Link to={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}>My job fair</Link>
   </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}>Organize job fair</Link>
-  </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE}>My template</Link>
+    <Link to={PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE}>My layout</Link>
   </Menu.Item>
 ];
 
 export const CompanyEmployeeMenu = [
-  <Menu.Item key={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}>
-    <Link to={PATH_COMPANY_EMPLOYEE.COMPANY_PROFILE_PAGE}>Company profile</Link>
-  </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}>
     <Link to={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}>Applications management</Link>
   </Menu.Item>,
@@ -70,7 +62,7 @@ export const AdminMenu = [
 
 const NavigationBar = () => {
   const role = useSelector((state) => state.authentication?.user?.roles);
-  const webSocketClient = useSelector((state) => state.webSocket.client);
+  const webSocketClient = useSelector(selectWebSocket);
   const history = useHistory();
   const dispatch = useDispatch();
   const extraMenu = () => {

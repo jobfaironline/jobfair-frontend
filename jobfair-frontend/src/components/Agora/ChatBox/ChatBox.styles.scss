@@ -1,0 +1,55 @@
+.chat-box {
+  // overflow: hidden;
+  height: 550px !important;
+  min-width: 300px;
+  background-color: #fff;
+  position: absolute;
+  bottom: 0;
+  right: 50px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: 1px solid #e4e4e4;
+
+  .chatContainer {
+    .chatHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 25px;
+      z-index: 10;
+      position: relative;
+      padding: 8px;
+      box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      background-color: #fff;
+      transition: background-color 0.3s ease-in;
+
+      .iconHeader {
+        margin-left: auto;
+      }
+    }
+
+    .chatHeader:hover {
+      background-color: #f7f7f7;
+    }
+
+    .chatZone {
+      height: 300px;
+      overflow: auto;
+
+      .chatField {
+        position: relative;
+      }
+    }
+
+    .chatZone::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .chatInput {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 3%;
+  }
+}

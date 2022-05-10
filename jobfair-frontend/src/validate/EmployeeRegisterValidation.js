@@ -1,10 +1,10 @@
-import { EMAIL_VALIDATOR, PHONE_VALIDATOR, REQUIRED_VALIDATOR } from './GeneralValidation';
+import { EMAIL_VALIDATOR, MAX_LENGTH_VALIDATOR, REQUIRED_VALIDATOR } from './GeneralValidation';
 
 export const EmployeeRegisterValidation = {
   email: [REQUIRED_VALIDATOR('Email'), ...EMAIL_VALIDATOR()],
   firstName: [REQUIRED_VALIDATOR('First name')],
   middleName: [],
   lastName: [REQUIRED_VALIDATOR('Last name')],
-  phone: [REQUIRED_VALIDATOR('Phone number'), ...PHONE_VALIDATOR()],
-  gender: [REQUIRED_VALIDATOR('Gender')]
+  department: [REQUIRED_VALIDATOR('Department'), MAX_LENGTH_VALIDATOR('Department', 100)],
+  employeeId: [REQUIRED_VALIDATOR("Employee's id"), MAX_LENGTH_VALIDATOR("Employee's id", 40)]
 };

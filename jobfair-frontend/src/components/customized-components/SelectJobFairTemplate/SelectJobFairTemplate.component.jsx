@@ -14,7 +14,7 @@ const SelectJobFairTemplateComponent = (props) => {
         dataLength={listData?.length}
         loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
         endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-        style={{ height: '65vh', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        style={{ height: '60vh', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <List
           itemLayout='vertical'
           size='large'

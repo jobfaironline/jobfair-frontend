@@ -71,5 +71,5 @@ export const CompanyProfileContainer = () => {
     );
   }
 
-  return <LoadingComponent />;
+  return <LoadingComponent isWholePage={true} />;
 };

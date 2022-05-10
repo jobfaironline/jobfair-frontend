@@ -32,7 +32,7 @@ export const getAllApplication = (
   );
 };
 
-export const getApplication = (applicationId) =>
+export const getApplicationForCompany = (applicationId) =>
   CallAPI(`${ENDPOINT_APPLICATION}/company-general/${applicationId}`, 'GET');
 
 export const evaluateApplication = (body) => CallAPI(`${ENDPOINT_APPLICATION}/evaluate`, 'POST', body);
@@ -40,3 +40,5 @@ export const evaluateApplication = (body) => CallAPI(`${ENDPOINT_APPLICATION}/ev
 export const draftApplication = (body) => CallAPI(`${ENDPOINT_APPLICATION}/draft`, 'POST', body);
 
 export const submitApplication = (applicationId) => CallAPI(`${ENDPOINT_APPLICATION}/submit/${applicationId}`, 'POST');
+
+export const getApplicationById = (applicationId) => CallAPI(`${ENDPOINT_APPLICATION}/${applicationId}`, 'GET');

@@ -1,10 +1,10 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
 import './DecoratedBoothSideBar.style.scss';
-import { Button, Descriptions, InputNumber, Upload } from 'antd';
+import { Button, Descriptions, InputNumber, Slider, Upload } from 'antd';
 import { DeleteOutlined, LeftOutlined, RightOutlined, UploadOutlined } from '@ant-design/icons';
+import { SHARPNESS_MARK } from '../../../../constants/DecorateConst';
 import { SketchPicker } from 'react-color';
 import Divider from '@mui/material/Divider';
+import ImgCrop from 'antd-img-crop';
 import Typography from '@mui/material/Typography';
 
 export const DecorateBoothSideBarComponent = (props) => {
@@ -17,7 +17,11 @@ export const DecorateBoothSideBarComponent = (props) => {
     handleOnRotationRight,
     loadFile,
     handleDelete,
-    handleOnChangeColor
+    handleOnChangeColor,
+    onChangeBrightness,
+    onChangeSharpness,
+    ratio,
+    handleUpVideoCropImage
   } = props;
 
   return (
@@ -81,12 +85,21 @@ export const DecorateBoothSideBarComponent = (props) => {
           </Descriptions>
         </div>
         <div style={{ margin: '1rem 0' }}>
-          <Upload {...loadFile}>
-            <Button icon={<UploadOutlined />}>Upload Media</Button>{' '}
-          </Upload>
+          <ImgCrop aspect={ratio} beforeCrop={handleUpVideoCropImage}>
+            <Upload {...loadFile}>
+              <Button icon={<UploadOutlined />}>Upload Media</Button>{' '}
+            </Upload>
+          </ImgCrop>
+
           <Button icon={<DeleteOutlined />} onClick={handleDelete}>
             Delete item
           </Button>
+        </div>
+        <div>
+          <Descriptions.Item>Image brightness</Descriptions.Item>
+          <Slider defaultValue={50} onChange={onChangeBrightness} />
+          <Descriptions.Item>Image sharpness</Descriptions.Item>
+          <Slider min={0} max={2} defaultValue={0} marks={SHARPNESS_MARK} onChange={onChangeSharpness} />
         </div>
         <div>
           <SketchPicker color={selectedItem?.material.color.getHexString()} onChangeComplete={handleOnChangeColor} />

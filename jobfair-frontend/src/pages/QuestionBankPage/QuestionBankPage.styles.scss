@@ -1,0 +1,18 @@
+.question-bank-page {
+  .page-title {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+  }
+  .back {
+    display: flex;
+    position: absolute;
+    top: 140px;
+    align-items: center;
+
+    h5 {
+      margin-left: 5px;
+      margin-bottom: 0;
+    }
+  }
+}

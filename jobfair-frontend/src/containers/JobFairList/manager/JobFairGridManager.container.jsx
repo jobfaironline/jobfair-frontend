@@ -1,29 +1,31 @@
-import { Input, Spin, notification } from 'antd';
+import './JobFairGridManager.styles.scss';
+import { Input, Typography, notification } from 'antd';
 import { JOB_FAIR_STATUS } from '../../../constants/JobFairConst';
+import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path';
-import {
-  getAllJobFairAPI,
-  getJobFairByIDAPI,
-  searchJobFairAPI
-} from '../../../services/jobhub-api/JobFairControllerService';
+import { getAllJobFairAPI, getJobFairByIDAPI } from '../../../services/jobhub-api/JobFairControllerService';
 import { useHistory } from 'react-router-dom';
 import JobFairGridComponent from '../../../components/customized-components/JobFairGrid/JobFairGrid.component';
 import React, { useEffect, useState } from 'react';
+
+const { Search } = Input;
 
 const JobFairGridManagerContainer = () => {
   const [data, setData] = useState();
   const history = useHistory();
 
   const fetchData = async () => {
-    const res = await getAllJobFairAPI();
+    const res = await getAllJobFairAPI({});
     const content = res.data.content;
+    content.unshift({ isFirst: true });
     setData(content);
   };
 
   const searchJobFair = async (searchValue) => {
     try {
-      const res = await searchJobFairAPI(searchValue);
+      const res = await getAllJobFairAPI({ name: searchValue });
       const content = res.data.content;
+      content.unshift({ isFirst: true });
       setData(content);
     } catch (e) {
       notification['error']({
@@ -45,28 +47,34 @@ const JobFairGridManagerContainer = () => {
     }
   };
 
+  const onAddJobFair = () => {
+    history.push(PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE);
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  const handleOnSearch = (e) => {
-    const searchValue = e.target.value;
+  const handleOnSearch = (searchValue) => {
     searchJobFair(searchValue);
   };
 
   return data ? (
-    <div>
-      <div style={{ display: 'flex', paddingBottom: '10px' }}>
-        <Input
+    <div className={'job-fair-grid-manager'}>
+      <div className={'header'}>
+        <Typography.Title level={2} style={{ marginRight: '3rem' }}>
+          My Job fair
+        </Typography.Title>
+        <Search
+          className={'search-bar'}
           placeholder='Search by job fair title'
-          onChange={(e) => handleOnSearch(e)}
-          style={{ width: 200, marginLeft: 'auto' }}
+          onSearch={(value) => handleOnSearch(value)}
         />
       </div>
-      <JobFairGridComponent data={data} onClick={onClick} role='COMPANY_MANAGER' />
+      <JobFairGridComponent data={data} onClick={onClick} onAddJobFair={onAddJobFair} role='COMPANY_MANAGER' />
     </div>
   ) : (
-    <Spin />
+    <LoadingComponent isWholePage={true} />
   );
 };
 

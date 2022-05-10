@@ -2,7 +2,7 @@ import JobFairTemplateDetailContainer from '../../containers/JobFairTemplateDeta
 import React from 'react';
 
 const JobFairTemplateDetailPage = () => (
-  <div className='page'>
+  <div className='page fullscreen-page'>
     <JobFairTemplateDetailContainer />
   </div>
 );

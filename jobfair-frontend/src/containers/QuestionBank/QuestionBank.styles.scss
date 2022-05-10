@@ -1,0 +1,49 @@
+.question-bank {
+  .search-bar {
+    width: 300px;
+    margin-bottom: 1rem;
+  }
+
+  .upload-section {
+    margin-left: auto;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    padding: 0 10rem;
+  }
+
+  .add-more-question {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 10rem;
+
+    .ant-card-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .button-container {
+    display: flex;
+  }
+  .paging {
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 5rem;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .warning {
+      margin-right: 10rem;
+      color: red;
+    }
+
+    .ant-pagination {
+      margin-left: auto;
+      margin-right: 10rem;
+    }
+  }
+}

@@ -1,20 +1,5 @@
-/* eslint-disable no-unused-vars */
 import './PickJobPositionForm.styles.scss';
-import {
-  Button,
-  Checkbox,
-  Col,
-  Collapse,
-  Divider,
-  Form,
-  Input,
-  InputNumber,
-  Popconfirm,
-  Row,
-  Space,
-  Tag,
-  Typography
-} from 'antd';
+import { Button, Checkbox, Divider, Form, Input, InputNumber, Popconfirm, Typography } from 'antd';
 import {
   MAXIMUM_MARK,
   MAXIMUM_NUM_OF_POSITION,
@@ -27,11 +12,9 @@ import {
 } from '../../../constants/CreateTestConst';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { PickJobPositionFormValidation } from '../../../validate/PickJobPositionForm';
-import { convertEnumToString } from '../../../utils/common';
+import JobPositionDetailCollapseComponent from '../../customized-components/JobPositionDetailCollapse/JobPositionDetailCollapse.component';
 import React from 'react';
 
-const { Panel } = Collapse;
-const { Text } = Typography;
 const { TextArea } = Input;
 
 const PickJobPositionForm = (props) => {
@@ -49,6 +32,14 @@ const PickJobPositionForm = (props) => {
         initialValues={{ description: undefined, jobPositions: [] }} //will go
         className={'pick-job-position-form'}>
         <Form.Item
+          label='Booth name'
+          required
+          tooltip='This is the name of the booth'
+          rules={PickJobPositionFormValidation.description}
+          name='name'>
+          <Input placeholder="Booth's name" style={{ width: '50%' }} />
+        </Form.Item>
+        <Form.Item
           label='Booth description'
           required
           tooltip='This description will be shown during the job fair'
@@ -60,8 +51,10 @@ const PickJobPositionForm = (props) => {
           {(fields, { remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => {
-                const id = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions[key]?.id : undefined;
-                const item = form.getFieldsValue().jobPositions ? form.getFieldsValue().jobPositions[key] : {};
+                const id = form.getFieldsValue(true).jobPositions
+                  ? form.getFieldsValue(true).jobPositions[key]?.id
+                  : undefined;
+                const item = form.getFieldsValue(true).jobPositions ? form.getFieldsValue(true).jobPositions[key] : {};
 
                 return (
                   <div>
@@ -83,114 +76,7 @@ const PickJobPositionForm = (props) => {
                             />
                           </Form.Item>
                         </div>
-                        <Collapse bordered={false} defaultActiveKey={['1']} style={{ marginBottom: '1rem' }}>
-                          <Panel
-                            key={item?.id}
-                            header={
-                              <Text strong style={{ fontSize: '1rem' }}>
-                                General information
-                              </Text>
-                            }>
-                            <Col style={{ marginLeft: '1rem' }}>
-                              <Row>
-                                <div key='title'>
-                                  <Space>
-                                    <Text strong>Job title: </Text>
-                                    <Text>{item?.title}</Text>
-                                  </Space>
-                                </div>
-                              </Row>
-                              <div key='language'>
-                                <Space>
-                                  <Text strong>Prefer language: </Text>
-                                  <Text>{item?.language}</Text>
-                                </Space>
-                              </div>
-                              <Row gutter={[100, 0]}>
-                                <Col span={8} key='level'>
-                                  <Space>
-                                    <Text strong>Job level: </Text>
-                                    <Text>{convertEnumToString(item?.level)}</Text>
-                                  </Space>
-                                </Col>
-                                <Col span={12} key='type'>
-                                  <Space>
-                                    <Text strong>Job type: </Text>
-                                    <Text>{convertEnumToString(item?.jobType)}</Text>
-                                  </Space>
-                                </Col>
-                              </Row>
-                              <Row gutter={[100, 0]}>
-                                <Col span={8}>
-                                  <div key='contact-name'>
-                                    <Space>
-                                      <Text strong>Contact Person:</Text>
-                                      <Text>{item?.contactPersonName}</Text>
-                                    </Space>
-                                  </div>
-                                </Col>
-                                <Col span={12}>
-                                  <div key='contact-email'>
-                                    <Space>
-                                      <Text strong>Contact Email:</Text>
-                                      <Text>{item?.contactEmail}</Text>
-                                    </Space>
-                                  </div>
-                                </Col>
-                                <Col>
-                                  <div key='skills'>
-                                    <Space>
-                                      <Text strong>Required skills: </Text>
-                                      {item?.skillTagDTOS.map((skill) => (
-                                        <Tag
-                                          color='blue'
-                                          style={{
-                                            fontSize: '0.9rem',
-                                            padding: '0.1rem 0.3rem'
-                                          }}>
-                                          {skill.name}
-                                        </Tag>
-                                      ))}
-                                    </Space>
-                                  </div>
-                                  <div key='category'>
-                                    <Space>
-                                      <Text strong>Category: </Text>
-                                      {item?.subCategoryDTOs.map((category) => (
-                                        <Tag
-                                          color='blue'
-                                          style={{
-                                            fontSize: '0.9rem',
-                                            padding: '0.1rem 0.3rem'
-                                          }}>
-                                          {category.name}
-                                        </Tag>
-                                      ))}
-                                    </Space>
-                                  </div>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col>
-                                  <div>
-                                    <div key='description'>
-                                      <Space align='start' direction='vertical' size={0}>
-                                        <Text strong>Job description: </Text>
-                                        <Text>{item?.description}</Text>
-                                      </Space>
-                                    </div>
-                                    <div key='requirement'>
-                                      <Space align='start' direction='vertical' size={0}>
-                                        <Text strong>Job requirements: </Text>
-                                        <Text>{item?.requirements}</Text>
-                                      </Space>
-                                    </div>
-                                  </div>
-                                </Col>
-                              </Row>
-                            </Col>
-                          </Panel>
-                        </Collapse>
+                        <JobPositionDetailCollapseComponent jobPosition={item} />
                         <div className='job-position-row-container '>
                           <Form.Item
                             label='Number of position'
@@ -231,14 +117,18 @@ const PickJobPositionForm = (props) => {
                               </Form.Item>
                             </Input.Group>
                             <Form.Item name={[name, 'isHaveTest']} {...restField}>
-                              <Checkbox onChange={(e) => onChangeHaveTest(e, key)}>Have test</Checkbox>
+                              <Checkbox.Group>
+                                <Checkbox onChange={(e) => onChangeHaveTest(e, key)} value={true}>
+                                  Have test
+                                </Checkbox>
+                              </Checkbox.Group>
                             </Form.Item>
                             <div style={arrKey.includes(key) ? {} : { display: 'none' }}>
                               <Form.Item
                                 label='Test duration'
                                 required
                                 tooltip='Hour:Minute'
-                                rules={PickJobPositionFormValidation.testLength}
+                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.testLength : null}
                                 name={[name, 'testLength']}>
                                 <InputNumber
                                   placeholder='Test duration'
@@ -251,7 +141,7 @@ const PickJobPositionForm = (props) => {
                                 label='Number of questions'
                                 required
                                 tooltip='The number of the questions'
-                                rules={PickJobPositionFormValidation.numberOfQuestion}
+                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.numberOfQuestion : null}
                                 name={[name, 'testNumOfQuestion']}>
                                 <InputNumber
                                   style={{ width: '25rem' }}
@@ -264,7 +154,7 @@ const PickJobPositionForm = (props) => {
                                 label='Pass mark'
                                 required
                                 tooltip='The minimum mark to pass'
-                                rules={PickJobPositionFormValidation.passMark}
+                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.passMark : null}
                                 name={[name, 'passMark']}>
                                 <InputNumber
                                   style={{ width: '25rem' }}
@@ -275,11 +165,10 @@ const PickJobPositionForm = (props) => {
                               </Form.Item>
                               <Form.Item
                                 label='Note'
-                                required
                                 tooltip='A small description about the test'
-                                rules={PickJobPositionFormValidation.note}
+                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.note : null}
                                 name={[name, 'note']}>
-                                <TextArea showCount maxLength={300} />
+                                <TextArea showCount maxLength={100} />
                               </Form.Item>
                             </div>
                           </div>

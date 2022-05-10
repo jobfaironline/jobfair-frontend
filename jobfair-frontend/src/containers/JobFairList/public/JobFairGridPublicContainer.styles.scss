@@ -1,0 +1,21 @@
+.job-fair-grid-public-container {
+  .header {
+    padding-top: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+
+    .ant-input-search-button {
+      border-bottom-right-radius: 8px !important;
+      border-top-right-radius: 8px !important;
+    }
+
+    input {
+      border-bottom-left-radius: 8px !important;
+      border-top-left-radius: 8px !important;
+    }
+
+    .ant-select-selector {
+      border-radius: 8px !important;
+    }
+  }
+}

@@ -5,7 +5,7 @@ export const ControlButtonGroup = (props) => {
   const { addMoreComponentHandle, saveHandle, reviewHandle, onNext } = props;
 
   return (
-    <div style={{ position: 'absolute', top: '90px', right: '10px' }}>
+    <div style={{ position: 'absolute', top: '136px', right: '10px' }}>
       <Space>
         <Button type='primary' onClick={addMoreComponentHandle}>
           Add more component
