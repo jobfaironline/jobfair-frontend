@@ -5,6 +5,7 @@ import { InventoryContainer } from '../../Inventory/Inventory.container';
 import { JobFairBoothContainer } from './JobFairBooth.container';
 import ChatBoxContainer from '../../Agora/ChatBox/ChatBox.container';
 import React, { useState } from 'react';
+import { Card } from 'antd';
 
 export const AttendantJobFairBoothViewContainer = (props) => {
   const { companyBoothId, geckoClientRef, communicationProps } = props;
@@ -47,7 +48,9 @@ export const AttendantJobFairBoothViewContainer = (props) => {
             geckoClientRef={geckoClientRef}
           />
         </div>
-        <ChatBoxContainer {...communicationProps} />
+        <Card>
+          <ChatBoxContainer {...communicationProps} />
+        </Card>
       </div>
     </>
   );

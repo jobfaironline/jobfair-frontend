@@ -1,6 +1,6 @@
 import { AgoraVideoPlayer } from 'agora-rtc-react';
 import { MailOutlined } from '@ant-design/icons';
-import { Tag } from 'antd';
+import { Tag, Button } from 'antd';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
 import NoPhotographyIcon from '@mui/icons-material/NoPhotography';
@@ -8,12 +8,13 @@ import PowerOffIcon from '@mui/icons-material/PowerOff';
 import React from 'react';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff';
+import CallEndIcon from '@mui/icons-material/CallEnd';
 
 const VideoCallComponent = (props) => {
   const { cameraReady, muteState, users, audioTrack, cameraTrack, handleMute, type } = props;
   return (
-    <div className={'video-call'}>
-      <div className={'topVideoCall'}>
+    <div className={'video-call'} style={{ height: '100%', padding: '2rem' }}>
+      <div className={'topVideoCall'} style={{ width: '95%', padding: '0rem 0.5rem' }}>
         <div className={'iconMail'}>
           <Tag color='default'>
             <MailOutlined /> 90
@@ -28,7 +29,7 @@ const VideoCallComponent = (props) => {
           )}
         </div>
       </div>
-      <div className={'mainVideo'}>
+      <div className={'mainVideo'} style={{ height: '85%', maxHeight: 'none' }}>
         {users.length > 0 ? (
           <div style={{ height: '100%' }}>
             {users.length > 0 &&
@@ -55,19 +56,40 @@ const VideoCallComponent = (props) => {
         )}
         <div className={'videoIcon'}>
           {audioTrack ? (
-            <div className={muteState.audio ? 'on' : ''} onClick={() => handleMute('audio')}>
-              {!muteState.audio ? <MicIcon /> : <MicOffIcon />}
+            <div className={muteState.audio ? 'on' : ''}>
+              <Button
+                type='primary'
+                shape='circle'
+                size='large'
+                icon={!muteState.audio ? <MicIcon /> : <MicOffIcon />}
+                onClick={() => handleMute('audio')}
+              />
             </div>
           ) : (
             <PowerOffIcon />
           )}
           {cameraTrack ? (
-            <div className={muteState.video ? 'on' : ''} onClick={() => handleMute('video')}>
-              {!muteState.video ? <VideocamIcon /> : <VideocamOffIcon />}
+            <div className={muteState.video ? 'on' : ''}>
+              <Button
+                type='primary'
+                shape='circle'
+                size='large'
+                icon={!muteState.video ? <VideocamIcon /> : <VideocamOffIcon />}
+                onClick={() => handleMute('video')}
+              />
             </div>
           ) : (
             <NoPhotographyIcon />
           )}
+          <Button
+            type='primary'
+            shape='circle'
+            size='large'
+            icon={<CallEndIcon />}
+            onClick={() => {
+              /*end call*/
+            }}
+          />
         </div>
       </div>
     </div>
