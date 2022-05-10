@@ -1,4 +1,4 @@
-import { Col, Row, Tabs, Tag, Typography } from 'antd';
+import { Col, Row, Space, Tabs, Tag, Typography } from 'antd';
 import { FileDoneOutlined, GiftOutlined, ReadOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { convertEnumToString } from '../../../utils/common';
@@ -8,8 +8,8 @@ import React from 'react';
 const { Text } = Typography;
 const { TabPane } = Tabs;
 
-const JobPositionDetailModalComponent = ({ data }) => (
-  <div style={{ height: 'max-content', fontSize: '1.2rem' }}>
+const JobPositionDetailModalComponent = ({ data, companyInfo }) => (
+  <div style={{ height: 'max-content', fontSize: '1rem' }}>
     <div
       key='no'
       style={{
@@ -21,7 +21,7 @@ const JobPositionDetailModalComponent = ({ data }) => (
         {data?.title}
       </Text>
     </div>
-    <div>
+    <Space size='small' direction='vertical'>
       <Row>
         <Col span={8}>
           <Text strong>Prefer language: </Text>
@@ -65,7 +65,7 @@ const JobPositionDetailModalComponent = ({ data }) => (
           }
           key='0'>
           <Row>
-            <Col span={24}>
+            <Col span={12}>
               <Text strong style={{ fontSize: '1rem' }}>
                 Job description:{' '}
               </Text>
@@ -73,7 +73,7 @@ const JobPositionDetailModalComponent = ({ data }) => (
             </Col>
           </Row>
           <Row>
-            <Col span={24}>
+            <Col span={12}>
               <Text strong style={{ fontSize: '1rem', display: 'flex', marginBottom: '0.5rem' }}>
                 Job category:{'  '}
               </Text>
@@ -96,7 +96,7 @@ const JobPositionDetailModalComponent = ({ data }) => (
           }
           key='1'>
           <Row>
-            <Col span={24}>
+            <Col span={12}>
               <Text strong style={{ fontSize: '1rem' }}>
                 Job requirements:{' '}
               </Text>
@@ -106,7 +106,7 @@ const JobPositionDetailModalComponent = ({ data }) => (
             </Col>
           </Row>
           <Row>
-            <Col span={24}>
+            <Col span={12}>
               <Text strong style={{ fontSize: '1rem', display: 'flex', marginBottom: '0.5rem' }}>
                 Required skills:{' '}
               </Text>
@@ -122,13 +122,16 @@ const JobPositionDetailModalComponent = ({ data }) => (
           tab={
             <span>
               <Text strong>
-                <GiftOutlined />
-                Benefits
+                <GiftOutlined /> Benefits
               </Text>
             </span>
           }
           key='2'>
-          Benefits
+          {companyInfo?.companyBenefitDTOS.map((item) => (
+            <Tag color='blue' style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
+              {item.description}
+            </Tag>
+          ))}
         </TabPane>
       </Tabs>
       <Row>
@@ -143,12 +146,16 @@ const JobPositionDetailModalComponent = ({ data }) => (
       </Row>
       <Row>
         <Col span={8} style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Text strong>Contact person name: </Text>
-          <Text>{data?.contactPersonName}</Text>
+          <Space direction='vertical' size='small'>
+            <Text strong>Contact email: </Text>
+            <Text>{data?.contactEmail}</Text>
+          </Space>
         </Col>
-        <Col span={8} style={{ display: 'flex', justifyContent: 'space-between', marginLeft: '5rem' }}>
-          <Text strong>Contact email: </Text>
-          <Text>{data?.contactEmail}</Text>
+        <Col span={8} style={{ marginLeft: '5rem' }}>
+          <Space direction='vertical' size='small'>
+            <Text strong>Contact person name: </Text>
+            <Text>{data?.contactPersonName}</Text>
+          </Space>
         </Col>
       </Row>
       <Text strong>Wage: </Text>
@@ -159,8 +166,8 @@ const JobPositionDetailModalComponent = ({ data }) => (
             style={{
               border: '1px solid',
               borderRadius: '0.5rem',
-              width: '15rem',
-              height: '3rem',
+              width: '75%',
+              height: '70%',
               textAlign: 'center'
             }}>
             <div style={{ marginTop: '0.5rem' }}>
@@ -177,8 +184,8 @@ const JobPositionDetailModalComponent = ({ data }) => (
             style={{
               border: '1px solid',
               borderRadius: '0.5rem',
-              width: '15rem',
-              height: '3rem',
+              width: '75%',
+              height: '70%',
               textAlign: 'center'
             }}>
             <div style={{ marginTop: '0.5rem' }}>
@@ -190,7 +197,7 @@ const JobPositionDetailModalComponent = ({ data }) => (
           </div>
         </Col>
       </Row>
-    </div>
+    </Space>
   </div>
 );
 

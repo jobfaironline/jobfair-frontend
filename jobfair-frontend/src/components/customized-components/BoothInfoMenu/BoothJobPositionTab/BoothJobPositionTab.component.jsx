@@ -5,7 +5,7 @@ import { List } from 'antd';
 import React from 'react';
 
 export const CompanyJobPositionTab = (props) => {
-  const { jobPositions, onClick } = props;
+  const { jobPositions, onClick, companyInfo } = props;
   return (
     <div style={{ padding: '0 20px 30px 0' }}>
       <List
@@ -13,6 +13,7 @@ export const CompanyJobPositionTab = (props) => {
         renderItem={(item) => (
           <JobPositionComponent
             key={item.id}
+            companyInfo={companyInfo}
             data={item}
             onClick={(_) => {
               onClick(item);

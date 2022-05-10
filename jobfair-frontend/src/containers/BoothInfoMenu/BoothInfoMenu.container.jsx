@@ -86,7 +86,11 @@ export const BoothInfoMenuContainer = (props) => {
           </div>
         }
         key='2'>
-        <BoothJobPositionTabContainer jobPositions={state.jobPositions} openInventory={openInventory} />
+        <BoothJobPositionTabContainer
+          jobPositions={state.jobPositions}
+          openInventory={openInventory}
+          companyInfo={state.companyInformation}
+        />
       </Tabs.TabPane>,
       <Tabs.TabPane
         tab={
