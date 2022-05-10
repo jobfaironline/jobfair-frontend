@@ -35,6 +35,7 @@ const InterviewRoomContainer = (props) => {
             cameraReady={cameraReady}
             cameraTrack={cameraTrack}
             type={'INTERVIEW_ROOM'}
+            height={'750px'}
           />
         </>
       }
@@ -46,7 +47,7 @@ const InterviewRoomContainer = (props) => {
           </Card>
         </div>
       }
-      ratio={1 / 5}
+      ratio={1 / 4.5}
       isOrganizeJobFair={false}
     />
   );

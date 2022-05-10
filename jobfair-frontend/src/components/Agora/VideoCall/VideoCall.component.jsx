@@ -14,9 +14,9 @@ import PowerOffIcon from '@mui/icons-material/PowerOff';
 import React from 'react';
 
 const VideoCallComponent = (props) => {
-  const { cameraReady, muteState, users, audioTrack, cameraTrack, handleMute, handleClose } = props;
+  const { cameraReady, muteState, users, audioTrack, cameraTrack, handleMute, handleClose, height } = props;
   return (
-    <div className={'video-call'} style={{ height: '100%', padding: '2rem' }}>
+    <div className={'video-call'} style={{ height: height, padding: '2rem' }}>
       <div className={'topVideoCall'} style={{ width: '95%', padding: '0rem 0.5rem' }}>
         <div className={'iconMail'}>
           <Tag color='default'>

@@ -32,6 +32,7 @@ export const AttendantJobFairBoothViewContainer = (props) => {
           activeKey={tabState.activeKey}
           handleOpenDetail={handleOpenDetail}
           openInventory={openInventory}
+          chatBoxContainer={() => <ChatBoxContainer {...communicationProps} />}
         />
         <div className={'booth'}>
           <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />
@@ -48,9 +49,6 @@ export const AttendantJobFairBoothViewContainer = (props) => {
             geckoClientRef={geckoClientRef}
           />
         </div>
-        <Card>
-          <ChatBoxContainer {...communicationProps} />
-        </Card>
       </div>
     </>
   );

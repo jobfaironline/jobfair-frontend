@@ -85,6 +85,7 @@ const VideoCallContainer = (props) => {
       cameraTrack={cameraTrack}
       handleMute={handleMute}
       handleClose={handleClose}
+      height={props.height}
     />
   );
 };

@@ -7,7 +7,6 @@ const ChatBoxComponent = (props) => {
   return (
     <div className={'chat-box'}>
       <div className={'chatContainer'}>
-        <div className={'chatHeader'}></div>
         <div className={'videoContainer'}>{videoCallComponent()}</div>
         <div className={'chatZone'}>
           <ChatField messageList={messageList} />

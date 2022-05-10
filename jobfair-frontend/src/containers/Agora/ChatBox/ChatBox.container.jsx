@@ -120,6 +120,7 @@ const ChatBoxContainer = (props) => {
                   audioTrack={audioTrack}
                   cameraReady={cameraReady}
                   cameraTrack={cameraTrack}
+                  height={'350px'}
                 />
               </>
             )
