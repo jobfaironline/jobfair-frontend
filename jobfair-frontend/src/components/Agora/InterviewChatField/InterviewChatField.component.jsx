@@ -3,11 +3,11 @@ import InputEmoji from 'react-input-emoji';
 import React from 'react';
 
 const InterviewChatFieldComponent = (props) => {
-  const { messageList, isChatReady, text, onEnter } = props;
+  const { messageList, text, onEnter } = props;
   return (
     <>
       <ChatField messageList={messageList} />
-      <div style={{ marginTop: '40rem', display: !isChatReady ? 'none' : '' }}>
+      <div style={{ marginTop: '40rem' }}>
         <InputEmoji value={text} cleanOnEnter onEnter={onEnter} placeholder='Type a message' />
       </div>
     </>
