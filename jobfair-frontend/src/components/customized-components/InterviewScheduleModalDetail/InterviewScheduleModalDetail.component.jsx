@@ -1,5 +1,6 @@
 import { Badge, Button, Card, Col, Modal, Row, Space, Typography } from 'antd';
-import { CalendarOutlined, ClockCircleOutlined, LinkOutlined } from '@ant-design/icons';
+import { CalendarOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import { INTERVIEW_SCHEDULE_STATUS } from '../../../constants/InterviewScheduleConst';
 import { convertEnumToString, convertToDateString, convertToUTCString } from '../../../utils/common';
 import React from 'react';
 
@@ -74,27 +75,34 @@ const InterviewScheduleModalDetailComponent = (props) => {
         <div style={{ marginTop: '2rem' }}>
           <Row>
             <Col span={24}>
-              <Space direction='vertical'>
-                <Typography.Text strong>
-                  Interview link <LinkOutlined />
-                </Typography.Text>
-                <a href={data?.interviewLink}>{data?.interviewLink}</a>
-              </Space>
-            </Col>
-          </Row>
-        </div>
-        <div style={{ marginTop: '2rem' }}>
-          <Row>
-            <Col span={24}>
               <Space direction='horizontal'>
-                <Typography.Text italic>Request to change interview schedule?</Typography.Text>
-                <Button type='primary' onClick={() => handleRequestChange()}>
-                  Send request
+                <Typography.Text strong>Interview room</Typography.Text>
+                <Button
+                  type='primary'
+                  style={{ borderRadius: 8 }}
+                  onClick={() => {
+                    if (data.interviewLink) window.location.href = data?.interviewLink;
+                  }}>
+                  Join room
                 </Button>
               </Space>
             </Col>
           </Row>
         </div>
+        {data?.status !== INTERVIEW_SCHEDULE_STATUS.NOT_YET ? null : (
+          <div style={{ marginTop: '2rem' }}>
+            <Row>
+              <Col span={24}>
+                <Space direction='horizontal'>
+                  <Typography.Text italic>Request to change interview schedule?</Typography.Text>
+                  <Button type='primary' style={{ borderRadius: 8 }} onClick={() => handleRequestChange()}>
+                    Send request
+                  </Button>
+                </Space>
+              </Col>
+            </Row>
+          </div>
+        )}
       </Card>
     </Modal>
   );

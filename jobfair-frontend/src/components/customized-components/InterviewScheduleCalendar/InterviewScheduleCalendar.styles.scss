@@ -1,0 +1,197 @@
+.interview-schedule-calendar {
+  .events {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ant-badge {
+    display: flex;
+    align-items: center;
+  }
+
+  .ant-badge-status-dot {
+    height: 7px;
+    width: 7px;
+  }
+
+  .header {
+    display: flex;
+    margin-bottom: 1rem;
+    padding: 0 2rem;
+  }
+
+  .ant-picker-content {
+    thead {
+      tr {
+        th:nth-child(1) {
+          visibility: hidden;
+          position: relative;
+          height: 70px;
+          padding: 0;
+        }
+
+        th:nth-child(1):after {
+          content: 'Sunday';
+          visibility: visible;
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, -25%);
+          padding: 0.5rem 1.5rem;
+          background-color: gray;
+          border-radius: 8px;
+          color: white;
+        }
+
+        th:nth-child(2) {
+          visibility: hidden;
+          position: relative;
+          height: 70px;
+          padding: 0;
+        }
+
+        th:nth-child(2):after {
+          content: 'Monday';
+          visibility: visible;
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, -25%);
+          padding: 0.5rem 1.5rem;
+          background-color: gray;
+          border-radius: 8px;
+          color: white;
+        }
+
+        th:nth-child(3) {
+          visibility: hidden;
+          position: relative;
+          height: 70px;
+          padding: 0;
+        }
+
+        th:nth-child(3):after {
+          content: 'Tuesday';
+          visibility: visible;
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, -25%);
+          padding: 0.5rem 1.5rem;
+          background-color: gray;
+          border-radius: 8px;
+          color: white;
+        }
+
+        th:nth-child(4) {
+          visibility: hidden;
+          position: relative;
+          height: 70px;
+          padding: 0;
+        }
+
+        th:nth-child(4):after {
+          content: 'Wednesday';
+          visibility: visible;
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, -25%);
+          padding: 0.5rem 1.5rem;
+          background-color: gray;
+          border-radius: 8px;
+          color: white;
+        }
+
+        th:nth-child(5) {
+          visibility: hidden;
+          position: relative;
+          height: 70px;
+          padding: 0;
+        }
+
+        th:nth-child(5):after {
+          content: 'Thursday';
+          visibility: visible;
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, -25%);
+          padding: 0.5rem 1.5rem;
+          background-color: gray;
+          border-radius: 8px;
+          color: white;
+        }
+
+        th:nth-child(6) {
+          visibility: hidden;
+          position: relative;
+          height: 70px;
+          padding: 0;
+        }
+
+        th:nth-child(6):after {
+          content: 'Friday';
+          visibility: visible;
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, -25%);
+          padding: 0.5rem 1.5rem;
+          background-color: gray;
+          border-radius: 8px;
+          color: white;
+        }
+
+        th:nth-child(7) {
+          visibility: hidden;
+          position: relative;
+          height: 70px;
+          padding: 0;
+        }
+
+        th:nth-child(7):after {
+          content: 'Saturday';
+          visibility: visible;
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, -25%);
+          padding: 0.5rem 1.5rem;
+          background-color: gray;
+          border-radius: 8px;
+          color: white;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td:first-child {
+          .ant-picker-calendar-date {
+            border-left: 0 !important;
+          }
+        }
+      }
+    }
+  }
+
+  .ant-picker-panel {
+    border: 1px solid black;
+    border-radius: 8px;
+  }
+
+  .ant-picker-calendar-date {
+    border-top: 1px solid black !important;
+    border-left: 1px solid black !important;
+    margin: 0 !important;
+    padding-right: 15px !important;
+  }
+
+  .ant-picker-calendar-date-value {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .ant-picker-body {
+    padding: 0 !important;
+  }
+
+  .ant-picker-calendar-date-content {
+    height: 60px !important;
+  }
+}

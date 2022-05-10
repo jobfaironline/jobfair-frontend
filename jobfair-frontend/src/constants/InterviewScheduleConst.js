@@ -4,3 +4,5 @@ export const INTERVIEW_SCHEDULE_STATUS = {
   DONE: 'DONE',
   REQUEST_CHANGE: 'REQUEST_CHANGE'
 };
+
+export const SHIFT_HOUR = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];

@@ -1,12 +1,14 @@
-import './styles.scss';
-import { Form } from 'antd';
+import './InterviewScheduleContainer.styles.scss';
+import { Badge, Form, Typography, notification } from 'antd';
 import { INTERVIEW_SCHEDULE_STATUS } from '../../constants/InterviewScheduleConst';
 import { InterviewScheduleCalendar } from '../../components/customized-components/InterviewScheduleCalendar/InterviewScheduleCalendar.component';
-import { getSchedule } from '../../services/jobhub-api/InterviewControllerService';
+import { getSchedule, requestChangeSchedule } from '../../services/jobhub-api/InterviewControllerService';
 import InterviewScheduleModalDetailComponent from '../../components/customized-components/InterviewScheduleModalDetail/InterviewScheduleModalDetail.component';
 import InterviewScheduleModalRequestChangeComponent from '../../components/customized-components/InterviewScheduleModalRequestChange/InterviewScheduleModalRequestChange.component';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+
+const { Title } = Typography;
 
 const InterviewScheduleContainer = () => {
   const [pivotDate, setPivotDate] = useState(moment());
@@ -16,12 +18,15 @@ const InterviewScheduleContainer = () => {
   const [requestChangeModalVisible, setRequestChangeModalVisible] = useState(false);
   //modal detail
   const [modalDetail, setModalDetail] = useState();
+  const [reRender, setReRender] = useState(true);
+
+  const [requestChangeError, setRequestChangeError] = useState(undefined);
 
   const [form] = Form.useForm();
 
   useEffect(() => {
     fetchData();
-  }, [pivotDate]);
+  }, [pivotDate, reRender]);
 
   const getBadgeType = (status) => {
     switch (status) {
@@ -39,28 +44,36 @@ const InterviewScheduleContainer = () => {
   };
 
   const fetchData = async () => {
-    let data = (
-      await getSchedule({
-        beginTime: pivotDate.subtract(15, 'd').unix() * 1000,
-        endTime: pivotDate.add(15, 'd').unix() * 1000
-      })
-    ).data;
+    try {
+      let data = (
+        await getSchedule({
+          beginTime: pivotDate.subtract(15, 'd').unix() * 1000,
+          endTime: pivotDate.add(15, 'd').unix() * 1000
+        })
+      ).data;
 
-    data = data.map((item) => {
-      const date = moment.unix(item.beginTime / 1000);
-      return {
-        ...item,
-        day: date.date(),
-        month: date.month(),
-        year: date.year(),
-        title: item.name,
-        timeStart: item.beginTime,
-        timeEnd: item.endTime,
-        interviewLink: item.url,
-        badgeType: getBadgeType(item.status)
-      };
-    });
-    setInterviewSchedule(data);
+      data = data.map((item) => {
+        const date = moment.unix(item.beginTime / 1000);
+        return {
+          ...item,
+          day: date.date(),
+          month: date.month(),
+          year: date.year(),
+          title: item.name,
+          timeStart: item.beginTime,
+          timeEnd: item.endTime,
+          interviewLink: item.url,
+          badgeType: getBadgeType(item.status)
+        };
+      });
+      setInterviewSchedule(data);
+    } catch (e) {
+      notification['error']({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching data, try again later`,
+        duration: 2
+      });
+    }
   };
 
   const onCancelModal = () => {
@@ -76,16 +89,40 @@ const InterviewScheduleContainer = () => {
     setRequestChangeModalVisible(true);
   };
 
-  const disabledDate = (current) => current && current < moment().startOf('day');
-
-  const onFinish = null;
+  const onFinish = async (values, scheduleData) => {
+    const { interviewDate, timeStart, timeEnd, reason } = values;
+    const beginTime = (interviewDate.unix() + (timeStart.unix() - timeStart.startOf('day').unix())) * 1000;
+    const endTime = (interviewDate.unix() + (timeEnd.unix() - timeEnd.startOf('day').unix())) * 1000;
+    const requestMessage = reason;
+    const applicationId = scheduleData.id;
+    try {
+      await requestChangeSchedule(applicationId, beginTime, endTime, requestMessage);
+      notification['success']({
+        message: `Request successfully`,
+        description: `Your request has been sent to company`
+      });
+      setRequestChangeError(undefined);
+      setRequestChangeModalVisible(false);
+      setReRender((prevState) => !prevState);
+    } catch (e) {
+      if (e.response.status === 400) {
+        setRequestChangeError(e.response.data.message);
+        return;
+      }
+      notification['error']({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching data, try again later`,
+        duration: 2
+      });
+    }
+  };
 
   const onPanelChange = (value) => {
     setPivotDate(value);
   };
 
   return (
-    <div>
+    <div className={'interview-schedule-container'}>
       <InterviewScheduleModalDetailComponent
         visible={scheduleDetailModalVisible}
         onCancel={onCancelModal}
@@ -96,9 +133,9 @@ const InterviewScheduleContainer = () => {
         data={modalDetail}
         visible={requestChangeModalVisible}
         onCancel={onCancelRequestChangeModal}
-        disabledDate={disabledDate}
         form={form}
         onFinish={onFinish}
+        requestChangeError={requestChangeError}
       />
       <InterviewScheduleCalendar
         setScheduleModalVisible={setScheduleDetailModalVisible}
@@ -106,6 +143,15 @@ const InterviewScheduleContainer = () => {
         data={interviewSchedule}
         onPanelChange={onPanelChange}
       />
+      <div className={'legend'}>
+        <Title level={4}>Legend</Title>
+        <div className={'container'}>
+          <Badge status='warning' text={'Not yet'} />
+          <Badge status='success' text={'Done'} />
+          <Badge status='error' text={'Request change'} />
+          <Badge status='processing' text={'Happening'} />
+        </div>
+      </div>
     </div>
   );
 };

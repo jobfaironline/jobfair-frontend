@@ -2,7 +2,7 @@ import InterviewScheduleContainer from '../../containers/InterviewScheduleCalend
 import React from 'react';
 
 const InterviewSchedulePage = () => (
-  <div className='page'>
+  <div className='page padding-bottom-page'>
     <InterviewScheduleContainer />
   </div>
 );

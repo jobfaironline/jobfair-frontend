@@ -149,12 +149,12 @@ const AppRouter = () => {
           exact
         />
         <AttendantRouter
-        key={PATH_ATTENDANT.INTERVIEW_SCHEDULE}
-        component={() => <InterviewSchedulePage />}
-        path={PATH_ATTENDANT.INTERVIEW_SCHEDULE}
-        exact
-      />
-      <CompanyEmployeeRouter
+          key={PATH_ATTENDANT.INTERVIEW_SCHEDULE}
+          component={() => <InterviewSchedulePage />}
+          path={PATH_ATTENDANT.INTERVIEW_SCHEDULE}
+          exact
+        />
+        <CompanyEmployeeRouter
           key={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}
           component={() => <ApplicationManagementPage />}
           path={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}
@@ -194,12 +194,12 @@ const AppRouter = () => {
           key={PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE}
           component={() => <EmployeeAssignBoothMapPage />}
           path={PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE}
-        exact
-      />
-      <CompanyEmployeeRouter
-        key={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}
-        component={() => <InterviewSchedulePage />}
-        path={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}
+          component={() => <InterviewSchedulePage />}
+          path={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}
           exact
         />
         <CompanyManagerRouter
@@ -262,7 +262,6 @@ const AppRouter = () => {
           path={PATH_COMPANY_MANAGER.QUESTION_BANK}
           exact
         />
-        //to fix browserrouter problem
         <Route path='/index.html'>
           <Redirect to='/' />
         </Route>
