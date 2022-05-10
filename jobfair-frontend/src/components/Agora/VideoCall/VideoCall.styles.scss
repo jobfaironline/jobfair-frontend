@@ -29,10 +29,11 @@
 
     .videoIcon {
       display: flex;
-      position: absolute;
-      left: 50%;
-      top: 35%;
-      transform: translate(-50%, -50%);
+      justify-content: center;
+
+      button {
+        margin: 1rem 0.5rem;
+      }
     }
   }
 }

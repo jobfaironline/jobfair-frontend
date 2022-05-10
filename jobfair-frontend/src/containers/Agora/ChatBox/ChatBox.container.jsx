@@ -4,8 +4,8 @@ import { getAgoraRTMToken } from '../../../services/jobhub-api/AgoraTokenControl
 import { useSelector } from 'react-redux';
 import AgoraRTC from 'agora-rtc-react';
 import ChatBoxComponent from '../../../components/Agora/ChatBox/ChatBox.component';
-import InterviewChatFieldComponent from '../../../components/Agora/InterviewChatField/InterviewChatField.component';
 import React, { useEffect, useState } from 'react';
+import VideoCallContainer from '../VideoCall/VideoCall.container';
 
 class Message {
   constructor(accountName, content, isMyMessage) {
@@ -27,8 +27,6 @@ const ChatBoxContainer = (props) => {
   const rtm = useSelector((state) => state.agora.rtmClient);
   const userId = useSelector((state) => state.authentication.user.userId);
   const channelId = useSelector((state) => state.agora.channelId);
-  //handle button Chat
-  const [isShowChatBox, setIsShowChatBox] = useState(true);
 
   async function initializeRtmClient(rtmClient, rtmToken, userId) {
     rtmClient.on('ConnectionStateChanged', (newState, reason) => {
@@ -107,36 +105,27 @@ const ChatBoxContainer = (props) => {
     });
   }, []);
 
-  if (type === 'INTERVIEW_ROOM') {
-    return (
-      <>
-        <InterviewChatFieldComponent
-          messageList={messageList}
-          form={form}
-          onEnter={onSubmit}
-          isChatReady={isChatReady}
-          text={text}
-          setText={setText}
-        />
-      </>
-    );
-  } else {
-    return (
-      <>
-        <ChatBoxComponent
-          isShowChatBox={isShowChatBox}
-          setIsShowChatBox={setIsShowChatBox}
-          messageList={messageList}
-          form={form}
-          onSubmit={onSubmit}
-          isChatReady={isChatReady}
-          audioReady={audioReady}
-          audioTrack={audioTrack}
-          cameraReady={cameraReady}
-          cameraTrack={cameraTrack}
-        />
-      </>
-    );
-  }
+  return (
+    <ChatBoxComponent
+      messageList={messageList}
+      form={form}
+      onSubmit={onSubmit}
+      isChatReady={isChatReady}
+      videoCallComponent={
+        type === 'INTERVIEW_ROOM'
+          ? () => {}
+          : () => (
+              <>
+                <VideoCallContainer
+                  audioReady={audioReady}
+                  audioTrack={audioTrack}
+                  cameraReady={cameraReady}
+                  cameraTrack={cameraTrack}
+                />
+              </>
+            )
+      }
+    />
+  );
 };
 export default ChatBoxContainer;

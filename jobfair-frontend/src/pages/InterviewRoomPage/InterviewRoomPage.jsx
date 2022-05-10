@@ -47,7 +47,7 @@ const InterviewRoomPage = () => {
   };
 
   return (
-    <div className='page'>
+    <div className='page' style={{ padding: 0 }}>
       <InterviewRoomContainer audioTrackRef={audioTrackRef} cameraTrackRef={cameraTrackRef} />
     </div>
   );
