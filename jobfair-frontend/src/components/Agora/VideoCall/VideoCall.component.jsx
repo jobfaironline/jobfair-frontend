@@ -1,6 +1,7 @@
 import { AgoraVideoPlayer } from 'agora-rtc-react';
+import { Button, Tag, Tooltip } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MailOutlined } from '@ant-design/icons';
-import { Tag, Tooltip } from 'antd';
 import {
   faMicrophone,
   faMicrophoneSlash,
@@ -11,11 +12,9 @@ import {
 import NoPhotographyIcon from '@mui/icons-material/NoPhotography';
 import PowerOffIcon from '@mui/icons-material/PowerOff';
 import React from 'react';
-import VideocamIcon from '@mui/icons-material/Videocam';
-import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 
 const VideoCallComponent = (props) => {
-  const { cameraReady, muteState, users, audioTrack, cameraTrack, handleMute, type, handleClose } = props;
+  const { cameraReady, muteState, users, audioTrack, cameraTrack, handleMute, handleClose } = props;
   return (
     <div className={'video-call'} style={{ height: '100%', padding: '2rem' }}>
       <div className={'topVideoCall'} style={{ width: '95%', padding: '0rem 0.5rem' }}>
@@ -59,28 +58,19 @@ const VideoCallComponent = (props) => {
           />
         )}
         <div className={'videoIcon'}>
-          {cameraTrack ? (
-            <div className={muteState.video ? 'on' : ''} onClick={() => handleMute('video')}>
-              {!muteState.video ? (
-                <Tooltip title='Turn off camera'>
-                  <FontAwesomeIcon icon={faVideoCamera} />
-                </Tooltip>
-              ) : (
-                <Tooltip title='Turn on camera'>
-                  <FontAwesomeIcon icon={faVideoSlash} />
-                </Tooltip>
-              )}
-            </div>
-          ) : (
-            <NoPhotographyIcon />
-          )}
           {audioTrack ? (
             <div className={muteState.audio ? 'on' : ''}>
               <Button
                 type='primary'
                 shape='circle'
                 size='large'
-                icon={!muteState.audio ? <MicIcon /> : <MicOffIcon />}
+                icon={
+                  !muteState.audio ? (
+                    <FontAwesomeIcon icon={faMicrophone} />
+                  ) : (
+                    <FontAwesomeIcon icon={faMicrophoneSlash} />
+                  )
+                }
                 onClick={() => handleMute('audio')}
               />
             </div>
@@ -93,7 +83,17 @@ const VideoCallComponent = (props) => {
                 type='primary'
                 shape='circle'
                 size='large'
-                icon={!muteState.video ? <VideocamIcon /> : <VideocamOffIcon />}
+                icon={
+                  !muteState.video ? (
+                    <Tooltip title='Turn off camera'>
+                      <FontAwesomeIcon icon={faVideoCamera} />
+                    </Tooltip>
+                  ) : (
+                    <Tooltip title='Turn on camera'>
+                      <FontAwesomeIcon icon={faVideoSlash} />
+                    </Tooltip>
+                  )
+                }
                 onClick={() => handleMute('video')}
               />
             </div>
@@ -104,10 +104,12 @@ const VideoCallComponent = (props) => {
             type='primary'
             shape='circle'
             size='large'
-            icon={<CallEndIcon />}
-            onClick={() => {
-              /*end call*/
-            }}
+            icon={
+              <Tooltip title='Leave call'>
+                <FontAwesomeIcon icon={faPhone} />
+              </Tooltip>
+            }
+            onClick={() => handleClose()}
           />
         </div>
       </div>

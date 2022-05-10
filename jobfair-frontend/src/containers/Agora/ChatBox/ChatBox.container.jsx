@@ -108,12 +108,11 @@ const ChatBoxContainer = (props) => {
   return (
     <ChatBoxComponent
       messageList={messageList}
-      form={form}
-      onSubmit={onSubmit}
-      isChatReady={isChatReady}
+      onEnter={onSubmit}
       videoCallComponent={
         type === 'INTERVIEW_ROOM'
-          ? () => {}
+          ? // eslint-disable-next-line no-empty-function
+            () => {}
           : () => (
               <>
                 <VideoCallContainer

@@ -73,7 +73,8 @@ const VideoCallContainer = (props) => {
     notification.success({
       description: 'You have left the channel'
     });
-    history.push(PATH.INTERVIEW_LANDING_PAGE);
+    if (type === 'INTERVIEW_ROOM') history.push(PATH.INTERVIEW_LANDING_PAGE);
+    else history.push(PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE);
   };
   return (
     <VideoCallComponent
@@ -84,7 +85,6 @@ const VideoCallContainer = (props) => {
       cameraTrack={cameraTrack}
       handleMute={handleMute}
       handleClose={handleClose}
-      type={type}
     />
   );
 };
