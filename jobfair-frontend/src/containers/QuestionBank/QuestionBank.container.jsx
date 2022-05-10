@@ -17,7 +17,7 @@ import { loadCSVFileAntdProps, uploadUtil } from '../../utils/uploadCSVUtil';
 import { v4 as uuidv4 } from 'uuid';
 import JobPositionDetailCollapseComponent from '../../components/customized-components/JobPositionDetailCollapse/JobPositionDetailCollapse.component';
 import PaginationComponent from '../../components/commons/PaginationComponent/Pagination.component';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const { Search } = Input;
 
@@ -42,6 +42,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
   const [searchValue, setSearchValue] = useState('');
 
   const [form] = Form.useForm();
+  const dataRef = useRef(data);
 
   const fetchData = async () => {
     try {
@@ -65,7 +66,12 @@ const QuestionBankContainer = ({ jobPositionId }) => {
           }
         }
       }
-      setData((prevState) => ({ ...prevState, jobPosition: jobPositionData, questions: questionData }));
+
+      setData((prevState) => {
+        const state = { ...prevState, jobPosition: jobPositionData, questions: questionData };
+        dataRef.current = state;
+        return state;
+      });
     } catch (e) {
       notification['error']({
         message: 'Error while fetching data'
@@ -88,20 +94,32 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     let editingQuestionIds = data.editingQuestionIds;
     if (isAdd) editingQuestionIds.push(questionId);
     else editingQuestionIds = editingQuestionIds.filter((id) => id !== questionId);
-    setData((prevState) => ({ ...prevState, editingQuestionIds }));
+    setData((prevState) => {
+      const state = { ...prevState, editingQuestionIds };
+      dataRef.current = state;
+      return state;
+    });
   };
 
   const onChangeIsCorrect = (questionId, answerId, value) => {
     const question = data.questions.find((question) => question.id === questionId);
     const answer = question.choicesList.find((answer) => answer.id === answerId);
     answer.isCorrect = value;
-    setData((prevState) => ({ ...prevState, ...data }));
+    setData((prevState) => {
+      const state = { ...prevState, ...data };
+      dataRef.current = state;
+      return state;
+    });
   };
 
   const onDeleteAnswer = (questionId, answerId) => {
     const question = data.questions.find((question) => question.id === questionId);
     question.choicesList = question.choicesList.filter((answer) => answer.id !== answerId);
-    setData((prevState) => ({ ...prevState, ...data }));
+    setData((prevState) => {
+      const state = { ...prevState, ...data };
+      dataRef.current = state;
+      return state;
+    });
   };
 
   const onAddAnswer = (questionId) => {
@@ -114,26 +132,34 @@ const QuestionBankContainer = ({ jobPositionId }) => {
       order: question.choicesList.length + 1
     };
     question.choicesList.push(answer);
-    setData((prevState) => ({ ...prevState, ...data }));
+    setData((prevState) => {
+      const state = { ...prevState, ...data };
+      dataRef.current = state;
+      return state;
+    });
   };
 
   const onDeleteQuestion = (questionId) => {
     data.questions = data.questions.filter((question) => question.id !== questionId);
     data.deletedQuestionIds.push(questionId);
-    setData((prevState) => ({ ...prevState, ...data }));
+    setData((prevState) => {
+      const state = { ...prevState, ...data };
+      dataRef.current = state;
+      return state;
+    });
   };
 
   const onQuestionContentChange = async (questionId, value) => {
     const question = data.questions.find((question) => question.id === questionId);
     question.content = value;
-    setData((prevState) => ({ ...prevState, ...data }));
+    dataRef.current = { ...data };
   };
 
   const onAnswerContentChange = async (questionId, answerId, value) => {
     const question = data.questions.find((question) => question.id === questionId);
     const answer = question.choicesList.find((answer) => answer.id === answerId);
     answer.content = value;
-    setData((prevState) => ({ ...prevState, ...data }));
+    dataRef.current = { ...data };
   };
 
   const onAddQuestion = () => {
@@ -156,7 +182,11 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     data.newQuestionIds.push(question.id);
     data.editingQuestionIds.push(question.id);
     data.editedQuestionsIds.push(question.id);
-    setData((prevState) => ({ ...prevState, ...data }));
+    setData((prevState) => {
+      const state = { ...prevState, ...data };
+      dataRef.current = state;
+      return state;
+    });
   };
 
   const onSave = async () => {
@@ -186,55 +216,65 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     if (Object.keys(data.errors).length > 0) {
       const firstError = Object.keys(data.errors)[0];
       form.scrollToField(firstError, { behavior: 'smooth', block: 'start' });
-      setData((prevState) => ({ ...prevState, ...data }));
+      setData((prevState) => {
+        const state = { ...prevState, ...data };
+        dataRef.current = state;
+        return state;
+      });
       return;
     }
 
-    const updatedQuestion = data.questions.filter(
+    const updatedQuestion = dataRef.current.questions.filter(
       (question) =>
-        data.editedQuestionsIds.includes(question.id) &&
-        !data.newQuestionIds.includes(question.id) &&
-        !data.deletedQuestionIds.includes(question.id)
+        dataRef.current.editedQuestionsIds.includes(question.id) &&
+        !dataRef.current.newQuestionIds.includes(question.id) &&
+        !dataRef.current.deletedQuestionIds.includes(question.id)
     );
-    const newQuestion = data.questions.filter(
-      (question) => data.newQuestionIds.includes(question.id) && !data.deletedQuestionIds.includes(question.id)
+    const newQuestion = dataRef.current.questions.filter(
+      (question) =>
+        dataRef.current.newQuestionIds.includes(question.id) &&
+        !dataRef.current.deletedQuestionIds.includes(question.id)
     );
     const promises = [];
     updatedQuestion.forEach((question) => {
       const body = {
-        jobPositionId: data.jobPosition.id,
+        jobPositionId: dataRef.current.jobPosition.id,
         id: question.id,
         content: question.content,
-        choicesList: question.choicesList.map((answer) => ({ content: answer.content, correct: answer.isCorrect }))
+        choicesList: question.choicesList.map((answer) => ({ content: answer.content, isCorrect: answer.isCorrect }))
       };
       const promise = updateQuestion(body);
       promises.push(promise);
     });
     newQuestion.forEach((question) => {
       const body = {
-        jobPositionId: data.jobPosition.id,
+        jobPositionId: dataRef.current.jobPosition.id,
         content: question.content,
-        choicesList: question.choicesList.map((answer) => ({ content: answer.content, correct: answer.isCorrect }))
+        choicesList: question.choicesList.map((answer) => ({ content: answer.content, isCorrect: answer.isCorrect }))
       };
       const promise = createQuestion(body);
       promises.push(promise);
     });
-    data.deletedQuestionIds.forEach((questionId) => {
-      if (data.newQuestionIds.includes(questionId)) return;
+    dataRef.current.deletedQuestionIds.forEach((questionId) => {
+      if (dataRef.current.newQuestionIds.includes(questionId)) return;
       const promise = deleteQuestion(questionId);
       promises.push(promise);
     });
 
     try {
       await Promise.all(promises);
-      setData((prevState) => ({
-        ...prevState,
-        editingQuestionIds: [],
-        newQuestionIds: [],
-        errors: {},
-        editedQuestionsIds: [],
-        deletedQuestionIds: []
-      }));
+      setData((prevState) => {
+        const state = {
+          ...prevState,
+          editingQuestionIds: [],
+          newQuestionIds: [],
+          errors: {},
+          editedQuestionsIds: [],
+          deletedQuestionIds: []
+        };
+        dataRef.current = state;
+        return state;
+      });
       notification['success']({
         message: `Save successfully`
       });
@@ -248,14 +288,18 @@ const QuestionBankContainer = ({ jobPositionId }) => {
   };
 
   const onCancel = () => {
-    setData((prevState) => ({
-      ...prevState,
-      editingQuestionIds: [],
-      newQuestionIds: [],
-      errors: {},
-      editedQuestionsIds: [],
-      deletedQuestionIds: []
-    }));
+    setData((prevState) => {
+      const state = {
+        ...prevState,
+        editingQuestionIds: [],
+        newQuestionIds: [],
+        errors: {},
+        editedQuestionsIds: [],
+        deletedQuestionIds: []
+      };
+      dataRef.current = state;
+      return state;
+    });
   };
 
   const handlePageChange = async (page, pageSize) => {
@@ -295,13 +339,17 @@ const QuestionBankContainer = ({ jobPositionId }) => {
 
     if (result) {
       setSearchValue(value);
-      setData((prevState) => ({
-        ...prevState,
-        editingQuestionIds: [],
-        newQuestionIds: [],
-        errors: {},
-        editedQuestionsIds: []
-      }));
+      setData((prevState) => {
+        const state = {
+          ...prevState,
+          editingQuestionIds: [],
+          newQuestionIds: [],
+          errors: {},
+          editedQuestionsIds: []
+        };
+        dataRef.current = state;
+        return state;
+      });
     }
   };
 
