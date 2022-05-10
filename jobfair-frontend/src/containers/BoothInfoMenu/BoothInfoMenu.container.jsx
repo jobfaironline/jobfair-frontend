@@ -5,11 +5,13 @@ import { CompanyInformation } from '../../components/customized-components/Booth
 import { Tabs, Typography, notification } from 'antd';
 import { getCompanyBoothById } from '../../services/jobhub-api/CompanyBoothControllerService';
 import { getCompanyProfileAPI } from '../../services/jobhub-api/CompanyControllerService';
+import BoothControlSettingContainer from '../BoothControlSetting/BoothControlSetting.container';
+import ChatBox from '../../components/Agora/ChatBox/ChatBox.component';
 import React, { useEffect, useState } from 'react';
 import SideBar from '../../components/commons/InfoMenu/InfoMenu.component';
 
 export const BoothInfoMenuContainer = (props) => {
-  const { companyBoothId, handleOpenDetail, isShow, activeKey, openInventory } = props;
+  const { companyBoothId, handleOpenDetail, isShow, activeKey, openInventory, communicationProps } = props;
   const [state, setState] = useState({
     companyInformation: undefined,
     jobPositions: []
@@ -58,8 +60,8 @@ export const BoothInfoMenuContainer = (props) => {
           </div>
         }
         key='0'>
-        <div className={'aboutCompany'}>
-          <Typography variant='button'>Chat & Video call</Typography>
+        <div style={{ marginTop: '30rem' }}>
+          <ChatBox {...communicationProps} />
         </div>
       </Tabs.TabPane>,
       <Tabs.TabPane
@@ -72,7 +74,6 @@ export const BoothInfoMenuContainer = (props) => {
         }
         key='1'>
         <div className={'aboutCompany'}>
-          <Typography variant='button'>About Company</Typography>
           <CompanyInformation data={state.companyInformation} />
         </div>
       </Tabs.TabPane>,
@@ -96,7 +97,7 @@ export const BoothInfoMenuContainer = (props) => {
           </div>
         }
         key='3'>
-        <BoothJobPositionTabContainer jobPositions={state.jobPositions} openInventory={openInventory} />
+        <BoothControlSettingContainer />
       </Tabs.TabPane>
     ]
   };

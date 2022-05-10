@@ -4,7 +4,6 @@ import { ControlTipsModalContainer } from '../../ControlTipModal/ControlTipsModa
 import { InventoryContainer } from '../../Inventory/Inventory.container';
 import { JobFairBoothContainer } from './JobFairBooth.container';
 import { useLocation } from 'react-router-dom';
-import ChatBox from '../../../components/Agora/ChatBox/ChatBox.component';
 import React, { useEffect, useState } from 'react';
 
 export const AttendantJobFairBoothViewContainer = (props) => {
@@ -39,6 +38,7 @@ export const AttendantJobFairBoothViewContainer = (props) => {
           activeKey={tabState.activeKey}
           handleOpenDetail={handleOpenDetail}
           openInventory={openInventory}
+          communicationProps={communicationProps}
         />
         <div className={'booth'}>
           <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />
@@ -55,7 +55,6 @@ export const AttendantJobFairBoothViewContainer = (props) => {
             geckoClientRef={geckoClientRef}
           />
         </div>
-        <ChatBox {...communicationProps} />
       </div>
     </>
   );
