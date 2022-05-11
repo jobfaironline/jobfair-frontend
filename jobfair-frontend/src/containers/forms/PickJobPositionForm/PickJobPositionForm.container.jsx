@@ -97,7 +97,7 @@ const PickJobPositionFormContainer = ({ form, companyBoothId }) => {
         maxSalary: item.maxSalary,
         minSalary: item.minSalary,
         numOfPosition: item.numOfPosition,
-        isHaveTest: item.isHaveTest && item.isHaveTest.length > 0,
+        isHaveTest: item.isHaveTest !== undefined && item.isHaveTest.length > 0,
         passMark: item.passMark,
         testLength: item.testLength,
         testNumOfQuestion: item.testNumOfQuestion,

@@ -1,10 +1,36 @@
-import { ApplicationValidation } from '../../../validate/ApplicationValidation';
 import { Button, Form, Space } from 'antd';
+import { PATH_ATTENDANT } from '../../../constants/Paths/Path';
+import { TestStatus } from '../../../constants/ApplicationConst';
+import { generatePath, useHistory } from 'react-router-dom';
 import React from 'react';
-import TextArea from 'antd/es/input/TextArea';
 
 const ConfirmSubmitResumeFormComponent = (props) => {
-  const { onFinish } = props;
+  const { onFinish, applicationData, quizId } = props;
+  const history = useHistory();
+
+  const messageGenerate = () => {
+    if (applicationData === undefined) return;
+    switch (applicationData.testStatus) {
+      case TestStatus.PASS:
+        return <span>You have passed the entry test. Do you want to apply</span>;
+      case TestStatus.FAIL:
+        return <span>You have failed the entry test</span>;
+      case TestStatus.IN_PROGRESS:
+        return (
+          <Button
+            onClick={() => {
+              const url = generatePath(PATH_ATTENDANT.ATTEMPT_TEST_PAGE, {
+                quizId
+              });
+              history.push(url, { from: window.location.pathname });
+            }}>
+            Resume test
+          </Button>
+        );
+      default:
+        return null;
+    }
+  };
 
   const [form] = Form.useForm();
   return (
@@ -16,15 +42,14 @@ const ConfirmSubmitResumeFormComponent = (props) => {
       labelAlign={'left'}
       scrollToFirstError={{ block: 'center', behavior: 'smooth' }}>
       <Space direction='vertical' style={{ width: '100%' }}>
-        <Form.Item
-          label='Message to employers'
-          name='summary'
-          rules={ApplicationValidation.summary}
-          style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-          <TextArea placeholder='Summary' showCount maxLength={1000} autoSize={{ minRows: 5 }} />
-        </Form.Item>
         <Form.Item>
-          <Button type='primary' htmlType='submit' style={{ position: 'absolute', right: '0' }}>
+          {messageGenerate()}
+          <Button
+            type='primary'
+            htmlType='submit'
+            style={{ position: 'absolute', right: '0' }}
+            className={'button'}
+            disabled={applicationData?.testStatus === TestStatus.FAIL}>
             Apply
           </Button>
         </Form.Item>
