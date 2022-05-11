@@ -225,8 +225,6 @@ const VideoCallComponent = (props) => {
           <div style={{ height: '100%' }}>
             {users.length > 0 &&
               users.map((user) => {
-                console.log(user);
-                debugger;
                 if (user.videoTrack) {
                   return (
                     <AgoraVideoPlayer

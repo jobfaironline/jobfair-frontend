@@ -28,9 +28,14 @@ const VideoCallContainer = (props) => {
       // eslint-disable-next-line no-console
       console.log('subscribe success');
 
-      if (mediaType === 'video') user.videoTrack?.play();
+      if (mediaType === 'video') {
+        setUsers((prevUsers) => {
+          const tmp = prevUsers.filter((User) => User.uid !== user.uid);
+          return [...tmp, user];
+        });
+      }
 
-      if (mediaType === 'audio') user.audioTrack?.play();
+      if (mediaType === 'audio') user?.audioTrack?.play();
     });
 
     rtcClient.on('user-unpublished', (user, type) => {
@@ -39,6 +44,7 @@ const VideoCallContainer = (props) => {
       if (type === 'audio') user.audioTrack?.stop();
 
       if (type === 'video') user.videoTrack?.stop();
+      setUsers((prevUsers) => [...prevUsers]);
     });
 
     rtcClient.on('user-left', (user) => {

@@ -35,7 +35,7 @@ const InterviewRoomContainer = (props) => {
             cameraReady={cameraReady}
             cameraTrack={cameraTrack}
             type={'INTERVIEW_ROOM'}
-            height={'850px'}
+            height={'87vh'}
             width={'100%'}
           />
         </>
