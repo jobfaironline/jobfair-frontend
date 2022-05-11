@@ -22,7 +22,13 @@ const VideoCallContainer = (props) => {
       await rtcClient.subscribe(user, mediaType);
       // eslint-disable-next-line no-console
       console.log('subscribe success');
-      if (mediaType === 'video') setUsers((prevUsers) => [...prevUsers, user]);
+      if (mediaType === 'video') {
+        if (users.find((u) => u.uid === user.uid)) {
+          if (mediaType === 'video') user.videoTrack?.play();
+        } else {
+          setUsers((prevUsers) => [...prevUsers, user]);
+        }
+      }
 
       if (mediaType === 'audio') user.audioTrack?.play();
     });
@@ -32,7 +38,7 @@ const VideoCallContainer = (props) => {
       console.log('unpublished', user, type);
       if (type === 'audio') user.audioTrack?.stop();
 
-      if (type === 'video') setUsers((prevUsers) => prevUsers.filter((User) => User.uid !== user.uid));
+      if (type === 'video') user.videoTrack?.stop();
     });
 
     rtcClient.on('user-left', (user) => {
@@ -80,7 +86,7 @@ const VideoCallContainer = (props) => {
     <VideoCallComponent
       cameraReady={cameraReady}
       muteState={muteState}
-      users={users}
+      users={[...users]}
       audioTrack={audioTrack}
       cameraTrack={cameraTrack}
       handleMute={handleMute}

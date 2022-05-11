@@ -35,9 +35,8 @@ const InterviewRoomContainer = (props) => {
             cameraReady={cameraReady}
             cameraTrack={cameraTrack}
             type={'INTERVIEW_ROOM'}
-            height={'720px'}
+            height={'850px'}
             width={'100%'}
-            layoutMode={'WAITINGROOM'}
           />
         </>
       }
