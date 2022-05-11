@@ -2,7 +2,7 @@ import { getCompanyLayoutAPI } from '../../services/jobhub-api/LayoutControllerS
 import { getTemplateLayoutAPI } from '../../services/jobhub-api/TemplateControllerService';
 import React, { useEffect, useState } from 'react';
 import SelectJobFairTemplateComponent from '../../components/customized-components/SelectJobFairTemplate/SelectJobFairTemplate.component';
-import UploadModalContainer from '../UploadModal/UploadModal.container';
+import UploadJobFairLayoutModalContainer from '../UploadModal/UploadJobFairLayoutModal.container';
 
 const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, visible, setVisible, isDefaultTemplate }) => {
   const [data, setData] = useState([]);
@@ -29,7 +29,7 @@ const SelectCompanyTemplateJobFairContainer = ({ handleLoad3DMap, visible, setVi
   }, [forceRerenderState]);
   return (
     <div>
-      <UploadModalContainer visible={visible} onSubmit={onSubmit} onCancel={onCancel} />
+      <UploadJobFairLayoutModalContainer visible={visible} onSubmit={onSubmit} onCancel={onCancel} />
       <SelectJobFairTemplateComponent listData={data} handleLoad3DMap={handleLoad3DMap} />
     </div>
   );
