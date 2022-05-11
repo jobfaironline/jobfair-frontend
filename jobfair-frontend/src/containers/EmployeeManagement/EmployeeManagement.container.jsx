@@ -1,5 +1,6 @@
 import './EmployeeManagement.styles.scss';
-import { Button, Form, Input, Modal, Popconfirm, Space, Typography, Upload, notification } from 'antd';
+import { Button, Form, Input, Modal, Popconfirm, Space, Typography, notification } from 'antd';
+import { UploadCSVModal } from '../UploadModal/UploadCSVModal.container';
 import { UploadOutlined } from '@ant-design/icons';
 import {
   createEmployeesAPI,
@@ -7,7 +8,7 @@ import {
   getEmployeesAPI,
   uploadCSVFile
 } from '../../services/jobhub-api/CompanyEmployeeControllerService';
-import { loadCSVFileAntdProps, uploadUtil } from '../../utils/uploadCSVUtil';
+import { uploadUtil } from '../../utils/uploadCSVUtil';
 import { useSelector } from 'react-redux';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import EmployeeDrawer from './EmployeeDrawer.container';
@@ -33,6 +34,7 @@ const EmployeeManagementContainer = () => {
   const [reRender, setReRender] = useState(false);
   const [isAddEmployeeModalVisible, setIsAddEmployeeModalVisible] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [uploadCsvModalVisible, setUploadCSVModalVisible] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -99,8 +101,11 @@ const EmployeeManagementContainer = () => {
 
   const onChangeUpload = async (info) => {
     await uploadUtil(info, uploadCSVFile);
-    //force render to fetch data after upload
-    setReRender((prevState) => !prevState);
+  };
+
+  const onCloseUploadCSVModal = () => {
+    setUploadCSVModalVisible(false);
+    setReRender((reRender) => !reRender);
   };
 
   const onFinish = (values) => {
@@ -172,6 +177,7 @@ const EmployeeManagementContainer = () => {
 
   return (
     <>
+      <UploadCSVModal visible={uploadCsvModalVisible} handleUpload={onChangeUpload} onCancel={onCloseUploadCSVModal} />
       <Modal
         className={'add-employee-modal'}
         visible={isAddEmployeeModalVisible}
@@ -194,11 +200,14 @@ const EmployeeManagementContainer = () => {
             Create employee account
           </Button>
           <div style={{ marginRight: '2rem' }}>
-            <Upload {...loadCSVFileAntdProps(onChangeUpload)}>
-              <Button style={{ borderRadius: 8 }} icon={<UploadOutlined />}>
-                Upload CSV
-              </Button>
-            </Upload>
+            <Button
+              style={{ borderRadius: 8 }}
+              icon={<UploadOutlined />}
+              onClick={() => {
+                setUploadCSVModalVisible(true);
+              }}>
+              Upload CSV or Excel file
+            </Button>
           </div>
         </div>
         <div className={'search-filter-container'}>

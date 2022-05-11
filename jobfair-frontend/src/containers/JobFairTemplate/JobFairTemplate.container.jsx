@@ -6,7 +6,7 @@ import { generatePath, useHistory } from 'react-router-dom';
 import { getCompanyLayoutAPI } from '../../services/jobhub-api/LayoutControllerService';
 import JobFairTemplateComponent from '../../components/customized-components/JobFairTemplate/JobFairTemplate.component';
 import React, { useEffect, useState } from 'react';
-import UploadModalContainer from '../UploadModal/UploadModal.container';
+import UploadJobFairLayoutModalContainer from '../UploadModal/UploadJobFairLayoutModal.container';
 
 const JobFairTemplateContainer = () => {
   const [data, setData] = useState();
@@ -53,7 +53,7 @@ const JobFairTemplateContainer = () => {
 
   return (
     <>
-      <UploadModalContainer visible={isVisible} onSubmit={onSubmit} onCancel={onCancel} />
+      <UploadJobFairLayoutModalContainer visible={isVisible} onSubmit={onSubmit} onCancel={onCancel} />
       <div className={'job-fair-template'}>
         <div className={'header'}>
           <Typography.Title level={2} style={{ marginRight: '2rem' }}>

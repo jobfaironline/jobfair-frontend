@@ -10,7 +10,7 @@ import React, { useRef, useState } from 'react';
 import UploadComponent from '../../components/commons/UploadComponent/Upload.component';
 
 const { TextArea } = Input;
-const UploadModalContainer = ({ visible, onCancel, onSubmit }) => {
+const UploadJobFairLayoutModalContainer = ({ visible, onCancel, onSubmit }) => {
   const glbFormData = useRef(new FormData());
   const thumbnailFormData = useRef(new FormData());
 
@@ -138,4 +138,4 @@ const UploadModalContainer = ({ visible, onCancel, onSubmit }) => {
   );
 };
 
-export default UploadModalContainer;
+export default UploadJobFairLayoutModalContainer;

@@ -1,8 +1,9 @@
 import './QuestionBank.styles.scss';
-import { Button, Card, Form, Input, List, Modal, Space, Upload, notification } from 'antd';
+import { Button, Card, Form, Input, List, Modal, Space, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { QuestionForm } from '../../components/forms/QuestionForm/QuestionForm.component';
+import { UploadCSVModal } from '../UploadModal/UploadCSVModal.container';
 import { UploadOutlined } from '@ant-design/icons';
 import {
   createQuestion,
@@ -13,7 +14,7 @@ import {
 } from '../../services/jobhub-api/QuestionControllerService';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { getJobPositionByIDAPI } from '../../services/jobhub-api/JobControllerService';
-import { loadCSVFileAntdProps, uploadUtil } from '../../utils/uploadCSVUtil';
+import { uploadUtil } from '../../utils/uploadCSVUtil';
 import { v4 as uuidv4 } from 'uuid';
 import JobPositionDetailCollapseComponent from '../../components/customized-components/JobPositionDetailCollapse/JobPositionDetailCollapse.component';
 import PaginationComponent from '../../components/commons/PaginationComponent/Pagination.component';
@@ -40,6 +41,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
   //re-render
   const [reRender, setReRender] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const [form] = Form.useForm();
   const dataRef = useRef(data);
@@ -83,9 +85,12 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     fetchData();
   }, [reRender, currentPage, pageSize, searchValue]);
 
-  const onChangeUpload = async (info) => {
-    await uploadUtil(info, uploadCSVFile, data.jobPosition.id);
-    //force render to fetch data after upload
+  const onUpload = async (file) => {
+    await uploadUtil(file, uploadCSVFile, data.jobPosition.id);
+  };
+
+  const onCloseUploadModal = () => {
+    setModalVisible(false);
     setReRender((prevState) => !prevState);
   };
 
@@ -356,73 +361,76 @@ const QuestionBankContainer = ({ jobPositionId }) => {
   if (data.questions === undefined || data.jobPosition === undefined) return <LoadingComponent />;
 
   return (
-    <div className={'question-bank'}>
-      <div className={'header'}>
-        <Search placeholder='Search question' className={'search-bar'} onSearch={onSearch} />
-        <Space className={'upload-section'}>
-          <Upload {...loadCSVFileAntdProps(onChangeUpload)}>
-            <Button icon={<UploadOutlined />}>Upload CSV</Button>{' '}
-          </Upload>
-        </Space>
-      </div>
-      <JobPositionDetailCollapseComponent jobPosition={data.jobPosition} />
-      <Card
-        hoverable={true}
-        className={'add-more-question'}
-        onClick={() => {
-          onAddQuestion();
-        }}>
-        <FontAwesomeIcon icon={faPlus} size={'2x'} color={'black'} />
-      </Card>
-      <List
-        dataSource={data.questions}
-        renderItem={(item) => {
-          const isEdit = data.editingQuestionIds.includes(item.id);
-          const error = data.errors[item.id];
-          return (
-            <QuestionForm
-              form={form}
-              error={error}
-              question={item}
-              onEditQuestion={onEditQuestion}
-              isEdit={isEdit}
-              onChangeIsCorrect={onChangeIsCorrect}
-              onDeleteAnswer={onDeleteAnswer}
-              onAddAnswer={onAddAnswer}
-              onDeleteQuestion={onDeleteQuestion}
-              onQuestionContentChange={onQuestionContentChange}
-              onAnswerContentChange={onAnswerContentChange}
-            />
-          );
-        }}
-      />
-      <div className={'button-container'}>
-        <Button className={'button'} style={{ marginLeft: 'auto' }} onClick={onSave}>
-          Save
-        </Button>
-        <Button className={'button'} style={{ marginLeft: '20px', marginRight: '10rem' }} onClick={onCancel}>
-          Cancel
-        </Button>
-      </div>
-      <div className={'paging'}>
-        {data.editedQuestionsIds.length > 0 ||
-        data.deletedQuestionIds.length > 0 ||
-        data.newQuestionIds.length > 0 ||
-        data.editedQuestionsIds.length > 0 ? (
-          <span className={'warning'}>You have unsaved changes</span>
-        ) : null}
-        <PaginationComponent
-          handlePageChange={handlePageChange}
-          totalRecord={totalRecord}
-          disable={
-            data.editedQuestionsIds.length > 0 ||
-            data.deletedQuestionIds.length > 0 ||
-            data.newQuestionIds.length > 0 ||
-            data.editedQuestionsIds.length > 0
-          }
+    <>
+      <UploadCSVModal visible={modalVisible} handleUpload={onUpload} onCancel={onCloseUploadModal} />
+      <div className={'question-bank'}>
+        <div className={'header'}>
+          <Search placeholder='Search question' className={'search-bar'} onSearch={onSearch} />
+          <Space className={'upload-section'}>
+            <Button icon={<UploadOutlined />} onClick={() => setModalVisible(true)}>
+              Upload CSV and Excel file
+            </Button>
+          </Space>
+        </div>
+        <JobPositionDetailCollapseComponent jobPosition={data.jobPosition} />
+        <Card
+          hoverable={true}
+          className={'add-more-question'}
+          onClick={() => {
+            onAddQuestion();
+          }}>
+          <FontAwesomeIcon icon={faPlus} size={'2x'} color={'black'} />
+        </Card>
+        <List
+          dataSource={data.questions}
+          renderItem={(item) => {
+            const isEdit = data.editingQuestionIds.includes(item.id);
+            const error = data.errors[item.id];
+            return (
+              <QuestionForm
+                form={form}
+                error={error}
+                question={item}
+                onEditQuestion={onEditQuestion}
+                isEdit={isEdit}
+                onChangeIsCorrect={onChangeIsCorrect}
+                onDeleteAnswer={onDeleteAnswer}
+                onAddAnswer={onAddAnswer}
+                onDeleteQuestion={onDeleteQuestion}
+                onQuestionContentChange={onQuestionContentChange}
+                onAnswerContentChange={onAnswerContentChange}
+              />
+            );
+          }}
         />
+        <div className={'button-container'}>
+          <Button className={'button'} style={{ marginLeft: 'auto' }} onClick={onSave}>
+            Save
+          </Button>
+          <Button className={'button'} style={{ marginLeft: '20px', marginRight: '10rem' }} onClick={onCancel}>
+            Cancel
+          </Button>
+        </div>
+        <div className={'paging'}>
+          {data.editedQuestionsIds.length > 0 ||
+          data.deletedQuestionIds.length > 0 ||
+          data.newQuestionIds.length > 0 ||
+          data.editedQuestionsIds.length > 0 ? (
+            <span className={'warning'}>You have unsaved changes</span>
+          ) : null}
+          <PaginationComponent
+            handlePageChange={handlePageChange}
+            totalRecord={totalRecord}
+            disable={
+              data.editedQuestionsIds.length > 0 ||
+              data.deletedQuestionIds.length > 0 ||
+              data.newQuestionIds.length > 0 ||
+              data.editedQuestionsIds.length > 0
+            }
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
