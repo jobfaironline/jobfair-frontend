@@ -11,7 +11,7 @@ import VideoCallComponent from '../../../components/Agora/VideoCall/VideoCall.co
 const { REACT_APP_AGORA_APP_ID } = process.env;
 const VideoCallContainer = (props) => {
   const history = useHistory();
-  const { audioReady, audioTrack, cameraReady, cameraTrack, type } = props;
+  const { audioReady, audioTrack, cameraReady, cameraTrack, type, layoutMode } = props;
   const [isRTCClientReady, setIsRTCClientReady] = useState(false);
   const [users, setUsers] = useState([]);
   const [muteState, setMuteState] = useState({ video: false, audio: false });
@@ -86,6 +86,8 @@ const VideoCallContainer = (props) => {
       handleMute={handleMute}
       handleClose={handleClose}
       height={props.height}
+      width={props.width}
+      layoutMode={layoutMode}
     />
   );
 };
