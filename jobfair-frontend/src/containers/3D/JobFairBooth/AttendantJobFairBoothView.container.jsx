@@ -3,6 +3,8 @@ import { BoothInfoMenuContainer } from '../../BoothInfoMenu/BoothInfoMenu.contai
 import { ControlTipsModalContainer } from '../../ControlTipModal/ControlTipsModal.container';
 import { InventoryContainer } from '../../Inventory/Inventory.container';
 import { JobFairBoothContainer } from './JobFairBooth.container';
+import ChatBoxContainer from '../../Agora/ChatBox/ChatBox.container';
+import { Card } from 'antd';
 import { useLocation } from 'react-router-dom';
 import ChatBox from '../../../components/Agora/ChatBox/ChatBox.component';
 import React, { useEffect, useState } from 'react';
@@ -39,6 +41,7 @@ export const AttendantJobFairBoothViewContainer = (props) => {
           activeKey={tabState.activeKey}
           handleOpenDetail={handleOpenDetail}
           openInventory={openInventory}
+          chatBoxContainer={() => <ChatBoxContainer {...communicationProps} />}
         />
         <div className={'booth'}>
           <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />
@@ -55,7 +58,6 @@ export const AttendantJobFairBoothViewContainer = (props) => {
             geckoClientRef={geckoClientRef}
           />
         </div>
-        <ChatBox {...communicationProps} />
       </div>
     </>
   );
