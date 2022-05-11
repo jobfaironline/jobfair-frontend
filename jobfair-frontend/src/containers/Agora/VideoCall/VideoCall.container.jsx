@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import '../../../components/Agora/VideoCall/VideoCall.styles.scss';
-import { PATH } from '../../../constants/Paths/Path';
+import { PATH, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import { getAgoraRTCToken } from '../../../services/jobhub-api/AgoraTokenControllerService';
 import { notification } from 'antd';
 import { useHistory } from 'react-router-dom';
@@ -16,6 +16,7 @@ const VideoCallContainer = (props) => {
   const [users, setUsers] = useState([]);
   const [muteState, setMuteState] = useState({ video: false, audio: false });
   const userId = useSelector((state) => state.authentication.user.userId);
+  const role = useSelector((state) => state.authentication?.user?.roles);
 
   async function initializeRTCClient(rtcClient, rtcToken, userId) {
     rtcClient.on('user-joined', async (user, mediaType) => {
@@ -85,8 +86,18 @@ const VideoCallContainer = (props) => {
     notification.success({
       description: 'You have left the channel'
     });
-    if (type === 'INTERVIEW_ROOM') history.push(PATH.INTERVIEW_LANDING_PAGE);
-    else history.push(PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE);
+    if (type === 'INTERVIEW_ROOM') {
+      switch (role) {
+        case 'ATTENDANT': {
+          history.push(PATH_ATTENDANT.INTERVIEW_SCHEDULE);
+          break;
+        }
+        case 'COMPANY_EMPLOYEE': {
+          history.push(PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE);
+          break;
+        }
+      }
+    } else history.push(PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE);
   };
   return (
     <VideoCallComponent

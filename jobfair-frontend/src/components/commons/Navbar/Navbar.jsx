@@ -22,9 +22,6 @@ export const AttendantMenu = [
   <Menu.Item key={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>
     <Link to={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>Job Fair List</Link>
   </Menu.Item>,
-  <Menu.Item key={PATH.INTERVIEW_LANDING_PAGE}>
-    <Link to={PATH.INTERVIEW_LANDING_PAGE}>Join interview</Link>
-  </Menu.Item>,
   <Menu.Item key={PATH_ATTENDANT.INTERVIEW_SCHEDULE}>
     <Link to={PATH_ATTENDANT.INTERVIEW_SCHEDULE}>My interview schedule</Link>
   </Menu.Item>

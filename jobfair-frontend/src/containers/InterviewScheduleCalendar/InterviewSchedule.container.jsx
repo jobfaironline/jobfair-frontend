@@ -1,8 +1,9 @@
 import './InterviewScheduleContainer.styles.scss';
-import { Badge, Form, Typography, notification } from 'antd';
+import { Badge, Button, Form, Typography, notification } from 'antd';
 import { INTERVIEW_SCHEDULE_STATUS } from '../../constants/InterviewScheduleConst';
 import { InterviewScheduleCalendar } from '../../components/customized-components/InterviewScheduleCalendar/InterviewScheduleCalendar.component';
 import { getSchedule, requestChangeSchedule } from '../../services/jobhub-api/InterviewControllerService';
+import { useSelector } from 'react-redux';
 import InterviewScheduleModalDetailComponent from '../../components/customized-components/InterviewScheduleModalDetail/InterviewScheduleModalDetail.component';
 import InterviewScheduleModalRequestChangeComponent from '../../components/customized-components/InterviewScheduleModalRequestChange/InterviewScheduleModalRequestChange.component';
 import React, { useEffect, useState } from 'react';
@@ -21,6 +22,8 @@ const InterviewScheduleContainer = () => {
   const [reRender, setReRender] = useState(true);
 
   const [requestChangeError, setRequestChangeError] = useState(undefined);
+
+  const role = useSelector((state) => state.authentication.user.roles);
 
   const [form] = Form.useForm();
 
@@ -47,7 +50,7 @@ const InterviewScheduleContainer = () => {
     try {
       let data = (
         await getSchedule({
-          beginTime: pivotDate.subtract(15, 'd').unix() * 1000,
+          beginTime: pivotDate.subtract(1, 'm').unix() * 1000,
           endTime: pivotDate.add(15, 'd').unix() * 1000
         })
       ).data;
@@ -89,6 +92,35 @@ const InterviewScheduleContainer = () => {
     setRequestChangeModalVisible(true);
   };
 
+  const buttonAction = (data) => {
+    switch (role) {
+      case 'ATTENDANT':
+        return (
+          <Button
+            type='primary'
+            style={{ borderRadius: 8 }}
+            onClick={() => {
+              if (data?.interviewLink) window.location.href = `/attendant/interview/${data.interviewLink}`;
+            }}>
+            Join room
+          </Button>
+        );
+      case 'COMPANY_EMPLOYEE':
+        return (
+          <Button
+            type='primary'
+            style={{ borderRadius: 8 }}
+            onClick={() => {
+              if (data?.interviewLink) window.location.href = `/employee/interview/${data.interviewLink}`;
+            }}>
+            Join room
+          </Button>
+        );
+      default:
+        return null;
+    }
+  };
+
   const onFinish = async (values, scheduleData) => {
     const { interviewDate, timeStart, timeEnd, reason } = values;
     const beginTime = (interviewDate.unix() + (timeStart.unix() - timeStart.startOf('day').unix())) * 1000;
@@ -128,6 +160,7 @@ const InterviewScheduleContainer = () => {
         onCancel={onCancelModal}
         data={modalDetail}
         handleRequestChange={handleRequestChange}
+        buttonAction={buttonAction}
       />
       <InterviewScheduleModalRequestChangeComponent
         data={modalDetail}

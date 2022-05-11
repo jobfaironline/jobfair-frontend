@@ -216,6 +216,12 @@ const AppRouter = () => {
           path={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}
           exact
         />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.INTERVIEW_ROOM_PAGE}
+          component={() => <InterviewRoomPage />}
+          path={PATH_COMPANY_EMPLOYEE.INTERVIEW_ROOM_PAGE}
+          exact
+        />
         <CompanyManagerRouter
           key={PATH_COMPANY_MANAGER.RESUME_DETAIL_PAGE}
           component={() => <ResumeDetailPage />}
