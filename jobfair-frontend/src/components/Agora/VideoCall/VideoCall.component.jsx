@@ -18,6 +18,8 @@ const VideoCallComponent = (props) => {
   const { cameraReady, muteState, users, audioTrack, cameraTrack, handleMute, handleClose, height, width, layoutMode } =
     props;
 
+  console.log(users);
+
   if (layoutMode === 'WAITINGROOM') {
     return (
       <div className={'video-call'} style={{ height: height, width: width, padding: '2rem' }}>
@@ -224,6 +226,7 @@ const VideoCallComponent = (props) => {
             {users.length > 0 &&
               users.map((user) => {
                 console.log(user);
+                debugger;
                 if (user.videoTrack) {
                   return (
                     <AgoraVideoPlayer

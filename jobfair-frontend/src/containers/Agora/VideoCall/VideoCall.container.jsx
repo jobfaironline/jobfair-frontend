@@ -18,17 +18,17 @@ const VideoCallContainer = (props) => {
   const userId = useSelector((state) => state.authentication.user.userId);
 
   async function initializeRTCClient(rtcClient, rtcToken, userId) {
+    rtcClient.on('user-joined', async (user, mediaType) => {
+      setUsers((prevUsers) => [...prevUsers, user]);
+    });
+
     rtcClient.on('user-published', async (user, mediaType) => {
       await rtcClient.subscribe(user, mediaType);
+
       // eslint-disable-next-line no-console
       console.log('subscribe success');
-      if (mediaType === 'video') {
-        if (users.find((u) => u.uid === user.uid)) {
-          if (mediaType === 'video') user.videoTrack?.play();
-        } else {
-          setUsers((prevUsers) => [...prevUsers, user]);
-        }
-      }
+
+      if (mediaType === 'video') user.videoTrack?.play();
 
       if (mediaType === 'audio') user.audioTrack?.play();
     });
@@ -86,7 +86,7 @@ const VideoCallContainer = (props) => {
     <VideoCallComponent
       cameraReady={cameraReady}
       muteState={muteState}
-      users={[...users]}
+      users={users}
       audioTrack={audioTrack}
       cameraTrack={cameraTrack}
       handleMute={handleMute}
