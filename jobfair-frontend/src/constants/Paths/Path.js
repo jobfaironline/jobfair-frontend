@@ -21,7 +21,8 @@ export const PATH = {
   PUBLICIZED_JOB_FAIR_LIST_PAGE: '/job-fair-list',
   HOME_PAGE: '/home',
   FINAL_ERROR_PAGE: '/error-500',
-  ABOUT_APPLICATION_PAGE: '/about-application'
+  ABOUT_APPLICATION_PAGE: '/about-application',
+  INTERVIEW_LANDING_PAGE: '/interview-landing'
 };
 export const PATH_ADMIN = {
   JOB_FAIR_LIST_PAGE: '/admin/job-fair-list',
@@ -36,6 +37,9 @@ export const PATH_ATTENDANT = {
   APPLICATION_MANAGEMENT_PAGE: '/attendant/application-management',
   JOB_FAIR_DETAIL_PAGE: '/attendant/job-fair-detail',
   RESUME_DETAIL_PAGE: '/attendant/resume-detail',
+  INTERVIEW_ROOM_PAGE: '/attendant/interview/:roomId'
+  INTERVIEW_SCHEDULE: '/attendant/interview-schedule',
+  RESUME_DETAIL_PAGE: '/attendant/resume-detail',
   ATTEMPT_TEST_PAGE: '/attendant/attempt-test/:quizId'
 };
 export const PATH_COMPANY_EMPLOYEE = {
@@ -44,7 +48,8 @@ export const PATH_COMPANY_EMPLOYEE = {
   RESUME_DETAIL_PAGE: '/employee/resume-detail',
   JOB_FAIR_DETAIL_PAGE: '/employee/job-fair-detail',
   ASSIGN_BOOTH_MAP_PAGE: '/employee/assign-map/:assignmentId',
-  JOB_FAIR_ASSIGNMENT_PAGE: '/employee/job-fair-assignment'
+  JOB_FAIR_ASSIGNMENT_PAGE: '/employee/job-fair-assignment',
+  INTERVIEW_SCHEDULE: '/employee/interview-schedule'
 };
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',

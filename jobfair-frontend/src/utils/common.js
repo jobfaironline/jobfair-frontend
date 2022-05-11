@@ -1,4 +1,5 @@
 import { CountryConst } from '../constants/AttendantConstants';
+import { DateFormat } from '../constants/ApplicationConst';
 import { JOB_FAIR_PLAN_STATUS } from '../constants/JobFairConst';
 import { Progress, Tag } from 'antd';
 import React from 'react';
@@ -37,7 +38,7 @@ export const getBase64 = (file) =>
 
 export const convertToDateString = (dateValue) => {
   try {
-    return new Date(dateValue).toISOString().replace(/T.*/, '').split('-').reverse().join('-');
+    return moment(dateValue).format(DateFormat);
   } catch (err) {
     return '01-01-1970';
   }
