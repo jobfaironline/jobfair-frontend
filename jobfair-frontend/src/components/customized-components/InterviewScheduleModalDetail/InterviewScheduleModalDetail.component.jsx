@@ -18,7 +18,7 @@ export const handleTag = (status) => {
 };
 
 const InterviewScheduleModalDetailComponent = (props) => {
-  const { data, visible, onCancel, handleRequestChange } = props;
+  const { data, visible, onCancel, handleRequestChange, buttonAction } = props;
   return (
     <Modal visible={visible} onCancel={onCancel} footer={null} centered={true}>
       <Card title={data?.title} bordered={false}>
@@ -77,14 +77,7 @@ const InterviewScheduleModalDetailComponent = (props) => {
             <Col span={24}>
               <Space direction='horizontal'>
                 <Typography.Text strong>Interview room</Typography.Text>
-                <Button
-                  type='primary'
-                  style={{ borderRadius: 8 }}
-                  onClick={() => {
-                    if (data.interviewLink) window.location.href = data?.interviewLink;
-                  }}>
-                  Join room
-                </Button>
+                {buttonAction(data)}
               </Space>
             </Col>
           </Row>
