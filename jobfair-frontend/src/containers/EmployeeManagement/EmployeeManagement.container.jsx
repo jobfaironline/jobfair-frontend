@@ -177,7 +177,12 @@ const EmployeeManagementContainer = () => {
 
   return (
     <>
-      <UploadCSVModal visible={uploadCsvModalVisible} handleUpload={onChangeUpload} onCancel={onCloseUploadCSVModal} />
+      <UploadCSVModal
+        visible={uploadCsvModalVisible}
+        handleUpload={onChangeUpload}
+        onCancel={onCloseUploadCSVModal}
+        templateURl={`${window.location.origin}/xlsx_template/company_employee_success.xlsx`}
+      />
       <Modal
         className={'add-employee-modal'}
         visible={isAddEmployeeModalVisible}

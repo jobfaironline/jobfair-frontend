@@ -362,7 +362,12 @@ const QuestionBankContainer = ({ jobPositionId }) => {
 
   return (
     <>
-      <UploadCSVModal visible={modalVisible} handleUpload={onUpload} onCancel={onCloseUploadModal} />
+      <UploadCSVModal
+        visible={modalVisible}
+        handleUpload={onUpload}
+        onCancel={onCloseUploadModal}
+        templateURl={`${window.location.origin}/xlsx_template/question-data-success.xlsx`}
+      />
       <div className={'question-bank'}>
         <div className={'header'}>
           <Search placeholder='Search question' className={'search-bar'} onSearch={onSearch} />

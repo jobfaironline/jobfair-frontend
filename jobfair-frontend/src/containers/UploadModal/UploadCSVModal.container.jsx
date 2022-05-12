@@ -1,5 +1,5 @@
+import { FileOutlined, InboxOutlined, LoadingOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { InboxOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Modal, Table } from 'antd';
 import { UPLOAD_STATUS } from '../../constants/CSVConstant';
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
@@ -7,7 +7,7 @@ import Dragger from 'antd/es/upload/Dragger';
 import React, { useState } from 'react';
 
 export const UploadCSVModal = (props) => {
-  const { visible, handleUpload, onCancel } = props;
+  const { visible, handleUpload, onCancel, templateURl } = props;
 
   const initialData = {
     uploading: false,
@@ -149,15 +149,21 @@ export const UploadCSVModal = (props) => {
         </div>
       ) : null}
       {!uploadingData.uploading ? (
-        <Dragger {...uploadProps}>
-          <p className='ant-upload-drag-icon'>
-            <InboxOutlined />
-          </p>
-          <p className='ant-upload-text'>Click or drag file to this area to upload</p>
-          <p className='ant-upload-hint'>
-            Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
-          </p>
-        </Dragger>
+        <div>
+          <div style={{ marginBottom: '1rem' }}>
+            {'Download template: '} <FileOutlined style={{ marginRight: 6 }} />
+            <a href={templateURl}>template.xlsx</a>
+          </div>
+          <Dragger {...uploadProps}>
+            <p className='ant-upload-drag-icon'>
+              <InboxOutlined />
+            </p>
+            <p className='ant-upload-text'>Click or drag file to this area to upload</p>
+            <p className='ant-upload-hint'>
+              Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
+            </p>
+          </Dragger>
+        </div>
       ) : null}
     </Modal>
   );

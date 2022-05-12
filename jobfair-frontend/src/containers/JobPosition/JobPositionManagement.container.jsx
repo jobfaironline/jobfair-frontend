@@ -154,7 +154,12 @@ const JobPositionManagementContainer = () => {
 
   return (
     <div>
-      <UploadCSVModal visible={uploadModalVisible} handleUpload={onUpload} onCancel={onCloseUploadModal} />
+      <UploadCSVModal
+        visible={uploadModalVisible}
+        handleUpload={onUpload}
+        onCancel={onCloseUploadModal}
+        templateURl={`${window.location.origin}/xlsx_template/job_position_success.xlsx`}
+      />
       <Space
         style={{
           display: 'flex',
