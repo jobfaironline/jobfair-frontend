@@ -1,17 +1,14 @@
 import '../3D/JobFairBooth/AttendantJobFairBoothView.styles.scss';
 import { BoothJobPositionTabContainer } from './BoothJobPositionTab/BoothJobPositionTab.container';
-import { CommentOutlined, ProfileOutlined, SettingOutlined, SolutionOutlined } from '@ant-design/icons';
 import { CompanyInformation } from '../../components/customized-components/BoothInfoMenu/BoothInformationTab/BoothInformationTab.component';
-import { Tabs, Typography, notification } from 'antd';
+import { Tabs, Typography, notification, Card } from 'antd';
 import { getCompanyBoothById } from '../../services/jobhub-api/CompanyBoothControllerService';
 import { getCompanyProfileAPI } from '../../services/jobhub-api/CompanyControllerService';
-import BoothControlSettingContainer from '../BoothControlSetting/BoothControlSetting.container';
-import ChatBox from '../../components/Agora/ChatBox/ChatBox.component';
 import React, { useEffect, useState } from 'react';
 import SideBar from '../../components/commons/InfoMenu/InfoMenu.component';
 
 export const BoothInfoMenuContainer = (props) => {
-  const { companyBoothId, handleOpenDetail, isShow, activeKey, openInventory, communicationProps } = props;
+  const { companyBoothId, handleOpenDetail, isShow, activeKey, openInventory, chatBoxContainer } = props;
   const [state, setState] = useState({
     companyInformation: undefined,
     jobPositions: []
@@ -46,11 +43,14 @@ export const BoothInfoMenuContainer = (props) => {
   const sideBarProps = {
     companyInformation: state.companyInformation,
     jobPositions: state.jobPositions,
-    isShow,
+    isShow: true,
     handleOpenDetail,
     activeKey,
     openInventory,
     tabs: [
+      <Tabs.TabPane tab='Chat box' key='0'>
+        {chatBoxContainer()}
+      </Tabs.TabPane>,
       <Tabs.TabPane
         tab={
           <div style={{ textAlign: 'center' }}>

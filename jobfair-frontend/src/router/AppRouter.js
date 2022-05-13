@@ -21,6 +21,9 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import FAQPage from '../pages/FAQPage/FAQPage';
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage';
 import HomePage from '../pages/HomePage';
+import InterviewLandingPage from '../pages/InterviewLandingPage/InterviewLandingPage';
+import InterviewRoomPage from '../pages/InterviewRoomPage/InterviewRoomPage';
+import InterviewSchedulePage from '../pages/InterviewSchedulePage/InterviewSchedulePage';
 import JobFairAssignmentPage from '../pages/JobFairAssignmentPage/JobFairAssignmentPage';
 import JobFairGridManagerPage from '../pages/JobFairListPage/JobFairGridManagerPage';
 import JobFairListPage from '../pages/JobFairListPage/JobFairListPage';
@@ -142,9 +145,27 @@ const AppRouter = () => {
           exact
         />
         <AttendantRouter
+          key={PATH.INTERVIEW_LANDING_PAGE}
+          component={() => <InterviewLandingPage />}
+          path={PATH.INTERVIEW_LANDING_PAGE}
+          exact
+        />
+        <AttendantRouter
+          key={PATH_ATTENDANT.INTERVIEW_ROOM_PAGE}
+          component={() => <InterviewRoomPage />}
+          path={PATH_ATTENDANT.INTERVIEW_ROOM_PAGE}
+          exact
+        />
+        <AttendantRouter
           key={PATH_ATTENDANT.ATTEMPT_TEST_PAGE}
           component={() => <AttendantAttemptTestPage />}
           path={PATH_ATTENDANT.ATTEMPT_TEST_PAGE}
+          exact
+        />
+        <AttendantRouter
+          key={PATH_ATTENDANT.INTERVIEW_SCHEDULE}
+          component={() => <InterviewSchedulePage />}
+          path={PATH_ATTENDANT.INTERVIEW_SCHEDULE}
           exact
         />
         <CompanyEmployeeRouter
@@ -187,6 +208,18 @@ const AppRouter = () => {
           key={PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE}
           component={() => <EmployeeAssignBoothMapPage />}
           path={PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}
+          component={() => <InterviewSchedulePage />}
+          path={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.INTERVIEW_ROOM_PAGE}
+          component={() => <InterviewRoomPage />}
+          path={PATH_COMPANY_EMPLOYEE.INTERVIEW_ROOM_PAGE}
           exact
         />
         <CompanyManagerRouter
@@ -249,7 +282,6 @@ const AppRouter = () => {
           path={PATH_COMPANY_MANAGER.QUESTION_BANK}
           exact
         />
-        //to fix browserrouter problem
         <Route path='/index.html'>
           <Redirect to='/' />
         </Route>

@@ -1,12 +1,14 @@
-import { Button, Space, Typography, Upload, notification } from 'antd';
+import { Button, Space, Typography, notification } from 'antd';
 import { JobPositionList } from '../../components/customized-components/JobPositionListCard/JobPositionListCard.component';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
+import { UploadCSVModal } from '../UploadModal/UploadCSVModal.container';
 import { UploadOutlined } from '@ant-design/icons';
 import {
   deleteJobPositionAPI,
   getJobPositionsAPI,
   uploadCSVFile
 } from '../../services/jobhub-api/JobControllerService';
+import { uploadUtil } from '../../utils/uploadCSVUtil';
 import { useHistory } from 'react-router-dom';
 import CreateJobPositionFormContainer from '../forms/CreateJobPositionForm/CreateJobPositionForm.container';
 import JobPositionDetailFormContainer from '../forms/JobPositionDetailForm/JobPositionDetailForm.container';
@@ -31,6 +33,7 @@ const JobPositionManagementContainer = () => {
   //
   const [mode, setMode] = useState(JobPositionMode.VIEW_LIST);
   const [selectedJobPosition, setSelectJobPosition] = useState();
+  const [uploadModalVisible, setUploadModalVisible] = useState(false);
 
   const fetchData = async () => {
     getJobPositionsAPI('DESC', currentPage, pageSize, 'createdDate')
@@ -72,35 +75,13 @@ const JobPositionManagementContainer = () => {
     setMode(JobPositionMode.VIEW_DETAIL);
   };
 
-  const loadFile = {
-    name: 'file',
-    accept: '.csv',
-    beforeUpload: () => false,
-    onChange: async (info) => {
-      if (info.file.type !== 'text/csv') {
-        notification['error']({
-          message: `${info.file.name} is not csv`
-        });
-        return;
-      }
-      const formData = new FormData();
-      formData.append('file', info.file);
-      await uploadCSVFile(formData);
-      notification['success']({
-        message: `${info.file.name} upload successfully`
-      });
-      //force render to fetch data after upload
-      setForceRerenderState((prevState) => !prevState);
-    },
-    showUploadList: false,
-    progress: {
-      strokeColor: {
-        '0%': '#108ee9',
-        '100%': '#87d068'
-      },
-      strokeWidth: 3,
-      format: (percent) => `${parseFloat(percent.toFixed(2))}%`
-    }
+  const onUpload = async (file) => {
+    await uploadUtil(file, uploadCSVFile);
+  };
+
+  const onCloseUploadModal = () => {
+    setUploadModalVisible(false);
+    setForceRerenderState((prevState) => !prevState);
   };
 
   const onCancelForm = () => {
@@ -172,7 +153,13 @@ const JobPositionManagementContainer = () => {
   };
 
   return (
-    <div style={{}}>
+    <div>
+      <UploadCSVModal
+        visible={uploadModalVisible}
+        handleUpload={onUpload}
+        onCancel={onCloseUploadModal}
+        templateURl={`${window.location.origin}/xlsx_template/job_position_success.xlsx`}
+      />
       <Space
         style={{
           display: 'flex',
@@ -183,9 +170,13 @@ const JobPositionManagementContainer = () => {
           Job positions
         </Typography.Title>
         <Space>
-          <Upload {...loadFile}>
-            <Button icon={<UploadOutlined />}>Upload CSV</Button>{' '}
-          </Upload>
+          <Button
+            icon={<UploadOutlined />}
+            onClick={() => {
+              setUploadModalVisible(true);
+            }}>
+            Upload CSV
+          </Button>
         </Space>
       </Space>
       {renderJobPosition()}

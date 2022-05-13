@@ -1,6 +1,5 @@
 import { Button, Form, notification } from 'antd';
 import { createJobPositionsAPI } from '../../../services/jobhub-api/JobControllerService';
-import { useSelector } from 'react-redux';
 import JobPositionFormComponent from '../../../components/forms/JobPositionForm/JobPositionForm.component';
 import React from 'react';
 
@@ -9,13 +8,11 @@ const fakeLocationId = 'ca597973-8f39-48c0-ab91-e6a3e1ff63df';
 const CreateJobPositionFormContainer = (props) => {
   const { onCancel } = props;
   const [form] = Form.useForm();
-  const companyId = useSelector((state) => state?.authentication?.user?.companyId);
 
   const onFinish = async (values) => {
     try {
       await createJobPositionsAPI({
         ...values,
-        companyId,
         //TODO: remove later
         locationId: fakeLocationId
       });

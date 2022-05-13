@@ -1,97 +1,226 @@
-import { MailOutlined } from '@ant-design/icons';
-import { Tag } from 'antd';
-
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-
 import { AgoraVideoPlayer } from 'agora-rtc-react';
-
-import MicIcon from '@mui/icons-material/Mic';
-import MicOffIcon from '@mui/icons-material/MicOff';
+import { Button, Tag, Tooltip, Badge, Avatar } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { MailOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
+import {
+  faMicrophone,
+  faMicrophoneSlash,
+  faPhone,
+  faVideoCamera,
+  faVideoSlash
+} from '@fortawesome/free-solid-svg-icons';
 import NoPhotographyIcon from '@mui/icons-material/NoPhotography';
 import PowerOffIcon from '@mui/icons-material/PowerOff';
-import VideocamIcon from '@mui/icons-material/Videocam';
-import VideocamOffIcon from '@mui/icons-material/VideocamOff';
+import React from 'react';
 
-import './VideoCall.styles.scss';
-import { getAgoraRTCToken } from '../../../services/jobhub-api/AgoraTokenControllerService';
+const VideoCallComponent = (props) => {
+  const { cameraReady, muteState, users, audioTrack, cameraTrack, handleMute, handleClose, height, width, layoutMode } =
+    props;
 
-const { REACT_APP_AGORA_APP_ID } = process.env;
-const VideoCall = (props) => {
-  const { audioReady, audioTrack, cameraReady, cameraTrack } = props;
-  const [isRTCClientReady, setIsRTCClientReady] = useState(false);
-  const [users, setUsers] = useState([]);
-  const [muteState, setMuteState] = useState({ video: false, audio: false });
-  const userId = useSelector((state) => state.authentication.user.userId);
+  console.log(users);
 
-  async function initializeRTCClient(rtcClient, rtcToken, userId) {
-    rtcClient.on('user-published', async (user, mediaType) => {
-      await rtcClient.subscribe(user, mediaType);
-      // eslint-disable-next-line no-console
-      console.log('subscribe success');
-      if (mediaType === 'video') setUsers((prevUsers) => [...prevUsers, user]);
-
-      if (mediaType === 'audio') user.audioTrack?.play();
-    });
-
-    rtcClient.on('user-unpublished', (user, type) => {
-      // eslint-disable-next-line no-console
-      console.log('unpublished', user, type);
-      if (type === 'audio') user.audioTrack?.stop();
-
-      if (type === 'video') setUsers((prevUsers) => prevUsers.filter((User) => User.uid !== user.uid));
-    });
-
-    rtcClient.on('user-left', (user) => {
-      // eslint-disable-next-line no-console
-      console.log('leaving', user);
-      setUsers((prevUsers) => prevUsers.filter((User) => User.uid !== user.uid));
-    });
-
-    await rtcClient.join(REACT_APP_AGORA_APP_ID, channelId, rtcToken, userId);
+  if (layoutMode === 'WAITINGROOM') {
+    return (
+      <div className={'video-call'} style={{ height: height, width: width, padding: '2rem' }}>
+        <div className={'topVideoCall'} style={{ padding: '0rem 0.5rem' }}>
+          <div className={'iconMail'}>
+            <Tag color='default'>
+              <MailOutlined /> 90
+            </Tag>
+          </div>
+          {/*TODO: the 'type' props will decide the style of component*/}
+          <div className={'videoCall'}>
+            {users.length > 0 ? (
+              <div
+                style={{
+                  height: '100%',
+                  width: `${users.length > 0 ? 10 * users.length : 10}rem`,
+                  display: 'flex',
+                  justifyContent: 'space-between'
+                }}>
+                {users.length > 0 &&
+                  users.map((user, index) => {
+                    if (index < 2) {
+                      if (user.videoTrack) {
+                        return (
+                          <AgoraVideoPlayer
+                            style={{ height: '100%', width: '100%', margin: '0 0.5rem' }}
+                            className='vid'
+                            videoTrack={user.videoTrack}
+                            key={user.uid}
+                          />
+                        );
+                      } else {
+                        return (
+                          <div
+                            style={{
+                              height: '100%',
+                              width: '10rem',
+                              margin: '0 0.5rem',
+                              background: '#000'
+                            }}>
+                            <div
+                              style={{
+                                height: '100%',
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                              }}>
+                              <Avatar shape='circle' size={64} icon={<UserOutlined />} />
+                            </div>
+                          </div>
+                        );
+                      }
+                    } else {
+                      //more than 2
+                      return (
+                        <div
+                          style={{
+                            height: '100%',
+                            width: '10rem',
+                            margin: '0 0.5rem',
+                            background: '#000'
+                          }}>
+                          <div
+                            style={{
+                              height: '100%',
+                              width: '100%',
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center'
+                            }}>
+                            <Badge count={users.length - 2}>
+                              <Avatar shape='circle' size='large' />
+                            </Badge>
+                          </div>
+                        </div>
+                      );
+                    }
+                  })}
+              </div>
+            ) : null}
+          </div>
+        </div>
+        <div className={'mainVideo'} style={{ height: '90%', maxHeight: 'none' }}>
+          {cameraReady && !muteState.video ? (
+            <AgoraVideoPlayer style={{ height: '100%', width: '100%' }} className='vid' videoTrack={cameraTrack} />
+          ) : (
+            <div
+              style={{
+                height: '100%',
+                width: '100%',
+                margin: '0 0.5rem',
+                background: '#000'
+              }}>
+              <div
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}>
+                <Avatar shape='circle' size={256} icon={<UserOutlined />} />
+              </div>
+            </div>
+          )}
+          <div className={'videoIcon'}>
+            {audioTrack ? (
+              <div className={muteState.audio ? 'on' : ''}>
+                <Button
+                  type='primary'
+                  shape='circle'
+                  size='large'
+                  icon={
+                    !muteState.audio ? (
+                      <FontAwesomeIcon icon={faMicrophone} />
+                    ) : (
+                      <FontAwesomeIcon icon={faMicrophoneSlash} />
+                    )
+                  }
+                  onClick={() => handleMute('audio')}
+                />
+              </div>
+            ) : (
+              <PowerOffIcon />
+            )}
+            {cameraTrack ? (
+              <div className={muteState.video ? 'on' : ''}>
+                <Button
+                  type='primary'
+                  shape='circle'
+                  size='large'
+                  icon={
+                    !muteState.video ? (
+                      <Tooltip title='Turn off camera'>
+                        <FontAwesomeIcon icon={faVideoCamera} />
+                      </Tooltip>
+                    ) : (
+                      <Tooltip title='Turn on camera'>
+                        <FontAwesomeIcon icon={faVideoSlash} />
+                      </Tooltip>
+                    )
+                  }
+                  onClick={() => handleMute('video')}
+                />
+              </div>
+            ) : (
+              <NoPhotographyIcon />
+            )}
+            <Button
+              type='primary'
+              shape='circle'
+              size='large'
+              icon={
+                <Tooltip title='Leave call'>
+                  <FontAwesomeIcon icon={faPhone} />
+                </Tooltip>
+              }
+              onClick={() => handleClose()}
+            />
+          </div>
+        </div>
+      </div>
+    );
   }
 
-  const rtcClient = useSelector((state) => state.agora.rtcClient);
-  const channelId = useSelector((state) => state.agora.channelId);
-  useEffect(async () => {
-    const rtcToken = await getAgoraRTCToken(channelId)
-      .then((value) => value.data)
-      .then((value) => value.token);
-    await initializeRTCClient(rtcClient, rtcToken, userId);
-    setIsRTCClientReady(true);
-  }, []);
-
-  useEffect(async () => {
-    if (isRTCClientReady && audioReady && audioTrack) await rtcClient.publish(audioTrack);
-    if (isRTCClientReady && cameraReady && cameraTrack) await rtcClient.publish(cameraTrack);
-  }, [cameraReady, audioReady, isRTCClientReady]);
-
-  const handleMute = async (type) => {
-    if (type === 'audio') {
-      await audioTrack.setMuted(!muteState.audio);
-      setMuteState((ps) => ({ ...ps, audio: !ps.audio }));
-    } else if (type === 'video') {
-      await cameraTrack.setMuted(!muteState.video);
-      setMuteState((ps) => ({ ...ps, video: !ps.video }));
-    }
-  };
   return (
-    <div className={'video-call'}>
-      <div className={'topVideoCall'}>
+    <div className={'video-call'} style={{ height: height, width: width, padding: '2rem' }}>
+      <div className={'topVideoCall'} style={{ padding: '0rem 0.5rem' }}>
         <div className={'iconMail'}>
           <Tag color='default'>
             <MailOutlined /> 90
           </Tag>
         </div>
-        <div className={'videoCall'}>
+        {/*TODO: the 'type' props will decide the style of component*/}
+        <div className={'videoCall'} style={{ width: '11rem' }}>
           {cameraReady && !muteState.video ? (
             <AgoraVideoPlayer style={{ height: '95%', width: '95%' }} className='vid' videoTrack={cameraTrack} />
           ) : (
-            <div style={{ height: '95%', width: '95%', backgroundColor: 'yellow' }} />
+            <div
+              style={{
+                height: '100%',
+                width: '100%',
+                margin: '0 0.5rem',
+                background: '#000'
+              }}>
+              <div
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}>
+                <Avatar shape='circle' size={64} icon={<UserOutlined />} />
+              </div>
+            </div>
           )}
         </div>
       </div>
-      <div className={'mainVideo'}>
+      <div className={'mainVideo'} style={{ height: '90%', maxHeight: 'none' }}>
         {users.length > 0 ? (
           <div style={{ height: '100%' }}>
             {users.length > 0 &&
@@ -105,35 +234,108 @@ const VideoCall = (props) => {
                       key={user.uid}
                     />
                   );
-                } else return null;
+                } else {
+                  return (
+                    <div
+                      style={{
+                        height: '100%',
+                        width: '100%',
+                        margin: '0 0.5rem',
+                        background: '#000'
+                      }}>
+                      <div
+                        style={{
+                          height: '100%',
+                          width: '100%',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center'
+                        }}>
+                        <Avatar shape='circle' size={256} icon={<UserOutlined />} />
+                      </div>
+                    </div>
+                  );
+                }
               })}
           </div>
         ) : (
-          <img
-            src='https://i.ytimg.com/vi/w6geNk3QnBQ/maxresdefault.jpg'
-            alt='Girl in a jacket'
-            width='100%'
-            height='100%'
-          />
+          <div
+            style={{
+              height: '100%',
+              width: '100%',
+              margin: '0 0.5rem',
+              background: '#000'
+            }}>
+            <div
+              style={{
+                height: '100%',
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              <h1 style={{ color: '#FFF' }}>No one is here</h1>
+            </div>
+          </div>
         )}
         <div className={'videoIcon'}>
           {audioTrack ? (
-            <div className={muteState.audio ? 'on' : ''} onClick={() => handleMute('audio')}>
-              {!muteState.audio ? <MicIcon /> : <MicOffIcon />}
+            <div className={muteState.audio ? 'on' : ''}>
+              <Button
+                type='primary'
+                shape='circle'
+                size='large'
+                icon={
+                  !muteState.audio ? (
+                    <FontAwesomeIcon icon={faMicrophone} />
+                  ) : (
+                    <FontAwesomeIcon icon={faMicrophoneSlash} />
+                  )
+                }
+                onClick={() => handleMute('audio')}
+              />
             </div>
           ) : (
             <PowerOffIcon />
           )}
           {cameraTrack ? (
-            <div className={muteState.video ? 'on' : ''} onClick={() => handleMute('video')}>
-              {!muteState.video ? <VideocamIcon /> : <VideocamOffIcon />}
+            <div className={muteState.video ? 'on' : ''}>
+              <Button
+                type='primary'
+                shape='circle'
+                size='large'
+                icon={
+                  !muteState.video ? (
+                    <Tooltip title='Turn off camera'>
+                      <FontAwesomeIcon icon={faVideoCamera} />
+                    </Tooltip>
+                  ) : (
+                    <Tooltip title='Turn on camera'>
+                      <FontAwesomeIcon icon={faVideoSlash} />
+                    </Tooltip>
+                  )
+                }
+                onClick={() => handleMute('video')}
+              />
             </div>
           ) : (
             <NoPhotographyIcon />
           )}
+          <Button
+            type='primary'
+            shape='circle'
+            size='large'
+            icon={
+              <Tooltip title='Leave call'>
+                <FontAwesomeIcon icon={faPhone} />
+              </Tooltip>
+            }
+            onClick={() => handleClose()}
+          />
         </div>
       </div>
     </div>
   );
 };
-export default VideoCall;
+
+export default VideoCallComponent;

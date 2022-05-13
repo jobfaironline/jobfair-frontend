@@ -1,8 +1,9 @@
 import './QuestionBank.styles.scss';
-import { Button, Card, Form, Input, List, Modal, Space, Upload, notification } from 'antd';
+import { Button, Card, Form, Input, List, Modal, Space, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { QuestionForm } from '../../components/forms/QuestionForm/QuestionForm.component';
+import { UploadCSVModal } from '../UploadModal/UploadCSVModal.container';
 import { UploadOutlined } from '@ant-design/icons';
 import {
   createQuestion,
@@ -13,11 +14,11 @@ import {
 } from '../../services/jobhub-api/QuestionControllerService';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { getJobPositionByIDAPI } from '../../services/jobhub-api/JobControllerService';
-import { loadCSVFileAntdProps, uploadUtil } from '../../utils/uploadCSVUtil';
+import { uploadUtil } from '../../utils/uploadCSVUtil';
 import { v4 as uuidv4 } from 'uuid';
 import JobPositionDetailCollapseComponent from '../../components/customized-components/JobPositionDetailCollapse/JobPositionDetailCollapse.component';
 import PaginationComponent from '../../components/commons/PaginationComponent/Pagination.component';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const { Search } = Input;
 
@@ -40,8 +41,10 @@ const QuestionBankContainer = ({ jobPositionId }) => {
   //re-render
   const [reRender, setReRender] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const [form] = Form.useForm();
+  const dataRef = useRef(data);
 
   const fetchData = async () => {
     try {
@@ -65,7 +68,12 @@ const QuestionBankContainer = ({ jobPositionId }) => {
           }
         }
       }
-      setData((prevState) => ({ ...prevState, jobPosition: jobPositionData, questions: questionData }));
+
+      setData((prevState) => {
+        const state = { ...prevState, jobPosition: jobPositionData, questions: questionData };
+        dataRef.current = state;
+        return state;
+      });
     } catch (e) {
       notification['error']({
         message: 'Error while fetching data'
@@ -77,9 +85,12 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     fetchData();
   }, [reRender, currentPage, pageSize, searchValue]);
 
-  const onChangeUpload = async (info) => {
-    await uploadUtil(info, uploadCSVFile, data.jobPosition.id);
-    //force render to fetch data after upload
+  const onUpload = async (file) => {
+    await uploadUtil(file, uploadCSVFile, data.jobPosition.id);
+  };
+
+  const onCloseUploadModal = () => {
+    setModalVisible(false);
     setReRender((prevState) => !prevState);
   };
 
@@ -88,20 +99,32 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     let editingQuestionIds = data.editingQuestionIds;
     if (isAdd) editingQuestionIds.push(questionId);
     else editingQuestionIds = editingQuestionIds.filter((id) => id !== questionId);
-    setData((prevState) => ({ ...prevState, editingQuestionIds }));
+    setData((prevState) => {
+      const state = { ...prevState, editingQuestionIds };
+      dataRef.current = state;
+      return state;
+    });
   };
 
   const onChangeIsCorrect = (questionId, answerId, value) => {
     const question = data.questions.find((question) => question.id === questionId);
     const answer = question.choicesList.find((answer) => answer.id === answerId);
     answer.isCorrect = value;
-    setData((prevState) => ({ ...prevState, ...data }));
+    setData((prevState) => {
+      const state = { ...prevState, ...data };
+      dataRef.current = state;
+      return state;
+    });
   };
 
   const onDeleteAnswer = (questionId, answerId) => {
     const question = data.questions.find((question) => question.id === questionId);
     question.choicesList = question.choicesList.filter((answer) => answer.id !== answerId);
-    setData((prevState) => ({ ...prevState, ...data }));
+    setData((prevState) => {
+      const state = { ...prevState, ...data };
+      dataRef.current = state;
+      return state;
+    });
   };
 
   const onAddAnswer = (questionId) => {
@@ -114,26 +137,34 @@ const QuestionBankContainer = ({ jobPositionId }) => {
       order: question.choicesList.length + 1
     };
     question.choicesList.push(answer);
-    setData((prevState) => ({ ...prevState, ...data }));
+    setData((prevState) => {
+      const state = { ...prevState, ...data };
+      dataRef.current = state;
+      return state;
+    });
   };
 
   const onDeleteQuestion = (questionId) => {
     data.questions = data.questions.filter((question) => question.id !== questionId);
     data.deletedQuestionIds.push(questionId);
-    setData((prevState) => ({ ...prevState, ...data }));
+    setData((prevState) => {
+      const state = { ...prevState, ...data };
+      dataRef.current = state;
+      return state;
+    });
   };
 
   const onQuestionContentChange = async (questionId, value) => {
     const question = data.questions.find((question) => question.id === questionId);
     question.content = value;
-    setData((prevState) => ({ ...prevState, ...data }));
+    dataRef.current = { ...data };
   };
 
   const onAnswerContentChange = async (questionId, answerId, value) => {
     const question = data.questions.find((question) => question.id === questionId);
     const answer = question.choicesList.find((answer) => answer.id === answerId);
     answer.content = value;
-    setData((prevState) => ({ ...prevState, ...data }));
+    dataRef.current = { ...data };
   };
 
   const onAddQuestion = () => {
@@ -156,7 +187,11 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     data.newQuestionIds.push(question.id);
     data.editingQuestionIds.push(question.id);
     data.editedQuestionsIds.push(question.id);
-    setData((prevState) => ({ ...prevState, ...data }));
+    setData((prevState) => {
+      const state = { ...prevState, ...data };
+      dataRef.current = state;
+      return state;
+    });
   };
 
   const onSave = async () => {
@@ -186,55 +221,65 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     if (Object.keys(data.errors).length > 0) {
       const firstError = Object.keys(data.errors)[0];
       form.scrollToField(firstError, { behavior: 'smooth', block: 'start' });
-      setData((prevState) => ({ ...prevState, ...data }));
+      setData((prevState) => {
+        const state = { ...prevState, ...data };
+        dataRef.current = state;
+        return state;
+      });
       return;
     }
 
-    const updatedQuestion = data.questions.filter(
+    const updatedQuestion = dataRef.current.questions.filter(
       (question) =>
-        data.editedQuestionsIds.includes(question.id) &&
-        !data.newQuestionIds.includes(question.id) &&
-        !data.deletedQuestionIds.includes(question.id)
+        dataRef.current.editedQuestionsIds.includes(question.id) &&
+        !dataRef.current.newQuestionIds.includes(question.id) &&
+        !dataRef.current.deletedQuestionIds.includes(question.id)
     );
-    const newQuestion = data.questions.filter(
-      (question) => data.newQuestionIds.includes(question.id) && !data.deletedQuestionIds.includes(question.id)
+    const newQuestion = dataRef.current.questions.filter(
+      (question) =>
+        dataRef.current.newQuestionIds.includes(question.id) &&
+        !dataRef.current.deletedQuestionIds.includes(question.id)
     );
     const promises = [];
     updatedQuestion.forEach((question) => {
       const body = {
-        jobPositionId: data.jobPosition.id,
+        jobPositionId: dataRef.current.jobPosition.id,
         id: question.id,
         content: question.content,
-        choicesList: question.choicesList.map((answer) => ({ content: answer.content, correct: answer.isCorrect }))
+        choicesList: question.choicesList.map((answer) => ({ content: answer.content, isCorrect: answer.isCorrect }))
       };
       const promise = updateQuestion(body);
       promises.push(promise);
     });
     newQuestion.forEach((question) => {
       const body = {
-        jobPositionId: data.jobPosition.id,
+        jobPositionId: dataRef.current.jobPosition.id,
         content: question.content,
-        choicesList: question.choicesList.map((answer) => ({ content: answer.content, correct: answer.isCorrect }))
+        choicesList: question.choicesList.map((answer) => ({ content: answer.content, isCorrect: answer.isCorrect }))
       };
       const promise = createQuestion(body);
       promises.push(promise);
     });
-    data.deletedQuestionIds.forEach((questionId) => {
-      if (data.newQuestionIds.includes(questionId)) return;
+    dataRef.current.deletedQuestionIds.forEach((questionId) => {
+      if (dataRef.current.newQuestionIds.includes(questionId)) return;
       const promise = deleteQuestion(questionId);
       promises.push(promise);
     });
 
     try {
       await Promise.all(promises);
-      setData((prevState) => ({
-        ...prevState,
-        editingQuestionIds: [],
-        newQuestionIds: [],
-        errors: {},
-        editedQuestionsIds: [],
-        deletedQuestionIds: []
-      }));
+      setData((prevState) => {
+        const state = {
+          ...prevState,
+          editingQuestionIds: [],
+          newQuestionIds: [],
+          errors: {},
+          editedQuestionsIds: [],
+          deletedQuestionIds: []
+        };
+        dataRef.current = state;
+        return state;
+      });
       notification['success']({
         message: `Save successfully`
       });
@@ -248,14 +293,18 @@ const QuestionBankContainer = ({ jobPositionId }) => {
   };
 
   const onCancel = () => {
-    setData((prevState) => ({
-      ...prevState,
-      editingQuestionIds: [],
-      newQuestionIds: [],
-      errors: {},
-      editedQuestionsIds: [],
-      deletedQuestionIds: []
-    }));
+    setData((prevState) => {
+      const state = {
+        ...prevState,
+        editingQuestionIds: [],
+        newQuestionIds: [],
+        errors: {},
+        editedQuestionsIds: [],
+        deletedQuestionIds: []
+      };
+      dataRef.current = state;
+      return state;
+    });
   };
 
   const handlePageChange = async (page, pageSize) => {
@@ -295,86 +344,98 @@ const QuestionBankContainer = ({ jobPositionId }) => {
 
     if (result) {
       setSearchValue(value);
-      setData((prevState) => ({
-        ...prevState,
-        editingQuestionIds: [],
-        newQuestionIds: [],
-        errors: {},
-        editedQuestionsIds: []
-      }));
+      setData((prevState) => {
+        const state = {
+          ...prevState,
+          editingQuestionIds: [],
+          newQuestionIds: [],
+          errors: {},
+          editedQuestionsIds: []
+        };
+        dataRef.current = state;
+        return state;
+      });
     }
   };
 
   if (data.questions === undefined || data.jobPosition === undefined) return <LoadingComponent />;
 
   return (
-    <div className={'question-bank'}>
-      <div className={'header'}>
-        <Search placeholder='Search question' className={'search-bar'} onSearch={onSearch} />
-        <Space className={'upload-section'}>
-          <Upload {...loadCSVFileAntdProps(onChangeUpload)}>
-            <Button icon={<UploadOutlined />}>Upload CSV</Button>{' '}
-          </Upload>
-        </Space>
-      </div>
-      <JobPositionDetailCollapseComponent jobPosition={data.jobPosition} />
-      <Card
-        hoverable={true}
-        className={'add-more-question'}
-        onClick={() => {
-          onAddQuestion();
-        }}>
-        <FontAwesomeIcon icon={faPlus} size={'2x'} color={'black'} />
-      </Card>
-      <List
-        dataSource={data.questions}
-        renderItem={(item) => {
-          const isEdit = data.editingQuestionIds.includes(item.id);
-          const error = data.errors[item.id];
-          return (
-            <QuestionForm
-              form={form}
-              error={error}
-              question={item}
-              onEditQuestion={onEditQuestion}
-              isEdit={isEdit}
-              onChangeIsCorrect={onChangeIsCorrect}
-              onDeleteAnswer={onDeleteAnswer}
-              onAddAnswer={onAddAnswer}
-              onDeleteQuestion={onDeleteQuestion}
-              onQuestionContentChange={onQuestionContentChange}
-              onAnswerContentChange={onAnswerContentChange}
-            />
-          );
-        }}
+    <>
+      <UploadCSVModal
+        visible={modalVisible}
+        handleUpload={onUpload}
+        onCancel={onCloseUploadModal}
+        templateURl={`${window.location.origin}/xlsx_template/question-data-success.xlsx`}
       />
-      <div className={'button-container'}>
-        <Button className={'button'} style={{ marginLeft: 'auto' }} onClick={onSave}>
-          Save
-        </Button>
-        <Button className={'button'} style={{ marginLeft: '20px', marginRight: '10rem' }} onClick={onCancel}>
-          Cancel
-        </Button>
-      </div>
-      <div className={'paging'}>
-        {data.editedQuestionsIds.length > 0 ||
-        data.deletedQuestionIds.length > 0 ||
-        data.newQuestionIds.length > 0 ||
-        data.editedQuestionsIds.length > 0 ? (
-          <span className={'warning'}>You have unsaved changes</span>
-        ) : null}
-        <PaginationComponent
-          handlePageChange={handlePageChange}
-          totalRecord={totalRecord}
-          disable={
-            data.editedQuestionsIds.length > 0 ||
-            data.deletedQuestionIds.length > 0 ||
-            data.newQuestionIds.length > 0 ||
-            data.editedQuestionsIds.length > 0
-          }
+      <div className={'question-bank'}>
+        <div className={'header'}>
+          <Search placeholder='Search question' className={'search-bar'} onSearch={onSearch} />
+          <Space className={'upload-section'}>
+            <Button icon={<UploadOutlined />} onClick={() => setModalVisible(true)}>
+              Upload CSV and Excel file
+            </Button>
+          </Space>
+        </div>
+        <JobPositionDetailCollapseComponent jobPosition={data.jobPosition} />
+        <Card
+          hoverable={true}
+          className={'add-more-question'}
+          onClick={() => {
+            onAddQuestion();
+          }}>
+          <FontAwesomeIcon icon={faPlus} size={'2x'} color={'black'} />
+        </Card>
+        <List
+          dataSource={data.questions}
+          renderItem={(item) => {
+            const isEdit = data.editingQuestionIds.includes(item.id);
+            const error = data.errors[item.id];
+            return (
+              <QuestionForm
+                form={form}
+                error={error}
+                question={item}
+                onEditQuestion={onEditQuestion}
+                isEdit={isEdit}
+                onChangeIsCorrect={onChangeIsCorrect}
+                onDeleteAnswer={onDeleteAnswer}
+                onAddAnswer={onAddAnswer}
+                onDeleteQuestion={onDeleteQuestion}
+                onQuestionContentChange={onQuestionContentChange}
+                onAnswerContentChange={onAnswerContentChange}
+              />
+            );
+          }}
         />
+        <div className={'button-container'}>
+          <Button className={'button'} style={{ marginLeft: 'auto' }} onClick={onSave}>
+            Save
+          </Button>
+          <Button className={'button'} style={{ marginLeft: '20px', marginRight: '10rem' }} onClick={onCancel}>
+            Cancel
+          </Button>
+        </div>
+        <div className={'paging'}>
+          {data.editedQuestionsIds.length > 0 ||
+          data.deletedQuestionIds.length > 0 ||
+          data.newQuestionIds.length > 0 ||
+          data.editedQuestionsIds.length > 0 ? (
+            <span className={'warning'}>You have unsaved changes</span>
+          ) : null}
+          <PaginationComponent
+            handlePageChange={handlePageChange}
+            totalRecord={totalRecord}
+            disable={
+              data.editedQuestionsIds.length > 0 ||
+              data.deletedQuestionIds.length > 0 ||
+              data.newQuestionIds.length > 0 ||
+              data.editedQuestionsIds.length > 0
+            }
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -4,7 +4,9 @@ import { ControlTipsModalContainer } from '../../ControlTipModal/ControlTipsModa
 import { InventoryContainer } from '../../Inventory/Inventory.container';
 import { JobFairBoothContainer } from './JobFairBooth.container';
 import { useLocation } from 'react-router-dom';
+import ChatBox from '../../../components/Agora/ChatBox/ChatBox.component';
 import React, { useEffect, useState } from 'react';
+import ChatBoxContainer from '../../Agora/ChatBox/ChatBox.container';
 
 export const AttendantJobFairBoothViewContainer = (props) => {
   const { companyBoothId, geckoClientRef, communicationProps } = props;
@@ -38,7 +40,7 @@ export const AttendantJobFairBoothViewContainer = (props) => {
           activeKey={tabState.activeKey}
           handleOpenDetail={handleOpenDetail}
           openInventory={openInventory}
-          communicationProps={communicationProps}
+          chatBoxContainer={() => <ChatBoxContainer {...communicationProps} />}
         />
         <div className={'booth'}>
           <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />

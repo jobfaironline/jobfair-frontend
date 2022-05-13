@@ -1,0 +1,5 @@
+export const UPLOAD_STATUS = {
+  UPLOADING: 'UPLOADING',
+  SUCCESS: 'SUCCESS',
+  FAIL: 'FAIL'
+};
