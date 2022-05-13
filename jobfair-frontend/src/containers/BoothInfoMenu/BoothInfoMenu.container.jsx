@@ -1,9 +1,11 @@
 import '../3D/JobFairBooth/AttendantJobFairBoothView.styles.scss';
 import { BoothJobPositionTabContainer } from './BoothJobPositionTab/BoothJobPositionTab.container';
+import { CommentOutlined, ProfileOutlined, SettingOutlined, SolutionOutlined } from '@ant-design/icons';
 import { CompanyInformation } from '../../components/customized-components/BoothInfoMenu/BoothInformationTab/BoothInformationTab.component';
-import { Tabs, Typography, notification, Card } from 'antd';
+import { Tabs, Typography, notification } from 'antd';
 import { getCompanyBoothById } from '../../services/jobhub-api/CompanyBoothControllerService';
 import { getCompanyProfileAPI } from '../../services/jobhub-api/CompanyControllerService';
+import BoothControlSettingContainer from '../BoothControlSetting/BoothControlSetting.container';
 import React, { useEffect, useState } from 'react';
 import SideBar from '../../components/commons/InfoMenu/InfoMenu.component';
 
@@ -48,9 +50,6 @@ export const BoothInfoMenuContainer = (props) => {
     activeKey,
     openInventory,
     tabs: [
-      <Tabs.TabPane tab='Chat box' key='0'>
-        {chatBoxContainer()}
-      </Tabs.TabPane>,
       <Tabs.TabPane
         tab={
           <div style={{ textAlign: 'center' }}>
@@ -60,9 +59,7 @@ export const BoothInfoMenuContainer = (props) => {
           </div>
         }
         key='0'>
-        <div style={{ marginTop: '30rem' }}>
-          <ChatBox {...communicationProps} />
-        </div>
+        {chatBoxContainer()}
       </Tabs.TabPane>,
       <Tabs.TabPane
         tab={
