@@ -3,10 +3,14 @@ import AgoraRTC from 'agora-rtc-react';
 import ChatBoxContainer from '../Agora/ChatBox/ChatBox.container';
 import React, { useEffect, useState } from 'react';
 import VideoCallContainer from '../Agora/VideoCall/VideoCall.container';
-import { Typography, Row, Col, Card } from 'antd';
+import { Typography, Row, Col, Card, Button } from 'antd';
+import { useSelector } from 'react-redux';
 
 const InterviewRoomContainer = (props) => {
-  const { audioTrackRef, cameraTrackRef } = props;
+  const role = useSelector((state) => state.authentication.user.roles);
+
+  const { audioTrackRef, cameraTrackRef, roomType } = props;
+  console.log(roomType);
   const [audioReady, setAudioReady] = useState(false);
   const [audioTrack, setAudioTrack] = useState(null);
   const [cameraReady, setCameraReady] = useState(false);
@@ -43,7 +47,8 @@ const InterviewRoomContainer = (props) => {
       leftSide={
         <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', flex: '1' }}>
           {/* TODO: dynamic this based on role */}
-          <WaitingListComponent />
+          {roomType.includes('waiting-room') ? <WaitingListComponent /> : null}
+          {roomType.includes('interview') && role === 'COMPANY_EMPLOYEE' ? <IntervieweeList /> : null}
           <Card>
             <ChatBoxContainer type={'INTERVIEW_ROOM'} />
           </Card>
@@ -81,5 +86,44 @@ const WaitingListComponent = () => {
 };
 
 //TODO: implemnt interviewer get interviewee component
+const IntervieweeList = () => {
+  //TODO: add websocket client logic
+
+  const fakeData = [
+    {
+      name: 'Trương Trần Tiến',
+      interviewTime: '9:00-9:30',
+      status: 'IN_ROOM'
+    },
+    {
+      name: 'Phạm Cao Sơn',
+      interviewTime: '10:00-10:30',
+      status: 'NOT_IN_ROOM'
+    }
+  ];
+
+  return (
+    <Card>
+      <div>
+        <Typography.Title level={3}>Danh sách ứng viên</Typography.Title>
+        {fakeData.map((interviewee) => {
+          return (
+            <div className='name-holder'>
+              <Row>
+                <Col span={10}>{interviewee.name}</Col>
+                <Col span={7}>{interviewee.interviewTime}</Col>
+                <Col span={7}>
+                  <Button type='primary' shape='round' disabled={interviewee.status === 'NOT_IN_ROOM'}>
+                    {interviewee.status === 'NOT_IN_ROOM' ? 'Not in room' : 'invite'}
+                  </Button>
+                </Col>
+              </Row>
+            </div>
+          );
+        })}
+      </div>
+    </Card>
+  );
+};
 
 export default InterviewRoomContainer;

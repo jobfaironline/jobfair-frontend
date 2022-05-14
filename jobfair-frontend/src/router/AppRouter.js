@@ -168,6 +168,12 @@ const AppRouter = () => {
           path={PATH_ATTENDANT.INTERVIEW_SCHEDULE}
           exact
         />
+        <AttendantRouter
+          key={PATH_ATTENDANT.WAITING_ROOM_PAGE}
+          component={() => <InterviewRoomPage />}
+          path={PATH_ATTENDANT.WAITING_ROOM_PAGE}
+          exact
+        />
         <CompanyEmployeeRouter
           key={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}
           component={() => <ApplicationManagementPage />}

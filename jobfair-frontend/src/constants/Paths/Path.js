@@ -37,6 +37,7 @@ export const PATH_ATTENDANT = {
   APPLICATION_MANAGEMENT_PAGE: '/attendant/application-management',
   JOB_FAIR_DETAIL_PAGE: '/attendant/job-fair-detail',
   INTERVIEW_ROOM_PAGE: '/attendant/interview/:roomId',
+  WAITING_ROOM_PAGE: '/attendant/waiting-room/:roomId',
   INTERVIEW_SCHEDULE: '/attendant/interview-schedule',
   RESUME_DETAIL_PAGE: '/attendant/resume-detail',
   ATTEMPT_TEST_PAGE: '/attendant/attempt-test/:quizId'
