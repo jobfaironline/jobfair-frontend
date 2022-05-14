@@ -10,6 +10,12 @@ export const CompanyJobPositionTab = (props) => {
     <div style={{ padding: '0 20px 30px 0' }}>
       <List
         dataSource={jobPositions}
+        style={{
+          overflowY: 'scroll',
+          width: 'fit-content',
+          overFlowX: 'auto',
+          height: '85vh'
+        }}
         renderItem={(item) => (
           <JobPositionComponent
             key={item.id}

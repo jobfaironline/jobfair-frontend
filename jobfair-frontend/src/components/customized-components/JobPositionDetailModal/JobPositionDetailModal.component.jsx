@@ -1,4 +1,4 @@
-import { Col, Row, Space, Tabs, Tag, Typography } from 'antd';
+import { Col, Divider, Row, Space, Tabs, Tag, Typography } from 'antd';
 import { FileDoneOutlined, GiftOutlined, ReadOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { convertEnumToString } from '../../../utils/common';
@@ -9,7 +9,7 @@ const { Text } = Typography;
 const { TabPane } = Tabs;
 
 const JobPositionDetailModalComponent = ({ data, companyInfo }) => (
-  <div style={{ height: 'max-content', fontSize: '1rem', width: '50rem' }}>
+  <div style={{ height: 'max-content', fontSize: '1rem', marginBottom: '2rem', marginRight: '2rem' }}>
     <div
       key='no'
       style={{
@@ -77,11 +77,13 @@ const JobPositionDetailModalComponent = ({ data, companyInfo }) => (
               <Text strong style={{ fontSize: '1rem', display: 'flex', marginBottom: '0.5rem' }}>
                 Job category:{'  '}
               </Text>
-              {data.subCategoryDTOs.map((category) => (
-                <Tag color='blue' style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
-                  {category.name}
-                </Tag>
-              ))}
+              <Space direction='vertical'>
+                {data.subCategoryDTOs.map((category) => (
+                  <Tag color='blue' style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
+                    {category.name}
+                  </Tag>
+                ))}
+              </Space>
             </Col>
           </Row>
         </TabPane>
@@ -110,11 +112,13 @@ const JobPositionDetailModalComponent = ({ data, companyInfo }) => (
               <Text strong style={{ fontSize: '1rem', display: 'flex', marginBottom: '0.5rem' }}>
                 Required skills:{' '}
               </Text>
-              {data.skillTagDTOS.map((skill) => (
-                <Tag color='blue' style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
-                  {skill.name}
-                </Tag>
-              ))}
+              <Space direction='vertical'>
+                {data.skillTagDTOS.map((skill) => (
+                  <Tag color='blue' style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
+                    {skill.name}
+                  </Tag>
+                ))}
+              </Space>
             </Col>
           </Row>
         </TabPane>
@@ -127,13 +131,16 @@ const JobPositionDetailModalComponent = ({ data, companyInfo }) => (
             </span>
           }
           key='2'>
-          {companyInfo?.companyBenefitDTOS.map((item) => (
-            <Tag color='blue' style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
-              {item.description}
-            </Tag>
-          ))}
+          <Space direction='vertical'>
+            {companyInfo?.companyBenefitDTOS.map((item) => (
+              <Tag color='blue' style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
+                {item.description}
+              </Tag>
+            ))}
+          </Space>
         </TabPane>
       </Tabs>
+      <Divider />
       <Row>
         <Col span={8} style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Text strong>Number of positions: </Text>

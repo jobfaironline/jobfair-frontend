@@ -10,7 +10,8 @@ export const JobPositionComponent = (props) => {
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
       onDrop={onDrop}
-      onClick={onClick}>
+      onClick={onClick}
+      style={{ width: 'max-content', marginBottom: '2rem' }}>
       <JobPositionDetailModalComponent data={data} companyInfo={companyInfo} />
       {/*//TODO: the code below is display job position as list, you can roll back to it anytime.*/}
       {/*<div className={'jobInformation'}>*/}
