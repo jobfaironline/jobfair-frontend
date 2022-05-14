@@ -5,6 +5,7 @@ import { InventoryContainer } from '../../Inventory/Inventory.container';
 import { JobFairBoothContainer } from './JobFairBooth.container';
 import { SideBarComponent } from '../../../components/commons/SideBar/SideBar.component';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ChatBoxContainer from '../../Agora/ChatBox/ChatBox.container';
 import React, { useEffect, useState } from 'react';
 
@@ -12,9 +13,10 @@ export const AttendantJobFairBoothViewContainer = (props) => {
   const { companyBoothId, geckoClientRef, communicationProps } = props;
   const location = useLocation();
   const { applicationId } = location.state ?? {};
+  const { activeKey } = useSelector((state) => state.boothTab);
   const [tabState, setTabState] = useState({
     isShow: false,
-    activeKey: '0'
+    activeKey
   });
   const handleOpenDetail = (status, tabIndex) => {
     setTabState((prevState) => ({ ...prevState, isShow: status, activeKey: tabIndex }));
@@ -54,7 +56,6 @@ export const AttendantJobFairBoothViewContainer = (props) => {
         <BoothInfoMenuContainer
           companyBoothId={companyBoothId}
           isShow={tabState.isShow}
-          activeKey={tabState.activeKey}
           handleOpenDetail={handleOpenDetail}
           openInventory={openInventory}
           chatBoxContainer={() => <ChatBoxContainer {...communicationProps} />}
