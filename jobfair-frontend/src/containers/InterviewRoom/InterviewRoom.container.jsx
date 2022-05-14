@@ -42,6 +42,7 @@ const InterviewRoomContainer = (props) => {
       }
       leftSide={
         <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', flex: '1' }}>
+          {/* TODO: dynamic this based on role */}
           <WaitingListComponent />
           <Card>
             <ChatBoxContainer type={'INTERVIEW_ROOM'} />
@@ -55,6 +56,8 @@ const InterviewRoomContainer = (props) => {
 };
 
 const WaitingListComponent = () => {
+  //TODO: add websocket client logic
+
   return (
     <Card>
       <div>
@@ -76,5 +79,7 @@ const WaitingListComponent = () => {
     </Card>
   );
 };
+
+//TODO: implemnt interviewer get interviewee component
 
 export default InterviewRoomContainer;
