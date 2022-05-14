@@ -37,6 +37,7 @@ export const PATH_ATTENDANT = {
   APPLICATION_MANAGEMENT_PAGE: '/attendant/application-management',
   JOB_FAIR_DETAIL_PAGE: '/attendant/job-fair-detail',
   INTERVIEW_ROOM_PAGE: '/attendant/interview/:roomId',
+  WAITING_INTERVIEW_ROOM_PAGE: '/attendant/waiting-interview/:roomId',
   INTERVIEW_SCHEDULE: '/attendant/interview-schedule',
   RESUME_DETAIL_PAGE: '/attendant/resume-detail',
   ATTEMPT_TEST_PAGE: '/attendant/attempt-test/:quizId'
@@ -49,7 +50,8 @@ export const PATH_COMPANY_EMPLOYEE = {
   ASSIGN_BOOTH_MAP_PAGE: '/employee/assign-map/:assignmentId',
   JOB_FAIR_ASSIGNMENT_PAGE: '/employee/job-fair-assignment',
   INTERVIEW_SCHEDULE: '/employee/interview-schedule',
-  INTERVIEW_ROOM_PAGE: '/employee/interview/:roomId'
+  INTERVIEW_ROOM_PAGE: '/employee/interview/:roomId',
+  WAITING_INTERVIEW_ROOM_PAGE: '/employee/waiting-interview/:roomId'
 };
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',

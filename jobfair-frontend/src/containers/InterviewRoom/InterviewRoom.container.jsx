@@ -1,9 +1,12 @@
+import { Button, Card, Col, Row, Typography } from 'antd';
+import { PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
 import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
+import { generatePath, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import AgoraRTC from 'agora-rtc-react';
 import ChatBoxContainer from '../Agora/ChatBox/ChatBox.container';
 import React, { useEffect, useState } from 'react';
 import VideoCallContainer from '../Agora/VideoCall/VideoCall.container';
-import { Typography, Row, Col, Card } from 'antd';
 
 const InterviewRoomContainer = (props) => {
   const { audioTrackRef, cameraTrackRef } = props;
@@ -11,6 +14,8 @@ const InterviewRoomContainer = (props) => {
   const [audioTrack, setAudioTrack] = useState(null);
   const [cameraReady, setCameraReady] = useState(false);
   const [cameraTrack, setCameraTrack] = useState(null);
+
+  const role = useSelector((state) => state.authentication?.user?.roles);
 
   useEffect(() => {
     AgoraRTC.createMicrophoneAudioTrack().then((track) => {
@@ -42,7 +47,7 @@ const InterviewRoomContainer = (props) => {
       }
       leftSide={
         <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', flex: '1' }}>
-          <WaitingListComponent />
+          <WaitingListComponent role={role} />
           <Card>
             <ChatBoxContainer type={'INTERVIEW_ROOM'} />
           </Card>
@@ -54,7 +59,8 @@ const InterviewRoomContainer = (props) => {
   );
 };
 
-const WaitingListComponent = () => {
+const WaitingListComponent = ({ role }) => {
+  const history = useHistory();
   return (
     <Card>
       <div>
@@ -72,9 +78,25 @@ const WaitingListComponent = () => {
             <Col span={7}>Tiếp theo</Col>
           </Row>
         </div>
+        <Button
+          type='primary'
+          onClick={() => {
+            let url = '';
+            if (role === 'ATTENDANT') {
+              url = generatePath(PATH_ATTENDANT.WAITING_INTERVIEW_ROOM_PAGE, {
+                roomId: 'iumauhong123'
+              });
+            } else {
+              url = generatePath(PATH_COMPANY_EMPLOYEE.WAITING_INTERVIEW_ROOM_PAGE, {
+                roomId: 'iumauhong123'
+              });
+            }
+            history.push(url);
+          }}>
+          Waiting room
+        </Button>
       </div>
     </Card>
   );
 };
-
 export default InterviewRoomContainer;

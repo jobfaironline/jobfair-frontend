@@ -42,6 +42,7 @@ import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
+import WaitingInterviewRoomPage from '../pages/WaitingInterviewRoomPage/WaitingInterviewRoomPage';
 
 const AppRouter = () => {
   const webSocketClient = useSelector(selectWebSocket);
@@ -157,6 +158,12 @@ const AppRouter = () => {
           exact
         />
         <AttendantRouter
+          key={PATH_ATTENDANT.WAITING_INTERVIEW_ROOM_PAGE}
+          component={() => <WaitingInterviewRoomPage />}
+          path={PATH_ATTENDANT.WAITING_INTERVIEW_ROOM_PAGE}
+          exact
+        />
+        <AttendantRouter
           key={PATH_ATTENDANT.ATTEMPT_TEST_PAGE}
           component={() => <AttendantAttemptTestPage />}
           path={PATH_ATTENDANT.ATTEMPT_TEST_PAGE}
@@ -220,6 +227,12 @@ const AppRouter = () => {
           key={PATH_COMPANY_EMPLOYEE.INTERVIEW_ROOM_PAGE}
           component={() => <InterviewRoomPage />}
           path={PATH_COMPANY_EMPLOYEE.INTERVIEW_ROOM_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.WAITING_INTERVIEW_ROOM_PAGE}
+          component={() => <WaitingInterviewRoomPage />}
+          path={PATH_COMPANY_EMPLOYEE.WAITING_INTERVIEW_ROOM_PAGE}
           exact
         />
         <CompanyManagerRouter
