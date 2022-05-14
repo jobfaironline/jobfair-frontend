@@ -3,10 +3,10 @@ import { BoothInfoMenuContainer } from '../../BoothInfoMenu/BoothInfoMenu.contai
 import { ControlTipsModalContainer } from '../../ControlTipModal/ControlTipsModal.container';
 import { InventoryContainer } from '../../Inventory/Inventory.container';
 import { JobFairBoothContainer } from './JobFairBooth.container';
+import { SideBarComponent } from '../../../components/commons/SideBar/SideBar.component';
 import { useLocation } from 'react-router-dom';
-import ChatBox from '../../../components/Agora/ChatBox/ChatBox.component';
-import React, { useEffect, useState } from 'react';
 import ChatBoxContainer from '../../Agora/ChatBox/ChatBox.container';
+import React, { useEffect, useState } from 'react';
 
 export const AttendantJobFairBoothViewContainer = (props) => {
   const { companyBoothId, geckoClientRef, communicationProps } = props;
@@ -23,7 +23,7 @@ export const AttendantJobFairBoothViewContainer = (props) => {
   const [inventoryVisible, setInventoryVisible] = useState(false);
 
   useEffect(() => {
-    if (applicationId) handleOpenDetail(true, '1');
+    if (applicationId) handleOpenDetail(true, '0');
   }, []);
 
   const openInventory = (status) => {
@@ -32,16 +32,8 @@ export const AttendantJobFairBoothViewContainer = (props) => {
   };
 
   return (
-    <>
-      <div className={'attendant-job-fair-booth-view'}>
-        <BoothInfoMenuContainer
-          companyBoothId={companyBoothId}
-          isShow={tabState.isShow}
-          activeKey={tabState.activeKey}
-          handleOpenDetail={handleOpenDetail}
-          openInventory={openInventory}
-          chatBoxContainer={() => <ChatBoxContainer {...communicationProps} />}
-        />
+    <SideBarComponent
+      rightSide={
         <div className={'booth'}>
           <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />
           <ControlTipsModalContainer>
@@ -57,7 +49,19 @@ export const AttendantJobFairBoothViewContainer = (props) => {
             geckoClientRef={geckoClientRef}
           />
         </div>
-      </div>
-    </>
+      }
+      leftSide={
+        <BoothInfoMenuContainer
+          companyBoothId={companyBoothId}
+          isShow={tabState.isShow}
+          activeKey={tabState.activeKey}
+          handleOpenDetail={handleOpenDetail}
+          openInventory={openInventory}
+          chatBoxContainer={() => <ChatBoxContainer {...communicationProps} />}
+        />
+      }
+      ratio={1.5 / 4}
+      isOrganizeJobFair={false}
+    />
   );
 };
