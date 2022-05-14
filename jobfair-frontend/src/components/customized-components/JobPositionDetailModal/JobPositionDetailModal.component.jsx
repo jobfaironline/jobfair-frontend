@@ -9,7 +9,7 @@ const { Text } = Typography;
 const { TabPane } = Tabs;
 
 const JobPositionDetailModalComponent = ({ data, companyInfo }) => (
-  <div style={{ height: 'max-content', fontSize: '1rem' }}>
+  <div style={{ height: 'max-content', fontSize: '1rem', width: '50rem' }}>
     <div
       key='no'
       style={{

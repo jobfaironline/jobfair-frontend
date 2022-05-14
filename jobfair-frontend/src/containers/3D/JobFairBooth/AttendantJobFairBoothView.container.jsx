@@ -60,7 +60,7 @@ export const AttendantJobFairBoothViewContainer = (props) => {
           chatBoxContainer={() => <ChatBoxContainer {...communicationProps} />}
         />
       }
-      ratio={1.5 / 4}
+      ratio={tabState.isShow ? 1.5 / 4 : 0.5 / 5}
       isOrganizeJobFair={false}
     />
   );

@@ -12,6 +12,7 @@ export const JobPositionComponent = (props) => {
       onDrop={onDrop}
       onClick={onClick}>
       <JobPositionDetailModalComponent data={data} companyInfo={companyInfo} />
+      {/*//TODO: the code below is display job position as list, you can roll back to it anytime.*/}
       {/*<div className={'jobInformation'}>*/}
       {/*  <Typography.Title level={4} className={'title'}>*/}
       {/*    {data.title}*/}
@@ -30,7 +31,6 @@ export const JobPositionComponent = (props) => {
       {/*    <Typography.Text>{data.locationId ?? 'Ho chi minh'}</Typography.Text>*/}
       {/*  </div>*/}
       {/*</div>*/}
-
       {/*<div className={'jobType'}>*/}
       {/*  <Tag color='blue' className={'tagContainer'}>*/}
       {/*    {convertEnumToString(data.jobType)}*/}
