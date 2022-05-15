@@ -54,6 +54,11 @@ const AttendantJobFairPage = () => {
 
   useEffect(() => {
     visitJobFairBooth(companyBoothId);
+    const leaveBooth = () => {
+      leaveJobFairBooth(companyBoothId);
+      window.removeEventListener(leaveBooth);
+    };
+    window.addEventListener('beforeunload', leaveBooth);
     return () => {
       leaveJobFairBooth(companyBoothId);
     };
