@@ -10,15 +10,19 @@ import styles from './InfoMenu.module.scss';
 const { Text } = Typography;
 
 const SideBar = (props) => {
-  const { companyInformation, isShow, handleOpenDetail, tabs } = props;
-  const { activeKey } = useSelector((state) => state.boothTab);
+  const { companyInformation, tabs } = props;
+  const { activeKey, isShow } = useSelector((state) => state.boothTab);
   const dispatch = useDispatch();
   return (
     <div className={styles.container}>
       <div className={styles.tabHeader}>
         <span>
           {isShow ? (
-            <a className={styles.icon} onClick={() => handleOpenDetail(false, activeKey)}>
+            <a
+              className={styles.icon}
+              onClick={() => {
+                dispatch(boothTabAction.setIsShow(false));
+              }}>
               <FontAwesomeIcon icon={faArrowLeft} size={'1x'} color={'black'} />
             </a>
           ) : (
@@ -27,7 +31,7 @@ const SideBar = (props) => {
                 className={styles.icon}
                 onClick={() => {
                   dispatch(boothTabAction.setActiveKey('0'));
-                  handleOpenDetail(true, activeKey);
+                  dispatch(boothTabAction.setIsShow(true));
                 }}>
                 <FontAwesomeIcon icon={faArrowRight} size={'1x'} color={'black'} />
               </a>
@@ -35,7 +39,7 @@ const SideBar = (props) => {
                 className={styles.icon}
                 onClick={() => {
                   dispatch(boothTabAction.setActiveKey('0'));
-                  handleOpenDetail(true, activeKey);
+                  dispatch(boothTabAction.setIsShow(true));
                 }}>
                 <Typography.Text strong>
                   <CommentOutlined /> Chat & Video
@@ -45,7 +49,7 @@ const SideBar = (props) => {
                 className={styles.icon}
                 onClick={() => {
                   dispatch(boothTabAction.setActiveKey('1'));
-                  handleOpenDetail(true, activeKey);
+                  dispatch(boothTabAction.setIsShow(true));
                 }}>
                 <Typography.Text strong>
                   <ProfileOutlined /> Company profile
@@ -55,7 +59,7 @@ const SideBar = (props) => {
                 className={styles.icon}
                 onClick={() => {
                   dispatch(boothTabAction.setActiveKey('2'));
-                  handleOpenDetail(true, activeKey);
+                  dispatch(boothTabAction.setIsShow(true));
                 }}>
                 <Typography.Text strong>
                   <SolutionOutlined /> Job positions
@@ -65,7 +69,7 @@ const SideBar = (props) => {
                 className={styles.icon}
                 onClick={() => {
                   dispatch(boothTabAction.setActiveKey('3'));
-                  handleOpenDetail(true, activeKey);
+                  dispatch(boothTabAction.setIsShow(true));
                 }}>
                 <Typography.Text strong>
                   <SettingOutlined /> Settings
@@ -83,7 +87,8 @@ const SideBar = (props) => {
         tabPosition='left'
         activeKey={activeKey}
         onTabClick={(key) => {
-          handleOpenDetail(true, key);
+          dispatch(boothTabAction.setActiveKey(key));
+          dispatch(boothTabAction.setIsShow(true));
         }}>
         {isShow ? <>{tabs?.map((tab) => tab)}</> : <></>}
       </Tabs>

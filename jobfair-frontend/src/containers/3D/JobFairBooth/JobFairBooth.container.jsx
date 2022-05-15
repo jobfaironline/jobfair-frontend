@@ -49,7 +49,7 @@ class CharacterModel extends BasicCharacterControl {
 }
 
 export const JobFairBoothContainer = (props) => {
-  const { companyBoothId, geckoClientRef, handleOpenDetail } = props;
+  const { companyBoothId, geckoClientRef } = props;
   const { userId } = useSelector((state) => state.authentication.user);
   const cameraRef = useRef();
   const sceneMeshRef = useRef();
@@ -258,7 +258,6 @@ export const JobFairBoothContainer = (props) => {
     cameraRef,
     sceneMeshRef,
     zoom: boothSize.width / 200 / 2.5,
-    handleOpenDetail,
     user,
     isChangeCamera,
     geckoClientRef

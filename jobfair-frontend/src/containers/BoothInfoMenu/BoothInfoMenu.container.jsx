@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import SideBar from '../../components/commons/InfoMenu/InfoMenu.component';
 
 export const BoothInfoMenuContainer = (props) => {
-  const { companyBoothId, handleOpenDetail, openInventory, chatBoxContainer, isShow } = props;
+  const { companyBoothId, openInventory, chatBoxContainer } = props;
   const [state, setState] = useState({
     companyInformation: undefined,
     jobPositions: []
@@ -45,8 +45,6 @@ export const BoothInfoMenuContainer = (props) => {
   const sideBarProps = {
     companyInformation: state.companyInformation,
     jobPositions: state.jobPositions,
-    isShow,
-    handleOpenDetail,
     openInventory,
     tabs: [
       <Tabs.TabPane
