@@ -1,6 +1,6 @@
 import { agoraAction } from '../../redux-flow/agora/agora-slice';
 import { createClient } from 'agora-rtc-react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useLocation } from 'react-router-dom';
 import InterviewRoomContainer from '../../containers/InterviewRoom/InterviewRoom.container';
 import RTMClient from '../../services/agora/RTMClient';
@@ -53,6 +53,7 @@ const InterviewRoomPage = (props) => {
         audioTrackRef={audioTrackRef}
         cameraTrackRef={cameraTrackRef}
         roomType={location.pathname}
+        channelId={channelId}
       />
     </div>
   );

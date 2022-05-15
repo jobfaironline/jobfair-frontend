@@ -65,7 +65,7 @@ const InterviewScheduleContainer = () => {
           title: item.name,
           timeStart: item.beginTime,
           timeEnd: item.endTime,
-          interviewLink: item.url,
+          interviewLink: item.url, //TODO: replace later
           badgeType: getBadgeType(item.status)
         };
       });
@@ -100,7 +100,7 @@ const InterviewScheduleContainer = () => {
             type='primary'
             style={{ borderRadius: 8 }}
             onClick={() => {
-              if (data?.interviewLink) window.location.href = `/attendant/interview/${data.interviewLink}`;
+              if (data?.interviewLink) window.location.href = `/attendant/waiting-room/iumauhong123`; //TODO: replace with real data later
             }}>
             Join room
           </Button>
@@ -111,7 +111,7 @@ const InterviewScheduleContainer = () => {
             type='primary'
             style={{ borderRadius: 8 }}
             onClick={() => {
-              if (data?.interviewLink) window.location.href = `/employee/interview/${data.interviewLink}`;
+              if (data?.interviewLink) window.location.href = `/employee/interview/123123abc`; //TODO: replace with real data later
             }}>
             Join room
           </Button>
