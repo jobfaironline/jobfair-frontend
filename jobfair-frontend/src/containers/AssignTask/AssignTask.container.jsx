@@ -16,19 +16,20 @@ const AssignTaskContainer = () => {
 
   useEffect(async () => {
     try {
-      const data = await getEmployeesAPI({ companyId, searchContent: searchValue, pageSize, offset: currentPage });
-      const mappedData = data.content.map((employee, index) => {
-        const { firstName, middleName, lastName } = employee.account;
-        const fullName = `${firstName} ${middleName} ${lastName}`;
+      const res = await getEmployeesAPI({ companyId, searchContent: searchValue, pageSize, offset: currentPage });
+      const mappedData = res.data.content.map((employee, index) => {
+        const { firstname, middlename, lastname } = employee.account;
+        const fullName = `${firstname} ${middlename ? `${middlename} ` : ''}${lastname}`;
         return {
           fullName,
           no: index + 1,
           department: employee.department,
-          employeeId: employee.employeeId
+          employeeId: employee.employeeId,
+          status: employee.account.status
         };
       });
-      setData(mappedData);
       setTotalRecord(data.totalElements);
+      setData(mappedData);
     } catch (e) {
       notification['error']({
         message: 'Error when get employee data'
@@ -39,9 +40,9 @@ const AssignTaskContainer = () => {
     tableData: data,
     tableColumns: () => [
       {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name'
+        title: 'No.',
+        dataIndex: 'no',
+        key: 'no'
       },
       {
         title: 'Employee Id',
@@ -49,12 +50,22 @@ const AssignTaskContainer = () => {
         key: 'employeeId'
       },
       {
-        title: 'Role',
-        dataIndex: 'role',
-        key: 'role',
-        render: (role) => {
+        title: 'Full name',
+        dataIndex: 'fullName',
+        key: 'fullName'
+      },
+      {
+        title: 'Department',
+        dataIndex: 'department',
+        key: 'department'
+      },
+      {
+        title: 'Status',
+        dataIndex: 'status',
+        key: 'status',
+        render: (status) => {
           let objStatus;
-          switch (role) {
+          switch (status) {
             case 'INTERVIEWER':
               objStatus = {
                 color: 'success',
@@ -70,7 +81,7 @@ const AssignTaskContainer = () => {
             default:
               objStatus = {
                 color: 'error',
-                message: role.toLowerCase()
+                message: status.toLowerCase()
               };
               break;
           }
@@ -115,14 +126,18 @@ const AssignTaskContainer = () => {
             <AssignTaskComponent
               data={[
                 {
-                  employeeName: 'Son ga',
-                  timeStart: 0,
-                  timeEnd: 0,
-                  month: 5,
-                  year: 2022,
-                  date: 15,
-                  id: 'abc123',
-                  badgeType: 'success'
+                  attendantId: '3f6eda7f-4c49-4f6c-83b2-a4c72612510a',
+                  employeeName: 'son',
+                  badgeType: 'processing',
+                  beginTime: 1652691071000,
+                  day: 16,
+                  endTime: 1652777471000,
+                  id: '04682dea-9ee5-48b0-826a-150baabf6315',
+                  month: 4,
+                  status: 'INTERVIEWING',
+                  timeEnd: 1652777471000,
+                  timeStart: 1652691071000,
+                  year: 2022
                 }
               ]}
             />
