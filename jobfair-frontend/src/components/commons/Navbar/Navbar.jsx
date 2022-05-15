@@ -51,6 +51,9 @@ export const CompanyEmployeeMenu = [
   </Menu.Item>,
   <Menu.Item key={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}>
     <Link to={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}>My interview schedule</Link>
+  </Menu.Item>,
+  <Menu.Item key={PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE}>
+    <Link to={PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE}>Assign task to employee</Link>
   </Menu.Item>
 ];
 
