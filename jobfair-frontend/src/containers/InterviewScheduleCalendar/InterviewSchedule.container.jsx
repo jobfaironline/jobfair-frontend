@@ -47,11 +47,13 @@ const InterviewScheduleContainer = () => {
   };
 
   const fetchData = async () => {
+    const beginTime = pivotDate.clone().subtract(30, 'd').unix() * 1000;
+    const endTime = pivotDate.clone().add(30, 'd').unix() * 1000;
     try {
       let data = (
         await getSchedule({
-          beginTime: pivotDate.subtract(1, 'm').unix() * 1000,
-          endTime: pivotDate.add(15, 'd').unix() * 1000
+          beginTime,
+          endTime
         })
       ).data;
 
@@ -65,7 +67,7 @@ const InterviewScheduleContainer = () => {
           title: item.name,
           timeStart: item.beginTime,
           timeEnd: item.endTime,
-          interviewLink: item.url, //TODO: replace later
+          interviewLink: item.url,
           badgeType: getBadgeType(item.status)
         };
       });
@@ -100,7 +102,7 @@ const InterviewScheduleContainer = () => {
             type='primary'
             style={{ borderRadius: 8 }}
             onClick={() => {
-              if (data?.interviewLink) window.location.href = `/attendant/waiting-room/iumauhong123`; //TODO: replace with real data later
+              if (data?.waitingRoomId) window.location.href = `/attendant/waiting-room/${data.waitingRoomId}`; //TODO: replace with real data later
             }}>
             Join room
           </Button>
@@ -111,7 +113,7 @@ const InterviewScheduleContainer = () => {
             type='primary'
             style={{ borderRadius: 8 }}
             onClick={() => {
-              if (data?.interviewLink) window.location.href = `/employee/interview/123123abc`; //TODO: replace with real data later
+              if (data?.interviewRoomId) window.location.href = `/employee/interview/${data.interviewRoomId}`; //TODO: replace with real data later
             }}>
             Join room
           </Button>

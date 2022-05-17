@@ -4,7 +4,9 @@ import {
   ENDPOINT_REQUEST_CHANGE_SCHEDULE,
   ENDPOINT_LEAVE_WAITING_ROOM,
   ENDPOINT_VISIT_WAITING_ROOM,
-  ENDPOINT_INVITE_INTERVIEWEE
+  ENDPOINT_INVITE_INTERVIEWEE,
+  ENDPOINT_GET_WAITING_ROOM_INFO,
+  ENDPOINT_GET_SCHEDULE_BY_INTERVIEW_ROOM_ID
 } from '../../constants/Endpoints/jobhub-api/InterviewControllerEndpoint';
 import moment from 'moment';
 
@@ -20,5 +22,11 @@ export const visitWaitingRoom = (channelId) => CallAPI(ENDPOINT_VISIT_WAITING_RO
 
 export const leaveWaitingRoom = (channelId) => CallAPI(ENDPOINT_LEAVE_WAITING_ROOM, 'POST', {}, { channelId });
 
-export const inviteInterviewee = (attendantId, waitingRoomId) =>
-  CallAPI(ENDPOINT_INVITE_INTERVIEWEE, 'POST', {}, { attendantId, waitingRoomId });
+export const inviteInterviewee = (attendantId, interviewRoomId) =>
+  CallAPI(ENDPOINT_INVITE_INTERVIEWEE, 'POST', {}, { attendantId, interviewRoomId });
+
+export const getWaitingRoomInfo = (waitingRoomId) =>
+  CallAPI(ENDPOINT_GET_WAITING_ROOM_INFO, 'GET', {}, { waitingRoomId });
+
+export const getScheduleByInterviewRoomId = (interviewRoomId) =>
+  CallAPI(`${ENDPOINT_GET_SCHEDULE_BY_INTERVIEW_ROOM_ID}/${interviewRoomId}`, 'GET');

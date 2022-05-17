@@ -4,16 +4,15 @@ import ChatBoxContainer from '../Agora/ChatBox/ChatBox.container';
 import React, { useEffect, useRef, useState } from 'react';
 import VideoCallContainer from '../Agora/VideoCall/VideoCall.container';
 import { Typography, Row, Col, Card, Button, notification } from 'antd';
+import WaitingRoomListContainer from '../WaitingRoomList/WaitingRoomList.container';
 import {
   visitWaitingRoom,
   leaveWaitingRoom,
-  getSchedule,
-  inviteInterviewee
+  getWaitingRoomInfo
 } from '../../services/jobhub-api/InterviewControllerService';
 import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
 import { NotificationType } from '../../constants/NotificationType';
 import { useSelector } from 'react-redux';
-import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 
 const InterviewRoomContainer = (props) => {
@@ -58,7 +57,7 @@ const InterviewRoomContainer = (props) => {
           {/* TODO: dynamic this based on role */}
           {roomType.includes('waiting-room') ? <WaitingListComponent channelId={channelId} /> : null}
           {roomType.includes('interview') && role === 'COMPANY_EMPLOYEE' ? (
-            <IntervieweeList channelId={channelId} />
+            <WaitingRoomListContainer channelId={channelId} />
           ) : null}
           <Card>
             <ChatBoxContainer type={'INTERVIEW_ROOM'} />
@@ -72,19 +71,18 @@ const InterviewRoomContainer = (props) => {
 };
 
 const WaitingListComponent = ({ channelId }) => {
-  const waitingRoomList = useState([]);
-  const waitingRoomListRef = useRef(waitingRoomList);
+  const user = useSelector((state) => state.authentication.user);
+  const [interviewTurn, setInterviewTurn] = useState(0);
+  const interviewTurnRef = useRef(interviewTurn);
 
   //TODO: add websocket client logic
   const webSocketClient = useSelector(selectWebSocket);
   const history = useHistory();
 
   useEffect(() => {
-    //TODO: replace later
     visitWaitingRoom(channelId);
     webSocketClient.addEvent('get-invitation', getInvitaion);
     return () => {
-      //TODO: replace later
       leaveWaitingRoom(channelId);
       webSocketClient.removeEvent('get-invitation', getInvitaion);
     };
@@ -92,8 +90,7 @@ const WaitingListComponent = ({ channelId }) => {
 
   const getInvitaion = (notificationData) => {
     if (notificationData.notificationType === NotificationType.INTERVIEW_ROOM) {
-      // const messageObject = JSON.parse(notificationData.message);
-      // const { connectedUserIds: waitingRoomList } = messageObject;
+      const messageObject = JSON.parse(notificationData.message);
 
       const key = `open${Date.now()}`;
       const btn = (
@@ -101,7 +98,7 @@ const WaitingListComponent = ({ channelId }) => {
           type='primary'
           size='small'
           onClick={() => {
-            history.push('/attendant/interview/123123abc');
+            history.push(`/attendant/interview/${messageObject.interviewRoomId}`);
             notification.close(key);
           }}>
           Let's go!
@@ -114,11 +111,10 @@ const WaitingListComponent = ({ channelId }) => {
         btn,
         key
       });
+    } else if (notificationData.notificationType === NotificationType.WAITING_ROOM) {
+      checkTurn(setInterviewTurn, channelId, interviewTurnRef);
     }
   };
-
-  //TODO: remove later
-  const rtcClient = useSelector((state) => state.agora.rtcClient);
 
   return (
     <Card>
@@ -127,13 +123,13 @@ const WaitingListComponent = ({ channelId }) => {
         <div>
           <Row>
             <Col span={10}>Số lượt tiếp theo</Col>
-            <Col span={7}>0</Col>
+            <Col span={7}>{interviewTurn}</Col>
           </Row>
         </div>
         <div className='name-holder'>
           <Row>
-            <Col span={10}>Trường Trần Tiến</Col>
-            <Col span={7}>9:00-9:30</Col>
+            <Col span={10}>{user.fullName}</Col>
+            <Col span={7}>9:30-10:00</Col>
             <Col span={7}>Tiếp theo</Col>
           </Row>
         </div>
@@ -142,145 +138,19 @@ const WaitingListComponent = ({ channelId }) => {
   );
 };
 
-//TODO: implemnt interviewer get interviewee component
-const IntervieweeList = ({ channelId }) => {
-  const [intervieweeList, setIntervieweeList] = useState([]);
-  const intervieweeListRef = useRef(intervieweeList);
-  const [pivotDate, setPivotDate] = useState(moment());
+const checkTurn = async (setInterviewTurn, waitingRoomId, interviewTurnRef) => {
+  try {
+    const { data } = await getWaitingRoomInfo(waitingRoomId);
 
-  const intervieweeInRoom = useSelector((state) => state.notification.inRoom);
-
-  const fetchData = async () => {
-    try {
-      let data = (
-        await getSchedule({
-          beginTime: pivotDate.subtract(1, 'm').unix() * 1000,
-          endTime: pivotDate.add(15, 'd').unix() * 1000
-        })
-      ).data;
-
-      data = data.map((item) => {
-        const date = moment.unix(item.beginTime / 1000);
-        return {
-          ...item,
-          day: date.date(),
-          month: date.month(),
-          year: date.year(),
-          title: item.name,
-          timeStart: item.beginTime,
-          timeEnd: item.endTime,
-          interviewLink: item.url,
-          badgeType: item.status,
-          inRoom: false
-        };
-      });
-      intervieweeListRef.current = data;
-      setIntervieweeList(data);
-    } catch (e) {
-      notification['error']({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching data, try again later`,
-        duration: 2
-      });
-    }
-  };
-
-  useEffect(() => {
-    //TODO: replace api later
-    fetchData();
-  }, []);
-
-  //TODO: add websocket client logic
-  const webSocketClient = useSelector(selectWebSocket);
-
-  useEffect(() => {
-    //TODO: replace later
-    visitWaitingRoom('iumauhong123');
-    webSocketClient.addEvent('change-waiting-room-list', changeWaitingRoomList);
-    return () => {
-      //TODO: replace later
-      leaveWaitingRoom('iumauhong123');
-      webSocketClient.removeEvent('change-waiting-room-list', changeWaitingRoomList);
-    };
-  }, []);
-
-  const changeWaitingRoomList = (notificationData) => {
-    if (!intervieweeListRef.current || !notificationData) return;
-    if (notificationData.notificationType === NotificationType.WAITING_ROOM) {
-      const messageObject = JSON.parse(notificationData.message);
-      const { connectedUserIds: waitingRoomList } = messageObject;
-
-      intervieweeListRef.current = intervieweeListRef.current.map((attendant) => {
-        if (waitingRoomList.includes(attendant.attendantId)) {
-          return {
-            //in room
-            ...attendant,
-            inRoom: true
-          };
-        } else {
-          return {
-            // not in room
-            ...attendant,
-            inRoom: false
-          };
-        }
-      });
-      setIntervieweeList(
-        intervieweeListRef.current.map((attendant) => {
-          if (waitingRoomList.includes(attendant.attendantId)) {
-            return {
-              //in room
-              ...attendant,
-              inRoom: true
-            };
-          } else {
-            return {
-              // not in room
-              ...attendant,
-              inRoom: false
-            };
-          }
-        })
-      );
-    }
-  };
-
-  const handleInvite = (attendantId) => {
-    inviteInterviewee(attendantId, 'iumauhong123').catch((err) => {
-      notification['error']({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while sending invitation, try again later`,
-        duration: 2
-      });
+    interviewTurnRef.current = data.turn;
+    setInterviewTurn(data.turn);
+  } catch (e) {
+    notification['error']({
+      message: `Something went wrong! Try again latter!`,
+      description: `There is problem while fetching data, try again later`,
+      duration: 2
     });
-  };
-
-  return (
-    <Card>
-      <div>
-        <Typography.Title level={3}>Danh sách ứng viên</Typography.Title>
-        {intervieweeList.map((interviewee) => {
-          return (
-            <div className='name-holder'>
-              <Row>
-                <Col span={10}>{interviewee.attendantId}</Col>
-                <Col span={7}>{interviewee.beginTime}</Col>
-                <Col span={7}>
-                  <Button
-                    type='primary'
-                    shape='round'
-                    disabled={!interviewee.inRoom} //TODO: remove later
-                    onClick={() => handleInvite(interviewee.attendantId)}>
-                    {!interviewee.inRoom ? (intervieweeInRoom ? 'In room' : 'Not in room') : 'invite'}
-                  </Button>
-                </Col>
-              </Row>
-            </div>
-          );
-        })}
-      </div>
-    </Card>
-  );
+  }
 };
 
 export default InterviewRoomContainer;
