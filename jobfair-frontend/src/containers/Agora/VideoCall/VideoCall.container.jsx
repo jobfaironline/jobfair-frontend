@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 import '../../../components/Agora/VideoCall/VideoCall.styles.scss';
 import { PATH, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import { getAgoraRTCToken } from '../../../services/jobhub-api/AgoraTokenControllerService';
 import { notification } from 'antd';
-import { useHistory } from 'react-router-dom';
 import { notificationAction } from '../../../redux-flow/notification/notification-slice';
+import { useHistory } from 'react-router-dom';
 import VideoCallComponent from '../../../components/Agora/VideoCall/VideoCall.component';
 
 const { REACT_APP_AGORA_APP_ID } = process.env;
@@ -22,7 +22,7 @@ const VideoCallContainer = (props) => {
   const role = useSelector((state) => state.authentication?.user?.roles);
 
   async function initializeRTCClient(rtcClient, rtcToken, userId) {
-    rtcClient.on('user-joined', async (user, mediaType) => {
+    rtcClient.on('user-joined', async (user) => {
       dispatch(notificationAction.setInRoom(true)); //TODO: remove later
       setUsers((prevUsers) => [...prevUsers, user]);
     });

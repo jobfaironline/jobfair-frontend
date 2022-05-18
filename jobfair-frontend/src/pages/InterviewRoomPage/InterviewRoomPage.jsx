@@ -1,7 +1,7 @@
 import { agoraAction } from '../../redux-flow/agora/agora-slice';
 import { createClient } from 'agora-rtc-react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useLocation, useParams } from 'react-router-dom';
 import InterviewRoomContainer from '../../containers/InterviewRoom/InterviewRoom.container';
 import RTMClient from '../../services/agora/RTMClient';
 import React, { useEffect, useRef } from 'react';
@@ -17,7 +17,7 @@ const useClient = createClient(config);
 const rtm = new RTMClient();
 rtm.init(REACT_APP_AGORA_APP_ID);
 
-const InterviewRoomPage = (props) => {
+const InterviewRoomPage = () => {
   const location = useLocation();
   const { roomId } = useParams();
   //channelId is the booth's id

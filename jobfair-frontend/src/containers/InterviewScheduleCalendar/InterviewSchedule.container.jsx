@@ -102,7 +102,8 @@ const InterviewScheduleContainer = () => {
             type='primary'
             style={{ borderRadius: 8 }}
             onClick={() => {
-              if (data?.waitingRoomId) window.location.href = `/attendant/waiting-room/${data.waitingRoomId}`; //TODO: replace with real data later
+              if (data?.waitingRoomId)
+                window.location.href = `/attendant/waiting-room/${data.id}/${data.waitingRoomId}`; //TODO: replace with real data later
             }}>
             Join room
           </Button>
@@ -113,7 +114,8 @@ const InterviewScheduleContainer = () => {
             type='primary'
             style={{ borderRadius: 8 }}
             onClick={() => {
-              if (data?.interviewRoomId) window.location.href = `/employee/interview/${data.interviewRoomId}`; //TODO: replace with real data later
+              if (data?.interviewRoomId)
+                window.location.href = `/employee/interview/${data.id}/${data.interviewRoomId}`; //TODO: replace with real data later
             }}>
             Join room
           </Button>
