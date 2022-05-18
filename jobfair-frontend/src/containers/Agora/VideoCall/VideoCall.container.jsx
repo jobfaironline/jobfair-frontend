@@ -14,16 +14,19 @@ const VideoCallContainer = (props) => {
   const history = useHistory();
   //TODO: remove later
   const dispatch = useDispatch();
-  const { audioReady, audioTrack, cameraReady, cameraTrack, type, layoutMode } = props;
+  const { audioReady, audioTrack, cameraReady, cameraTrack, type, layoutMode, userListRef } = props;
   const [isRTCClientReady, setIsRTCClientReady] = useState(false);
   const [users, setUsers] = useState([]);
   const [muteState, setMuteState] = useState({ video: false, audio: false });
   const userId = useSelector((state) => state.authentication.user.userId);
   const role = useSelector((state) => state.authentication?.user?.roles);
 
+  useEffect(() => {
+    userListRef && (userListRef.current = users);
+  }, [users]);
+
   async function initializeRTCClient(rtcClient, rtcToken, userId) {
     rtcClient.on('user-joined', async (user) => {
-      dispatch(notificationAction.setInRoom(true)); //TODO: remove later
       setUsers((prevUsers) => [...prevUsers, user]);
     });
 

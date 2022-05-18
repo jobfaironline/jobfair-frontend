@@ -7,7 +7,7 @@ import {
 import { useSelector } from 'react-redux';
 import AgoraRTC from 'agora-rtc-react';
 import ChatBoxContainer from '../Agora/ChatBox/ChatBox.container';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import VideoCallContainer from '../Agora/VideoCall/VideoCall.container';
 import { useParams } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ const InterviewRoomContainer = (props) => {
   const { scheduleId, roomId: channelId } = useParams();
 
   const { audioTrackRef, cameraTrackRef, roomType } = props;
+  const userListRef = useRef([]);
   const [audioReady, setAudioReady] = useState(false);
   const [audioTrack, setAudioTrack] = useState(null);
   const [cameraReady, setCameraReady] = useState(false);
@@ -47,6 +48,7 @@ const InterviewRoomContainer = (props) => {
             type={'INTERVIEW_ROOM'}
             height={'87vh'}
             width={'100%'}
+            userListRef={userListRef}
           />
         </>
       }
@@ -54,7 +56,11 @@ const InterviewRoomContainer = (props) => {
         <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', flex: '1' }}>
           {/* TODO: dynamic this based on role */}
           {roomType.includes('waiting-room') ? (
-            <WaitingRoomListForIntervieweeContainer channelId={channelId} scheduleId={scheduleId} />
+            <WaitingRoomListForIntervieweeContainer
+              channelId={channelId}
+              scheduleId={scheduleId}
+              agoraUserListRef={userListRef}
+            />
           ) : null}
           {roomType.includes('interview') && role === 'COMPANY_EMPLOYEE' ? (
             <WaitingRoomListForInterviewerContainer channelId={channelId} scheduleId={scheduleId} />

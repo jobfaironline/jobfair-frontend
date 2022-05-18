@@ -1,4 +1,4 @@
-import { Button, notification } from 'antd';
+import { Button, notification, Modal } from 'antd';
 import { NotificationType } from '../../constants/NotificationType';
 import {
   WaitingRoomListForIntervieweeComponent,
@@ -9,6 +9,7 @@ import {
   getWaitingRoomInfo,
   inviteInterviewee,
   leaveWaitingRoom,
+  swapSchedule,
   visitWaitingRoom
 } from '../../services/jobhub-api/InterviewControllerService';
 import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
@@ -17,10 +18,11 @@ import { useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 
-export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId }) => {
+export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId, agoraUserListRef }) => {
   const [intervieweeList, setIntervieweeList] = useState([]);
   const intervieweeListRef = useRef(intervieweeList);
   const [scheduleInfo, setScheduleInfo] = useState({});
+  const [inInterview, setInInterview] = useState(false); //check dynamic later ?
   const webSocketClient = useSelector(selectWebSocket);
 
   const fetchScheduleInfo = async () => {
@@ -28,6 +30,7 @@ export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId }
       const { data } = await getScheduleById(scheduleId);
 
       setScheduleInfo(data);
+      setInInterview(data.status === 'INTERVIEWING');
     } catch (e) {
       notification['error']({
         message: `Something went wrong! Try again latter!`,
@@ -93,11 +96,35 @@ const mappingTodayScheduleAndWaitingRoomList = async (
   intervieweeListRef,
   interviewRoomId
 ) => {
-  const handleInvite = async (attendantId) => {
+  const handleInvite = async (attendantId, applicationId) => {
     try {
       const res = await inviteInterviewee(attendantId, interviewRoomId);
-      if (res?.status === 204) {
-        //need to swap
+
+      if (res?.status === 202) {
+        const swapHandle = async () => {
+          //need to swap
+          const curInterviewee = intervieweeListRef.current.filter((interviewee) => {
+            return new Date(interviewee.beginTime) <= Date.now() && new Date(interviewee.endTime) >= Date.now();
+          });
+
+          try {
+            await swapSchedule(applicationId, curInterviewee[0].id);
+            //invite again
+            await inviteInterviewee(attendantId, interviewRoomId);
+          } catch (e) {
+            notification['error']({
+              message: `Something went wrong! Try again latter!`,
+              description: `There is problem while swaping, try again later`,
+              duration: 2
+            });
+          }
+        };
+
+        //show confirm popup
+        Modal.info({
+          title: 'Are you sure you wanna swap this schedule?',
+          onOk: () => swapHandle()
+        });
       }
     } catch (e) {
       notification['error']({
@@ -124,7 +151,7 @@ const mappingTodayScheduleAndWaitingRoomList = async (
         interviewLink: item.url,
         badgeType: item.status,
         inRoom: item.inWaitingRoom,
-        handleInvite: () => handleInvite(item.attendantId)
+        handleInvite: () => handleInvite(item.attendantId, item.id)
       };
       return tmp;
     });
@@ -167,7 +194,7 @@ export const WaitingRoomListForIntervieweeContainer = ({ channelId, scheduleId }
           type='primary'
           size='small'
           onClick={() => {
-            history.push(`/attendant/interview/${messageObject.interviewRoomId}`);
+            history.push(`/attendant/interview/${scheduleId}/${messageObject.interviewRoomId}`);
             notification.close(key);
           }}>
           Let's go!

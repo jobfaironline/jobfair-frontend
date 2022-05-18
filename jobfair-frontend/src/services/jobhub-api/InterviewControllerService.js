@@ -6,6 +6,7 @@ import {
   ENDPOINT_INVITE_INTERVIEWEE,
   ENDPOINT_LEAVE_WAITING_ROOM,
   ENDPOINT_REQUEST_CHANGE_SCHEDULE,
+  ENDPOINT_SWAP_INTERVIEW,
   ENDPOINT_VISIT_WAITING_ROOM
 } from '../../constants/Endpoints/jobhub-api/InterviewControllerEndpoint';
 import moment from 'moment';
@@ -32,3 +33,6 @@ export const getScheduleByInterviewRoomId = (interviewRoomId) =>
   CallAPI(`${ENDPOINT_GET_SCHEDULE_BY_INTERVIEW_ROOM_ID}/${interviewRoomId}`, 'GET');
 
 export const getScheduleById = (scheduleId) => CallAPI(`${ENDPOINT_INTERVIEW_SCHEDULE}/${scheduleId}`, 'GET');
+
+export const swapSchedule = (fromApplicationId, toApplicationId) =>
+  CallAPI(`${ENDPOINT_SWAP_INTERVIEW}`, 'POST', {}, { fromApplicationId, toApplicationId });
