@@ -1,11 +1,13 @@
 import { CallAPI } from '../axiosBase';
 import {
+  ENDPOINT_END_INTERVIEW,
   ENDPOINT_GET_SCHEDULE_BY_INTERVIEW_ROOM_ID,
   ENDPOINT_GET_WAITING_ROOM_INFO,
   ENDPOINT_INTERVIEW_SCHEDULE,
   ENDPOINT_INVITE_INTERVIEWEE,
   ENDPOINT_LEAVE_WAITING_ROOM,
   ENDPOINT_REQUEST_CHANGE_SCHEDULE,
+  ENDPOINT_START_INTERVIEW,
   ENDPOINT_SWAP_INTERVIEW,
   ENDPOINT_VISIT_WAITING_ROOM
 } from '../../constants/Endpoints/jobhub-api/InterviewControllerEndpoint';
@@ -36,3 +38,9 @@ export const getScheduleById = (scheduleId) => CallAPI(`${ENDPOINT_INTERVIEW_SCH
 
 export const swapSchedule = (fromApplicationId, toApplicationId) =>
   CallAPI(`${ENDPOINT_SWAP_INTERVIEW}`, 'POST', {}, { fromApplicationId, toApplicationId });
+
+export const startInterview = (attendantId, interviewRoomId) =>
+  CallAPI(`${ENDPOINT_START_INTERVIEW}`, 'POST', {}, { attendantId, interviewRoomId });
+
+export const endInterview = (attendantId, interviewRoomId) =>
+  CallAPI(`${ENDPOINT_END_INTERVIEW}`, 'POST', {}, { attendantId, interviewRoomId });

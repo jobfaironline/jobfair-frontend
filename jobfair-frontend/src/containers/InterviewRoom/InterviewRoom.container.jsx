@@ -4,15 +4,16 @@ import {
   WaitingRoomListForIntervieweeContainer,
   WaitingRoomListForInterviewerContainer
 } from '../WaitingRoomList/WaitingRoomList.container';
+import { useLocation, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import AgoraRTC from 'agora-rtc-react';
 import ChatBoxContainer from '../Agora/ChatBox/ChatBox.container';
 import React, { useEffect, useRef, useState } from 'react';
 import VideoCallContainer from '../Agora/VideoCall/VideoCall.container';
-import { useParams } from 'react-router-dom';
 
 const InterviewRoomContainer = (props) => {
   const role = useSelector((state) => state.authentication.user.roles);
+  const location = useLocation();
 
   const { scheduleId, roomId: channelId } = useParams();
 
@@ -49,6 +50,7 @@ const InterviewRoomContainer = (props) => {
             height={'87vh'}
             width={'100%'}
             userListRef={userListRef}
+            layoutMode={location.pathname.includes('waiting-room') ? 'WAITINGROOM' : 'INTERVIEWROOM'}
           />
         </>
       }

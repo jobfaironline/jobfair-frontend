@@ -8,13 +8,13 @@ export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => (
       {waitingList.map((interviewee) => (
         <div className='name-holder'>
           <Row>
-            <Col span={10}>{interviewee.attendantName}</Col>
-            <Col span={7}>
+            <Col span={8}>{interviewee.attendantName}</Col>
+            <Col span={4}>
               {`${new Date(interviewee.beginTime).toTimeString().split(' ')[0]} - ${
                 new Date(interviewee.endTime).toTimeString().split(' ')[0]
               }`}
             </Col>
-            <Col span={7}>
+            <Col span={8}>
               <Button
                 type='primary'
                 shape='round'
@@ -23,6 +23,7 @@ export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => (
                 {!interviewee.inRoom ? 'Not in room' : 'invite'}
               </Button>
             </Col>
+            <Col span={4}>{interviewee?.buttonStatus()}</Col>
           </Row>
         </div>
       ))}
@@ -30,16 +31,16 @@ export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => (
   </Card>
 );
 
-export const WaitingRoomListForIntervieweeComponent = ({ turn, userSchedule }) => (
+export const WaitingRoomListForIntervieweeComponent = ({ userSchedule }) => (
   <Card>
     <div>
       <Typography.Title level={3}>Phòng chờ phỏng vấn</Typography.Title>
-      <div>
+      {/* <div>
         <Row>
           <Col span={10}>Số lượt tiếp theo</Col>
           <Col span={7}>{turn}</Col>
         </Row>
-      </div>
+      </div> */}
       <div className='name-holder'>
         <Row>
           <Col span={10}>{userSchedule.fullName}</Col>

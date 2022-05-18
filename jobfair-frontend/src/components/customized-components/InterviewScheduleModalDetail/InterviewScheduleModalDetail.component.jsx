@@ -19,7 +19,7 @@ export const handleTag = (status) => {
 
 const InterviewScheduleModalDetailComponent = (props) => {
   const { data, visible, onCancel, handleRequestChange, buttonAction } = props;
-  console.log(data);
+
   return (
     <Modal visible={visible} onCancel={onCancel} footer={null} centered={true}>
       <Card title={data?.title} bordered={false}>

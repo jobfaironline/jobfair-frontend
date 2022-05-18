@@ -1,14 +1,16 @@
-import { Button, notification, Modal } from 'antd';
+import { Button, Modal, notification } from 'antd';
 import { NotificationType } from '../../constants/NotificationType';
 import {
   WaitingRoomListForIntervieweeComponent,
   WaitingRoomListForInterviewerComponent
 } from '../../components/customized-components/WaitingRoomList/WaitingRoomList.component';
 import {
+  endInterview,
   getScheduleById,
   getWaitingRoomInfo,
   inviteInterviewee,
   leaveWaitingRoom,
+  startInterview,
   swapSchedule,
   visitWaitingRoom
 } from '../../services/jobhub-api/InterviewControllerService';
@@ -18,11 +20,10 @@ import { useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 
-export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId, agoraUserListRef }) => {
+export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId }) => {
   const [intervieweeList, setIntervieweeList] = useState([]);
   const intervieweeListRef = useRef(intervieweeList);
   const [scheduleInfo, setScheduleInfo] = useState({});
-  const [inInterview, setInInterview] = useState(false); //check dynamic later ?
   const webSocketClient = useSelector(selectWebSocket);
 
   const fetchScheduleInfo = async () => {
@@ -30,7 +31,6 @@ export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId, 
       const { data } = await getScheduleById(scheduleId);
 
       setScheduleInfo(data);
-      setInInterview(data.status === 'INTERVIEWING');
     } catch (e) {
       notification['error']({
         message: `Something went wrong! Try again latter!`,
@@ -103,9 +103,10 @@ const mappingTodayScheduleAndWaitingRoomList = async (
       if (res?.status === 202) {
         const swapHandle = async () => {
           //need to swap
-          const curInterviewee = intervieweeListRef.current.filter((interviewee) => {
-            return new Date(interviewee.beginTime) <= Date.now() && new Date(interviewee.endTime) >= Date.now();
-          });
+          const curInterviewee = intervieweeListRef.current.filter(
+            (interviewee) =>
+              new Date(interviewee.beginTime) <= Date.now() && new Date(interviewee.endTime) >= Date.now()
+          );
 
           try {
             await swapSchedule(applicationId, curInterviewee[0].id);
@@ -151,6 +152,7 @@ const mappingTodayScheduleAndWaitingRoomList = async (
         interviewLink: item.url,
         badgeType: item.status,
         inRoom: item.inWaitingRoom,
+        buttonStatus: () => <InterviewStatusButton data={item} />,
         handleInvite: () => handleInvite(item.attendantId, item.id)
       };
       return tmp;
@@ -231,5 +233,60 @@ const checkTurn = async (setInterviewTurn, waitingRoomId, interviewTurnRef) => {
       description: `There is problem while fetching data, try again later`,
       duration: 2
     });
+  }
+};
+
+const InterviewStatusButton = ({ data }) => {
+  const handleEndInterview = async () => {
+    try {
+      await endInterview(data?.attendantId, data?.interviewRoomId);
+    } catch (e) {
+      notification['error']({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while ending interview, try again later`,
+        duration: 2
+      });
+    }
+  };
+
+  const handleStartInterview = async () => {
+    try {
+      await startInterview(data?.attendantId, data?.interviewRoomId);
+    } catch (e) {
+      notification['error']({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while starting interview, try again later`,
+        duration: 2
+      });
+    }
+  };
+
+  switch (data.status) {
+    case 'NOT_YET':
+      return (
+        <Button type='primary' shape='round' onClick={() => handleStartInterview()}>
+          Start
+        </Button>
+      );
+    case 'INTERVIEWING':
+      return (
+        <Button type='primary' shape='round' onClick={() => handleEndInterview()}>
+          End
+        </Button>
+      );
+    case 'DONE':
+      return (
+        <Button type='primary' shape='round' disabled={true}>
+          Done
+        </Button>
+      );
+    case 'REQUEST_CHANGE':
+      return (
+        <Button type='primary' shape='round' disabled={true}>
+          Changing
+        </Button>
+      );
+    default:
+      return null;
   }
 };
