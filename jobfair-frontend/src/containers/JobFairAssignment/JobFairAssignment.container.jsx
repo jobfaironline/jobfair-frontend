@@ -51,18 +51,39 @@ const JobFairAssignmentContainer = () => {
     setPageSize(pageSize);
   };
 
-  const handleStartDecorateBooth = (id) => {
-    const url = generatePath(PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE, {
-      assignmentId: id
-    });
-    history.push(url);
+  const handleRedirect = (record, key) => {
+    let url = '';
+    switch (key) {
+      case 'DECORATOR':
+        url = generatePath(PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE, {
+          assignmentId: record.id
+        });
+        history.push(url);
+        break;
+      case 'SUPERVISOR':
+        url = generatePath(PATH_COMPANY_EMPLOYEE.BOOTH_DESCRIPTION_PAGE, {
+          assignmentId: record.id
+        });
+        history.push(url);
+        break;
+      default:
+        break;
+    }
   };
 
-  const handleDecorateAction = (record) => {
-    const now = new Date().getTime();
-    return record.decorateStartTimeValue <= now <= record.decorateEndTimeValue ? (
-      <a onClick={() => handleStartDecorateBooth(record.id)}>Decorate booth</a>
-    ) : null;
+  const handleAction = (record) => {
+    switch (record.assignmentType) {
+      case 'Supervisor':
+        return <a onClick={() => handleRedirect(record, 'SUPERVISOR')}>Add booth description</a>;
+      case 'Decorator': {
+        const now = new Date().getTime();
+        return record.decorateStartTimeValue <= now <= record.decorateEndTimeValue ? (
+          <a onClick={() => handleRedirect(record, 'DECORATOR')}>Decorate booth</a>
+        ) : null;
+      }
+      default:
+        return null;
+    }
   };
 
   const jobFairAssignmentTableProps = {
@@ -75,7 +96,7 @@ const JobFairAssignmentContainer = () => {
       {
         title: 'Actions',
         key: 'action',
-        render: (text, record) => <Space size='middle'>{handleDecorateAction(record)}</Space>
+        render: (text, record) => <Space size='middle'>{handleAction(record)}</Space>
       }
     ],
     paginationObject: {
