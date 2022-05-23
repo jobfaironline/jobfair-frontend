@@ -36,7 +36,6 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
 
   const fetchData = async () => {
     const assigmentData = (await getAssignmentById(assignmentId)).data;
-    console.log(assigmentData);
     const data = (await getCompanyBoothById(assigmentData.jobFairBooth.id)).data;
     const formData = {
       name: data.name,
