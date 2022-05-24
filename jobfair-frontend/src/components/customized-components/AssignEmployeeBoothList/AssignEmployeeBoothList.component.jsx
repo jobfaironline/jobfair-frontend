@@ -36,9 +36,9 @@ export const AssignEmployeeBoothList = (props) => {
                   <Title level={5}>{item.booth.name}</Title>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <Text>In charge: </Text>
+                  <Text>Supervisor: </Text>
                   {item.assignments
-                    .filter((assign) => assign.type === AssignmentConst.IN_CHARGE)
+                    .filter((assign) => assign.type === AssignmentConst.SUPERVISOR)
                     .map((assign) => (
                       <Text>
                         {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
@@ -57,6 +57,15 @@ export const AssignEmployeeBoothList = (props) => {
                   <Text>Interviewee: </Text>
                   {item.assignments
                     .filter((assign) => assign.type === AssignmentConst.INTERVIEWER)
+                    .map((assign) => (
+                      <Text>
+                        {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
+                        {assign.companyEmployee.account.lastname}
+                      </Text>
+                    ))}
+                  <Text>Decorator: </Text>
+                  {item.assignments
+                    .filter((assign) => assign.type === AssignmentConst.DECORATOR)
                     .map((assign) => (
                       <Text>
                         {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
