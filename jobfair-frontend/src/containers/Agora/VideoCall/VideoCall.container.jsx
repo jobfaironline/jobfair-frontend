@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import '../../../components/Agora/VideoCall/VideoCall.styles.scss';
+import { COMPANY_EMPLOYEE } from '../../../constants/RoleType';
 import { NotificationType } from '../../../constants/NotificationType';
 import { PATH, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import { getAgoraRTCToken } from '../../../services/jobhub-api/AgoraTokenControllerService';
@@ -17,7 +18,9 @@ const VideoCallContainer = (props) => {
   const history = useHistory();
   //TODO: remove later
   const dispatch = useDispatch();
-  const { audioReady, audioTrack, cameraReady, cameraTrack, type, layoutMode, userListRef } = props;
+  const { audioReady, audioTrack, cameraReady, cameraTrack, type, layoutMode, userListRef, setInterviewingData } =
+    props;
+
   const [isRTCClientReady, setIsRTCClientReady] = useState(false);
   const [users, setUsers] = useState([]);
   const [muteState, setMuteState] = useState({ video: false, audio: false });
@@ -58,6 +61,11 @@ const VideoCallContainer = (props) => {
 
   async function initializeRTCClient(rtcClient, rtcToken, userId) {
     rtcClient.on('user-joined', async (user) => {
+      setInterviewingData !== undefined &&
+        setInterviewingData((prevState) => {
+          if (user.uid === prevState.invitingAttendantId) return { ...prevState, isInterviewing: true };
+          return prevState;
+        });
       setUsers((prevUsers) => [...prevUsers, user]);
     });
 
@@ -140,7 +148,7 @@ const VideoCallContainer = (props) => {
       width={props.width}
       layoutMode={layoutMode}
       kickUser={handleKickUser}
-      role={role}
+      isKickable={role === COMPANY_EMPLOYEE}
     />
   );
 };

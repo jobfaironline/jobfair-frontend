@@ -1,5 +1,4 @@
 import './VideoCall.styles.scss';
-import { ATTENDANT, COMPANY_EMPLOYEE } from '../../../constants/RoleType';
 import { AgoraVideoPlayer } from 'agora-rtc-react';
 import { Avatar, Badge, Button, Tag, Tooltip } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,7 +27,7 @@ const VideoCallComponent = (props) => {
     width,
     layoutMode,
     kickUser,
-    role = ATTENDANT
+    isKickable = false
   } = props;
 
   if (layoutMode === 'WAITINGROOM') {
@@ -245,8 +244,8 @@ const VideoCallComponent = (props) => {
                         videoTrack={user.videoTrack}
                         key={user.uid}
                       />
-                      {role === COMPANY_EMPLOYEE ? <div className={'user-icon'} /> : null}
-                      {role === COMPANY_EMPLOYEE ? (
+                      {isKickable ? <div className={'user-icon'} /> : null}
+                      {isKickable ? (
                         <div className={'user-mask'}>
                           <Tooltip title={'Remove this user'}>
                             <div
@@ -301,9 +300,7 @@ const VideoCallComponent = (props) => {
                 justifyContent: 'center',
                 alignItems: 'center'
               }}>
-              <div className={'user-icon'}>
-                <h1 style={{ color: '#FFF' }}>No one is here</h1>
-              </div>
+              <h1 style={{ color: '#FFF' }}>No one is here</h1>
             </div>
           </div>
         )}

@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 
-export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId }) => {
+export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId, setInterviewingData }) => {
   const [intervieweeList, setIntervieweeList] = useState([]);
   const intervieweeListRef = useRef(intervieweeList);
   const [scheduleInfo, setScheduleInfo] = useState({});
@@ -55,7 +55,8 @@ export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId }
           setIntervieweeList,
           scheduleInfo?.waitingRoomId,
           intervieweeListRef,
-          channelId
+          channelId,
+          setInterviewingData
         ));
     };
 
@@ -79,7 +80,8 @@ export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId }
             setIntervieweeList,
             scheduleInfo?.waitingRoomId,
             intervieweeListRef,
-            channelId
+            channelId,
+            setInterviewingData
           ));
       };
 
@@ -94,12 +96,18 @@ const mappingTodayScheduleAndWaitingRoomList = async (
   setIntervieweeList,
   waitingRoomId,
   intervieweeListRef,
-  interviewRoomId
+  interviewRoomId,
+  setInterviewingData
 ) => {
   const handleInvite = async (attendantId, applicationId) => {
     try {
       const res = await inviteInterviewee(attendantId, interviewRoomId);
-
+      setInterviewingData !== undefined &&
+        setInterviewingData((prevState) => ({
+          ...prevState,
+          invitingApplicationId: applicationId,
+          invitingAttendantId: attendantId
+        }));
       if (res?.status === 202) {
         const swapHandle = async () => {
           //need to swap
@@ -115,7 +123,8 @@ const mappingTodayScheduleAndWaitingRoomList = async (
                 setIntervieweeList,
                 waitingRoomId,
                 intervieweeListRef,
-                interviewRoomId
+                interviewRoomId,
+                setInterviewingData
               ));
             //invite again
             await inviteInterviewee(attendantId, interviewRoomId);
@@ -146,6 +155,7 @@ const mappingTodayScheduleAndWaitingRoomList = async (
   try {
     const { data: waitingRoomList } = await getWaitingRoomInfo(waitingRoomId);
 
+    // eslint-disable-next-line no-unused-vars
     const InterviewStatusButton = ({ data, scheduleInfo, channelId }) => {
       const handleEndInterview = async () => {
         try {
@@ -155,7 +165,8 @@ const mappingTodayScheduleAndWaitingRoomList = async (
               setIntervieweeList,
               waitingRoomId,
               intervieweeListRef,
-              interviewRoomId
+              interviewRoomId,
+              setInterviewingData
             ));
         } catch (e) {
           notification['error']({
@@ -174,7 +185,8 @@ const mappingTodayScheduleAndWaitingRoomList = async (
               setIntervieweeList,
               waitingRoomId,
               intervieweeListRef,
-              interviewRoomId
+              interviewRoomId,
+              setInterviewingData
             ));
         } catch (e) {
           notification['error']({

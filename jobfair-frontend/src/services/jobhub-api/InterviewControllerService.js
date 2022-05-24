@@ -7,6 +7,7 @@ import {
   ENDPOINT_INVITE_INTERVIEWEE,
   ENDPOINT_KICK_FROM_ROOM,
   ENDPOINT_LEAVE_WAITING_ROOM,
+  ENDPOINT_REPORT,
   ENDPOINT_REQUEST_CHANGE_SCHEDULE,
   ENDPOINT_START_INTERVIEW,
   ENDPOINT_SWAP_INTERVIEW,
@@ -47,3 +48,11 @@ export const endInterview = (attendantId, interviewRoomId) =>
   CallAPI(`${ENDPOINT_END_INTERVIEW}`, 'POST', {}, { attendantId, interviewRoomId });
 
 export const kickUser = (userId, channelId) => CallAPI(`${ENDPOINT_KICK_FROM_ROOM}`, 'POST', {}, { channelId, userId });
+
+export const submitReport = ({ advantage = '', applicationId = '', disadvantage = '', note = '' }) =>
+  CallAPI(`${ENDPOINT_REPORT}`, 'POST', {
+    advantage,
+    disadvantage,
+    applicationId,
+    note
+  });
