@@ -29,9 +29,9 @@ const InterviewRoomPage = () => {
   dispatch(agoraAction.setRTCClient(useClient()));
   dispatch(agoraAction.setChannelId(channelId));
 
-  useEffect(() => initializeRoomChat(), []);
+  useEffect(() => cleanUp, []);
 
-  const initializeRoomChat = () => {
+  const cleanUp = () => {
     //close all audio and camera tracks
     audioTrackRef.current?.close();
     cameraTrackRef.current?.close();

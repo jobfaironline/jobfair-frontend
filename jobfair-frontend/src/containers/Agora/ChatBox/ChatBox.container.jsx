@@ -95,6 +95,7 @@ const ChatBoxContainer = (props) => {
     }
   };
   useEffect(() => {
+    if (type === 'INTERVIEW_ROOM') return;
     AgoraRTC.createMicrophoneAudioTrack().then((track) => {
       audioTrackRef.current = track;
       setAudioTrack(track);
