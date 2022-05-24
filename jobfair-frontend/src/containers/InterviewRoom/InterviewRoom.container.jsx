@@ -30,7 +30,9 @@ const InterviewRoomContainer = (props) => {
       setAudioTrack(track);
       setAudioReady(true);
     });
-    AgoraRTC.createCameraVideoTrack().then((track) => {
+    AgoraRTC.createCameraVideoTrack({
+      encoderConfig: '120p'
+    }).then((track) => {
       cameraTrackRef.current = track;
       setCameraTrack(track);
       setCameraReady(true);

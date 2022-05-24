@@ -46,4 +46,40 @@
       width: auto;
     }
   }
+
+  .user-icon{
+    width: 20rem;
+    height: 20rem;
+    display: flex;
+    align-items: center;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    top: -50%;
+    justify-content: space-around;
+    position: relative;
+  }
+
+  .user-icon:hover + .user-mask{
+    display: flex;
+  }
+
+  .user-mask:hover{
+    display: flex;
+  }
+
+  .user-mask{
+    position: absolute;
+    background: #0000008a;
+    width: 100px;
+    height: 50px;
+    opacity: 1;
+    justify-content: center;
+    align-items: center;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    top: 50%;
+    display: none;
+    border-radius: 20px;
+  }
+
 }

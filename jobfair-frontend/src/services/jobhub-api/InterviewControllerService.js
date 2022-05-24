@@ -5,6 +5,7 @@ import {
   ENDPOINT_GET_WAITING_ROOM_INFO,
   ENDPOINT_INTERVIEW_SCHEDULE,
   ENDPOINT_INVITE_INTERVIEWEE,
+  ENDPOINT_KICK_FROM_ROOM,
   ENDPOINT_LEAVE_WAITING_ROOM,
   ENDPOINT_REQUEST_CHANGE_SCHEDULE,
   ENDPOINT_START_INTERVIEW,
@@ -44,3 +45,5 @@ export const startInterview = (attendantId, interviewRoomId) =>
 
 export const endInterview = (attendantId, interviewRoomId) =>
   CallAPI(`${ENDPOINT_END_INTERVIEW}`, 'POST', {}, { attendantId, interviewRoomId });
+
+export const kickUser = (userId, channelId) => CallAPI(`${ENDPOINT_KICK_FROM_ROOM}`, 'POST', {}, { channelId, userId });

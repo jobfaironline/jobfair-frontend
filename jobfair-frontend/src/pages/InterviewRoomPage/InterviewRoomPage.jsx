@@ -1,6 +1,7 @@
 import { agoraAction } from '../../redux-flow/agora/agora-slice';
 import { createClient } from 'agora-rtc-react';
-import { useDispatch } from 'react-redux';
+import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import InterviewRoomContainer from '../../containers/InterviewRoom/InterviewRoom.container';
 import RTMClient from '../../services/agora/RTMClient';
@@ -28,10 +29,12 @@ const InterviewRoomPage = () => {
   dispatch(agoraAction.setRTMClient(rtm));
   dispatch(agoraAction.setRTCClient(useClient()));
   dispatch(agoraAction.setChannelId(channelId));
+  const webSocketClient = useSelector(selectWebSocket);
 
   useEffect(() => cleanUp, []);
 
   const cleanUp = () => {
+    webSocketClient.removeEvent('is-kick');
     //close all audio and camera tracks
     audioTrackRef.current?.close();
     cameraTrackRef.current?.close();
