@@ -70,43 +70,89 @@ const InterviewRoomContainer = (props) => {
     });
   };
 
+  if (role === 'COMPANY_EMPLOYEE') {
+    return (
+      <SideBarComponent
+        rightSide={
+          <SideBarComponent
+            rightSide={
+              <>
+                <VideoCallContainer
+                  audioReady={audioReady}
+                  audioTrack={audioTrack}
+                  cameraReady={cameraReady}
+                  cameraTrack={cameraTrack}
+                  type={'INTERVIEW_ROOM'}
+                  height={'40%'}
+                  width={'100%'}
+                  userListRef={userListRef}
+                  layoutMode={location.pathname.includes('waiting-room') ? 'WAITINGROOM' : 'INTERVIEWROOM'}
+                  setInterviewingData={setInterviewingData}
+                />
+                {interviewingData.isInterviewing && interviewingData.applicationData !== undefined ? (
+                  <div>
+                    <CompactResumeDetail data={interviewingData.applicationData} />
+                  </div>
+                ) : null}
+              </>
+            }
+            leftSide={
+              interviewingData.isInterviewing ? (
+                <div style={{ padding: '2rem' }}>
+                  <InterviewReportForm form={form} onFinish={handleSubmitReport} />
+                </div>
+              ) : (
+                <div />
+              )
+            }
+            ratio={3 / 5}
+            isOrganizeJobFair={false}
+          />
+        }
+        leftSide={
+          <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', flex: '1' }}>
+            {/* TODO: dynamic this based on role */}
+            {roomType.includes('waiting-room') ? (
+              <WaitingRoomListForIntervieweeContainer
+                channelId={channelId}
+                scheduleId={scheduleId}
+                agoraUserListRef={userListRef}
+              />
+            ) : null}
+            {roomType.includes('interview') && role === 'COMPANY_EMPLOYEE' ? (
+              <WaitingRoomListForInterviewerContainer
+                channelId={channelId}
+                scheduleId={scheduleId}
+                setInterviewingData={setInterviewingData}
+              />
+            ) : null}
+            <Card>
+              <ChatBoxContainer type={'INTERVIEW_ROOM'} />
+            </Card>
+          </div>
+        }
+        ratio={2 / 7}
+        isOrganizeJobFair={false}
+      />
+    );
+  }
+
   return (
     <SideBarComponent
       rightSide={
-        <SideBarComponent
-          rightSide={
-            <>
-              <VideoCallContainer
-                audioReady={audioReady}
-                audioTrack={audioTrack}
-                cameraReady={cameraReady}
-                cameraTrack={cameraTrack}
-                type={'INTERVIEW_ROOM'}
-                height={'40%'}
-                width={'100%'}
-                userListRef={userListRef}
-                layoutMode={location.pathname.includes('waiting-room') ? 'WAITINGROOM' : 'INTERVIEWROOM'}
-                setInterviewingData={setInterviewingData}
-              />
-              {interviewingData.isInterviewing && interviewingData.applicationData !== undefined ? (
-                <div>
-                  <CompactResumeDetail data={interviewingData.applicationData} />
-                </div>
-              ) : null}
-            </>
-          }
-          leftSide={
-            interviewingData.isInterviewing ? (
-              <div style={{ padding: '2rem' }}>
-                <InterviewReportForm form={form} onFinish={handleSubmitReport} />
-              </div>
-            ) : (
-              <div />
-            )
-          }
-          ratio={3 / 5}
-          isOrganizeJobFair={false}
-        />
+        <>
+          <VideoCallContainer
+            audioReady={audioReady}
+            audioTrack={audioTrack}
+            cameraReady={cameraReady}
+            cameraTrack={cameraTrack}
+            type={'INTERVIEW_ROOM'}
+            height={'87vh'}
+            width={'100%'}
+            userListRef={userListRef}
+            layoutMode={location.pathname.includes('waiting-room') ? 'WAITINGROOM' : 'INTERVIEWROOM'}
+          />
+        </>
       }
       leftSide={
         <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', flex: '1' }}>
@@ -119,18 +165,14 @@ const InterviewRoomContainer = (props) => {
             />
           ) : null}
           {roomType.includes('interview') && role === 'COMPANY_EMPLOYEE' ? (
-            <WaitingRoomListForInterviewerContainer
-              channelId={channelId}
-              scheduleId={scheduleId}
-              setInterviewingData={setInterviewingData}
-            />
+            <WaitingRoomListForInterviewerContainer channelId={channelId} scheduleId={scheduleId} />
           ) : null}
           <Card>
             <ChatBoxContainer type={'INTERVIEW_ROOM'} />
           </Card>
         </div>
       }
-      ratio={2 / 7}
+      ratio={1 / 4.5}
       isOrganizeJobFair={false}
     />
   );
