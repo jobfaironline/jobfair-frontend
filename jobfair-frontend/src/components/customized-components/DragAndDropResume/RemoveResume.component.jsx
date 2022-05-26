@@ -1,5 +1,6 @@
-import { Divider, Typography } from 'antd';
+import { Descriptions, Divider, Typography } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { convertEnumToString } from '../../../utils/common';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
@@ -12,10 +13,14 @@ export const RemoveResumeComponent = (props) => {
       <Divider style={{ margin: '1rem 0' }} />
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <div>
-          <Text strong style={{ fontSize: '1.5rem' }}>
-            {' '}
-            {`CV: ${selectedResume.name} `}
-          </Text>
+          <Descriptions title='CV detail' bordered={false} column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}>
+            <Descriptions.Item label={<Text strong>Name </Text>}>{selectedResume?.name}</Descriptions.Item>
+            <Descriptions.Item label={<Text strong>Email </Text>}>{selectedResume?.email}</Descriptions.Item>
+            <Descriptions.Item label={<Text strong>Job level </Text>}>
+              {convertEnumToString(selectedResume?.jobLevel)}
+            </Descriptions.Item>
+            <Descriptions.Item label={<Text strong>Job title </Text>}>{selectedResume?.jobTitle}</Descriptions.Item>
+          </Descriptions>
         </div>
         <div
           className={'remove-resume'}

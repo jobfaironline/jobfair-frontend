@@ -1,8 +1,9 @@
 import { Badge, Button, Card, Col, Modal, Row, Space, Typography } from 'antd';
 import { CalendarOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import { INTERVIEW_SCHEDULE_STATUS } from '../../../constants/InterviewScheduleConst';
-import { convertEnumToString, convertToDateString, convertToUTCString } from '../../../utils/common';
+import { convertEnumToString, convertToDateString } from '../../../utils/common';
 import React from 'react';
+import moment from 'moment';
 
 export const handleTag = (status) => {
   switch (status) {
@@ -18,7 +19,7 @@ export const handleTag = (status) => {
 };
 
 const InterviewScheduleModalDetailComponent = (props) => {
-  const { data, visible, onCancel, handleRequestChange, buttonAction } = props;
+  const { data, visible, onCancel, handleRequestChange, buttonAction, role, handleTakeReport } = props;
 
   return (
     <Modal visible={visible} onCancel={onCancel} footer={null} centered={true}>
@@ -60,7 +61,7 @@ const InterviewScheduleModalDetailComponent = (props) => {
                 <Typography.Text strong>
                   Start time <ClockCircleOutlined />
                 </Typography.Text>
-                <Typography.Text>{convertToUTCString(data?.timeStart).split('GMT')[0].split(' ')[4]}</Typography.Text>
+                <Typography.Text>{moment(data?.timeStart).format('hh:mm')}</Typography.Text>
               </Space>
             </Col>
             <Col span={8}>
@@ -68,7 +69,7 @@ const InterviewScheduleModalDetailComponent = (props) => {
                 <Typography.Text strong>
                   End time <ClockCircleOutlined />
                 </Typography.Text>
-                <Typography.Text>{convertToUTCString(data?.timeEnd).split('GMT')[0].split(' ')[4]}</Typography.Text>
+                <Typography.Text>{moment(data?.timeEnd).format('hh:mm')}</Typography.Text>
               </Space>
             </Col>
           </Row>
@@ -77,8 +78,19 @@ const InterviewScheduleModalDetailComponent = (props) => {
           <Row>
             <Col span={24}>
               <Space direction='horizontal'>
-                <Typography.Text strong>Interview room</Typography.Text>
-                {buttonAction(data)}
+                {data?.status !== INTERVIEW_SCHEDULE_STATUS.DONE ? (
+                  <>
+                    <Typography.Text strong>Interview room</Typography.Text>
+                    {buttonAction(data)}
+                  </>
+                ) : (
+                  <>
+                    <Typography.Text type='success'>
+                      {role === 'ATTENDANT' && 'You have attended on this interview. Thank you for your time!'}
+                    </Typography.Text>
+                    <div>{role === 'COMPANY_EMPLOYEE' && <a onClick={handleTakeReport}>Take report</a>}</div>
+                  </>
+                )}
               </Space>
             </Col>
           </Row>

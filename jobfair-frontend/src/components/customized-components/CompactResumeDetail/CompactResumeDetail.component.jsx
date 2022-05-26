@@ -1,13 +1,11 @@
-import { Descriptions, Typography, Avatar, Button, Card, Modal } from 'antd';
+import { Avatar, Button, Card, Descriptions, Modal } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { convertEnumToString } from '../../../utils/common';
 import React from 'react';
 import ResumeDetailForAttendantContainer from '../../../containers/Resume/attendant/ResumeDetailForAttendant.container';
 
-const { Text } = Typography;
-
 export const CompactResumeDetail = (props) => {
   const { data } = props;
-  console.log(data);
 
   const handleOpenResume = () => {
     Modal.info({
@@ -41,7 +39,7 @@ export const CompactResumeDetail = (props) => {
             {data.yearOfExp}
           </Descriptions.Item>
           <Descriptions.Item label='Job level' span={24}>
-            {data.jobLevel}
+            {convertEnumToString(data.jobLevel)}
           </Descriptions.Item>
           <Descriptions.Item span={24}>
             <div style={{ display: 'flex', justifyContent: 'end', width: '100%' }}>

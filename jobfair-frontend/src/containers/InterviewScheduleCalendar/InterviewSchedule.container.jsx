@@ -50,14 +50,20 @@ const InterviewScheduleContainer = () => {
     const beginTime = pivotDate.clone().subtract(30, 'd').unix() * 1000;
     const endTime = pivotDate.clone().add(30, 'd').unix() * 1000;
     try {
-      let data = (
-        await getSchedule({
-          beginTime,
-          endTime
-        })
-      ).data;
+      const response = await getSchedule({
+        beginTime,
+        endTime
+      });
+      if (response.status === 204) {
+        notification['info']({
+          message: `You have no interview schedule yet`,
+          duration: 2
+        });
+        return;
+      }
+      let data = response.data;
 
-      data = data.map((item) => {
+      data = data?.map((item) => {
         const date = moment.unix(item.beginTime / 1000);
         return {
           ...item,
@@ -71,6 +77,7 @@ const InterviewScheduleContainer = () => {
           badgeType: getBadgeType(item.status)
         };
       });
+
       setInterviewSchedule(data);
     } catch (e) {
       notification['error']({
@@ -105,7 +112,7 @@ const InterviewScheduleContainer = () => {
               if (data?.waitingRoomId)
                 window.location.href = `/attendant/waiting-room/${data.id}/${data.waitingRoomId}`; //TODO: replace with real data later
             }}>
-            Join room
+            Join waiting room
           </Button>
         );
       case 'COMPANY_EMPLOYEE':
@@ -117,7 +124,7 @@ const InterviewScheduleContainer = () => {
               if (data?.interviewRoomId)
                 window.location.href = `/employee/interview/${data.id}/${data.interviewRoomId}`; //TODO: replace with real data later
             }}>
-            Join room
+            Join interview room
           </Button>
         );
       default:
@@ -165,6 +172,7 @@ const InterviewScheduleContainer = () => {
         data={modalDetail}
         handleRequestChange={handleRequestChange}
         buttonAction={buttonAction}
+        role={role}
       />
       <InterviewScheduleModalRequestChangeComponent
         data={modalDetail}

@@ -1,4 +1,4 @@
-import { Card, Form } from 'antd';
+import { Card, Form, notification } from 'antd';
 import { CompactResumeDetail } from '../../components/customized-components/CompactResumeDetail/CompactResumeDetail.component';
 import { InterviewReportForm } from '../../components/forms/InterviewReportForm/InterviewReportForm.component';
 import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
@@ -61,13 +61,25 @@ const InterviewRoomContainer = (props) => {
     setInterviewingData((prevState) => ({ ...prevState, applicationData: data }));
   };
 
-  const handleSubmitReport = (values) => {
-    submitReport({
-      advantage: values.advantage ?? '',
-      disadvantage: values.disadvantage ?? '',
-      note: values.note ?? '',
-      applicationId: interviewingData.applicationData.id
-    });
+  const handleSubmitReport = async (values) => {
+    try {
+      await submitReport({
+        advantage: values.advantage ?? '',
+        disadvantage: values.disadvantage ?? '',
+        note: values.note ?? '',
+        applicationId: interviewingData.applicationData.id
+      });
+      notification['success']({
+        message: 'Submit report successfully',
+        duration: 2
+      });
+    } catch (e) {
+      notification['error']({
+        message: 'Found error when submitting report',
+        description: 'Please try again later!',
+        duration: 2
+      });
+    }
   };
 
   if (role === 'COMPANY_EMPLOYEE') {
