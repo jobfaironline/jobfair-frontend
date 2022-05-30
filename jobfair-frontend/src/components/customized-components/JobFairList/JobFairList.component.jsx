@@ -19,7 +19,7 @@ import { COMPANY_JOB_FAIR_STATUS } from '../../../constants/CompanyJobFairStatus
 import { JOB_FAIR_FOR_ATTENDANT_STATUS, JOB_FAIR_PLAN_COMPANY_STATUS } from '../../../constants/JobFairConst';
 import { useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import JobFairThumbnailComponent from './Thumbnail/JobFairThumbnail.component';
+import JobFairThumbnailComponent from '../JobFairThumbnail/JobFairThumbnail.component';
 import React from 'react';
 import ShowMoreText from 'react-show-more-text';
 
