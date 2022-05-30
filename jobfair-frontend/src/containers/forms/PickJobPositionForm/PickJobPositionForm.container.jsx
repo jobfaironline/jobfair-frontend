@@ -1,5 +1,5 @@
 import './PickJobPositionForm.styles.scss';
-import { Card, Form, Image, Input, Modal, Typography, notification } from 'antd';
+import { Button, Card, Form, Image, Input, Modal, Typography, notification } from 'antd';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { PATH } from '../../../constants/Paths/Path';
 import {
@@ -202,6 +202,13 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
               </Form.Item>
               <Form.Item label='Booth description' required name='description'>
                 <TextArea autoSize={{ minRows: 5 }} showCount maxLength={3000} placeholder='Description' />
+              </Form.Item>
+              <Form.Item>
+                <div style={{ display: 'flex', width: '100%', marginTop: '1rem' }}>
+                  <Button type='primary' htmlType='submit' className={'button'} style={{ marginLeft: 'auto' }}>
+                    Submit
+                  </Button>
+                </div>
               </Form.Item>
             </Form>
           </div>
