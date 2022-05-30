@@ -13,10 +13,9 @@ const JobPositionDetailModalComponent = ({ data }) => (
         flexDirection: 'column',
         alignItems: 'center'
       }}>
-      <Text strong style={{ fontSize: '1.8rem' }}>{`- Job position -`}</Text>
       <Text strong style={{ fontSize: '1.8rem' }}>{`${data.title}`}</Text>
     </div>
-    <div style={{}}>
+    <div>
       <div className='sub-title' style={{}}>
         <Text strong style={{ fontSize: '1.5rem' }}>
           General information

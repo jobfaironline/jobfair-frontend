@@ -1,17 +1,20 @@
-/* eslint-disable no-unused-vars */
-import { Form, Modal, Typography, notification } from 'antd';
+import './PickJobPositionForm.styles.scss';
+import { Card, Form, Image, Input, Modal, Typography, notification } from 'antd';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { PATH } from '../../../constants/Paths/Path';
 import {
   assignJobPositionToBooth,
   getCompanyBoothById
 } from '../../../services/jobhub-api/JobFairBoothControllerService';
+import { convertEnumToString } from '../../../utils/common';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getAssignmentById } from '../../../services/jobhub-api/AssignmentControllerService';
-import AnchorComponent from '../../../components/commons/Anchor/Achor.component';
 import PickJobPositionForm from '../../../components/forms/PickJobPositionForm/PickJobPositionForm.component';
 import PickJobPositionTableContainer from '../../JobPositionTable/JobPositionTable.container';
 import React, { useEffect, useRef, useState } from 'react';
+
+const { TextArea } = Input;
+const { Text, Title } = Typography;
 
 const PickJobPositionFormContainer = ({ assignmentId }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -21,18 +24,17 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
   const history = useHistory();
   const [form] = Form.useForm();
 
-  const [anchorList, setAnchorList] = useState(
-    form.getFieldsValue().jobPositions
-      ? form.getFieldsValue().jobPositions.map((item) => ({
-          href: `#${item.id}`,
-          title: item.title
-        }))
-      : []
-  );
-
   useEffect(() => {
     fetchData();
   }, []);
+
+  const calculateKeyArr = () => {
+    const hasTestArr = form
+      .getFieldsValue(true)
+      .jobPositions?.filter((position) => position?.isHaveTest?.length > 0)
+      .map((position) => position.no);
+    setArrKey(hasTestArr);
+  };
 
   const fetchData = async () => {
     const assigmentData = (await getAssignmentById(assignmentId)).data;
@@ -43,6 +45,8 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
       boothId: assigmentData.jobFairBooth.id,
       jobPositions: data.boothJobPositions.map((position, index) => ({
         ...position,
+        jobType: convertEnumToString(position.jobType),
+        jobLevel: convertEnumToString(position.jobLevel),
         id: position.originJobPosition,
         key: position.originJobPosition,
         no: index,
@@ -52,7 +56,9 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
       })),
       jobFair: data.jobFair
     };
-    const hasTestArr = formData.jobPositions?.filter((position) => position.isHasTest).map((position) => position.no);
+    const hasTestArr = formData?.jobPositions
+      ?.filter((position) => position.isHaveTest.length > 0)
+      .map((position) => position.no);
     setArrKey(hasTestArr);
     setFormData(formData);
   };
@@ -63,26 +69,12 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
 
   const handleRemove = (name, remove) => {
     remove(name);
-    setAnchorList(
-      form.getFieldsValue().jobPositions
-        ? form.getFieldsValue().jobPositions.map((item) => ({
-            href: `#${item.id}`,
-            title: item.title
-          }))
-        : []
-    );
+    calculateKeyArr();
   };
 
   const handleCloseModal = () => {
     setModalVisible(false);
-    setAnchorList(
-      form.getFieldsValue().jobPositions
-        ? form.getFieldsValue().jobPositions.map((item) => ({
-            href: `#${item.id}`,
-            title: item.title
-          }))
-        : []
-    );
+    calculateKeyArr();
   };
 
   const onChangeHaveTest = (e, value) => {
@@ -131,7 +123,9 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
     } catch (e) {
       notification['error']({
         message: `Error occurred when finish booth description`,
-        description: `${e.response.data.message}`
+        description: `${
+          e.response.data.message.includes('Binding') ? 'Some job position is invalid' : e.response.data.message
+        }`
       });
     }
   };
@@ -157,7 +151,6 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
     });
     history.push(url);
   };
-
   return (
     <>
       <Modal
@@ -167,35 +160,60 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
         onCancel={handleCloseModal}
         footer={null}
         destroyOnClose>
-        {modalVisible ? <PickJobPositionTableContainer form={form} selectable /> : null}
+        {modalVisible ? (
+          <PickJobPositionTableContainer form={form} selectable calculateKeyArr={calculateKeyArr} />
+        ) : null}
       </Modal>
-      <div style={{ display: 'flex', margin: '5rem 1rem' }}>
-        <div style={{ padding: '1rem' }}>
-          <Typography style={{ fontSize: '1rem', paddingBottom: '0.3rem' }}>Content list</Typography>
-          <AnchorComponent
-            listData={
-              form.getFieldsValue().jobPositions
-                ? form.getFieldsValue().jobPositions.map((item) => ({
-                    href: `#${item.id}`,
-                    title: item.title
-                  }))
-                : []
-            }
-            href={'#description'}
-            title={'Booth description'}
-          />
+      <div className={'pick-job-position-container'}>
+        <div className={'left-side'}>
+          <div className={'card-container'}>
+            <Card bordered={true} className={'card'} onClick={handleView3DBooth} hoverable>
+              <Image
+                alt='example'
+                src={formData.jobFair?.thumbnailUrl}
+                preview={false}
+                height={'10rem'}
+                width={'100%'}
+              />
+              <Title level={5}>Booth decoration</Title>
+              <Text>Detail</Text>
+            </Card>
+            <Card
+              bordered={true}
+              className={'card'}
+              hoverable
+              onClick={handleViewJobFairMap}
+              style={{ marginLeft: '1rem' }}>
+              <Image
+                alt='example'
+                src={formData.jobFair?.thumbnailUrl}
+                preview={false}
+                height={'10rem'}
+                width={'100%'}
+              />
+              <Title level={5}>Job fair map</Title>
+              <Text>Detail</Text>
+            </Card>
+          </div>
+          <div className={'booth-description-container'}>
+            <Form form={form} onFinish={onFinish}>
+              <Form.Item label='Booth name' required name='name'>
+                <Input placeholder="Booth's name" />
+              </Form.Item>
+              <Form.Item label='Booth description' required name='description'>
+                <TextArea autoSize={{ minRows: 5 }} showCount maxLength={3000} placeholder='Description' />
+              </Form.Item>
+            </Form>
+          </div>
         </div>
-        <div style={{ flex: '1', padding: '0 5rem' }}>
+        <div className={'right-side'}>
           <PickJobPositionForm
             handlePickJobPosition={handlePickJobPosition}
-            handleView3DBooth={handleView3DBooth}
-            handleViewJobFairMap={handleViewJobFairMap}
             form={form}
             onFinish={onFinish}
             handleRemove={handleRemove}
             onChangeHaveTest={onChangeHaveTest}
             arrKey={arrKey}
-            jobFair={formData.jobFair}
           />
         </div>
       </div>
