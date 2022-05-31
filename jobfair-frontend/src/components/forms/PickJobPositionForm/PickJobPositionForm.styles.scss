@@ -2,15 +2,78 @@
   flex: 1;
 }
 
-.job-position-row-container {
-  display: block;
+.pick-job-position-form {
+  display: flex;
+  flex-direction: column;
 
-  > div {
-    width: fit-content;
-    flex: auto 1;
+  .add-job-button {
+    width: 100%;
+    height: 5rem;
+    border: 1px #0000006b solid;
+    border-radius: 8px;
   }
-}
 
-.ant-anchor-link-title {
-  font-size: 0.95rem;
+  .job-position-container {
+    border-radius: 8px;
+    border: 1px #0000006b solid;
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .ant-checkbox-disabled {
+    cursor: default;
+  }
+
+  .disable-input {
+    border: none !important;
+    background: white;
+    color: black;
+    padding: 0;
+
+    input {
+      border: none !important;
+      background: white;
+      color: black;
+      padding: 0;
+    }
+  }
+
+  .disable-input:focus, .disable-input:hover {
+    cursor: text;
+
+    input {
+      cursor: text;
+    }
+  }
+
+  .disable-input-title {
+    font-size: 1.5rem;
+  }
+
+  .job-position-row-container {
+    display: block;
+
+    .job-position-information-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem 1rem;
+
+      .job-position-information {
+        display: flex;
+        align-items: center;
+
+        .label {
+          font-weight: bold;
+          margin-right: 1rem;
+        }
+
+        .ant-form-item {
+          margin: 0;
+        }
+      }
+    }
+
+
+  }
+
 }

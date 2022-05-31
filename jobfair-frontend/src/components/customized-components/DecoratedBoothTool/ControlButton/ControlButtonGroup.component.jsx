@@ -2,7 +2,7 @@ import { Button, Space } from 'antd';
 import React from 'react';
 
 export const ControlButtonGroup = (props) => {
-  const { addMoreComponentHandle, saveHandle, reviewHandle, onNext } = props;
+  const { addMoreComponentHandle, saveHandle, reviewHandle } = props;
 
   return (
     <div style={{ position: 'absolute', top: '136px', right: '10px' }}>
@@ -15,9 +15,6 @@ export const ControlButtonGroup = (props) => {
         </Button>
         <Button type='primary' onClick={reviewHandle}>
           Review
-        </Button>
-        <Button type='primary' onClick={onNext}>
-          Start description
         </Button>
       </Space>
     </div>
