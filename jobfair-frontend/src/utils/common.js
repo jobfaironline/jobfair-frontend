@@ -169,3 +169,8 @@ export const getDateDifferent = (timeStamp) => {
 };
 
 export const getCountryOrder = () => CountryConst.sort((o1, o2) => o1.name.localeCompare(o2.name));
+export const formatMoney = (value, message = 'Not enter') => {
+  if (value === undefined || value === null || value === '') return message;
+  return `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+export const parseMoney = (value) => value.replace(/\$\s?|(,*)/g, '');

@@ -2,6 +2,7 @@ import './PickJobPositionForm.styles.scss';
 import { Button, Card, Checkbox, Form, Input, InputNumber, Popconfirm, Typography } from 'antd';
 import { JobPositionFormModal } from '../JobPositionForm/JobPositionFormModal.component';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { formatMoney, parseMoney } from '../../../utils/common';
 import React, { useState } from 'react';
 
 const { Title, Text } = Typography;
@@ -82,11 +83,8 @@ const PickJobPositionForm = (props) => {
                                   disabled
                                   className={'disable-input'}
                                   placeholder={'Not enter'}
-                                  formatter={(value) => {
-                                    if (value === undefined || value === null || value === '') return 'Not enter';
-                                    return `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                                  }}
-                                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                                  formatter={(value) => formatMoney(value)}
+                                  parser={parseMoney}
                                 />
                               </Form.Item>
                             </div>
@@ -103,11 +101,8 @@ const PickJobPositionForm = (props) => {
                                   disabled
                                   className={'disable-input'}
                                   placeholder={'Not enter'}
-                                  formatter={(value) => {
-                                    if (value === undefined || value === null || value === '') return 'Not enter';
-                                    return `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                                  }}
-                                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                                  formatter={(value) => formatMoney(value)}
+                                  parser={parseMoney}
                                 />
                               </Form.Item>
                             </div>
@@ -119,10 +114,9 @@ const PickJobPositionForm = (props) => {
                                   className={'disable-input'}
                                   placeholder={'Not enter'}
                                   formatter={(value) => {
-                                    if (value === undefined || value === null || value === '') return 'Not enter';
-                                    return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                                    formatMoney(value);
                                   }}
-                                  parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                                  parser={parseMoney}
                                 />
                               </Form.Item>
                             </div>

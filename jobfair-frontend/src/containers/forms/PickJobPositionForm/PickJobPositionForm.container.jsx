@@ -6,9 +6,9 @@ import {
   assignJobPositionToBooth,
   getCompanyBoothById
 } from '../../../services/jobhub-api/JobFairBoothControllerService';
-import { convertEnumToString } from '../../../utils/common';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getAssignmentById } from '../../../services/jobhub-api/AssignmentControllerService';
+import { mapperCompanyBooth } from '../../../utils/mapperCompanyBoooth';
 import PickJobPositionForm from '../../../components/forms/PickJobPositionForm/PickJobPositionForm.component';
 import PickJobPositionTableContainer from '../../JobPositionTable/JobPositionTable.container';
 import React, { useEffect, useRef, useState } from 'react';
@@ -39,23 +39,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
   const fetchData = async () => {
     const assigmentData = (await getAssignmentById(assignmentId)).data;
     const data = (await getCompanyBoothById(assigmentData.jobFairBooth.id)).data;
-    const formData = {
-      name: data.name,
-      description: data.description,
-      boothId: assigmentData.jobFairBooth.id,
-      jobPositions: data.boothJobPositions.map((position, index) => ({
-        ...position,
-        jobType: convertEnumToString(position.jobType),
-        jobLevel: convertEnumToString(position.jobLevel),
-        id: position.originJobPosition,
-        key: position.originJobPosition,
-        no: index,
-        isHaveTest: position.isHaveTest ? [true] : [],
-        testLength: position.testTimeLength,
-        testNumOfQuestion: position.numOfQuestion
-      })),
-      jobFair: data.jobFair
-    };
+    const formData = mapperCompanyBooth(data, assigmentData);
     const hasTestArr = formData?.jobPositions
       ?.filter((position) => position.isHaveTest.length > 0)
       .map((position) => position.no);
