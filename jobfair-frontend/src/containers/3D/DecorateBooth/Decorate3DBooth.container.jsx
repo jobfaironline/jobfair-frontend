@@ -34,7 +34,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
 
 export const Decorate3DBoothContainer = (props) => {
-  const { companyBoothId, jobFairId, onNext } = props;
+  const { companyBoothId, jobFairId } = props;
   const history = useHistory();
   const dispatch = useDispatch();
   const { mode, selectedItem } = useSelector((state) => state.decorateBooth);
@@ -188,8 +188,7 @@ export const Decorate3DBoothContainer = (props) => {
   const controlButtonsProps = {
     addMoreComponentHandle,
     saveHandle,
-    reviewHandle,
-    onNext
+    reviewHandle
   };
   const sideBarProps = {
     handleOnRotationLeft,

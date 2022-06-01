@@ -37,7 +37,7 @@ export const PickJobPositionFormValidation = {
         const minValue = parseInt(getFieldValue('jobPositions')[name].minSalary);
         if (!value) return Promise.resolve();
 
-        if (!value.match(/^\d+$/)) return Promise.reject(new Error('Invalid number'));
+        if (!value.toString().match(/^\d+$/)) return Promise.reject(new Error('Invalid number'));
 
         if (maxValue < minValue) return Promise.reject(new Error('Invalid max salary.'));
 
