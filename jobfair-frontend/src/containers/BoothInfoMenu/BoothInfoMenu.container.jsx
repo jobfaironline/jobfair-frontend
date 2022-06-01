@@ -1,14 +1,14 @@
 import '../3D/JobFairBooth/AttendantJobFairBoothView.styles.scss';
 import { BoothJobPositionTabContainer } from './BoothJobPositionTab/BoothJobPositionTab.container';
+import { Card, Tabs, Typography, notification } from 'antd';
 import { CompanyInformation } from '../../components/customized-components/BoothInfoMenu/BoothInformationTab/BoothInformationTab.component';
-import { Tabs, Typography, notification, Card } from 'antd';
 import { getCompanyBoothById } from '../../services/jobhub-api/CompanyBoothControllerService';
 import { getCompanyProfileAPI } from '../../services/jobhub-api/CompanyControllerService';
 import React, { useEffect, useState } from 'react';
 import SideBar from '../../components/commons/InfoMenu/InfoMenu.component';
 
 export const BoothInfoMenuContainer = (props) => {
-  const { companyBoothId, handleOpenDetail, isShow, activeKey, openInventory, chatBoxContainer } = props;
+  const { companyBoothId, handleOpenDetail, activeKey, openInventory, chatBoxContainer } = props;
   const [state, setState] = useState({
     companyInformation: undefined,
     jobPositions: []

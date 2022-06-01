@@ -19,7 +19,7 @@ const VideoCallContainer = (props) => {
   const role = useSelector((state) => state.authentication?.user?.roles);
 
   async function initializeRTCClient(rtcClient, rtcToken, userId) {
-    rtcClient.on('user-joined', async (user, mediaType) => {
+    rtcClient.on('user-joined', async (user) => {
       setUsers((prevUsers) => [...prevUsers, user]);
     });
 

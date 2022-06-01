@@ -38,7 +38,8 @@
     }
   }
 
-  .disable-input:focus, .disable-input:hover {
+  .disable-input:focus,
+  .disable-input:hover {
     cursor: text;
 
     input {
@@ -72,8 +73,5 @@
         }
       }
     }
-
-
   }
-
 }
