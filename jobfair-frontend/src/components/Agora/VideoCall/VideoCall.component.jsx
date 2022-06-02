@@ -1,8 +1,7 @@
 import { AgoraVideoPlayer } from 'agora-rtc-react';
-import { Button, Tag, Tooltip, Badge, Avatar } from 'antd';
+import { Avatar, Badge, Button, Tag, Tooltip } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MailOutlined } from '@ant-design/icons';
-import { UserOutlined } from '@ant-design/icons';
+import { MailOutlined, UserOutlined } from '@ant-design/icons';
 import {
   faMicrophone,
   faMicrophoneSlash,
@@ -18,11 +17,9 @@ const VideoCallComponent = (props) => {
   const { cameraReady, muteState, users, audioTrack, cameraTrack, handleMute, handleClose, height, width, layoutMode } =
     props;
 
-  console.log(users);
-
   if (layoutMode === 'WAITINGROOM') {
     return (
-      <div className={'video-call'} style={{ height: height, width: width, padding: '2rem' }}>
+      <div className={'video-call'} style={{ height, width, padding: '2rem' }}>
         <div className={'topVideoCall'} style={{ padding: '0rem 0.5rem' }}>
           <div className={'iconMail'}>
             <Tag color='default'>
@@ -187,7 +184,7 @@ const VideoCallComponent = (props) => {
   }
 
   return (
-    <div className={'video-call'} style={{ height: height, width: width, padding: '2rem' }}>
+    <div className={'video-call'} style={{ height, width, padding: '2rem' }}>
       <div className={'topVideoCall'} style={{ padding: '0rem 0.5rem' }}>
         <div className={'iconMail'}>
           <Tag color='default'>

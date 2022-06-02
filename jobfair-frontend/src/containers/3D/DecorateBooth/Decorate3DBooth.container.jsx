@@ -200,6 +200,7 @@ export const Decorate3DBoothContainer = (props) => {
   if (modelItems.length === 0) return <LoadingComponent />;
   return (
     <div style={{ height: 'calc(100vh - 126px)' }}>
+      <DecorateBooth3DItemMenuContainer />
       <Stats />
       <div
         style={{
@@ -209,7 +210,7 @@ export const Decorate3DBoothContainer = (props) => {
         <DecoratedBoothSideBarContainer {...sideBarProps} />
         <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd} ref={meshGroupRef} renderRef={rendererRef} />
       </div>
-      <DecorateBooth3DItemMenuContainer />
+
       <ControlButtonGroup {...controlButtonsProps} />
       <ToastContainer />
     </div>
