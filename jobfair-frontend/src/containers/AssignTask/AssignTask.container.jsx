@@ -180,55 +180,59 @@ const AssignTaskContainer = (props) => {
                   </div>
                 );
               });
-            if (elements.length !== 2) {
-              elements.push(
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Tooltip title='assign task'>
-                    <a
-                      style={{ fontSize: '50px' }}
-                      onClick={() => {
-                        let isMorningShift = false;
-                        let isAfternoonShift = false;
-                        let morningShiftType = undefined;
-                        let afternoonShiftType = undefined;
+            const assignTaskComponent = (
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Tooltip title='assign task'>
+                  <a
+                    style={{ fontSize: '50px' }}
+                    onClick={() => {
+                      let isMorningShift = false;
+                      let isAfternoonShift = false;
+                      let morningShiftType = undefined;
+                      let afternoonShiftType = undefined;
 
-                        record[title].forEach((assignemnt) => {
-                          if (moment(assignemnt.beginTime).hour() === 9) {
-                            isMorningShift = true;
-                            morningShiftType = assignemnt.type;
-                          } else {
-                            isAfternoonShift = true;
-                            afternoonShiftType = assignemnt.type;
-                          }
-                        });
-                        form.setFieldsValue({
-                          'morning-shift': isMorningShift,
-                          'morning-shift-type': morningShiftType,
-                          'afternoon-shift': isAfternoonShift,
-                          'afternoon-shift-type': afternoonShiftType
-                        });
+                      record[title].forEach((assignemnt) => {
+                        if (moment(assignemnt.beginTime).hour() === 9) {
+                          isMorningShift = true;
+                          morningShiftType = assignemnt.type;
+                        } else {
+                          isAfternoonShift = true;
+                          afternoonShiftType = assignemnt.type;
+                        }
+                      });
+                      form.setFieldsValue({
+                        'morning-shift': isMorningShift,
+                        'morning-shift-type': morningShiftType,
+                        'afternoon-shift': isAfternoonShift,
+                        'afternoon-shift-type': afternoonShiftType
+                      });
 
-                        setSelectedCellData((prevState) => ({
-                          ...prevState,
-                          visible: true,
-                          fullname: fullName,
-                          date: title,
-                          employee: record.employee,
-                          timeObj: record.timeObj,
-                          assignments: record[title]
-                        }));
-                        setChooseShift((prevState) => ({
-                          ...prevState,
-                          morningShift: isMorningShift,
-                          afternoonShift: isAfternoonShift
-                        }));
-                      }}>
-                      +
-                    </a>
-                  </Tooltip>
-                </div>
-              );
+                      setSelectedCellData((prevState) => ({
+                        ...prevState,
+                        visible: true,
+                        fullname: fullName,
+                        date: title,
+                        employee: record.employee,
+                        timeObj: record.timeObj,
+                        assignments: record[title]
+                      }));
+                      setChooseShift((prevState) => ({
+                        ...prevState,
+                        morningShift: isMorningShift,
+                        afternoonShift: isAfternoonShift
+                      }));
+                    }}>
+                    +
+                  </a>
+                </Tooltip>
+              </div>
+            );
+            if (elements.length !== 2 && elements.length !== 0) {
+              if (moment(record[title][0].beginTime).hour() === 9) elements.push(assignTaskComponent);
+              else elements.unshift(assignTaskComponent);
             }
+            if (elements.length === 0) elements.push(assignTaskComponent);
+
             return elements;
           }
         });
@@ -338,7 +342,12 @@ const AssignTaskContainer = (props) => {
       <div className={'assign-task-container'}>
         <div style={{ display: 'flex', marginBottom: '1rem' }}>
           <Typography.Title level={3}>Assign task</Typography.Title>
-          <Button style={{ marginLeft: 'auto' }} className={'button'} disabled={!hasChange} type={'primary'}>
+          <Button
+            style={{ marginLeft: 'auto', display: hasChange ? 'block' : 'none', marginRight: '1rem' }}
+            className={'button'}>
+            Remove change
+          </Button>
+          <Button className={'button'} disabled={!hasChange} type={'primary'}>
             Save schedule
           </Button>
         </div>
