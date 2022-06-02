@@ -86,7 +86,7 @@ export const AssignEmployeeModalContainer = (props) => {
             onChange={(value) => {
               record.assignmentType = AssigmentType.filter((item) => item.value === value)[0].name;
             }}>
-            {AssigmentType.map((item) => (
+            {AssigmentType.filter((item) => item.name !== 'INTERVIEWER' && item.name !== 'RECEPTION').map((item) => (
               <Option value={item.value}>{item.label}</Option>
             ))}
           </Select>

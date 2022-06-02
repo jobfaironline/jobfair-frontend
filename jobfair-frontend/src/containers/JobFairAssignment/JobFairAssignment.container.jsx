@@ -1,7 +1,7 @@
 import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
 import { Space, Typography, notification } from 'antd';
 import { generatePath, useHistory } from 'react-router-dom';
-import { getAssignmentByEmployeeId } from '../../services/jobhub-api/AssignmentControllerService';
+import { getAssignmentByEmployeeId, getAssignmentById } from '../../services/jobhub-api/AssignmentControllerService';
 import { mapperJobFairAssignment } from '../../utils/mapperJobFairAssignment';
 import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
@@ -51,7 +51,7 @@ const JobFairAssignmentContainer = () => {
     setPageSize(pageSize);
   };
 
-  const handleRedirect = (record, key) => {
+  const handleRedirect = async (record, key) => {
     let url = '';
     switch (key) {
       case 'DECORATOR':
@@ -66,6 +66,16 @@ const JobFairAssignmentContainer = () => {
         });
         history.push(url);
         break;
+      case 'SUPERVISOR-ASSIGN': {
+        const response = await getAssignmentById(record.id);
+        const data = response.data;
+        const boothId = data.jobFairBooth.id;
+        url = generatePath(PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE, {
+          boothId
+        });
+        history.push(url);
+        break;
+      }
       default:
         break;
     }
@@ -74,7 +84,13 @@ const JobFairAssignmentContainer = () => {
   const handleAction = (record) => {
     switch (record.assignmentType) {
       case 'Supervisor':
-        return <a onClick={() => handleRedirect(record, 'SUPERVISOR')}>Add booth description</a>;
+        return (
+          <div>
+            <a onClick={() => handleRedirect(record, 'SUPERVISOR')}>Add booth description</a>
+            <br />
+            <a onClick={() => handleRedirect(record, 'SUPERVISOR-ASSIGN')}>Assign task</a>
+          </div>
+        );
       case 'Decorator': {
         const now = new Date().getTime();
         return record.decorateStartTimeValue <= now <= record.decorateEndTimeValue ? (

@@ -45,18 +45,9 @@ export const AssignEmployeeBoothList = (props) => {
                         {assign.companyEmployee.account.lastname}
                       </Text>
                     ))}
-                  <Text>Reception: </Text>
+                  <Text>Staff:</Text>
                   {item.assignments
-                    .filter((assign) => assign.type === AssignmentConst.RECEPTION)
-                    .map((assign) => (
-                      <Text>
-                        {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
-                        {assign.companyEmployee.account.lastname}
-                      </Text>
-                    ))}
-                  <Text>Interviewee: </Text>
-                  {item.assignments
-                    .filter((assign) => assign.type === AssignmentConst.INTERVIEWER)
+                    .filter((assign) => assign.type === AssignmentConst.STAFF)
                     .map((assign) => (
                       <Text>
                         {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
