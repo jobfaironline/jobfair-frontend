@@ -3,10 +3,10 @@ import { EMAIL_VALIDATOR, MAX_LENGTH_VALIDATOR, PHONE_VALIDATOR, REQUIRED_VALIDA
 export const AttendantRegisterValidation = {
   email: [REQUIRED_VALIDATOR('Email'), ...EMAIL_VALIDATOR()],
   firstName: [REQUIRED_VALIDATOR('First name')],
-  middleName: [],
+  middleName: [REQUIRED_VALIDATOR('Middle name')],
+  gender: [REQUIRED_VALIDATOR('Gender')],
   lastName: [REQUIRED_VALIDATOR('Last name')],
   phone: [REQUIRED_VALIDATOR('Phone number'), ...PHONE_VALIDATOR()],
-  gender: [REQUIRED_VALIDATOR('Gender')],
   password: [REQUIRED_VALIDATOR('Password')],
   rePassword: [
     REQUIRED_VALIDATOR('Confirm password'),
@@ -25,6 +25,8 @@ export const CompanyRegisterValidation = {
   companyName: [REQUIRED_VALIDATOR('Company name')],
   taxId: [REQUIRED_VALIDATOR('Tax ID')],
   address: [REQUIRED_VALIDATOR('Address'), MAX_LENGTH_VALIDATOR('Address', 300)],
+  description: [REQUIRED_VALIDATOR('Description'), MAX_LENGTH_VALIDATOR('Description', 5000)],
+  url: [REQUIRED_VALIDATOR('Website')],
   phone: [REQUIRED_VALIDATOR('Phone number'), ...PHONE_VALIDATOR()],
   password: [REQUIRED_VALIDATOR('Password')],
   rePassword: [
@@ -36,5 +38,8 @@ export const CompanyRegisterValidation = {
         return Promise.reject(new Error('Your confirm password does not match'));
       }
     })
-  ]
+  ],
+  benefits: [REQUIRED_VALIDATOR('Company benefits')],
+  categories: [REQUIRED_VALIDATOR('Company industries:')],
+  sizeId: [REQUIRED_VALIDATOR('Company size')]
 };
