@@ -4,7 +4,6 @@ import { AttendantRegisterValidation, CompanyRegisterValidation } from '../../..
 import { Button, Card, Divider, Form, Input, Select, Space, Steps, Tabs, Typography, notification } from 'antd';
 import { CategoriesConst, SizeConst, SubCategories, benefitConst } from '../../../constants/CompanyProfileConstant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NUM_OF_SKILL_TAGS } from '../../../constants/JobPositionConst';
 import { createCompanyAPI } from '../../../services/jobhub-api/CompanyControllerService';
 import { faArrowLeft, faArrowRight, faBuilding, faPhone, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { registerAttendantAPI } from '../../../services/jobhub-api/AttendantControllerService';
@@ -372,7 +371,7 @@ const CompanyForm = () => {
                   mode='multiple'
                   onChange={(value) => {
                     //value is a array
-                    if (value.length > NUM_OF_SKILL_TAGS) value.pop();
+                    if (value.length > MAX_TOTAL_BENEFITS) value.pop();
                     setTotalBenefits(value.length);
                   }}
                   onSearch={() => {}}
@@ -383,8 +382,8 @@ const CompanyForm = () => {
                       <Typography.Text type={totalBenefits > 5 ? 'danger' : 'success'}>
                         {totalBenefits > 5
                           ? null
-                          : `You can select ${NUM_OF_SKILL_TAGS} items only. (${
-                              NUM_OF_SKILL_TAGS - totalBenefits
+                          : `You can select ${MAX_TOTAL_BENEFITS}  items only. (${
+                              MAX_TOTAL_BENEFITS - totalBenefits
                             } left)`}
                       </Typography.Text>
                     </>
