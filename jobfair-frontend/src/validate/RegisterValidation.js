@@ -41,5 +41,10 @@ export const CompanyRegisterValidation = {
   ],
   benefits: [REQUIRED_VALIDATOR('Company benefits')],
   categories: [REQUIRED_VALIDATOR('Company industries:')],
-  sizeId: [REQUIRED_VALIDATOR('Company size')]
+  sizeId: [REQUIRED_VALIDATOR('Company size')],
+  firstName: [REQUIRED_VALIDATOR('First name'), MAX_LENGTH_VALIDATOR('First name', 100)],
+  middleName: [REQUIRED_VALIDATOR('Middle name'), MAX_LENGTH_VALIDATOR('Middle name', 100)],
+  lastName: [REQUIRED_VALIDATOR('Last name'), MAX_LENGTH_VALIDATOR('Last name', 100)],
+  gender: [REQUIRED_VALIDATOR('Gender')],
+  department: [REQUIRED_VALIDATOR('Department')]
 };
