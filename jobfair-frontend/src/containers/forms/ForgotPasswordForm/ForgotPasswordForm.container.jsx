@@ -1,13 +1,14 @@
 import { Form, notification } from 'antd';
 import { PATH } from '../../../constants/Paths/Path';
-import { forgotPasswordAPI } from '../../../services/jobhub-api/AccountControllerService';
+import { forgotPasswordAPI, getGeneralInfoAPI } from '../../../services/jobhub-api/AccountControllerService';
 import { useHistory } from 'react-router-dom';
 import ForgotPasswordFormComponent from '../../../components/forms/ForgotPasswordForm/ForgotPasswordForm.component';
-import React from 'react';
+import React, { useState } from 'react';
 
 const ForgotPasswordFormContainer = () => {
   const [form] = Form.useForm();
   const history = useHistory();
+  const [generalInfo, setGeneralInfo] = useState();
   const onFinish = async (values) => {
     const body = {
       email: values.email
@@ -15,13 +16,10 @@ const ForgotPasswordFormContainer = () => {
     forgotPasswordAPI(body)
       .then(() => {
         notification['success']({
-          message: `Your OTP Code has been sent in your email box.`,
+          message: 'An email with the embedded OTP has been sent to your email. Please check for more detail.',
           duration: 1
         });
-        history.push({
-          pathname: PATH.CHANGE_PASSWORD_PAGE,
-          state: { email: body.email }
-        });
+        history.push(PATH.RESET_PASSWORD_PAGE);
       })
       .catch((err) => {
         notification['error']({
@@ -30,9 +28,25 @@ const ForgotPasswordFormContainer = () => {
         });
       });
   };
+  const handleSearchEmail = async (values) => {
+    try {
+      const res = await getGeneralInfoAPI(values.email);
+      setGeneralInfo(res.data);
+    } catch (err) {
+      notification['error']({
+        message: `Not found user with email ${values.email}`
+      });
+      setGeneralInfo(undefined);
+    }
+  };
   return (
     <>
-      <ForgotPasswordFormComponent form={form} onFinish={onFinish} />
+      <ForgotPasswordFormComponent
+        form={form}
+        onFinish={onFinish}
+        handleSearchEmail={handleSearchEmail}
+        info={generalInfo}
+      />
     </>
   );
 };
