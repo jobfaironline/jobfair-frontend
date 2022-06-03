@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars,no-empty-function */
 import './NewAccountRegisterForm.styles.scss';
-import { Button, Card, Divider, Form, Select, Space, Steps, Tabs, Typography, notification } from 'antd';
+import { Button, Card, Divider, Form, Select, Steps, Tabs, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PATH } from '../../../constants/Paths/Path';
 import { createCompanyAPI } from '../../../services/jobhub-api/CompanyControllerService';
-import { faArrowLeft, faBuilding, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { registerAttendantAPI } from '../../../services/jobhub-api/AttendantControllerService';
 import { registerCompanyAPI } from '../../../services/jobhub-api/CompanyEmployeeControllerService';
 import { useHistory } from 'react-router-dom';
@@ -29,7 +29,7 @@ const genderType = [
 
 const { Step } = Steps;
 
-const NewAccountRegisterFormComponent = ({ form }) => (
+const NewAccountRegisterFormComponent = () => (
   <div className='register-container'>
     <Divider orientation='center' plain>
       <Typography.Title level={4}>Job Fair Online - Sign in</Typography.Title>
@@ -108,9 +108,7 @@ const CompanyRegisterContainer = () => {
       const res = await createCompanyAPI(body);
       setCompanyId(res.data.id);
     } catch (e) {
-      notification['error']({
-        message: 'Create company failed'
-      });
+      //
     }
   };
 
@@ -217,14 +215,6 @@ const CompanyRegisterContainer = () => {
       content: (
         <>
           <Card
-            title={
-              <Space size='middle'>
-                <Typography.Text>Company manager detail</Typography.Text>
-                <a onClick={onPrev(currentStep)}>
-                  <FontAwesomeIcon icon={faArrowLeft} />
-                </a>
-              </Space>
-            }
             style={{
               boxShadow: '5px 8px 24px 5px rgba(208, 216, 243, 0.6)',
               marginBottom: '2rem'
@@ -234,6 +224,7 @@ const CompanyRegisterContainer = () => {
             <CompanyManagerRegisterFormComponent
               form={managerForm}
               handleRegisterCompanyManager={handleRegisterCompanyManager}
+              onPrev={onPrev(currentStep)}
             />
           </Card>
         </>

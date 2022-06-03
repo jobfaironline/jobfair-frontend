@@ -1,5 +1,7 @@
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select, Space, Typography } from 'antd';
 import { CompanyRegisterValidation } from '../../../validate/RegisterValidation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
 const genderType = [
@@ -39,8 +41,14 @@ const departmentType = [
     value: 'PURCHASE'
   }
 ];
-const CompanyManagerRegisterFormComponent = ({ form, handleRegisterCompanyManager }) => (
+const CompanyManagerRegisterFormComponent = ({ form, handleRegisterCompanyManager, onPrev }) => (
   <div>
+    <Space size='middle'>
+      <Typography.Text strong>Company manager detail</Typography.Text>
+      <a onClick={onPrev}>
+        <FontAwesomeIcon icon={faArrowLeft} /> Previous
+      </a>
+    </Space>
     <Form form={form} onFinish={handleRegisterCompanyManager} scrollToFirstError>
       <Form.Item
         label='Email'
