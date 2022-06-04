@@ -2,10 +2,9 @@ import { EMAIL_VALIDATOR, MAX_LENGTH_VALIDATOR, PHONE_VALIDATOR, REQUIRED_VALIDA
 
 export const AttendantRegisterValidation = {
   email: [REQUIRED_VALIDATOR('Email'), ...EMAIL_VALIDATOR()],
-  firstName: [REQUIRED_VALIDATOR('First name')],
-  middleName: [REQUIRED_VALIDATOR('Middle name')],
-  gender: [REQUIRED_VALIDATOR('Gender')],
-  lastName: [REQUIRED_VALIDATOR('Last name')],
+  firstName: [REQUIRED_VALIDATOR('First name'), MAX_LENGTH_VALIDATOR('First name', 100)],
+  middleName: [MAX_LENGTH_VALIDATOR('Middle name', 100)],
+  lastName: [REQUIRED_VALIDATOR('Last name'), MAX_LENGTH_VALIDATOR('First name', 100)],
   phone: [REQUIRED_VALIDATOR('Phone number'), ...PHONE_VALIDATOR()],
   password: [REQUIRED_VALIDATOR('Password')],
   rePassword: [
@@ -43,7 +42,7 @@ export const CompanyRegisterValidation = {
   categories: [REQUIRED_VALIDATOR('Company industries:')],
   sizeId: [REQUIRED_VALIDATOR('Company size')],
   firstName: [REQUIRED_VALIDATOR('First name'), MAX_LENGTH_VALIDATOR('First name', 100)],
-  middleName: [REQUIRED_VALIDATOR('Middle name'), MAX_LENGTH_VALIDATOR('Middle name', 100)],
+  middleName: [MAX_LENGTH_VALIDATOR('Middle name', 100)],
   lastName: [REQUIRED_VALIDATOR('Last name'), MAX_LENGTH_VALIDATOR('Last name', 100)],
   gender: [REQUIRED_VALIDATOR('Gender')],
   department: [REQUIRED_VALIDATOR('Department')]

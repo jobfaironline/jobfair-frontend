@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars,no-empty-function */
 import './NewAccountRegisterForm.styles.scss';
-import { Button, Card, Divider, Form, Select, Steps, Tabs, Typography, notification } from 'antd';
+import { Button, Card, Divider, Form, Modal, Select, Space, Steps, Tabs, Typography } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PATH } from '../../../constants/Paths/Path';
 import { createCompanyAPI } from '../../../services/jobhub-api/CompanyControllerService';
@@ -56,17 +56,44 @@ const AttendantRegisterContainer = () => {
     try {
       const res = await registerAttendantAPI(body);
       form.resetFields();
-      history.push(PATH.LOGIN_PAGE);
       if (res.status === 201) {
-        notification['success']({
-          message: `${res.data.message}`,
-          duration: 2
+        Modal.success({
+          title: 'Register attendant account successfully !',
+          width: '30rem',
+          closable: true,
+          maskClosable: true,
+          okText: 'Login now',
+          afterClose: () => history.push(PATH.LOGIN_PAGE),
+          content: (
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <Typography.Title level={3} style={{ display: 'block', margin: '0 auto' }}>
+                Please check your email address
+              </Typography.Title>
+              <Typography.Paragraph style={{ display: 'block', margin: '0 auto', marginTop: '2rem' }}>
+                <Space direction='vertical'>
+                  <div>
+                    <Typography.Text>An confirmation email has been sent to</Typography.Text>
+                    <Typography.Text strong> {values.email}</Typography.Text>
+                  </div>
+                  <Typography.Text>Please check your inbox and follow the instruction</Typography.Text>
+                </Space>
+              </Typography.Paragraph>
+            </div>
+          )
         });
       }
     } catch (err) {
-      notification['error']({
-        message: `${err.response.data.message}`,
-        duration: 2
+      Modal.error({
+        title: 'Register attendant account failed !',
+        width: '30rem',
+        height: '40rem',
+        closable: true,
+        maskClosable: true,
+        content: (
+          <>
+            <Typography.Text strong>{err.response.data.message}</Typography.Text>
+          </>
+        )
       });
     }
   };
@@ -88,24 +115,23 @@ const AttendantRegisterContainer = () => {
 };
 
 const CompanyRegisterContainer = () => {
-  const [companyForm] = Form.useForm();
-  const [managerForm] = Form.useForm();
+  const [form] = Form.useForm();
   const [currentStep, setCurrentStep] = useState(0);
+  const [companyId, setCompanyId] = useState('');
   const [isError, setIsError] = useState(true);
-  const [companyId, setCompanyId] = useState();
   const history = useHistory();
 
   const handleRegisterCompany = async (values) => {
-    const body = {
-      address: values.address,
-      companyEmail: values.companyEmail,
+    const companyBody = {
       name: values.name,
-      phone: values.phone,
+      companyEmail: values.companyEmail,
       taxId: values.taxId,
-      sizeId: values.sizeId
+      sizeId: values.sizeId,
+      subCategoriesIds: values.subCategoriesIds
     };
+
     try {
-      const res = await createCompanyAPI(body);
+      const res = await createCompanyAPI(companyBody);
       setCompanyId(res.data.id);
     } catch (e) {
       //
@@ -127,15 +153,10 @@ const CompanyRegisterContainer = () => {
     };
     try {
       await registerCompanyAPI(body);
-      notification['success']({
-        message: 'Create company manager account successfully'
-      });
-      managerForm.resetFields();
-      history.push(PATH.LOGIN_PAGE);
+      form.resetFields();
+      // history.push(PATH.LOGIN_PAGE);
     } catch (e) {
-      notification['error']({
-        message: 'Create company manager account failed'
-      });
+      //
     }
   };
 
@@ -144,15 +165,14 @@ const CompanyRegisterContainer = () => {
       case 0:
         return async () => {
           try {
-            await companyForm.validateFields();
-            await handleRegisterCompany(companyForm.getFieldsValue(true));
+            await form.validateFields();
             setCurrentStep(currentStep + 1);
             setIsError(false);
           } catch (e) {
-            const errorsArray = companyForm.getFieldsError();
+            const errorsArray = form.getFieldsError();
             for (const error of errorsArray) {
               if (error.errors.length > 0) {
-                companyForm.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
+                form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
                 break;
               }
             }
@@ -161,15 +181,15 @@ const CompanyRegisterContainer = () => {
       case 1:
         return async () => {
           try {
-            await managerForm.validateFields();
-            await handleRegisterCompanyManager(managerForm.getFieldsValue(true));
-            setCurrentStep(currentStep + 1);
+            await form.validateFields();
+            await handleRegisterCompanyManager(form.getFieldsValue(true));
+            await handleRegisterCompany(form.getFieldsValue(true));
             setIsError(false);
           } catch (e) {
-            const errorsArray = managerForm.getFieldsError();
+            const errorsArray = form.getFieldsError();
             for (const error of errorsArray) {
               if (error.errors.length > 0) {
-                managerForm.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
+                form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
                 break;
               }
             }
@@ -189,27 +209,6 @@ const CompanyRegisterContainer = () => {
 
   const stepComponentList = [
     {
-      title: 'Company',
-      icon: <FontAwesomeIcon icon={faBuilding} />,
-      content: (
-        <>
-          <Card
-            style={{
-              boxShadow: '5px 8px 24px 5px rgba(208, 216, 243, 0.6)',
-              marginBottom: '2rem'
-            }}
-            headStyle={{ backgroundColor: 'white', border: 0 }}
-            bodyStyle={{ backgroundColor: 'white', border: 0 }}>
-            <CreateCompanyFormComponent
-              form={companyForm}
-              handleRegisterCompany={handleRegisterCompany}
-              onNext={onNext(currentStep)}
-            />
-          </Card>
-        </>
-      )
-    },
-    {
       title: 'Manager',
       icon: <FontAwesomeIcon icon={faUserShield} />,
       content: (
@@ -222,10 +221,27 @@ const CompanyRegisterContainer = () => {
             headStyle={{ backgroundColor: 'white', border: 0 }}
             bodyStyle={{ backgroundColor: 'white', border: 0 }}>
             <CompanyManagerRegisterFormComponent
-              form={managerForm}
-              handleRegisterCompanyManager={handleRegisterCompanyManager}
-              onPrev={onPrev(currentStep)}
+              form={form}
+              onNext={onNext(currentStep)}
+              onFinish={handleRegisterCompanyManager}
             />
+          </Card>
+        </>
+      )
+    },
+    {
+      title: 'Company',
+      icon: <FontAwesomeIcon icon={faBuilding} />,
+      content: (
+        <>
+          <Card
+            style={{
+              boxShadow: '5px 8px 24px 5px rgba(208, 216, 243, 0.6)',
+              marginBottom: '2rem'
+            }}
+            headStyle={{ backgroundColor: 'white', border: 0 }}
+            bodyStyle={{ backgroundColor: 'white', border: 0 }}>
+            <CreateCompanyFormComponent form={form} onFinish={handleRegisterCompany} onPrev={onPrev(currentStep)} />
           </Card>
         </>
       )

@@ -1,61 +1,24 @@
-import { Button, Form, Input, Select, Space, Typography } from 'antd';
+import { Button, Form, Input, Space, Typography } from 'antd';
 import { CompanyRegisterValidation } from '../../../validate/RegisterValidation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import React from 'react';
 
-const genderType = [
-  {
-    title: 'Male',
-    value: 'MALE'
-  },
-  {
-    title: 'Female',
-    value: 'FEMALE'
-  }
-];
-
-const departmentType = [
-  {
-    title: 'Head Office',
-    value: 'HEAD_OFFICE'
-  },
-  {
-    title: 'Marketing',
-    value: 'MARKETING'
-  },
-  {
-    title: 'Finance',
-    value: 'FINANCE'
-  },
-  {
-    title: 'Sales',
-    value: 'SALES'
-  },
-  {
-    title: 'Human Resource',
-    value: 'HUMAN_RESOURCES'
-  },
-  {
-    title: 'Purchase',
-    value: 'PURCHASE'
-  }
-];
-const CompanyManagerRegisterFormComponent = ({ form, handleRegisterCompanyManager, onPrev }) => (
+const CompanyManagerRegisterFormComponent = ({ form, onNext, onFinish }) => (
   <div>
     <Space size='middle'>
       <Typography.Text strong>Company manager detail</Typography.Text>
-      <a onClick={onPrev}>
-        <FontAwesomeIcon icon={faArrowLeft} /> Previous
+      <a onClick={onNext}>
+        <FontAwesomeIcon icon={faArrowRight} /> Next
       </a>
     </Space>
-    <Form form={form} onFinish={handleRegisterCompanyManager} scrollToFirstError>
+    <Form form={form} onFinish={onFinish}>
       <Form.Item
         label='Email'
         name='email'
         rules={CompanyRegisterValidation.email}
         style={{ display: 'inline-block', width: '100%' }}>
-        <Input placeholder='Email' autoComplete='new-email' />
+        <Input placeholder='Please use real email for verification' autoComplete='new-email' />
       </Form.Item>
       <Form.Item
         label='First name'
@@ -79,41 +42,12 @@ const CompanyManagerRegisterFormComponent = ({ form, handleRegisterCompanyManage
         <Input placeholder='Last name' />
       </Form.Item>
       <Form.Item
-        name='gender'
-        label='Gender'
-        rules={CompanyRegisterValidation.gender}
-        style={{ display: 'inline-block', width: '100%' }}>
-        <Select defaultValue='Select gender...'>
-          {genderType.map((gender) => (
-            <Select.Option value={gender.value}>{gender.title}</Select.Option>
-          ))}
-        </Select>
-      </Form.Item>
-      <Form.Item
-        name='department'
-        label='Department'
-        rules={CompanyRegisterValidation.department}
-        style={{ display: 'inline-block', width: '100%' }}>
-        <Select defaultValue='Select department...'>
-          {departmentType.map((gender) => (
-            <Select.Option value={gender.value}>{gender.title}</Select.Option>
-          ))}
-        </Select>
-      </Form.Item>
-      <Form.Item
-        label='Phone'
-        name='phone'
-        rules={CompanyRegisterValidation.phone}
-        style={{ display: 'inline-block', width: '100%' }}>
-        <Input placeholder='Phone number' />
-      </Form.Item>
-      <Form.Item
         label='Password'
         name='password'
         rules={CompanyRegisterValidation.password}
         style={{ display: 'inline-block', width: '100%' }}
         hasFeedback>
-        <Input.Password placeholder='Password' autoComplete='new-password' />
+        <Input.Password placeholder='At least 2 characters' autoComplete='new-password' />
       </Form.Item>
       <Form.Item
         label='Confirm password'
@@ -125,8 +59,8 @@ const CompanyManagerRegisterFormComponent = ({ form, handleRegisterCompanyManage
         <Input.Password placeholder='Confirm password' />
       </Form.Item>
       <Form.Item>
-        <Button type='primary' htmlType='submit'>
-          Register
+        <Button type='primary' onClick={onNext}>
+          Continue
         </Button>
       </Form.Item>
     </Form>
