@@ -1,6 +1,52 @@
-.assign-task-container{
+.assign-task-container {
   padding-top: 1rem;
-  .side-bar-left-side-container{
-    border: none!important;
+
+  .side-bar-left-side-container {
+    border: none !important;
   }
+
+  .assigment-cell-container {
+    position: relative;
+
+    .mask {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      opacity: 0;
+    }
+
+    .assigment-cell {
+      display: flex;
+      padding: 1rem;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .ant-table-cell:hover {
+    .assignment-actions {
+      cursor: pointer;
+      display: block;
+    }
+
+    .mask {
+      opacity: 0.5;
+    }
+  }
+
+  .assignment-actions {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: none;
+
+  }
+
+
 }

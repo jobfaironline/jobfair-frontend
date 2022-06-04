@@ -1,4 +1,6 @@
 import './AssignTask.styles.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { AssignmentConst } from '../../constants/AssignmentConst';
 import {
   Avatar,
@@ -24,8 +26,9 @@ import {
   updateAssignment
 } from '../../services/jobhub-api/AssignmentControllerService';
 import { deepClone } from '../../utils/common';
+import { faPenToSquare, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { getCompanyBoothById } from '../../services/jobhub-api/JobFairBoothControllerService';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 
 const { Text } = Typography;
@@ -121,7 +124,9 @@ const AssignTaskContainer = (props) => {
 
   const [hasChange, setHasChange] = useState(false);
 
-  const [shiftData, setShiftData] = useState();
+  const [shiftData, setShiftData] = useState([]);
+
+  const shiftDataRef = useRef([]);
 
   useEffect(() => {
     fetchData();
@@ -142,7 +147,7 @@ const AssignTaskContainer = (props) => {
       const jobFairBooth = res.data;
       const jobFairInfo = res.data.jobFair;
       const dayRange = await getJobFairPublicDayRange(jobFairInfo);
-      const dataSource = await getDataSource(staffAssignments, staffs, dayRange);
+      const dataSource = await getDataSource(staffAssignments, staffs, dayRange, shiftData);
       const columns = await getTableColumns(dayRange);
 
       setTableData((prevState) => ({
@@ -152,7 +157,10 @@ const AssignTaskContainer = (props) => {
         oldDataSource: deepClone(dataSource)
       }));
       setBoothData(jobFairBooth);
-      setShiftData(shiftData);
+      setShiftData(() => {
+        shiftDataRef.current = shiftData;
+        return shiftData;
+      });
     } catch (e) {
       notification['error']({
         message: 'Error when get employee data'
@@ -187,44 +195,50 @@ const AssignTaskContainer = (props) => {
         dataIndex: title,
         render: (_, record) => {
           const elements = [];
-          record[title]
-            .sort((a, b) => a.shift - b.shift)
-            .forEach((assigment) => {
-              const beginTime = moment(assigment.beginTime);
-              const endTime = moment(assigment.endTime);
-              elements.push(
-                <div
-                  style={{
-                    display: 'flex',
-                    backgroundColor: assigment.type === AssignmentConst.INTERVIEWER ? '#dfdf149e' : '#02fd02',
-                    padding: '1rem',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1rem',
-                    fontWeight: 600,
-                    marginBottom: '0.5rem'
-                  }}>
-                  <Text>
-                    {beginTime.format('kk:mm')}-{endTime.format('kk:mm')}
-                  </Text>
-                  -<Text>{assigment.type}</Text>
-                </div>
-              );
-            });
           const assignTaskComponent = (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className={'assignment-actions'}>
               <Tooltip title='assign task'>
-                <a style={{ fontSize: '50px' }} onClick={() => handleOpenAssignTaskModal(record, title)}>
-                  +
-                </a>
+                <FontAwesomeIcon
+                  size={'3x'}
+                  icon={record[title].length === 0 ? faPlus : faPenToSquare}
+                  onClick={() => handleOpenAssignTaskModal(record, title)}
+                  color={'white'}
+                />
               </Tooltip>
             </div>
           );
-          if (elements.length !== 2 && elements.length !== 0) {
-            if (moment(record[title][0].beginTime).hour() === 9) elements.push(assignTaskComponent);
-            else elements.unshift(assignTaskComponent);
-          }
-          if (elements.length === 0) elements.push(assignTaskComponent);
+          const div = (
+            <div className={'assigment-cell-container'}>
+              <div className={'mask'} />
+              {Array.from({ length: record.shiftData.length }, (v, i) => i).map((shiftIndex) => {
+                const assignment = record[title].find((assignment) => assignment.shift === shiftIndex);
+                if (assignment === undefined) {
+                  return (
+                    <div className={'assigment-cell'}>
+                      <Text style={{ opacity: 0 }}>abc</Text>
+                    </div>
+                  );
+                }
+
+                const beginTime = moment(assignment.beginTime);
+                const endTime = moment(assignment.endTime);
+                return (
+                  <div
+                    className={'assigment-cell'}
+                    style={{
+                      backgroundColor: assignment.type === AssignmentConst.INTERVIEWER ? '#dfdf149e' : '#02fd02'
+                    }}>
+                    <Text>
+                      {beginTime.format('kk:mm')}-{endTime.format('kk:mm')}
+                    </Text>
+                    -<Text>{assignment.type}</Text>
+                  </div>
+                );
+              })}
+            </div>
+          );
+          elements.push(div);
+          elements.push(assignTaskComponent);
 
           return elements;
         }
@@ -244,7 +258,7 @@ const AssignTaskContainer = (props) => {
   //    'Sun, Jun/5/2022': [{assignment1, assignment2}],
   //  }
   // ]
-  const getDataSource = async (staffAssignments, staffs, dayRange) => {
+  const getDataSource = async (staffAssignments, staffs, dayRange, shiftData) => {
     const dataSource = [];
 
     for (const [key, value] of Object.entries(staffAssignments)) {
@@ -279,7 +293,7 @@ const AssignTaskContainer = (props) => {
       .map((item) => {
         const { firstname, middlename, lastname } = item.employee.account;
         const fullName = `${firstname} ${middlename ? `${middlename} ` : ''} ${lastname}`;
-        return { ...item, fullName, key: item.employee.account.id };
+        return { ...item, fullName, key: item.employee.account.id, shiftData };
       })
       .sort((a, b) => a.fullName.localeCompare(b.fullName));
   };
