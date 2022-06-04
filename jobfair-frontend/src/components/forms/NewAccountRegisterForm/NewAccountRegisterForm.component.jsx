@@ -60,8 +60,9 @@ const AttendantRegisterContainer = () => {
           title: 'Register attendant account successfully !',
           width: '30rem',
           closable: true,
+          keyboard: false,
           maskClosable: true,
-          okText: 'Login now',
+          onOk: () => history.push(PATH.LOGIN_PAGE),
           content: (
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <Typography.Title level={3} style={{ display: 'block', margin: '0 auto' }}>
@@ -158,7 +159,8 @@ const CompanyRegisterContainer = () => {
           closable: true,
           maskClosable: true,
           okText: 'OK',
-          afterClose: history.push(PATH.LOGIN_PAGE),
+          keyboard: false,
+          onOk: () => history.push(PATH.LOGIN_PAGE),
           content: (
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <Typography.Title level={3} style={{ display: 'block', margin: '0 auto' }}>

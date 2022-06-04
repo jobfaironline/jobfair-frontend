@@ -1,15 +1,20 @@
-import { Button, Divider, Form, Input, Select, Space, Typography } from 'antd';
+import { Button, Checkbox, Divider, Form, Input, Select, Space, Typography } from 'antd';
 import { CategoriesConst, SizeConst, SubCategories } from '../../../constants/CompanyProfileConstant';
 import { CompanyRegisterValidation } from '../../../validate/RegisterValidation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { PATH } from '../../../constants/Paths/Path';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import { faIndustry, faUser } from '@fortawesome/free-solid-svg-icons';
+import { useHistory } from 'react-router-dom';
 import React, { useState } from 'react';
 
 const MAX_TOTAL_INDUSTRY = 4;
 
-const CreateCompanyFormComponent = ({ form, onFinish, onPrev, isError }) => {
+const CreateCompanyFormComponent = ({ form, onFinish, onPrev }) => {
   const [totalIndustries, setTotalIndustries] = useState(0);
+  const [isAgree, setIsAgree] = useState(false);
+  const history = useHistory();
+
   return (
     <div>
       <Space size='middle'>
@@ -105,8 +110,17 @@ const CreateCompanyFormComponent = ({ form, onFinish, onPrev, isError }) => {
             ))}
           </Select>
         </Form.Item>
+        <div>
+          <Checkbox onChange={(e) => setIsAgree(e.target.checked)}>
+            <span>By clicking the "Register" button, I agree to the</span>{' '}
+            <a type='link' onClick={() => history.push(PATH.FAQ_PAGE)}>
+              Term of use
+            </a>{' '}
+            <span>and</span> <a onClick={() => history.push(PATH.FAQ_PAGE)}>Privacy Policy</a> <span>of JobHub</span>
+          </Checkbox>
+        </div>
         <Form.Item>
-          <Button type='primary' htmlType='submit'>
+          <Button type='primary' htmlType='submit' disabled={!isAgree}>
             Register
           </Button>
         </Form.Item>
