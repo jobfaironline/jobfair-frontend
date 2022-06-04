@@ -1,4 +1,4 @@
-import { Form, notification } from 'antd';
+import { Form, Modal, Typography } from 'antd';
 import { PATH } from '../../../constants/Paths/Path';
 import { resetPasswordAPI } from '../../../services/jobhub-api/ResetPasswordControllerService';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -12,25 +12,35 @@ const ResetPasswordFormContainer = () => {
   const history = useHistory();
   const onFinish = async (values) => {
     const body = {
-      email: values?.email ? values.email : location?.state?.email,
+      email: location?.state?.email,
       otp: otpCode,
       newPassword: values.newPassword,
       confirmPassword: values.confirmPassword
     };
-    resetPasswordAPI(body)
-      .then(() => {
-        notification['success']({
-          message: `Your password has been change!.`,
-          duration: 1
-        });
-        history.push(PATH.LOGIN_PAGE);
-      })
-      .catch((err) => {
-        notification['error']({
-          message: `Error - ${err.response.data.message}`,
-          duration: 1
-        });
+    try {
+      await resetPasswordAPI(body);
+      Modal.success({
+        title: 'Reset password successfully !',
+        width: '30rem',
+        closable: true,
+        maskClosable: true,
+        onOk: () => history.push(PATH.LOGIN_PAGE),
+        keyboard: false,
+        content: (
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <Typography.Text>Your password has been updated</Typography.Text>
+          </div>
+        )
       });
+    } catch (e) {
+      Modal.error({
+        title: 'Reset password failed !',
+        width: '30rem',
+        closable: true,
+        maskClosable: true,
+        content: <Typography.Text>{e.response.data.message}</Typography.Text>
+      });
+    }
   };
   return (
     <div className='page'>

@@ -19,7 +19,9 @@ const ForgotPasswordFormContainer = () => {
           message: 'An email with the embedded OTP has been sent to your email. Please check for more detail.',
           duration: 1
         });
-        history.push(PATH.RESET_PASSWORD_PAGE);
+        history.push(PATH.RESET_PASSWORD_PAGE, {
+          email: values.email
+        });
       })
       .catch((err) => {
         notification['error']({
