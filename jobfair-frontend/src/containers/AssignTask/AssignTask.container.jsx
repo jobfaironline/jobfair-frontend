@@ -22,7 +22,7 @@ const { Text } = Typography;
 const TaskFilterPanel = (props) => {
   const { onFilter, onReset } = props;
   return (
-    <div style={{ padding: '0 1rem 0 0' }}>
+    <div style={{ padding: '0 1rem 0 0', marginRight: '2rem' }}>
       <Form
         onFinish={onFilter}
         onReset={() => {
@@ -127,7 +127,7 @@ const AssignTaskContainer = (props) => {
       {
         title: 'Employee',
         key: 'employee',
-        width: '25rem',
+        width: '30%',
         render: (_, record) => {
           const { profileImageUrl } = record.employee.account;
           return (
@@ -144,6 +144,7 @@ const AssignTaskContainer = (props) => {
     for (const title of Object.keys(dayRange)) {
       columns.push({
         title,
+        width: `${70 / Object.keys(dayRange).length}%`,
         dataIndex: title,
         render: (_, record) => (
           <AssignTaskCell record={record} title={title} handleOpenAssignTaskModal={handleOpenAssignTaskModal} />
@@ -471,12 +472,14 @@ const AssignTaskContainer = (props) => {
         ) : (
           <SideBarComponent
             rightSide={
-              <Table
-                dataSource={[...tableData.dataSource]}
-                columns={[...tableData.columns]}
-                pagination={false}
-                rowClassName={(record) => !record.enabled && 'disabled-row'}
-              />
+              <div style={{ marginLeft: '2rem' }}>
+                <Table
+                  dataSource={[...tableData.dataSource]}
+                  columns={[...tableData.columns]}
+                  pagination={false}
+                  rowClassName={(record) => !record.enabled && 'disabled-row'}
+                />
+              </div>
             }
             leftSide={<TaskFilterPanel onFilter={onFilterData} onReset={onResetFilter} />}
             isOrganizeJobFair={false}
