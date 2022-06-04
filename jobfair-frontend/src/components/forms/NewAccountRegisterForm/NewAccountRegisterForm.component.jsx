@@ -55,7 +55,6 @@ const AttendantRegisterContainer = () => {
     };
     try {
       const res = await registerAttendantAPI(body);
-      form.resetFields();
       if (res.status === 201) {
         Modal.success({
           title: 'Register attendant account successfully !',
@@ -63,7 +62,6 @@ const AttendantRegisterContainer = () => {
           closable: true,
           maskClosable: true,
           okText: 'Login now',
-          afterClose: () => history.push(PATH.LOGIN_PAGE),
           content: (
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <Typography.Title level={3} style={{ display: 'block', margin: '0 auto' }}>
@@ -115,10 +113,12 @@ const AttendantRegisterContainer = () => {
 };
 
 const CompanyRegisterContainer = () => {
+  // const [companyForm] = Form.useForm();
+  // const [managerForm] = Form.useForm();
   const [form] = Form.useForm();
   const [currentStep, setCurrentStep] = useState(0);
-  const [companyId, setCompanyId] = useState('');
-  const [isError, setIsError] = useState(true);
+  const [isCompanyError, setIsCompanyError] = useState(true);
+  const [isManagerError, setIsManagerError] = useState(true);
   const history = useHistory();
 
   const handleRegisterCompany = async (values) => {
@@ -129,34 +129,101 @@ const CompanyRegisterContainer = () => {
       sizeId: values.sizeId,
       subCategoriesIds: values.subCategoriesIds
     };
-
     try {
-      const res = await createCompanyAPI(companyBody);
-      setCompanyId(res.data.id);
+      return await createCompanyAPI(companyBody);
     } catch (e) {
-      //
+      Modal.error({
+        title: 'Register company failed !',
+        width: '30rem',
+        height: '40rem',
+        closable: true,
+        maskClosable: true,
+        content: (
+          <>
+            <Typography.Text strong>{e.response.data.message}</Typography.Text>
+          </>
+        )
+      });
     }
   };
 
-  const handleRegisterCompanyManager = async (values) => {
+  const handleOnFinish = async () => {
+    try {
+      const res = await handleRegisterCompany(form.getFieldsValue(true));
+      const responseManager = await handleRegisterCompanyManager(form.getFieldsValue(true), res.data.id);
+      if (res.status === 200 && responseManager.status === 201) {
+        Modal.success({
+          title: 'Register company manager successfully !',
+          width: '30rem',
+          closable: true,
+          maskClosable: true,
+          okText: 'OK',
+          afterClose: history.push(PATH.LOGIN_PAGE),
+          content: (
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <Typography.Title level={3} style={{ display: 'block', margin: '0 auto' }}>
+                Please check your email address
+              </Typography.Title>
+              <Typography.Paragraph style={{ display: 'block', margin: '0 auto', marginTop: '2rem' }}>
+                <Space direction='vertical'>
+                  <div>
+                    <Typography.Text>
+                      An confirmation email has been sent to {form.getFieldValue('email')}
+                    </Typography.Text>
+                    <Typography.Text strong> </Typography.Text>
+                  </div>
+                  <Typography.Text>Please check your inbox and follow the instruction</Typography.Text>
+                </Space>
+              </Typography.Paragraph>
+            </div>
+          )
+        });
+      }
+    } catch (e) {
+      //manager form errors
+      const errorsArray = form.getFieldsError();
+      for (const error of errorsArray) {
+        if (error.errors.length > 0) {
+          form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
+          break;
+        }
+      }
+      //company form errors
+      const errorsCompany = form.getFieldsError();
+      for (const error of errorsCompany) {
+        if (error.errors.length > 0) {
+          form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
+          break;
+        }
+      }
+    }
+  };
+
+  const handleRegisterCompanyManager = async (values, companyId) => {
     const body = {
       companyId,
       confirmPassword: values.confirm,
-      department: values.department,
       email: values.email,
       firstName: values.firstName,
-      gender: values.gender,
       lastName: values.lastName,
       middleName: values.middleName,
-      password: values.password,
-      phone: values.phone
+      password: values.password
     };
     try {
-      await registerCompanyAPI(body);
-      form.resetFields();
-      // history.push(PATH.LOGIN_PAGE);
+      return await registerCompanyAPI(body);
     } catch (e) {
-      //
+      Modal.error({
+        title: 'Register company manager failed !',
+        width: '30rem',
+        height: '40rem',
+        closable: true,
+        maskClosable: true,
+        content: (
+          <>
+            <Typography.Text strong>{e.response.data.message}</Typography.Text>
+          </>
+        )
+      });
     }
   };
 
@@ -167,24 +234,6 @@ const CompanyRegisterContainer = () => {
           try {
             await form.validateFields();
             setCurrentStep(currentStep + 1);
-            setIsError(false);
-          } catch (e) {
-            const errorsArray = form.getFieldsError();
-            for (const error of errorsArray) {
-              if (error.errors.length > 0) {
-                form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
-                break;
-              }
-            }
-          }
-        };
-      case 1:
-        return async () => {
-          try {
-            await form.validateFields();
-            await handleRegisterCompanyManager(form.getFieldsValue(true));
-            await handleRegisterCompany(form.getFieldsValue(true));
-            setIsError(false);
           } catch (e) {
             const errorsArray = form.getFieldsError();
             for (const error of errorsArray) {
@@ -196,14 +245,16 @@ const CompanyRegisterContainer = () => {
           }
         };
       default:
-        return () => setCurrentStep(currentStep + 1);
+        return () => {
+          setCurrentStep(currentStep + 1);
+        };
     }
   };
 
-  const onPrev = (currentStep) => () => {
+  const onPrev = (currentStep) => async () => {
     if (currentStep !== 0) {
+      await form.validateFields();
       setCurrentStep(currentStep - 1);
-      setIsError(false);
     }
   };
 
@@ -224,6 +275,7 @@ const CompanyRegisterContainer = () => {
               form={form}
               onNext={onNext(currentStep)}
               onFinish={handleRegisterCompanyManager}
+              isError={isManagerError}
             />
           </Card>
         </>
@@ -241,7 +293,12 @@ const CompanyRegisterContainer = () => {
             }}
             headStyle={{ backgroundColor: 'white', border: 0 }}
             bodyStyle={{ backgroundColor: 'white', border: 0 }}>
-            <CreateCompanyFormComponent form={form} onFinish={handleRegisterCompany} onPrev={onPrev(currentStep)} />
+            <CreateCompanyFormComponent
+              form={form}
+              onFinish={handleOnFinish}
+              onPrev={onPrev(currentStep)}
+              isError={isCompanyError}
+            />
           </Card>
         </>
       )

@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 
 const MAX_TOTAL_INDUSTRY = 4;
 
-const CreateCompanyFormComponent = ({ form, onFinish, onPrev }) => {
+const CreateCompanyFormComponent = ({ form, onFinish, onPrev, isError }) => {
   const [totalIndustries, setTotalIndustries] = useState(0);
   return (
     <div>
@@ -18,10 +18,11 @@ const CreateCompanyFormComponent = ({ form, onFinish, onPrev }) => {
           <FontAwesomeIcon icon={faArrowLeft} /> Previous
         </a>
       </Space>
-      <Form form={form} onFinish={onFinish} scrollToFirstError>
+      <Form form={form} onFinish={onFinish} preserve={true}>
         <Form.Item
           label='Company name'
           name='name'
+          preserve={true}
           rules={CompanyRegisterValidation.companyName}
           style={{ display: 'inline-block', width: '100%' }}>
           <Input placeholder='Your company name' />
@@ -29,6 +30,7 @@ const CreateCompanyFormComponent = ({ form, onFinish, onPrev }) => {
         <Form.Item
           label='Company email'
           name='companyEmail'
+          preserve={true}
           rules={CompanyRegisterValidation.email}
           style={{ display: 'inline-block', width: '100%' }}>
           <Input placeholder='Your company email' />
@@ -36,6 +38,7 @@ const CreateCompanyFormComponent = ({ form, onFinish, onPrev }) => {
         <Form.Item
           label='Tax ID'
           name='taxId'
+          preserve={true}
           tooltip={
             <>
               Mã số thuế (Tax ID hoặc TIN) là một dãy số, chữ cái hoặc ký tự do cơ quan quản lý thuế cấp cho người nộp
@@ -51,6 +54,7 @@ const CreateCompanyFormComponent = ({ form, onFinish, onPrev }) => {
         </Form.Item>
         <Form.Item
           label='Company size'
+          preserve={true}
           name='sizeId'
           tooltip={'The number of workers in your company'}
           rules={CompanyRegisterValidation.sizeId}
@@ -64,6 +68,7 @@ const CreateCompanyFormComponent = ({ form, onFinish, onPrev }) => {
         <Form.Item
           label='Company industries'
           required
+          preserve={true}
           tooltip={'The industry areas that your company involved'}
           rules={CompanyRegisterValidation.categories}
           name='subCategoriesIds'

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import React from 'react';
 
-const CompanyManagerRegisterFormComponent = ({ form, onNext, onFinish }) => (
+const CompanyManagerRegisterFormComponent = ({ form, onNext, onFinish, isError }) => (
   <div>
     <Space size='middle'>
       <Typography.Text strong>Company manager detail</Typography.Text>
@@ -12,10 +12,11 @@ const CompanyManagerRegisterFormComponent = ({ form, onNext, onFinish }) => (
         <FontAwesomeIcon icon={faArrowRight} /> Next
       </a>
     </Space>
-    <Form form={form} onFinish={onFinish}>
+    <Form form={form} onFinish={onFinish} preserve={true}>
       <Form.Item
         label='Email'
         name='email'
+        preserve={true}
         rules={CompanyRegisterValidation.email}
         style={{ display: 'inline-block', width: '100%' }}>
         <Input placeholder='Please use real email for verification' autoComplete='new-email' />
@@ -23,6 +24,7 @@ const CompanyManagerRegisterFormComponent = ({ form, onNext, onFinish }) => (
       <Form.Item
         label='First name'
         name='firstName'
+        preserve={true}
         rules={CompanyRegisterValidation.firstName}
         style={{ display: 'inline-block', width: '100%' }}>
         <Input placeholder='First name' />
@@ -30,6 +32,7 @@ const CompanyManagerRegisterFormComponent = ({ form, onNext, onFinish }) => (
       <Form.Item
         label='Middle name'
         name='middleName'
+        preserve={true}
         rules={CompanyRegisterValidation.middleName}
         style={{ display: 'inline-block', width: '100%' }}>
         <Input placeholder='Middle name' />
@@ -37,6 +40,7 @@ const CompanyManagerRegisterFormComponent = ({ form, onNext, onFinish }) => (
       <Form.Item
         label='Last name'
         name='lastName'
+        preserve={true}
         rules={CompanyRegisterValidation.lastName}
         style={{ display: 'inline-block', width: '100%' }}>
         <Input placeholder='Last name' />
@@ -44,6 +48,7 @@ const CompanyManagerRegisterFormComponent = ({ form, onNext, onFinish }) => (
       <Form.Item
         label='Password'
         name='password'
+        preserve={true}
         rules={CompanyRegisterValidation.password}
         style={{ display: 'inline-block', width: '100%' }}
         hasFeedback>
@@ -52,6 +57,7 @@ const CompanyManagerRegisterFormComponent = ({ form, onNext, onFinish }) => (
       <Form.Item
         label='Confirm password'
         name='confirm'
+        preserve={true}
         dependencies={['password']}
         style={{ display: 'inline-block', width: '100%' }}
         hasFeedback
