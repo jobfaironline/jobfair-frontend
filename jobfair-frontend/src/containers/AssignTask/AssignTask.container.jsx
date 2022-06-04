@@ -19,32 +19,48 @@ import moment from 'moment';
 
 const { Text } = Typography;
 
-const TaskFilterPanel = () => (
-  <div style={{ padding: '0 1rem 0 0' }}>
-    <Typography.Title level={4}>Filter</Typography.Title>
-    <Input.Search />
-    <Typography.Title level={5}>Role</Typography.Title>
-    <Checkbox.Group>
-      <Checkbox value={'all'}>
-        <Badge color={'black'} text={'ALL'} />
-      </Checkbox>
-      <br />
-      <Checkbox value={'INTERVIEWER'}>
-        <Badge color={'#dfdf149e'} text={'INTERVIEWEE'} />
-      </Checkbox>
-      <br />
-      <Checkbox value={'RECEPTION'}>
-        <Badge color={'#02fd02'} text={'RECEPTION'} />
-      </Checkbox>
-      <br />
-    </Checkbox.Group>
-    <br />
-
-    <Button style={{ marginTop: '1rem' }} className={'button'} type={'primary'}>
-      Search
-    </Button>
-  </div>
-);
+const TaskFilterPanel = (props) => {
+  const { onFilter, onReset } = props;
+  return (
+    <div style={{ padding: '0 1rem 0 0' }}>
+      <Form
+        onFinish={onFilter}
+        onReset={() => {
+          onReset();
+        }}
+        initialValues={{
+          searchValue: '',
+          filter: []
+        }}>
+        <Typography.Title level={4}>Filter</Typography.Title>
+        <Typography.Title level={5}>Name</Typography.Title>
+        <Form.Item name={'searchValue'}>
+          <Input.Search placeholder={"Employee's name"} />
+        </Form.Item>
+        <Typography.Title level={5}>Role</Typography.Title>
+        <Form.Item name={'filter'}>
+          <Checkbox.Group>
+            <Checkbox value={AssignmentConst.RECEPTION}>
+              <Badge color={'#dfdf149e'} text={'RECEPTION'} />
+            </Checkbox>
+            <br />
+            <Checkbox value={AssignmentConst.INTERVIEWER}>
+              <Badge color={'#02fd02'} text={'INTERVIEWER'} />
+            </Checkbox>
+          </Checkbox.Group>
+        </Form.Item>
+        <div style={{ marginTop: '1rem', display: 'flex' }}>
+          <Button style={{ marginLeft: 'auto', marginRight: '1rem' }} htmlType={'reset'}>
+            Reset
+          </Button>
+          <Button type={'primary'} htmlType={'submit'}>
+            Search
+          </Button>
+        </div>
+      </Form>
+    </div>
+  );
+};
 
 const AssignTaskContainer = (props) => {
   const { boothId } = props;
@@ -181,7 +197,7 @@ const AssignTaskContainer = (props) => {
       .map((item) => {
         const { firstname, middlename, lastname } = item.employee.account;
         const fullName = `${firstname} ${middlename ? `${middlename} ` : ''} ${lastname}`;
-        return { ...item, fullName, key: item.employee.account.id, shiftData };
+        return { ...item, fullName, key: item.employee.account.id, shiftData, enabled: true };
       })
       .sort((a, b) => a.fullName.localeCompare(b.fullName));
   };
@@ -393,6 +409,32 @@ const AssignTaskContainer = (props) => {
     }
   };
 
+  const onFilterData = (values) => {
+    const { searchValue, filter } = values;
+
+    const dataSource = tableData.dataSource.map((item) => {
+      const assignments = [];
+      for (const date of Object.keys(tableData.dayRange)) assignments.push(...item[date]);
+      const isHasRole = assignments.some((assignment) => filter.includes(assignment.type));
+      let isHasName = true;
+      if (searchValue !== '' && searchValue !== undefined) isHasName = item.fullName.includes(searchValue);
+
+      let enabled = false;
+
+      if (searchValue === '' || searchValue === undefined) enabled = isHasRole;
+      else enabled = isHasRole && isHasName;
+
+      return { ...item, enabled };
+    });
+
+    setTableData((prevState) => ({ ...prevState, dataSource: deepClone(dataSource) }));
+  };
+
+  const onResetFilter = () => {
+    const dataSource = tableData.dataSource.map((item) => ({ ...item, enabled: true }));
+    setTableData((prevState) => ({ ...prevState, dataSource: deepClone(dataSource) }));
+  };
+
   const modalProps = {
     date: selectedCellData.date,
     visible: selectedCellData.visible,
@@ -429,9 +471,14 @@ const AssignTaskContainer = (props) => {
         ) : (
           <SideBarComponent
             rightSide={
-              <Table dataSource={[...tableData.dataSource]} columns={[...tableData.columns]} pagination={false} />
+              <Table
+                dataSource={[...tableData.dataSource]}
+                columns={[...tableData.columns]}
+                pagination={false}
+                rowClassName={(record) => !record.enabled && 'disabled-row'}
+              />
             }
-            leftSide={<TaskFilterPanel />}
+            leftSide={<TaskFilterPanel onFilter={onFilterData} onReset={onResetFilter} />}
             isOrganizeJobFair={false}
             ratio={1 / 6}
           />
