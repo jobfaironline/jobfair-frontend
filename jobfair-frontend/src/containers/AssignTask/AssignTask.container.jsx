@@ -269,34 +269,39 @@ const AssignTaskContainer = (props) => {
   };
 
   const onOkModal = async () => {
-    const values = form.getFieldsValue(true);
-    const data = tableData.dataSource.find((item) => item.employeeId === selectedCellData.employee.accountId);
-    const assignments = data[selectedCellData.date];
-    for (let i = 0; i < shiftData.length; i++) {
-      if (values[`shift-${i}`] === true) {
-        const assignment = assignments.find((assignment) => assignment.shift === i);
-        if (assignment === undefined) {
-          const result = {
-            beginTime: tableData.dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[i].beginTime,
-            endTime: tableData.dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[i].endTime,
-            companyEmployee: data.employee,
-            creatTime: null,
-            id: null,
-            jobFairBooth: null,
-            shift: i,
-            type: values[`shift-${i}-type`]
-          };
-          assignments.push(result);
+    try {
+      await form.validateFields();
+      const values = form.getFieldsValue(true);
+      const data = tableData.dataSource.find((item) => item.employeeId === selectedCellData.employee.accountId);
+      const assignments = data[selectedCellData.date];
+      for (let i = 0; i < shiftData.length; i++) {
+        if (values[`shift-${i}`] === true) {
+          const assignment = assignments.find((assignment) => assignment.shift === i);
+          if (assignment === undefined) {
+            const result = {
+              beginTime: tableData.dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[i].beginTime,
+              endTime: tableData.dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[i].endTime,
+              companyEmployee: data.employee,
+              creatTime: null,
+              id: null,
+              jobFairBooth: null,
+              shift: i,
+              type: values[`shift-${i}-type`]
+            };
+            assignments.push(result);
+          }
+        } else {
+          const index = assignments.findIndex((assignment) => assignment.shift === i);
+          if (index !== -1) assignments.splice(index, 1);
         }
-      } else {
-        const index = assignments.findIndex((assignment) => assignment.shift === i);
-        if (index !== -1) assignments.splice(index, 1);
       }
-    }
 
-    setHasChange(true);
-    setTableData((prevState) => ({ ...prevState, dataSource: deepClone(tableData.dataSource) }));
-    onCancelModal();
+      setHasChange(true);
+      setTableData((prevState) => ({ ...prevState, dataSource: deepClone(tableData.dataSource) }));
+      onCancelModal();
+    } catch (e) {
+      //ignore form error
+    }
   };
 
   const handleOpenAssignTaskModal = (record, title) => {

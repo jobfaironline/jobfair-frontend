@@ -1,3 +1,4 @@
+import { AssignTaskValidation } from '../../../validate/AssignTaskValidation';
 import { AssignmentConst } from '../../../constants/AssignmentConst';
 import { Checkbox, Form, Modal, Select, Typography } from 'antd';
 import React, { useState } from 'react';
@@ -25,7 +26,7 @@ export const AssignTaskModal = (props) => {
                   }}>{`Shift ${index + 1} (${beginTime.format('kk:mm')}-${endTime.format('kk:mm')})`}</Checkbox>
               </Form.Item>
               {form.getFieldsValue(true)[`shift-${index}`] ? (
-                <Form.Item name={`shift-${index}-type`}>
+                <Form.Item name={`shift-${index}-type`} rules={AssignTaskValidation.role}>
                   <Select placeholder={'Select role'}>
                     <Select.Option value={AssignmentConst.RECEPTION}>{AssignmentConst.RECEPTION}</Select.Option>
                     <Select.Option value={AssignmentConst.INTERVIEWER}>{AssignmentConst.INTERVIEWER}</Select.Option>
