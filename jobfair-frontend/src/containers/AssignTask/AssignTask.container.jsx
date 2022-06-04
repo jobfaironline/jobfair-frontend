@@ -1,22 +1,9 @@
 import './AssignTask.styles.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { AssignTaskCell } from '../../components/customized-components/AssignTask/AssignTaskCell.component';
+import { AssignTaskModal } from '../../components/forms/AssignTaskModalForm/AsignTaskModalForm.component';
 import { AssignmentConst } from '../../constants/AssignmentConst';
-import {
-  Avatar,
-  Badge,
-  Button,
-  Checkbox,
-  Form,
-  Input,
-  Modal,
-  Select,
-  Space,
-  Table,
-  Tooltip,
-  Typography,
-  notification
-} from 'antd';
+import { Avatar, Badge, Button, Checkbox, Form, Input, Space, Table, Typography, notification } from 'antd';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
 import {
@@ -26,9 +13,8 @@ import {
   updateAssignment
 } from '../../services/jobhub-api/AssignmentControllerService';
 import { deepClone } from '../../utils/common';
-import { faPenToSquare, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { getCompanyBoothById } from '../../services/jobhub-api/JobFairBoothControllerService';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
 const { Text } = Typography;
@@ -60,73 +46,26 @@ const TaskFilterPanel = () => (
   </div>
 );
 
-const AssignTaskModalContainer = (props) => {
-  const { date, visible, fullname, form, onCancel, onOk, shiftData } = props;
-  const [, setForceRerender] = useState(false);
-  return (
-    <Modal visible={visible} title={`Assign task - ${date} - ${fullname}`} onCancel={onCancel} onOk={onOk}>
-      <Form form={form}>
-        <Text>Available shift</Text>
-        {shiftData?.map((shift, index) => {
-          const startOfDate = moment().startOf('day');
-          const beginTime = startOfDate.clone().add(shift.beginTime);
-          const endTime = startOfDate.clone().add(shift.endTime);
-          return (
-            <div key={`shift-${index}`}>
-              <Form.Item name={`shift-${index}`} valuePropName='checked'>
-                <Checkbox
-                  onChange={() => {
-                    setForceRerender((prevState) => !prevState);
-                  }}>{`Shift ${index + 1} (${beginTime.format('kk:mm')}-${endTime.format('kk:mm')})`}</Checkbox>
-              </Form.Item>
-              {form.getFieldsValue(true)[`shift-${index}`] ? (
-                <Form.Item name={`shift-${index}-type`}>
-                  <Select placeholder={'Select role'}>
-                    <Select.Option value={AssignmentConst.RECEPTION}>{AssignmentConst.RECEPTION}</Select.Option>
-                    <Select.Option value={AssignmentConst.INTERVIEWER}>{AssignmentConst.INTERVIEWER}</Select.Option>
-                  </Select>
-                </Form.Item>
-              ) : null}
-            </div>
-          );
-        })}
-      </Form>
-    </Modal>
-  );
-};
-
 const AssignTaskContainer = (props) => {
   const { boothId } = props;
   const [tableData, setTableData] = useState({
     oldDataSource: undefined,
     dataSource: undefined,
-    columns: undefined
+    columns: undefined,
+    dayRange: undefined
   });
+  const [shiftData, setShiftData] = useState([]);
   const [boothData, setBoothData] = useState(undefined);
-
   const [selectedCellData, setSelectedCellData] = useState({
     date: undefined,
     employee: undefined,
     visible: false,
-    fullname: undefined,
-    dayRange: undefined,
+    fullName: undefined,
     assignments: undefined
   });
-
-  const [chooseShift, setChooseShift] = useState({
-    morningShift: false,
-    afternoonShift: false
-  });
-
-  const [forceRerender, setForceRerender] = useState(false);
-
-  const [form] = Form.useForm();
-
   const [hasChange, setHasChange] = useState(false);
-
-  const [shiftData, setShiftData] = useState([]);
-
-  const shiftDataRef = useRef([]);
+  const [forceRerender, setForceRerender] = useState(false);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     fetchData();
@@ -154,13 +93,11 @@ const AssignTaskContainer = (props) => {
         ...prevState,
         dataSource,
         columns,
-        oldDataSource: deepClone(dataSource)
+        oldDataSource: deepClone(dataSource),
+        dayRange
       }));
       setBoothData(jobFairBooth);
-      setShiftData(() => {
-        shiftDataRef.current = shiftData;
-        return shiftData;
-      });
+      setShiftData(shiftData);
     } catch (e) {
       notification['error']({
         message: 'Error when get employee data'
@@ -176,13 +113,12 @@ const AssignTaskContainer = (props) => {
         key: 'employee',
         width: '25rem',
         render: (_, record) => {
-          const { firstname, middlename, lastname, profileImageUrl } = record.employee.account;
-          const fullName = `${firstname} ${middlename ? `${middlename} ` : ''} ${lastname}`;
+          const { profileImageUrl } = record.employee.account;
           return (
             <div>
               <Space>
                 <Avatar src={profileImageUrl} size={56} />
-                <Text>{fullName}</Text>
+                <Text>{record.fullName}</Text>
               </Space>
             </div>
           );
@@ -193,55 +129,9 @@ const AssignTaskContainer = (props) => {
       columns.push({
         title,
         dataIndex: title,
-        render: (_, record) => {
-          const elements = [];
-          const assignTaskComponent = (
-            <div className={'assignment-actions'}>
-              <Tooltip title='assign task'>
-                <FontAwesomeIcon
-                  size={'3x'}
-                  icon={record[title].length === 0 ? faPlus : faPenToSquare}
-                  onClick={() => handleOpenAssignTaskModal(record, title)}
-                  color={'white'}
-                />
-              </Tooltip>
-            </div>
-          );
-          const div = (
-            <div className={'assigment-cell-container'}>
-              <div className={'mask'} />
-              {Array.from({ length: record.shiftData.length }, (v, i) => i).map((shiftIndex) => {
-                const assignment = record[title].find((assignment) => assignment.shift === shiftIndex);
-                if (assignment === undefined) {
-                  return (
-                    <div className={'assigment-cell'}>
-                      <Text style={{ opacity: 0 }}>abc</Text>
-                    </div>
-                  );
-                }
-
-                const beginTime = moment(assignment.beginTime);
-                const endTime = moment(assignment.endTime);
-                return (
-                  <div
-                    className={'assigment-cell'}
-                    style={{
-                      backgroundColor: assignment.type === AssignmentConst.INTERVIEWER ? '#dfdf149e' : '#02fd02'
-                    }}>
-                    <Text>
-                      {beginTime.format('kk:mm')}-{endTime.format('kk:mm')}
-                    </Text>
-                    -<Text>{assignment.type}</Text>
-                  </div>
-                );
-              })}
-            </div>
-          );
-          elements.push(div);
-          elements.push(assignTaskComponent);
-
-          return elements;
-        }
+        render: (_, record) => (
+          <AssignTaskCell record={record} title={title} handleOpenAssignTaskModal={handleOpenAssignTaskModal} />
+        )
       });
     }
     return columns;
@@ -253,7 +143,6 @@ const AssignTaskContainer = (props) => {
   //  {
   //    employeeId: "f996f062-c1d5-4fcc-a13c-8cae1e210d0d",
   //    employee: {accountId: ....},
-  //    dayRange: the job fair public day range map
   //    'Sat, Jun/4/2022': [{assignment1, assignment2}],
   //    'Sun, Jun/5/2022': [{assignment1, assignment2}],
   //  }
@@ -264,8 +153,7 @@ const AssignTaskContainer = (props) => {
     for (const [key, value] of Object.entries(staffAssignments)) {
       const result = {
         employeeId: key,
-        employee: staffs[key],
-        dayRange
+        employee: staffs[key]
       };
       for (const title of Object.keys(dayRange)) result[title] = [];
       for (const [title, time] of Object.entries(dayRange)) {
@@ -374,10 +262,9 @@ const AssignTaskContainer = (props) => {
       ...prevState,
       visible: false,
       date: undefined,
-      dayRange: undefined,
       employee: undefined,
       assignments: undefined,
-      fullname: undefined
+      fullName: undefined
     }));
   };
 
@@ -390,8 +277,8 @@ const AssignTaskContainer = (props) => {
         const assignment = assignments.find((assignment) => assignment.shift === i);
         if (assignment === undefined) {
           const result = {
-            beginTime: selectedCellData.dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[i].beginTime,
-            endTime: selectedCellData.dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[i].endTime,
+            beginTime: tableData.dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[i].beginTime,
+            endTime: tableData.dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[i].endTime,
             companyEmployee: data.employee,
             creatTime: null,
             id: null,
@@ -413,9 +300,6 @@ const AssignTaskContainer = (props) => {
   };
 
   const handleOpenAssignTaskModal = (record, title) => {
-    const { firstname, middlename, lastname } = record.employee.account;
-    const fullName = `${firstname} ${middlename ? `${middlename} ` : ''} ${lastname}`;
-
     const initialValue = {};
     record[title].forEach((assignment) => {
       initialValue[`shift-${assignment.shift}`] = true;
@@ -426,10 +310,9 @@ const AssignTaskContainer = (props) => {
     setSelectedCellData((prevState) => ({
       ...prevState,
       visible: true,
-      fullname: fullName,
+      fullName: record.fullName,
       date: title,
       employee: record.employee,
-      dayRange: record.dayRange,
       assignments: record[title]
     }));
   };
@@ -451,7 +334,7 @@ const AssignTaskContainer = (props) => {
     for (let i = 0; i < tableData.oldDataSource.length; i++) {
       const oldData = tableData.oldDataSource[i];
       const newData = tableData.dataSource[i];
-      const dayRange = oldData.dayRange;
+      const dayRange = tableData.dayRange;
       for (const date of Object.keys(dayRange)) {
         //find new or updated assignment
         for (const newAssignment of newData[date]) {
@@ -508,18 +391,16 @@ const AssignTaskContainer = (props) => {
   const modalProps = {
     date: selectedCellData.date,
     visible: selectedCellData.visible,
-    fullname: selectedCellData.fullname,
+    fullName: selectedCellData.fullName,
     form,
     onCancel: onCancelModal,
     onOk: onOkModal,
-    chooseShift,
-    setChooseShift,
     shiftData
   };
 
   return (
     <>
-      <AssignTaskModalContainer {...modalProps} />
+      <AssignTaskModal {...modalProps} />
       <div className={'assign-task-container'}>
         <div style={{ display: 'flex', marginBottom: '1rem' }}>
           <Typography.Title level={3}>Assign task</Typography.Title>
