@@ -4,10 +4,10 @@ import { Button, Col, Descriptions, Form, Image, InputNumber, Row, Slider, Tabs,
 import { DeleteOutlined, RotateLeftOutlined, RotateRightOutlined, UploadOutlined } from '@ant-design/icons';
 import { SHARPNESS_MARK } from '../../../../constants/DecorateConst';
 import { getBase64 } from '../../../../utils/common';
+import { previewImageBase64 } from '../../../../constants/ImageDataConstants';
 import { useState } from 'react';
 import Divider from '@mui/material/Divider';
 import ImgCrop from 'antd-img-crop';
-import { previewImageBase64 } from '../../../../constants/ImageDataConstants';
 
 const { TabPane } = Tabs;
 

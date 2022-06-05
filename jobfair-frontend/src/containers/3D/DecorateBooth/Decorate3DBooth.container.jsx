@@ -32,18 +32,21 @@ import {
 import { notify } from '../../../utils/toastutil';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
+import MyBoothLayoutListContainer from '../../MyBoothLayoutList/MyBoothLayoutList.container';
 
 export const Decorate3DBoothContainer = (props) => {
   const { companyBoothId, jobFairId } = props;
   const history = useHistory();
   const dispatch = useDispatch();
   const { mode, selectedItem } = useSelector((state) => state.decorateBooth);
+  const modelUrl = useSelector((state) => state?.decorateBooth?.modelUrl);
   const [modelItems, setModelItems] = useState([]);
+  const [myLayoutVisibility, setMyLayoutVisibility] = useState(false);
   const meshGroupRef = useRef();
   const rendererRef = useRef();
 
   useEffect(async () => {
-    let url = GENERIC_BOOTH_LAYOUT_URL;
+    let url = modelUrl;
     const companyBoothLayoutVideos = {};
     try {
       const response = await getCompanyBoothLatestLayout(companyBoothId);
@@ -62,7 +65,7 @@ export const Decorate3DBoothContainer = (props) => {
       fixTextureOffset(mesh);
     }
     setModelItems(result);
-  }, []);
+  }, [modelUrl]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
@@ -185,10 +188,15 @@ export const Decorate3DBoothContainer = (props) => {
     }
   };
 
+  const openBoothModal = () => {
+    setMyLayoutVisibility(true);
+  };
+
   const controlButtonsProps = {
     addMoreComponentHandle,
     saveHandle,
-    reviewHandle
+    reviewHandle,
+    openBoothModal
   };
   const sideBarProps = {
     handleOnRotationLeft,
@@ -200,6 +208,10 @@ export const Decorate3DBoothContainer = (props) => {
   if (modelItems.length === 0) return <LoadingComponent />;
   return (
     <div style={{ height: 'calc(100vh - 126px)' }}>
+      <MyBoothLayoutListContainer
+        setMyLayoutVisibility={setMyLayoutVisibility}
+        myLayoutVisibility={myLayoutVisibility}
+      />
       <DecorateBooth3DItemMenuContainer />
       <Stats />
       <div

@@ -2,7 +2,7 @@ import { Button, Space } from 'antd';
 import React from 'react';
 
 export const ControlButtonGroup = (props) => {
-  const { addMoreComponentHandle, saveHandle, reviewHandle } = props;
+  const { addMoreComponentHandle, saveHandle, reviewHandle, openBoothModal } = props;
 
   return (
     <div style={{ position: 'absolute', top: '136px', right: '10px' }}>
@@ -13,8 +13,12 @@ export const ControlButtonGroup = (props) => {
         <Button onClick={saveHandle} type='primary'>
           Save
         </Button>
+        <Button type='primary'>Save this version to my booth layout</Button>
         <Button type='primary' onClick={reviewHandle}>
           Review
+        </Button>
+        <Button type='primary' onClick={openBoothModal}>
+          My Booth layout
         </Button>
       </Space>
     </div>
