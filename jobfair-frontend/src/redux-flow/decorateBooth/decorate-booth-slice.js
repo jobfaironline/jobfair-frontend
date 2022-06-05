@@ -10,10 +10,10 @@ const decorateBoothSlice = createSlice({
     selectedSampleItem: {},
     modelItems: [],
     hoverItem: undefined,
-    modelUrl: GENERIC_BOOTH_LAYOUT_URL //TODO: will replace later
+    modelId: GENERIC_BOOTH_LAYOUT_URL //TODO: will replace later
   },
   reducers: {
-    setModelUrl: (state, action) => {
+    setModelId: (state, action) => {
       //also reset it
       return {
         mode: ModeConstant.SELECT,
@@ -21,7 +21,7 @@ const decorateBoothSlice = createSlice({
         selectedSampleItem: {},
         modelItems: [],
         hoverItem: undefined,
-        modelUrl: action.payload
+        modelId: action.payload
       };
     },
     setMode: (state, action) => {

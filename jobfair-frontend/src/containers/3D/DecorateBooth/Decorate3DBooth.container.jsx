@@ -1,4 +1,6 @@
 /* eslint-disable no-unused-vars */
+import { Button, Form, Input, Modal, Spin } from 'antd';
+import { Content } from 'antd/lib/layout/layout';
 import { ControlButtonGroup } from '../../../components/customized-components/DecoratedBoothTool/ControlButton/ControlButtonGroup.component';
 import { DecorateBooth3DItemMenuContainer } from '../../SampleItemMenu/DecorateBooth3DItemMenu.container';
 import { DecorateBoothCanvas } from '../../../components/3D/DecorateBooth/DeoratedBoothCanvas/DecorateBoothCanvas.component';
@@ -29,8 +31,15 @@ import {
   saveLayoutVideoWithFile,
   saveLayoutVideoWithUrl
 } from '../../../services/jobhub-api/CompanyBoothLayoutControllerService';
+import {
+  getMyBoothLayoutById,
+  saveDecoratedBoothIntoMyBoothLayout,
+  saveLayoutVideoWithFileIntoMyBoothLayout,
+  saveLayoutVideoWithUrlIntoMyBoothLayout
+} from '../../../services/jobhub-api/DecoratorBoothLayoutController';
 import { notify } from '../../../utils/toastutil';
 import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'antd/lib/form/Form';
 import MyBoothLayoutListContainer from '../../MyBoothLayoutList/MyBoothLayoutList.container';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -39,14 +48,14 @@ export const Decorate3DBoothContainer = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { mode, selectedItem } = useSelector((state) => state.decorateBooth);
-  const modelUrl = useSelector((state) => state?.decorateBooth?.modelUrl);
+  const modelId = useSelector((state) => state?.decorateBooth?.modelId);
   const [modelItems, setModelItems] = useState([]);
   const [myLayoutVisibility, setMyLayoutVisibility] = useState(false);
   const meshGroupRef = useRef();
   const rendererRef = useRef();
 
   useEffect(async () => {
-    let url = modelUrl;
+    let url = GENERIC_BOOTH_LAYOUT_URL;
     const companyBoothLayoutVideos = {};
     try {
       const response = await getCompanyBoothLatestLayout(companyBoothId);
@@ -65,7 +74,29 @@ export const Decorate3DBoothContainer = (props) => {
       fixTextureOffset(mesh);
     }
     setModelItems(result);
-  }, [modelUrl]);
+  }, []);
+
+  useEffect(async () => {
+    let url = GENERIC_BOOTH_LAYOUT_URL;
+    const companyBoothLayoutVideos = {};
+    try {
+      const response = await getMyBoothLayoutById(modelId);
+      url = response.data.url;
+      response.data.companyBoothLayoutVideos?.forEach((data) => {
+        companyBoothLayoutVideos[data.itemName] = data.url;
+      });
+    } catch (err) {
+      //handle error in here
+    }
+    //parse file and get items
+    const glb = await loadGLBModel(url);
+    const result = glb.scene.children;
+    for (const mesh of result) {
+      addVideoTexture(mesh, companyBoothLayoutVideos);
+      fixTextureOffset(mesh);
+    }
+    setModelItems(result);
+  }, [modelId]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
@@ -74,13 +105,21 @@ export const Decorate3DBoothContainer = (props) => {
     };
   });
 
-  const uploadVideo = async (textureObj, layoutId, itemName) => {
+  const uploadVideo = async (textureObj, layoutId, itemName, isSaveInMyBoothLayout) => {
     if (textureObj.texture.image.src.substring(0, 4) !== 'data') {
-      return saveLayoutVideoWithUrl({
-        layoutId,
-        itemName,
-        url: textureObj.texture.image.src
-      });
+      if (isSaveInMyBoothLayout) {
+        return saveLayoutVideoWithUrlIntoMyBoothLayout({
+          layoutId,
+          itemName,
+          url: textureObj.texture.image.src
+        });
+      } else {
+        return saveLayoutVideoWithUrl({
+          layoutId,
+          itemName,
+          url: textureObj.texture.image.src
+        });
+      }
     }
     const b64data = textureObj.texture.image.src.substring(15 + 7);
     const blob = await b64toBlob(b64data, 'video/mp4');
@@ -88,10 +127,11 @@ export const Decorate3DBoothContainer = (props) => {
     formData.append('layoutId', layoutId);
     formData.append('file', blob);
     formData.append('itemName', itemName);
-    return saveLayoutVideoWithFile(formData);
+    if (isSaveInMyBoothLayout) return saveLayoutVideoWithFileIntoMyBoothLayout(formData);
+    else return saveLayoutVideoWithFile(formData);
   };
 
-  const saveHandle = async () => {
+  const saveHandle = async (isSaveInMyBoothLayout, layoutName) => {
     let sceneNode = meshGroupRef.current.parent;
     while (sceneNode.type !== 'Scene') sceneNode = sceneNode.parent;
 
@@ -112,7 +152,11 @@ export const Decorate3DBoothContainer = (props) => {
     const formData = new FormData();
     formData.append('companyBoothId', companyBoothId);
     formData.append('file', glbData);
-    const response = await saveDecoratedBooth(formData);
+    let response;
+    if (isSaveInMyBoothLayout) {
+      formData.append('name', layoutName);
+      response = await saveDecoratedBoothIntoMyBoothLayout(formData);
+    } else response = await saveDecoratedBooth(formData);
 
     //upload video
     const videoUploadPromises = [];
@@ -189,9 +233,20 @@ export const Decorate3DBoothContainer = (props) => {
 
   const controlButtonsProps = {
     addMoreComponentHandle,
-    saveHandle,
+    saveHandle: () => saveHandle(),
     reviewHandle,
-    openBoothModal
+    openBoothModal,
+    saveIntoMyBoothLayout: () => {
+      Modal.info({
+        okButtonProps: { style: { display: 'none' } },
+        title: 'Your layout name',
+        content: (
+          <>
+            <InputLayoutNameForm saveHandle={saveHandle} />
+          </>
+        )
+      });
+    }
   };
   const sideBarProps = {
     handleOnRotationLeft,
@@ -221,5 +276,35 @@ export const Decorate3DBoothContainer = (props) => {
       <ControlButtonGroup {...controlButtonsProps} />
       <ToastContainer />
     </div>
+  );
+};
+
+const InputLayoutNameForm = ({ saveHandle }) => {
+  //for layout name form
+  const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
+
+  return (
+    <>
+      <Form
+        form={form}
+        onFinish={() => {
+          setLoading(true);
+          saveHandle(true, form.getFieldValue('name')).then(() => {
+            setLoading(false);
+            Modal.destroyAll();
+          });
+        }}>
+        <Form.Item label='Name' name='name' rules={[{ required: true, message: 'Please input the name!' }]}>
+          <Input />
+        </Form.Item>
+        <Button type='primary' htmlType='submit' loading={loading} style={{ marginRight: '1rem' }}>
+          Save
+        </Button>
+        <Button onClick={() => Modal.destroyAll()} disabled={loading}>
+          Cancel
+        </Button>
+      </Form>
+    </>
   );
 };
