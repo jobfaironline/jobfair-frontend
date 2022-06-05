@@ -4,10 +4,10 @@ import { Button, Col, Descriptions, Form, Image, InputNumber, Row, Slider, Tabs,
 import { DeleteOutlined, RotateLeftOutlined, RotateRightOutlined, UploadOutlined } from '@ant-design/icons';
 import { SHARPNESS_MARK } from '../../../../constants/DecorateConst';
 import { getBase64 } from '../../../../utils/common';
+import { previewImageBase64 } from '../../../../constants/ImageDataConstants';
 import { useState } from 'react';
 import Divider from '@mui/material/Divider';
 import ImgCrop from 'antd-img-crop';
-import { previewImageBase64 } from '../../../../constants/ImageDataConstants';
 
 const { TabPane } = Tabs;
 
@@ -32,8 +32,7 @@ export const DecorateBoothSideBarComponent = (props) => {
 
   return (
     <div className={'decorate-booth-side-bar'}>
-      <div
-        style={{ position: 'absolute', zIndex: 100000, backgroundColor: '#FFF', borderRight: '1px solid #00000010' }}>
+      <div style={{ position: 'absolute', zIndex: 100, backgroundColor: '#FFF', borderRight: '1px solid #00000010' }}>
         <Tabs type='card' defaultActiveKey='1' centered size='large'>
           <TabPane tab='Edit 3D model style' key='1'>
             <div style={{ padding: '1rem', display: 'flex', justifyContent: 'center' }}>
