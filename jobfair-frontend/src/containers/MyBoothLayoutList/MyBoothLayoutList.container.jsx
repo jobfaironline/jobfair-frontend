@@ -1,4 +1,4 @@
-import { Card, Modal, Typography } from 'antd';
+import { Card, Modal, notification, Typography } from 'antd';
 import { decorateBoothAction } from '../../redux-flow/decorateBooth/decorate-booth-slice';
 import { getAllMyBoothLayout } from '../../services/jobhub-api/DecoratorBoothLayoutController';
 import { useDispatch } from 'react-redux';
@@ -25,6 +25,13 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility 
       setMyBoothLayouts(finalData);
     } catch (e) {
       if (e.status === 204) setMyBoothLayouts([]);
+      notification['error']({
+        message: `Error happens`,
+        description: `There is problem while fetch booth layout, try again later`,
+        duration: 2
+      });
+      //close modal
+      setMyLayoutVisibility(false);
     }
   };
 
