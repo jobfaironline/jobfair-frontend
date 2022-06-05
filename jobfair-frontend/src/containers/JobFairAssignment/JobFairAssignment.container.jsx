@@ -1,5 +1,5 @@
 import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
-import { Space, Typography, notification } from 'antd';
+import { Space, Typography, notification, Tabs, Button, Select } from 'antd';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getAssignmentByEmployeeId } from '../../services/jobhub-api/AssignmentControllerService';
 import { mapperJobFairAssignment } from '../../utils/mapperJobFairAssignment';
@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import JobFairAssignmentTableColumn from '../JobFairAssignmentTable/JobFairAssignmentTable.column';
 import React, { useEffect, useState } from 'react';
+import TaskActionButton from './TaskActionButton.container';
+const { TabPane } = Tabs;
+const { Option } = Select;
 
 const JobFairAssignmentContainer = () => {
   const history = useHistory();
@@ -15,6 +18,8 @@ const JobFairAssignmentContainer = () => {
 
   const [data, setData] = useState([]);
   const [reRender, setRerender] = useState(false);
+  const [currentTab, setCurrentTab] = useState('RECEPTIONIST');
+  const [viewAllMode, setViewAllMode] = useState(true);
   //pagination
   const [totalRecord, setTotalRecord] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -38,7 +43,7 @@ const JobFairAssignmentContainer = () => {
     return () => {
       webSocketClient.removeEvent('refresh-assignment-list');
     };
-  }, [currentPage, pageSize, reRender]);
+  }, [currentPage, pageSize, reRender, currentTab]);
 
   webSocketClient.addEvent('refresh-assignment-list', () => {
     setRerender((prevState) => !prevState);
@@ -51,41 +56,6 @@ const JobFairAssignmentContainer = () => {
     setPageSize(pageSize);
   };
 
-  const handleRedirect = (record, key) => {
-    let url = '';
-    switch (key) {
-      case 'DECORATOR':
-        url = generatePath(PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE, {
-          assignmentId: record.id
-        });
-        history.push(url);
-        break;
-      case 'SUPERVISOR':
-        url = generatePath(PATH_COMPANY_EMPLOYEE.BOOTH_DESCRIPTION_PAGE, {
-          assignmentId: record.id
-        });
-        history.push(url);
-        break;
-      default:
-        break;
-    }
-  };
-
-  const handleAction = (record) => {
-    switch (record.assignmentType) {
-      case 'Supervisor':
-        return <a onClick={() => handleRedirect(record, 'SUPERVISOR')}>Add booth description</a>;
-      case 'Decorator': {
-        const now = new Date().getTime();
-        return record.decorateStartTimeValue <= now <= record.decorateEndTimeValue ? (
-          <a onClick={() => handleRedirect(record, 'DECORATOR')}>Decorate booth</a>
-        ) : null;
-      }
-      default:
-        return null;
-    }
-  };
-
   const jobFairAssignmentTableProps = {
     tableData: data,
     tableColumns: JobFairAssignmentTableColumn,
@@ -96,7 +66,9 @@ const JobFairAssignmentContainer = () => {
       {
         title: 'Actions',
         key: 'action',
-        render: (text, record) => <Space size='middle'>{handleAction(record)}</Space>
+        render: (text, record) => {
+          return <TaskActionButton type={record.assignmentType} record={record} />;
+        }
       }
     ],
     paginationObject: {
@@ -116,9 +88,43 @@ const JobFairAssignmentContainer = () => {
         <Typography.Title level={2} style={{ marginBottom: '0rem' }}>
           My assignment
         </Typography.Title>
+        <Space>
+          View mode:
+          <Select
+            defaultValue={true}
+            style={{
+              width: 200
+            }}
+            onChange={(value) => setViewAllMode(value)}>
+            <Option value={true}>View all</Option>
+            <Option value={false}>View by assignment type</Option>
+          </Select>
+        </Space>
       </Space>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <CommonTableContainer {...jobFairAssignmentTableProps} />
+        {viewAllMode ? (
+          <CommonTableContainer {...jobFairAssignmentTableProps} />
+        ) : (
+          <Tabs
+            activeKey={currentTab}
+            centered
+            onTabClick={(key) => {
+              setCurrentTab(key);
+            }}>
+            <TabPane tab='Receptionist task' key='RECEPTIONIST'>
+              <CommonTableContainer {...jobFairAssignmentTableProps} />
+            </TabPane>
+            <TabPane tab='Inteview task' key='INTEVIEWER'>
+              <CommonTableContainer {...jobFairAssignmentTableProps} />
+            </TabPane>
+            <TabPane tab='Decorate task' key='DECORATOR'>
+              <Space style={{ width: '100%', justifyContent: 'end', marginBottom: '1rem' }}>
+                <Button type='primary'>My Booth Layout</Button>
+              </Space>
+              <CommonTableContainer {...jobFairAssignmentTableProps} />
+            </TabPane>
+          </Tabs>
+        )}
       </div>
     </div>
   );

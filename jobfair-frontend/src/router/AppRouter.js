@@ -92,9 +92,6 @@ const AppRouter = () => {
         <Route path={PATH.FAQ_PAGE} exact>
           <FAQPage />
         </Route>
-        <Route path={PATH.DECORATE_BOOTH_PAGE} exact>
-          <DecorateBoothPage />
-        </Route>
         <Route path={PATH.CONTRACTS_PAGE} exact>
           <ContactPage />
         </Route>
@@ -167,6 +164,12 @@ const AppRouter = () => {
           key={PATH_ATTENDANT.INTERVIEW_SCHEDULE}
           component={() => <InterviewSchedulePage />}
           path={PATH_ATTENDANT.INTERVIEW_SCHEDULE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE}
+          component={() => <DecorateBoothPage />}
+          path={PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE}
           exact
         />
         <CompanyEmployeeRouter

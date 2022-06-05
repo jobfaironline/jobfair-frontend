@@ -14,8 +14,6 @@ export const PATH = {
   RESULT_SUCCESS_PAGE: '/proceed-success',
   RESULT_FAILED_PAGE: '/proceed-fail',
   FAQ_PAGE: '/faq',
-  //decorate booth
-  DECORATE_BOOTH_PAGE: '/decorate-booth/:jobFairId/:companyBoothId',
   //choose booth page
   CONTRACTS_PAGE: '/contacts',
   PUBLICIZED_JOB_FAIR_LIST_PAGE: '/job-fair-list',
@@ -50,7 +48,9 @@ export const PATH_COMPANY_EMPLOYEE = {
   JOB_FAIR_ASSIGNMENT_PAGE: '/employee/job-fair-assignment',
   INTERVIEW_SCHEDULE: '/employee/interview-schedule',
   INTERVIEW_ROOM_PAGE: '/employee/interview/:roomId',
-  BOOTH_DESCRIPTION_PAGE: '/employee/booth-description/:assignmentId'
+  BOOTH_DESCRIPTION_PAGE: '/employee/booth-description/:assignmentId',
+  //decorate booth
+  DECORATE_BOOTH_PAGE: '/employee/decorate-booth/:jobFairId/:companyBoothId'
 };
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',

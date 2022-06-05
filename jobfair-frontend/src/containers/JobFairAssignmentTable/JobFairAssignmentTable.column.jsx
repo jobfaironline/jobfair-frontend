@@ -1,5 +1,6 @@
-import { Tag } from 'antd';
+import { Tag, Typography } from 'antd';
 import React from 'react';
+import { convertEnumToString, convertToUTCString } from '../../utils/common';
 
 const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
   {
@@ -31,7 +32,7 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
     ...getColumnSearchProps('assignmentType'),
     render: (assignmentType) => (
       <>
-        <Tag color={'green'}>{assignmentType}</Tag>
+        <Tag color={'green'}>{convertEnumToString(assignmentType)}</Tag>
       </>
     )
   },
@@ -42,13 +43,15 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
         title: 'Start time',
         dataIndex: 'decorateStartTime',
         key: 'decorateStartTime',
-        ...getColumnSearchProps('decorateStartTime')
+        ...getColumnSearchProps('decorateStartTime'),
+        render: (text, record) => <Typography>{convertToUTCString(record?.decorateStartTime)}</Typography>
       },
       {
         title: 'End time',
         dataIndex: 'decorateEndTime',
         key: 'decorateEndTime',
-        ...getColumnSearchProps('decorateEndTime')
+        ...getColumnSearchProps('decorateEndTime'),
+        render: (text, record) => <Typography>{convertToUTCString(record?.decorateEndTime)}</Typography>
       }
     ]
   },
@@ -59,13 +62,15 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
         title: 'Start time',
         dataIndex: 'publicStartTime',
         key: 'publicStartTime',
-        ...getColumnSearchProps('publicStartTime')
+        ...getColumnSearchProps('publicStartTime'),
+        render: (text, record) => <Typography>{convertToUTCString(record?.publicStartTime)}</Typography>
       },
       {
         title: 'End time',
         dataIndex: 'publicEndTime',
         key: 'publicEndTime',
-        ...getColumnSearchProps('publicEndTime')
+        ...getColumnSearchProps('publicEndTime'),
+        render: (text, record) => <Typography>{convertToUTCString(record?.publicEndTime)}</Typography>
       }
     ]
   },
