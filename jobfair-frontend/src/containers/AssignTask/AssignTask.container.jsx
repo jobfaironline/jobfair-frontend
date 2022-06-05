@@ -358,7 +358,7 @@ const AssignTaskContainer = (props) => {
         for (const newAssignment of newData[date]) {
           if (newAssignment.id === null) {
             newAssignments.push(newAssignment);
-            break;
+            continue;
           }
           const oldAssigment = oldData[date].find((assignment) => assignment.id === newAssignment.id);
           if (
@@ -367,7 +367,7 @@ const AssignTaskContainer = (props) => {
             oldAssigment.endTime !== newAssignment.endTime
           ) {
             updatedAssignmens.push(newAssignment);
-            break;
+            continue;
           }
         }
         //find deleted assignment
