@@ -114,8 +114,6 @@ const AttendantRegisterContainer = () => {
 };
 
 const CompanyRegisterContainer = () => {
-  // const [companyForm] = Form.useForm();
-  // const [managerForm] = Form.useForm();
   const [form] = Form.useForm();
   const [currentStep, setCurrentStep] = useState(0);
   const [isCompanyError, setIsCompanyError] = useState(true);
@@ -152,7 +150,7 @@ const CompanyRegisterContainer = () => {
     try {
       const res = await handleRegisterCompany(form.getFieldsValue(true));
       const responseManager = await handleRegisterCompanyManager(form.getFieldsValue(true), res.data.id);
-      if (res.status === 200 && responseManager.status === 201) {
+      if (res.status === 201 && responseManager.status === 201) {
         Modal.success({
           title: 'Register company manager successfully !',
           width: '30rem',
