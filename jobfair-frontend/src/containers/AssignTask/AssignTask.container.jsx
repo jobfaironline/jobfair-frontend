@@ -302,7 +302,7 @@ const AssignTaskContainer = (props) => {
               type: values[`shift-${i}-type`]
             };
             assignments.push(result);
-          }
+          } else assignment.type = values[`shift-${i}-type`];
         } else {
           const index = assignments.findIndex((assignment) => assignment.shift === i);
           if (index !== -1) assignments.splice(index, 1);
@@ -393,12 +393,13 @@ const AssignTaskContainer = (props) => {
     promises.push(...deletedAssignments.map((assignment) => unAssignEmployee(assignment.id)));
     promises.push(
       ...updatedAssignmens.map(async (assignment) =>
-        updateAssignment(assignment.id, assignment.beginTime, assignment.endTime)
+        updateAssignment(assignment.id, assignment.beginTime, assignment.endTime, assignment.type)
       )
     );
     try {
       await Promise.all(promises);
       setForceRerender((prevState) => !prevState);
+      setHasChange(false);
     } catch (e) {
       notification['error']({
         message: `Error occurred: ${e.response.data.message}`

@@ -15,8 +15,8 @@ export const getAssigmentByJobFairBoothId = (jobFairBoothId) =>
 export const assignEmployee = (employeeId, jobFairBoothId, type, beginTime = null, endTime = null) =>
   CallAPI(`${ASSIGN}`, 'POST', { employeeId, jobFairBoothId, type, beginTime, endTime });
 export const unAssignEmployee = (assignmentId) => CallAPI(`${UNASSIGNMENT}/${assignmentId}`, 'DELETE', {});
-export const updateAssignment = (assignmentId, beginTime, endTime) =>
-  CallAPI(`${ASSIGNMENT}/${assignmentId}`, 'PUT', {}, { beginTime, endTime });
+export const updateAssignment = (assignmentId, beginTime, endTime, type) =>
+  CallAPI(`${ASSIGNMENT}/${assignmentId}`, 'PUT', {}, { beginTime, endTime, type });
 export const getStatisticsByJobFair = (jobFairId) => CallAPI(`${STATISTICS}/${jobFairId}`, 'GET');
 export const getAssignmentByEmployeeId = (direction = 'ASC', offset = '0', pageSize = '10', sortBy = 'createTime') =>
   CallAPI(`${ASSIGNMENT_BY_EMPLOYEE_ID}`, 'GET', {}, { direction, offset, pageSize, sortBy });

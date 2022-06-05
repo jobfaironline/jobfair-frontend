@@ -8,7 +8,7 @@ import moment from 'moment';
 const { RangePicker } = DatePicker;
 const { Title } = Typography;
 const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChange }) => {
-  const shift = jobFairData.shifts.sort((a, b) => a.beginTime - b.beginTime);
+  const shift = jobFairData.shifts?.sort((a, b) => a.beginTime - b.beginTime);
   const startOfDate = moment().startOf('day').valueOf();
   return (
     <div className={'schedule-job-fair-form'}>
@@ -28,12 +28,12 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
               jobFairData.publicEndTime ? moment.unix(jobFairData.publicEndTime / 1000) : undefined
             ],
             morningShift: [
-              shift[0].beginTime !== undefined ? moment(startOfDate + shift[0].beginTime) : undefined,
-              shift[0].endTime !== undefined ? moment(startOfDate + shift[0].endTime) : undefined
+              shift?.[0]?.beginTime !== undefined ? moment(startOfDate + shift[0].beginTime) : undefined,
+              shift?.[0]?.endTime !== undefined ? moment(startOfDate + shift[0].endTime) : undefined
             ],
             afternoonShift: [
-              shift[1].beginTime !== undefined ? moment(startOfDate + shift[1].beginTime) : undefined,
-              shift[1].endTime !== undefined ? moment(startOfDate + shift[1].endTime) : undefined
+              shift?.[1]?.beginTime !== undefined ? moment(startOfDate + shift[1].beginTime) : undefined,
+              shift?.[1]?.endTime !== undefined ? moment(startOfDate + shift[1].endTime) : undefined
             ]
           }}
           form={form}
