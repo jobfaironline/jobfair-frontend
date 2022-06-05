@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Button, Form, Input, Modal, Spin } from 'antd';
+import { Button, Form, Input, Modal, notification, Spin } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import { ControlButtonGroup } from '../../../components/customized-components/DecoratedBoothTool/ControlButton/ControlButtonGroup.component';
 import { DecorateBooth3DItemMenuContainer } from '../../SampleItemMenu/DecorateBooth3DItemMenu.container';
@@ -86,7 +86,11 @@ export const Decorate3DBoothContainer = (props) => {
         companyBoothLayoutVideos[data.itemName] = data.url;
       });
     } catch (err) {
-      //handle error in here
+      notification['error']({
+        message: `Error happens`,
+        description: `There is problem while fetch booth layout, try again later (the default layout will be used)`,
+        duration: 2
+      });
     }
     //parse file and get items
     const glb = await loadGLBModel(url);
