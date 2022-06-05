@@ -3,28 +3,28 @@
     "id": 1,
     "name": "Banner",
     "description": "Banner",
-    "thumbnailUrl": "",
+    "thumbnailUrl": "/3D-component/banner.png",
     "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/banner1.glb"
   },
   {
     "id": 2,
     "name": "main board",
     "description": "main board",
-    "thumbnailUrl": "",
+    "thumbnailUrl": "/3D-component/screen.png",
     "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/main_board.glb"
   },
   {
     "id": 3,
     "name": "rostrum",
     "description": "Rostrum",
-    "thumbnailUrl": "",
+    "thumbnailUrl": "/3D-component/rostrum.png",
     "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/rostrum.glb"
   },
   {
     "id": 4,
     "name": "Trash",
     "description": "Trash",
-    "thumbnailUrl": "",
+    "thumbnailUrl": "/3D-component/trash.png",
     "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/trash.glb"
   }
 ]

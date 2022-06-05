@@ -35,7 +35,15 @@ export const DecorateBooth3DItemMenuContainer = () => {
 
   if (sampleItems.length === 0) return null;
   return (
-    <div style={{ display: mode === ModeConstant.ADD ? 'block' : 'none', flex: 1 }}>
+    <div
+      style={{
+        display: mode === ModeConstant.ADD ? 'block' : 'none',
+        flex: 1,
+        bottom: '0',
+        zIndex: 100000,
+        position: 'fixed',
+        right: 0
+      }}>
       <SampleItemMenu {...sampleItemMenuProps} />
     </div>
   );

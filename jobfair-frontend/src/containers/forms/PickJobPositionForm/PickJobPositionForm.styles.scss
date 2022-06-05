@@ -1,38 +1,38 @@
-.pick-job-position-container{
+.pick-job-position-container {
   display: flex;
   padding-top: 4rem;
   margin: 0 4rem;
 
-  .left-side{
+  .left-side {
     flex: 1;
     display: flex;
     flex-direction: column;
     margin-right: 5rem;
   }
 
-  .right-side{
+  .right-side {
     flex: 2;
   }
 
-  .card-container{
+  .card-container {
     display: flex;
     justify-content: space-between;
     margin-bottom: 2rem;
   }
 
-  .card{
+  .card {
     width: 20rem;
     border: 1px solid gray;
     border-radius: 10px;
     height: max-content;
 
-    .ant-card-body{
+    .ant-card-body {
       padding: 0.7rem 1rem;
       display: flex;
       flex-direction: column;
     }
 
-    .ant-image{
+    .ant-image {
       margin-bottom: 1rem;
     }
 
@@ -40,12 +40,12 @@
       margin-bottom: 0;
     }
 
-    span{
+    span {
       margin-left: auto;
     }
   }
 
-  .booth-description-container{
+  .booth-description-container {
     input {
       border-radius: 8px;
     }
@@ -54,7 +54,8 @@
       border-radius: 8px;
     }
 
-    .ant-input:hover, .ant-input:focus{
+    .ant-input:hover,
+    .ant-input:focus {
       border-color: black;
     }
   }
