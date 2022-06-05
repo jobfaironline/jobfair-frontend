@@ -14,13 +14,10 @@ export const OrganizeJobFairValidation = {
         const afterNoonShiftStartTime = moment(afternoonShift[0]);
         const morningShiftStartTime = moment(morningShift[0]);
         const morningShiftEndTime = moment(morningShift[1]);
-        if (morningShiftStartTime <= morningShiftEndTime)
+        if (morningShiftStartTime.unix() >= morningShiftEndTime.unix())
           return Promise.reject(new Error('Morning shift begin time must be lower than morning shift end time'));
 
-        if (
-          afterNoonShiftStartTime.valueOf() - startOfDate.valueOf() <
-          morningShiftEndTime.valueOf() - startOfDate.valueOf()
-        )
+        if (afterNoonShiftStartTime.unix() - startOfDate.unix() < morningShiftEndTime.unix() - startOfDate.unix())
           return Promise.reject(new Error('Morning shift time must be lower than afternoon shift time'));
         return Promise.resolve();
       }
@@ -40,12 +37,9 @@ export const OrganizeJobFairValidation = {
 
         const morningShiftEndTime = moment(morningShift[1]);
 
-        if (afterNoonShiftStartTime <= afterNoonShiftEndTime)
+        if (afterNoonShiftStartTime.unix() >= afterNoonShiftEndTime.unix())
           return Promise.reject(new Error('Afternoon shift begin time must be lower than afternoon shift end time'));
-        if (
-          afterNoonShiftStartTime.valueOf() - startOfDate.valueOf() <
-          morningShiftEndTime.valueOf() - startOfDate.valueOf()
-        )
+        if (afterNoonShiftStartTime.unix() - startOfDate.unix() < morningShiftEndTime.unix() - startOfDate.unix())
           return Promise.reject(new Error('Morning shift time must be lower than afternoon shift time'));
         return Promise.resolve();
       }
