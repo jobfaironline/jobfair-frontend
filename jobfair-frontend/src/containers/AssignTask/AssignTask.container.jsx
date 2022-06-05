@@ -35,17 +35,17 @@ const TaskFilterPanel = (props) => {
         <Typography.Title level={4}>Filter</Typography.Title>
         <Typography.Title level={5}>Name</Typography.Title>
         <Form.Item name={'searchValue'}>
-          <Input.Search placeholder={"Employee's name"} />
+          <Input placeholder={"Employee's name"} />
         </Form.Item>
         <Typography.Title level={5}>Role</Typography.Title>
         <Form.Item name={'filter'}>
           <Checkbox.Group>
             <Checkbox value={AssignmentConst.RECEPTION}>
-              <Badge color={'#dfdf149e'} text={'RECEPTION'} />
+              <Badge color={'#02fd02'} text={'RECEPTION'} />
             </Checkbox>
             <br />
             <Checkbox value={AssignmentConst.INTERVIEWER}>
-              <Badge color={'#02fd02'} text={'INTERVIEWER'} />
+              <Badge color={'#dfdf149e'} text={'INTERVIEWER'} />
             </Checkbox>
           </Checkbox.Group>
         </Form.Item>
@@ -54,7 +54,7 @@ const TaskFilterPanel = (props) => {
             Reset
           </Button>
           <Button type={'primary'} htmlType={'submit'}>
-            Search
+            Filter
           </Button>
         </div>
       </Form>
@@ -461,7 +461,7 @@ const AssignTaskContainer = (props) => {
             type={'primary'}
             onClick={onSaveChange}
             style={{ marginLeft: hasChange ? '1rem' : 'auto' }}>
-            Save schedule
+            Save new schedule
           </Button>
         </div>
         {tableData.dataSource === undefined ? (
