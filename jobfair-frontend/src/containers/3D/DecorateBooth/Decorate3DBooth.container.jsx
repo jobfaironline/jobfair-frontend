@@ -71,27 +71,22 @@ export const Decorate3DBoothContainer = (props) => {
     };
   });
 
-  const uploadVideo = (textureObj, layoutId, itemName) =>
-    // eslint-disable-next-line no-async-promise-executor
-    new Promise(async (resolve) => {
-      if (textureObj.texture.image.src.substring(0, 4) !== 'data') {
-        saveLayoutVideoWithUrl({
-          layoutId,
-          itemName,
-          url: textureObj.texture.image.src
-        });
-      } else {
-        const b64data = textureObj.texture.image.src.substring(15 + 7);
-
-        const blob = await b64toBlob(b64data, 'video/mp4');
-        const formData = new FormData();
-        formData.append('layoutId', layoutId);
-        formData.append('file', blob);
-        formData.append('itemName', itemName);
-        saveLayoutVideoWithFile(formData);
-      }
-      resolve();
-    });
+  const uploadVideo = async (textureObj, layoutId, itemName) => {
+    if (textureObj.texture.image.src.substring(0, 4) !== 'data') {
+      return saveLayoutVideoWithUrl({
+        layoutId,
+        itemName,
+        url: textureObj.texture.image.src
+      });
+    }
+    const b64data = textureObj.texture.image.src.substring(15 + 7);
+    const blob = await b64toBlob(b64data, 'video/mp4');
+    const formData = new FormData();
+    formData.append('layoutId', layoutId);
+    formData.append('file', blob);
+    formData.append('itemName', itemName);
+    return saveLayoutVideoWithFile(formData);
+  };
 
   const saveHandle = async () => {
     let sceneNode = meshGroupRef.current.parent;
