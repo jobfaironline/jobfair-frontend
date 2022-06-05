@@ -15,14 +15,16 @@ const CompanyRegisterFormContainer = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const history = useHistory();
 
+  const registerCompanyMapper = (values) => ({
+    name: values.name,
+    companyEmail: values.companyEmail,
+    taxId: values.taxId,
+    sizeId: values.sizeId,
+    subCategoriesIds: values.subCategoriesIds
+  });
+
   const handleRegisterCompany = async (values) => {
-    const companyBody = {
-      name: values.name,
-      companyEmail: values.companyEmail,
-      taxId: values.taxId,
-      sizeId: values.sizeId,
-      subCategoriesIds: values.subCategoriesIds
-    };
+    const companyBody = registerCompanyMapper(values);
     try {
       return await createCompanyAPI(companyBody);
     } catch (e) {
