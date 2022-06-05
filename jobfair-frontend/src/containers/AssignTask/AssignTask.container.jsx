@@ -89,18 +89,14 @@ const AssignTaskContainer = (props) => {
 
   const fetchData = async () => {
     try {
-      const shiftData = [
-        { beginTime: 32400000, endTime: 43200000 },
-        { beginTime: 45000000, endTime: 61200000 }
-      ];
-
-      let res = await getAssigmentByJobFairBoothId(boothId);
+      let res = await getCompanyBoothById(boothId);
+      const jobFairBooth = res.data;
+      const jobFairInfo = res.data.jobFair;
+      const shiftData = jobFairInfo.shifts.sort((a, b) => a.beginTime - b.beginTime);
+      res = await getAssigmentByJobFairBoothId(boothId);
       const assignments = res.data;
       const staffAssignments = await getStaffAssignments(assignments, shiftData);
       const staffs = await getStaffList(assignments);
-      res = await getCompanyBoothById(boothId);
-      const jobFairBooth = res.data;
-      const jobFairInfo = res.data.jobFair;
       const dayRange = await getJobFairPublicDayRange(jobFairInfo);
       const dataSource = await getDataSource(staffAssignments, staffs, dayRange, shiftData);
       const columns = await getTableColumns(dayRange);

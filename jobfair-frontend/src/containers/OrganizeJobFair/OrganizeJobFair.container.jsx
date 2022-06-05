@@ -20,6 +20,7 @@ import JobFairParkMapComponent from '../../components/3D/JobFairParkMap/JobFairP
 import PublishJobFairContainer from '../PublishJobFairContainer/PublishJobFair.container';
 import React, { useEffect, useState } from 'react';
 import ScheduleJobFairFormComponent from '../../components/forms/ScheduleJobFairForm/ScheduleJobFairForm.component';
+import moment from 'moment';
 
 const OrganizeJobFairContainer = () => {
   const history = useHistory();
@@ -101,13 +102,26 @@ const OrganizeJobFairContainer = () => {
 
   const updateJobFairAtScheduleScreen = async (values) => {
     try {
+      const startOfDate = moment().startOf('day');
+
+      const shifts = [
+        {
+          beginTime: Math.trunc((values.morningShift[0].valueOf() - startOfDate.valueOf()) / 1000) * 1000,
+          endTime: Math.trunc((values.morningShift[1].valueOf() - startOfDate.valueOf()) / 1000) * 1000
+        },
+        {
+          beginTime: Math.trunc((values.afternoonShift[0].valueOf() - startOfDate.valueOf()) / 1000) * 1000,
+          endTime: Math.trunc((values.afternoonShift[1].valueOf() - startOfDate.valueOf()) / 1000) * 1000
+        }
+      ];
       const body = {
         id: jobFairData?.id,
         name: values.name,
         decorateStartTime: convertToDateValue(values.decorateRange[0].format()),
         decorateEndTime: convertToDateValue(values.decorateRange[1].format()),
         publicStartTime: convertToDateValue(values.publicRange[0].format()),
-        publicEndTime: convertToDateValue(values.publicRange[1].format())
+        publicEndTime: convertToDateValue(values.publicRange[1].format()),
+        shifts
       };
       const res = await updateJobFairAPI(body);
       if (res.status === 200) return true;
