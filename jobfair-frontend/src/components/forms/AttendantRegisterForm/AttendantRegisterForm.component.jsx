@@ -1,11 +1,9 @@
 import { AttendantRegisterValidation } from '../../../validate/RegisterValidation';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { PATH } from '../../../constants/Paths/Path';
-import { useHistory } from 'react-router-dom';
 import React, { useState } from 'react';
 
 const AttendantRegisterFormComponent = ({ handleRegisterAttendant, form }) => {
-  const history = useHistory();
   const [isAgree, setIsAgree] = useState(false);
 
   return (
@@ -58,11 +56,8 @@ const AttendantRegisterFormComponent = ({ handleRegisterAttendant, form }) => {
         </Form.Item>
         <div>
           <Checkbox onChange={(e) => setIsAgree(e.target.checked)}>
-            <span>By clicking the "Register" button, I agree to the</span>{' '}
-            <a type='link' onClick={() => history.push(PATH.FAQ_PAGE)}>
-              Term of use
-            </a>{' '}
-            <span>and</span> <a onClick={() => history.push(PATH.FAQ_PAGE)}>Privacy Policy</a> <span>of JobHub</span>
+            <span>By clicking the "Register" button, I agree to the</span> <a href={PATH.FAQ_PAGE}>Term of use</a>{' '}
+            <span>and</span> <a href={PATH.FAQ_PAGE}>Privacy Policy</a> <span>of JobHub</span>
           </Checkbox>
         </div>
         <Form.Item>
@@ -71,10 +66,7 @@ const AttendantRegisterFormComponent = ({ handleRegisterAttendant, form }) => {
           </Button>
         </Form.Item>
         <Form.Item className='login-text'>
-          <span>Already have an account?</span>{' '}
-          <Button type='link' onClick={() => history.push(PATH.LOGIN_PAGE)}>
-            Login now!
-          </Button>
+          <span>Already have an account?</span> <a href={PATH.LOGIN_PAGE}>Login now !</a>
         </Form.Item>
       </Form>
     </div>
