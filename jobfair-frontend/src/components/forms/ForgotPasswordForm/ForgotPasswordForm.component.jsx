@@ -44,7 +44,7 @@ const ForgotPasswordFormComponent = ({ onFinish, form, handleSearchEmail, info }
               <Form.Item>
                 <Button
                   type='primary'
-                  onClick={() => handleSearchEmail(form.getFieldsValue(true))}
+                  onClick={() => handleSearchEmail(form.getFieldValue('email'))}
                   className='button'
                   style={{ display: 'block', margin: '0 auto' }}>
                   Search
