@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Button, Form, Input, Modal, notification, Spin } from 'antd';
-import { Content } from 'antd/lib/layout/layout';
+import { Button, Form, Input, Modal, notification } from 'antd';
 import { ControlButtonGroup } from '../../../components/customized-components/DecoratedBoothTool/ControlButton/ControlButtonGroup.component';
 import { DecorateBooth3DItemMenuContainer } from '../../SampleItemMenu/DecorateBooth3DItemMenu.container';
 import { DecorateBoothCanvas } from '../../../components/3D/DecorateBooth/DeoratedBoothCanvas/DecorateBoothCanvas.component';
@@ -39,7 +38,6 @@ import {
 } from '../../../services/jobhub-api/DecoratorBoothLayoutController';
 import { notify } from '../../../utils/toastutil';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'antd/lib/form/Form';
 import MyBoothLayoutListContainer from '../../MyBoothLayoutList/MyBoothLayoutList.container';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -86,9 +84,9 @@ export const Decorate3DBoothContainer = (props) => {
         companyBoothLayoutVideos[data.itemName] = data.url;
       });
     } catch (err) {
-      notification['error']({
-        message: `Error happens`,
-        description: `There is problem while fetch booth layout, try again later (the default layout will be used)`,
+      notification['info']({
+        message: `Info:`,
+        description: `The default layout will be used.`,
         duration: 2
       });
     }
