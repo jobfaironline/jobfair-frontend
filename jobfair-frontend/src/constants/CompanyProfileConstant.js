@@ -426,23 +426,28 @@ export const benefitDescriptionsConst = [
 export const benefitConst = [
   {
     value: 0,
-    label: 'Kindergarten'
+    label: 'Kindergarten',
+    description: 'e.g: $200 a month kindergarten allowance per child under 5 years old'
   },
   {
     value: 1,
-    label: 'Canteen'
+    label: 'Canteen',
+    description: 'e.g: Lunch and unlimited snacks'
   },
   {
     value: 2,
-    label: 'Healthcare Plan'
+    label: 'Healthcare Plan',
+    description: 'e.g: Premium healthcare plan for you and your family'
   },
   {
     value: 3,
-    label: 'Awards'
+    label: 'Awards',
+    description: 'e.g: Monthly award for the excellent employees of the month'
   },
   {
     value: 4,
-    label: 'Bonus'
+    label: 'Bonus',
+    description: 'e.g: 13th payment'
   },
   {
     value: 5,

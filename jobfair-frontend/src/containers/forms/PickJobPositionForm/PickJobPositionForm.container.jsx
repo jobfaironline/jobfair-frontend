@@ -8,6 +8,7 @@ import {
 } from '../../../services/jobhub-api/JobFairBoothControllerService';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getAssignmentById } from '../../../services/jobhub-api/AssignmentControllerService';
+import { handleFieldsError } from '../../../utils/handleFIeldsError';
 import { mapperCompanyBooth } from '../../../utils/mapperCompanyBoooth';
 import PickJobPositionForm from '../../../components/forms/PickJobPositionForm/PickJobPositionForm.component';
 import PickJobPositionTableContainer from '../../JobPositionTable/JobPositionTable.container';
@@ -89,13 +90,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
     try {
       await form.validateFields();
     } catch (e) {
-      const errorsArray = form.getFieldsError();
-      for (const error of errorsArray) {
-        if (error.errors.length > 0) {
-          form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
-          break;
-        }
-      }
+      handleFieldsError(form);
     }
     try {
       const res = await assignJobPositionToBooth(body);

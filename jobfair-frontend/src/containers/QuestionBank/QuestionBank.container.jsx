@@ -14,6 +14,7 @@ import {
 } from '../../services/jobhub-api/QuestionControllerService';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { getJobPositionByIDAPI } from '../../services/jobhub-api/JobControllerService';
+import { handleFieldsError } from '../../utils/handleFIeldsError';
 import { uploadUtil } from '../../utils/uploadCSVUtil';
 import { v4 as uuidv4 } from 'uuid';
 import JobPositionDetailCollapseComponent from '../../components/customized-components/JobPositionDetailCollapse/JobPositionDetailCollapse.component';
@@ -199,14 +200,7 @@ const QuestionBankContainer = ({ jobPositionId }) => {
     try {
       await form.validateFields();
     } catch (e) {
-      const errorsArray = form.getFieldsError();
-      for (const error of errorsArray) {
-        if (error.errors.length > 0) {
-          form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
-          break;
-        }
-      }
-      return;
+      handleFieldsError(form);
     }
     //additional error
     data.errors = {};
