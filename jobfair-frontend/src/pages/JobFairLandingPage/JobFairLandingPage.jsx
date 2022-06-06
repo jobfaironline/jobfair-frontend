@@ -2,7 +2,7 @@ import JobFairLandingContainer from '../../containers/JobFairThumbnail/JobFairLa
 import React from 'react';
 
 const JobFairLandingPage = () => (
-  <div className='page'>
+  <div className='page fullscreen-page'>
     <JobFairLandingContainer />
   </div>
 );

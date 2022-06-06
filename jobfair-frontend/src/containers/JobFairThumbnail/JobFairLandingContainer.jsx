@@ -1,53 +1,15 @@
-import { Button, Card, Divider, Space, Tag, Typography } from 'antd';
+import './JobFairLandingPage.styles.scss';
+import { Button, Divider, Image, Tag, Tooltip, Typography } from 'antd';
+import { CalendarOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PATH } from '../../constants/Paths/Path';
 import { convertToDateString } from '../../utils/common';
-import { faArrowRight, faHourglassEnd, faHourglassStart } from '@fortawesome/free-solid-svg-icons';
+import { faLink, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { getJobFairByIDAPI } from '../../services/jobhub-api/JobFairControllerService';
-import JobFairThumbnailComponent from '../../components/customized-components/JobFairThumbnail/JobFairThumbnail.component';
 import React, { useEffect, useState } from 'react';
 
-const JobFairDetail = ({ jobFair, handleJoinJobFair }) => (
-  <Space direction='vertical' size='middle'>
-    <Typography.Title>{jobFair?.name}</Typography.Title>
-    <Space>
-      <div>
-        <Typography.Text strong>
-          <FontAwesomeIcon icon={faHourglassStart} /> Start Time:{' '}
-        </Typography.Text>
-        <Typography.Text>{convertToDateString(jobFair?.publicStartTime)}</Typography.Text>
-      </div>
-      <FontAwesomeIcon icon={faArrowRight} />
-      <div>
-        <Typography.Text strong>
-          <FontAwesomeIcon icon={faHourglassEnd} /> End Time:{' '}
-        </Typography.Text>
-        <Typography.Text>{convertToDateString(jobFair?.publicEndTime)}</Typography.Text>
-      </div>
-    </Space>
-    <div>
-      <Typography.Text strong>Target attendant: </Typography.Text>
-      <Typography.Text>{jobFair?.targetAttendant}</Typography.Text>
-    </div>
-    <div>
-      <Typography.Text strong>Category: </Typography.Text>
-      {jobFair?.company?.subCategoryDTOs.map((item) => (
-        <Tag color='blue'>{item.name}</Tag>
-      ))}
-    </div>
-    <Button type='default' shape='round' size='large' style={{ width: '25rem' }} onClick={handleJoinJobFair}>
-      Join now
-    </Button>
-  </Space>
-);
-
-const JobFairDescription = ({ jobFair }) => (
-  <div>
-    <Typography.Text strong>Description:</Typography.Text>
-    <Typography.Paragraph>{jobFair?.description}</Typography.Paragraph>
-  </div>
-);
+const { Text, Title } = Typography;
 
 const JobFairLandingContainer = () => {
   const { jobFairId } = useParams();
@@ -66,26 +28,66 @@ const JobFairLandingContainer = () => {
     history.push(url);
   };
 
+  const onClickLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+  };
+
   return (
-    <div>
-      <Card style={{ marginTop: '15rem' }}>
-        <Card.Meta
-          title={
-            <>
-              <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-                <JobFairThumbnailComponent urlImage={jobFairData.thumbnailUrl} />
-                <JobFairDetail jobFair={jobFairData} handleJoinJobFair={handleJoinJobFair} />
-              </div>
-              <Divider />
-            </>
-          }
-          description={
-            <div style={{ marginLeft: '15rem' }}>
-              <JobFairDescription jobFair={jobFairData} />
+    <div className={'job-fair-landing-container'}>
+      <div className={'shadow'}>
+        <div
+          className={'header'}
+          style={{
+            background: `linear-gradient(rgba(72,159,192,0.8), rgba(0,10,72,0.8)), url("${jobFairData.thumbnailUrl}")`
+          }}>
+          <div className={'overlay'}>
+            <div>
+              <Image src={jobFairData.thumbnailUrl} style={{ borderRadius: '8px' }} />
             </div>
-          }
-        />
-      </Card>
+            <div className={'general'}>
+              <div className={'title'}>
+                <Title level={1}>{jobFairData?.name}</Title>
+                <Tooltip title={'Copy link'}>
+                  <FontAwesomeIcon className={'icon'} icon={faLink} color={'white'} size={'xl'} onClick={onClickLink} />
+                </Tooltip>
+              </div>
+
+              <Title level={5} style={{ marginBottom: '0.3rem' }}>
+                <CalendarOutlined /> {convertToDateString(jobFairData?.publicStartTime)} -{' '}
+                {convertToDateString(jobFairData?.publicEndTime)}
+              </Title>
+              <Title level={5} style={{ marginBottom: '0.3rem' }}>
+                Host by {jobFairData?.hostName}
+              </Title>
+              <div style={{ marginBottom: '0.3rem' }}>
+                <Typography.Text strong>Category: </Typography.Text>
+                {jobFairData?.company?.subCategoryDTOs.map((item) => (
+                  <Tag color='blue'>{item.name}</Tag>
+                ))}
+              </div>
+              <Button
+                type='default'
+                shape='round'
+                size='large'
+                style={{ width: '20rem', backgroundColor: '#ffffff38', color: 'white', marginTop: '1rem' }}
+                onClick={handleJoinJobFair}>
+                Join now
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className={'detail'}>
+        <Title level={3}>Description</Title>
+        <Text className={'description'}>{jobFairData?.description}</Text>
+        <Divider style={{ borderTop: '1px solid white' }} />
+        <Title level={3}>Schedule</Title>
+        <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem' }}>
+          <div className={'time-cube'}>{convertToDateString(jobFairData?.publicStartTime)}</div>
+          <FontAwesomeIcon icon={faMinus} style={{ color: 'white' }} />
+          <div className={'time-cube'}>{convertToDateString(jobFairData?.publicEndTime)}</div>
+        </div>
+      </div>
     </div>
   );
 };
