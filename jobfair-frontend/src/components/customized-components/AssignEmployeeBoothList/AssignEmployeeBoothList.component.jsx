@@ -44,32 +44,39 @@ export const AssignEmployeeBoothList = (props) => {
               }}>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', alignItems: 'stretch' }}>
-                  <Title level={5}>{item.booth.name}</Title>
+                  <Title level={5}>
+                    {`Slot name: ${item.booth.name}`}
+                    <br />
+                    {item.name ? `Booth name - ${item.name}` : ''}
+                  </Title>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <Text>Supervisor: </Text>
+                  <Text strong>Supervisor: </Text>
                   {item.assignments
                     .filter((assign) => assign.type === AssignmentConst.SUPERVISOR)
                     .map((assign) => (
                       <Text>
+                        {'- '}
                         {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
                         {assign.companyEmployee.account.lastname}
                       </Text>
                     ))}
-                  <Text>Staff:</Text>
+                  <Text strong>Staff:</Text>
                   {item.assignments
                     .filter((assign) => assign.type === AssignmentConst.STAFF)
                     .map((assign) => (
                       <Text>
+                        {'- '}
                         {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
                         {assign.companyEmployee.account.lastname}
                       </Text>
                     ))}
-                  <Text>Decorator: </Text>
+                  <Text strong>Decorator: </Text>
                   {item.assignments
                     .filter((assign) => assign.type === AssignmentConst.DECORATOR)
                     .map((assign) => (
                       <Text>
+                        {'- '}
                         {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
                         {assign.companyEmployee.account.lastname}
                       </Text>
