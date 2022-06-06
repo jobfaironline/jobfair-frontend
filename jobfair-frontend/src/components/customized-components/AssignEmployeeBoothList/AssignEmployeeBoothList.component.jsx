@@ -1,16 +1,27 @@
 import { AssignmentConst } from '../../../constants/AssignmentConst';
-import { Card, Divider, List, Skeleton, Typography } from 'antd';
+import { Button, Card, Divider, List, Skeleton, Typography } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import React from 'react';
 
 const { Title, Text } = Typography;
 
 export const AssignEmployeeBoothList = (props) => {
-  const { data, onHoverIn, onHoverOut, onClick } = props;
+  const { data, onHoverIn, onHoverOut, onClick, onClickModal } = props;
   return (
     <>
-      <div style={{ textAlign: 'center' }}>
+      <div
+        style={{
+          textAlign: 'center',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: '1rem'
+        }}>
         <Title level={5}>Assign employee</Title>
+        <Button style={{ marginLeft: '1rem' }} type={'primary'} icon={<UploadOutlined />} onClick={onClickModal}>
+          Upload CSV
+        </Button>
       </div>
       <InfiniteScroll
         dataLength={data?.length}
