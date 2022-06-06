@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import CompanyManagerRegisterFormComponent from '../../components/forms/CompanyManagerRegisterForm/CompanyManagerRegisterFormComponent';
 import CreateCompanyFormComponent from '../../components/forms/CreateCompanyForm/CreateCompanyForm.component';
 import React, { useState } from 'react';
+import RegisterFailedContentComponent from '../../components/commons/RegisterFailedContent/RegisterFailedContent.component';
 import RegisterSuccessContentComponent from '../../components/commons/RegisterSuccessContent/RegisterSuccessContent.component';
 
 const CompanyRegisterFormContainer = () => {
@@ -35,29 +36,27 @@ const CompanyRegisterFormContainer = () => {
         height: '40rem',
         closable: true,
         maskClosable: true,
-        content: (
-          <>
-            <Typography.Text strong>{e.response.data.message}</Typography.Text>
-          </>
-        )
+        content: <RegisterFailedContentComponent email={values.email} message={e.response.data.message} />
       });
     }
   };
 
   const handleOnFinish = async () => {
     try {
-      await handleRegisterCompany(form.getFieldsValue(true));
-      await handleRegisterCompanyManager(form.getFieldsValue(true), res.data.id);
-      Modal.success({
-        title: 'Register company manager successfully !',
-        width: '30rem',
-        closable: true,
-        maskClosable: true,
-        okText: 'OK',
-        keyboard: false,
-        onOk: () => history.push(PATH.LOGIN_PAGE),
-        content: <RegisterSuccessContentComponent email={form.getFieldValue('email')} />
-      });
+      const resCompany = await handleRegisterCompany(form.getFieldsValue(true));
+      const resManager = await handleRegisterCompanyManager(form.getFieldsValue(true), resCompany.data.id);
+      if (resCompany.status === 200 && resManager.status === 201) {
+        Modal.success({
+          title: 'Register company manager successfully !',
+          width: '30rem',
+          closable: true,
+          maskClosable: true,
+          okText: 'OK',
+          keyboard: false,
+          onOk: () => history.push(PATH.LOGIN_PAGE),
+          content: <RegisterSuccessContentComponent email={form.getFieldValue('email')} />
+        });
+      }
     } catch (e) {
       //handle field error
       handleFieldsError(form);
