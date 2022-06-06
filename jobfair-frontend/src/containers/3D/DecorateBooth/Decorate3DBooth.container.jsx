@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
-import { Button, Form, Input, Modal, notification, Spin } from 'antd';
-import { Content } from 'antd/lib/layout/layout';
+import { Button, Form, Input, Modal, notification } from 'antd';
 import { ControlButtonGroup } from '../../../components/customized-components/DecoratedBoothTool/ControlButton/ControlButtonGroup.component';
 import { DecorateBooth3DItemMenuContainer } from '../../SampleItemMenu/DecorateBooth3DItemMenu.container';
 import { DecorateBoothCanvas } from '../../../components/3D/DecorateBooth/DeoratedBoothCanvas/DecorateBoothCanvas.component';
@@ -39,7 +37,6 @@ import {
 } from '../../../services/jobhub-api/DecoratorBoothLayoutController';
 import { notify } from '../../../utils/toastutil';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm } from 'antd/lib/form/Form';
 import MyBoothLayoutListContainer from '../../MyBoothLayoutList/MyBoothLayoutList.container';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -184,19 +181,19 @@ export const Decorate3DBoothContainer = (props) => {
     history.push(url);
   };
 
-  const handleOnRotationLeft = (_) => {
+  const handleOnRotationLeft = () => {
     if (selectedItem === undefined) return;
 
     rotateModelLeft(selectedItem, 10);
   };
 
-  const handleOnRotationRight = (_) => {
+  const handleOnRotationRight = () => {
     if (selectedItem === undefined) return;
 
     rotateModelRight(selectedItem, 10);
   };
 
-  const handleDelete = (_) => {
+  const handleDelete = () => {
     setModelItems((prevState) => prevState.filter((itemMesh) => itemMesh.uuid !== selectedItem.uuid));
   };
 

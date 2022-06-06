@@ -1,9 +1,7 @@
 import './AssignTask.styles.scss';
-
-import { AssignTaskCell } from '../../components/customized-components/AssignTask/AssignTaskCell.component';
+import { AssignTaskFilterPanel } from '../../components/customized-components/AssignTask/AssignTaskFilterPanel.component';
 import { AssignTaskModal } from '../../components/forms/AssignTaskModalForm/AsignTaskModalForm.component';
-import { AssignmentConst } from '../../constants/AssignmentConst';
-import { Avatar, Badge, Button, Checkbox, Form, Input, Space, Table, Typography, notification } from 'antd';
+import { Button, Form, Table, Typography, notification } from 'antd';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
 import {
@@ -13,54 +11,11 @@ import {
   updateAssignment
 } from '../../services/jobhub-api/AssignmentControllerService';
 import { deepClone } from '../../utils/common';
+import { getAssignmentsData } from './utils/assign-task-utils';
 import { getCompanyBoothById } from '../../services/jobhub-api/JobFairBoothControllerService';
+import { getDataSource, getJobFairPublicDayRange, getStaffAssignments, getStaffList } from './utils/datasource-utils';
+import { getTableColumns } from './column/AssignTask.column';
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
-
-const { Text } = Typography;
-
-const TaskFilterPanel = (props) => {
-  const { onFilter, onReset } = props;
-  return (
-    <div style={{ padding: '0 1rem 0 0', marginRight: '2rem' }}>
-      <Form
-        onFinish={onFilter}
-        onReset={() => {
-          onReset();
-        }}
-        initialValues={{
-          searchValue: '',
-          filter: []
-        }}>
-        <Typography.Title level={4}>Filter</Typography.Title>
-        <Typography.Title level={5}>Name</Typography.Title>
-        <Form.Item name={'searchValue'}>
-          <Input placeholder={"Employee's name"} />
-        </Form.Item>
-        <Typography.Title level={5}>Role</Typography.Title>
-        <Form.Item name={'filter'}>
-          <Checkbox.Group>
-            <Checkbox value={AssignmentConst.RECEPTION}>
-              <Badge color={'#02fd02'} text={'RECEPTION'} />
-            </Checkbox>
-            <br />
-            <Checkbox value={AssignmentConst.INTERVIEWER}>
-              <Badge color={'#dfdf149e'} text={'INTERVIEWER'} />
-            </Checkbox>
-          </Checkbox.Group>
-        </Form.Item>
-        <div style={{ marginTop: '1rem', display: 'flex' }}>
-          <Button style={{ marginLeft: 'auto', marginRight: '1rem' }} htmlType={'reset'}>
-            Reset
-          </Button>
-          <Button type={'primary'} htmlType={'submit'}>
-            Filter
-          </Button>
-        </div>
-      </Form>
-    </div>
-  );
-};
 
 const AssignTaskContainer = (props) => {
   const { boothId } = props;
@@ -99,7 +54,7 @@ const AssignTaskContainer = (props) => {
       const staffs = await getStaffList(assignments);
       const dayRange = await getJobFairPublicDayRange(jobFairInfo);
       const dataSource = await getDataSource(staffAssignments, staffs, dayRange, shiftData);
-      const columns = await getTableColumns(dayRange);
+      const columns = await getTableColumns(dayRange, handleOpenAssignTaskModal);
 
       setTableData((prevState) => ({
         ...prevState,
@@ -117,158 +72,6 @@ const AssignTaskContainer = (props) => {
     }
   };
 
-  const getTableColumns = async (dayRange) => {
-    //generate table columns based on dayRange
-    const columns = [
-      {
-        title: 'Employee',
-        key: 'employee',
-        width: '30%',
-        render: (_, record) => {
-          const { profileImageUrl } = record.employee.account;
-          return (
-            <div>
-              <Space>
-                <Avatar src={profileImageUrl} size={56} />
-                <Text>{record.fullName}</Text>
-              </Space>
-            </div>
-          );
-        }
-      }
-    ];
-    for (const title of Object.keys(dayRange)) {
-      columns.push({
-        title,
-        width: `${70 / Object.keys(dayRange).length}%`,
-        dataIndex: title,
-        render: (_, record) => (
-          <AssignTaskCell record={record} title={title} handleOpenAssignTaskModal={handleOpenAssignTaskModal} />
-        )
-      });
-    }
-    return columns;
-  };
-
-  //process to calculate datasource for table
-  //each row of the datasource comprise of employeeId, employee's info, assignments by date
-  //Ex: [
-  //  {
-  //    employeeId: "f996f062-c1d5-4fcc-a13c-8cae1e210d0d",
-  //    employee: {accountId: ....},
-  //    'Sat, Jun/4/2022': [{assignment1, assignment2}],
-  //    'Sun, Jun/5/2022': [{assignment1, assignment2}],
-  //  }
-  // ]
-  const getDataSource = async (staffAssignments, staffs, dayRange, shiftData) => {
-    const dataSource = [];
-
-    for (const [key, value] of Object.entries(staffAssignments)) {
-      const result = {
-        employeeId: key,
-        employee: staffs[key]
-      };
-      for (const title of Object.keys(dayRange)) result[title] = [];
-      for (const [title, time] of Object.entries(dayRange)) {
-        const { beginTime, endTime } = time;
-        for (const assignment of value) {
-          if (assignment.beginTime >= beginTime.valueOf() && assignment.endTime <= endTime.valueOf())
-            result[title].push(assignment);
-        }
-      }
-      dataSource.push(result);
-    }
-    //check for the remaining staffs if they have not yet assigned
-    for (const staffId of Object.keys(staffs)) {
-      const existedData = dataSource.find((data) => data.employeeId === staffId);
-      if (existedData === undefined) {
-        const data = {
-          employeeId: staffId,
-          employee: staffs[staffId]
-        };
-        for (const title of Object.keys(dayRange)) data[title] = [];
-        dataSource.push(data);
-      }
-    }
-    return dataSource
-      .map((item) => {
-        const { firstname, middlename, lastname } = item.employee.account;
-        const fullName = `${firstname} ${middlename ? `${middlename} ` : ''} ${lastname}`;
-        return { ...item, fullName, key: item.employee.account.id, shiftData, enabled: true };
-      })
-      .sort((a, b) => a.fullName.localeCompare(b.fullName));
-  };
-
-  //calculate the job fair public day range
-  //dayRange is the map with key is the string format of a moment and its start of day and end of day
-  //Ex: {Sat, Jun/4/2022: {beginTime: Moment, endTime: Moment}}
-  const getJobFairPublicDayRange = async (jobFairInfo) => {
-    const publicStartTime = moment(jobFairInfo.publicStartTime);
-    const publicEndTime = moment(jobFairInfo.publicEndTime);
-    let dayRange = [];
-    const diff = publicEndTime.diff(publicStartTime, 'days');
-    const publicStartBeginTime = publicStartTime.clone().startOf('day');
-    for (let i = 0; i <= diff; i++) {
-      publicStartBeginTime.add(i, 'days');
-      dayRange.push(publicStartBeginTime.clone());
-    }
-    dayRange = dayRange.reduce((prev, current) => {
-      const title = current.format('ddd, MMM/D/YYYY');
-      prev[title] = { beginTime: current.clone(), endTime: current.clone().endOf('day') };
-      return prev;
-    }, {});
-    return dayRange;
-  };
-
-  //get employee information and store in map with key is employeeId
-  //Ex: {123: {accountId:....}}
-  const getStaffList = async (assignments) => {
-    const staffAssignments = assignments.filter((assignment) =>
-      [AssignmentConst.STAFF, AssignmentConst.INTERVIEWER, AssignmentConst.RECEPTION].includes(assignment.type)
-    );
-    return staffAssignments
-      .map((assignment) => assignment.companyEmployee)
-      .reduce((prev, employee) => {
-        prev[employee.accountId] = employee;
-        return prev;
-      }, {});
-  };
-
-  //transform staffAssignments from list of assignment to map of assignments based on employeeId
-  //Ex: {3128aa05-fafa-4790-a8dd-219b6741f9d4: [{assignment1}, {assignment2}]
-  const getStaffAssignments = async (assignments, shiftData) => {
-    //get staff assignments
-    let staffAssignments = assignments.filter((assignment) =>
-      [AssignmentConst.STAFF, AssignmentConst.INTERVIEWER, AssignmentConst.RECEPTION].includes(assignment.type)
-    );
-    //transform staffAssignments from list of assignment to map of assignments based on employeeId
-    //Ex: {3128aa05-fafa-4790-a8dd-219b6741f9d4: [{assignment1}, {assignment2}]
-    staffAssignments = staffAssignments.reduce((prev, current) => {
-      const employeeId = current.companyEmployee.accountId;
-      if (prev[employeeId] === undefined) prev[employeeId] = [];
-      current.shift = undefined;
-      const { beginTime, endTime } = current;
-      if (beginTime !== undefined && beginTime !== null) {
-        const startOfDate = moment(beginTime).startOf('day');
-
-        for (let i = 0; i < shiftData.length; i++) {
-          if (
-            beginTime - startOfDate.valueOf() >= shiftData[i].beginTime &&
-            endTime - startOfDate.valueOf() <= shiftData[i].endTime
-          ) {
-            current.shift = i;
-            break;
-          }
-        }
-      }
-
-      prev[employeeId].push(current);
-      return prev;
-    }, {});
-
-    return staffAssignments;
-  };
-
   const onCancelModal = () => {
     form.resetFields();
     setSelectedCellData((prevState) => ({
@@ -281,6 +84,17 @@ const AssignTaskContainer = (props) => {
     }));
   };
 
+  const generateAssignment = (data, shiftData, shiftIndex, assignmentType) => ({
+    beginTime: tableData.dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[shiftIndex].beginTime,
+    endTime: tableData.dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[shiftIndex].endTime,
+    companyEmployee: data.employee,
+    creatTime: null,
+    id: null,
+    jobFairBooth: null,
+    shift: shiftIndex,
+    type: assignmentType
+  });
+
   const onOkModal = async () => {
     try {
       await form.validateFields();
@@ -291,16 +105,7 @@ const AssignTaskContainer = (props) => {
         if (values[`shift-${i}`] === true) {
           const assignment = assignments.find((assignment) => assignment.shift === i);
           if (assignment === undefined) {
-            const result = {
-              beginTime: tableData.dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[i].beginTime,
-              endTime: tableData.dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[i].endTime,
-              companyEmployee: data.employee,
-              creatTime: null,
-              id: null,
-              jobFairBooth: null,
-              shift: i,
-              type: values[`shift-${i}-type`]
-            };
+            const result = generateAssignment(data, shiftData, i, values[`shift-${i}-type`]);
             assignments.push(result);
           } else assignment.type = values[`shift-${i}-type`];
         } else {
@@ -344,39 +149,10 @@ const AssignTaskContainer = (props) => {
   };
 
   const onSaveChange = async () => {
-    //compare oldDataSource and newDataSource
-    const newAssignments = [];
-    const deletedAssignments = [];
-    const updatedAssignmens = [];
-
-    for (let i = 0; i < tableData.oldDataSource.length; i++) {
-      const oldData = tableData.oldDataSource[i];
-      const newData = tableData.dataSource[i];
-      const dayRange = tableData.dayRange;
-      for (const date of Object.keys(dayRange)) {
-        //find new or updated assignment
-        for (const newAssignment of newData[date]) {
-          if (newAssignment.id === null) {
-            newAssignments.push(newAssignment);
-            continue;
-          }
-          const oldAssigment = oldData[date].find((assignment) => assignment.id === newAssignment.id);
-          if (
-            oldAssigment.type !== newAssignment.type ||
-            oldAssigment.beginTime !== newAssignment.beginTime ||
-            oldAssigment.endTime !== newAssignment.endTime
-          ) {
-            updatedAssignmens.push(newAssignment);
-            continue;
-          }
-        }
-        //find deleted assignment
-        for (const oldAssigment of oldData[date]) {
-          const index = newData[date].findIndex((assignment) => assignment.id === oldAssigment.id);
-          if (index === -1) deletedAssignments.push(oldAssigment);
-        }
-      }
-    }
+    const oldData = tableData.oldDataSource;
+    const newData = tableData.dataSource;
+    const dayRange = tableData.dayRange;
+    const [newAssignments, deletedAssignments, updatedAssignments] = getAssignmentsData(oldData, newData, dayRange);
 
     const promises = [];
     promises.push(
@@ -392,7 +168,7 @@ const AssignTaskContainer = (props) => {
     );
     promises.push(...deletedAssignments.map((assignment) => unAssignEmployee(assignment.id)));
     promises.push(
-      ...updatedAssignmens.map(async (assignment) =>
+      ...updatedAssignments.map((assignment) =>
         updateAssignment(assignment.id, assignment.beginTime, assignment.endTime, assignment.type)
       )
     );
@@ -409,22 +185,17 @@ const AssignTaskContainer = (props) => {
 
   const onFilterData = (values) => {
     const { searchValue, filter } = values;
-
     const dataSource = tableData.dataSource.map((item) => {
       const assignments = [];
       for (const date of Object.keys(tableData.dayRange)) assignments.push(...item[date]);
       const isHasRole = assignments.some((assignment) => filter.includes(assignment.type));
       let isHasName = true;
       if (searchValue !== '' && searchValue !== undefined) isHasName = item.fullName.includes(searchValue);
-
       let enabled = false;
-
       if (searchValue === '' || searchValue === undefined) enabled = isHasRole;
       else enabled = isHasRole && isHasName;
-
       return { ...item, enabled };
     });
-
     setTableData((prevState) => ({ ...prevState, dataSource: deepClone(dataSource) }));
   };
 
@@ -478,7 +249,7 @@ const AssignTaskContainer = (props) => {
                 />
               </div>
             }
-            leftSide={<TaskFilterPanel onFilter={onFilterData} onReset={onResetFilter} />}
+            leftSide={<AssignTaskFilterPanel onFilter={onFilterData} onReset={onResetFilter} />}
             isOrganizeJobFair={false}
             ratio={1 / 6}
           />

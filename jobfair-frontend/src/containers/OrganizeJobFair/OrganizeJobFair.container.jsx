@@ -106,12 +106,12 @@ const OrganizeJobFairContainer = () => {
 
       const shifts = [
         {
-          beginTime: Math.trunc((values.morningShift[0].valueOf() - startOfDate.valueOf()) / 1000) * 1000,
-          endTime: Math.trunc((values.morningShift[1].valueOf() - startOfDate.valueOf()) / 1000) * 1000
+          beginTime: values.morningShift[0].unix() - startOfDate.unix(),
+          endTime: values.morningShift[1].unix() - startOfDate.unix()
         },
         {
-          beginTime: Math.trunc((values.afternoonShift[0].valueOf() - startOfDate.valueOf()) / 1000) * 1000,
-          endTime: Math.trunc((values.afternoonShift[1].valueOf() - startOfDate.valueOf()) / 1000) * 1000
+          beginTime: values.afternoonShift[0].unix() - startOfDate.unix(),
+          endTime: values.afternoonShift[1].unix() - startOfDate.unix()
         }
       ];
       const body = {
