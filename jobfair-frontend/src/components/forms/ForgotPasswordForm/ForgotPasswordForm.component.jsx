@@ -36,7 +36,7 @@ const ForgotPasswordFormComponent = ({ onFinish, form, handleSearchEmail, info }
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '1rem' }}>
                   <Typography.Text>{info?.email}</Typography.Text>
-                  <a onClick={() => onFinish(form.getFieldsValue(true))}>Send OTP to this email</a>
+                  <a onClick={() => onFinish(form.getFieldValue('email'))}>Send OTP to this email</a>
                 </div>
               </div>
             </Form.Item>

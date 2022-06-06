@@ -9,9 +9,9 @@ const ForgotPasswordFormContainer = () => {
   const [form] = Form.useForm();
   const history = useHistory();
   const [generalInfo, setGeneralInfo] = useState();
-  const onFinish = async (values) => {
+  const onFinish = async (email) => {
     const body = {
-      email: values.email
+      email
     };
     forgotPasswordAPI(body)
       .then(() => {
@@ -20,7 +20,7 @@ const ForgotPasswordFormContainer = () => {
           duration: 1
         });
         history.push(PATH.RESET_PASSWORD_PAGE, {
-          email: values.email
+          email
         });
       })
       .catch((err) => {
@@ -30,13 +30,13 @@ const ForgotPasswordFormContainer = () => {
         });
       });
   };
-  const handleSearchEmail = async (values) => {
+  const handleSearchEmail = async (email) => {
     try {
-      const res = await getGeneralInfoAPI(values.email);
+      const res = await getGeneralInfoAPI(email);
       setGeneralInfo(res.data);
     } catch (err) {
       notification['error']({
-        message: `Not found user with email ${values.email}`
+        message: `Not found user with email ${email}`
       });
       setGeneralInfo(undefined);
     }
