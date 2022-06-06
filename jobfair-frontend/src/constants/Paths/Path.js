@@ -50,7 +50,8 @@ export const PATH_COMPANY_EMPLOYEE = {
   ASSIGN_BOOTH_MAP_PAGE: '/employee/assign-map/:assignmentId',
   JOB_FAIR_ASSIGNMENT_PAGE: '/employee/job-fair-assignment',
   INTERVIEW_SCHEDULE: '/employee/interview-schedule',
-  INTERVIEW_ROOM_PAGE: '/employee/interview/:roomId'
+  INTERVIEW_ROOM_PAGE: '/employee/interview/:roomId',
+  BOOTH_DESCRIPTION_PAGE: '/employee/booth-description/:assignmentId'
 };
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',

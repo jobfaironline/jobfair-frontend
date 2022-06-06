@@ -1,16 +1,19 @@
 /* eslint-disable no-unused-vars */
 import * as THREE from 'three';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import { DecorateBoothSideBarComponent } from '../../../components/customized-components/DecoratedBoothTool/DecoratedBoothSideBar/DecoratedBoothSideBar.component';
 import { IMAGE_PLANE_NAME } from '../../../constants/DecorateBoothConstant';
+import { decorateBoothAction } from '../../../redux-flow/decorateBooth/decorate-booth-slice';
 import { getBase64 } from '../../../utils/common';
 import { notify } from '../../../utils/toastutil';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 export const DecoratedBoothSideBarContainer = (props) => {
   const { handleOnRotationLeft, handleOnRotationRight, handleDelete, rendererRef } = props;
 
   const selectedItem = useSelector((state) => state.decorateBooth.selectedItem);
+  const dispatch = useDispatch();
 
   const [currentSelectedColor, setCurrentSelectedColor] = useState(selectedItem?.material.color.getHexString());
   const [positionState, setPositionState] = useState({
@@ -308,5 +311,12 @@ export const DecoratedBoothSideBarContainer = (props) => {
     handleUpVideoCropImage
   };
 
-  return <DecorateBoothSideBarComponent {...componentProps} />;
+  return (
+    <div>
+      <div style={{ width: '331px', padding: '0.5rem', border: '1px solid #00000010' }}>
+        <ArrowLeftOutlined onClick={() => dispatch(decorateBoothAction.setSelectedItem(undefined))} />
+      </div>
+      <DecorateBoothSideBarComponent {...componentProps} />
+    </div>
+  );
 };

@@ -22,8 +22,9 @@ const ChatBoxContainer = (props) => {
   const [cameraReady, setCameraReady] = useState(false);
   const [cameraTrack, setCameraTrack] = useState(null);
   const [messageList, setMessageList] = useState([]);
+  //TODO: check this var again before deleting it
+  /* eslint-disable no-unused-vars*/
   const [isChatReady, setIsChatReady] = useState(false);
-  const [text, setText] = useState('');
   const rtm = useSelector((state) => state.agora.rtmClient);
   const userId = useSelector((state) => state.authentication.user.userId);
   const channelId = useSelector((state) => state.agora.channelId);

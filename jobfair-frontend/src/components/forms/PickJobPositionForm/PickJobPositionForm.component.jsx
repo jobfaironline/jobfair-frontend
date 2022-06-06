@@ -1,27 +1,41 @@
 import './PickJobPositionForm.styles.scss';
-import { Button, Checkbox, Divider, Form, Input, InputNumber, Popconfirm, Typography } from 'antd';
-import {
-  MAXIMUM_MARK,
-  MAXIMUM_NUM_OF_POSITION,
-  MAXIMUM_QUESTION,
-  MAXIMUM_TEST_DURATION,
-  MINIMUM_MARK,
-  MINIMUM_NUM_OF_POSITION,
-  MINIMUM_QUESTION,
-  MINIMUM_TEST_DURATION
-} from '../../../constants/CreateTestConst';
+import { Button, Card, Checkbox, Form, Input, InputNumber, Popconfirm, Typography } from 'antd';
+import { JobPositionFormModal } from '../JobPositionForm/JobPositionFormModal.component';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { PickJobPositionFormValidation } from '../../../validate/PickJobPositionForm';
-import JobPositionDetailCollapseComponent from '../../customized-components/JobPositionDetailCollapse/JobPositionDetailCollapse.component';
-import React from 'react';
+import { formatMoney, parseMoney } from '../../../utils/common';
+import React, { useState } from 'react';
 
-const { TextArea } = Input;
+const { Title, Text } = Typography;
 
 const PickJobPositionForm = (props) => {
   const { handlePickJobPosition, form, handleRemove, onChangeHaveTest, arrKey, onFinish } = props;
 
+  const finishModal = async () => {
+    try {
+      await form.validateFields();
+      setJobPositionModalData((prevState) => ({ ...prevState, visible: false }));
+    } catch (e) {
+      //ignore
+    }
+  };
+
+  const [jobPositionModalData, setJobPositionModalData] = useState({
+    visible: false,
+    data: undefined
+  });
+
   return (
     <>
+      <JobPositionFormModal
+        jobPositionData={jobPositionModalData.data}
+        form={form}
+        onChangeHaveTest={onChangeHaveTest}
+        arrKey={arrKey}
+        isVisible={jobPositionModalData.visible}
+        onCancel={finishModal}
+        onFinish={finishModal}
+      />
+      <Title level={3}>Booth's job position</Title>
       <Form
         form={form}
         layout='vertical'
@@ -31,144 +45,79 @@ const PickJobPositionForm = (props) => {
         scrollToFirstError
         initialValues={{ description: undefined, jobPositions: [] }} //will go
         className={'pick-job-position-form'}>
-        <Form.Item
-          label='Booth name'
-          required
-          tooltip='This is the name of the booth'
-          rules={PickJobPositionFormValidation.description}
-          name='name'>
-          <Input placeholder="Booth's name" style={{ width: '50%' }} />
-        </Form.Item>
-        <Form.Item
-          label='Booth description'
-          required
-          tooltip='This description will be shown during the job fair'
-          rules={PickJobPositionFormValidation.description}
-          name='description'>
-          <TextArea autoSize={{ minRows: 5 }} showCount maxLength={3000} placeholder='Description' />
+        <Form.Item>
+          <Button className={'add-job-button'} onClick={() => handlePickJobPosition()} block icon={<PlusOutlined />}>
+            Add job
+          </Button>
         </Form.Item>
         <Form.List name='jobPositions' rules={[]}>
           {(fields, { remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => {
                 const id = form.getFieldsValue(true).jobPositions
-                  ? form.getFieldsValue(true).jobPositions[key]?.id
+                  ? form.getFieldsValue(true).jobPositions[name]?.id
                   : undefined;
-                const item = form.getFieldsValue(true).jobPositions ? form.getFieldsValue(true).jobPositions[key] : {};
-
+                const item = form.getFieldsValue(true).jobPositions ? form.getFieldsValue(true).jobPositions[name] : {};
                 return (
-                  <div>
-                    <Divider />
+                  <Card
+                    className={'job-position-container'}
+                    actions={[
+                      <Text
+                        onClick={() => {
+                          setJobPositionModalData((prevState) => ({ ...prevState, visible: true, data: item }));
+                        }}>
+                        Job position's detail
+                      </Text>
+                    ]}>
                     <div id={id} key={key} style={{ width: '100%', display: 'flex' }}>
                       <div className='job-position-input-container '>
                         <div className='job-position-row-container'>
-                          <Typography style={{ fontSize: '1.5rem' }}>Job position: </Typography>
                           <Form.Item {...restField} name={[name, 'title']}>
-                            <Input
-                              disabled
-                              style={{
-                                border: 'none',
-                                background: 'white',
-                                color: 'black',
-                                fontSize: '1.5rem',
-                                padding: '0 0 0 0.2rem'
-                              }}
-                            />
+                            <Input disabled className={'disable-input disable-input-title'} />
                           </Form.Item>
-                        </div>
-                        <JobPositionDetailCollapseComponent jobPosition={item} />
-                        <div className='job-position-row-container '>
-                          <Form.Item
-                            label='Number of position'
-                            {...restField}
-                            name={[name, 'numOfPosition']}
-                            rules={PickJobPositionFormValidation.numberOfPosition}
-                            style={{ maxWidth: '14rem', width: '14rem' }}>
-                            <InputNumber
-                              placeholder='Number of position'
-                              style={{ width: '12rem' }}
-                              max={MAXIMUM_NUM_OF_POSITION}
-                              min={MINIMUM_NUM_OF_POSITION}
-                            />
-                          </Form.Item>
-                          <div style={{ width: 'fit-content', flex: 'none' }}>
-                            <Input.Group compact>
-                              <Form.Item
-                                label='Min salary'
-                                {...restField}
-                                name={[name, 'minSalary']}
-                                rules={PickJobPositionFormValidation.minSalary(name)}>
-                                <Input prefix='$' placeholder='Min salary' />
-                              </Form.Item>
-                              <Form.Item label=' '>
-                                <Input
-                                  className='site-input-split'
-                                  placeholder='~'
+                          <div className={'job-position-information-container'}>
+                            <div className={'job-position-information'}>
+                              <Text className={'label'}>Min salary:</Text>
+                              <Form.Item {...restField} name={[name, 'minSalary']}>
+                                <InputNumber
                                   disabled
-                                  style={{ width: '2rem' }}
+                                  className={'disable-input'}
+                                  placeholder={'Not enter'}
+                                  formatter={(value) => formatMoney(value)}
+                                  parser={parseMoney}
                                 />
                               </Form.Item>
-                              <Form.Item
-                                {...restField}
-                                label='Max salary'
-                                name={[name, 'maxSalary']}
-                                rules={PickJobPositionFormValidation.maxSalary(name)}>
-                                <Input prefix='$' className='site-input-right' placeholder='Max salary' />
+                            </div>
+                            <div className={'job-position-information'}>
+                              <Text className={'label'}>Is have test: </Text>
+                              <Form.Item {...restField} name={[name, 'isHaveTest']} valuePropName='checked'>
+                                <Checkbox disabled className={'disable-input'} />
                               </Form.Item>
-                            </Input.Group>
-                            <Form.Item name={[name, 'isHaveTest']} {...restField}>
-                              <Checkbox.Group>
-                                <Checkbox onChange={(e) => onChangeHaveTest(e, key)} value={true}>
-                                  Have test
-                                </Checkbox>
-                              </Checkbox.Group>
-                            </Form.Item>
-                            <div style={arrKey.includes(key) ? {} : { display: 'none' }}>
-                              <Form.Item
-                                label='Test duration'
-                                required
-                                tooltip='Hour:Minute'
-                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.testLength : null}
-                                name={[name, 'testLength']}>
+                            </div>
+                            <div className={'job-position-information'}>
+                              <Text className={'label'}>Max salary: </Text>
+                              <Form.Item {...restField} name={[name, 'maxSalary']}>
                                 <InputNumber
-                                  placeholder='Test duration'
-                                  style={{ width: '20rem' }}
-                                  max={MAXIMUM_TEST_DURATION}
-                                  min={MINIMUM_TEST_DURATION}
+                                  disabled
+                                  className={'disable-input'}
+                                  placeholder={'Not enter'}
+                                  formatter={(value) => formatMoney(value)}
+                                  parser={parseMoney}
                                 />
                               </Form.Item>
-                              <Form.Item
-                                label='Number of questions'
-                                required
-                                tooltip='The number of the questions'
-                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.numberOfQuestion : null}
-                                name={[name, 'testNumOfQuestion']}>
+                            </div>
+                            <div className={'job-position-information'}>
+                              <Text className={'label'}>Number of position: </Text>
+                              <Form.Item {...restField} name={[name, 'numOfPosition']}>
                                 <InputNumber
-                                  style={{ width: '25rem' }}
-                                  type='number'
-                                  min={MINIMUM_QUESTION}
-                                  max={MAXIMUM_QUESTION}
+                                  disabled
+                                  className={'disable-input'}
+                                  placeholder={'Not enter'}
+                                  formatter={(value) => {
+                                    formatMoney(value);
+                                  }}
+                                  parser={parseMoney}
                                 />
-                              </Form.Item>
-                              <Form.Item
-                                label='Pass mark'
-                                required
-                                tooltip='The minimum mark to pass'
-                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.passMark : null}
-                                name={[name, 'passMark']}>
-                                <InputNumber
-                                  style={{ width: '25rem' }}
-                                  type='number'
-                                  min={MINIMUM_MARK}
-                                  max={MAXIMUM_MARK}
-                                />
-                              </Form.Item>
-                              <Form.Item
-                                label='Note'
-                                tooltip='A small description about the test'
-                                rules={arrKey.includes(key) ? PickJobPositionFormValidation.note : null}
-                                name={[name, 'note']}>
-                                <TextArea showCount maxLength={100} />
                               </Form.Item>
                             </div>
                           </div>
@@ -183,22 +132,12 @@ const PickJobPositionForm = (props) => {
                         <MinusCircleOutlined />
                       </Popconfirm>
                     </div>
-                  </div>
+                  </Card>
                 );
               })}
-              <Form.Item>
-                <Button type='dashed' onClick={() => handlePickJobPosition()} block icon={<PlusOutlined />}>
-                  Add job
-                </Button>
-              </Form.Item>
             </>
           )}
         </Form.List>
-        <Form.Item>
-          <Button type='primary' htmlType='submit'>
-            Submit
-          </Button>
-        </Form.Item>
       </Form>
     </>
   );

@@ -1,0 +1,62 @@
+.pick-job-position-container {
+  display: flex;
+  padding-top: 4rem;
+  margin: 0 4rem;
+
+  .left-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-right: 5rem;
+  }
+
+  .right-side {
+    flex: 2;
+  }
+
+  .card-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  .card {
+    width: 20rem;
+    border: 1px solid gray;
+    border-radius: 10px;
+    height: max-content;
+
+    .ant-card-body {
+      padding: 0.7rem 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ant-image {
+      margin-bottom: 1rem;
+    }
+
+    h5 {
+      margin-bottom: 0;
+    }
+
+    span {
+      margin-left: auto;
+    }
+  }
+
+  .booth-description-container {
+    input {
+      border-radius: 8px;
+    }
+
+    textarea {
+      border-radius: 8px;
+    }
+
+    .ant-input:hover,
+    .ant-input:focus {
+      border-color: black;
+    }
+  }
+}
