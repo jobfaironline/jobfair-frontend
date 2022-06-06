@@ -1,21 +1,11 @@
 import { Card, Form, Modal, Typography } from 'antd';
 import { PATH } from '../../constants/Paths/Path';
+import { genderType } from '../../constants/GenderConst';
 import { registerAttendantAPI } from '../../services/jobhub-api/AttendantControllerService';
 import { useHistory } from 'react-router-dom';
 import AttendantRegisterFormComponent from '../../components/forms/AttendantRegisterForm/AttendantRegisterForm.component';
 import React from 'react';
 import RegisterSuccessContentComponent from '../../components/commons/RegisterSuccessContent/RegisterSuccessContent.component';
-
-const genderType = [
-  {
-    title: 'Male',
-    value: 'MALE'
-  },
-  {
-    title: 'Female',
-    value: 'FEMALE'
-  }
-];
 
 const AttendantRegisterFormContainer = () => {
   const [form] = Form.useForm();

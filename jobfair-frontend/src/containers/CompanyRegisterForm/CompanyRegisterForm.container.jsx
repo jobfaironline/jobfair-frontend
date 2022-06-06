@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PATH } from '../../constants/Paths/Path';
 import { createCompanyAPI } from '../../services/jobhub-api/CompanyControllerService';
 import { faBuilding, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import { handleFieldsError } from '../../utils/handleFIeldsError';
 import { registerCompanyAPI } from '../../services/jobhub-api/CompanyEmployeeControllerService';
 import { useHistory } from 'react-router-dom';
 import CompanyManagerRegisterFormComponent from '../../components/forms/CompanyManagerRegisterForm/CompanyManagerRegisterFormComponent';
@@ -45,29 +46,21 @@ const CompanyRegisterFormContainer = () => {
 
   const handleOnFinish = async () => {
     try {
-      const res = await handleRegisterCompany(form.getFieldsValue(true));
-      const responseManager = await handleRegisterCompanyManager(form.getFieldsValue(true), res.data.id);
-      if (res.status === 200 && responseManager.status === 201) {
-        Modal.success({
-          title: 'Register company manager successfully !',
-          width: '30rem',
-          closable: true,
-          maskClosable: true,
-          okText: 'OK',
-          keyboard: false,
-          onOk: () => history.push(PATH.LOGIN_PAGE),
-          content: <RegisterSuccessContentComponent email={form.getFieldValue('email')} />
-        });
-      }
+      await handleRegisterCompany(form.getFieldsValue(true));
+      await handleRegisterCompanyManager(form.getFieldsValue(true), res.data.id);
+      Modal.success({
+        title: 'Register company manager successfully !',
+        width: '30rem',
+        closable: true,
+        maskClosable: true,
+        okText: 'OK',
+        keyboard: false,
+        onOk: () => history.push(PATH.LOGIN_PAGE),
+        content: <RegisterSuccessContentComponent email={form.getFieldValue('email')} />
+      });
     } catch (e) {
       //handle field error
-      const errorsArray = form.getFieldsError();
-      for (const error of errorsArray) {
-        if (error.errors.length > 0) {
-          form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
-          break;
-        }
-      }
+      handleFieldsError(form);
     }
   };
 
@@ -107,13 +100,7 @@ const CompanyRegisterFormContainer = () => {
             await form.validateFields();
             setCurrentStep(currentStep + 1);
           } catch (e) {
-            const errorsArray = form.getFieldsError();
-            for (const error of errorsArray) {
-              if (error.errors.length > 0) {
-                form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
-                break;
-              }
-            }
+            handleFieldsError(form);
           }
         };
       default:
@@ -125,8 +112,12 @@ const CompanyRegisterFormContainer = () => {
 
   const onPrev = (currentStep) => async () => {
     if (currentStep !== 0) {
-      await form.validateFields();
-      setCurrentStep(currentStep - 1);
+      try {
+        await form.validateFields();
+        setCurrentStep(currentStep - 1);
+      } catch (e) {
+        handleFieldsError(form);
+      }
     }
   };
 

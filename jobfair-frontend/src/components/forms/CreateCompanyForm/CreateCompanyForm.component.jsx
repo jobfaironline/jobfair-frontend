@@ -2,12 +2,11 @@ import { Button, Checkbox, Divider, Form, Input, Select, Space, Typography } fro
 import { CategoriesConst, SizeConst, SubCategories } from '../../../constants/CompanyProfileConstant';
 import { CompanyRegisterValidation } from '../../../validate/RegisterValidation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { MAX_TOTAL_INDUSTRY } from '../../../constants/CompanyIndustryConst';
 import { PATH } from '../../../constants/Paths/Path';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import { faIndustry, faUser } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
-
-const MAX_TOTAL_INDUSTRY = 4;
 
 const CreateCompanyFormComponent = ({ form, onFinish, onPrev }) => {
   const [totalIndustries, setTotalIndustries] = useState(0);
