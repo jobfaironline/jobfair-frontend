@@ -1,7 +1,7 @@
 import { Typography } from 'antd';
 import React from 'react';
 
-export const modalSuccessObject = (handleOnOk, title, content) => ({
+export const modalResponseObj = (title, content, handleOnOk) => ({
   title,
   width: '30rem',
   closable: true,
@@ -13,12 +13,4 @@ export const modalSuccessObject = (handleOnOk, title, content) => ({
       <Typography.Text>{content}</Typography.Text>
     </div>
   )
-});
-
-export const modalErrorObject = (err, title) => ({
-  title,
-  width: '30rem',
-  closable: true,
-  maskClosable: true,
-  content: <Typography.Text>{err.response.data.message}</Typography.Text>
 });
