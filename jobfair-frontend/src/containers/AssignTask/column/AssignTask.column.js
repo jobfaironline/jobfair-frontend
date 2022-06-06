@@ -4,7 +4,7 @@ import React from 'react';
 
 const { Text } = Typography;
 
-export const getTableColumns = async (dayRange, handleOpenAssignTaskModal) => {
+export const getTableColumns = (dayRange, handleOpenAssignTaskModal) => {
   //generate table columns based on dayRange
   const columns = [
     {

@@ -54,7 +54,7 @@ const AssignTaskContainer = (props) => {
       const staffs = await getStaffList(assignments);
       const dayRange = await getJobFairPublicDayRange(jobFairInfo);
       const dataSource = await getDataSource(staffAssignments, staffs, dayRange, shiftData);
-      const columns = await getTableColumns(dayRange, handleOpenAssignTaskModal);
+      const columns = getTableColumns(dayRange, handleOpenAssignTaskModal);
 
       setTableData((prevState) => ({
         ...prevState,
