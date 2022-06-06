@@ -16,7 +16,7 @@ const JobFairLandingPageFormComponent = ({
 }) => (
   <div className={'job-fair-landing-page'}>
     <div style={{ textAlign: 'center' }}>
-      <Title level={5}>Schedule job fair event</Title>
+      <Title level={5}>Design landing page</Title>
     </div>
     <Form
       initialValues={{
@@ -49,7 +49,7 @@ const JobFairLandingPageFormComponent = ({
         name={'description'}
         rules={OrganizeJobFairValidation.description}
         className={'form-item'}>
-        <TextArea showCount maxLength={1000} placeholder='Description' />
+        <TextArea showCount maxLength={1000} autoSize={{ minRows: 6 }} placeholder='Description' />
       </Form.Item>
     </Form>
   </div>
