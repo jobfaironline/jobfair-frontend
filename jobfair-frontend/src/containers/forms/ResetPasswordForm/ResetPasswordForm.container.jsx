@@ -22,10 +22,8 @@ const ResetPasswordFormContainer = () => {
     try {
       await resetPasswordAPI(body);
       Modal.success(
-        modalResponseObj(
-          () => history.push(PATH.LOGIN_PAGE),
-          'Reset password successfully!',
-          'Your password has been update !'
+        modalResponseObj('Your password has been update !', 'Reset password successfully!', () =>
+          history.push(PATH.LOGIN_PAGE)
         )
       );
     } catch (e) {
