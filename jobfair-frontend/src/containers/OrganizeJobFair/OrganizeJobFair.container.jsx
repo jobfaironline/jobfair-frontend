@@ -12,6 +12,7 @@ import {
   updateJobFairAPI
 } from '../../services/jobhub-api/JobFairControllerService';
 import { getLayoutByJobFairId, pickLayoutForJobFair } from '../../services/jobhub-api/LayoutControllerService';
+import { handleFieldsError } from '../../utils/handleFIeldsError';
 import { loadGLBModel } from '../../utils/ThreeJS/threeJSUtil';
 import { useHistory, useLocation } from 'react-router-dom';
 import ChooseTemplateJobFairContainer from '../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
@@ -88,13 +89,7 @@ const OrganizeJobFairContainer = () => {
       await form.validateFields();
       setIsError(false);
     } catch (e) {
-      const errorsArray = form.getFieldsError();
-      for (const error of errorsArray) {
-        if (error.errors.length > 0) {
-          form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
-          break;
-        }
-      }
+      handleFieldsError(form);
       const isHasError = form.getFieldsError().filter(({ errors }) => errors.length).length > 0;
       setIsError(isHasError);
     }
@@ -180,13 +175,7 @@ const OrganizeJobFairContainer = () => {
             setCurrentStep(currentStep + 1);
             setIsError(false);
           } catch (e) {
-            const errorsArray = form.getFieldsError();
-            for (const error of errorsArray) {
-              if (error.errors.length > 0) {
-                form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
-                break;
-              }
-            }
+            handleFieldsError(form);
           }
         };
       case 3:
@@ -197,13 +186,7 @@ const OrganizeJobFairContainer = () => {
             setCurrentStep(currentStep + 1);
             setIsError(false);
           } catch (e) {
-            const errorsArray = form.getFieldsError();
-            for (const error of errorsArray) {
-              if (error.errors.length > 0) {
-                form.scrollToField(error.name, { behavior: 'smooth', block: 'center' });
-                break;
-              }
-            }
+            handleFieldsError(form);
           }
         };
       case 4:
