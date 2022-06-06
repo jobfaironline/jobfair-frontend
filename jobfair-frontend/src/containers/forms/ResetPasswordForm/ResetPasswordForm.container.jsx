@@ -1,6 +1,6 @@
 import { Form, Modal } from 'antd';
 import { PATH } from '../../../constants/Paths/Path';
-import { modalErrorObject, modalSuccessObject } from '../../../utils/modalResponseObj';
+import { modalResponseObj } from '../../../utils/modalResponseObj';
 import { resetPasswordAPI } from '../../../services/jobhub-api/ResetPasswordControllerService';
 import { useHistory, useLocation } from 'react-router-dom';
 import React, { useState } from 'react';
@@ -22,14 +22,14 @@ const ResetPasswordFormContainer = () => {
     try {
       await resetPasswordAPI(body);
       Modal.success(
-        modalSuccessObject(
+        modalResponseObj(
           () => history.push(PATH.LOGIN_PAGE),
-          'Reset password successfully',
+          'Reset password successfully!',
           'Your password has been update !'
         )
       );
     } catch (e) {
-      Modal.error(modalErrorObject(e, 'Reset password failed !'));
+      Modal.error(modalResponseObj('Reset password failed!', 'Reset password failed !'));
     }
   };
   return (
