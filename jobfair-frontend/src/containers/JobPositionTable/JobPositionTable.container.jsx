@@ -7,7 +7,7 @@ import JobPositionSubmodalContainer from '../JobPosition/JobPositionSubmodal.con
 import PickJobPositionTableColumn from './PickJobPositionTable.column';
 import React, { useLayoutEffect, useState } from 'react';
 
-const PickJobPositionTable = ({ selectable, form }) => {
+const PickJobPositionTable = ({ selectable, form, calculateKeyArr }) => {
   //pagination
   const totalRecord = useSelector((state) => state.jobPosition.totalRecord);
   const [currentPage, setCurrentPage] = useState(0);
@@ -45,6 +45,7 @@ const PickJobPositionTable = ({ selectable, form }) => {
       jobPositions: [...currentJobPositionsInForm, ...mappedData]
     });
     setInitialSelectedValues(selectedRowKeys);
+    calculateKeyArr();
   };
 
   const rowSelection = {

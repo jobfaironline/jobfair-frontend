@@ -1,8 +1,8 @@
 export const AssigmentType = [
   {
     value: 0,
-    label: 'In charge',
-    name: 'IN_CHARGE'
+    label: 'Supervisor',
+    name: 'SUPERVISOR'
   },
   {
     value: 1,
@@ -13,11 +13,23 @@ export const AssigmentType = [
     value: 2,
     label: 'Interviewee',
     name: 'INTERVIEWER'
+  },
+  {
+    value: 3,
+    label: 'Decorator',
+    name: 'DECORATOR'
+  },
+  {
+    value: 4,
+    label: 'Staff',
+    name: 'STAFF'
   }
 ];
 
 export const AssignmentConst = {
-  IN_CHARGE: 'IN_CHARGE',
+  SUPERVISOR: 'SUPERVISOR',
   RECEPTION: 'RECEPTION',
-  INTERVIEWER: 'INTERVIEWER'
+  INTERVIEWER: 'INTERVIEWER',
+  DECORATOR: 'DECORATOR',
+  STAFF: 'STAFF'
 };

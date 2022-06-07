@@ -5,10 +5,12 @@ import { selectWebSocket } from '../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import AboutApplicationPage from '../pages/AboutApplicationPage';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
+import AssignTaskPage from '../pages/AssignTaskPage/AssignTaskPage';
 import AttendantAttemptTestPage from '../pages/AttendantAttemptTestPage/AttendantAttemptTestPage';
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage';
 import AttendantProfile from '../pages/ProfilePage/Attendant/AttendantProfilePage';
 import AttendantRouter from './components/AttendantRouter';
+import BoothDescriptionPage from '../pages/BoothDescriptionPage/BoothDescriptionPage';
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage';
 import CompanyEmployeeRouter from './components/CompanyEmployeeRouter';
 import CompanyManagerRouter from './components/CompanyManagerRouter';
@@ -220,6 +222,18 @@ const AppRouter = () => {
           key={PATH_COMPANY_EMPLOYEE.INTERVIEW_ROOM_PAGE}
           component={() => <InterviewRoomPage />}
           path={PATH_COMPANY_EMPLOYEE.INTERVIEW_ROOM_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE}
+          component={() => <AssignTaskPage />}
+          path={PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.BOOTH_DESCRIPTION_PAGE}
+          component={() => <BoothDescriptionPage />}
+          path={PATH_COMPANY_EMPLOYEE.BOOTH_DESCRIPTION_PAGE}
           exact
         />
         <CompanyManagerRouter

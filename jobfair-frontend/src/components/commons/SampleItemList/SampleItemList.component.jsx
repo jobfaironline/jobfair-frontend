@@ -1,4 +1,5 @@
-import { Button } from 'antd';
+import './SampleItemList.style.scss';
+import { Button, Card } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 import React from 'react';
@@ -10,12 +11,13 @@ export const SampleItemMenu = (props) => {
   return (
     <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
       {items.map((item) => (
-        <Card
+        <CardElement
           itemId={item.id}
           title={item.name}
           key={item.id}
           onClick={onItemClick(item.id)}
           selected={isItemSelected(item.id)}
+          imgUrl={item?.thumbnailUrl}
         />
       ))}
     </ScrollMenu>
@@ -25,7 +27,7 @@ export const SampleItemMenu = (props) => {
 function LeftArrow() {
   const { isFirstItemVisible, scrollPrev } = React.useContext(VisibilityContext);
   return (
-    <Button disabled={isFirstItemVisible} onClick={() => scrollPrev()}>
+    <Button disabled={isFirstItemVisible} onClick={() => scrollPrev()} style={{ height: '105px' }}>
       <LeftOutlined />
     </Button>
   );
@@ -34,29 +36,23 @@ function LeftArrow() {
 function RightArrow() {
   const { isLastItemVisible, scrollNext } = React.useContext(VisibilityContext);
   return (
-    <Button disabled={isLastItemVisible} onClick={() => scrollNext()}>
+    <Button disabled={isLastItemVisible} onClick={() => scrollNext()} style={{ height: '105px' }}>
       <RightOutlined />
     </Button>
   );
 }
 
-function Card({ onClick, selected, title }) {
+function CardElement({ onClick, selected, title, imgUrl }) {
   return (
-    <div
-      onClick={onClick}
-      style={{
-        width: '160px'
-      }}
-      tabIndex={0}>
-      <div className='card'>
-        <div>{title}</div>
-        <div>selected: {JSON.stringify(!!selected)}</div>
+    <div onClick={onClick} tabIndex={0}>
+      <div style={{ border: ` ${!!selected ? '1px solid blue' : 'none'}` }}>
+        <Card
+          style={{ width: '120px' }}
+          cover={<img alt='example' src={imgUrl} style={{ width: '100%' }} />}
+          bodyStyle={{ padding: '0.5rem' }}>
+          <Card.Meta title={title} />
+        </Card>
       </div>
-      <div
-        style={{
-          height: '50px'
-        }}
-      />
     </div>
   );
 }
