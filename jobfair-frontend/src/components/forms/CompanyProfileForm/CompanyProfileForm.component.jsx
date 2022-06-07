@@ -9,17 +9,34 @@ import {
 } from '../../../constants/CompanyProfileConstant';
 import { CompanyProfileValidation } from '../../../validate/CompanyProfileValidation';
 import { CopyOutlined, GiftOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import ImageUploadComponent from '../../commons/ImageUpload/ImageUpload.component';
-import React, { useState } from 'react';
+import { getBase64 } from '../../../utils/common';
+import React, { useRef, useState } from 'react';
 import TextArea from 'antd/es/input/TextArea';
+import UploadComponent from '../../commons/UploadComponent/Upload.component';
 
-const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
+const CompanyProfileForm = ({ urlValue, editable }) => {
   //state
   const [totalSelect, setTotalSelect] = useState(0);
   // eslint-disable-next-line no-unused-vars
   const [benefitId, setBenefitId] = useState(0);
   const [url, setUrl] = useState(urlValue);
+  const [mediaUrl, setMediaUrl] = useState('');
+  const fromData = useRef(new FormData());
 
+  const mediaUpload = {
+    name: 'file',
+    beforeUpload: () => false,
+    onChange: async (info) => {
+      const url = await getBase64(info.file);
+      setMediaUrl(url);
+      fromData.current.append('file', info.file);
+    },
+    onRemove: async () => {
+      setMediaUrl(undefined);
+    },
+    showUploadList: true,
+    maxCount: 1
+  };
   //
   const { Option, OptGroup } = Select;
 
@@ -28,32 +45,36 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
   return (
     <>
       <Form.Item
+        style={{ display: 'inline-block', width: '40%' }}
         shouldUpdate
         label='Company Name'
         name='name'
         required
         tooltip='This is required'
         rules={editable ? CompanyProfileValidation.name : []}>
-        {noStyle ? <Text>{data.name}</Text> : <Input placeholder='Company name' style={{ width: 300 }} />}
+        <Input placeholder='Company name' style={{ width: 200 }} />
       </Form.Item>
       <Form.Item
+        style={{ display: 'inline-block', width: '60%' }}
         shouldUpdate
         label='Company Email'
         required
         tooltip='This is required'
         rules={editable ? CompanyProfileValidation.email : []}
         name='email'>
-        {noStyle ? <Text>{data.email}</Text> : <Input placeholder='Company email' style={{ width: 250 }} />}
+        <Input placeholder='Company email' />
       </Form.Item>
       <Form.Item
+        style={{ display: 'inline-block', width: '30%' }}
         shouldUpdate
         label='Phone number'
         name='phone'
         hasFeedback
         rules={editable ? CompanyProfileValidation.phone : []}>
-        {noStyle ? <Text>{data.phone}</Text> : <Input placeholder='Company phone' style={{ width: 250 }} />}
+        <Input placeholder='Company phone' style={{ width: 150 }} />
       </Form.Item>
       <Form.Item
+        style={{ display: 'inline-block', width: '70%' }}
         shouldUpdate
         label='Company Address'
         tooltip={{
@@ -62,87 +83,74 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
         }}
         name='address'
         rules={editable ? CompanyProfileValidation.address : []}>
-        {noStyle ? <Text>{data.address}</Text> : <Input placeholder='Company address' style={{ width: 350 }} />}
+        <Input placeholder='Company address' />
       </Form.Item>
       <Form.Item
+        style={{ display: 'inline-block', width: '50%' }}
         shouldUpdate
         label='Company tax ID'
         required
         tooltip='This is required'
         rules={editable ? CompanyProfileValidation.taxId : []}
         name='taxId'>
-        {noStyle ? <Text>{data.taxId}</Text> : <Input placeholder='Company Tax ID' style={{ width: 300 }} />}
+        <Input placeholder='Company Tax ID' style={{ width: 200 }} />
       </Form.Item>
       <Form.Item
+        label='Company URL'
+        style={{ display: 'inline-block', width: '50%' }}
+        tooltip={{
+          title: 'This is optional',
+          icon: <InfoCircleOutlined />
+        }}>
+        <Input.Group compact>
+          <Form.Item
+            shouldUpdate
+            name='url'
+            rules={editable ? CompanyProfileValidation.url : []}
+            style={{ display: 'inline-block', width: '50%' }}>
+            <Input style={{ width: '100%' }} defaultValue={url} onChange={(e) => setUrl(e.target.value)} />
+          </Form.Item>
+          <Tooltip title='copy url'>
+            <Button
+              onClick={() => {
+                navigator.clipboard
+                  .writeText(url)
+                  .then(message.success('Copied to clipboard'))
+                  .catch((err) => {
+                    message.error(`An error occurred, ${err}`);
+                  });
+              }}
+              icon={<CopyOutlined />}
+            />
+          </Tooltip>
+        </Input.Group>
+      </Form.Item>
+      <Form.Item
+        style={{ display: 'inline-block', width: '100%' }}
         shouldUpdate
         label='Company description'
         required
         tooltip='This is required'
         rules={editable ? CompanyProfileValidation.description : []}
         name='companyDescription'>
-        {noStyle ? (
-          <Text>{data.companyDescription}</Text>
-        ) : (
-          <TextArea showCount maxLength={3000} placeholder='Company description' style={{ width: 300 }} />
-        )}
+        <TextArea showCount maxLength={3000} placeholder='Company description' />
       </Form.Item>
-      <div className='site-input-group-wrapper'>
-        <Form.Item
-          label='Company URL'
-          tooltip={{
-            title: 'This is optional',
-            icon: <InfoCircleOutlined />
-          }}>
-          <Input.Group compact>
-            <Form.Item
-              shouldUpdate
-              noStyle
-              name='url'
-              rules={editable ? CompanyProfileValidation.url : []}
-              style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}>
-              {noStyle ? (
-                <Text>{data.url}</Text>
-              ) : (
-                <Input
-                  style={{ width: 'calc( 60% - 200px)' }}
-                  defaultValue={url}
-                  onChange={(e) => setUrl(e.target.value)}
-                />
-              )}
-            </Form.Item>
-            <Tooltip title='copy url'>
-              <Button
-                hidden={noStyle}
-                onClick={() => {
-                  navigator.clipboard
-                    .writeText(url)
-                    .then(message.success('Copied to clipboard'))
-                    .catch((err) => {
-                      message.error(`An error occurred, ${err}`);
-                    });
-                }}
-                icon={<CopyOutlined />}
-              />
-            </Tooltip>
-          </Input.Group>
-        </Form.Item>
-      </div>
       <Form.Item
-        noStyle={noStyle}
-        label='Company size'
+        style={{ display: 'inline-block', width: '50%' }}
+        label='Company size (workers)'
         name='sizeId'
         tooltip={{
           title: 'This is optional',
           icon: <InfoCircleOutlined />
         }}>
-        <Select hidden={noStyle} style={{ width: 150 }} onChange={() => {}} defaultValue='Select a size...'>
+        <Select onChange={() => {}} defaultValue='Select a size...'>
           {SizeConst.map((item) => (
             <Option value={item.value}>{item.label}</Option>
           ))}
         </Select>
       </Form.Item>
       <Form.Item
-        noStyle={noStyle}
+        style={{ display: 'inline-block', width: '50%' }}
         label='Company industry'
         name='subCategoriesIds'
         tooltip={{
@@ -150,14 +158,11 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
           icon: <InfoCircleOutlined />
         }}>
         <Select
-          hidden={noStyle}
-          style={{ width: 300 }}
           placeholder='Company industry'
           mode='multiple'
           onChange={(value) => {
             //value is a array
             if (value.length > NUM_OF_SIZE_MAXIMUM) value.pop();
-
             setTotalSelect(value.length);
           }}
           onSearch={() => {}}
@@ -181,19 +186,17 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
           ))}
         </Select>
       </Form.Item>
-      <Form.List name='benefits' noStyle={noStyle}>
+      <Form.List name='benefits'>
         {(fields, { add, remove }) => (
           <>
             {fields.map(({ key, name, ...restField }) => (
               <div key={key} style={{ display: 'flex', flexDirection: 'row' }}>
                 <Form.Item
-                  noStyle={noStyle}
                   {...restField}
                   label='Benefit type'
                   name={[name, 'id']}
-                  style={{ width: 150 }}>
+                  style={{ display: 'inline-block', width: '100%' }}>
                   <Select
-                    hidden={noStyle}
                     defaultValue='Select one...'
                     onChange={(value) => {
                       setBenefitId(value);
@@ -207,25 +210,18 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
                   </Select>
                 </Form.Item>
                 <Form.Item
-                  noStyle={noStyle}
                   {...restField}
                   name={[name, 'description']}
                   label='Description'
                   rules={editable ? CompanyProfileValidation.description : []}
-                  style={{ width: 400 }}>
-                  <TextArea hidden={noStyle} placeholder='Description' showCount maxLength={3000} />
+                  style={{ display: 'inline-block', width: '100%' }}>
+                  <TextArea placeholder='Description' showCount maxLength={3000} />
                 </Form.Item>
-                {noStyle !== true ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
+                <MinusCircleOutlined onClick={() => remove(name)} />
               </div>
             ))}
-            <Form.Item noStyle={noStyle}>
-              <Button
-                hidden={noStyle}
-                style={{ width: '30%' }}
-                type='dashed'
-                onClick={() => add()}
-                block
-                icon={<PlusOutlined />}>
+            <Form.Item>
+              <Button style={{ width: '30%' }} type='dashed' onClick={() => add()} block icon={<PlusOutlined />}>
                 Add field
               </Button>
             </Form.Item>
@@ -233,14 +229,16 @@ const CompanyProfileForm = ({ urlValue, noStyle, data, editable }) => {
         )}
       </Form.List>
       <Form.Item
-        noStyle={noStyle}
+        style={{ display: 'inline-block', width: '100%' }}
         label='Company medias'
         name='mediaUrls'
         tooltip={{
           title: 'This is optional',
           icon: <InfoCircleOutlined />
         }}>
-        {noStyle !== true ? <ImageUploadComponent /> : null}
+        <UploadComponent uploadProps={mediaUpload}>
+          {mediaUrl ? <img src={mediaUrl} alt='avatar' style={{ width: '100%' }} /> : undefined}
+        </UploadComponent>
       </Form.Item>
     </>
   );

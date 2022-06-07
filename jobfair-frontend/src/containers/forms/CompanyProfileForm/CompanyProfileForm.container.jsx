@@ -1,4 +1,4 @@
-import { Affix, Button, Form, Spin, notification } from 'antd';
+import { Affix, Button, Card, Form, Spin, notification } from 'antd';
 import { getCompanyProfileAPI, updateCompanyProfileAPI } from '../../../services/jobhub-api/CompanyControllerService';
 import { useSelector } from 'react-redux';
 import CompanyProfileForm from '../../../components/forms/CompanyProfileForm/CompanyProfileForm.component';
@@ -73,16 +73,25 @@ const CompanyProfileFormContainer = () => {
       {data === undefined || data === null || Object.keys(data).length === 0 ? (
         <Spin size='large' />
       ) : (
-        <Form form={form} onFinish={onFinish} requiredMark='required' autoComplete='off' scrollToFirstError={true}>
-          <CompanyProfileForm urlValue={data.url} />
-          <Form.Item>
-            <Affix offsetBottom={10}>
-              <Button type='primary' htmlType='submit'>
-                Submit
-              </Button>
-            </Affix>
-          </Form.Item>
-        </Form>
+        <Card
+          title=''
+          style={{
+            boxShadow: '5px 8px 24px 5px rgba(208, 216, 243, 0.6)',
+            marginBottom: '2rem'
+          }}
+          headStyle={{ backgroundColor: 'white', border: 0 }}
+          bodyStyle={{ backgroundColor: 'white', border: 0 }}>
+          <Form form={form} onFinish={onFinish} requiredMark='required' autoComplete='off' scrollToFirstError={true}>
+            <CompanyProfileForm urlValue={data.url} />
+            <Form.Item>
+              <Affix offsetBottom={10}>
+                <Button type='primary' htmlType='submit'>
+                  Submit
+                </Button>
+              </Affix>
+            </Form.Item>
+          </Form>
+        </Card>
       )}
     </>
   );
