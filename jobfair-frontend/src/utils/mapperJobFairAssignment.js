@@ -1,4 +1,4 @@
-import { convertEnumToString, convertToUTCString } from './common';
+import { convertToUTCString } from './common';
 
 export const mapperJobFairAssignment = (item, index) => ({
   key: item.id,
@@ -7,7 +7,7 @@ export const mapperJobFairAssignment = (item, index) => ({
   booth: item.jobFairBooth?.booth,
   jobFair: item.jobFairBooth?.jobFair,
   jobFairName: item.jobFairBooth?.jobFair?.name,
-  assignmentType: convertEnumToString(item.type),
+  assignmentType: item.type,
   decorateStartTime: convertToUTCString(item.jobFairBooth?.jobFair?.decorateStartTime),
   decorateEndTime: convertToUTCString(item.jobFairBooth?.jobFair?.decorateEndTime),
   decorateStartTimeValue: item.jobFairBooth?.jobFair?.decorateStartTime,

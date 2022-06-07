@@ -5,6 +5,7 @@ import { selectWebSocket } from '../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import AboutApplicationPage from '../pages/AboutApplicationPage';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
+import AssignTaskPage from '../pages/AssignTaskPage/AssignTaskPage';
 import AttendantAttemptTestPage from '../pages/AttendantAttemptTestPage/AttendantAttemptTestPage';
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage';
 import AttendantProfile from '../pages/ProfilePage/Attendant/AttendantProfilePage';
@@ -221,6 +222,12 @@ const AppRouter = () => {
           key={PATH_COMPANY_EMPLOYEE.INTERVIEW_ROOM_PAGE}
           component={() => <InterviewRoomPage />}
           path={PATH_COMPANY_EMPLOYEE.INTERVIEW_ROOM_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE}
+          component={() => <AssignTaskPage />}
+          path={PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE}
           exact
         />
         <CompanyEmployeeRouter
