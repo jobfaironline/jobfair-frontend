@@ -136,8 +136,8 @@ export const AssignEmployeeContainer = (props) => {
             data={state.boothData}
             onHoverIn={onBoothMouseOver}
             onHoverOut={onBoothMouseOut}
-            onClick={onBoothClick}
-            onClickModal={onClickUploadCSV}
+            onBoothClick={onBoothClick}
+            onClickUploadCSV={onClickUploadCSV}
           />
         }
         nextButtonContent={'Start design landing page'}

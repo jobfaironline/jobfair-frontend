@@ -2,6 +2,7 @@ import './ScheduleJobFairFormComponent.styles.scss';
 import { DateFormat, MinuteFormat } from '../../../constants/ApplicationConst';
 import { DatePicker, Form, Input, TimePicker, Typography } from 'antd';
 import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairValidation';
+import { SHIFT_DISABLE_TIME } from '../../../constants/JobFairConst';
 import { getTimeZoneCode } from '../../../utils/common';
 import React from 'react';
 import moment from 'moment';
@@ -79,7 +80,7 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
             <TimePicker.RangePicker
               format={MinuteFormat}
               disabledTime={() => ({
-                disabledHours: () => [0, 1, 2, 3, 4, 5, 6, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+                disabledHours: () => SHIFT_DISABLE_TIME.MORNING_SHIFT
               })}
             />
           </Form.Item>
@@ -91,7 +92,7 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
             <TimePicker.RangePicker
               format={MinuteFormat}
               disabledTime={() => ({
-                disabledHours: () => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 23]
+                disabledHours: () => SHIFT_DISABLE_TIME.AFTERNOON_SHIFT
               })}
             />
           </Form.Item>

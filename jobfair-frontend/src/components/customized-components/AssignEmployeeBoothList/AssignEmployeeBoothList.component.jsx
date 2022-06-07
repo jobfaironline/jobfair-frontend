@@ -7,7 +7,7 @@ import React from 'react';
 const { Title, Text } = Typography;
 
 export const AssignEmployeeBoothList = (props) => {
-  const { data, onHoverIn, onHoverOut, onClick, onClickModal } = props;
+  const { data, onHoverIn, onHoverOut, onBoothClick, onClickUploadCSV } = props;
   return (
     <>
       <div
@@ -19,7 +19,7 @@ export const AssignEmployeeBoothList = (props) => {
           marginBottom: '1rem'
         }}>
         <Title level={5}>Assign employee</Title>
-        <Button style={{ marginLeft: '1rem' }} type={'primary'} icon={<UploadOutlined />} onClick={onClickModal}>
+        <Button style={{ marginLeft: '1rem' }} type={'primary'} icon={<UploadOutlined />} onClick={onClickUploadCSV}>
           Upload CSV
         </Button>
       </div>
@@ -40,7 +40,7 @@ export const AssignEmployeeBoothList = (props) => {
               onMouseEnter={() => onHoverIn(item.booth.name)}
               onMouseLeave={() => onHoverOut()}
               onClick={() => {
-                onClick(item.id, item.booth.name);
+                onBoothClick(item.id, item.booth.name);
               }}>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', alignItems: 'stretch' }}>
