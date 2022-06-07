@@ -83,9 +83,9 @@ export const Decorate3DBoothContainer = (props) => {
         companyBoothLayoutVideos[data.itemName] = data.url;
       });
     } catch (err) {
-      notification['error']({
-        message: `Error happens`,
-        description: `There is problem while fetch booth layout, try again later (the default layout will be used)`,
+      notification['info']({
+        message: `Info:`,
+        description: `The default layout will be used.`,
         duration: 2
       });
     }
