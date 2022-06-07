@@ -27,7 +27,7 @@ const CreateJobFairLandingPageContainer = ({ jobFairData, onFinish, form, jobFai
       jobFairId,
       review: 'review'
     });
-    const src = `${window.location.protocol}//${window.location.hostname}:${window.location.port}${url}?review`;
+    const src = `${window.location.origin}${url}?review`;
     window.open(src);
   };
 
