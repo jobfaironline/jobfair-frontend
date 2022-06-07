@@ -1,5 +1,5 @@
 /* eslint-disable no-empty-function */
-import { Button, Divider, Form, Input, Select, Tooltip, Typography, message } from 'antd';
+import { Button, Card, Divider, Form, Input, Select, Tooltip, Typography, message } from 'antd';
 import {
   CategoriesConst,
   NUM_OF_SIZE_MAXIMUM,
@@ -8,35 +8,19 @@ import {
   benefitConst
 } from '../../../constants/CompanyProfileConstant';
 import { CompanyProfileValidation } from '../../../validate/CompanyProfileValidation';
-import { CopyOutlined, GiftOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { getBase64 } from '../../../utils/common';
-import React, { useRef, useState } from 'react';
+import { CopyOutlined, GiftOutlined, InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from 'react';
 import TextArea from 'antd/es/input/TextArea';
 import UploadComponent from '../../commons/UploadComponent/Upload.component';
 
-const CompanyProfileForm = ({ urlValue, editable }) => {
+const CompanyProfileForm = ({ form, urlValue, editable, mediaUrl, ...mediaUpload }) => {
   //state
   const [totalSelect, setTotalSelect] = useState(0);
   // eslint-disable-next-line no-unused-vars
   const [benefitId, setBenefitId] = useState(0);
   const [url, setUrl] = useState(urlValue);
-  const [mediaUrl, setMediaUrl] = useState('');
-  const fromData = useRef(new FormData());
-
-  const mediaUpload = {
-    name: 'file',
-    beforeUpload: () => false,
-    onChange: async (info) => {
-      const url = await getBase64(info.file);
-      setMediaUrl(url);
-      fromData.current.append('file', info.file);
-    },
-    onRemove: async () => {
-      setMediaUrl(undefined);
-    },
-    showUploadList: true,
-    maxCount: 1
-  };
   //
   const { Option, OptGroup } = Select;
 
@@ -86,7 +70,7 @@ const CompanyProfileForm = ({ urlValue, editable }) => {
         <Input placeholder='Company address' />
       </Form.Item>
       <Form.Item
-        style={{ display: 'inline-block', width: '50%' }}
+        style={{ display: 'inline-block', width: '40%' }}
         shouldUpdate
         label='Company tax ID'
         required
@@ -97,7 +81,7 @@ const CompanyProfileForm = ({ urlValue, editable }) => {
       </Form.Item>
       <Form.Item
         label='Company URL'
-        style={{ display: 'inline-block', width: '50%' }}
+        style={{ display: 'inline-block', width: '60%' }}
         tooltip={{
           title: 'This is optional',
           icon: <InfoCircleOutlined />
@@ -108,10 +92,11 @@ const CompanyProfileForm = ({ urlValue, editable }) => {
             name='url'
             rules={editable ? CompanyProfileValidation.url : []}
             style={{ display: 'inline-block', width: '50%' }}>
-            <Input style={{ width: '100%' }} defaultValue={url} onChange={(e) => setUrl(e.target.value)} />
+            <Input style={{ width: '175%' }} defaultValue={url} onChange={(e) => setUrl(e.target.value)} />
           </Form.Item>
           <Tooltip title='copy url'>
             <Button
+              style={{ marginLeft: '7rem' }}
               onClick={() => {
                 navigator.clipboard
                   .writeText(url)
@@ -136,21 +121,21 @@ const CompanyProfileForm = ({ urlValue, editable }) => {
         <TextArea showCount maxLength={3000} placeholder='Company description' />
       </Form.Item>
       <Form.Item
-        style={{ display: 'inline-block', width: '50%' }}
+        style={{ display: 'inline-block', width: '40%' }}
         label='Company size (workers)'
         name='sizeId'
         tooltip={{
           title: 'This is optional',
           icon: <InfoCircleOutlined />
         }}>
-        <Select onChange={() => {}} defaultValue='Select a size...'>
+        <Select style={{ width: 150 }} onChange={() => {}} defaultValue='Select a size...'>
           {SizeConst.map((item) => (
             <Option value={item.value}>{item.label}</Option>
           ))}
         </Select>
       </Form.Item>
       <Form.Item
-        style={{ display: 'inline-block', width: '50%' }}
+        style={{ display: 'inline-block', width: '60%' }}
         label='Company industry'
         name='subCategoriesIds'
         tooltip={{
@@ -186,58 +171,70 @@ const CompanyProfileForm = ({ urlValue, editable }) => {
           ))}
         </Select>
       </Form.Item>
-      <Form.List name='benefits'>
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name, ...restField }) => (
-              <div key={key} style={{ display: 'flex', flexDirection: 'row' }}>
-                <Form.Item
-                  {...restField}
-                  label='Benefit type'
-                  name={[name, 'id']}
-                  style={{ display: 'inline-block', width: '100%' }}>
-                  <Select
-                    defaultValue='Select one...'
-                    onChange={(value) => {
-                      setBenefitId(value);
-                    }}>
-                    {benefitConst.map((item) => (
-                      <Option value={item.value}>
-                        <GiftOutlined />
-                        {item.label}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-                <Form.Item
-                  {...restField}
-                  name={[name, 'description']}
-                  label='Description'
-                  rules={editable ? CompanyProfileValidation.description : []}
-                  style={{ display: 'inline-block', width: '100%' }}>
-                  <TextArea placeholder='Description' showCount maxLength={3000} />
-                </Form.Item>
-                <MinusCircleOutlined onClick={() => remove(name)} />
-              </div>
-            ))}
-            <Form.Item>
-              <Button style={{ width: '30%' }} type='dashed' onClick={() => add()} block icon={<PlusOutlined />}>
-                Add field
-              </Button>
-            </Form.Item>
-          </>
-        )}
-      </Form.List>
+      <Card
+        title='Company benefits'
+        style={{
+          marginBottom: '2rem'
+        }}
+        headStyle={{ backgroundColor: 'white', border: 0 }}
+        bodyStyle={{ backgroundColor: 'white', border: 0 }}>
+        <Form.List label='Company benefits' name='benefits'>
+          {(fields, { add, remove }) => (
+            <>
+              {fields.map(({ key, name, ...restField }) => (
+                <div key={key} style={{ display: 'flex', flexDirection: 'row' }}>
+                  <Form.Item
+                    {...restField}
+                    label='Benefit type'
+                    name={[name, 'id']}
+                    style={{ display: 'inline-block', width: '30%', height: '5rem' }}>
+                    <Select
+                      defaultValue='Select one...'
+                      onChange={(value) => {
+                        setBenefitId(value);
+                      }}>
+                      {benefitConst.map((item) => (
+                        <Option value={item.value}>
+                          <GiftOutlined />
+                          {item.label}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[name, 'description']}
+                    label='Description'
+                    rules={editable ? CompanyProfileValidation.description : []}
+                    style={{ display: 'inline-block', width: '70%' }}>
+                    <TextArea placeholder='Description' showCount maxLength={3000} />
+                  </Form.Item>
+                  <FontAwesomeIcon icon={faTrash} onClick={() => remove(name)} />
+                </div>
+              ))}
+              <Form.Item>
+                <Button style={{ width: '100%' }} type='dashed' onClick={() => add()} block icon={<PlusOutlined />}>
+                  Add benefit
+                </Button>
+              </Form.Item>
+            </>
+          )}
+        </Form.List>
+      </Card>
       <Form.Item
         style={{ display: 'inline-block', width: '100%' }}
-        label='Company medias'
-        name='mediaUrls'
+        label='Company logo'
+        name='companyLogoURL'
         tooltip={{
           title: 'This is optional',
           icon: <InfoCircleOutlined />
         }}>
         <UploadComponent uploadProps={mediaUpload}>
-          {mediaUrl ? <img src={mediaUrl} alt='avatar' style={{ width: '100%' }} /> : undefined}
+          {mediaUrl ? (
+            <img src={mediaUrl} alt='avatar' style={{ width: '100%' }} />
+          ) : (
+            <img src={form.getFieldValue('companyLogoURL')} alt='avatar' style={{ width: '100%' }} />
+          )}
         </UploadComponent>
       </Form.Item>
     </>

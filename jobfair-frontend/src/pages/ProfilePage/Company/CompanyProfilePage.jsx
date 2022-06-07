@@ -10,13 +10,12 @@ const CompanyProfilePage = () => {
   return (
     <div className={'page company-profile-page'}>
       <div className={'company-profile'}>
-        <Button
-          style={{ marginLeft: 'auto', marginRight: '5rem' }}
-          className={'button'}
-          onClick={() => setIsEditable(true)}>
+        <Button className={'button'} onClick={() => setIsEditable(true)}>
           Edit
         </Button>
-        <Button onClick={() => setIsEditable(false)}>Cancel</Button>
+        <Button className={'button'} onClick={() => setIsEditable(false)}>
+          Cancel
+        </Button>
         {isEditable ? <CompanyProfileFormContainer /> : <CompanyProfileContainer />}
       </div>
       <div className={'job-positions'}>
