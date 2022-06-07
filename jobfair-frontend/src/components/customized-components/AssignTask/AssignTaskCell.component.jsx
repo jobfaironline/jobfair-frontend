@@ -12,7 +12,7 @@ export const AssignTaskCell = (props) => {
   return (
     <div>
       <div className={'assignment-actions'}>
-        <Tooltip title='assign task'>
+        <Tooltip title={record[title].length === 0 ? 'assign task' : 'edit task'}>
           <FontAwesomeIcon
             size={'3x'}
             icon={record[title].length === 0 ? faPlus : faPenToSquare}

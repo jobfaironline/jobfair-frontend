@@ -2,6 +2,8 @@ import './ScheduleJobFairFormComponent.styles.scss';
 import { DateFormat, MinuteFormat } from '../../../constants/ApplicationConst';
 import { DatePicker, Form, Input, TimePicker, Typography } from 'antd';
 import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairValidation';
+import { SHIFT_DISABLE_TIME } from '../../../constants/JobFairConst';
+import { getTimeZoneCode } from '../../../utils/common';
 import React from 'react';
 import moment from 'moment';
 
@@ -34,6 +36,11 @@ const mapJobFairDataToFormInitialValues = (jobFairData) => {
 
 const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChange }) => {
   const initialFormValue = mapJobFairDataToFormInitialValues(jobFairData);
+  const timeZone = getTimeZoneCode();
+
+  const disabledDate = (current) =>
+    // Can not select days before today and today
+    current && current < moment().endOf('day');
   return (
     <div className={'schedule-job-fair-form'}>
       <div style={{ textAlign: 'center' }}>
@@ -52,32 +59,42 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
             <Input placeholder='Job fair name' />
           </Form.Item>
           <Form.Item
-            label='Decoration booth time range'
+            label={`Decoration booth time range (${timeZone})`}
             name={'decorateRange'}
             rules={OrganizeJobFairValidation.decorateRange}
             className={'form-item'}>
-            <RangePicker format={DateFormat} />
+            <RangePicker format={DateFormat} disabledDate={disabledDate} />
           </Form.Item>
           <Form.Item
             className={'form-item'}
-            label='Public time range'
+            label={`Public time range (${timeZone})`}
             name={'publicRange'}
             rules={OrganizeJobFairValidation.publicRange}>
-            <RangePicker format={DateFormat} />
+            <RangePicker format={DateFormat} disabledDate={disabledDate} />
           </Form.Item>
           <Form.Item
             className={'form-item'}
-            label='Morning shift'
+            label={`Morning shift (${timeZone})`}
             name={'morningShift'}
             rules={OrganizeJobFairValidation.morningShift}>
-            <TimePicker.RangePicker format={MinuteFormat} />
+            <TimePicker.RangePicker
+              format={MinuteFormat}
+              disabledTime={() => ({
+                disabledHours: () => SHIFT_DISABLE_TIME.MORNING_SHIFT
+              })}
+            />
           </Form.Item>
           <Form.Item
             className={'form-item'}
-            label='Afternoon shift'
+            label={`Afternoon shift (${timeZone})`}
             name={'afternoonShift'}
             rules={OrganizeJobFairValidation.afternoonShift}>
-            <TimePicker.RangePicker format={MinuteFormat} />
+            <TimePicker.RangePicker
+              format={MinuteFormat}
+              disabledTime={() => ({
+                disabledHours: () => SHIFT_DISABLE_TIME.AFTERNOON_SHIFT
+              })}
+            />
           </Form.Item>
         </Form>
       </div>

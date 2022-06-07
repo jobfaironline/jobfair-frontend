@@ -1,8 +1,10 @@
-import { Card, Modal, notification, Typography } from 'antd';
+import { Card, Modal, Typography, notification } from 'antd';
+import { CustomDateFormat } from '../../constants/ApplicationConst';
 import { decorateBoothAction } from '../../redux-flow/decorateBooth/decorate-booth-slice';
 import { getAllMyBoothLayout } from '../../services/jobhub-api/DecoratorBoothLayoutController';
 import { useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 
 const { Meta } = Card;
 
@@ -20,12 +22,21 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility 
 
   const fetchData = async () => {
     try {
-      const { data } = await getAllMyBoothLayout();
-      const finalData = data.map((item) => ({ ...item, imgUrl: '/my-layout-tmp.png' }));
+      const response = await getAllMyBoothLayout();
+      if (response.status === 204) {
+        setMyBoothLayouts([]);
+        return;
+      }
+      const { data } = response;
+      const finalData = data
+        .sort((a, b) => b.createTime - a.createTime)
+        .map((item) => ({
+          ...item,
+          imgUrl: '/my-layout-tmp.png'
+        }));
       setMyBoothLayouts(finalData);
     } catch (e) {
-      if (e.status === 204) setMyBoothLayouts([]);
-      notification['error']({
+      notification['info']({
         message: `Error happens`,
         description: `There is problem while fetch booth layout, try again later`,
         duration: 2
@@ -62,8 +73,8 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility 
       title='My booth layout'
       onOk={handleOk}
       onCancel={handleCancel}
-      width='100vw'>
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', minHeight: '500px' }}>
+      width='100rem'>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start', minHeight: '500px' }}>
         {myBoothLayouts.length > 0 ? (
           myBoothLayouts.map((layout) => (
             <Card
@@ -71,11 +82,12 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility 
               hoverable
               style={{
                 width: 240,
-                minHeight: 20,
-                marginBottom: '2rem'
+                marginBottom: '2rem',
+                height: 'fit-content',
+                marginRight: '2rem'
               }}
               cover={<img alt='example' src={layout?.imgUrl} />}>
-              <Meta title={layout.name} />
+              <Meta title={layout.name} description={moment(layout.createTime).format(CustomDateFormat)} />
             </Card>
           ))
         ) : (
