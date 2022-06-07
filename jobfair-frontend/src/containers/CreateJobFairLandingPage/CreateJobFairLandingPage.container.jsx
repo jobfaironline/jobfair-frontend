@@ -20,7 +20,9 @@ const CreateJobFairLandingPageContainer = ({ jobFairData, onFinish, form, jobFai
     setCompanyInformation(companyInformation);
   }, []);
 
-  const handleReviewLandingPage = () => {
+  const handleReviewLandingPage = async () => {
+    const values = form.getFieldsValue(true);
+    await onFinish(values);
     const url = generatePath(PATH.JOB_FAIR_LANDING_PAGE, {
       jobFairId,
       review: 'review'
