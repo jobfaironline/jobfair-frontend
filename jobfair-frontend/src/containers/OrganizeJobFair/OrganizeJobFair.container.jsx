@@ -21,6 +21,31 @@ import JobFairParkMapComponent from '../../components/3D/JobFairParkMap/JobFairP
 import PublishJobFairContainer from '../PublishJobFairContainer/PublishJobFair.container';
 import React, { useEffect, useState } from 'react';
 import ScheduleJobFairFormComponent from '../../components/forms/ScheduleJobFairForm/ScheduleJobFairForm.component';
+import moment from 'moment';
+
+const generateUpdateJobFairRequestBody = (formValues, jobFairId) => {
+  const startOfDate = moment().startOf('day');
+
+  const shifts = [
+    {
+      beginTime: formValues.morningShift[0].unix() - startOfDate.unix(),
+      endTime: formValues.morningShift[1].unix() - startOfDate.unix()
+    },
+    {
+      beginTime: formValues.afternoonShift[0].unix() - startOfDate.unix(),
+      endTime: formValues.afternoonShift[1].unix() - startOfDate.unix()
+    }
+  ];
+  return {
+    id: jobFairId,
+    name: formValues.name,
+    decorateStartTime: convertToDateValue(formValues.decorateRange[0].format()),
+    decorateEndTime: convertToDateValue(formValues.decorateRange[1].format()),
+    publicStartTime: convertToDateValue(formValues.publicRange[0].format()),
+    publicEndTime: convertToDateValue(formValues.publicRange[1].format()),
+    shifts
+  };
+};
 
 const OrganizeJobFairContainer = () => {
   const history = useHistory();
@@ -96,14 +121,7 @@ const OrganizeJobFairContainer = () => {
 
   const updateJobFairAtScheduleScreen = async (values) => {
     try {
-      const body = {
-        id: jobFairData?.id,
-        name: values.name,
-        decorateStartTime: convertToDateValue(values.decorateRange[0].format()),
-        decorateEndTime: convertToDateValue(values.decorateRange[1].format()),
-        publicStartTime: convertToDateValue(values.publicRange[0].format()),
-        publicEndTime: convertToDateValue(values.publicRange[1].format())
-      };
+      const body = generateUpdateJobFairRequestBody(values, jobFairData?.id);
       const res = await updateJobFairAPI(body);
       if (res.status === 200) return true;
     } catch (e) {
