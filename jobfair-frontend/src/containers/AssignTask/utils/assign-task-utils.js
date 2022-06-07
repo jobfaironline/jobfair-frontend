@@ -1,4 +1,4 @@
-export const getAssignmentsData = async (oldDataSource, newDataSource, dayRange) => {
+export const getAssignmentsData = (oldDataSource, newDataSource, dayRange) => {
   //compare oldDataSource and newDataSource
   const newAssignments = [];
   const deletedAssignments = [];

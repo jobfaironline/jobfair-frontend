@@ -17,6 +17,17 @@ import { getDataSource, getJobFairPublicDayRange, getStaffAssignments, getStaffL
 import { getTableColumns } from './column/AssignTask.column';
 import React, { useEffect, useState } from 'react';
 
+const generateAssignment = (data, shiftData, shiftIndex, assignmentType, dayRange, selectedCellData) => ({
+  beginTime: dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[shiftIndex].beginTime,
+  endTime: dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[shiftIndex].endTime,
+  companyEmployee: data.employee,
+  creatTime: null,
+  id: null,
+  jobFairBooth: null,
+  shift: shiftIndex,
+  type: assignmentType
+});
+
 const AssignTaskContainer = (props) => {
   const { boothId } = props;
   const [tableData, setTableData] = useState({
@@ -84,17 +95,6 @@ const AssignTaskContainer = (props) => {
     }));
   };
 
-  const generateAssignment = (data, shiftData, shiftIndex, assignmentType) => ({
-    beginTime: tableData.dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[shiftIndex].beginTime,
-    endTime: tableData.dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[shiftIndex].endTime,
-    companyEmployee: data.employee,
-    creatTime: null,
-    id: null,
-    jobFairBooth: null,
-    shift: shiftIndex,
-    type: assignmentType
-  });
-
   const onOkModal = async () => {
     try {
       await form.validateFields();
@@ -105,7 +105,14 @@ const AssignTaskContainer = (props) => {
         if (values[`shift-${i}`] === true) {
           const assignment = assignments.find((assignment) => assignment.shift === i);
           if (assignment === undefined) {
-            const result = generateAssignment(data, shiftData, i, values[`shift-${i}-type`]);
+            const result = generateAssignment(
+              data,
+              shiftData,
+              i,
+              values[`shift-${i}-type`],
+              tableData.dayRange,
+              selectedCellData
+            );
             assignments.push(result);
           } else assignment.type = values[`shift-${i}-type`];
         } else {
