@@ -1,18 +1,17 @@
-import './JobFairLandingPage.styles.scss';
+import './JobFairLanding.container.styles.scss';
 import { Button, Divider, Image, Tag, Tooltip, Typography } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PATH } from '../../constants/Paths/Path';
 import { convertToDateString } from '../../utils/common';
 import { faLink, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { generatePath, useHistory, useParams } from 'react-router-dom';
+import { generatePath, useHistory } from 'react-router-dom';
 import { getJobFairByIDAPI } from '../../services/jobhub-api/JobFairControllerService';
 import React, { useEffect, useState } from 'react';
 
 const { Text, Title } = Typography;
 
-const JobFairLandingContainer = () => {
-  const { jobFairId } = useParams();
+const JobFairLandingContainer = ({ jobFairId, isReview }) => {
   const [jobFairData, setJobFairData] = useState({});
   const history = useHistory();
 
@@ -22,6 +21,7 @@ const JobFairLandingContainer = () => {
   }, []);
 
   const handleJoinJobFair = () => {
+    if (isReview) return;
     const url = generatePath(PATH.PUBLICIZED_BOOTH_PAGE, {
       jobFairId
     });
@@ -84,7 +84,7 @@ const JobFairLandingContainer = () => {
         <Title level={3}>Schedule</Title>
         <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem' }}>
           <div className={'time-cube'}>{convertToDateString(jobFairData?.publicStartTime)}</div>
-          <FontAwesomeIcon icon={faMinus} style={{ color: 'white' }} />
+          <FontAwesomeIcon icon={faMinus} />
           <div className={'time-cube'}>{convertToDateString(jobFairData?.publicEndTime)}</div>
         </div>
       </div>
