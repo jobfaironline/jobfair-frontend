@@ -1,4 +1,5 @@
 import './JobFairLandingPageForm.styles.scss';
+import { EyeOutlined } from '@ant-design/icons';
 import { Form, Input, Typography } from 'antd';
 import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairValidation';
 import React from 'react';
@@ -12,11 +13,13 @@ const JobFairLandingPageFormComponent = ({
   uploadProps,
   thumbnailUrl,
   companyInformation,
-  jobFairData
+  jobFairData,
+  handleReviewLandingPage
 }) => (
   <div className={'job-fair-landing-page'}>
     <div style={{ textAlign: 'center' }}>
-      <Title level={5}>Design landing page</Title>
+      <Title level={4}>Schedule job fair event</Title>
+      <EyeOutlined className={'icon'} onClick={handleReviewLandingPage} />
     </div>
     <Form
       initialValues={{

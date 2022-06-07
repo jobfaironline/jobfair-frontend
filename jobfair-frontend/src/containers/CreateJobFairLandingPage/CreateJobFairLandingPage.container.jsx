@@ -1,3 +1,5 @@
+import { PATH } from '../../constants/Paths/Path';
+import { generatePath } from 'react-router-dom';
 import { getBase64 } from '../../utils/common';
 import { getCompanyProfileAPI } from '../../services/jobhub-api/CompanyControllerService';
 import { notification } from 'antd';
@@ -6,7 +8,7 @@ import { useSelector } from 'react-redux';
 import JobFairLandingPageFormComponent from '../../components/forms/JobFairLandingPageForm/JobFairLandingPageForm.component';
 import React, { useEffect, useState } from 'react';
 
-const JobFairLandingPageContainer = ({ jobFairData, onFinish, form, jobFairId }) => {
+const CreateJobFairLandingPageContainer = ({ jobFairData, onFinish, form, jobFairId }) => {
   const [isError, setIsError] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState(jobFairData.thumbnailUrl);
   const [companyInformation, setCompanyInformation] = useState();
@@ -17,6 +19,17 @@ const JobFairLandingPageContainer = ({ jobFairData, onFinish, form, jobFairId })
     const companyInformation = await getCompanyProfileAPI(companyId).then((response) => response.data);
     setCompanyInformation(companyInformation);
   }, []);
+
+  const handleReviewLandingPage = async () => {
+    const values = form.getFieldsValue(true);
+    await onFinish(values);
+    const url = generatePath(PATH.JOB_FAIR_LANDING_PAGE, {
+      jobFairId,
+      review: 'review'
+    });
+    const src = `${window.location.origin}${url}?review`;
+    window.open(src);
+  };
 
   const uploadProps = {
     name: 'file',
@@ -49,8 +62,9 @@ const JobFairLandingPageContainer = ({ jobFairData, onFinish, form, jobFairId })
       uploadProps={uploadProps}
       thumbnailUrl={thumbnailUrl}
       companyInformation={companyInformation}
+      handleReviewLandingPage={handleReviewLandingPage}
     />
   ) : null;
 };
 
-export default JobFairLandingPageContainer;
+export default CreateJobFairLandingPageContainer;

@@ -16,7 +16,7 @@ import { handleFieldsError } from '../../utils/handleFIeldsError';
 import { loadGLBModel } from '../../utils/ThreeJS/threeJSUtil';
 import { useHistory, useLocation } from 'react-router-dom';
 import ChooseTemplateJobFairContainer from '../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
-import JobFairLandingPageContainer from '../JobFairLandingPage/JobFairLandingPage.container';
+import CreateJobFairLandingPageContainer from '../CreateJobFairLandingPage/CreateJobFairLandingPage.container';
 import JobFairParkMapComponent from '../../components/3D/JobFairParkMap/JobFairParkMap.component';
 import PublishJobFairContainer from '../PublishJobFairContainer/PublishJobFair.container';
 import React, { useEffect, useState } from 'react';
@@ -291,7 +291,7 @@ const OrganizeJobFairContainer = () => {
       rightSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
       leftSide={
         jobFairData !== undefined ? (
-          <JobFairLandingPageContainer
+          <CreateJobFairLandingPageContainer
             jobFairData={jobFairData}
             form={form}
             onFinish={updateJobFairAtLandingPage}
