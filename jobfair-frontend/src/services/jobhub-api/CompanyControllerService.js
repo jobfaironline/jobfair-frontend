@@ -3,3 +3,4 @@ import { ENDPOINT_COMPANY } from '../../constants/Endpoints/jobhub-api/CompanyCo
 
 export const getCompanyProfileAPI = (companyId) => CallAPI(`${ENDPOINT_COMPANY}/${companyId}`, 'GET');
 export const updateCompanyProfileAPI = (body, companyId) => CallAPI(`${ENDPOINT_COMPANY}/${companyId}`, 'PUT', body);
+export const createCompanyAPI = (body) => CallAPI(ENDPOINT_COMPANY, 'POST', body);

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { Button, Form, Input, Modal, notification } from 'antd';
 import { ControlButtonGroup } from '../../../components/customized-components/DecoratedBoothTool/ControlButton/ControlButtonGroup.component';
 import { DecorateBooth3DItemMenuContainer } from '../../SampleItemMenu/DecorateBooth3DItemMenu.container';
@@ -182,19 +181,19 @@ export const Decorate3DBoothContainer = (props) => {
     history.push(url);
   };
 
-  const handleOnRotationLeft = (_) => {
+  const handleOnRotationLeft = () => {
     if (selectedItem === undefined) return;
 
     rotateModelLeft(selectedItem, 10);
   };
 
-  const handleOnRotationRight = (_) => {
+  const handleOnRotationRight = () => {
     if (selectedItem === undefined) return;
 
     rotateModelRight(selectedItem, 10);
   };
 
-  const handleDelete = (_) => {
+  const handleDelete = () => {
     setModelItems((prevState) => prevState.filter((itemMesh) => itemMesh.uuid !== selectedItem.uuid));
   };
 
