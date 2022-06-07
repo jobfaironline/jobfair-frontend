@@ -1,18 +1,21 @@
 import './JobFairLanding.container.styles.scss';
 import { Button, Divider, Image, Tag, Tooltip, Typography } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
+import { CompactCompanyProfile } from '../../components/customized-components/CompanyProfile/CompactCompanyProfile.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { PATH } from '../../constants/Paths/Path';
 import { convertToDateString } from '../../utils/common';
 import { faLink, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getJobFairByIDAPI } from '../../services/jobhub-api/JobFairControllerService';
+import { mapCompanyProfileFromAPIResponse } from '../../utils/mapperCompanyProfile';
 import React, { useEffect, useState } from 'react';
 
 const { Text, Title } = Typography;
 
 const JobFairLandingContainer = ({ jobFairId, isReview }) => {
-  const [jobFairData, setJobFairData] = useState({});
+  const [jobFairData, setJobFairData] = useState(undefined);
   const history = useHistory();
 
   useEffect(async () => {
@@ -31,6 +34,8 @@ const JobFairLandingContainer = ({ jobFairId, isReview }) => {
   const onClickLink = () => {
     navigator.clipboard.writeText(window.location.href);
   };
+
+  if (jobFairData === undefined) return <LoadingComponent isWholePage={true} />;
 
   return (
     <div className={'job-fair-landing-container'}>
@@ -80,13 +85,17 @@ const JobFairLandingContainer = ({ jobFairId, isReview }) => {
       <div className={'detail'}>
         <Title level={3}>Description</Title>
         <Text className={'description'}>{jobFairData?.description}</Text>
-        <Divider style={{ borderTop: '1px solid white' }} />
+        <Divider />
         <Title level={3}>Schedule</Title>
         <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem' }}>
           <div className={'time-cube'}>{convertToDateString(jobFairData?.publicStartTime)}</div>
           <FontAwesomeIcon icon={faMinus} />
           <div className={'time-cube'}>{convertToDateString(jobFairData?.publicEndTime)}</div>
         </div>
+        <Divider />
+        <Title level={3}>About the host</Title>
+
+        <CompactCompanyProfile data={mapCompanyProfileFromAPIResponse(jobFairData?.company)} />
       </div>
     </div>
   );
