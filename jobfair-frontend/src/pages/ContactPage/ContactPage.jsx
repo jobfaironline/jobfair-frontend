@@ -2,33 +2,31 @@ import { FacebookOutlined, GithubOutlined, InstagramOutlined } from '@ant-design
 import React from 'react';
 
 const ContactPage = () => (
-  <div className='page contact-page'>
-    <div>
-      <div className='left-side'>
-        <div>JobHub</div>
-        <div>
-          <FacebookOutlined
-            style={{ fontSize: '3rem' }}
-            onClick={() => {
-              window.location.href = 'https://www.facebook.com/TrongKhanh.Kieu';
-            }}
-          />
-          <InstagramOutlined
-            style={{ fontSize: '3rem' }}
-            onClick={() => {
-              window.location.href = 'https://help.instagram.com/';
-            }}
-          />
-          <GithubOutlined
-            style={{ fontSize: '3rem' }}
-            onClick={() => {
-              window.location.href = 'https://github.com/jobfaironline';
-            }}
-          />
-        </div>
+  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+    <div style={{ flex: 1 }}>
+      <div style={{ textTransform: 'uppercase', fontSize: '30px', fontWeight: 'bold', color: '#1E3B9B' }}>JobHub</div>
+      <div>
+        <FacebookOutlined
+          style={{ fontSize: '3rem' }}
+          onClick={() => {
+            window.location.href = 'https://www.facebook.com/TrongKhanh.Kieu';
+          }}
+        />
+        <InstagramOutlined
+          style={{ fontSize: '3rem' }}
+          onClick={() => {
+            window.location.href = 'https://help.instagram.com/';
+          }}
+        />
+        <GithubOutlined
+          style={{ fontSize: '3rem' }}
+          onClick={() => {
+            window.location.href = 'https://github.com/jobfaironline';
+          }}
+        />
       </div>
-      <div className='right-side'>form</div>
     </div>
+    <div style={{ flex: 4 }}>form</div>
   </div>
 );
 

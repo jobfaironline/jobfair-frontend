@@ -35,7 +35,7 @@ const JobFairAds = () => (
   </div>
 );
 
-const HeaderPart = ({ onClick }) => (
+const HeaderPart = () => (
   <div className='home-body'>
     <div className='a-better-way'>
       <div>
@@ -68,12 +68,6 @@ const HeaderPart = ({ onClick }) => (
   </div>
 );
 
-const FooterPart = () => (
-  <div className='footer'>
-    <ContactPage />
-  </div>
-);
-
 const HomePage = () => {
   const role = useSelector((state) => state.authentication.user.roles);
 
@@ -96,7 +90,7 @@ const HomePage = () => {
             <Divider plain></Divider>
             <FAQPage />
             <Divider plain></Divider>
-            <FooterPart />
+            <ContactPage />
           </div>
         );
     }
