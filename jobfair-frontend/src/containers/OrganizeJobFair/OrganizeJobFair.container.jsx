@@ -8,17 +8,15 @@ import { convertToDateValue } from '../../utils/common';
 import {
   draftJobFairAPI,
   getJobFairByIDAPI,
-  publishJobFairAPI,
   updateJobFairAPI
 } from '../../services/jobhub-api/JobFairControllerService';
+import { generatePath, useHistory, useLocation } from 'react-router-dom';
 import { getLayoutByJobFairId, pickLayoutForJobFair } from '../../services/jobhub-api/LayoutControllerService';
 import { handleFieldsError } from '../../utils/handleFIeldsError';
 import { loadGLBModel } from '../../utils/ThreeJS/threeJSUtil';
-import { useHistory, useLocation } from 'react-router-dom';
 import ChooseTemplateJobFairContainer from '../ChooseTemplateJobFair/ChooseTemplateJobFair.container';
 import CreateJobFairLandingPageContainer from '../CreateJobFairLandingPage/CreateJobFairLandingPage.container';
 import JobFairParkMapComponent from '../../components/3D/JobFairParkMap/JobFairParkMap.component';
-import PublishJobFairContainer from '../PublishJobFairContainer/PublishJobFair.container';
 import React, { useEffect, useState } from 'react';
 import ScheduleJobFairFormComponent from '../../components/forms/ScheduleJobFairForm/ScheduleJobFairForm.component';
 import moment from 'moment';
@@ -28,12 +26,12 @@ const generateUpdateJobFairRequestBody = (formValues, jobFairId) => {
 
   const shifts = [
     {
-      beginTime: formValues.morningShift[0].unix() - startOfDate.unix(),
-      endTime: formValues.morningShift[1].unix() - startOfDate.unix()
+      beginTime: formValues.morningShift[0].valueOf() - startOfDate.valueOf(),
+      endTime: formValues.morningShift[1].valueOf() - startOfDate.valueOf()
     },
     {
-      beginTime: formValues.afternoonShift[0].unix() - startOfDate.unix(),
-      endTime: formValues.afternoonShift[1].unix() - startOfDate.unix()
+      beginTime: formValues.afternoonShift[0].valueOf() - startOfDate.valueOf(),
+      endTime: formValues.afternoonShift[1].valueOf() - startOfDate.valueOf()
     }
   ];
   return {
@@ -71,23 +69,30 @@ const OrganizeJobFairContainer = () => {
   const fetchData = async () => {
     try {
       if (step === 0) {
-        const body = { name: 'Untitled' };
-        const data = (await draftJobFairAPI(body)).data;
-        setJobFairData(data);
-        notification['success']({
-          message: 'A job fair has been created'
-        });
-      } else {
-        const jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
-
-        const layoutData = (await getLayoutByJobFairId(jobFairId)).data;
-        const glb = await loadGLBModel(layoutData.url);
-        setLayoutData({
-          glb: glb.scene,
-          id: layoutData.id
-        });
-        setJobFairData(jobFairData);
+        let jobFairData;
+        try {
+          jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
+        } catch (e) {
+          //ignore error
+        }
+        if (jobFairData === undefined) {
+          const body = { name: 'Untitled' };
+          const data = (await draftJobFairAPI(body)).data;
+          setJobFairData(data);
+          notification['success']({
+            message: 'A job fair has been created'
+          });
+          return;
+        }
       }
+      const jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
+      const layoutData = (await getLayoutByJobFairId(jobFairId)).data;
+      const glb = await loadGLBModel(layoutData.url);
+      setLayoutData({
+        glb: glb.scene,
+        id: layoutData.id
+      });
+      setJobFairData(jobFairData);
     } catch (e) {
       notification['error']({
         message: `Something went wrong: ${e.response.data.message}`
@@ -150,20 +155,6 @@ const OrganizeJobFairContainer = () => {
     }
   };
 
-  const publishJobFairEvent = async () => {
-    try {
-      await publishJobFairAPI(jobFairData?.id);
-      notification['success']({
-        message: 'Publish job fair successfully'
-      });
-    } catch (e) {
-      notification['error']({
-        message: `Failed to publish job fair`,
-        description: `${e.response.data.message}`
-      });
-    }
-  };
-
   const onNext = (step) => {
     switch (step) {
       case 0:
@@ -187,21 +178,10 @@ const OrganizeJobFairContainer = () => {
           try {
             await form.validateFields();
             await updateJobFairAtLandingPage(form.getFieldsValue(true));
-            setCurrentStep(currentStep + 1);
-            setIsError(false);
+            const url = generatePath(PATH_COMPANY_MANAGER.CHECKLIST, { jobFairId });
+            history.push(url);
           } catch (e) {
             handleFieldsError(form);
-          }
-        };
-      case 4:
-        return async () => {
-          try {
-            await publishJobFairEvent();
-            history.push(PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE);
-          } catch (e) {
-            notification['error']({
-              message: `Fail to publish job fair: ${e.response.message}`
-            });
           }
         };
       default:
@@ -307,17 +287,10 @@ const OrganizeJobFairContainer = () => {
       onPrev={onPrev(currentStep)}
       ratio={450 / 1728}
       currentStep={currentStep}
-    />,
-    <>
-      {jobFairData !== undefined ? (
-        <PublishJobFairContainer
-          jobFairId={jobFairData.id}
-          onFinish={onNext(currentStep)}
-          onHandlePrev={onPrev(currentStep)}
-        />
-      ) : null}
-    </>
+    />
   ];
+
+  if (jobFairData === undefined) return <LoadingComponent isWholePage={true} />;
 
   return <div>{stepComponentList[currentStep]}</div>;
 };

@@ -65,5 +65,7 @@ export const PATH_COMPANY_MANAGER = {
   JOB_FAIR_GRID_PAGE: '/company/my-job-fair',
   TEMPLATE_GRID_PAGE: '/company/my-template',
   TEMPLATE_DETAIL: '/company/my-template/:templateId',
-  QUESTION_BANK: '/company/question-bank'
+  QUESTION_BANK: '/company/question-bank',
+  CHECKLIST: '/company/checklist/:jobFairId',
+  REVIEW_MAP: '/company/review-map/:layoutId'
 };

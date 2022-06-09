@@ -1,0 +1,14 @@
+.job-fair-check-list-container {
+  .step-container {
+    border-radius: 8px;
+    border: 1px solid black;
+
+    .step {
+      border-bottom: 1px solid black;
+    }
+
+    :last-child{
+      border-bottom: none;
+    }
+  }
+}

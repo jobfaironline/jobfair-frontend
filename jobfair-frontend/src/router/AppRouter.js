@@ -1,3 +1,5 @@
+import { JobFairCheckListPage } from '../pages/JobFairCheckList/JobFairCheckListPage';
+import { JobFairMapReviewPage } from '../pages/JobFairMapReviewPage/JobFairMapReviewPage';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
@@ -298,6 +300,18 @@ const AppRouter = () => {
           key={PATH_COMPANY_MANAGER.QUESTION_BANK}
           component={() => <QuestionBankPage />}
           path={PATH_COMPANY_MANAGER.QUESTION_BANK}
+          exact
+        />
+        <CompanyManagerRouter
+          key={PATH_COMPANY_MANAGER.CHECKLIST}
+          component={() => <JobFairCheckListPage />}
+          path={PATH_COMPANY_MANAGER.CHECKLIST}
+          exact
+        />
+        <CompanyManagerRouter
+          key={PATH_COMPANY_MANAGER.REVIEW_MAP}
+          component={() => <JobFairMapReviewPage />}
+          path={PATH_COMPANY_MANAGER.REVIEW_MAP}
           exact
         />
         <Route path='/index.html'>
