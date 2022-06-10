@@ -24,6 +24,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  margin-bottom: 2rem;
 
   .ads-container-left {
     display: flex;
@@ -100,104 +101,4 @@
 
     }
   }
-}
-
-.home-body {
-
-  display: flex;
-  padding: 90px 120px;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  background-color: #fcfbfb;
-  box-sizing: border-box;
-
-  .a-better-way {
-    display: flex;
-    width: 40%;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .solution-margin {
-    display: block;
-    width: 10.3%;
-    box-sizing: border-box;
-  }
-
-  .video-loop {
-    overflow: hidden;
-    z-index: 1;
-    width: 41.6vw;
-    height: 26vw;
-    position: relative
-  }
-
-  .player-wrapper {
-    position: relative;
-    padding-top: 56.25%
-  }
-
-  .react-player {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  .circular-icon {
-    display: inline-block;
-    position: relative;
-    width: 50px;
-    height: 50px;
-    overflow: hidden;
-    border-radius: 50%;
-  }
-
-  .circular-icon img {
-    width: auto;
-    height: 100%;
-    margin-left: -3px;
-  }
-
-  .below-icon-text {
-    display: block;
-    margin-top: 32px;
-    font-size: 40px;
-    line-weight: 52px;
-    font-weight: 700;
-    color: #212121;
-    font-family: Dmsans, sans-serif;
-    box-sizing: border-box;
-  }
-
-  .paragraph-below-text {
-    display: block;
-    margin-top: 24px;
-    font-family: Dmsans, sans-serif;
-    font-size: 20px;
-    line-height: 26px;
-    font-weight: 400;
-    color: #404040;
-    box-sizing: border-box;
-  }
-
-  .button {
-    margin-top: calc(50% + 25px);
-    background-color: #1E3B9B;
-  }
-
-  .button:hover {
-    background-color: #FF7866;
-    transition: 0.7s;
-  }
-
-}
-
-.footer {
-  padding-right: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  box-sizing: border-box;
-
 }

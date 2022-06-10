@@ -1,0 +1,81 @@
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: #fcfbfb;
+  color: #1E3B9B;
+  width: fit-content;
+
+  .left-side {
+    margin-top: 2rem;
+    flex: 1;
+    margin-left: 5rem;
+    display: flex;
+    flex-direction: column;
+
+    .logo {
+      text-transform: uppercase;
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .logo-click {
+      display: flex;
+      flex-direction: column;
+      margin-top: 2rem;
+
+      .children {
+        display: flex;
+        flex-direction: row;
+
+        .description {
+          font-size: 20px;
+          font-weight: bold;
+          margin-top: 0.5rem;
+          margin-left: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .right-side {
+    flex: 4;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 5rem;
+
+    .children {
+      margin-left: 5rem;
+
+      .title {
+        font-size: 20px;
+        font-weight: bold;
+        width: max-content;
+      }
+
+      .normal-text {
+        font-size: 15px;
+        width: max-content;
+
+        .span-text {
+          margin-left: 0.5rem;
+        }
+      }
+    }
+
+    .form-contact {
+      margin-left: 10rem;
+
+      .button {
+        background-color: #1E3B9B;
+      }
+
+      .button:hover {
+        background-color: #FF7866;
+        transition: 0.7s;
+      }
+    }
+  }
+
+}
