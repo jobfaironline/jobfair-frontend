@@ -55,7 +55,7 @@ const HomePage = () => {
         );
       default:
         return (
-          <div className='page'>
+          <div>
             <HeaderHomePage />
             <div style={{ width: '100%', height: '10rem', backgroundColor: '#E5EAFB' }}></div>
             <JobFairAds />
