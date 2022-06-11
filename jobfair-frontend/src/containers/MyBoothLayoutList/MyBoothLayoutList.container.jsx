@@ -1,14 +1,18 @@
-import { Card, Modal, Typography, notification } from 'antd';
+import { Card, Modal, Typography, notification, Space, Tooltip, Button } from 'antd';
 import { CustomDateFormat } from '../../constants/ApplicationConst';
 import { decorateBoothAction } from '../../redux-flow/decorateBooth/decorate-booth-slice';
-import { getAllMyBoothLayout } from '../../services/jobhub-api/DecoratorBoothLayoutController';
+import {
+  deleteBoothLayoutInMyBoothLayout,
+  getAllMyBoothLayout
+} from '../../services/jobhub-api/DecoratorBoothLayoutController';
 import { useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import { DeleteOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
 
-const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility }) => {
+const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility, deletable }) => {
   const [myBoothLayouts, setMyBoothLayouts] = useState([]);
   const dispatch = useDispatch();
 
@@ -62,6 +66,29 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility 
     });
   };
 
+  const handleDeleteLayout = (layoutId) => {
+    const modal = Modal.confirm();
+    modal.update({
+      title: 'Confirm using layout',
+      content: 'Are you sure you wanna delete this layout?',
+      onOk: async () => {
+        try {
+          await deleteBoothLayoutInMyBoothLayout(layoutId);
+          await fetchData();
+        } catch (e) {
+          notification['info']({
+            message: `Error happens`,
+            description: `There is problem while delete layout, try again later`,
+            duration: 2
+          });
+        }
+      },
+      onCancel: () => {
+        modal.destroy();
+      }
+    });
+  };
+
   useEffect(() => {
     fetchData();
   }, [myLayoutVisibility]);
@@ -78,7 +105,7 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility 
         {myBoothLayouts.length > 0 ? (
           myBoothLayouts.map((layout) => (
             <Card
-              onClick={() => handleChoose(layout?.id)}
+              onClick={deletable ? null : () => handleChoose(layout?.id)}
               hoverable
               style={{
                 width: 240,
@@ -87,7 +114,24 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility 
                 marginRight: '2rem'
               }}
               cover={<img alt='example' src={layout?.imgUrl} />}>
-              <Meta title={layout.name} description={moment(layout.createTime).format(CustomDateFormat)} />
+              <Meta
+                title={
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Typography>{layout?.name}</Typography>
+                    {deletable ? (
+                      <Tooltip title='delete this layout'>
+                        <Button
+                          shape='circle'
+                          icon={<DeleteOutlined />}
+                          size='small'
+                          onClick={() => handleDeleteLayout(layout?.id)}
+                        />
+                      </Tooltip>
+                    ) : null}
+                  </div>
+                }
+                description={moment(layout.createTime).format(CustomDateFormat)}
+              />
             </Card>
           ))
         ) : (

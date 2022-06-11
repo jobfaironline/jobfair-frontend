@@ -11,6 +11,7 @@ import JobFairAssignmentTableColumn from '../JobFairAssignmentTable/JobFairAssig
 import React, { useEffect, useState } from 'react';
 import TaskActionButton from './TaskActionButton.container';
 import { isFulfilled } from '@reduxjs/toolkit';
+import MyBoothLayoutListContainer from '../MyBoothLayoutList/MyBoothLayoutList.container';
 const { TabPane } = Tabs;
 const { Option } = Select;
 
@@ -22,6 +23,7 @@ const JobFairAssignmentContainer = () => {
   const [reRender, setRerender] = useState(false);
   const [currentTab, setCurrentTab] = useState(AssignmentConst.SUPERVISOR);
   const [viewAllMode, setViewAllMode] = useState(true);
+  const [myLayoutVisibility, setMyLayoutVisibility] = useState(false);
   //pagination
   const [totalRecord, setTotalRecord] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -85,8 +87,17 @@ const JobFairAssignmentContainer = () => {
     }
   };
 
+  const handleOpenMyBoothLayout = () => {
+    setMyLayoutVisibility(true);
+  };
+
   return (
     <div style={{}}>
+      <MyBoothLayoutListContainer
+        setMyLayoutVisibility={setMyLayoutVisibility}
+        myLayoutVisibility={myLayoutVisibility}
+        deletable
+      />
       <Space
         style={{
           display: 'flex',
@@ -111,7 +122,14 @@ const JobFairAssignmentContainer = () => {
       </Space>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {viewAllMode ? (
-          <CommonTableContainer {...jobFairAssignmentTableProps} />
+          <>
+            <Space style={{ width: '100%', justifyContent: 'end', marginBottom: '1rem' }}>
+              <Button type='primary' onClick={handleOpenMyBoothLayout}>
+                My Booth Layout
+              </Button>
+            </Space>
+            <CommonTableContainer {...jobFairAssignmentTableProps} />
+          </>
         ) : (
           <Tabs
             activeKey={currentTab}
@@ -130,7 +148,9 @@ const JobFairAssignmentContainer = () => {
             </TabPane>
             <TabPane tab='Decorate task' key={AssignmentConst.DECORATOR}>
               <Space style={{ width: '100%', justifyContent: 'end', marginBottom: '1rem' }}>
-                <Button type='primary'>My Booth Layout</Button>
+                <Button type='primary' onClick={handleOpenMyBoothLayout}>
+                  My Booth Layout
+                </Button>
               </Space>
               <CommonTableContainer {...jobFairAssignmentTableProps} />
             </TabPane>
