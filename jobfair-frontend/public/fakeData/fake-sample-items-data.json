@@ -26,5 +26,68 @@
     "description": "Trash",
     "thumbnailUrl": "/3D-component/trash.png",
     "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/trash.glb"
+  },
+  {
+    "id": 5,
+    "name": "New Table",
+    "description": "New table",
+    "thumbnailUrl": "/3D-component/trash.png",
+    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/NormalTable.glb"
+  },
+  {
+    "id": 6,
+    "name": "New Table v2",
+    "description": "New table v2",
+    "thumbnailUrl": "/3D-component/trash.png",
+    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/NormalTable_Ver2.glb"
+  },
+  {
+    "id": 7,
+    "name": "Receptionist",
+    "description": "Receptionist",
+    "thumbnailUrl": "/3D-component/trash.png",
+    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/ReceptionistTable.glb"
+  },
+  {
+    "id": 8,
+    "name": "Receptionist v2",
+    "description": "Receptionist v2",
+    "thumbnailUrl": "/3D-component/trash.png",
+    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/ReceptionistTable_Ver2.glb"
+  },
+  {
+    "id": 9,
+    "name": "New Standee ",
+    "description": "New Standee",
+    "thumbnailUrl": "/3D-component/trash.png",
+    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/Standee.glb"
+  },
+  {
+    "id": 10,
+    "name": "New Standee v2",
+    "description": "New Standee v2",
+    "thumbnailUrl": "/3D-component/trash.png",
+    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/Standee_Ver2.glb"
+  },
+  {
+    "id": 11,
+    "name": "New Screen",
+    "description": "New screen",
+    "thumbnailUrl": "/3D-component/trash.png",
+    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/Screne.glb"
+  },
+  {
+    "id": 12,
+    "name": "New Screen v2",
+    "description": "New Screen v2",
+    "thumbnailUrl": "/3D-component/trash.png",
+    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/screen_v7.glb"
+  },
+  {
+    "id": 13,
+    "name": "New Screen v3",
+    "description": "New Screen v3",
+    "thumbnailUrl": "/3D-component/trash.png",
+    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/screen_v6.glb"
   }
 ]
