@@ -22,6 +22,7 @@ export const ReviewBoothLayoutContainer = ({ id, type }) => {
     let url;
     try {
       switch (type) {
+        //check Layout.js constant to know the type usage
         case BoothLayoutType.GENERAL: {
           const response = await getCompanyBoothLatestLayout(id);
           url = response.data.url;
