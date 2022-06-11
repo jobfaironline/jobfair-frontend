@@ -3,6 +3,7 @@ import { Button, Space } from 'antd';
 import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
 import { generatePath, useHistory } from 'react-router-dom';
 import React from 'react';
+import moment from 'moment';
 
 const TaskActionButton = ({ type, record }) => {
   const history = useHistory();
@@ -56,10 +57,7 @@ const TaskActionButton = ({ type, record }) => {
         <Space>
           <Button
             type='link'
-            disabled={
-              new Date().setMilliseconds(record?.decorateStartTime) > Date.now() ||
-              new Date().setMilliseconds(record?.decorateEndTime) < Date.now()
-            }
+            disabled={record?.decorateStartTime > moment().valueOf() || record?.decorateEndTime < moment().valueOf()}
             onClick={() =>
               history.push(
                 generatePath(PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE, {

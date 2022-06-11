@@ -1,6 +1,8 @@
+import { BoothLayoutType } from '../../constants/LayoutConstant';
 import { Button, Card, Modal, Tooltip, Typography, notification } from 'antd';
 import { CustomDateFormat } from '../../constants/ApplicationConst';
 import { DeleteOutlined } from '@ant-design/icons';
+import { ReviewBoothLayoutContainer } from '../3D/ReviewBoothLayout/ReviewBoothLayout.container';
 import { decorateBoothAction } from '../../redux-flow/decorateBooth/decorate-booth-slice';
 import {
   deleteBoothLayoutInMyBoothLayout,
@@ -54,7 +56,7 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility,
     const modal = Modal.confirm();
     modal.update({
       title: 'Confirm using layout',
-      content: 'Are you sure you wanna you this layout? (The current design will be replace!)',
+      content: <ReviewBoothLayoutContainer id={id} type={BoothLayoutType.DECORATOR} />,
       onOk: () => {
         dispatch(decorateBoothAction.setModelId(id));
         Modal.destroyAll();
