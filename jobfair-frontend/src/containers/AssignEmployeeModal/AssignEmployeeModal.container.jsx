@@ -40,6 +40,7 @@ export const AssignEmployeeModalContainer = (props) => {
         ...assignment.companyEmployee.account,
         fullName: `${assignment.companyEmployee.account.firstname} ${assignment.companyEmployee.account.middlename} ${assignment.companyEmployee.account.lastname}`,
         assignmentType: assignment.type,
+        assignmentId: assignment.id,
         key: assignment.companyEmployee.account.id
       }));
 
@@ -86,7 +87,7 @@ export const AssignEmployeeModalContainer = (props) => {
             onChange={(value) => {
               record.assignmentType = AssigmentType.filter((item) => item.value === value)[0].name;
             }}>
-            {AssigmentType.map((item) => (
+            {AssigmentType.filter((item) => item.name !== 'INTERVIEWER' && item.name !== 'RECEPTION').map((item) => (
               <Option value={item.value}>{item.label}</Option>
             ))}
           </Select>
@@ -115,7 +116,7 @@ export const AssignEmployeeModalContainer = (props) => {
 
     const unassignedPromise = [];
     for (const employee of unassignedEmployee) {
-      const promise = unAssignEmployee(employee.id, boothId);
+      const promise = unAssignEmployee(employee.assignmentId);
       unassignedPromise.push(promise);
     }
     await Promise.all(unassignedPromise);

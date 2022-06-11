@@ -1,7 +1,8 @@
+import { AssignmentConst } from '../../constants/AssignmentConst';
 import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
 import { Space, Typography, notification, Tabs, Button, Select } from 'antd';
 import { generatePath, useHistory } from 'react-router-dom';
-import { getAssignmentByEmployeeId } from '../../services/jobhub-api/AssignmentControllerService';
+import { getAssignmentByEmployeeId, getAssignmentById } from '../../services/jobhub-api/AssignmentControllerService';
 import { mapperJobFairAssignment } from '../../utils/mapperJobFairAssignment';
 import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
@@ -9,7 +10,6 @@ import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.c
 import JobFairAssignmentTableColumn from '../JobFairAssignmentTable/JobFairAssignmentTable.column';
 import React, { useEffect, useState } from 'react';
 import TaskActionButton from './TaskActionButton.container';
-import { AssignmentConst } from '../../constants/AssignmentConst';
 import { isFulfilled } from '@reduxjs/toolkit';
 const { TabPane } = Tabs;
 const { Option } = Select;

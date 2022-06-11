@@ -18,9 +18,10 @@ import React, { useEffect, useState } from 'react';
 
 const { Search } = Input;
 
-const EmployeeManagementContainer = () => {
+const EmployeeManagementContainer = (props) => {
   const companyId = useSelector((state) => state.authentication.user.companyId);
   const [form] = Form.useForm();
+  const { isEmployeeManagement = true } = props;
 
   //pagination
   /* eslint-disable no-unused-vars */
@@ -198,22 +199,26 @@ const EmployeeManagementContainer = () => {
       </Modal>
       <div className={'employee-management'}>
         <div className={'header'}>
-          <Typography.Title level={2} style={{ marginRight: '2rem' }}>
-            Employee management
-          </Typography.Title>
-          <Button style={{ marginRight: '2rem', borderRadius: 8 }} onClick={onAddClick}>
-            Create employee account
-          </Button>
-          <div style={{ marginRight: '2rem' }}>
-            <Button
-              style={{ borderRadius: 8 }}
-              icon={<UploadOutlined />}
-              onClick={() => {
-                setUploadCSVModalVisible(true);
-              }}>
-              Upload CSV or Excel file
-            </Button>
-          </div>
+          {isEmployeeManagement ? (
+            <>
+              <Typography.Title level={2} style={{ marginRight: '2rem' }}>
+                Employee management
+              </Typography.Title>
+              <Button style={{ marginRight: '2rem', borderRadius: 8 }} onClick={onAddClick}>
+                Create employee account
+              </Button>
+              <div style={{ marginRight: '2rem' }}>
+                <Button
+                  style={{ borderRadius: 8 }}
+                  icon={<UploadOutlined />}
+                  onClick={() => {
+                    setUploadCSVModalVisible(true);
+                  }}>
+                  Upload CSV or Excel file
+                </Button>
+              </div>
+            </>
+          ) : null}
         </div>
         <div className={'search-filter-container'}>
           <Search placeholder='Search employee' className={'search-bar'} onSearch={onSearch} />

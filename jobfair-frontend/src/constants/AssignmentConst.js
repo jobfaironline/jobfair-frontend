@@ -18,6 +18,11 @@ export const AssigmentType = [
     value: 3,
     label: 'Decorator',
     name: 'DECORATOR'
+  },
+  {
+    value: 4,
+    label: 'Staff',
+    name: 'STAFF'
   }
 ];
 
@@ -25,5 +30,6 @@ export const AssignmentConst = {
   SUPERVISOR: 'SUPERVISOR',
   RECEPTION: 'RECEPTION',
   INTERVIEWER: 'INTERVIEWER',
-  DECORATOR: 'DECORATOR'
+  DECORATOR: 'DECORATOR',
+  STAFF: 'STAFF'
 };

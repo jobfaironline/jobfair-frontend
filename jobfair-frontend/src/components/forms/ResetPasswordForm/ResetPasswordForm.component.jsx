@@ -1,5 +1,5 @@
 import './ResetPasswordForm.scss';
-import { Button, Divider, Form, Input } from 'antd';
+import { Button, Card, Form, Input } from 'antd';
 import { ChangePasswordValidation } from '../../../validate/ChangePasswordValidation';
 import React from 'react';
 import ReactCodeInput from 'react-code-input';
@@ -11,11 +11,18 @@ const ResetPasswordFormComponent = ({ onFinish, form, email, setOtpCode }) => {
   };
   return (
     <div className='container'>
-      <Divider orientation='center' plain>
-        Reset Password Page
-      </Divider>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Form labelCol={{ span: 8 }} wrapperCol={{ span: 8 }} form={form} onFinish={onFinish} autoComplete='off'>
+      <Card
+        title={`Reset password for email: ${email}`}
+        style={{
+          boxShadow: '5px 8px 24px 5px rgba(208, 216, 243, 0.6)',
+          width: '30rem',
+          marginTop: '5rem',
+          display: 'block',
+          margin: '0 auto'
+        }}
+        headStyle={{ backgroundColor: 'white', border: 0 }}
+        bodyStyle={{ backgroundColor: 'white', border: 0 }}>
+        <Form form={form} onFinish={onFinish} autoComplete='off'>
           <div
             style={{
               display: 'flex',
@@ -25,30 +32,31 @@ const ResetPasswordFormComponent = ({ onFinish, form, email, setOtpCode }) => {
             <Typography variant='h6' gutterBottom component='div'>
               OTP Code:
             </Typography>
-            <ReactCodeInput id='pinCode' type='text' fields={6} onChange={handlePinChange} />
+            <ReactCodeInput id='pinCode' type='number' fields={6} onChange={handlePinChange} autoComplete={'false'} />
           </div>
-          {!email ? (
-            <Form.Item label='Email' name='email' hasFeedback rules={ChangePasswordValidation.email}>
-              <Input />
-            </Form.Item>
-          ) : null}
-          <Form.Item label='newPassword' name='newPassword' hasFeedback rules={ChangePasswordValidation.newPassword}>
+          <Form.Item
+            label='New password'
+            name='newPassword'
+            hasFeedback
+            rules={ChangePasswordValidation.newPassword}
+            style={{ display: 'inline-block', width: '100%' }}>
             <Input.Password />
           </Form.Item>
           <Form.Item
-            label='confirmPassword'
+            label='Confirm password'
             name='confirmPassword'
             hasFeedback
-            rules={ChangePasswordValidation.rePassword}>
+            rules={ChangePasswordValidation.rePassword}
+            style={{ display: 'inline-block', width: '100%' }}>
             <Input.Password />
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type='primary' htmlType='submit' className='button'>
-              Submit
+              Reset password
             </Button>
           </Form.Item>
         </Form>
-      </div>
+      </Card>
     </div>
   );
 };
