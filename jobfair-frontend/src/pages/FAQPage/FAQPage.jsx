@@ -8,7 +8,7 @@ const { Panel } = Collapse;
 const { Paragraph, Text } = Typography;
 
 const FAQPage = () => (
-  <div className='page faq-page'>
+  <div className='faq-page'>
     <div className='container'>
       <div className='left-side'>FAQ</div>
       <div className='right-side'>
