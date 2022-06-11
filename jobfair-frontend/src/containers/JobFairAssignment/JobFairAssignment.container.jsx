@@ -9,6 +9,8 @@ import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.c
 import JobFairAssignmentTableColumn from '../JobFairAssignmentTable/JobFairAssignmentTable.column';
 import React, { useEffect, useState } from 'react';
 import TaskActionButton from './TaskActionButton.container';
+import { AssignmentConst } from '../../constants/AssignmentConst';
+import { isFulfilled } from '@reduxjs/toolkit';
 const { TabPane } = Tabs;
 const { Option } = Select;
 
@@ -18,7 +20,7 @@ const JobFairAssignmentContainer = () => {
 
   const [data, setData] = useState([]);
   const [reRender, setRerender] = useState(false);
-  const [currentTab, setCurrentTab] = useState('RECEPTIONIST');
+  const [currentTab, setCurrentTab] = useState(AssignmentConst.SUPERVISOR);
   const [viewAllMode, setViewAllMode] = useState(true);
   //pagination
   const [totalRecord, setTotalRecord] = useState(0);
@@ -27,7 +29,13 @@ const JobFairAssignmentContainer = () => {
 
   const fetchData = async () => {
     try {
-      const res = await getAssignmentByEmployeeId('', currentPage, pageSize, '');
+      let res;
+      if (viewAllMode) {
+        res = await getAssignmentByEmployeeId('', currentPage, pageSize, '');
+      } else {
+        res = await getAssignmentByEmployeeId('', currentPage, pageSize, '', currentTab);
+      }
+
       setTotalRecord(res.data.totalElements);
       setData([...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))]);
     } catch (e) {
@@ -111,13 +119,16 @@ const JobFairAssignmentContainer = () => {
             onTabClick={(key) => {
               setCurrentTab(key);
             }}>
-            <TabPane tab='Receptionist task' key='RECEPTIONIST'>
+            <TabPane tab='Supervisor task' key={AssignmentConst.SUPERVISOR}>
               <CommonTableContainer {...jobFairAssignmentTableProps} />
             </TabPane>
-            <TabPane tab='Inteview task' key='INTEVIEWER'>
+            <TabPane tab='Receptionist task' key={AssignmentConst.RECEPTION}>
               <CommonTableContainer {...jobFairAssignmentTableProps} />
             </TabPane>
-            <TabPane tab='Decorate task' key='DECORATOR'>
+            <TabPane tab='Inteview task' key={AssignmentConst.INTERVIEWER}>
+              <CommonTableContainer {...jobFairAssignmentTableProps} />
+            </TabPane>
+            <TabPane tab='Decorate task' key={AssignmentConst.DECORATOR}>
               <Space style={{ width: '100%', justifyContent: 'end', marginBottom: '1rem' }}>
                 <Button type='primary'>My Booth Layout</Button>
               </Space>
