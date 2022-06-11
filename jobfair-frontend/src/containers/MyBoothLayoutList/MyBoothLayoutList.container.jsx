@@ -1,5 +1,6 @@
-import { Card, Modal, Typography, notification, Space, Tooltip, Button } from 'antd';
+import { Button, Card, Modal, Tooltip, Typography, notification } from 'antd';
 import { CustomDateFormat } from '../../constants/ApplicationConst';
+import { DeleteOutlined } from '@ant-design/icons';
 import { decorateBoothAction } from '../../redux-flow/decorateBooth/decorate-booth-slice';
 import {
   deleteBoothLayoutInMyBoothLayout,
@@ -8,7 +9,6 @@ import {
 import { useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { DeleteOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
 

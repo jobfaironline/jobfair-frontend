@@ -1,22 +1,18 @@
 import { AssignmentConst } from '../../constants/AssignmentConst';
-import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
-import { Space, Typography, notification, Tabs, Button, Select } from 'antd';
-import { generatePath, useHistory } from 'react-router-dom';
-import { getAssignmentByEmployeeId, getAssignmentById } from '../../services/jobhub-api/AssignmentControllerService';
+import { Button, Select, Space, Tabs, Typography, notification } from 'antd';
+import { getAssignmentByEmployeeId } from '../../services/jobhub-api/AssignmentControllerService';
 import { mapperJobFairAssignment } from '../../utils/mapperJobFairAssignment';
 import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import JobFairAssignmentTableColumn from '../JobFairAssignmentTable/JobFairAssignmentTable.column';
+import MyBoothLayoutListContainer from '../MyBoothLayoutList/MyBoothLayoutList.container';
 import React, { useEffect, useState } from 'react';
 import TaskActionButton from './TaskActionButton.container';
-import { isFulfilled } from '@reduxjs/toolkit';
-import MyBoothLayoutListContainer from '../MyBoothLayoutList/MyBoothLayoutList.container';
 const { TabPane } = Tabs;
 const { Option } = Select;
 
 const JobFairAssignmentContainer = () => {
-  const history = useHistory();
   const webSocketClient = useSelector(selectWebSocket);
 
   const [data, setData] = useState([]);
@@ -32,11 +28,8 @@ const JobFairAssignmentContainer = () => {
   const fetchData = async () => {
     try {
       let res;
-      if (viewAllMode) {
-        res = await getAssignmentByEmployeeId('', currentPage, pageSize, '');
-      } else {
-        res = await getAssignmentByEmployeeId('', currentPage, pageSize, '', currentTab);
-      }
+      if (viewAllMode) res = await getAssignmentByEmployeeId('', currentPage, pageSize, '');
+      else res = await getAssignmentByEmployeeId('', currentPage, pageSize, '', currentTab);
 
       setTotalRecord(res.data.totalElements);
       setData([...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))]);
@@ -76,9 +69,7 @@ const JobFairAssignmentContainer = () => {
       {
         title: 'Actions',
         key: 'action',
-        render: (text, record) => {
-          return <TaskActionButton type={record.assignmentType} record={record} />;
-        }
+        render: (text, record) => <TaskActionButton type={record.assignmentType} record={record} />
       }
     ],
     paginationObject: {

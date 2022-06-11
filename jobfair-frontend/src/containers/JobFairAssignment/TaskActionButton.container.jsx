@@ -1,8 +1,8 @@
-import React from 'react';
-import { Button, Space } from 'antd';
-import { useHistory, generatePath } from 'react-router-dom';
-import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
 import { AssignmentConst } from '../../constants/AssignmentConst';
+import { Button, Space } from 'antd';
+import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
+import { generatePath, useHistory } from 'react-router-dom';
+import React from 'react';
 
 const TaskActionButton = ({ type, record }) => {
   const history = useHistory();

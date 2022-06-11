@@ -1,6 +1,6 @@
 import { Tag, Typography } from 'antd';
-import React from 'react';
 import { convertEnumToString, convertToUTCString } from '../../utils/common';
+import React from 'react';
 
 const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
   {

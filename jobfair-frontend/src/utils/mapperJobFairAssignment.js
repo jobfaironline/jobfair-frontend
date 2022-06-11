@@ -1,5 +1,3 @@
-import { convertToUTCString } from './common';
-
 export const mapperJobFairAssignment = (item, index) => ({
   key: item.id,
   no: index + 1,
