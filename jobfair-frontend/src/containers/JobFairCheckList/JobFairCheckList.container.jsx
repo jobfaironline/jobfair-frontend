@@ -68,7 +68,8 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
       landing: false,
       publish: false,
       score: 0
-    }
+    },
+    isLoading: true
   });
 
   const history = useHistory();
@@ -112,12 +113,32 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
   };
 
   const fetchData = async () => {
-    let { data: jobFairData } = await getJobFairByIDAPI(jobFairId);
+    let jobFairData;
+    let layoutData;
+    let statistics;
+    try {
+      const { data } = await getJobFairByIDAPI(jobFairId);
+      jobFairData = data;
+    } catch (e) {
+      //ignore
+    }
     jobFairData = mapJobFairData(jobFairData);
-    const { data: layoutData } = await getLayoutByJobFairId(jobFairId);
-    const { data: statistics } = await getStatisticsByJobFair(jobFairId);
+
+    try {
+      const { data } = await getLayoutByJobFairId(jobFairId);
+      layoutData = data;
+    } catch (e) {
+      //ignore
+    }
+
+    try {
+      const { data } = await getStatisticsByJobFair(jobFairId);
+      statistics = data;
+    } catch (e) {
+      //ignore
+    }
     const progressData = calculateProgressPercentage(jobFairData, layoutData, statistics);
-    setState((prevState) => ({ ...prevState, jobFairData, layoutData, statistics, progressData }));
+    setState((prevState) => ({ ...prevState, jobFairData, layoutData, statistics, progressData, isLoading: false }));
   };
 
   const handleReviewLayout = () => {
@@ -167,8 +188,7 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
     }
   };
 
-  if (state.jobFairData === undefined || state.layoutData === undefined || state.statistics === undefined)
-    return <LoadingComponent isWholePage={true} />;
+  if (state.isLoading) return <LoadingComponent isWholePage={true} />;
 
   return (
     <>
@@ -211,6 +231,7 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
 
               <div className={'button-container'}>
                 <Button
+                  disabled={!state.progressData.choosingLayout}
                   style={{ marginRight: '0.3rem' }}
                   className={'button'}
                   type={'primary'}
@@ -227,7 +248,7 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
                 style={{ borderRadius: '8px' }}
                 width={'100%'}
                 height={'200px'}
-                src={state.layoutData.thumbnailUrl}
+                src={state.layoutData?.thumbnailUrl}
               />
             </div>
           </StepComponent>
@@ -382,7 +403,11 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
                   onClick={handleEditLandingPage}>
                   Decorate landing page
                 </Button>
-                <Button className={'button'} type={'primary'} onClick={handleReviewLandingPage}>
+                <Button
+                  disabled={!state.progressData.landing}
+                  className={'button'}
+                  type={'primary'}
+                  onClick={handleReviewLandingPage}>
                   Review
                 </Button>
               </div>

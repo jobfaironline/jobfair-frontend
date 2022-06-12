@@ -72,6 +72,8 @@ const OrganizeJobFairContainer = () => {
         let jobFairData;
         try {
           jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
+          setJobFairData(jobFairData);
+          return;
         } catch (e) {
           //ignore error
         }
