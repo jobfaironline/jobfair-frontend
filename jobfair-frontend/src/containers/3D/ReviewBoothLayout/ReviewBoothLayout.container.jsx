@@ -7,8 +7,8 @@ import { Stage } from '@react-three/drei';
 import { addVideoTexture, fixTextureOffset, loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import { getCompanyBoothLatestLayout } from '../../../services/jobhub-api/CompanyBoothLayoutControllerService';
 import { getMyBoothLayoutById } from '../../../services/jobhub-api/DecoratorBoothLayoutController';
-import { notification } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { notification, Spin } from 'antd';
+import React, { Suspense, useEffect, useState } from 'react';
 
 export const ReviewBoothLayoutContainer = ({ id, type }) => {
   const [boothItems, setBoothItems] = useState();
@@ -61,15 +61,17 @@ export const ReviewBoothLayoutContainer = ({ id, type }) => {
 
   if (boothItems === undefined) return <LoadingComponent />;
   return (
-    <Canvas dpr={[1, 2]} camera={{ fov: 40, zoom: 1.2, position: [-1, 1, -1] }}>
-      <CameraControls />
-      <Stage adjustCamera={false} preset='rembrandt' intensity={0.4} environment='city' contactShadow={false}>
-        <group dispose={null}>
-          {boothItems.map((mesh) => (
-            <BasicMesh key={mesh.uuid} mesh={mesh} />
-          ))}
-        </group>
-      </Stage>
-    </Canvas>
+    <Suspense fallback={<LoadingComponent />}>
+      <Canvas dpr={[1, 2]} camera={{ fov: 40, zoom: 1.2, position: [-1, 1, -1] }}>
+        <CameraControls />
+        <Stage adjustCamera={false} preset='rembrandt' intensity={0.4} environment='city' contactShadow={false}>
+          <group dispose={null}>
+            {boothItems.map((mesh) => (
+              <BasicMesh key={mesh.uuid} mesh={mesh} />
+            ))}
+          </group>
+        </Stage>
+      </Canvas>
+    </Suspense>
   );
 };

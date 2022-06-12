@@ -1,7 +1,7 @@
 import { BoothLayoutType } from '../../constants/LayoutConstant';
-import { Button, Card, Modal, Tooltip, Typography, notification } from 'antd';
+import { Button, Card, Modal, Tooltip, Typography, notification, Space } from 'antd';
 import { CustomDateFormat } from '../../constants/ApplicationConst';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import { ReviewBoothLayoutContainer } from '../3D/ReviewBoothLayout/ReviewBoothLayout.container';
 import { decorateBoothAction } from '../../redux-flow/decorateBooth/decorate-booth-slice';
 import {
@@ -52,14 +52,14 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility,
     }
   };
 
-  const handleChoose = (id) => {
+  const handleChoose = (layoutId, layoutName) => {
     const modal = Modal.confirm();
     modal.update({
       title: 'Confirm using layout',
-      content: <ReviewBoothLayoutContainer id={id} type={BoothLayoutType.DECORATOR} />,
+      content: `Are you sure you want to use layout ${layoutName}? (This layout will replace the current design)`,
       onOk: () => {
-        dispatch(decorateBoothAction.setModelId(id));
-        Modal.destroyAll();
+        dispatch(decorateBoothAction.setModelId(layoutId));
+        modal.destroy();
         setMyLayoutVisibility(false);
       },
       onCancel: () => {
@@ -91,6 +91,19 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility,
     });
   };
 
+  const handlePreviewLayout = (layoutId, layoutName) => {
+    const modal = Modal.info();
+    modal.update({
+      width: '800px',
+      title: `Layout: ${layoutName}`,
+      content: (
+        <div style={{ height: '700px' }}>
+          <ReviewBoothLayoutContainer id={layoutId} type={BoothLayoutType.DECORATOR} />
+        </div>
+      )
+    });
+  };
+
   useEffect(() => {
     fetchData();
   }, [myLayoutVisibility]);
@@ -107,7 +120,7 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility,
         {myBoothLayouts.length > 0 ? (
           myBoothLayouts.map((layout) => (
             <Card
-              onClick={deletable ? null : () => handleChoose(layout?.id)}
+              onClick={deletable ? null : () => handleChoose(layout?.id, layout?.name)}
               hoverable
               style={{
                 width: 240,
@@ -120,16 +133,26 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility,
                 title={
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Typography>{layout?.name}</Typography>
-                    {deletable ? (
-                      <Tooltip title='delete this layout'>
+                    <Space>
+                      {deletable ? (
+                        <Tooltip title='delete this layout'>
+                          <Button
+                            shape='circle'
+                            icon={<DeleteOutlined />}
+                            size='small'
+                            onClick={() => handleDeleteLayout(layout?.id)}
+                          />
+                        </Tooltip>
+                      ) : null}
+                      <Tooltip title='preview this layout'>
                         <Button
                           shape='circle'
-                          icon={<DeleteOutlined />}
+                          icon={<EyeOutlined />}
                           size='small'
-                          onClick={() => handleDeleteLayout(layout?.id)}
+                          onClick={() => handlePreviewLayout(layout?.id, layout?.name)}
                         />
                       </Tooltip>
-                    ) : null}
+                    </Space>
                   </div>
                 }
                 description={moment(layout.createTime).format(CustomDateFormat)}
