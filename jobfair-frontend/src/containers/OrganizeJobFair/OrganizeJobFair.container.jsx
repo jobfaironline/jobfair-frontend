@@ -229,25 +229,24 @@ const OrganizeJobFairContainer = () => {
   const stepComponentList = [
     <SideBarComponent
       rightSide={
-        layoutData.glb ? (
-          <>
-            <Button
-              style={{
-                position: 'absolute',
-                zIndex: 1000,
-                right: 0,
-                display: step === 0 && jobFairData === undefined ? 'none' : 'block'
-              }}
-              onClick={handleGotoChecklist}>
-              Go to checklist
-            </Button>
+        <>
+          <Button
+            style={{
+              position: 'absolute',
+              zIndex: 1000,
+              right: 0
+            }}
+            onClick={handleGotoChecklist}>
+            Go to checklist
+          </Button>
+          {layoutData.glb ? (
             <JobFairParkMapComponent mapMesh={layoutData.glb} />
-          </>
-        ) : isLoadMap ? (
-          <LoadingComponent />
-        ) : (
-          <div>No layout is chosen</div>
-        )
+          ) : isLoadMap ? (
+            <LoadingComponent />
+          ) : (
+            <div className={'no-layout'}>No layout is chosen</div>
+          )}
+        </>
       }
       leftSide={
         <>
@@ -269,22 +268,22 @@ const OrganizeJobFairContainer = () => {
     />,
     <SideBarComponent
       rightSide={
-        layoutData.glb ? (
-          <>
-            <Button
-              onClick={handleGotoChecklist}
-              style={{
-                position: 'absolute',
-                zIndex: 1000,
-                right: 0
-              }}>
-              Go to checklist
-            </Button>
+        <>
+          <Button
+            onClick={handleGotoChecklist}
+            style={{
+              position: 'absolute',
+              zIndex: 1000,
+              right: 0
+            }}>
+            Go to checklist
+          </Button>
+          {layoutData.glb ? (
             <JobFairParkMapComponent mapMesh={layoutData.glb} />
-          </>
-        ) : (
-          <div>No layout is chosen</div>
-        )
+          ) : (
+            <div className={'no-layout'}>No layout is chosen</div>
+          )}
+        </>
       }
       leftSide={
         <>
@@ -318,22 +317,24 @@ const OrganizeJobFairContainer = () => {
     </>,
     <SideBarComponent
       rightSide={
-        layoutData.glb ? (
-          <>
-            <Button
-              onClick={handleGotoChecklist}
-              style={{
-                position: 'absolute',
-                zIndex: 100000,
-                right: 0
-              }}>
-              Go to checklist
-            </Button>
-            <JobFairParkMapComponent mapMesh={layoutData.glb} />{' '}
-          </>
-        ) : (
-          <div>No layout is chosen</div>
-        )
+        <>
+          <Button
+            onClick={handleGotoChecklist}
+            style={{
+              position: 'absolute',
+              zIndex: 100000,
+              right: 0
+            }}>
+            Go to checklist
+          </Button>
+          {layoutData.glb ? (
+            <>
+              <JobFairParkMapComponent mapMesh={layoutData.glb} />{' '}
+            </>
+          ) : (
+            <div className={'no-layout'}>No layout is chosen</div>
+          )}
+        </>
       }
       leftSide={
         jobFairData !== undefined ? (
@@ -342,6 +343,7 @@ const OrganizeJobFairContainer = () => {
             form={form}
             onFinish={updateJobFairAtLandingPage}
             jobFairId={jobFairData.id}
+            onValueChange={onValueChange}
           />
         ) : null
       }
@@ -358,7 +360,7 @@ const OrganizeJobFairContainer = () => {
 
   if (jobFairData === undefined) return <LoadingComponent isWholePage={true} />;
 
-  return <div>{stepComponentList[currentStep]}</div>;
+  return <div className={'organize-job-fair-container'}>{stepComponentList[currentStep]}</div>;
 };
 
 export default OrganizeJobFairContainer;
