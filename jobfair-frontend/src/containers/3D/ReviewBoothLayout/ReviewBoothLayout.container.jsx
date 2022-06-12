@@ -7,7 +7,7 @@ import { Stage } from '@react-three/drei';
 import { addVideoTexture, fixTextureOffset, loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import { getCompanyBoothLatestLayout } from '../../../services/jobhub-api/CompanyBoothLayoutControllerService';
 import { getMyBoothLayoutById } from '../../../services/jobhub-api/DecoratorBoothLayoutController';
-import { notification, Spin } from 'antd';
+import { notification } from 'antd';
 import React, { Suspense, useEffect, useState } from 'react';
 
 export const ReviewBoothLayoutContainer = ({ id, type }) => {

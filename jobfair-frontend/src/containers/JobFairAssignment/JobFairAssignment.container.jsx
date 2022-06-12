@@ -48,6 +48,11 @@ const JobFairAssignmentContainer = () => {
     };
   }, [currentPage, pageSize, reRender, currentTab]);
 
+  useEffect(() => {
+    if (viewAllMode) setCurrentTab('');
+    else setCurrentTab(AssignmentConst.SUPERVISOR);
+  }, [viewAllMode]);
+
   webSocketClient.addEvent('refresh-assignment-list', () => {
     setRerender((prevState) => !prevState);
   });

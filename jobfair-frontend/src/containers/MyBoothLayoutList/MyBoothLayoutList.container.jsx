@@ -1,5 +1,5 @@
 import { BoothLayoutType } from '../../constants/LayoutConstant';
-import { Button, Card, Modal, Tooltip, Typography, notification, Space } from 'antd';
+import { Button, Card, Modal, Space, Tooltip, Typography, notification } from 'antd';
 import { CustomDateFormat } from '../../constants/ApplicationConst';
 import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import { ReviewBoothLayoutContainer } from '../3D/ReviewBoothLayout/ReviewBoothLayout.container';
@@ -68,11 +68,11 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility,
     });
   };
 
-  const handleDeleteLayout = (layoutId) => {
+  const handleDeleteLayout = (layoutId, layoutName) => {
     const modal = Modal.confirm();
     modal.update({
       title: 'Confirm using layout',
-      content: 'Are you sure you wanna delete this layout?',
+      content: `Are you sure you wanna delete layout: ${layoutName}?`,
       onOk: async () => {
         try {
           await deleteBoothLayoutInMyBoothLayout(layoutId);
@@ -140,7 +140,7 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility,
                             shape='circle'
                             icon={<DeleteOutlined />}
                             size='small'
-                            onClick={() => handleDeleteLayout(layout?.id)}
+                            onClick={() => handleDeleteLayout(layout?.id, layout?.name)}
                           />
                         </Tooltip>
                       ) : null}

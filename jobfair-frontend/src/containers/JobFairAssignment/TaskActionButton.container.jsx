@@ -84,6 +84,17 @@ const TaskActionButton = ({ type, record }) => {
             }>
             My booth profile
           </Button>
+          <Button
+            type='link'
+            onClick={() =>
+              history.push(
+                generatePath(PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE, {
+                  boothId: record?.jobFairBoothId
+                })
+              )
+            }>
+            Assign task
+          </Button>
         </Space>
       );
     default:

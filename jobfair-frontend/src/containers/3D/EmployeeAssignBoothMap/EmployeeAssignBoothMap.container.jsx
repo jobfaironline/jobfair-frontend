@@ -1,6 +1,6 @@
 import { EmployeeAssignBoothMapCanvas } from '../../../components/3D/EmployeeAssignBoothMap/EmployeeAssignBoothMapCanvas.component';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
-import { PATH, PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
+import { PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { getAssignmentById } from '../../../services/jobhub-api/AssignmentControllerService';
 import { getLayoutByJobFairId } from '../../../services/jobhub-api/LayoutControllerService';
