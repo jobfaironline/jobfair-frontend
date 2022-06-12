@@ -67,38 +67,44 @@ const OrganizeJobFairContainer = () => {
   }, []);
 
   const fetchData = async () => {
-    try {
-      if (step === 0) {
-        let jobFairData;
-        try {
-          jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
-          setJobFairData(jobFairData);
-          return;
-        } catch (e) {
-          //ignore error
-        }
-        if (jobFairData === undefined) {
-          const body = { name: 'Untitled' };
-          const data = (await draftJobFairAPI(body)).data;
-          setJobFairData(data);
-          notification['success']({
-            message: 'A job fair has been created'
-          });
-          return;
-        }
+    if (step === 0) {
+      let jobFairData;
+      try {
+        jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
+        setJobFairData(jobFairData);
+        return;
+      } catch (e) {
+        //ignore error
       }
+      if (jobFairData === undefined) {
+        const body = { name: 'Untitled' };
+        const data = (await draftJobFairAPI(body)).data;
+        setJobFairData(data);
+        notification['success']({
+          message: 'A job fair has been created'
+        });
+        return;
+      }
+    }
+    try {
       const jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
+      setJobFairData(jobFairData);
+    } catch (e) {
+      //ignore
+    }
+    try {
       const layoutData = (await getLayoutByJobFairId(jobFairId)).data;
       const glb = await loadGLBModel(layoutData.url);
       setLayoutData({
         glb: glb.scene,
         id: layoutData.id
       });
-      setJobFairData(jobFairData);
     } catch (e) {
-      notification['error']({
-        message: `Something went wrong: ${e.response.data.message}`
-      });
+      if (e.result.status !== 404) {
+        notification['error']({
+          message: `Something went wrong: ${e.response.data.message}`
+        });
+      }
     }
   };
 
@@ -240,7 +246,7 @@ const OrganizeJobFairContainer = () => {
         ) : isLoadMap ? (
           <LoadingComponent />
         ) : (
-          <div />
+          <div>No layout is chosen</div>
         )
       }
       leftSide={
@@ -277,7 +283,7 @@ const OrganizeJobFairContainer = () => {
             <JobFairParkMapComponent mapMesh={layoutData.glb} />
           </>
         ) : (
-          <div />
+          <div>No layout is chosen</div>
         )
       }
       leftSide={
@@ -326,7 +332,7 @@ const OrganizeJobFairContainer = () => {
             <JobFairParkMapComponent mapMesh={layoutData.glb} />{' '}
           </>
         ) : (
-          <div />
+          <div>No layout is chosen</div>
         )
       }
       leftSide={

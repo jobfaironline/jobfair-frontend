@@ -376,7 +376,11 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
               </div>
 
               <div className={'button-container'}>
-                <Button className={'button'} type={'primary'} onClick={handleEditAssignEmployee}>
+                <Button
+                  className={'button'}
+                  type={'primary'}
+                  disabled={!state.progressData.choosingLayout}
+                  onClick={handleEditAssignEmployee}>
                   Assign more
                 </Button>
               </div>
