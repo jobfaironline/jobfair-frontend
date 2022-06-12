@@ -14,7 +14,7 @@ export class GeckoClient extends EventEmitter {
       initialQuaternion
     )}`;
     this.channel = geckos({
-      url: 'https://geckos.jobhub.works',
+      url: 'https://13.213.115.202',
       port: 3001,
       authorization: auth
     });

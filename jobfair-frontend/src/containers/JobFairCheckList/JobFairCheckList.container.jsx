@@ -1,22 +1,24 @@
 import './JobFairCheckList.styles.scss';
 
-import { Button, Modal, Progress, notification } from 'antd';
+import { Button, Col, Image, Modal, Progress, Row, Tag, Typography, notification } from 'antd';
 import { DateFormat, MinuteFormat } from '../../constants/ApplicationConst';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JOB_FAIR_STATUS } from '../../constants/JobFairConst';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
-import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { PATH, PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
+import { faArrowLeft, faCircleCheck, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getJobFairByIDAPI, publishJobFairAPI } from '../../services/jobhub-api/JobFairControllerService';
 import { getLayoutByJobFairId } from '../../services/jobhub-api/LayoutControllerService';
 import { getStatisticsByJobFair } from '../../services/jobhub-api/AssignmentControllerService';
+import { getTimeZoneCode } from '../../utils/common';
 import { green } from '@ant-design/colors';
 import { useEffect, useState } from 'react';
-import PublishJobFairContainer from '../PublishJobFairContainer/PublishJobFair.container';
 import moment from 'moment';
 
 const organizeJobFairStep = 5;
+
+const { Text } = Typography;
 
 const mapJobFairData = (jobFairData) => {
   const startOfDate = moment().startOf('day');
@@ -24,31 +26,51 @@ const mapJobFairData = (jobFairData) => {
     ...jobFairData,
     morningShift: [
       jobFairData.shifts?.[0]?.beginTime !== undefined
-        ? moment(startOfDate.valueOf() + jobFairData.shifts[0].beginTime)
+        ? moment(startOfDate.valueOf() + jobFairData.shifts[0].beginTime).format(MinuteFormat)
         : undefined,
       jobFairData.shifts?.[0]?.endTime !== undefined
-        ? moment(startOfDate.valueOf() + jobFairData.shifts[0].endTime)
+        ? moment(startOfDate.valueOf() + jobFairData.shifts[0].endTime).format(MinuteFormat)
         : undefined
     ],
     afternoonShift: [
       jobFairData.shifts?.[1]?.beginTime !== undefined
-        ? moment(startOfDate.valueOf() + jobFairData.shifts[1].beginTime)
+        ? moment(startOfDate.valueOf() + jobFairData.shifts[1].beginTime).format(MinuteFormat)
         : undefined,
       jobFairData.shifts?.[1]?.endTime !== undefined
-        ? moment(startOfDate.valueOf() + jobFairData.shifts[1].endTime)
+        ? moment(startOfDate.valueOf() + jobFairData.shifts[1].endTime).format(MinuteFormat)
         : undefined
     ]
   };
+};
+
+const StepComponent = (props) => {
+  const { isFinish, children } = props;
+
+  return (
+    <div className={'step'}>
+      <div className={'status'}>
+        <FontAwesomeIcon icon={faCircleCheck} color={isFinish ? 'green' : 'gray'} size={'2x'} />
+      </div>
+      <div style={{ flex: 1 }}>{children}</div>
+    </div>
+  );
 };
 
 export const JobFairCheckListContainer = ({ jobFairId }) => {
   const [state, setState] = useState({
     jobFairData: undefined,
     layoutData: undefined,
-    statisticsData: undefined
+    statisticsData: undefined,
+    progressData: {
+      choosingLayout: false,
+      schedule: false,
+      assign: false,
+      landing: false,
+      publish: false,
+      score: 0
+    }
   });
 
-  const [progress, setProgress] = useState(0);
   const history = useHistory();
   const [publishModalVisible, setPublishModalVisible] = useState(false);
 
@@ -57,14 +79,36 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
   }, []);
 
   const calculateProgressPercentage = (jobFairData, layoutData, statistics) => {
+    const progressData = {
+      choosingLayout: false,
+      schedule: false,
+      assign: false,
+      landing: false,
+      publish: false,
+      score: 0
+    };
     const progressStep = 100 / organizeJobFairStep;
-    let progress = 0;
-    if (jobFairData.decorateStartTime !== undefined) progress += progressStep;
-    if (layoutData !== undefined) progress += progressStep;
-    if (jobFairData.thumbnailUrl !== undefined) progress += progressStep;
-    if (jobFairData.status === JOB_FAIR_STATUS.PUBLISH) progress += progressStep;
-    if (statistics.assignedBoothNum !== 0) progress += progressStep;
-    setProgress(progress);
+    if (jobFairData.decorateStartTime !== undefined && jobFairData.decorateStartTime !== null) {
+      progressData.schedule = true;
+      progressData.score += progressStep;
+    }
+    if (layoutData !== undefined && layoutData !== null) {
+      progressData.choosingLayout = true;
+      progressData.score += progressStep;
+    }
+    if (jobFairData.thumbnailUrl !== undefined && jobFairData.thumbnailUrl !== null) {
+      progressData.score += progressStep;
+      progressData.landing = true;
+    }
+    if (jobFairData.status === JOB_FAIR_STATUS.PUBLISH) {
+      progressData.score += progressStep;
+      progressData.publish = true;
+    }
+    if (statistics.assignedBoothNum !== 0) {
+      progressData.score += progressStep;
+      progressData.assign = true;
+    }
+    return progressData;
   };
 
   const fetchData = async () => {
@@ -72,8 +116,8 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
     jobFairData = mapJobFairData(jobFairData);
     const { data: layoutData } = await getLayoutByJobFairId(jobFairId);
     const { data: statistics } = await getStatisticsByJobFair(jobFairId);
-    calculateProgressPercentage(jobFairData, layoutData, statistics);
-    setState((prevState) => ({ ...prevState, jobFairData, layoutData, statistics }));
+    const progressData = calculateProgressPercentage(jobFairData, layoutData, statistics);
+    setState((prevState) => ({ ...prevState, jobFairData, layoutData, statistics, progressData }));
   };
 
   const handleReviewLayout = () => {
@@ -100,6 +144,15 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
     history.push(PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE, { step: 3, jobFairId: state.jobFairData.id });
   };
 
+  const handleReviewLandingPage = () => {
+    const url = generatePath(PATH.JOB_FAIR_LANDING_PAGE, {
+      jobFairId,
+      review: 'review'
+    });
+    const src = `${window.location.origin}${url}?review`;
+    window.open(src);
+  };
+
   const publishJobFairEvent = async () => {
     try {
       await publishJobFairAPI(state.jobFairData?.id);
@@ -119,95 +172,249 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
 
   return (
     <>
+      <Modal
+        title='Publish job fair'
+        visible={publishModalVisible}
+        onOk={publishJobFairEvent}
+        centered
+        onCancel={() => {
+          setPublishModalVisible(false);
+        }}>
+        Are you sure to publish <Text strong>{state.jobFairData.name}</Text>?
+      </Modal>
       <div className={'job-fair-check-list-container'}>
         <Button
           type={'link'}
           onClick={() => {
             history.push(PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE);
-          }}>
-          <FontAwesomeIcon icon={faArrowLeft} />
-          Back to my events
+          }}
+          style={{ fontSize: '1.2rem', marginTop: '1rem' }}>
+          <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: 5 }} />
+          Back to my job fair
         </Button>
-        <div>
-          <Progress percent={progress} steps={organizeJobFairStep} strokeColor={green[6]} />
+        <div className={'progress-bar'}>
+          <Progress percent={state.progressData.score} steps={organizeJobFairStep} strokeColor={green[6]} />
         </div>
         <div className={'step-container'}>
-          <div className={'step'}>
-            <div>Step 1: choosing your template</div>
-            <Button onClick={handleReviewLayout}>Enter map</Button>
-            <Button onClick={handleEditLayout}>Change layout</Button>
-          </div>
-          <div className={'step'}>
-            <div>Step 2: schedule job fair</div>
-            <div>
-              <div>
-                Decorate start time:{' '}
-                {state.jobFairData.decorateStartTime
-                  ? moment(state.jobFairData.decorateStartTime).format(DateFormat)
-                  : 'Not enter'}
+          <StepComponent isFinish={state.progressData.choosingLayout}>
+            <div className={'title'}>
+              <div style={{ flex: 1 }}>
+                <Row>
+                  <Text className={'content'} strong>
+                    Step 1: Choosing your layout
+                  </Text>
+                </Row>
+                <Row>
+                  <Text>Select your job fair layout</Text>
+                </Row>
               </div>
-              <div>
-                Decorate end time:{' '}
-                {state.jobFairData.decorateEndTime
-                  ? moment(state.jobFairData.decorateEndTime).format(DateFormat)
-                  : 'Not enter'}
+
+              <div className={'button-container'}>
+                <Button
+                  style={{ marginRight: '0.3rem' }}
+                  className={'button'}
+                  type={'primary'}
+                  onClick={handleReviewLayout}>
+                  Enter map
+                </Button>
+                <Button className={'button'} type={'primary'} onClick={handleEditLayout}>
+                  Change layout
+                </Button>
               </div>
-              <div>
-                Public start time:{' '}
-                {state.jobFairData.publicStartTime
-                  ? moment(state.jobFairData.publicStartTime).format(DateFormat)
-                  : 'Not enter'}
-              </div>
-              <div>
-                Public end time:{' '}
-                {state.jobFairData.publicEndTime
-                  ? moment(state.jobFairData.publicEndTime).format(DateFormat)
-                  : 'Not enter'}
-              </div>
-              <div>
-                Morning shift: {state.jobFairData.morningShift[0]?.format(MinuteFormat)}{' '}
-                {state.jobFairData.morningShift[1]?.format(MinuteFormat)}
-              </div>
-              <div>
-                Afternoon shift: {state.jobFairData.afternoonShift[0]?.format(MinuteFormat)}{' '}
-                {state.jobFairData.afternoonShift[1]?.format(MinuteFormat)}
-              </div>
-              <Button onClick={handleEditSchedule}>Edit</Button>
             </div>
-          </div>
-          <div className={'step'}>
-            <div>Step 3: assign employee</div>
-            <Button>Review</Button>
-            <Button onClick={handleEditAssignEmployee}>Edit</Button>
-          </div>
-          <div className={'step'}>
-            <div>Step 4: create landing page</div>
-            <Button>Review</Button>
-            <Button onClick={handleEditLandingPage}>Edit</Button>
-          </div>
-          <div className={'step'}>
-            <div>Publish your job fair</div>
-            <Button
-              onClick={() => {
-                setPublishModalVisible(true);
-              }}>
-              Publish
-            </Button>
-            <Modal visible={publishModalVisible} footer={null} closable={false}>
-              <PublishJobFairContainer
-                onHandlePrev={() => {
-                  setPublishModalVisible(false);
-                }}
-                onFinish={() => {
-                  publishJobFairEvent(state.jobFairData.id);
-                }}
-                jobFairId={state.jobFairData.id}
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <Image
+                style={{ borderRadius: '8px' }}
+                width={'100%'}
+                height={'200px'}
+                src={state.layoutData.thumbnailUrl}
               />
-            </Modal>
-          </div>
+            </div>
+          </StepComponent>
+          <StepComponent isFinish={state.progressData.schedule}>
+            <div className={'title'}>
+              <div style={{ flex: 1 }}>
+                <Text className={'content'} strong>
+                  Step 2: Schedule job fair
+                </Text>
+                <Row className={'time'}>
+                  <Col span={5}>
+                    <Text>Decorate time ({getTimeZoneCode()}):</Text>
+                  </Col>
+                  <Col>
+                    {state.jobFairData.decorateStartTime ? (
+                      <Tag color={'green'}>{moment(state.jobFairData.decorateStartTime).format(DateFormat)}</Tag>
+                    ) : (
+                      <Tag color={'red'}>Not enter</Tag>
+                    )}
+                    <Tag color='orange'>
+                      <FontAwesomeIcon icon={faMinus} />
+                    </Tag>
+                    {state.jobFairData.decorateEndTime ? (
+                      <Tag color={'green'}>{moment(state.jobFairData.decorateEndTime).format(DateFormat)}</Tag>
+                    ) : (
+                      <Tag color={'red'}>Not enter</Tag>
+                    )}
+                  </Col>
+                </Row>
+                <Row className={'time'}>
+                  <Col span={5}>
+                    <Text>Public time ({getTimeZoneCode()}):</Text>
+                  </Col>
+                  <Col>
+                    {state.jobFairData.publicStartTime ? (
+                      <Tag color={'green'}>{moment(state.jobFairData.publicStartTime).format(DateFormat)}</Tag>
+                    ) : (
+                      <Tag color={'red'}>Not enter</Tag>
+                    )}
+                    <Tag color='orange'>
+                      <FontAwesomeIcon icon={faMinus} />
+                    </Tag>
+                    {state.jobFairData.publicEndTime ? (
+                      <Tag color={'green'}>{moment(state.jobFairData.publicEndTime).format(DateFormat)}</Tag>
+                    ) : (
+                      <Tag color={'red'}>Not enter</Tag>
+                    )}
+                  </Col>
+                </Row>
+                <Row className={'time'}>
+                  <Col span={5}>
+                    <Text>Morning shift ({getTimeZoneCode()}):</Text>
+                  </Col>
+                  <Col>
+                    {state.jobFairData.morningShift[0] ? (
+                      <Tag color={'green'}>{state.jobFairData.morningShift[0]}</Tag>
+                    ) : (
+                      <Tag color={'red'}>Not enter</Tag>
+                    )}
+                    <Tag color='orange'>
+                      <FontAwesomeIcon icon={faMinus} />
+                    </Tag>
+                    {state.jobFairData.morningShift[1] ? (
+                      <Tag color={'green'}>{state.jobFairData.morningShift[1]}</Tag>
+                    ) : (
+                      <Tag color={'red'}>Not enter</Tag>
+                    )}
+                  </Col>
+                </Row>
+                <Row className={'time'}>
+                  <Col span={5}>
+                    <Text>Afternoon shift ({getTimeZoneCode()}):</Text>
+                  </Col>
+                  <Col>
+                    {state.jobFairData.afternoonShift[0] ? (
+                      <Tag color={'green'}>{state.jobFairData.afternoonShift[0]}</Tag>
+                    ) : (
+                      <Tag color={'red'}>Not enter</Tag>
+                    )}
+                    <Tag color='orange'>
+                      <FontAwesomeIcon icon={faMinus} />
+                    </Tag>
+                    {state.jobFairData.afternoonShift[1] ? (
+                      <Tag color={'green'}>{state.jobFairData.afternoonShift[1]}</Tag>
+                    ) : (
+                      <Tag color={'red'}>Not enter</Tag>
+                    )}
+                  </Col>
+                </Row>
+              </div>
+
+              <div className={'button-container'}>
+                <Button className={'button'} type={'primary'} onClick={handleEditSchedule}>
+                  Edit schedule
+                </Button>
+              </div>
+            </div>
+          </StepComponent>
+          <StepComponent isFinish={state.progressData.assign}>
+            <div className={'title'}>
+              <div style={{ flex: 1 }}>
+                <Text className={'content'} strong>
+                  Step 3: Assign employee
+                </Text>
+                <Row className={'time'}>
+                  <Col span={6}>
+                    <Text>Number of assigned employee: </Text>
+                  </Col>
+                  <Col>
+                    <Text strong style={{ color: state.statistics.assignedEmployeeNum === 0 ? 'red' : 'green' }}>
+                      {state.statistics.assignedEmployeeNum}
+                    </Text>
+                  </Col>
+                </Row>
+                <Row className={'time'}>
+                  <Col span={6}>
+                    <Text>Number of assigned booth: </Text>
+                  </Col>
+                  <Col>
+                    <Text strong style={{ color: state.statistics.assignedBoothNum === 0 ? 'red' : 'green' }}>
+                      {state.statistics.assignedBoothNum}
+                    </Text>
+                  </Col>
+                </Row>
+              </div>
+
+              <div className={'button-container'}>
+                <Button className={'button'} type={'primary'} onClick={handleEditAssignEmployee}>
+                  Assign more
+                </Button>
+              </div>
+            </div>
+          </StepComponent>
+          <StepComponent isFinish={state.progressData.landing}>
+            <div className={'title'}>
+              <div style={{ flex: 1 }}>
+                <Row>
+                  <Text className={'content'} strong>
+                    Step 4: Create landing page
+                  </Text>
+                </Row>
+                <Row>
+                  <Text>Decorate your job fair's landing page</Text>
+                </Row>
+              </div>
+
+              <div className={'button-container'}>
+                <Button
+                  style={{ marginRight: '0.3rem' }}
+                  className={'button'}
+                  type={'primary'}
+                  onClick={handleEditLandingPage}>
+                  Decorate landing page
+                </Button>
+                <Button className={'button'} type={'primary'} onClick={handleReviewLandingPage}>
+                  Review
+                </Button>
+              </div>
+            </div>
+          </StepComponent>
+          <StepComponent isFinish={state.progressData.publish}>
+            <div className={'title'}>
+              <div style={{ flex: 1 }}>
+                <Row>
+                  <Text className={'content'} strong>
+                    Step 5: Publish your job fair
+                  </Text>
+                </Row>
+                <Row>
+                  <Text>Confirm and publish your job fair</Text>
+                </Row>
+              </div>
+
+              <div className={'button-container'}>
+                <Button
+                  disabled={state.progressData.score !== 80}
+                  className={'button'}
+                  type={'primary'}
+                  onClick={() => {
+                    setPublishModalVisible(true);
+                  }}>
+                  Publish
+                </Button>
+              </div>
+            </div>
+          </StepComponent>
         </div>
-        <div>Share or review landing page</div>
-        <div>Delete event</div>
       </div>
     </>
   );

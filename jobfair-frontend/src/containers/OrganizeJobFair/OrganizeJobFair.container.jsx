@@ -1,6 +1,6 @@
 import './OrganizeJobFair.styles.scss';
 import { AssignEmployeeContainer } from '../3D/AssignEmployee/AssignEmployee.container';
-import { Form, notification } from 'antd';
+import { Button, Form, notification } from 'antd';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
@@ -211,11 +211,30 @@ const OrganizeJobFairContainer = () => {
     }
   };
 
+  const handleGotoChecklist = () => {
+    const url = generatePath(PATH_COMPANY_MANAGER.CHECKLIST, {
+      jobFairId: jobFairData.id ? jobFairData.id : jobFairId
+    });
+    history.push(url);
+  };
+
   const stepComponentList = [
     <SideBarComponent
       rightSide={
         layoutData.glb ? (
-          <JobFairParkMapComponent mapMesh={layoutData.glb} />
+          <>
+            <Button
+              style={{
+                position: 'absolute',
+                zIndex: 1000,
+                right: 0,
+                display: step === 0 && jobFairData === undefined ? 'none' : 'block'
+              }}
+              onClick={handleGotoChecklist}>
+              Go to checklist
+            </Button>
+            <JobFairParkMapComponent mapMesh={layoutData.glb} />
+          </>
         ) : isLoadMap ? (
           <LoadingComponent />
         ) : (
@@ -223,11 +242,13 @@ const OrganizeJobFairContainer = () => {
         )
       }
       leftSide={
-        <ChooseTemplateJobFairContainer
-          handleLoad3DMap={handleLoad3DMap}
-          onNext={onNext(currentStep)}
-          layoutData={layoutData}
-        />
+        <>
+          <ChooseTemplateJobFairContainer
+            handleLoad3DMap={handleLoad3DMap}
+            onNext={onNext(currentStep)}
+            layoutData={layoutData}
+          />
+        </>
       }
       nextButtonContent={'Choose template'}
       onNext={onNext(currentStep)}
@@ -239,14 +260,33 @@ const OrganizeJobFairContainer = () => {
       currentStep={currentStep}
     />,
     <SideBarComponent
-      rightSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
+      rightSide={
+        layoutData.glb ? (
+          <>
+            <Button
+              onClick={handleGotoChecklist}
+              style={{
+                position: 'absolute',
+                zIndex: 1000,
+                right: 0
+              }}>
+              Go to checklist
+            </Button>
+            <JobFairParkMapComponent mapMesh={layoutData.glb} />
+          </>
+        ) : (
+          <div />
+        )
+      }
       leftSide={
-        <ScheduleJobFairFormComponent
-          jobFairData={jobFairData}
-          onFinish={updateJobFairAtScheduleScreen}
-          form={form}
-          onValueChange={onValueChange}
-        />
+        <>
+          <ScheduleJobFairFormComponent
+            jobFairData={jobFairData}
+            onFinish={updateJobFairAtScheduleScreen}
+            form={form}
+            onValueChange={onValueChange}
+          />
+        </>
       }
       nextButtonContent={'Start assign employee'}
       prevButtonContent={'Back to choose job fair layout'}
@@ -264,11 +304,29 @@ const OrganizeJobFairContainer = () => {
           onHandleNext={onNext(currentStep)}
           onHandlePrev={onPrev(currentStep)}
           currentStep={currentStep}
+          handleGotoChecklist={handleGotoChecklist}
         />
       ) : null}
     </>,
     <SideBarComponent
-      rightSide={layoutData.glb ? <JobFairParkMapComponent mapMesh={layoutData.glb} /> : <div />}
+      rightSide={
+        layoutData.glb ? (
+          <>
+            <Button
+              onClick={handleGotoChecklist}
+              style={{
+                position: 'absolute',
+                zIndex: 100000,
+                right: 0
+              }}>
+              Go to checklist
+            </Button>
+            <JobFairParkMapComponent mapMesh={layoutData.glb} />{' '}
+          </>
+        ) : (
+          <div />
+        )
+      }
       leftSide={
         jobFairData !== undefined ? (
           <CreateJobFairLandingPageContainer
