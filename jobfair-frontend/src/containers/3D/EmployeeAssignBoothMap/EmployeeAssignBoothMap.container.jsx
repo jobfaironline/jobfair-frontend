@@ -1,6 +1,6 @@
 import { EmployeeAssignBoothMapCanvas } from '../../../components/3D/EmployeeAssignBoothMap/EmployeeAssignBoothMapCanvas.component';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
-import { PATH } from '../../../constants/Paths/Path';
+import { PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import { generatePath, useHistory, useParams } from 'react-router-dom';
 import { getAssignmentById } from '../../../services/jobhub-api/AssignmentControllerService';
 import { getLayoutByJobFairId } from '../../../services/jobhub-api/LayoutControllerService';
@@ -64,7 +64,7 @@ export const EmployeeAssignBoothMapContainer = () => {
   const onClick = () => {
     const jobFairId = state.jobFairBoothData.jobFair.id;
     const boothId = state.jobFairBoothData.id;
-    const url = generatePath(PATH.DECORATE_BOOTH_PAGE, {
+    const url = generatePath(PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE, {
       jobFairId,
       companyBoothId: boothId
     });
