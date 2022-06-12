@@ -13,10 +13,7 @@ const TaskActionButton = ({ type, record }) => {
       return (
         <Space>
           <Button
-            disabled={
-              new Date().setMilliseconds(record?.publicStartTime) > Date.now() ||
-              new Date().setMilliseconds(record?.publicEndTime) < Date.now()
-            }
+            disabled={record?.publicStartTime > moment().valueOf() || record?.publicEndTime < moment().valueOf()}
             type='link'
             onClick={() =>
               history.push(
@@ -33,19 +30,13 @@ const TaskActionButton = ({ type, record }) => {
       return (
         <Space>
           <Button
-            disabled={
-              new Date().setMilliseconds(record?.publicStartTime) > Date.now() ||
-              new Date().setMilliseconds(record?.publicEndTime) < Date.now()
-            }
+            disabled={record?.publicStartTime > moment().valueOf() || record?.publicEndTime < moment().valueOf()}
             type='link'
             onClick={() => history.push(generatePath(PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE))}>
             Interview schedule
           </Button>
           <Button
-            disabled={
-              new Date().setMilliseconds(record?.publicStartTime) > Date.now() ||
-              new Date().setMilliseconds(record?.publicEndTime) < Date.now()
-            }
+            disabled={record?.publicStartTime > moment().valueOf() || record?.publicEndTime < moment().valueOf()}
             type='link'
             onClick={() => history.push(generatePath(PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE))}>
             Application list
