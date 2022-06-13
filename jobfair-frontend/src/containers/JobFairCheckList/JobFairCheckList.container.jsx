@@ -1,6 +1,6 @@
 import './JobFairCheckList.styles.scss';
 
-import { Button, Col, Image, Modal, Progress, Row, Tag, Typography, notification } from 'antd';
+import { Button, Col, Empty, Image, Modal, Progress, Row, Tag, Tooltip, Typography, notification } from 'antd';
 import { DateFormat, MinuteFormat } from '../../constants/ApplicationConst';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JOB_FAIR_STATUS } from '../../constants/JobFairConst';
@@ -213,7 +213,7 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
           Back to my job fair
         </Button>
         <div className={'progress-bar'}>
-          <Progress percent={state.progressData.score} steps={organizeJobFairStep} strokeColor={green[6]} />
+          <Progress percent={state.progressData.score} strokeColor={green[6]} />
         </div>
         <div className={'step-container'}>
           <StepComponent isFinish={state.progressData.choosingLayout}>
@@ -244,12 +244,16 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <Image
-                style={{ borderRadius: '8px' }}
-                width={'100%'}
-                height={'200px'}
-                src={state.layoutData?.thumbnailUrl}
-              />
+              {state.layoutData?.thumbnailUrl === undefined ? (
+                <Empty />
+              ) : (
+                <Image
+                  style={{ borderRadius: '8px' }}
+                  width={'100%'}
+                  height={'200px'}
+                  src={state.layoutData?.thumbnailUrl}
+                />
+              )}
             </div>
           </StepComponent>
           <StepComponent isFinish={state.progressData.schedule}>
@@ -376,13 +380,29 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
               </div>
 
               <div className={'button-container'}>
-                <Button
-                  className={'button'}
-                  type={'primary'}
-                  disabled={!state.progressData.choosingLayout}
-                  onClick={handleEditAssignEmployee}>
-                  Assign more
-                </Button>
+                {!state.progressData.choosingLayout ? (
+                  <Tooltip title={'Please choose layout for job fair first'}>
+                    {/* need to wrap span outside disable button if using tool tip: https://github.com/react-component/tooltip/issues/18#issuecomment-411476678*/}
+                    <span>
+                      <Button
+                        style={{ pointerEvents: 'none' }}
+                        className={'button'}
+                        type={'primary'}
+                        disabled={!state.progressData.choosingLayout}
+                        onClick={handleEditAssignEmployee}>
+                        Assign more
+                      </Button>
+                    </span>
+                  </Tooltip>
+                ) : (
+                  <Button
+                    className={'button'}
+                    type={'primary'}
+                    disabled={!state.progressData.choosingLayout}
+                    onClick={handleEditAssignEmployee}>
+                    Assign more
+                  </Button>
+                )}
               </div>
             </div>
           </StepComponent>
@@ -431,15 +451,33 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
               </div>
 
               <div className={'button-container'}>
-                <Button
-                  disabled={state.progressData.score !== 80}
-                  className={'button'}
-                  type={'primary'}
-                  onClick={() => {
-                    setPublishModalVisible(true);
-                  }}>
-                  Publish
-                </Button>
+                {state.progressData.score !== 80 ? (
+                  <Tooltip title={'Please complete all steps to publish'}>
+                    {/* need to wrap span outside disable button if using tool tip: https://github.com/react-component/tooltip/issues/18#issuecomment-411476678*/}
+                    <span>
+                      <Button
+                        style={{ pointerEvents: 'none' }}
+                        disabled={state.progressData.score !== 80}
+                        className={'button'}
+                        type={'primary'}
+                        onClick={() => {
+                          setPublishModalVisible(true);
+                        }}>
+                        Publish
+                      </Button>
+                    </span>
+                  </Tooltip>
+                ) : (
+                  <Button
+                    disabled={state.progressData.score !== 80}
+                    className={'button'}
+                    type={'primary'}
+                    onClick={() => {
+                      setPublishModalVisible(true);
+                    }}>
+                    Publish
+                  </Button>
+                )}
               </div>
             </div>
           </StepComponent>

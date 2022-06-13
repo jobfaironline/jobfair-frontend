@@ -59,7 +59,7 @@ const OrganizeJobFairContainer = () => {
     glb: undefined,
     id: ''
   });
-  const [isError, setIsError] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [isLoadMap, setIsLoadMap] = useState(false);
 
   useEffect(() => {
@@ -80,6 +80,7 @@ const OrganizeJobFairContainer = () => {
         const body = { name: 'Untitled' };
         const data = (await draftJobFairAPI(body)).data;
         setJobFairData(data);
+        setIsError(true);
         notification['success']({
           message: 'A job fair has been created'
         });
@@ -88,6 +89,9 @@ const OrganizeJobFairContainer = () => {
     }
     try {
       const jobFairData = (await getJobFairByIDAPI(jobFairId)).data;
+      if (step === 1 && jobFairData.decorateStartTime === null) setIsError(true);
+      if (step === 3 && jobFairData.thumbnailUrl === null) setIsError(true);
+
       setJobFairData(jobFairData);
     } catch (e) {
       //ignore
@@ -175,8 +179,14 @@ const OrganizeJobFairContainer = () => {
           try {
             await form.validateFields();
             await updateJobFairAtScheduleScreen(form.getFieldsValue(true));
-            setCurrentStep(currentStep + 1);
-            setIsError(false);
+            if (layoutData.glb !== undefined) {
+              setCurrentStep(currentStep + 1);
+              setIsError(false);
+            } else {
+              notification['success']({
+                message: 'Save schedule successfully'
+              });
+            }
           } catch (e) {
             handleFieldsError(form);
           }
@@ -199,6 +209,12 @@ const OrganizeJobFairContainer = () => {
 
   const onPrev = (currentStep) => () => {
     if (currentStep !== 0) {
+      if (currentStep === 3 && layoutData.glb === undefined) {
+        notification['warn']({
+          message: 'Please go to check list and select a layout'
+        });
+        return;
+      }
       setCurrentStep(currentStep - 1);
       setIsError(false);
     }
@@ -295,7 +311,7 @@ const OrganizeJobFairContainer = () => {
           />
         </>
       }
-      nextButtonContent={'Start assign employee'}
+      nextButtonContent={layoutData.glb === undefined ? 'Save' : 'Start assign employee'}
       prevButtonContent={'Back to choose job fair layout'}
       onNext={onNext(currentStep)}
       isNextButtonDisable={isError}
