@@ -33,3 +33,9 @@ export const AssignmentConst = {
   DECORATOR: 'DECORATOR',
   STAFF: 'STAFF'
 };
+
+export const AssignmentBoothConstraint = {
+  decoratorNum: 1,
+  supervisorNum: 1,
+  staffNum: 2
+};
