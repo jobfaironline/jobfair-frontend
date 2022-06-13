@@ -1,25 +1,21 @@
 .job-fair-check-list-container {
-
   padding: 0 20%;
 
   margin-bottom: 2rem;
 
-  .ant-btn-link{
-    padding: 0!important;
+  .ant-btn-link {
+    padding: 0 !important;
   }
 
-
-  .progress-bar{
+  .progress-bar {
     margin: 1rem 0;
   }
-
-
 
   .step-container {
     border-radius: 8px;
     border: 1px solid black;
 
-    .ant-image-img{
+    .ant-image-img {
       object-fit: cover;
     }
 
@@ -37,22 +33,22 @@
           font-size: 1rem;
         }
 
-        .button-container{
+        .button-container {
           margin-left: auto;
         }
 
-        .time{
+        .time {
           margin-top: 0.5rem;
         }
       }
 
-      .status{
+      .status {
         margin-right: 1rem;
       }
     }
   }
 
-  .step:last-child{
+  .step:last-child {
     border-bottom: none;
   }
 }
