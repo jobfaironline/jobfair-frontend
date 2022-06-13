@@ -26,12 +26,12 @@ const generateUpdateJobFairRequestBody = (formValues, jobFairId) => {
 
   const shifts = [
     {
-      beginTime: formValues.morningShift[0].valueOf() - startOfDate.valueOf(),
-      endTime: formValues.morningShift[1].valueOf() - startOfDate.valueOf()
+      beginTime: (formValues.morningShift[0].unix() - startOfDate.unix()) * 1000,
+      endTime: (formValues.morningShift[1].unix() - startOfDate.unix()) * 1000
     },
     {
-      beginTime: formValues.afternoonShift[0].valueOf() - startOfDate.valueOf(),
-      endTime: formValues.afternoonShift[1].valueOf() - startOfDate.valueOf()
+      beginTime: (formValues.afternoonShift[0].unix() - startOfDate.unix()) * 1000,
+      endTime: (formValues.afternoonShift[1].unix() - startOfDate.unix()) * 1000
     }
   ];
   return {
