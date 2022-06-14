@@ -1,47 +1,13 @@
 import { ATTENDANT, COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../constants/RoleType';
-import { Form, Typography } from 'antd';
+import { FAQComponent } from '../../components/customized-components/FAQ/FAQ.components';
+import { HomePageAdComponent } from '../../components/customized-components/HomePage/HomePageAd.component';
 import { useSelector } from 'react-redux';
-import FAQPage from '../FAQPage/FAQPage';
-import FooterHomePage from './FooterHomePage';
-import HeaderHomePage from './HeaderHomePage';
+import Footer from '../../components/commons/Footer/Footer';
+import HomePageHeaderComponent from '../../components/customized-components/HomePage/HomePageHeader.component';
 import React from 'react';
-
-const JobFairAds = () => (
-  <div className='ads-container'>
-    <div className='ads-container-left'>
-      <div className='first-line'>More than</div>
-      <div className='second-line'>10.000</div>
-      <div className='third-line'>user sign up to this page.</div>
-    </div>
-    <div className='ads-container-right'>
-      <div className='text-and-circle'>
-        <div className='responsive-circle'>
-          <div className='circle-text'>80%</div>
-        </div>
-        <div className='text'>
-          <Typography.Text strong>Học sinh - Sinh viên có được việc làm</Typography.Text>
-        </div>
-      </div>
-      <div className='text-and-circle'>
-        <div className='responsive-circle'>
-          <div className='circle-text'>80%</div>
-        </div>
-        <div className='text'>
-          <Typography.Text strong>Học sinh - Sinh viên có được việc làm</Typography.Text>
-        </div>
-      </div>
-    </div>
-  </div>
-);
 
 const HomePage = () => {
   const role = useSelector((state) => state.authentication.user.roles);
-
-  const [form] = Form.useForm();
-
-  const handleSubmit = (values) => {
-    console.log(values);
-  };
 
   const handleDisplayHomePage = (role) => {
     switch (role) {
@@ -56,12 +22,14 @@ const HomePage = () => {
       default:
         return (
           <div>
-            <HeaderHomePage />
-            <div style={{ width: '100%', height: '10rem', backgroundColor: '#E5EAFB' }}></div>
-            <JobFairAds />
-            <div style={{ width: '100%', height: '10rem', backgroundColor: '#E5EAFB' }}></div>
-            <FAQPage />
-            <FooterHomePage form={form} onFinish={handleSubmit} />
+            <HomePageHeaderComponent />
+            <div style={{ width: '100%', height: '10rem', backgroundColor: '#E5EAFB' }} />
+            <HomePageAdComponent />
+            <div style={{ width: '100%', height: '10rem', backgroundColor: '#E5EAFB' }} />
+            <div style={{ padding: '2% 10%' }}>
+              <FAQComponent />
+            </div>
+            <Footer />
           </div>
         );
     }

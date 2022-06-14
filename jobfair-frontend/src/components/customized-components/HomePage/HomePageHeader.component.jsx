@@ -1,10 +1,10 @@
-import './HeaderHomePage.styles.scss';
+import './HomePageHeader.styles.scss';
 import { Button } from 'antd';
-import { PATH } from '../../constants/Paths/Path';
+import { PATH } from '../../../constants/Paths/Path';
 import React from 'react';
 import ReactPlayer from 'react-player';
 
-const HeaderHomePage = () => (
+const HomePageHeaderComponent = () => (
   <div className='home-body'>
     <div className='a-better-way'>
       <div>
@@ -18,17 +18,17 @@ const HeaderHomePage = () => (
           <img src={`${window.location.origin}/icon/anya-3.png`} alt={'Anya-3'} />
         </div>
       </div>
-      <div className='below-icon-text'>JobHub's Slogan</div>
+      <div className='below-icon-text'>A virtual job fair platform</div>
       <div className='paragraph-below-text'>
-        Making a world where kids don’t need to cry… that was the whole reason I became a spy in the first place
+        Surrounding yourself with many job opportunities from world-class companies' job fairs
       </div>
-      <div>
+      <div style={{ marginTop: '2rem' }}>
         <Button type='primary' className='button'>
-          <a href={PATH.LOGIN_PAGE}>Dùng thử miễn phí</a>
+          <a href={PATH.LOGIN_PAGE}>Discover a job fair</a>
         </Button>
       </div>
     </div>
-    <div className='solution-margin'></div>
+    <div className='solution-margin' />
     <div className='video-loop'>
       <div className='player-wrapper'>
         <ReactPlayer className='react-player' url='https://youtu.be/DrsZjqJIiSk' width='100%' height='100%' />
@@ -37,4 +37,4 @@ const HeaderHomePage = () => (
   </div>
 );
 
-export default HeaderHomePage;
+export default HomePageHeaderComponent;
