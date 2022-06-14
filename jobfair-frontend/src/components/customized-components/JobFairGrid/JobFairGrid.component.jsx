@@ -106,7 +106,6 @@ const JobFairGridComponent = (props) => {
       <List
         grid={{ gutter: 20, xs: 1, sm: 3, md: 3, lg: 5, xl: 5, xxl: 5 }}
         dataSource={data}
-        footer={<div>footer</div>}
         renderItem={(item) => {
           if (item.isFirst) {
             return (

@@ -2,7 +2,6 @@ import { ATTENDANT, COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../constants/Ro
 import { FAQComponent } from '../../components/customized-components/FAQ/FAQ.components';
 import { HomePageAdComponent } from '../../components/customized-components/HomePage/HomePageAd.component';
 import { useSelector } from 'react-redux';
-import Footer from '../../components/commons/Footer/Footer';
 import HomePageHeaderComponent from '../../components/customized-components/HomePage/HomePageHeader.component';
 import React from 'react';
 
@@ -29,7 +28,6 @@ const HomePage = () => {
             <div style={{ padding: '2% 10%' }}>
               <FAQComponent />
             </div>
-            <Footer />
           </div>
         );
     }

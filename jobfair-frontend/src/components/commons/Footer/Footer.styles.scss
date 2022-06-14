@@ -3,10 +3,10 @@
   flex-direction: row;
   background-color: #130b56;
   color: white;
-  padding: 0 20% 1% 10%;
+  padding: 0.5rem 20% 0 10%;
+  margin-top: auto;
 
   .left-side {
-    margin-top: 2rem;
     margin-left: 5rem;
     display: flex;
     flex-direction: column;
@@ -20,16 +20,16 @@
     .logo-click {
       display: flex;
       flex-direction: column;
-      margin-top: 2rem;
+      margin-top: 1rem;
 
       .children {
         display: flex;
         flex-direction: row;
         align-items: center;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
 
         .description {
-          font-size: 20px;
+          font-size: 15px;
           font-weight: bold;
           margin-left: 0.5rem;
         }
@@ -63,10 +63,9 @@
     }
 
     .form-contact {
-      padding-top: 2rem;
       flex: 0;
       .title{
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: 600;
       }
       .input{

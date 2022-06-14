@@ -1,5 +1,8 @@
+import { default as CustomFooter } from '../components/commons/Footer/Footer';
+import { Footer } from 'antd/es/layout/layout';
 import { JobFairCheckListPage } from '../pages/JobFairCheckList/JobFairCheckListPage';
 import { JobFairMapReviewPage } from '../pages/JobFairMapReviewPage/JobFairMapReviewPage';
+import { Layout } from 'antd';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
@@ -62,7 +65,7 @@ const AppRouter = () => {
   };
 
   return (
-    <>
+    <Layout>
       <NavigationBar />
       <Switch>
         <Route path={PATH.FINAL_ERROR_PAGE} exact>
@@ -303,7 +306,10 @@ const AppRouter = () => {
         </Route>
         <Route path='*' component={() => <ErrorPage code={404} />} />
       </Switch>
-    </>
+      <Footer>
+        <CustomFooter />
+      </Footer>
+    </Layout>
   );
 };
 export default AppRouter;

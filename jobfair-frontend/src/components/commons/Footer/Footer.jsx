@@ -9,7 +9,7 @@ const Footer = () => (
   <div className='footer'>
     <div className='left-side'>
       <div className='logo'>
-        <img style={{ width: '50%' }} src={`${window.location.origin}/logo/logo_with_text.svg`} />
+        <img style={{ width: '40%' }} src={`${window.location.origin}/logo/logo_with_text.svg`} />
       </div>
       <div>©2022 JobHub, Inc.</div>
       <div className='logo-click'>
@@ -35,17 +35,18 @@ const Footer = () => (
     </div>
     <div className='right-side'>
       <div className='form-contact'>
-        <div className='title'>Have a question? Send us now</div>
+        <div className='title'>Have a question? Send us an email</div>
         <form action='mailto:tientt1938@gmail.com' method='post' encType='text/plain'>
-          Contact name:
+          <TextArea
+            style={{ marginTop: '0.5rem' }}
+            type='text'
+            name='comment'
+            className={'input'}
+            maxLength={500}
+            autoSize={{ minRows: 3, maxRows: 3 }}
+          />
           <br />
-          <Input type='text' name='contact' className={'input'} />
-          <br />
-          Content:
-          <br />
-          <TextArea type='text' name='comment' className={'input'} maxLength={500} />
-          <br />
-          <Button type='primary' htmlType='submit' style={{ marginTop: '1rem' }} className={'button'}>
+          <Button type='primary' htmlType='submit' style={{ marginTop: '0.5rem' }}>
             Send
           </Button>
         </form>
