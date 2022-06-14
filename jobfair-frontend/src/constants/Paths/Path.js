@@ -14,8 +14,6 @@ export const PATH = {
   RESULT_SUCCESS_PAGE: '/proceed-success',
   RESULT_FAILED_PAGE: '/proceed-fail',
   FAQ_PAGE: '/faq',
-  //decorate booth
-  DECORATE_BOOTH_PAGE: '/decorate-booth/:jobFairId/:companyBoothId',
   //choose booth page
   CONTRACTS_PAGE: '/contacts',
   PUBLICIZED_JOB_FAIR_LIST_PAGE: '/job-fair-list',
@@ -51,6 +49,8 @@ export const PATH_COMPANY_EMPLOYEE = {
   JOB_FAIR_ASSIGNMENT_PAGE: '/employee/job-fair-assignment',
   INTERVIEW_SCHEDULE: '/employee/interview-schedule',
   INTERVIEW_ROOM_PAGE: '/employee/interview/:roomId',
+  //decorate booth
+  DECORATE_BOOTH_PAGE: '/employee/decorate-booth/:jobFairId/:companyBoothId',
   ASSIGN_TASK_PAGE: '/employee/assign-task/:boothId',
   BOOTH_DESCRIPTION_PAGE: '/employee/booth-description/:assignmentId'
 };
@@ -65,5 +65,7 @@ export const PATH_COMPANY_MANAGER = {
   JOB_FAIR_GRID_PAGE: '/company/my-job-fair',
   TEMPLATE_GRID_PAGE: '/company/my-template',
   TEMPLATE_DETAIL: '/company/my-template/:templateId',
-  QUESTION_BANK: '/company/question-bank'
+  QUESTION_BANK: '/company/question-bank',
+  CHECKLIST: '/company/checklist/:jobFairId',
+  REVIEW_MAP: '/company/review-map/:layoutId'
 };

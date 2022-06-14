@@ -8,6 +8,7 @@ import {
   getJobPositionsAPI,
   uploadCSVFile
 } from '../../services/jobhub-api/JobControllerService';
+import { getQuestionByJobPositionIdAndCriteria } from '../../services/jobhub-api/QuestionControllerService';
 import { uploadUtil } from '../../utils/uploadCSVUtil';
 import { useHistory } from 'react-router-dom';
 import CreateJobPositionFormContainer from '../forms/CreateJobPositionForm/CreateJobPositionForm.container';
@@ -96,6 +97,14 @@ const JobPositionManagementContainer = () => {
 
   const handleOnDelete = async (id) => {
     try {
+      const { data } = await getQuestionByJobPositionIdAndCriteria({ jobPositionId: id });
+      if (data.totalElements) {
+        notification['error']({
+          message: `This job still has questions!`,
+          description: `Please delete all before delete job position.`
+        });
+        return;
+      }
       await deleteJobPositionAPI(id);
       notification['success']({
         message: `Delete job position successfully`

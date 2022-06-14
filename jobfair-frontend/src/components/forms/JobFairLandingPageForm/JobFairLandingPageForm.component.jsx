@@ -14,7 +14,8 @@ const JobFairLandingPageFormComponent = ({
   thumbnailUrl,
   companyInformation,
   jobFairData,
-  handleReviewLandingPage
+  handleReviewLandingPage,
+  onValueChange
 }) => (
   <div className={'job-fair-landing-page'}>
     <div style={{ textAlign: 'center' }}>
@@ -31,8 +32,9 @@ const JobFairLandingPageFormComponent = ({
       requiredMark='required'
       autoComplete='off'
       onFinish={onFinish}
+      onValuesChange={onValueChange}
       scrollToFirstError={{ block: 'center', behavior: 'smooth' }}>
-      <Form.Item label='Thumbnail' name={'thumbnail'} rules={[]} className={'form-item'}>
+      <Form.Item label='Thumbnail' name={'thumbnail'} className={'form-item'} required>
         <UploadComponent uploadProps={uploadProps}>
           {thumbnailUrl ? <img src={thumbnailUrl} alt='avatar' style={{ width: '100%' }} /> : undefined}
         </UploadComponent>

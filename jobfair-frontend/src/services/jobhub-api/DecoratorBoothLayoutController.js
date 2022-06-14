@@ -27,3 +27,6 @@ export const saveLayoutVideoWithFileIntoMyBoothLayout = async (formData) =>
 
 export const saveLayoutVideoWithUrlIntoMyBoothLayout = async (params) =>
   CallAPI(`${ENDPOINT_DECORATOR_BOOTH_LAYOUT}/videos/url`, 'POST', {}, params);
+
+export const deleteBoothLayoutInMyBoothLayout = async (layoutId) =>
+  CallAPI(`${ENDPOINT_DECORATOR_BOOTH_LAYOUT}/${layoutId}`, 'DELETE');

@@ -1,3 +1,5 @@
+import { JobFairCheckListPage } from '../pages/JobFairCheckList/JobFairCheckListPage';
+import { JobFairMapReviewPage } from '../pages/JobFairMapReviewPage/JobFairMapReviewPage';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
@@ -37,7 +39,6 @@ import LoginPage from '../pages/LoginPage/LoginPage';
 import NavigationBar from '../components/commons/Navbar/Navbar';
 import OrganizeJobFairPage from '../pages/OrganizeJobFairPage/OrganizeJobFairPage';
 import PublicRouter from './components/PublicRouter';
-import PublicizeJobFairDetailPage from '../pages/JobFairDetailPage/PublicizeJobFairDetailPage';
 import PublicizedBoothPage from '../pages/PublicizedBoothPage/PublicizedBoothPage';
 import QuestionBankPage from '../pages/QuestionBankPage/QuestionBankPage';
 import React, { useEffect } from 'react';
@@ -94,9 +95,6 @@ const AppRouter = () => {
         <Route path={PATH.FAQ_PAGE} exact>
           <FAQPage />
         </Route>
-        <Route path={PATH.DECORATE_BOOTH_PAGE} exact>
-          <DecorateBoothPage />
-        </Route>
         <Route path={PATH.CONTRACTS_PAGE} exact>
           <ContactPage />
         </Route>
@@ -139,12 +137,6 @@ const AppRouter = () => {
           exact
         />
         <AttendantRouter
-          key={PATH_ATTENDANT.JOB_FAIR_DETAIL_PAGE}
-          component={() => <PublicizeJobFairDetailPage />}
-          path={PATH_ATTENDANT.JOB_FAIR_DETAIL_PAGE}
-          exact
-        />
-        <AttendantRouter
           key={PATH_ATTENDANT.RESUME_DETAIL_PAGE}
           component={() => <ResumeDetailPage />}
           path={PATH_ATTENDANT.RESUME_DETAIL_PAGE}
@@ -175,6 +167,12 @@ const AppRouter = () => {
           exact
         />
         <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE}
+          component={() => <DecorateBoothPage />}
+          path={PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
           key={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}
           component={() => <ApplicationManagementPage />}
           path={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}
@@ -190,12 +188,6 @@ const AppRouter = () => {
           key={PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE}
           component={() => <ResumeDetailPage />}
           path={PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE}
-          exact
-        />
-        <CompanyEmployeeRouter
-          key={PATH_COMPANY_EMPLOYEE.JOB_FAIR_DETAIL_PAGE}
-          component={() => <PublicizeJobFairDetailPage />}
-          path={PATH_COMPANY_EMPLOYEE.JOB_FAIR_DETAIL_PAGE}
           exact
         />
         <CompanyEmployeeRouter
@@ -271,12 +263,6 @@ const AppRouter = () => {
           exact
         />
         <CompanyManagerRouter
-          key={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE}
-          component={() => <PublicizeJobFairDetailPage />}
-          path={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE}
-          exact
-        />
-        <CompanyManagerRouter
           key={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}
           component={() => <OrganizeJobFairPage />}
           path={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}
@@ -298,6 +284,18 @@ const AppRouter = () => {
           key={PATH_COMPANY_MANAGER.QUESTION_BANK}
           component={() => <QuestionBankPage />}
           path={PATH_COMPANY_MANAGER.QUESTION_BANK}
+          exact
+        />
+        <CompanyManagerRouter
+          key={PATH_COMPANY_MANAGER.CHECKLIST}
+          component={() => <JobFairCheckListPage />}
+          path={PATH_COMPANY_MANAGER.CHECKLIST}
+          exact
+        />
+        <CompanyManagerRouter
+          key={PATH_COMPANY_MANAGER.REVIEW_MAP}
+          component={() => <JobFairMapReviewPage />}
+          path={PATH_COMPANY_MANAGER.REVIEW_MAP}
           exact
         />
         <Route path='/index.html'>
