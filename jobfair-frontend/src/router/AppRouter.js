@@ -5,6 +5,7 @@ import { selectWebSocket } from '../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import AboutApplicationPage from '../pages/AboutApplicationPage';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
+import AssignTaskPage from '../pages/AssignTaskPage/AssignTaskPage';
 import AttendantAttemptTestPage from '../pages/AttendantAttemptTestPage/AttendantAttemptTestPage';
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage';
 import AttendantProfile from '../pages/ProfilePage/Attendant/AttendantProfilePage';
@@ -27,6 +28,7 @@ import InterviewRoomPage from '../pages/InterviewRoomPage/InterviewRoomPage';
 import InterviewSchedulePage from '../pages/InterviewSchedulePage/InterviewSchedulePage';
 import JobFairAssignmentPage from '../pages/JobFairAssignmentPage/JobFairAssignmentPage';
 import JobFairGridManagerPage from '../pages/JobFairListPage/JobFairGridManagerPage';
+import JobFairLandingPage from '../pages/JobFairLandingPage/JobFairLandingPage';
 import JobFairListPage from '../pages/JobFairListPage/JobFairListPage';
 import JobFairTablePage from '../pages/JobFairTablePage/JobFairTablePage';
 import JobFairTemplateDetailPage from '../pages/JobFairTemplateDetailPage/JobFairTemplateDetailPage';
@@ -92,9 +94,6 @@ const AppRouter = () => {
         <Route path={PATH.FAQ_PAGE} exact>
           <FAQPage />
         </Route>
-        <Route path={PATH.DECORATE_BOOTH_PAGE} exact>
-          <DecorateBoothPage />
-        </Route>
         <Route path={PATH.CONTRACTS_PAGE} exact>
           <ContactPage />
         </Route>
@@ -106,6 +105,9 @@ const AppRouter = () => {
         </Route>
         <Route path={PATH.RESULT_SUCCESS_PAGE} exact>
           <ResultSuccessPage />
+        </Route>
+        <Route path={PATH.JOB_FAIR_LANDING_PAGE} exact>
+          <JobFairLandingPage />
         </Route>
         <PublicRouter key={PATH.LOGIN_PAGE} component={() => <LoginPage />} path={PATH.LOGIN_PAGE} exact />
         <PublicRouter key={PATH.REGISTER_PAGE} component={() => <RegisterPage />} path={PATH.REGISTER_PAGE} exact />
@@ -170,6 +172,12 @@ const AppRouter = () => {
           exact
         />
         <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE}
+          component={() => <DecorateBoothPage />}
+          path={PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
           key={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}
           component={() => <ApplicationManagementPage />}
           path={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}
@@ -221,6 +229,12 @@ const AppRouter = () => {
           key={PATH_COMPANY_EMPLOYEE.INTERVIEW_ROOM_PAGE}
           component={() => <InterviewRoomPage />}
           path={PATH_COMPANY_EMPLOYEE.INTERVIEW_ROOM_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE}
+          component={() => <AssignTaskPage />}
+          path={PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE}
           exact
         />
         <CompanyEmployeeRouter

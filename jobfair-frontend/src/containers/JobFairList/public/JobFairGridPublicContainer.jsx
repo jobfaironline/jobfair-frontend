@@ -68,7 +68,7 @@ const JobFairGridPublicContainer = ({ role }) => {
   };
 
   const onClick = async (jobFairId) => {
-    const url = generatePath(PATH.PUBLICIZED_BOOTH_PAGE, {
+    const url = generatePath(PATH.JOB_FAIR_LANDING_PAGE, {
       jobFairId
     });
     history.push(url);

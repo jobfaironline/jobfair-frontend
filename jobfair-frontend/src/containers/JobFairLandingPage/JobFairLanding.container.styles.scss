@@ -1,0 +1,82 @@
+.job-fair-landing-container {
+  min-height: calc(100vh - 126px);
+  .shadow {
+    padding: 2rem;
+    background: linear-gradient(rgba(72, 159, 192, 0.8), rgba(0, 10, 72, 0.8));
+  }
+  .header {
+    height: 20rem;
+    color: white;
+    overflow: hidden;
+    background: #c04848;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .overlay {
+    color: white !important;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+    .general {
+      margin-left: 2rem;
+
+      .title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        .icon {
+          margin-left: 0.7rem;
+          cursor: pointer;
+        }
+
+        .icon:hover {
+          color: orange;
+        }
+      }
+    }
+
+    .ant-typography {
+      color: white;
+      margin: 0;
+    }
+  }
+
+  .detail {
+    margin: 1rem 25% 0;
+
+    h3 {
+      font-size: 1.4rem;
+    }
+
+    .description {
+      font-size: 18px;
+    }
+
+    .ant-typography {
+      margin: 0;
+    }
+
+    .time-cube:first-child {
+      margin-right: 1rem;
+    }
+
+    .time-cube:last-child {
+      margin-left: 1rem;
+    }
+
+    .time-cube {
+      color: white;
+      background-color: #1890ff;
+      padding: 0.5rem 1rem;
+      width: max-content;
+      border-radius: 16px;
+    }
+  }
+}
