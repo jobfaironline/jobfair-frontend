@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@craco/craco": "^6.4.3",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@fortawesome/fontawesome-svg-core": "^6.1.0",
@@ -28,6 +29,7 @@
     "antd": "^4.18.5",
     "antd-img-crop": "^4.2.0",
     "axios": "^0.25.0",
+    "craco-less": "^2.0.0",
     "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
     "js-cookie": "^2.2.1",
     "moment": "^2.29.3",
@@ -74,9 +76,9 @@
     "prettier": "npx prettier src --check",
     "prettier:fix": "npm run prettier -- --write",
     "format": "npm run prettier:fix && npm run lint:fix",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject",
     "tien-start": "node node_modules/react-scripts/bin/react-scripts.js start",
     "tien-format": "node node_modules/eslint/bin/eslint.js --quiet --fix . --ext .js,.jsx src/ && node node_modules/prettier/bin-prettier.js -w src/"

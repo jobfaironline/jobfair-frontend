@@ -1,6 +1,6 @@
-import './App.scss';
+import './App.less';
 import 'animate.css';
-import 'antd/dist/antd.min.css';
+// import 'antd/dist/antd.min.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import AppRouter from './router/AppRouter';
