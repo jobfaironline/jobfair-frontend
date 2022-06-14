@@ -34,7 +34,7 @@ const JobFairLandingPageFormComponent = ({
       onFinish={onFinish}
       onValuesChange={onValueChange}
       scrollToFirstError={{ block: 'center', behavior: 'smooth' }}>
-      <Form.Item label='Thumbnail' name={'thumbnail'} rules={[]} className={'form-item'} required>
+      <Form.Item label='Thumbnail' name={'thumbnail'} className={'form-item'} required>
         <UploadComponent uploadProps={uploadProps}>
           {thumbnailUrl ? <img src={thumbnailUrl} alt='avatar' style={{ width: '100%' }} /> : undefined}
         </UploadComponent>
