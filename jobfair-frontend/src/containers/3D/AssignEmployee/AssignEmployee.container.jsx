@@ -1,5 +1,6 @@
 import { AssignEmployeeBoothList } from '../../../components/customized-components/AssignEmployeeBoothList/AssignEmployeeBoothList.component';
 import { AssignEmployeeModalContainer } from '../../AssignEmployeeModal/AssignEmployeeModal.container';
+import { Button } from 'antd';
 import { ChooseBoothCanvas } from '../../../components/3D/ChooseBooth/ChooseBoothCanvas.component';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { SideBarComponent } from '../../../components/commons/SideBar/SideBar.component';
@@ -12,7 +13,7 @@ import { uploadUtil } from '../../../utils/uploadCSVUtil';
 import React, { useEffect, useRef, useState } from 'react';
 
 export const AssignEmployeeContainer = (props) => {
-  const { jobFairId, onHandleNext, onHandlePrev, currentStep } = props;
+  const { jobFairId, onHandleNext, onHandlePrev, currentStep, handleGotoChecklist } = props;
   const [state, setState] = useState({
     glbMesh: undefined,
     boothDataForMesh: {},
@@ -117,17 +118,28 @@ export const AssignEmployeeContainer = (props) => {
       />
       <SideBarComponent
         rightSide={
-          <ChooseBoothCanvas
-            mesh={state.glbMesh}
-            boothData={state.boothDataForMesh}
-            jobFairId={jobFairId}
-            onClick={onBoothClick}
-            selectionRef={selectionRef}
-            onCompanyGroundPointerOver={onBoothMouseOver}
-            onCompanyGroundPointerOut={onBoothMouseOut}
-            hoverRef={hoverRef}
-            boothMeshesRef={boothMeshesRef}
-          />
+          <>
+            <Button
+              onClick={handleGotoChecklist}
+              style={{
+                position: 'absolute',
+                zIndex: 1000,
+                right: 0
+              }}>
+              Go to checklist
+            </Button>
+            <ChooseBoothCanvas
+              mesh={state.glbMesh}
+              boothData={state.boothDataForMesh}
+              jobFairId={jobFairId}
+              onClick={onBoothClick}
+              selectionRef={selectionRef}
+              onCompanyGroundPointerOver={onBoothMouseOver}
+              onCompanyGroundPointerOut={onBoothMouseOut}
+              hoverRef={hoverRef}
+              boothMeshesRef={boothMeshesRef}
+            />
+          </>
         }
         leftSide={
           <AssignEmployeeBoothList
