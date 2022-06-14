@@ -23,7 +23,7 @@ const mapperCompanyInfoToUpdate = (values) => ({
   sizeId: values.sizeId,
   subCategoriesIds: values.subCategoriesIds,
   taxId: values.taxId,
-  url: values.url
+  url: values.websiteUrl
 });
 
 const mapperCompanyInfoToDisplay = (values) => ({
@@ -58,8 +58,7 @@ export const CompanyProfileContainer = () => {
       setMediaUrl(data.companyLogoURL);
     } catch (e) {
       notification['error']({
-        message: `Fetch company profile failed`,
-        description: `Failed for company with ${companyId}`
+        message: `Fetch company profile failed`
       });
     }
   };
@@ -94,13 +93,12 @@ export const CompanyProfileContainer = () => {
   const onFinish = async (values) => {
     const body = mapperCompanyInfoToUpdate(values);
     try {
-      await uploadCompanyLogo(logoFormData.current);
+      if (logoFormData.current.has('file')) await uploadCompanyLogo(logoFormData.current);
       await updateCompanyProfileAPI(body, companyId);
       notification['success']({
         message: `Update company profile successfully`,
-        description: `For company with ${values.companyName}`
+        description: `For company with name: ${values.name}`
       });
-      //setIsEditable(false);
     } catch (err) {
       notification['error']({
         message: `Update company profile failed`,
