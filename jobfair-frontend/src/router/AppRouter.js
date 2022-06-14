@@ -39,7 +39,6 @@ import LoginPage from '../pages/LoginPage/LoginPage';
 import NavigationBar from '../components/commons/Navbar/Navbar';
 import OrganizeJobFairPage from '../pages/OrganizeJobFairPage/OrganizeJobFairPage';
 import PublicRouter from './components/PublicRouter';
-import PublicizeJobFairDetailPage from '../pages/JobFairDetailPage/PublicizeJobFairDetailPage';
 import PublicizedBoothPage from '../pages/PublicizedBoothPage/PublicizedBoothPage';
 import QuestionBankPage from '../pages/QuestionBankPage/QuestionBankPage';
 import React, { useEffect } from 'react';
@@ -138,12 +137,6 @@ const AppRouter = () => {
           exact
         />
         <AttendantRouter
-          key={PATH_ATTENDANT.JOB_FAIR_DETAIL_PAGE}
-          component={() => <PublicizeJobFairDetailPage />}
-          path={PATH_ATTENDANT.JOB_FAIR_DETAIL_PAGE}
-          exact
-        />
-        <AttendantRouter
           key={PATH_ATTENDANT.RESUME_DETAIL_PAGE}
           component={() => <ResumeDetailPage />}
           path={PATH_ATTENDANT.RESUME_DETAIL_PAGE}
@@ -195,12 +188,6 @@ const AppRouter = () => {
           key={PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE}
           component={() => <ResumeDetailPage />}
           path={PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE}
-          exact
-        />
-        <CompanyEmployeeRouter
-          key={PATH_COMPANY_EMPLOYEE.JOB_FAIR_DETAIL_PAGE}
-          component={() => <PublicizeJobFairDetailPage />}
-          path={PATH_COMPANY_EMPLOYEE.JOB_FAIR_DETAIL_PAGE}
           exact
         />
         <CompanyEmployeeRouter
@@ -273,12 +260,6 @@ const AppRouter = () => {
           key={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}
           component={() => <JobFairGridManagerPage />}
           path={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}
-          exact
-        />
-        <CompanyManagerRouter
-          key={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE}
-          component={() => <PublicizeJobFairDetailPage />}
-          path={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE}
           exact
         />
         <CompanyManagerRouter

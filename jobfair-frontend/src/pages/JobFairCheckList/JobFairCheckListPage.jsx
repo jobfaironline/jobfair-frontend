@@ -1,3 +1,4 @@
+import './JobFairCheckListPage.styles.scss';
 import { JobFairCheckListContainer } from '../../containers/JobFairCheckList/JobFairCheckList.container';
 import { useParams } from 'react-router-dom';
 

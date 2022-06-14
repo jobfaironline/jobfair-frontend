@@ -1,5 +1,3 @@
-import './JobFairCheckList.styles.scss';
-
 import { Button, Modal, Progress, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JOB_FAIR_STATUS } from '../../constants/JobFairConst';
