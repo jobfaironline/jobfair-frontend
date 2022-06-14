@@ -1,30 +1,61 @@
-import { Card, Descriptions, Image, Tag, Typography, notification } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Form, Typography, message, notification } from 'antd';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
-import { SizeConst, SubCategories } from '../../constants/CompanyProfileConstant';
-import { getCompanyProfileAPI } from '../../services/jobhub-api/CompanyControllerService';
-import { useEffect, useState } from 'react';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { getBase64 } from '../../utils/common';
+import {
+  getCompanyProfileAPI,
+  updateCompanyProfileAPI,
+  uploadCompanyLogo
+} from '../../services/jobhub-api/CompanyControllerService';
 import { useSelector } from 'react-redux';
+import CompanyProfileForm from '../../components/forms/CompanyProfileForm/CompanyProfileForm.component';
+import React, { useEffect, useRef, useState } from 'react';
 
-const { Title } = Typography;
+const mapperCompanyInfoToUpdate = (values) => ({
+  address: values.address,
+  benefits: values.benefits,
+  companyDescription: values.companyDescription,
+  email: values.email,
+  mediaUrls: values.mediaUrls,
+  name: values.name,
+  phone: values.phone,
+  sizeId: values.sizeId,
+  subCategoriesIds: values.subCategoriesIds,
+  taxId: values.taxId,
+  url: values.url
+});
+
+const mapperCompanyInfoToDisplay = (values) => ({
+  ...values,
+  benefits: values.companyBenefitDTOS.map((item) => ({
+    ...item,
+    id: item.benefitDTO.id,
+    description: item.description
+  })),
+  mediaUrls: values.mediaDTOS,
+  subCategoriesIds: values.subCategoryDTOs.map((item) => item.id)
+});
 
 export const CompanyProfileContainer = () => {
   const companyId = useSelector((state) => state.authentication.user.companyId);
+  const [form] = Form.useForm();
   const [data, setData] = useState();
+  const [isEdit, setIsEdit] = useState(false);
+  const [mediaUrl, setMediaUrl] = useState('');
+  const logoFormData = useRef(new FormData());
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     try {
-      const data = (await getCompanyProfileAPI(companyId)).data;
-      setData({
-        data,
-        benefits: data.companyBenefitDTOS.map((item) => ({
-          ...item,
-          id: item.benefitDTO.id,
-          description: item.benefitDTO.description
-        })),
-        mediaUrls: data.mediaDTOS,
-        subCategoriesIds: data.subCategoryDTOs.map((item) => item.id),
-        url: data.websiteUrl
-      });
+      let { data } = await getCompanyProfileAPI(companyId);
+      data = mapperCompanyInfoToDisplay(data);
+      form.setFieldsValue({ ...data });
+      setData(data);
+      setMediaUrl(data.companyLogoURL);
     } catch (e) {
       notification['error']({
         message: `Fetch company profile failed`,
@@ -33,49 +64,83 @@ export const CompanyProfileContainer = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const mediaUpload = {
+    name: 'file',
+    beforeUpload: () => false,
+    onChange: async (info) => {
+      try {
+        const fileExtension = info.file.name.split('.').pop();
+        if (fileExtension !== 'png' && fileExtension !== 'jpg' && fileExtension !== 'jpeg') {
+          notification['error']({
+            message: `${info.file.name} is not image file`
+          });
+          return;
+        }
+        const url = await getBase64(info.file);
+        setMediaUrl(url);
+        logoFormData.current.append('file', info.file);
+        message.success('Upload company logo to review successfully');
+      } catch (err) {
+        message.error('Upload company logo failed.');
+      }
+    },
+    onRemove: async () => {
+      setMediaUrl(undefined);
+    },
+    showUploadList: false,
+    maxCount: 1
+  };
 
-  if (data) {
-    return (
-      <div>
-        <Card
-          title=''
-          style={{
-            boxShadow: '5px 8px 24px 5px rgba(208, 216, 243, 0.6)',
-            marginBottom: '2rem'
-          }}
-          headStyle={{ backgroundColor: 'white', border: 0 }}
-          bodyStyle={{ backgroundColor: 'white', border: 0 }}>
-          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
-            <Image height={'10rem'} src={data.data.companyLogoURL} />
-          </div>
-          <div style={{ marginTop: '1rem' }}>
-            <Descriptions
-              title={
-                <Title style={{ marginBottom: 0, fontWeight: '700' }} level={3}>
-                  {data.data.name}
-                </Title>
-              }
-              column={1}>
-              <Descriptions.Item label={'Address'}>{data.data.address}</Descriptions.Item>
-              <Descriptions.Item label={'Website'}>{data.url}</Descriptions.Item>
-              <Descriptions.Item label={'Size'}>
-                {SizeConst.find((item) => item.value === data.data.sizeId)?.label}
-              </Descriptions.Item>
-              <Descriptions.Item label={'Company industry'}>
-                {data.subCategoriesIds.map((categoryId) => (
-                  <Tag>{SubCategories.find((item) => item.value === categoryId)?.label}</Tag>
-                ))}
-              </Descriptions.Item>
-              <Descriptions.Item label={'Company description'}>{data.data.companyDescription}</Descriptions.Item>
-            </Descriptions>
-          </div>
-        </Card>
+  const onFinish = async (values) => {
+    const body = mapperCompanyInfoToUpdate(values);
+    try {
+      await uploadCompanyLogo(logoFormData.current);
+      await updateCompanyProfileAPI(body, companyId);
+      notification['success']({
+        message: `Update company profile successfully`,
+        description: `For company with ${values.companyName}`
+      });
+      //setIsEditable(false);
+    } catch (err) {
+      notification['error']({
+        message: `Update company profile failed`,
+        description: `There is problem while updating, try again later`
+      });
+    }
+  };
+
+  const onCancel = () => {
+    setIsEdit(false);
+  };
+
+  return (
+    <div className={'company-profile-container'}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Typography.Title level={2} style={{ marginBottom: '0rem' }}>
+          Company profile
+        </Typography.Title>
+        <a
+          style={{ display: isEdit ? 'none' : 'block', marginLeft: 'auto' }}
+          href={'#'}
+          onClick={() => {
+            setIsEdit(true);
+          }}>
+          <FontAwesomeIcon icon={faPen} size={'2x'} color={'black'} />
+        </a>
       </div>
-    );
-  }
 
-  return <LoadingComponent isWholePage={true} />;
+      {data ? (
+        <CompanyProfileForm
+          form={form}
+          mediaUrl={mediaUrl}
+          onFinish={onFinish}
+          editable={isEdit}
+          onCancel={onCancel}
+          {...mediaUpload}
+        />
+      ) : (
+        <LoadingComponent />
+      )}
+    </div>
+  );
 };

@@ -3,8 +3,9 @@ import { Upload } from 'antd';
 import React from 'react';
 
 const { Dragger } = Upload;
-const UploadComponent = ({ uploadProps, ...props }) => (
-  <Dragger {...uploadProps}>
+
+const UploadComponent = ({ uploadProps, disabled, ...props }) => (
+  <Dragger {...uploadProps} disabled={disabled}>
     {props.children === undefined ? (
       <>
         <p className='ant-upload-drag-icon'>

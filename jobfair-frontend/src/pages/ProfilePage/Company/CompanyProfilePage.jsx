@@ -1,28 +1,17 @@
 import './CompanyProfilePage.scss';
-import { Button } from 'antd';
 import { CompanyProfileContainer } from '../../../containers/CompanyProfile/CompanyProfile.container';
-import CompanyProfileFormContainer from '../../../containers/forms/CompanyProfileForm/CompanyProfileForm.container';
 import JobPositionManagementContainer from '../../../containers/JobPosition/JobPositionManagement.container';
-import React, { useState } from 'react';
+import React from 'react';
 
-const CompanyProfilePage = () => {
-  const [isEditable, setIsEditable] = useState(false);
-  return (
-    <div className={'page company-profile-page'}>
-      <div className={'company-profile'}>
-        <Button className={'button'} onClick={() => setIsEditable(true)}>
-          Edit
-        </Button>
-        <Button className={'button'} onClick={() => setIsEditable(false)}>
-          Cancel
-        </Button>
-        {isEditable ? <CompanyProfileFormContainer /> : <CompanyProfileContainer />}
-      </div>
-      <div className={'job-positions'}>
-        <JobPositionManagementContainer />
-      </div>
+const CompanyProfilePage = () => (
+  <div className={'page company-profile-page'}>
+    <div className={'company-profile'}>
+      <CompanyProfileContainer />
     </div>
-  );
-};
+    <div className={'job-positions'}>
+      <JobPositionManagementContainer />
+    </div>
+  </div>
+);
 
 export default CompanyProfilePage;
