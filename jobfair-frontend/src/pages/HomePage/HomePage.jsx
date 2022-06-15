@@ -14,10 +14,10 @@ const HomePage = () => {
   switch (role) {
     case RoleType.COMPANY_EMPLOYEE:
       history.push(PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE);
-      return;
+      return null;
     case RoleType.COMPANY_MANAGER:
       history.push(PATH_COMPANY_MANAGER.COMPANY_PROFILE_PAGE);
-      return;
+      return null;
   }
 
   return (

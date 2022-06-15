@@ -6,7 +6,7 @@ import store from '../../redux-flow/index';
 export class WebSocketClient {
   constructor(token) {
     this.token = token;
-    this.socket = new WebSocket(`wss://d8jkn5uxre.execute-api.ap-southeast-1.amazonaws.com/production?token=${token}`);
+    this.socket = new WebSocket(`wss://lflmm880j3.execute-api.ap-southeast-1.amazonaws.com/production?token=${token}`);
     this.eventHandlers = {
       default: (notificationData) => {
         switch (notificationData?.notificationType) {
