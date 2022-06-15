@@ -80,7 +80,8 @@ export const AssignEmployeeContainer = (props) => {
       const id = boothInfo.id;
       const name = boothInfo.booth.name;
       boothData[name] = {
-        id
+        id,
+        color: `#${Math.floor(Math.random() * 16777215).toString(16)}`
       };
     }
 
@@ -150,6 +151,7 @@ export const AssignEmployeeContainer = (props) => {
             onHoverOut={onBoothMouseOut}
             onBoothClick={onBoothClick}
             onClickUploadCSV={onClickUploadCSV}
+            boothData={state.boothDataForMesh}
           />
         }
         nextButtonContent={'Start design landing page'}

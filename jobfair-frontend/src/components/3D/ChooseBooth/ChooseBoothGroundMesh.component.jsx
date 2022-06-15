@@ -3,7 +3,7 @@ import { BasicMesh } from '../ThreeJSBaseComponent/ChildMesh.component';
 import React, { useRef } from 'react';
 
 export const ChooseBoothGroundMesh = (props) => {
-  const { mesh, onPointerOver, onPointerLeave, onClick, isAvailable, boothId, boothMeshesRef } = props;
+  const { mesh, onPointerOver, onPointerLeave, onClick, isAvailable, boothId, boothMeshesRef, color } = props;
   const ref = useRef();
   boothMeshesRef.current.push(ref);
   if (!isAvailable) {
@@ -13,7 +13,8 @@ export const ChooseBoothGroundMesh = (props) => {
     mesh.material = newMaterial;
   } else {
     const newMaterial = mesh.material.clone();
-    newMaterial.color.set(0x42f56f);
+    if (color !== undefined) newMaterial.color.set(color);
+    else newMaterial.color.set(0x42f56f);
     newMaterial.transparent = true;
     mesh.material = newMaterial;
   }
