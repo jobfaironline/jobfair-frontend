@@ -88,7 +88,7 @@ const JobFairAssignmentContainer = () => {
   };
 
   return (
-    <div style={{}}>
+    <div style={{ paddingTop: '2rem' }}>
       <MyBoothLayoutListContainer
         setMyLayoutVisibility={setMyLayoutVisibility}
         myLayoutVisibility={myLayoutVisibility}

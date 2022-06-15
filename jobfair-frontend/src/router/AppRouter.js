@@ -59,7 +59,7 @@ const isHasFooter = (location) =>
       exact: true,
       strict: true
     });
-    return match.isExact;
+    return match?.isExact;
   });
 
 const AppRouter = () => {
@@ -79,7 +79,7 @@ const AppRouter = () => {
   };
 
   return (
-    <Layout>
+    <Layout style={{ minHeight: '100vh' }}>
       <NavigationBar />
       <Switch>
         <Route path={PATH.FINAL_ERROR_PAGE} exact>
