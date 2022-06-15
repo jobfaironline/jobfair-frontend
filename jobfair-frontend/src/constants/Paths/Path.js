@@ -39,7 +39,8 @@ export const PATH_ATTENDANT = {
   WAITING_ROOM_PAGE: '/attendant/waiting-room/:scheduleId/:roomId',
   INTERVIEW_SCHEDULE: '/attendant/interview-schedule',
   RESUME_DETAIL_PAGE: '/attendant/resume-detail',
-  ATTEMPT_TEST_PAGE: '/attendant/attempt-test/:quizId'
+  ATTEMPT_TEST_PAGE: '/attendant/attempt-test/:quizId',
+  RESUME_MANAGEMENT_PAGE: '/attendant/resume-management'
 };
 export const PATH_COMPANY_EMPLOYEE = {
   COMPANY_PROFILE_PAGE: '/employee/company-profile',

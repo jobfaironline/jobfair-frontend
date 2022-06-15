@@ -1,39 +1,32 @@
-import { Divider, Space, Typography } from 'antd';
 import { FacebookOutlined, GithubOutlined, InstagramOutlined } from '@ant-design/icons';
 import React from 'react';
 
-const { Title } = Typography;
-
 const ContactPage = () => (
-  <div className='page'>
-    <Divider plain>
-      <Title>Contact us now !!!</Title>
-    </Divider>
-    <Space size='large' direction='vertical' style={{ marginLeft: '42rem' }}>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+    <div style={{ flex: 1 }}>
+      <div style={{ textTransform: 'uppercase', fontSize: '30px', fontWeight: 'bold', color: '#1E3B9B' }}>JobHub</div>
+      <div>
         <FacebookOutlined
-          style={{ fontSize: '7rem' }}
+          style={{ fontSize: '3rem' }}
           onClick={() => {
             window.location.href = 'https://www.facebook.com/TrongKhanh.Kieu';
           }}
         />
         <InstagramOutlined
-          style={{ fontSize: '7rem' }}
+          style={{ fontSize: '3rem' }}
           onClick={() => {
             window.location.href = 'https://help.instagram.com/';
           }}
         />
         <GithubOutlined
-          style={{ fontSize: '7rem' }}
+          style={{ fontSize: '3rem' }}
           onClick={() => {
             window.location.href = 'https://github.com/jobfaironline';
           }}
         />
       </div>
-      <div style={{ fontSize: '7rem' }}>
-        <img src={`${window.location.origin}/contact.png`} style={{ margin: '0 -12rem' }} />
-      </div>
-    </Space>
+    </div>
+    <div style={{ flex: 4 }}>form</div>
   </div>
 );
 
