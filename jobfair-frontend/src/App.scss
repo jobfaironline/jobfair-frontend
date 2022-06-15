@@ -202,13 +202,14 @@ home
 }
 
 .disable-form {
-  .ant-input[disabled] {
+  .ant-input-affix-wrapper-disabled, .ant-input[disabled] {
     color: black;
     background-color: white;
     box-shadow: none;
     border: none;
     cursor: default;
     opacity: 1;
+    padding: 4px 0;
   }
 
   .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
@@ -216,6 +217,7 @@ home
     background: white !important;
     cursor: default;
     border: none;
+    padding: 0;
   }
 
   .ant-select-disabled .ant-select-arrow {
@@ -235,4 +237,15 @@ home
   .ant-checkbox-disabled .ant-checkbox-inner {
     cursor: default;
   }
+
+  .ant-upload.ant-upload-drag.ant-upload-disabled{
+    cursor: default;
+    border: none;
+    background-color: transparent;
+  }
+
+  .ant-upload.ant-upload-disabled {
+    cursor: default;
+  }
+
 }

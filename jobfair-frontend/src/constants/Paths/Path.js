@@ -14,15 +14,14 @@ export const PATH = {
   RESULT_SUCCESS_PAGE: '/proceed-success',
   RESULT_FAILED_PAGE: '/proceed-fail',
   FAQ_PAGE: '/faq',
-  //decorate booth
-  DECORATE_BOOTH_PAGE: '/decorate-booth/:jobFairId/:companyBoothId',
   //choose booth page
   CONTRACTS_PAGE: '/contacts',
   PUBLICIZED_JOB_FAIR_LIST_PAGE: '/job-fair-list',
   HOME_PAGE: '/home',
   FINAL_ERROR_PAGE: '/error-500',
   ABOUT_APPLICATION_PAGE: '/about-application',
-  INTERVIEW_LANDING_PAGE: '/interview-landing'
+  INTERVIEW_LANDING_PAGE: '/interview-landing',
+  JOB_FAIR_LANDING_PAGE: `/landing-job-fair/:jobFairId`
 };
 export const PATH_ADMIN = {
   JOB_FAIR_LIST_PAGE: '/admin/job-fair-list',
@@ -50,6 +49,10 @@ export const PATH_COMPANY_EMPLOYEE = {
   ASSIGN_BOOTH_MAP_PAGE: '/employee/assign-map/:assignmentId',
   JOB_FAIR_ASSIGNMENT_PAGE: '/employee/job-fair-assignment',
   INTERVIEW_SCHEDULE: '/employee/interview-schedule',
+  //decorate booth
+  DECORATE_BOOTH_PAGE: '/employee/decorate-booth/:jobFairId/:companyBoothId',
+  ASSIGN_TASK_PAGE: '/employee/assign-task/:boothId',
+  BOOTH_DESCRIPTION_PAGE: '/employee/booth-description/:assignmentId',
   INTERVIEW_ROOM_PAGE: '/employee/interview/:scheduleId/:roomId'
 };
 export const PATH_COMPANY_MANAGER = {
@@ -63,5 +66,7 @@ export const PATH_COMPANY_MANAGER = {
   JOB_FAIR_GRID_PAGE: '/company/my-job-fair',
   TEMPLATE_GRID_PAGE: '/company/my-template',
   TEMPLATE_DETAIL: '/company/my-template/:templateId',
-  QUESTION_BANK: '/company/question-bank'
+  QUESTION_BANK: '/company/question-bank',
+  CHECKLIST: '/company/checklist/:jobFairId',
+  REVIEW_MAP: '/company/review-map/:layoutId'
 };

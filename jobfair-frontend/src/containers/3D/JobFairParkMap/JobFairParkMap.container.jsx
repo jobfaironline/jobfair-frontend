@@ -64,6 +64,12 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
   useEffect(() => {
     visitJobFair(jobFairId);
     webSocketClient.addEvent('change-job-fair-booth-view', changeJobFairBoothView);
+    const leaveJobFairFn = () => {
+      leaveJobFair(jobFairId);
+      webSocketClient.removeEvent('change-job-fair-booth-view');
+      window.removeEventListener(leaveJobFairFn);
+    };
+    window.addEventListener('beforeunload', leaveJobFairFn);
     return () => {
       leaveJobFair(jobFairId);
       webSocketClient.removeEvent('change-job-fair-booth-view');

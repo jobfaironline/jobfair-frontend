@@ -169,3 +169,22 @@ export const getDateDifferent = (timeStamp) => {
 };
 
 export const getCountryOrder = () => CountryConst.sort((o1, o2) => o1.name.localeCompare(o2.name));
+export const formatMoney = (value, message = 'Not enter') => {
+  if (value === undefined || value === null || value === '') return message;
+  return `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+export const parseMoney = (value) => value.replace(/\$\s?|(,*)/g, '');
+
+export const deepClone = (value) => {
+  if (Array.isArray(value)) return value.map((child) => deepClone(child));
+  if (moment.isMoment(value)) return value.clone();
+
+  if (typeof value === 'object' && value !== null)
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, deepClone(v)]));
+
+  return value;
+};
+
+export const getTimeZoneCode = () =>
+  //https://stackoverflow.com/questions/1954397/detect-timezone-abbreviation-using-javascript
+  new Date().toLocaleTimeString('en-us', { timeZoneName: 'short' }).split(' ')[2];

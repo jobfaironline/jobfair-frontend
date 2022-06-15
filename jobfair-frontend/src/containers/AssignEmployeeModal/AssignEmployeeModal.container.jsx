@@ -1,4 +1,4 @@
-import { AssigmentType } from '../../constants/AssignmentConst';
+import { AssigmentType, AssignmentBoothConstraint, AssignmentConst } from '../../constants/AssignmentConst';
 import { Modal, Select, Typography, notification } from 'antd';
 import { TableTransfer } from '../../components/commons/TableTransfer/TableTransfer.component';
 import {
@@ -40,6 +40,7 @@ export const AssignEmployeeModalContainer = (props) => {
         ...assignment.companyEmployee.account,
         fullName: `${assignment.companyEmployee.account.firstname} ${assignment.companyEmployee.account.middlename} ${assignment.companyEmployee.account.lastname}`,
         assignmentType: assignment.type,
+        assignmentId: assignment.id,
         key: assignment.companyEmployee.account.id
       }));
 
@@ -86,7 +87,7 @@ export const AssignEmployeeModalContainer = (props) => {
             onChange={(value) => {
               record.assignmentType = AssigmentType.filter((item) => item.value === value)[0].name;
             }}>
-            {AssigmentType.map((item) => (
+            {AssigmentType.filter((item) => item.name !== 'INTERVIEWER' && item.name !== 'RECEPTION').map((item) => (
               <Option value={item.value}>{item.label}</Option>
             ))}
           </Select>
@@ -103,25 +104,43 @@ export const AssignEmployeeModalContainer = (props) => {
   };
 
   const onOK = async () => {
-    const assginedEmployee = state.data.filter((employee) => state.targetKeys.includes(employee.key));
-    if (assginedEmployee.length === 0 || assginedEmployee.some((employee) => employee.assignmentType === undefined)) {
+    const assginedEmployees = state.data.filter((employee) => state.targetKeys.includes(employee.key));
+    //check for not assign anyone or missing assignment type
+    if (assginedEmployees.length === 0 || assginedEmployees.some((employee) => employee.assignmentType === undefined)) {
+      setIsError(true);
+      return;
+    }
+    //check for required assignment in booth
+    const decoratorNum = assginedEmployees.filter(
+      (employee) => employee.assignmentType === AssignmentConst.DECORATOR
+    ).length;
+    const supervisorNum = assginedEmployees.filter(
+      (employee) => employee.assignmentType === AssignmentConst.SUPERVISOR
+    ).length;
+    const staffNum = assginedEmployees.filter((employee) => employee.assignmentType === AssignmentConst.STAFF).length;
+
+    if (
+      decoratorNum !== AssignmentBoothConstraint.decoratorNum ||
+      supervisorNum !== AssignmentBoothConstraint.supervisorNum ||
+      staffNum !== AssignmentBoothConstraint.staffNum
+    ) {
       setIsError(true);
       return;
     }
 
     const unassignedEmployee = state.oldAssignedEmployees.filter(
-      (employee) => !assginedEmployee.find((oldEmployee) => oldEmployee.id === employee.id)
+      (employee) => !assginedEmployees.find((oldEmployee) => oldEmployee.id === employee.id)
     );
 
     const unassignedPromise = [];
     for (const employee of unassignedEmployee) {
-      const promise = unAssignEmployee(employee.id, boothId);
+      const promise = unAssignEmployee(employee.assignmentId);
       unassignedPromise.push(promise);
     }
     await Promise.all(unassignedPromise);
 
     const assignPromise = [];
-    for (const employee of assginedEmployee) {
+    for (const employee of assginedEmployees) {
       const promise = assignEmployee(employee.id, boothId, employee.assignmentType);
       assignPromise.push(promise);
     }
@@ -155,7 +174,7 @@ export const AssignEmployeeModalContainer = (props) => {
         />
         {isError ? (
           <Text type='danger' style={{ fontSize: '1rem', marginTop: '10px' }}>
-            Please assign employee
+            Please assign 1 supervisor, 1 decorator, at least 2 staffs for this booth
           </Text>
         ) : null}
       </div>

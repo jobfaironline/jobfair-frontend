@@ -1,16 +1,27 @@
 import { AssignmentConst } from '../../../constants/AssignmentConst';
-import { Card, Divider, List, Skeleton, Typography } from 'antd';
+import { Button, Card, Divider, List, Skeleton, Typography } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import React from 'react';
 
 const { Title, Text } = Typography;
 
 export const AssignEmployeeBoothList = (props) => {
-  const { data, onHoverIn, onHoverOut, onClick } = props;
+  const { data, onHoverIn, onHoverOut, onBoothClick, onClickUploadCSV } = props;
   return (
     <>
-      <div style={{ textAlign: 'center' }}>
+      <div
+        style={{
+          textAlign: 'center',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: '1rem'
+        }}>
         <Title level={5}>Assign employee</Title>
+        <Button style={{ marginLeft: '1rem' }} type={'primary'} icon={<UploadOutlined />} onClick={onClickUploadCSV}>
+          Upload CSV
+        </Button>
       </div>
       <InfiniteScroll
         dataLength={data?.length}
@@ -29,36 +40,43 @@ export const AssignEmployeeBoothList = (props) => {
               onMouseEnter={() => onHoverIn(item.booth.name)}
               onMouseLeave={() => onHoverOut()}
               onClick={() => {
-                onClick(item.id, item.booth.name);
+                onBoothClick(item.id, item.booth.name);
               }}>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', alignItems: 'stretch' }}>
-                  <Title level={5}>{item.booth.name}</Title>
+                  <Title level={5}>
+                    {`Slot name: ${item.booth.name}`}
+                    <br />
+                    {item.name ? `Booth name - ${item.name}` : ''}
+                  </Title>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <Text>In charge: </Text>
+                  <Text strong>Supervisor: </Text>
                   {item.assignments
-                    .filter((assign) => assign.type === AssignmentConst.IN_CHARGE)
+                    .filter((assign) => assign.type === AssignmentConst.SUPERVISOR)
                     .map((assign) => (
                       <Text>
+                        {'- '}
                         {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
                         {assign.companyEmployee.account.lastname}
                       </Text>
                     ))}
-                  <Text>Reception: </Text>
+                  <Text strong>Staff:</Text>
                   {item.assignments
-                    .filter((assign) => assign.type === AssignmentConst.RECEPTION)
+                    .filter((assign) => assign.type === AssignmentConst.STAFF)
                     .map((assign) => (
                       <Text>
+                        {'- '}
                         {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
                         {assign.companyEmployee.account.lastname}
                       </Text>
                     ))}
-                  <Text>Interviewee: </Text>
+                  <Text strong>Decorator: </Text>
                   {item.assignments
-                    .filter((assign) => assign.type === AssignmentConst.INTERVIEWER)
+                    .filter((assign) => assign.type === AssignmentConst.DECORATOR)
                     .map((assign) => (
                       <Text>
+                        {'- '}
                         {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
                         {assign.companyEmployee.account.lastname}
                       </Text>
