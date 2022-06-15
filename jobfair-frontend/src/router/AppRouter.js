@@ -4,7 +4,7 @@ import { JobFairCheckListPage } from '../pages/JobFairCheckList/JobFairCheckList
 import { JobFairMapReviewPage } from '../pages/JobFairMapReviewPage/JobFairMapReviewPage';
 import { Layout } from 'antd';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, matchPath, useLocation } from 'react-router-dom';
 import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
 import { selectWebSocket } from '../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
@@ -50,7 +50,21 @@ import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
 
+const excludeFooterPages = [PATH.BOOTH_PAGE];
+
+const isHasFooter = (location) =>
+  !excludeFooterPages.some((path) => {
+    const match = matchPath(location.pathname, {
+      path,
+      exact: true,
+      strict: true
+    });
+    return match.isExact;
+  });
+
 const AppRouter = () => {
+  const location = useLocation();
+
   const webSocketClient = useSelector(selectWebSocket);
   useEffect(() => {
     window.addEventListener('beforeunload', cleanUp);
@@ -306,9 +320,11 @@ const AppRouter = () => {
         </Route>
         <Route path='*' component={() => <ErrorPage code={404} />} />
       </Switch>
-      <Footer>
-        <CustomFooter />
-      </Footer>
+      {isHasFooter(location) ? (
+        <Footer>
+          <CustomFooter />
+        </Footer>
+      ) : null}
     </Layout>
   );
 };
