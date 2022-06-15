@@ -9,7 +9,6 @@ import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selec
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState } from 'react';
 import extraMenu from './MenuByRole';
-import RoleType from '../../../constants/RoleType';
 
 const NavigationBar = () => {
   const role = useSelector((state) => state?.authentication?.user?.roles);
