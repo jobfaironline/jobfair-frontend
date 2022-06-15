@@ -46,6 +46,7 @@ import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
+import ResumeManagmentPage from '../pages/ResumeManagementPage/ResumeManagementPage';
 
 const AppRouter = () => {
   const webSocketClient = useSelector(selectWebSocket);
@@ -164,6 +165,12 @@ const AppRouter = () => {
           key={PATH_ATTENDANT.INTERVIEW_SCHEDULE}
           component={() => <InterviewSchedulePage />}
           path={PATH_ATTENDANT.INTERVIEW_SCHEDULE}
+          exact
+        />
+        <AttendantRouter
+          key={PATH_ATTENDANT.RESUME_MANAGEMENT_PAGE}
+          component={() => <ResumeManagmentPage />}
+          path={PATH_ATTENDANT.RESUME_MANAGEMENT_PAGE}
           exact
         />
         <CompanyEmployeeRouter

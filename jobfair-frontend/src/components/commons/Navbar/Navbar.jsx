@@ -1,87 +1,21 @@
 import './Navbar.styles.scss';
-import { Avatar, Button, Dropdown, Menu, Typography } from 'antd';
+import { AppstoreFilled, UserOutlined } from '@ant-design/icons';
+import { Avatar, Button, Dropdown, Menu, Space, Typography } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import { NotificationContainer } from '../../../containers/NotificationContainer/Notification.container';
-import {
-  PATH,
-  PATH_ADMIN,
-  PATH_ATTENDANT,
-  PATH_COMPANY_EMPLOYEE,
-  PATH_COMPANY_MANAGER
-} from '../../../constants/Paths/Path';
-import { UserOutlined } from '@ant-design/icons';
+import { PATH } from '../../../constants/Paths/Path';
 import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
 import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
-
-export const AttendantMenu = [
-  <Menu.Item key={PATH_ATTENDANT.PROFILE_PAGE}>
-    <Link to={PATH_ATTENDANT.PROFILE_PAGE}>Attendant Profile</Link>
-  </Menu.Item>,
-  <Menu.Item key={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>
-    <Link to={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>Job Fair List</Link>
-  </Menu.Item>,
-  <Menu.Item key={PATH_ATTENDANT.INTERVIEW_SCHEDULE}>
-    <Link to={PATH_ATTENDANT.INTERVIEW_SCHEDULE}>My interview schedule</Link>
-  </Menu.Item>
-];
-
-export const CompanyManagerMenu = [
-  <Menu.Item key={PATH_COMPANY_MANAGER.COMPANY_PROFILE_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.COMPANY_PROFILE_PAGE}>Company profile</Link>
-  </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.EMPLOYEE_MANAGEMENT_PAGE}>Employee Management</Link>
-  </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE}>My job fair</Link>
-  </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE}>
-    <Link to={PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE}>My layout</Link>
-  </Menu.Item>
-];
-
-export const CompanyEmployeeMenu = [
-  <Menu.Item key={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}>
-    <Link to={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}>Applications management</Link>
-  </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE}>
-    <Link to={PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE}>My assignment</Link>
-  </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}>
-    <Link to={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}>My interview schedule</Link>
-  </Menu.Item>,
-  <Menu.Item key={PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE}>
-    <Link to={PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE}>Assign task to employee</Link>
-  </Menu.Item>
-];
-
-export const AdminMenu = [
-  <Menu.Item key={PATH_ADMIN.JOB_FAIR_LIST_PAGE}>
-    <Link to={PATH_ADMIN.JOB_FAIR_LIST_PAGE}>Job fair list</Link>
-  </Menu.Item>
-];
+import extraMenu from './MenuByRole';
 
 const NavigationBar = () => {
-  const role = useSelector((state) => state.authentication?.user?.roles);
+  const role = useSelector((state) => state?.authentication?.user?.roles);
   const webSocketClient = useSelector(selectWebSocket);
   const history = useHistory();
   const dispatch = useDispatch();
-  const extraMenu = () => {
-    switch (role) {
-      case 'ATTENDANT':
-        return AttendantMenu;
-      case 'COMPANY_MANAGER':
-        return CompanyManagerMenu;
-      case 'COMPANY_EMPLOYEE':
-        return CompanyEmployeeMenu;
-      case 'ADMIN':
-        return AdminMenu;
-      default:
-        return null;
-    }
-  };
+
   const handleClick = () => {
     webSocketClient?.close();
 
@@ -100,19 +34,31 @@ const NavigationBar = () => {
             </div>
           </Link>
           {!role ? <AuthenticationButtonGroups handleRedirect={handleRedirect} /> : null}
-          {role ? <NotificationContainer /> : null}
-          {role ? <AvatarMenu logoutFunction={handleClick} handleRedirect={handleRedirect} /> : null}
+
+          <Space size='middle'>
+            {role ? <NotificationContainer /> : null}
+            {role ? (
+              <>
+                <Dropdown
+                  overlay={
+                    extraMenu(role) ? (
+                      <div className={'sub-navbar-container'} style={{ position: 'relative', top: '20px' }}>
+                        <div className='Navbar'>
+                          <Menu className='menu' mode='horizontal'>
+                            {extraMenu(role)}
+                          </Menu>
+                        </div>
+                      </div>
+                    ) : null
+                  }>
+                  <AppstoreFilled style={{ fontSize: 32, color: '#FFF' }} />
+                </Dropdown>
+              </>
+            ) : null}
+            {role ? <AvatarMenu logoutFunction={handleClick} handleRedirect={handleRedirect} /> : null}
+          </Space>
         </div>
       </div>
-      {extraMenu() ? (
-        <div className={'sub-navbar-container'}>
-          <div className='Navbar'>
-            <Menu className='menu' mode='horizontal'>
-              {extraMenu()}
-            </Menu>
-          </div>
-        </div>
-      ) : null}
     </div>
   );
 };
@@ -154,12 +100,12 @@ const AvatarMenu = ({ logoutFunction }) => {
 
   return (
     <div className={'avatar'}>
-      <div style={{ display: 'flex', alignItems: 'center', padding: '0 1rem' }}>
-        <Typography style={{ color: '#fff' }}>{name}</Typography>
-      </div>
       <Dropdown overlay={menu} placement='bottomRight'>
         <Avatar size={45} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
       </Dropdown>
+      <div style={{ display: 'flex', alignItems: 'center', padding: '0 1rem' }}>
+        <Typography style={{ color: '#fff' }}>{name}</Typography>
+      </div>
     </div>
   );
 };
