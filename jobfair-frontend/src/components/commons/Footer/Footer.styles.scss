@@ -1,0 +1,78 @@
+.footer {
+  display: flex;
+  flex-direction: row;
+  background-color: #130b56;
+  color: white;
+  padding: 0.5rem 20% 0 10%;
+  margin-top: auto;
+
+  .left-side {
+    margin-left: 5rem;
+    display: flex;
+    flex-direction: column;
+
+    .logo {
+      text-transform: uppercase;
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .logo-click {
+      display: flex;
+      flex-direction: column;
+      margin-top: 1rem;
+
+      .children {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 0.5rem;
+
+        .description {
+          font-size: 15px;
+          font-weight: bold;
+          margin-left: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .right-side {
+    margin-left: auto;
+    display: flex;
+    flex-direction: row;
+
+    .children {
+      flex: 0;
+      margin-left: auto;
+
+      .title {
+        font-size: 20px;
+        font-weight: bold;
+        width: max-content;
+      }
+
+      .normal-text {
+        font-size: 15px;
+        width: max-content;
+
+        .span-text {
+          margin-left: 0.5rem;
+        }
+      }
+    }
+
+    .form-contact {
+      flex: 0;
+      .title{
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      .input{
+        width: 20rem;
+        border-radius: 8px;
+      }
+    }
+  }
+
+}

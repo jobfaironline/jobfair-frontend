@@ -1,7 +1,10 @@
+import { default as CustomFooter } from '../components/commons/Footer/Footer';
+import { Footer } from 'antd/es/layout/layout';
 import { JobFairCheckListPage } from '../pages/JobFairCheckList/JobFairCheckListPage';
 import { JobFairMapReviewPage } from '../pages/JobFairMapReviewPage/JobFairMapReviewPage';
+import { Layout } from 'antd';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, matchPath, useLocation } from 'react-router-dom';
 import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
 import { selectWebSocket } from '../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
@@ -24,7 +27,7 @@ import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeMana
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import FAQPage from '../pages/FAQPage/FAQPage';
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage';
-import HomePage from '../pages/HomePage';
+import HomePage from '../pages/HomePage/HomePage';
 import InterviewLandingPage from '../pages/InterviewLandingPage/InterviewLandingPage';
 import InterviewRoomPage from '../pages/InterviewRoomPage/InterviewRoomPage';
 import InterviewSchedulePage from '../pages/InterviewSchedulePage/InterviewSchedulePage';
@@ -47,7 +50,21 @@ import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
 
+const excludeFooterPages = [PATH.BOOTH_PAGE];
+
+const isHasFooter = (location) =>
+  !excludeFooterPages.some((path) => {
+    const match = matchPath(location.pathname, {
+      path,
+      exact: true,
+      strict: true
+    });
+    return match?.isExact;
+  });
+
 const AppRouter = () => {
+  const location = useLocation();
+
   const webSocketClient = useSelector(selectWebSocket);
   useEffect(() => {
     window.addEventListener('beforeunload', cleanUp);
@@ -62,7 +79,7 @@ const AppRouter = () => {
   };
 
   return (
-    <>
+    <Layout style={{ minHeight: '100vh' }}>
       <NavigationBar />
       <Switch>
         <Route path={PATH.FINAL_ERROR_PAGE} exact>
@@ -303,7 +320,12 @@ const AppRouter = () => {
         </Route>
         <Route path='*' component={() => <ErrorPage code={404} />} />
       </Switch>
-    </>
+      {isHasFooter(location) ? (
+        <Footer>
+          <CustomFooter />
+        </Footer>
+      ) : null}
+    </Layout>
   );
 };
 export default AppRouter;
