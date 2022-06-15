@@ -7,11 +7,13 @@ import { PATH } from '../../../constants/Paths/Path';
 import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
 import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
 import { useDispatch, useSelector } from 'react-redux';
-import React from 'react';
+import React, { useState } from 'react';
 import extraMenu from './MenuByRole';
+import RoleType from '../../../constants/RoleType';
 
 const NavigationBar = () => {
   const role = useSelector((state) => state?.authentication?.user?.roles);
+  const [subNavVisible, setSubNavVisible] = useState(true);
   const webSocketClient = useSelector(selectWebSocket);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -24,6 +26,7 @@ const NavigationBar = () => {
   };
 
   const handleRedirect = (path) => history.push(path);
+
   return (
     <div>
       <div className='navbar-container container-fluid'>
@@ -40,6 +43,8 @@ const NavigationBar = () => {
             {role ? (
               <>
                 <Dropdown
+                  visible={subNavVisible}
+                  trigger={['click']}
                   overlay={
                     extraMenu(role) ? (
                       <div className={'sub-navbar-container'} style={{ position: 'relative', top: '20px' }}>
@@ -51,7 +56,10 @@ const NavigationBar = () => {
                       </div>
                     ) : null
                   }>
-                  <AppstoreFilled style={{ fontSize: 32, color: '#FFF' }} />
+                  <AppstoreFilled
+                    style={{ fontSize: 32, color: '#FFF' }}
+                    onClick={() => setSubNavVisible((preState) => !preState)}
+                  />
                 </Dropdown>
               </>
             ) : null}
