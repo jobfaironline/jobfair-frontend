@@ -12,19 +12,19 @@
 
     .first-line {
       font-size: 20px;
-      color: #1E3B9B;
+      color: #1e3b9b;
     }
 
     .second-line {
       font-size: 50px;
       font-weight: bold;
-      color: #FF7866;
+      color: #ff7866;
     }
 
     .third-line {
       font-size: 30px;
       text-transform: uppercase;
-      color: #1E3B9B;
+      color: #1e3b9b;
     }
   }
 
@@ -43,7 +43,7 @@
         width: 100px;
         height: 100px;
         border-radius: 50%;
-        background: #FF7866;
+        background: #ff7866;
         position: relative;
         box-sizing: border-box;
         margin-bottom: 2rem;
@@ -53,7 +53,7 @@
         content: '';
         position: absolute;
         box-sizing: border-box;
-        border: 3px solid #1E3B9B;
+        border: 3px solid #1e3b9b;
         border-radius: 50%;
         width: calc(100% + 16px);
         height: calc(100% + 16px);
@@ -66,7 +66,7 @@
         bottom: 25%;
         width: 100%;
         text-align: center;
-        color: #1E3B9B;
+        color: #1e3b9b;
         font-weight: bold;
         font-size: 2rem;
       }
@@ -75,7 +75,6 @@
         margin-top: 3rem;
         margin-left: 3rem;
       }
-
     }
   }
 }

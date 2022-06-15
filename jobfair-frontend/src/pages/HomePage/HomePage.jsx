@@ -1,11 +1,16 @@
 import { FAQComponent } from '../../components/customized-components/FAQ/FAQ.components';
 import { HomePageAdComponent } from '../../components/customized-components/HomePage/HomePageAd.component';
+import { PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import HomePageHeaderComponent from '../../components/customized-components/HomePage/HomePageHeader.component';
 import React from 'react';
-import { PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import RoleType from '../../constants/RoleType';
 
 const HomePage = () => {
+  const history = useHistory();
+  const role = useSelector((state) => state?.authentication?.user?.roles);
+
   switch (role) {
     case RoleType.COMPANY_EMPLOYEE:
       history.push(PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE);
