@@ -137,6 +137,7 @@ export const UploadCSVModal = (props) => {
 
   return (
     <Modal
+      centered={true}
       visible={visible}
       title={'Upload CSV or Excel file'}
       onOk={onOk}

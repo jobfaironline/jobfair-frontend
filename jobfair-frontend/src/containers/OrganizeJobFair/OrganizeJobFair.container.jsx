@@ -191,6 +191,12 @@ const OrganizeJobFairContainer = () => {
             handleFieldsError(form);
           }
         };
+      case 2:
+        return async () => {
+          if (jobFairData.thumbnailUrl) setIsError(false);
+          setIsError(true);
+          setCurrentStep(currentStep + 1);
+        };
       case 3:
         return async () => {
           try {
