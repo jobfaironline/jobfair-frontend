@@ -173,7 +173,8 @@ export const DecorateBoothSideBarComponent = (props) => {
                 width={200}
                 height={200}
                 src={previewImage}
-                fallback={previewImageBase64}></Image>
+                fallback={previewImageBase64}
+              />
               <ImgCrop aspect={ratio} beforeCrop={handleUpVideoCropImage}>
                 <Upload
                   {...loadFile}
