@@ -109,6 +109,7 @@ home
   padding-left: 5rem;
   padding-right: 5rem;
   scroll-margin: 200px;
+
 }
 
 .fullscreen-page {
@@ -248,4 +249,8 @@ home
   .ant-upload.ant-upload-disabled {
     cursor: default;
   }
+}
+
+.ant-layout-footer{
+  padding: 0!important;
 }
