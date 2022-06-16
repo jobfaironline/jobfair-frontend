@@ -22,8 +22,9 @@ const ChatBoxContainer = (props) => {
   const [cameraReady, setCameraReady] = useState(false);
   const [cameraTrack, setCameraTrack] = useState(null);
   const [messageList, setMessageList] = useState([]);
-  //TODO: check this var again before deleting it
-  /* eslint-disable no-unused-vars*/
+
+  //TODO: implement enter button for chat later
+  // eslint-disable-next-line no-unused-vars
   const [isChatReady, setIsChatReady] = useState(false);
   const rtm = useSelector((state) => state.agora.rtmClient);
   const userId = useSelector((state) => state.authentication.user.userId);
@@ -94,6 +95,7 @@ const ChatBoxContainer = (props) => {
     }
   };
   useEffect(() => {
+    if (type === 'INTERVIEW_ROOM') return;
     AgoraRTC.createMicrophoneAudioTrack().then((track) => {
       audioTrackRef.current = track;
       setAudioTrack(track);

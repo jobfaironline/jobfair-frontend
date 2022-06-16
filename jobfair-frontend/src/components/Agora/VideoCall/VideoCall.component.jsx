@@ -1,3 +1,4 @@
+import './VideoCall.styles.scss';
 import { AgoraVideoPlayer } from 'agora-rtc-react';
 import { Avatar, Badge, Button, Tag, Tooltip } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,8 +15,20 @@ import PowerOffIcon from '@mui/icons-material/PowerOff';
 import React from 'react';
 
 const VideoCallComponent = (props) => {
-  const { cameraReady, muteState, users, audioTrack, cameraTrack, handleMute, handleClose, height, width, layoutMode } =
-    props;
+  const {
+    cameraReady,
+    muteState,
+    users,
+    audioTrack,
+    cameraTrack,
+    handleMute,
+    handleClose,
+    height,
+    width,
+    layoutMode,
+    kickUser,
+    isKickable = false
+  } = props;
 
   if (layoutMode === 'WAITINGROOM') {
     return (
@@ -224,12 +237,28 @@ const VideoCallComponent = (props) => {
               users.map((user) => {
                 if (user.videoTrack) {
                   return (
-                    <AgoraVideoPlayer
-                      style={{ height: '100%', width: '100%' }}
-                      className='vid'
-                      videoTrack={user.videoTrack}
-                      key={user.uid}
-                    />
+                    <div style={{ height: '100%', width: '100%' }}>
+                      <AgoraVideoPlayer
+                        style={{ height: '100%', width: '100%' }}
+                        className='vid'
+                        videoTrack={user.videoTrack}
+                        key={user.uid}
+                      />
+                      {isKickable ? <div className={'user-icon'} /> : null}
+                      {isKickable ? (
+                        <div className={'user-mask'}>
+                          <Tooltip title={'Remove this user'}>
+                            <div
+                              style={{ color: '#FFF' }}
+                              onClick={() => {
+                                kickUser(user.uid);
+                              }}>
+                              Remove
+                            </div>
+                          </Tooltip>
+                        </div>
+                      ) : null}
+                    </div>
                   );
                 } else {
                   return (
