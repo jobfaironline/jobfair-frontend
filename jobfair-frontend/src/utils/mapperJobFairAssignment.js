@@ -1,4 +1,6 @@
 import { JOB_FAIR_STATUS_FOR_EMPLOYEE } from '../constants/JobFairConst';
+import { PATH_COMPANY_EMPLOYEE } from '../constants/Paths/Path';
+import { generatePath } from 'react-router-dom';
 import moment from 'moment';
 
 export const mapperJobFairAssignment = (item, index) => {
@@ -21,6 +23,10 @@ export const mapperJobFairAssignment = (item, index) => {
     publicStartTime: item.jobFairBooth?.jobFair?.publicStartTime,
     publicEndTime: item.jobFairBooth?.jobFair?.publicEndTime,
     status,
-    jobFairBoothId: item?.jobFairBooth?.id
+    jobFairBoothId: item?.jobFairBooth?.id,
+    onClickJobFair: () => {
+      const url = generatePath(PATH_COMPANY_EMPLOYEE.CHECKLIST, { jobFairId: item.jobFairBooth?.jobFair?.id });
+      window.open(`${window.location.origin}${url}`);
+    }
   };
 };
