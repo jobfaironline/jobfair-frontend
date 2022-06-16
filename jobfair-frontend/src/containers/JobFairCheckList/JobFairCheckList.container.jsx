@@ -16,7 +16,9 @@ import { getJobFairByIDAPI, publishJobFairAPI } from '../../services/jobhub-api/
 import { getLayoutByJobFairId } from '../../services/jobhub-api/LayoutControllerService';
 import { getStatisticsByJobFair } from '../../services/jobhub-api/AssignmentControllerService';
 import { green } from '@ant-design/colors';
+import { useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
+import RoleType from '../../constants/RoleType';
 import moment from 'moment';
 
 const organizeJobFairStep = 5;
@@ -80,6 +82,7 @@ const calculateProgressPercentage = (jobFairData, layoutData, statistics) => {
 };
 
 export const JobFairCheckListContainer = ({ jobFairId }) => {
+  const role = useSelector((state) => state?.authentication?.user?.roles);
   const [state, setState] = useState({
     jobFairData: undefined,
     layoutData: undefined,
@@ -215,15 +218,18 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
       />
 
       <div className={'job-fair-check-list-container'}>
-        <Button
-          type={'link'}
-          onClick={() => {
-            history.push(PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE);
-          }}
-          style={{ fontSize: '1.2rem', marginTop: '1rem' }}>
-          <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: 5 }} />
-          Back to my job fair
-        </Button>
+        {role === RoleType.COMPANY_MANAGER ? (
+          <Button
+            type={'link'}
+            onClick={() => {
+              history.push(PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE);
+            }}
+            style={{ fontSize: '1.2rem', marginTop: '1rem' }}>
+            <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: 5 }} />
+            Back to my job fair
+          </Button>
+        ) : null}
+
         <div className={'progress-bar'}>
           <Progress percent={state.progressData.score} strokeColor={green[6]} />
         </div>

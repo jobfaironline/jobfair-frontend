@@ -1,7 +1,11 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JOB_FAIR_STATUS_FOR_EMPLOYEE } from '../../constants/JobFairConst';
 import { Tag, Typography } from 'antd';
 import { convertEnumToString, convertToUTCString } from '../../utils/common';
+import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
+
+const { Text } = Typography;
 
 const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
   {
@@ -24,7 +28,13 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
     ...getColumnSearchProps('jobFairName'),
     onFilter: (value, record) => record.title.indexOf(value) === 0,
     sorter: (a, b) => a.title.localeCompare(b.title),
-    sortDirections: ['descend']
+    sortDirections: ['descend'],
+    render: (text, record) => (
+      <a href='#' onClick={record.onClickJobFair}>
+        <Text>{text}</Text>
+        <FontAwesomeIcon icon={faExternalLink} style={{ marginLeft: '5px' }} />
+      </a>
+    )
   },
   {
     title: 'Assignment type',
