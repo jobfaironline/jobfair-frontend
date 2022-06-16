@@ -1,3 +1,4 @@
+import { AssignEmployeeDetailModalContainer } from './AssignEmployeeDetailModal.container';
 import { Button, Modal, Progress, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JOB_FAIR_STATUS } from '../../constants/JobFairConst';
@@ -15,7 +16,7 @@ import { getJobFairByIDAPI, publishJobFairAPI } from '../../services/jobhub-api/
 import { getLayoutByJobFairId } from '../../services/jobhub-api/LayoutControllerService';
 import { getStatisticsByJobFair } from '../../services/jobhub-api/AssignmentControllerService';
 import { green } from '@ant-design/colors';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
 const organizeJobFairStep = 5;
@@ -97,6 +98,7 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
 
   const history = useHistory();
   const [publishModalVisible, setPublishModalVisible] = useState(false);
+  const [assignEmployeeModalVisible, setAssignEmployeeModalVisible] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -184,6 +186,14 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
     setPublishModalVisible(true);
   };
 
+  const onCloseAssignEmployeeModal = () => {
+    setAssignEmployeeModalVisible(false);
+  };
+
+  const handleViewAssignmentDetail = () => {
+    setAssignEmployeeModalVisible(true);
+  };
+
   if (state.isLoading) return <LoadingComponent isWholePage={true} />;
 
   return (
@@ -198,6 +208,12 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
         }}>
         Are you sure to publish <Text strong>{state.jobFairData.name}</Text>?
       </Modal>
+      <AssignEmployeeDetailModalContainer
+        visible={assignEmployeeModalVisible}
+        onClose={onCloseAssignEmployeeModal}
+        jobFairId={jobFairId}
+      />
+
       <div className={'job-fair-check-list-container'}>
         <Button
           type={'link'}
@@ -231,6 +247,7 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
             statistics={state.statistics}
             isChooseLayout={state.progressData.choosingLayout}
             handleEditAssignEmployee={handleEditAssignEmployee}
+            handleViewDetail={handleViewAssignmentDetail}
           />
           <Step4Component
             isFinish={state.progressData.landing}

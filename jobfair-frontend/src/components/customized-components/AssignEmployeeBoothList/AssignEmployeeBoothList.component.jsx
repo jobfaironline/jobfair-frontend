@@ -1,10 +1,10 @@
-import { AssignmentConst } from '../../../constants/AssignmentConst';
+import { BoothAssignmentDetail } from '../BoothAssigmentDetail/BoothAssignmentDetail.component';
 import { Button, Card, Divider, List, Skeleton, Typography } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import React from 'react';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 export const AssignEmployeeBoothList = (props) => {
   const { data, onHoverIn, onHoverOut, onBoothClick, onClickUploadCSV, boothData } = props;
@@ -50,47 +50,7 @@ export const AssignEmployeeBoothList = (props) => {
                 onClick={() => {
                   onBoothClick(item.id, item.booth.name);
                 }}>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ display: 'flex', alignItems: 'stretch' }}>
-                    <Title level={5}>
-                      {`Slot name: ${item.booth.name}`}
-                      <br />
-                      {item.name ? `Booth name - ${item.name}` : ''}
-                    </Title>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <Text strong>Supervisor: </Text>
-                    {item.assignments
-                      .filter((assign) => assign.type === AssignmentConst.SUPERVISOR)
-                      .map((assign) => (
-                        <Text>
-                          {'- '}
-                          {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
-                          {assign.companyEmployee.account.lastname}
-                        </Text>
-                      ))}
-                    <Text strong>Staff:</Text>
-                    {item.assignments
-                      .filter((assign) => assign.type === AssignmentConst.STAFF)
-                      .map((assign) => (
-                        <Text>
-                          {'- '}
-                          {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
-                          {assign.companyEmployee.account.lastname}
-                        </Text>
-                      ))}
-                    <Text strong>Decorator: </Text>
-                    {item.assignments
-                      .filter((assign) => assign.type === AssignmentConst.DECORATOR)
-                      .map((assign) => (
-                        <Text>
-                          {'- '}
-                          {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
-                          {assign.companyEmployee.account.lastname}
-                        </Text>
-                      ))}
-                  </div>
-                </div>
+                <BoothAssignmentDetail data={item} />
               </Card>
             );
           }}
