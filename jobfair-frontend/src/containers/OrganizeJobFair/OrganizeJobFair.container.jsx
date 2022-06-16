@@ -202,7 +202,9 @@ const OrganizeJobFairContainer = () => {
           try {
             await form.validateFields();
             await updateJobFairAtLandingPage(form.getFieldsValue(true));
-            const url = generatePath(PATH_COMPANY_MANAGER.CHECKLIST, { jobFairId });
+            const url = generatePath(PATH_COMPANY_MANAGER.CHECKLIST, {
+              jobFairId: jobFairId ? jobFairId : jobFairData.id
+            });
             history.push(url);
           } catch (e) {
             handleFieldsError(form);
