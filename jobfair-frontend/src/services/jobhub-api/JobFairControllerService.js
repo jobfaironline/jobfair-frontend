@@ -9,7 +9,8 @@ export const getAllJobFairAPI = ({
   direction = 'DESC',
   offset = '0',
   pageSize = '100',
-  sortBy = 'createTime'
+  sortBy = 'createTime',
+  status = null
 }) =>
   CallAPI(
     `${JOB_FAIR_END_POINT}`,
@@ -20,7 +21,8 @@ export const getAllJobFairAPI = ({
       offset,
       pageSize,
       sortBy,
-      name
+      name,
+      status
     }
   );
 
