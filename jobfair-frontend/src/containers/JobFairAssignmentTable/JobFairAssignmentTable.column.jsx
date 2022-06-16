@@ -1,3 +1,4 @@
+import { JOB_FAIR_STATUS_FOR_EMPLOYEE } from '../../constants/JobFairConst';
 import { Tag, Typography } from 'antd';
 import { convertEnumToString, convertToUTCString } from '../../utils/common';
 import React from 'react';
@@ -78,11 +79,42 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
     title: 'Status',
     key: 'status',
     dataIndex: 'status',
-    render: (status) => (
-      <>
-        <Tag color={'green'}>{status}</Tag>
-      </>
-    )
+    filters: [
+      {
+        text: JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE,
+        value: JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE
+      },
+      {
+        text: JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING,
+        value: JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING
+      },
+      {
+        text: JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET,
+        value: JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET
+      }
+    ],
+    onFilter: (value, record) => record.status === value,
+    render: (status) => {
+      let color;
+      switch (status) {
+        case JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE:
+          color = 'green';
+          break;
+        case JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING:
+          color = 'blue';
+          break;
+        case JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET:
+          color = 'default';
+          break;
+        default:
+          color = 'default';
+      }
+      return (
+        <>
+          <Tag color={color}>{status}</Tag>
+        </>
+      );
+    }
   }
 ];
 
