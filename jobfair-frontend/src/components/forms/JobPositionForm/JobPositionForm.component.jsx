@@ -40,7 +40,7 @@ const JobPositionFormComponent = (props) => {
   return (
     <div className={'job-position-form disable-form'}>
       <Card
-        title={'Add job position'}
+        title={'Job position detail'}
         extra={
           <div className={'extra'}>
             {extra}

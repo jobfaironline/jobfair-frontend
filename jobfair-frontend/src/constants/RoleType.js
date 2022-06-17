@@ -3,3 +3,13 @@ export const STAFF = 'STAFF';
 export const COMPANY_MANAGER = 'COMPANY_MANAGER';
 export const COMPANY_EMPLOYEE = 'COMPANY_EMPLOYEE';
 export const ATTENDANT = 'ATTENDANT';
+
+const RoleType = {
+  ADMIN: 'ADMIN',
+  STAFF: 'STAFF',
+  COMPANY_MANAGER: 'COMPANY_MANAGER',
+  COMPANY_EMPLOYEE: 'COMPANY_EMPLOYEE',
+  ATTENDANT: 'ATTENDANT'
+};
+
+export default RoleType;

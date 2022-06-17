@@ -1,7 +1,7 @@
 import './PickJobPositionForm.styles.scss';
 import { Button, Card, Form, Image, Input, Modal, Typography, notification } from 'antd';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
-import { PATH } from '../../../constants/Paths/Path';
+import { PATH, PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import {
   assignJobPositionToBooth,
   getCompanyBoothById
@@ -117,7 +117,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
   }
 
   const handleView3DBooth = () => {
-    const url = generatePath(PATH.DECORATE_BOOTH_PAGE, {
+    const url = generatePath(PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE, {
       jobFairId: formData.jobFair.id,
       companyBoothId: formData.boothId
     });
