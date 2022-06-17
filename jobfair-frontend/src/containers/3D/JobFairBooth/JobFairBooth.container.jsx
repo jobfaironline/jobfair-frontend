@@ -84,8 +84,19 @@ export const JobFairBoothContainer = (props) => {
     const floorMesh = boothMesh.children.filter((child) => child.name === 'sand')[0];
     const floorHeight = calculateMeshSize(floorMesh).height;
     //load model
-    const model = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx');
+    //const model = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx');
     //const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx");
+    const model = await loadFBXModel(`${window.location.origin}/human/Human.fbx`);
+
+    const loader = new THREE.TextureLoader();
+
+    const material = new THREE.MeshBasicMaterial({
+      map: loader.load(`${window.location.origin}/human/WalkingModel_8_LOWPOLY-COLORS_BaseColor.png`)
+    });
+
+    model.traverse((child) => {
+      if (child.isMesh) child.material = material;
+    });
 
     const boothSize = calculateMeshSize(boothMesh);
 
