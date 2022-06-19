@@ -87,7 +87,7 @@ const JobFairGridPublicContainer = ({ role }) => {
     <div className={'job-fair-grid-public-container'}>
       <div className={'header'}>
         <Search
-          placeholder='Search by company name'
+          placeholder='Search by job fair name'
           onSearch={(value) => handleOnSearch(value)}
           style={{ width: '30rem', marginRight: '5rem' }}
         />
