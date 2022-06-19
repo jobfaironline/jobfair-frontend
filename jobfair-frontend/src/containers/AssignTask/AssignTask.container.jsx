@@ -1,8 +1,11 @@
 import './AssignTask.styles.scss';
 import { AssignTaskFilterPanel } from '../../components/customized-components/AssignTask/AssignTaskFilterPanel.component';
 import { AssignTaskModal } from '../../components/forms/AssignTaskModalForm/AsignTaskModalForm.component';
+import { AssignmentConst } from '../../constants/AssignmentConst';
 import { Button, Form, Table, Typography, notification } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
+import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
 import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
 import {
   assignEmployee,
@@ -11,6 +14,8 @@ import {
   updateAssignment
 } from '../../services/jobhub-api/AssignmentControllerService';
 import { deepClone } from '../../utils/common';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { generatePath, useHistory } from 'react-router-dom';
 import { getAssignmentsData } from './utils/assign-task-utils';
 import { getCompanyBoothById } from '../../services/jobhub-api/JobFairBoothControllerService';
 import { getDataSource, getJobFairPublicDayRange, getStaffAssignments, getStaffList } from './utils/datasource-utils';
@@ -47,7 +52,9 @@ const AssignTaskContainer = (props) => {
   });
   const [hasChange, setHasChange] = useState(false);
   const [forceRerender, setForceRerender] = useState(false);
+  const [supervisorAssignment, setSupervisorAssignment] = useState();
   const [form] = Form.useForm();
+  const history = useHistory();
 
   useEffect(() => {
     fetchData();
@@ -61,6 +68,9 @@ const AssignTaskContainer = (props) => {
       const shiftData = jobFairInfo.shifts.sort((a, b) => a.beginTime - b.beginTime);
       res = await getAssigmentByJobFairBoothId(boothId);
       const assignments = res.data;
+      const supervisorAssignment = assignments.filter(
+        (assignment) => assignment.type === AssignmentConst.SUPERVISOR
+      )[0];
       const staffAssignments = await getStaffAssignments(assignments, shiftData);
       const staffs = await getStaffList(assignments);
       const dayRange = await getJobFairPublicDayRange(jobFairInfo);
@@ -76,6 +86,7 @@ const AssignTaskContainer = (props) => {
       }));
       setBoothData(jobFairBooth);
       setShiftData(shiftData);
+      setSupervisorAssignment(supervisorAssignment);
     } catch (e) {
       notification['error']({
         message: 'Error when get employee data'
@@ -225,6 +236,27 @@ const AssignTaskContainer = (props) => {
     <>
       <AssignTaskModal {...modalProps} />
       <div className={'assign-task-container'}>
+        <div className={'button-container'}>
+          <Button
+            type={'link'}
+            onClick={() => {
+              history.push(PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE);
+            }}>
+            <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '5px' }} />
+            Back to my assignment
+          </Button>
+          <Button
+            type={'link'}
+            style={{ marginLeft: 'auto' }}
+            onClick={() => {
+              const url = generatePath(PATH_COMPANY_EMPLOYEE.BOOTH_DESCRIPTION_PAGE, {
+                assignmentId: supervisorAssignment.id
+              });
+              history.push(url);
+            }}>
+            Go booth description <FontAwesomeIcon icon={faArrowRight} style={{ marginLeft: '5px' }} />
+          </Button>
+        </div>
         <div style={{ display: 'flex', marginBottom: '1rem' }}>
           <Typography.Title level={3}>Assign task</Typography.Title>
           <Button

@@ -1,6 +1,16 @@
 .assign-task-container {
   padding-top: 1rem;
 
+  .button-container{
+    margin-bottom: 1rem;
+    display: flex;
+
+    .ant-btn{
+      padding: 0;
+      font-size: 1rem;
+    }
+  }
+
   .side-bar-left-side-container {
     border: none !important;
     border-right: 1px solid grey !important;
