@@ -9,6 +9,13 @@ export const OrganizeJobFairValidation = {
         const afternoonShift = getFieldValue('afternoonShift');
         const morningShift = value;
         if (afternoonShift === undefined || morningShift === undefined) return Promise.resolve();
+        if (
+          afternoonShift[0] === undefined ||
+          afternoonShift[0] === undefined ||
+          morningShift[0] === undefined ||
+          morningShift[1] === undefined
+        )
+          return Promise.resolve();
 
         const startOfDate = moment().startOf('day');
         const afterNoonShiftStartTime = moment(afternoonShift[0]);
@@ -30,6 +37,13 @@ export const OrganizeJobFairValidation = {
         const morningShift = getFieldValue('morningShift');
         const afternoonShift = value;
         if (afternoonShift === undefined || morningShift === undefined) return Promise.resolve();
+        if (
+          afternoonShift[0] === undefined ||
+          afternoonShift[0] === undefined ||
+          morningShift[0] === undefined ||
+          morningShift[1] === undefined
+        )
+          return Promise.resolve();
 
         const startOfDate = moment().startOf('day');
         const afterNoonShiftStartTime = moment(afternoonShift[0]);
@@ -46,13 +60,13 @@ export const OrganizeJobFairValidation = {
     })
   ],
   decorateRange: [
-    REQUIRED_VALIDATOR('decorateRange'),
+    REQUIRED_VALIDATOR('Decorate time'),
     DATE_RANGE_VALIDATOR(Date.now(), new Date(2025, 12, 12).getTime()),
     ({ getFieldValue }) => ({
       validator(_, value) {
         const decorateRange = value;
         const publicRange = getFieldValue('publicRange');
-        if (decorateRange === undefined || publicRange === undefined) return Promise.resolve();
+        if (!decorateRange || !publicRange) return Promise.resolve();
 
         const decorateEndTime = moment(decorateRange[1]);
         const publicStartTime = moment(publicRange[0]);
@@ -63,13 +77,13 @@ export const OrganizeJobFairValidation = {
     })
   ],
   publicRange: [
-    REQUIRED_VALIDATOR('publicRange'),
+    REQUIRED_VALIDATOR('Public time'),
     DATE_RANGE_VALIDATOR(Date.now(), new Date(2025, 12, 12).getTime()),
     ({ getFieldValue }) => ({
       validator(_, value) {
         const publicRange = value;
         const decorateRange = getFieldValue('decorateRange');
-        if (decorateRange === undefined || publicRange === undefined) return Promise.resolve();
+        if (!decorateRange || !publicRange) return Promise.resolve();
 
         const decorateEndTime = moment(decorateRange[1]);
         const publicStartTime = moment(publicRange[0]);
