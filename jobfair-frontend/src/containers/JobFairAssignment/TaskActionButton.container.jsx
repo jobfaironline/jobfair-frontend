@@ -1,7 +1,9 @@
 import { AssignmentConst } from '../../constants/AssignmentConst';
 import { Button, Space } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JOB_FAIR_STATUS_FOR_EMPLOYEE } from '../../constants/JobFairConst';
 import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { generatePath, useHistory } from 'react-router-dom';
 import React from 'react';
 
@@ -61,7 +63,12 @@ const TaskActionButton = ({ type, status, record }) => {
           </Button>
         </Space>
       );
-    case AssignmentConst.SUPERVISOR:
+    case AssignmentConst.SUPERVISOR: {
+      const isDoneAssignTask = record.boothAssignments.some(
+        (assignment) => assignment.type === AssignmentConst.INTERVIEWER || assignment.type === AssignmentConst.RECEPTION
+      );
+      const isDoneDescription = record.jobFairBooth.boothJobPositions?.length > 0 ?? false;
+
       return (
         <Space>
           <Button
@@ -74,6 +81,9 @@ const TaskActionButton = ({ type, status, record }) => {
                 })
               )
             }>
+            {isDoneDescription ? (
+              <FontAwesomeIcon icon={faCircleCheck} color={'green'} style={{ marginRight: '5px' }} />
+            ) : null}
             My booth profile
           </Button>
           <Button
@@ -86,10 +96,14 @@ const TaskActionButton = ({ type, status, record }) => {
                 })
               )
             }>
+            {isDoneAssignTask ? (
+              <FontAwesomeIcon icon={faCircleCheck} color={'green'} style={{ marginRight: '5px' }} />
+            ) : null}
             Assign task
           </Button>
         </Space>
       );
+    }
     default:
       return null;
   }

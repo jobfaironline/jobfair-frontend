@@ -68,6 +68,7 @@ export const mapperJobFairAssignment = (item, index) => {
     statusColor,
     assignerFullName: `${item?.assigner?.account.firstname} ${item?.assigner?.account.middlename} ${item?.assigner?.account.lastname}`,
     createTime: item?.createTime,
-    dueTime
+    dueTime,
+    ...item
   };
 };

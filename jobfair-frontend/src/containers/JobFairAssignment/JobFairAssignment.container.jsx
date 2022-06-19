@@ -1,6 +1,9 @@
 import { AssignmentConst } from '../../constants/AssignmentConst';
 import { Button, Select, Space, Tabs, Typography, notification } from 'antd';
-import { getAssignmentByEmployeeId } from '../../services/jobhub-api/AssignmentControllerService';
+import {
+  getAssigmentByJobFairBoothId,
+  getAssignmentByEmployeeId
+} from '../../services/jobhub-api/AssignmentControllerService';
 import { mapperJobFairAssignment } from '../../utils/mapperJobFairAssignment';
 import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
@@ -9,6 +12,7 @@ import JobFairAssignmentTableColumn from '../JobFairAssignmentTable/JobFairAssig
 import MyBoothLayoutListContainer from '../MyBoothLayoutList/MyBoothLayoutList.container';
 import React, { useEffect, useState } from 'react';
 import TaskActionButton from './TaskActionButton.container';
+
 const { TabPane } = Tabs;
 const { Option } = Select;
 
@@ -31,8 +35,18 @@ const JobFairAssignmentContainer = () => {
       if (viewAllMode) res = await getAssignmentByEmployeeId('', currentPage, pageSize, '');
       else res = await getAssignmentByEmployeeId('', currentPage, pageSize, '', currentTab);
 
+      const data = [...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))];
+      const boothAssignmentPromises = data.map((assignment) =>
+        getAssigmentByJobFairBoothId(assignment.jobFairBooth.id)
+      );
+      const boothAssignments = await Promise.all(boothAssignmentPromises);
+
+      data.forEach((assignment, index) => {
+        assignment.boothAssignments = boothAssignments[index].data;
+      });
+
       setTotalRecord(res.data.totalElements);
-      setData([...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))]);
+      setData(data);
     } catch (e) {
       notification['error']({
         message: `Something went wrong! Try again latter!`,
