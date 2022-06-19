@@ -44,7 +44,7 @@ const JobPositionFormComponent = (props) => {
         extra={
           <div className={'extra'}>
             {extra}
-            <a href={'#'} onClick={onCancel}>
+            <a onClick={onCancel} key={'cancel'}>
               <FontAwesomeIcon icon={faX} size={'2x'} color={'black'} />
             </a>
           </div>
