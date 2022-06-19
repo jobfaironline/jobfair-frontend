@@ -61,7 +61,7 @@ export const OrganizeJobFairValidation = {
   ],
   decorateRange: [
     REQUIRED_VALIDATOR('Decorate time'),
-    DATE_RANGE_VALIDATOR(Date.now(), new Date(2025, 12, 12).getTime()),
+    DATE_RANGE_VALIDATOR(moment().startOf('d'), new Date(2025, 12, 12).getTime()),
     ({ getFieldValue }) => ({
       validator(_, value) {
         const decorateRange = value;
@@ -78,7 +78,7 @@ export const OrganizeJobFairValidation = {
   ],
   publicRange: [
     REQUIRED_VALIDATOR('Public time'),
-    DATE_RANGE_VALIDATOR(Date.now(), new Date(2025, 12, 12).getTime()),
+    DATE_RANGE_VALIDATOR(moment().startOf('d'), new Date(2025, 12, 12).getTime()),
     ({ getFieldValue }) => ({
       validator(_, value) {
         const publicRange = value;
