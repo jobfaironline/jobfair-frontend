@@ -33,7 +33,7 @@ export const AssignEmployeeBoothList = (props) => {
           size='large'
           dataSource={data}
           renderItem={(item) => {
-            const color = `${Object.values(boothData).filter((booth) => booth.id === item.id)[0]?.color}50` ?? 'white';
+            const color = `${Object.values(boothData).filter((booth) => booth.id === item.id)[0]?.color}` ?? 'white';
             return (
               <Card
                 hoverable={true}
@@ -42,7 +42,7 @@ export const AssignEmployeeBoothList = (props) => {
                   border: '1px solid black',
                   borderRadius: '20px',
                   marginBottom: '10px',
-                  backgroundColor: color
+                  borderLeft: `10px solid ${color}`
                 }}
                 bodyStyle={{ padding: '15px' }}
                 onMouseEnter={() => onHoverIn(item.booth.name)}

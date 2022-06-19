@@ -8,6 +8,20 @@ export const mapperJobFairAssignment = (item, index) => {
   let status = JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET;
   if (now.valueOf() > item.jobFairBooth?.jobFair?.decorateStartTime) status = JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING;
   if (now.valueOf() > item.jobFairBooth?.jobFair?.decorateEndTime) status = JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE;
+  let statusColor;
+  switch (status) {
+    case JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE:
+      statusColor = 'green';
+      break;
+    case JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING:
+      statusColor = 'blue';
+      break;
+    case JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET:
+      statusColor = 'default';
+      break;
+    default:
+      statusColor = 'default';
+  }
   return {
     key: item.id,
     no: index + 1,
@@ -27,6 +41,7 @@ export const mapperJobFairAssignment = (item, index) => {
     onClickJobFair: () => {
       const url = generatePath(PATH_COMPANY_EMPLOYEE.CHECKLIST, { jobFairId: item.jobFairBooth?.jobFair?.id });
       window.open(`${window.location.origin}${url}`);
-    }
+    },
+    statusColor
   };
 };

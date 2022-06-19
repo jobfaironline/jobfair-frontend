@@ -104,27 +104,11 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
       }
     ],
     onFilter: (value, record) => record.status === value,
-    render: (status) => {
-      let color;
-      switch (status) {
-        case JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE:
-          color = 'green';
-          break;
-        case JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING:
-          color = 'blue';
-          break;
-        case JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET:
-          color = 'default';
-          break;
-        default:
-          color = 'default';
-      }
-      return (
-        <>
-          <Tag color={color}>{status}</Tag>
-        </>
-      );
-    }
+    render: (status, record) => (
+      <>
+        <Tag color={record.statusColor}>{status}</Tag>
+      </>
+    )
   }
 ];
 

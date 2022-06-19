@@ -23,7 +23,10 @@ export const AssignEmployeeDetailModalContainer = (props) => {
       assignmentPromises.push(promise);
     }
     const assignments = await Promise.all(assignmentPromises);
-    for (let i = 0; i < assignments.length; i++) data[i].assignments = assignments[i] === '' ? [] : assignments[i];
+    assignments.forEach((assignment, index) => {
+      data[index].assignments = assignment === '' ? [] : assignment;
+    });
+
     data = data.filter((booth) => booth.assignments.length > 0);
     setData(data);
   };
