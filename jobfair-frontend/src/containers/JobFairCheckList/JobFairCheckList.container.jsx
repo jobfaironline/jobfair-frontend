@@ -66,7 +66,7 @@ const calculateProgressPercentage = (jobFairData, layoutData, statistics) => {
     progressData.choosingLayout = true;
     progressData.score += progressStep;
   }
-  if (jobFairData.thumbnailUrl !== undefined && jobFairData.thumbnailUrl !== null) {
+  if (jobFairData.thumbnailUrl && jobFairData.description && jobFairData.targetAttendant) {
     progressData.score += progressStep;
     progressData.landing = true;
   }
