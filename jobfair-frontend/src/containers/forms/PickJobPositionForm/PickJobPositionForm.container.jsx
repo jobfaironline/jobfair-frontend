@@ -21,6 +21,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [arrKey, setArrKey] = useState([]);
   const [formData, setFormData] = useState();
+
   const hasFetchData = useRef(false);
   const history = useHistory();
   const [form] = Form.useForm();
@@ -91,6 +92,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
       await form.validateFields();
     } catch (e) {
       handleFieldsError(form);
+      return;
     }
     try {
       const res = await assignJobPositionToBooth(body);
