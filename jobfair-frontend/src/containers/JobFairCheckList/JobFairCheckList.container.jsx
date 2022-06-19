@@ -1,10 +1,11 @@
 import { AssignEmployeeDetailModalContainer } from './AssignEmployeeDetailModal.container';
-import { Button, Modal, Progress, Typography, notification } from 'antd';
+import { Button, Progress, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JOB_FAIR_STATUS } from '../../constants/JobFairConst';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { MinuteFormat } from '../../constants/ApplicationConst';
 import { PATH, PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
+import { PublishJobFairConfirmModal } from '../../components/customized-components/PublishJobFairConfirmModal/PublishJobFairConfirmModal.component';
 import { Step1Component } from '../../components/customized-components/JobFairCheckList/Step1.component';
 import { Step2Component } from '../../components/customized-components/JobFairCheckList/Step2.component';
 import { Step3Component } from '../../components/customized-components/JobFairCheckList/Step3.component';
@@ -26,8 +27,6 @@ import RoleType from '../../constants/RoleType';
 import moment from 'moment';
 
 const organizeJobFairStep = 5;
-
-const { Text } = Typography;
 
 const mapJobFairData = (jobFairData) => {
   const startOfDate = moment().startOf('day');
@@ -218,24 +217,25 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
     setAssignEmployeeModalVisible(true);
   };
 
+  const onCancelPublish = () => {
+    setPublishModalVisible(false);
+  };
+
   if (state.isLoading) return <LoadingComponent isWholePage={true} />;
 
   return (
     <>
-      <Modal
-        title='Publish job fair'
-        visible={publishModalVisible}
-        onOk={publishJobFairEvent}
-        centered
-        onCancel={() => {
-          setPublishModalVisible(false);
-        }}>
-        Are you sure to publish <Text strong>{state.jobFairData.name}</Text>?
-      </Modal>
       <AssignEmployeeDetailModalContainer
         visible={assignEmployeeModalVisible}
         onClose={onCloseAssignEmployeeModal}
         jobFairId={jobFairId}
+      />
+      <PublishJobFairConfirmModal
+        publishModalVisible={publishModalVisible}
+        publishJobFairEvent={publishJobFairEvent}
+        onCancel={onCancelPublish}
+        jobFairData={state.jobFairData}
+        statistics={state.statistics}
       />
 
       <div className={'job-fair-check-list-container'}>

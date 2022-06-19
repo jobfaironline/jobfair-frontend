@@ -20,7 +20,7 @@ export const Step5Component = (props) => {
         </div>
 
         <div className={'button-container'}>
-          {hasAnotherPublishJobFair ? (
+          {progressScore === 80 && hasAnotherPublishJobFair ? (
             <Text style={{ color: 'red', marginRight: '5px' }}>There is another published job fair</Text>
           ) : null}
           {progressScore !== 80 || hasAnotherPublishJobFair ? (
