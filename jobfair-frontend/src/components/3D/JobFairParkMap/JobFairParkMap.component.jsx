@@ -47,7 +47,7 @@ const JobFairParkMapComponent = (props) => {
   return (
     <>
       <SkyTypeSelect onChange={onChangeSkyType} />
-      <Canvas dpr={[1, 2]} camera={{ far: 5000, fov: 50 }} style={{ width: '100%', height: 'calc(100vh - 126px)' }}>
+      <Canvas dpr={[1, 2]} camera={{ far: 5000, fov: 50 }} style={{ width: '100%', height: 'calc(100vh - 124px)' }}>
         <CameraControls />
         <SkyComponent style={skyType} />
         <group dispose={null}>

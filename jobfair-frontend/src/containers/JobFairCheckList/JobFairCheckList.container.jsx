@@ -10,9 +10,13 @@ import { Step2Component } from '../../components/customized-components/JobFairCh
 import { Step3Component } from '../../components/customized-components/JobFairCheckList/Step3.component';
 import { Step4Component } from '../../components/customized-components/JobFairCheckList/Step4.component';
 import { Step5Component } from '../../components/customized-components/JobFairCheckList/Step5.component';
+import {
+  checkJobFairPublishAPI,
+  getJobFairByIDAPI,
+  publishJobFairAPI
+} from '../../services/jobhub-api/JobFairControllerService';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { generatePath, useHistory } from 'react-router-dom';
-import { getJobFairByIDAPI, publishJobFairAPI } from '../../services/jobhub-api/JobFairControllerService';
 import { getLayoutByJobFairId } from '../../services/jobhub-api/LayoutControllerService';
 import { getStatisticsByJobFair } from '../../services/jobhub-api/AssignmentControllerService';
 import { green } from '@ant-design/colors';
@@ -95,7 +99,8 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
       publish: false,
       score: 0
     },
-    isLoading: true
+    isLoading: true,
+    hasAnotherPublishJobFair: false
   });
   const [rerender, setRerender] = useState(true);
 
@@ -132,8 +137,24 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
     } catch (e) {
       //ignore
     }
+    let hasAnotherPublishJobFair = false;
+    try {
+      const { data } = await checkJobFairPublishAPI(jobFairId);
+      hasAnotherPublishJobFair = data?.error.includes('published') ?? false;
+    } catch (e) {
+      //ignore
+    }
+
     const progressData = calculateProgressPercentage(jobFairData, layoutData, statistics);
-    setState((prevState) => ({ ...prevState, jobFairData, layoutData, statistics, progressData, isLoading: false }));
+    setState((prevState) => ({
+      ...prevState,
+      jobFairData,
+      layoutData,
+      statistics,
+      progressData,
+      isLoading: false,
+      hasAnotherPublishJobFair
+    }));
   };
 
   const handleReviewLayout = () => {
@@ -264,6 +285,7 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
           <Step5Component
             isFinish={state.progressData.publish}
             progressScore={state.progressData.score}
+            hasAnotherPublishJobFair={state.hasAnotherPublishJobFair}
             handlePublishJobFair={handlePublishJobFair}
           />
         </div>
