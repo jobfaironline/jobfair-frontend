@@ -1,7 +1,7 @@
 import './JobFairGridPublicContainer.styles.scss';
 import { CategoriesConst, SubCategories } from '../../../constants/CompanyProfileConstant';
 import { Divider, Input, Select, notification } from 'antd';
-import { NotificationType } from '../../../constants/NotificationType';
+import { NotificationType } from '../../../constants/NotificationConstant';
 import { PATH } from '../../../constants/Paths/Path';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getCountryOrder } from '../../../utils/common';

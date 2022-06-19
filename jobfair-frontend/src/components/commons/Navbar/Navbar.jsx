@@ -42,6 +42,7 @@ const NavigationBar = () => {
             {role ? (
               <>
                 <Dropdown
+                  overlayStyle={{ zIndex: 0 }}
                   visible={subNavVisible}
                   trigger={['click']}
                   overlay={

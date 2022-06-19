@@ -1,4 +1,5 @@
-import { NotificationType } from '../../constants/NotificationType';
+import { NotificationType } from '../../constants/NotificationConstant';
+import { mapperForNotification } from '../../utils/mapperForNotification';
 import { notification } from 'antd';
 import { notificationAction } from '../../redux-flow/notification/notification-slice';
 import store from '../../redux-flow/index';
@@ -8,13 +9,17 @@ export class WebSocketClient {
     this.token = token;
     this.socket = new WebSocket(`wss://lflmm880j3.execute-api.ap-southeast-1.amazonaws.com/production?token=${token}`);
     this.eventHandlers = {
-      default: (notificationData) => {
+      default: (data) => {
+        let notificationData = JSON.parse(JSON.stringify(data));
         switch (notificationData?.notificationType) {
           case NotificationType.NOTI: {
+            notificationData = mapperForNotification(notificationData);
             notification['success']({
               message: notificationData.title,
               description: notificationData.message,
-              duration: 2
+              duration: 0,
+              onClick: notificationData.action,
+              className: notificationData.action ? 'notification-message-clickable' : ''
             });
             store.dispatch(notificationAction.addNotification(notificationData));
             break;
