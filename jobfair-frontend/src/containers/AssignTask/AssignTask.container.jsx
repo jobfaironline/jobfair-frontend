@@ -6,7 +6,6 @@ import { Button, Form, Table, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
-import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
 import {
   assignEmployee,
   getAssigmentByJobFairBoothId,
@@ -277,21 +276,19 @@ const AssignTaskContainer = (props) => {
         {tableData.dataSource === undefined ? (
           <LoadingComponent isWholePage={true} />
         ) : (
-          <SideBarComponent
-            rightSide={
-              <div style={{ marginLeft: '2rem' }}>
-                <Table
-                  dataSource={[...tableData.dataSource]}
-                  columns={[...tableData.columns]}
-                  pagination={false}
-                  rowClassName={(record) => !record.enabled && 'disabled-row'}
-                />
-              </div>
-            }
-            leftSide={<AssignTaskFilterPanel onFilter={onFilterData} onReset={onResetFilter} />}
-            isOrganizeJobFair={false}
-            ratio={1 / 6}
-          />
+          <div>
+            <div>
+              <AssignTaskFilterPanel onFilter={onFilterData} onReset={onResetFilter} />
+            </div>
+            <div>
+              <Table
+                dataSource={[...tableData.dataSource]}
+                columns={[...tableData.columns]}
+                pagination={false}
+                rowClassName={(record) => !record.enabled && 'disabled-row'}
+              />
+            </div>
+          </div>
         )}
       </div>
     </>
