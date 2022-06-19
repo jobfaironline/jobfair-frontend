@@ -1,8 +1,8 @@
 import './JobFairGridPublicContainer.styles.scss';
-import { CategoriesConst, SubCategories } from '../../../constants/CompanyProfileConstant';
 import { Divider, Input, Select, notification } from 'antd';
 import { NotificationType } from '../../../constants/NotificationConstant';
 import { PATH } from '../../../constants/Paths/Path';
+import { SearchCategories, SearchSubCategories } from '../../../constants/CompanyProfileConstant';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getCountryOrder } from '../../../utils/common';
 import { getJobFairForAttendant } from '../../../services/jobhub-api/JobFairControllerService';
@@ -23,12 +23,13 @@ const JobFairGridPublicContainer = ({ role }) => {
     category: '',
     country: ''
   });
+
   const latestData = useRef(data);
   useEffect(async () => {
     try {
       const res = await getJobFairForAttendant({
         name: searchAndFilterValue.searchValue,
-        categoryId: searchAndFilterValue.category,
+        categoryId: searchAndFilterValue.category === -1 ? null : searchAndFilterValue.category,
         countryId: searchAndFilterValue.country
       });
       latestData.current = res.data.content;
@@ -104,9 +105,9 @@ const JobFairGridPublicContainer = ({ role }) => {
               <Divider style={{ margin: '8px 0' }} />
             </>
           )}>
-          {CategoriesConst.map((category) => (
+          {SearchCategories.map((category) => (
             <OptGroup label={category.label}>
-              {SubCategories.filter((item) => item.category_id === category.value).map((item) => (
+              {SearchSubCategories.filter((item) => item.category_id === category.value).map((item) => (
                 <Option value={item.value}>{item.label}</Option>
               ))}
             </OptGroup>
