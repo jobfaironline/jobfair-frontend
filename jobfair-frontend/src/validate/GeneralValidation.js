@@ -65,7 +65,7 @@ export const NUMBER_RANGE_VALIDATOR = (minValue, maxValue) => () => ({
 
 export const DATE_RANGE_VALIDATOR = (minTime, maxTime) => () => ({
   validator(_, value) {
-    if (value === undefined) return Promise.resolve();
+    if (!value || !value[0] || !value[1]) return Promise.resolve();
     const fromDate = moment(value[0]).toDate().getTime();
     const toDate = moment(value[1]).toDate().getTime();
     if (fromDate > maxTime)

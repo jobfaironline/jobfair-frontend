@@ -1,5 +1,6 @@
 import { default as CustomFooter } from '../components/commons/Footer/Footer';
 import { Footer } from 'antd/es/layout/layout';
+import { JobFairBoothReviewPage } from '../pages/JobFairBoothReviewPage/JobFairBoothReviewPage';
 import { JobFairCheckListPage } from '../pages/JobFairCheckList/JobFairCheckListPage';
 import { JobFairMapReviewPage } from '../pages/JobFairMapReviewPage/JobFairMapReviewPage';
 import { Layout } from 'antd';
@@ -266,6 +267,12 @@ const AppRouter = () => {
           key={PATH_COMPANY_EMPLOYEE.CHECKLIST}
           component={() => <JobFairCheckListPage />}
           path={PATH_COMPANY_EMPLOYEE.CHECKLIST}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.JOB_FAIR_BOOTH_REVIEW}
+          component={() => <JobFairBoothReviewPage />}
+          path={PATH_COMPANY_EMPLOYEE.JOB_FAIR_BOOTH_REVIEW}
           exact
         />
         <CompanyManagerRouter

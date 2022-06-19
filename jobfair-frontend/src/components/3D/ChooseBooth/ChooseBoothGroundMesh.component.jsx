@@ -8,13 +8,13 @@ export const ChooseBoothGroundMesh = (props) => {
   boothMeshesRef.current.push(ref);
   if (!isAvailable) {
     const newMaterial = mesh.material.clone();
-    newMaterial.color.set(0xf54254);
+    newMaterial.color.set('#33ff77');
     newMaterial.transparent = true;
     mesh.material = newMaterial;
   } else {
     const newMaterial = mesh.material.clone();
-    if (color !== undefined) newMaterial.color.set(color);
-    else newMaterial.color.set(0x42f56f);
+    if (color !== undefined) newMaterial.color.set('#33ff77');
+    else newMaterial.color.set('#33ff77');
     newMaterial.transparent = true;
     mesh.material = newMaterial;
   }

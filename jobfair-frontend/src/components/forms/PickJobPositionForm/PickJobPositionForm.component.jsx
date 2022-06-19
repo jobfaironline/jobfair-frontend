@@ -130,12 +130,21 @@ const PickJobPositionForm = (props) => {
             </>
           )}
         </Form.List>
-        <Form.Item>
-          <div style={{ display: 'flex', width: '100%', marginTop: '1rem' }}>
-            <Button type='primary' htmlType='submit' className={'button'} style={{ marginLeft: 'auto' }}>
-              Submit
-            </Button>
-          </div>
+        <Form.Item shouldUpdate>
+          {() => (
+            <div style={{ display: 'flex', width: '100%', marginTop: '1rem' }}>
+              <Button
+                type='primary'
+                htmlType='submit'
+                className={'button'}
+                style={{ marginLeft: 'auto' }}
+                disabled={
+                  !form.isFieldsTouched() || form.getFieldsError().filter(({ errors }) => errors.length).length > 0
+                }>
+                Submit
+              </Button>
+            </div>
+          )}
         </Form.Item>
       </Form>
     </>

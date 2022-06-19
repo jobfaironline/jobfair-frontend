@@ -1,7 +1,19 @@
 .pick-job-position-container {
-  display: flex;
-  padding-top: 4rem;
-  margin: 0 4rem;
+
+  .button-container{
+    margin: 1rem 4rem 0;
+    display: flex;
+
+    .ant-btn{
+      padding: 0;
+      font-size: 1rem;
+    }
+  }
+
+  .content-container {
+    display: flex;
+    margin: 0 4rem;
+  }
 
   .left-side {
     flex: 1;

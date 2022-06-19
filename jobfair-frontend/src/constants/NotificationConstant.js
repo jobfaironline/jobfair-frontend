@@ -6,3 +6,7 @@ export const NotificationType = {
   INTERVIEW_ROOM: 'INTERVIEW_ROOM',
   KICK_USER: 'KICK_USER'
 };
+
+export const NotificationAction = {
+  ASSIGMENT: 'ASSIGNMENT'
+};

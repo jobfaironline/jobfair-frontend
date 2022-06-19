@@ -12,6 +12,8 @@ import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import { uploadUtil } from '../../../utils/uploadCSVUtil';
 import React, { useEffect, useRef, useState } from 'react';
 
+const assignBoothColors = ['F9C80E', 'F86624', 'EA3546', '662E9B', '43BCCD', 'FF8811', 'F4D06F', '9DD9D2', '392F5A'];
+
 export const AssignEmployeeContainer = (props) => {
   const { jobFairId, onHandleNext, onHandlePrev, currentStep, handleGotoChecklist } = props;
   const [state, setState] = useState({
@@ -76,14 +78,15 @@ export const AssignEmployeeContainer = (props) => {
 
     const glb = await loadGLBModel(url);
     const boothData = {};
-    for (const boothInfo of data) {
+
+    data.forEach((boothInfo, index) => {
       const id = boothInfo.id;
       const name = boothInfo.booth.name;
       boothData[name] = {
         id,
-        color: `#${Math.floor(Math.random() * 16777215).toString(16)}`
+        color: `#${assignBoothColors[index % assignBoothColors.length]}`
       };
-    }
+    });
 
     setState((prevState) => ({ ...prevState, glbMesh: glb.scene, boothDataForMesh: boothData, boothData: data }));
   }, []);

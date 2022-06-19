@@ -55,7 +55,8 @@ export const PATH_COMPANY_EMPLOYEE = {
   ASSIGN_TASK_PAGE: '/employee/assign-task/:boothId',
   BOOTH_DESCRIPTION_PAGE: '/employee/booth-description/:assignmentId',
   INTERVIEW_ROOM_PAGE: '/employee/interview/:scheduleId/:roomId',
-  CHECKLIST: '/employee/checklist/:jobFairId'
+  CHECKLIST: '/employee/checklist/:jobFairId',
+  JOB_FAIR_BOOTH_REVIEW: '/employee/review-booth/:boothId'
 };
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',
