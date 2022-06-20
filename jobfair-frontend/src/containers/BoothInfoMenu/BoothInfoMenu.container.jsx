@@ -1,11 +1,10 @@
 import '../3D/JobFairBooth/AttendantJobFairBoothView.styles.scss';
 import { BoothJobPositionTabContainer } from './BoothJobPositionTab/BoothJobPositionTab.container';
-import { CommentOutlined, ProfileOutlined, SettingOutlined, SolutionOutlined } from '@ant-design/icons';
+import { CommentOutlined, ProfileOutlined, SolutionOutlined } from '@ant-design/icons';
 import { CompanyInformation } from '../../components/customized-components/BoothInfoMenu/BoothInformationTab/BoothInformationTab.component';
 import { Tabs, Typography, notification } from 'antd';
 import { getCompanyBoothById } from '../../services/jobhub-api/CompanyBoothControllerService';
 import { getCompanyProfileAPI } from '../../services/jobhub-api/CompanyControllerService';
-import BoothControlSettingContainer from '../BoothControlSetting/BoothControlSetting.container';
 import React, { useEffect, useState } from 'react';
 import SideBar from '../../components/commons/InfoMenu/InfoMenu.component';
 
@@ -85,17 +84,6 @@ export const BoothInfoMenuContainer = (props) => {
           openInventory={openInventory}
           companyInfo={state.companyInformation}
         />
-      </Tabs.TabPane>,
-      <Tabs.TabPane
-        tab={
-          <div style={{ textAlign: 'center' }}>
-            <Typography.Text strong>
-              <SettingOutlined /> Settings
-            </Typography.Text>
-          </div>
-        }
-        key='3'>
-        <BoothControlSettingContainer />
       </Tabs.TabPane>
     ]
   };

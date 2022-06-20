@@ -12,7 +12,6 @@ export const CompanyJobPositionTab = (props) => {
         dataSource={jobPositions}
         style={{
           overflowY: 'scroll',
-          width: 'fit-content',
           overFlowX: 'auto',
           height: '85vh'
         }}

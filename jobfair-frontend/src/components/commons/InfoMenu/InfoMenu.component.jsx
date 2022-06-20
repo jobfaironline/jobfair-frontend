@@ -1,4 +1,4 @@
-import { CommentOutlined, ProfileOutlined, SettingOutlined, SolutionOutlined } from '@ant-design/icons';
+import { CommentOutlined, ProfileOutlined, SolutionOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Space, Tabs, Typography } from 'antd';
 import { boothTabAction } from '../../../redux-flow/boothInfoTab/boothInfoTab-slice';
@@ -26,7 +26,7 @@ const SideBar = (props) => {
               <FontAwesomeIcon icon={faArrowLeft} size={'1x'} color={'black'} />
             </a>
           ) : (
-            <Space direction='vertical'>
+            <Space direction='vertical' style={{}}>
               <a
                 className={styles.icon}
                 onClick={() => {
@@ -42,7 +42,7 @@ const SideBar = (props) => {
                   dispatch(boothTabAction.setIsShow(true));
                 }}>
                 <Typography.Text strong>
-                  <CommentOutlined /> Chat & Video
+                  <CommentOutlined /> Chat & Videos
                 </Typography.Text>
               </a>
               <a
@@ -63,16 +63,6 @@ const SideBar = (props) => {
                 }}>
                 <Typography.Text strong>
                   <SolutionOutlined /> Job positions
-                </Typography.Text>
-              </a>
-              <a
-                className={styles.icon}
-                onClick={() => {
-                  dispatch(boothTabAction.setActiveKey('3'));
-                  dispatch(boothTabAction.setIsShow(true));
-                }}>
-                <Typography.Text strong>
-                  <SettingOutlined /> Settings
                 </Typography.Text>
               </a>
             </Space>
