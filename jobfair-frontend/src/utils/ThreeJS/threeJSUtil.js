@@ -103,7 +103,8 @@ export const calculatePositionWithBoundary = ({ x, y, z, x_range, y_range, z_ran
 
 export const addVideoTexture = (mesh, videoData) => {
   if (Object.keys(videoData).includes(mesh.name)) {
-    const imagePlane = mesh.children.filter((child) => child.name.includes(IMAGE_PLANE_NAME))[0];
+    const imagePlane = mesh.getObjectByName(IMAGE_PLANE_NAME);
+    if (imagePlane === undefined) return;
     const vid = document.createElement('video');
     vid.crossOrigin = 'Anonymous';
     vid.loop = true;

@@ -1,93 +1,79 @@
 [
   {
     "id": 1,
-    "name": "Banner",
-    "description": "Banner",
-    "thumbnailUrl": "/3D-component/banner.png",
-    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/banner1.glb"
+    "name": "Normal table 1",
+    "description": "Normal table 1",
+    "thumbnailUrl": "/3D-component-thumbnail/NormalTable.png",
+    "url": "/3D-component/NormalTable.glb"
   },
   {
     "id": 2,
-    "name": "main board",
-    "description": "main board",
-    "thumbnailUrl": "/3D-component/screen.png",
-    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/main_board.glb"
+    "name": "Normal table 2",
+    "description": "Normal table 2",
+    "thumbnailUrl": "/3D-component-thumbnail/NormalTable_Ver2.png",
+    "url": "/3D-component/NormalTable_Ver2.glb"
   },
   {
     "id": 3,
-    "name": "rostrum",
-    "description": "Rostrum",
-    "thumbnailUrl": "/3D-component/rostrum.png",
-    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/rostrum.glb"
+    "name": "Receptionist table 1",
+    "description": "Receptionist table 1",
+    "thumbnailUrl": "/3D-component-thumbnail/ReceptionistTable.png",
+    "url": "/3D-component/ReceptionistTable.glb"
   },
   {
     "id": 4,
-    "name": "Trash",
-    "description": "Trash",
-    "thumbnailUrl": "/3D-component/trash.png",
-    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/trash.glb"
+    "name": "Receptionist table 2",
+    "description": "Receptionist table 2",
+    "thumbnailUrl": "/3D-component-thumbnail/ReceptionistTable_Ver2.png",
+    "url": "/3D-component/ReceptionistTable_Ver2.glb"
   },
   {
     "id": 5,
-    "name": "New Table",
-    "description": "New table",
-    "thumbnailUrl": "/3D-component/trash.png",
-    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/NormalTable.glb"
+    "name": "Screen 1",
+    "description": "Screen 1",
+    "thumbnailUrl": "/3D-component-thumbnail/Screen.png",
+    "url": "/3D-component/Screen.glb"
   },
   {
     "id": 6,
-    "name": "New Table v2",
-    "description": "New table v2",
-    "thumbnailUrl": "/3D-component/trash.png",
-    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/NormalTable_Ver2.glb"
+    "name": "Screen 2",
+    "description": "Screen 1",
+    "thumbnailUrl": "/3D-component-thumbnail/Screen_Ver2.png",
+    "url": "/3D-component/Screen_Ver2.glb"
   },
   {
     "id": 7,
-    "name": "Receptionist",
-    "description": "Receptionist",
-    "thumbnailUrl": "/3D-component/trash.png",
-    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/ReceptionistTable.glb"
+    "name": "Sign",
+    "description": "Sign",
+    "thumbnailUrl": "/3D-component-thumbnail/Sign.png",
+    "url": "/3D-component/Sign.glb"
   },
   {
     "id": 8,
-    "name": "Receptionist v2",
-    "description": "Receptionist v2",
-    "thumbnailUrl": "/3D-component/trash.png",
-    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/ReceptionistTable_Ver2.glb"
+    "name": "Standee 1",
+    "description": "Standee 1",
+    "thumbnailUrl": "/3D-component-thumbnail/Standee.png",
+    "url": "/3D-component/Standee.glb"
   },
   {
     "id": 9,
-    "name": "New Standee ",
-    "description": "New Standee",
-    "thumbnailUrl": "/3D-component/trash.png",
-    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/Standee.glb"
+    "name": "Standee 2",
+    "description": "Standee 2",
+    "thumbnailUrl": "/3D-component-thumbnail/Standee_Ver2.png",
+    "url": "/3D-component/Standee_Ver2.glb"
   },
   {
     "id": 10,
-    "name": "New Standee v2",
-    "description": "New Standee v2",
-    "thumbnailUrl": "/3D-component/trash.png",
-    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/Standee_Ver2.glb"
+    "name": "Wall 1",
+    "description": "Wall 1",
+    "thumbnailUrl": "/3D-component-thumbnail/Wall.png",
+    "url": "/3D-component/Wall.glb"
   },
   {
     "id": 11,
-    "name": "New Screen",
-    "description": "New screen",
-    "thumbnailUrl": "/3D-component/trash.png",
-    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/Screne.glb"
-  },
-  {
-    "id": 12,
-    "name": "New Screen v2",
-    "description": "New Screen v2",
-    "thumbnailUrl": "/3D-component/trash.png",
-    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/screen_v7.glb"
-  },
-  {
-    "id": 13,
-    "name": "New Screen v3",
-    "description": "New Screen v3",
-    "thumbnailUrl": "/3D-component/trash.png",
-    "url": "https://d3polnwtp0nqe6.cloudfront.net/SampleItem/screen_v6.glb"
+    "name": "Wall 2",
+    "description": "Wall 2",
+    "thumbnailUrl": "/3D-component-thumbnail/Wall_Ver2.png",
+    "url": "/3D-component/Wall_Ver2.glb"
   }
 ]

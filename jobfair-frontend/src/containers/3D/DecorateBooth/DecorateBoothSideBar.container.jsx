@@ -89,102 +89,36 @@ export const DecoratedBoothSideBarContainer = (props) => {
         map: texture
       });
 
+      //get screen center point
+      const middle = new THREE.Vector3();
+      screenMesh.geometry.computeBoundingBox();
+      middle.x = (screenMesh.geometry.boundingBox.max.x + screenMesh.geometry.boundingBox.min.x) / 2;
+      middle.y = (screenMesh.geometry.boundingBox.max.y + screenMesh.geometry.boundingBox.min.y) / 2;
+      middle.z = (screenMesh.geometry.boundingBox.max.z + screenMesh.geometry.boundingBox.min.z) / 2;
+
       // eslint-disable-next-line prefer-const
       plane = new THREE.Mesh(geometry, material);
       plane.name = IMAGE_PLANE_NAME;
+
       //rotate plane to face the screen direction
       if (screenSize.x > screenSize.z) {
         const myAxis = new THREE.Vector3(0, 0, 1);
         plane.rotateOnAxis(myAxis, THREE.Math.degToRad(180));
-
-        plane.position.setZ(-screenSize.z / 2 / screenMesh.scale.z - 0.2);
+        plane.position.setZ(-screenSize.z / 2 / screenMesh.scale.z - 0.4);
+        plane.position.setY(middle.y);
       } else {
         let myAxis = new THREE.Vector3(0, 1, 0);
         plane.rotateOnAxis(myAxis, THREE.Math.degToRad(90));
         myAxis = new THREE.Vector3(0, 0, 1);
         plane.rotateOnAxis(myAxis, THREE.Math.degToRad(180));
-
-        plane.position.setX(-screenSize.x / 2 / screenMesh.scale.x - 0.2);
+        plane.position.setX(-screenSize.x / 2 / screenMesh.scale.x - 0.4);
+        plane.position.setY(middle.y);
       }
 
       const realScreen = selectedItem?.getObjectByName('Media');
       const prevPlane = realScreen?.getObjectByName(IMAGE_PLANE_NAME);
       if (prevPlane !== undefined) realScreen?.remove(prevPlane);
       realScreen.add(plane);
-
-      //remove previous plane-image
-      /*const prevPlane = selectedItem?.getObjectByName(IMAGE_PLANE_NAME);
-      if (prevPlane !== undefined) selectedItem?.remove(prevPlane);
-
-      selectedItem?.add(plane);*/
-
-      //old code for old component
-      /*const screenMesh = selectedItem?.clone(false);
-      screenMesh.clear();
-
-      //check if screenMesh is a plane
-      if (
-        screenMesh.geometry.boundingBox.max.x - screenMesh.geometry.boundingBox.min.x === 0 ||
-        screenMesh.geometry.boundingBox.max.y - screenMesh.geometry.boundingBox.min.y === 0 ||
-        screenMesh.geometry.boundingBox.max.z - screenMesh.geometry.boundingBox.min.z === 0
-      ) {
-        texture.center.x = 0.5;
-        texture.center.y = 0.5;
-        texture.center.set(0.5, 0.5);
-        texture.rotation = Math.PI / 2;
-
-        const newMaterial = selectedItem?.material.clone();
-        newMaterial.color = new THREE.Color(0xffffff);
-        newMaterial.emissive = new THREE.Color(0x000000);
-        newMaterial.size = THREE.DoubleSide;
-        newMaterial.map = texture;
-        selectedItem.material = newMaterial;
-        return;
-      }
-
-      //get screenSize
-      const scale = screenMesh.scale;
-      const localSize = new THREE.Vector3();
-      screenMesh.geometry.boundingBox.getSize(localSize);
-      const screenSize = new THREE.Vector3(scale.x * localSize.x, scale.y * localSize.y, scale.z * localSize.z);
-
-      //calculate which dimension is the length and which dimension is the width
-      let width;
-      if (screenSize.x > screenSize.z) width = screenSize.x / screenMesh.scale.x;
-      else width = screenSize.z / screenMesh.scale.z;
-
-      let plane;
-
-      //create new plane
-      const geometry = new THREE.PlaneGeometry(width, screenSize.y / screenMesh.scale.y);
-      const material = new THREE.MeshStandardMaterial({
-        side: THREE.DoubleSide,
-        map: texture
-      });
-
-      // eslint-disable-next-line prefer-const
-      plane = new THREE.Mesh(geometry, material);
-      plane.name = IMAGE_PLANE_NAME;
-      //rotate plane to face the screen direction
-      if (screenSize.x > screenSize.z) {
-        const myAxis = new THREE.Vector3(0, 0, 1);
-        plane.rotateOnAxis(myAxis, THREE.Math.degToRad(180));
-
-        plane.position.setZ(-screenSize.z / 2 / screenMesh.scale.z - 0.05);
-      } else {
-        let myAxis = new THREE.Vector3(0, 1, 0);
-        plane.rotateOnAxis(myAxis, THREE.Math.degToRad(90));
-        myAxis = new THREE.Vector3(0, 0, 1);
-        plane.rotateOnAxis(myAxis, THREE.Math.degToRad(180));
-
-        plane.position.setX(-screenSize.x / 2 / screenMesh.scale.x - 0.05);
-      }
-
-      //remove previous plane-image
-      const prevPlane = selectedItem?.getObjectByName(IMAGE_PLANE_NAME);
-      if (prevPlane !== undefined) selectedItem?.remove(prevPlane);
-
-      selectedItem?.add(plane);*/
     },
     showUploadList: false
   };

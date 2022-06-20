@@ -74,6 +74,7 @@ export const Decorate3DBoothContainer = (props) => {
   }, []);
 
   useEffect(async () => {
+    if (modelId === undefined) return;
     let url = GENERIC_BOOTH_LAYOUT_URL;
     const companyBoothLayoutVideos = {};
     try {
@@ -239,6 +240,7 @@ export const Decorate3DBoothContainer = (props) => {
     openBoothModal,
     saveIntoMyBoothLayout: () => {
       Modal.info({
+        centered: true,
         okButtonProps: { style: { display: 'none' } },
         title: 'Your layout name',
         content: (
