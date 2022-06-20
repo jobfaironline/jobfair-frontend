@@ -10,30 +10,35 @@ export const ControlButtonGroup = (props) => {
     <div style={{ position: 'absolute', top: '136px', right: '10px' }}>
       <Space direction='vertical' align='end'>
         <Button
+          style={{ width: '12rem' }}
           type='primary'
           onClick={addMoreComponentHandle}
           icon={<FontAwesomeIcon icon={faPlus} style={{ paddingRight: '0.5rem' }} />}>
           Add more component
         </Button>
         <Button
+          style={{ width: '12rem' }}
           onClick={saveHandle}
           type='primary'
           icon={<FontAwesomeIcon icon={faFloppyDisk} style={{ paddingRight: '0.5rem' }} />}>
-          Set current layout
+          Save
         </Button>
         <Button
-          type='primary'
-          onClick={saveIntoMyBoothLayout}
-          icon={<FontAwesomeIcon icon={faFloppyDisk} style={{ paddingRight: '0.5rem' }} />}>
-          Save this booth version
-        </Button>
-        <Button
+          style={{ width: '12rem' }}
           type='primary'
           onClick={reviewHandle}
           icon={<FontAwesomeIcon icon={faEye} style={{ paddingRight: '0.5rem' }} />}>
           Review on map
         </Button>
         <Button
+          style={{ width: '12rem' }}
+          type='primary'
+          onClick={saveIntoMyBoothLayout}
+          icon={<FontAwesomeIcon icon={faFloppyDisk} style={{ paddingRight: '0.5rem' }} />}>
+          Save to gallery
+        </Button>
+        <Button
+          style={{ width: '12rem' }}
           type='primary'
           onClick={openBoothModal}
           icon={<FontAwesomeIcon icon={faHistory} style={{ paddingRight: '0.5rem' }} />}>

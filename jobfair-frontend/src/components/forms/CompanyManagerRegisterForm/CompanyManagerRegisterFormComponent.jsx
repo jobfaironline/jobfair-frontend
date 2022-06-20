@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import React from 'react';
 
-const CompanyManagerRegisterFormComponent = ({ form, onNext, onFinish, isError }) => (
+const CompanyManagerRegisterFormComponent = ({ form, onNext, onFinish }) => (
   <div>
     <Space size='middle'>
       <Typography.Text strong>Company manager detail</Typography.Text>

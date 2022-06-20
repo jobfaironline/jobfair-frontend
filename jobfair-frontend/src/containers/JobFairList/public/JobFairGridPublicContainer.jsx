@@ -1,5 +1,4 @@
 import './JobFairGridPublicContainer.styles.scss';
-import { ATTENDANT } from '../../../constants/RoleType';
 import { CategoriesConst, SubCategories } from '../../../constants/CompanyProfileConstant';
 import { Divider, Input, Select, notification } from 'antd';
 import { NotificationType } from '../../../constants/NotificationType';
@@ -14,9 +13,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const { Search } = Input;
 const { Option, OptGroup } = Select;
+
 const JobFairGridPublicContainer = ({ role }) => {
   const webSocketClient = useSelector(selectWebSocket);
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const history = useHistory();
   const [searchAndFilterValue, setSearchAndFilterValue] = useState({
     searchValue: '',
@@ -24,16 +24,29 @@ const JobFairGridPublicContainer = ({ role }) => {
     country: ''
   });
   const latestData = useRef(data);
-
-  useEffect(() => {
-    fetchData();
+  useEffect(async () => {
+    try {
+      const res = await getJobFairForAttendant({
+        name: searchAndFilterValue.searchValue,
+        categoryId: searchAndFilterValue.category,
+        countryId: searchAndFilterValue.country
+      });
+      latestData.current = res.data.content;
+      setData(res.data.content);
+    } catch (e) {
+      notification['error']({
+        message: `Error occurred: ${e.response.data.message}`
+      });
+    }
   }, [searchAndFilterValue]);
 
   useEffect(() => {
-    webSocketClient.addEvent('chang-job-fair-view', changeJobFairView);
-    return () => {
-      webSocketClient.removeEvent('chang-job-fair-view');
-    };
+    if (role !== undefined) {
+      webSocketClient.addEvent('chang-job-fair-view', changeJobFairView);
+      return () => {
+        webSocketClient.removeEvent('chang-job-fair-view');
+      };
+    }
   }, []);
 
   const changeJobFairView = (notificationData) => {
@@ -48,27 +61,8 @@ const JobFairGridPublicContainer = ({ role }) => {
     }
   };
 
-  const fetchData = async () => {
-    try {
-      let res;
-      if (role === ATTENDANT) {
-        res = await getJobFairForAttendant({
-          name: searchAndFilterValue.searchValue,
-          categoryId: searchAndFilterValue.category,
-          countryId: searchAndFilterValue.country
-        });
-        latestData.current = res.data.content;
-        setData(res.data.content);
-      }
-    } catch (e) {
-      notification['error']({
-        message: `Error occurred: ${e.response.data.message}`
-      });
-    }
-  };
-
   const onClick = async (jobFairId) => {
-    const url = generatePath(PATH.PUBLICIZED_BOOTH_PAGE, {
+    const url = generatePath(PATH.JOB_FAIR_LANDING_PAGE, {
       jobFairId
     });
     history.push(url);

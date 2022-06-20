@@ -14,4 +14,15 @@
     display: inline-block;
     width: 350px;
   }
+
+  .icon {
+    position: absolute;
+    right: 3rem;
+    top: 7rem;
+    font-size: 2rem;
+  }
+
+  .icon:hover {
+    color: orange;
+  }
 }

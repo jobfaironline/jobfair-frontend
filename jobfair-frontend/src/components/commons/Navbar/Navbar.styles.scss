@@ -15,6 +15,17 @@
   width: 100vw;
   background-color: #2586df;
   z-index: 2;
+
+  .sub-navbar-item:hover {
+    background-color: #fff;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .sub-navbar-item {
+    a:hover {
+      color: #2586df !important;
+    }
+  }
 }
 
 .Navbar {
@@ -23,6 +34,7 @@
   padding: 0 5rem;
   align-items: center;
   width: 100%;
+  justify-content: space-between;
 }
 
 .menu {

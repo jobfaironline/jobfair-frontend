@@ -1,4 +1,5 @@
 import './JobFairLandingPageForm.styles.scss';
+import { EyeOutlined } from '@ant-design/icons';
 import { Form, Input, Typography } from 'antd';
 import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairValidation';
 import React from 'react';
@@ -12,11 +13,14 @@ const JobFairLandingPageFormComponent = ({
   uploadProps,
   thumbnailUrl,
   companyInformation,
-  jobFairData
+  jobFairData,
+  handleReviewLandingPage,
+  onValueChange
 }) => (
   <div className={'job-fair-landing-page'}>
     <div style={{ textAlign: 'center' }}>
-      <Title level={5}>Schedule job fair event</Title>
+      <Title level={4}>Schedule job fair event</Title>
+      <EyeOutlined className={'icon'} onClick={handleReviewLandingPage} />
     </div>
     <Form
       initialValues={{
@@ -28,8 +32,9 @@ const JobFairLandingPageFormComponent = ({
       requiredMark='required'
       autoComplete='off'
       onFinish={onFinish}
+      onValuesChange={onValueChange}
       scrollToFirstError={{ block: 'center', behavior: 'smooth' }}>
-      <Form.Item label='Thumbnail' name={'thumbnail'} rules={[]} className={'form-item'}>
+      <Form.Item label='Thumbnail' name={'thumbnail'} className={'form-item'} required>
         <UploadComponent uploadProps={uploadProps}>
           {thumbnailUrl ? <img src={thumbnailUrl} alt='avatar' style={{ width: '100%' }} /> : undefined}
         </UploadComponent>
@@ -49,7 +54,7 @@ const JobFairLandingPageFormComponent = ({
         name={'description'}
         rules={OrganizeJobFairValidation.description}
         className={'form-item'}>
-        <TextArea showCount maxLength={1000} placeholder='Description' />
+        <TextArea showCount maxLength={1000} autoSize={{ minRows: 6 }} placeholder='Description' />
       </Form.Item>
     </Form>
   </div>

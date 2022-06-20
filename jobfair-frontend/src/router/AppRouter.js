@@ -1,5 +1,10 @@
+import { default as CustomFooter } from '../components/commons/Footer/Footer';
+import { Footer } from 'antd/es/layout/layout';
+import { JobFairCheckListPage } from '../pages/JobFairCheckList/JobFairCheckListPage';
+import { JobFairMapReviewPage } from '../pages/JobFairMapReviewPage/JobFairMapReviewPage';
+import { Layout } from 'antd';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, matchPath, useLocation } from 'react-router-dom';
 import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
 import { selectWebSocket } from '../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
@@ -22,12 +27,13 @@ import EmployeeManagementPage from '../pages/EmployeeManagementPage/EmployeeMana
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import FAQPage from '../pages/FAQPage/FAQPage';
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage';
-import HomePage from '../pages/HomePage';
+import HomePage from '../pages/HomePage/HomePage';
 import InterviewLandingPage from '../pages/InterviewLandingPage/InterviewLandingPage';
 import InterviewRoomPage from '../pages/InterviewRoomPage/InterviewRoomPage';
 import InterviewSchedulePage from '../pages/InterviewSchedulePage/InterviewSchedulePage';
 import JobFairAssignmentPage from '../pages/JobFairAssignmentPage/JobFairAssignmentPage';
 import JobFairGridManagerPage from '../pages/JobFairListPage/JobFairGridManagerPage';
+import JobFairLandingPage from '../pages/JobFairLandingPage/JobFairLandingPage';
 import JobFairListPage from '../pages/JobFairListPage/JobFairListPage';
 import JobFairTablePage from '../pages/JobFairTablePage/JobFairTablePage';
 import JobFairTemplateDetailPage from '../pages/JobFairTemplateDetailPage/JobFairTemplateDetailPage';
@@ -36,7 +42,6 @@ import LoginPage from '../pages/LoginPage/LoginPage';
 import NavigationBar from '../components/commons/Navbar/Navbar';
 import OrganizeJobFairPage from '../pages/OrganizeJobFairPage/OrganizeJobFairPage';
 import PublicRouter from './components/PublicRouter';
-import PublicizeJobFairDetailPage from '../pages/JobFairDetailPage/PublicizeJobFairDetailPage';
 import PublicizedBoothPage from '../pages/PublicizedBoothPage/PublicizedBoothPage';
 import QuestionBankPage from '../pages/QuestionBankPage/QuestionBankPage';
 import React, { useEffect } from 'react';
@@ -44,8 +49,23 @@ import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
+import ResumeManagmentPage from '../pages/ResumeManagementPage/ResumeManagementPage';
+
+const excludeFooterPages = [PATH.BOOTH_PAGE, PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE];
+
+const isHasFooter = (location) =>
+  !excludeFooterPages.some((path) => {
+    const match = matchPath(location.pathname, {
+      path,
+      exact: true,
+      strict: true
+    });
+    return match?.isExact;
+  });
 
 const AppRouter = () => {
+  const location = useLocation();
+
   const webSocketClient = useSelector(selectWebSocket);
   useEffect(() => {
     window.addEventListener('beforeunload', cleanUp);
@@ -60,7 +80,7 @@ const AppRouter = () => {
   };
 
   return (
-    <>
+    <Layout style={{ minHeight: '100vh' }}>
       <NavigationBar />
       <Switch>
         <Route path={PATH.FINAL_ERROR_PAGE} exact>
@@ -93,9 +113,6 @@ const AppRouter = () => {
         <Route path={PATH.FAQ_PAGE} exact>
           <FAQPage />
         </Route>
-        <Route path={PATH.DECORATE_BOOTH_PAGE} exact>
-          <DecorateBoothPage />
-        </Route>
         <Route path={PATH.CONTRACTS_PAGE} exact>
           <ContactPage />
         </Route>
@@ -107,6 +124,9 @@ const AppRouter = () => {
         </Route>
         <Route path={PATH.RESULT_SUCCESS_PAGE} exact>
           <ResultSuccessPage />
+        </Route>
+        <Route path={PATH.JOB_FAIR_LANDING_PAGE} exact>
+          <JobFairLandingPage />
         </Route>
         <PublicRouter key={PATH.LOGIN_PAGE} component={() => <LoginPage />} path={PATH.LOGIN_PAGE} exact />
         <PublicRouter key={PATH.REGISTER_PAGE} component={() => <RegisterPage />} path={PATH.REGISTER_PAGE} exact />
@@ -132,12 +152,6 @@ const AppRouter = () => {
           key={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}
           component={() => <JobFairListPage />}
           path={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}
-          exact
-        />
-        <AttendantRouter
-          key={PATH_ATTENDANT.JOB_FAIR_DETAIL_PAGE}
-          component={() => <PublicizeJobFairDetailPage />}
-          path={PATH_ATTENDANT.JOB_FAIR_DETAIL_PAGE}
           exact
         />
         <AttendantRouter
@@ -170,6 +184,18 @@ const AppRouter = () => {
           path={PATH_ATTENDANT.INTERVIEW_SCHEDULE}
           exact
         />
+        <AttendantRouter
+          key={PATH_ATTENDANT.RESUME_MANAGEMENT_PAGE}
+          component={() => <ResumeManagmentPage />}
+          path={PATH_ATTENDANT.RESUME_MANAGEMENT_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE}
+          component={() => <DecorateBoothPage />}
+          path={PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE}
+          exact
+        />
         <CompanyEmployeeRouter
           key={PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}
           component={() => <ApplicationManagementPage />}
@@ -186,12 +212,6 @@ const AppRouter = () => {
           key={PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE}
           component={() => <ResumeDetailPage />}
           path={PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE}
-          exact
-        />
-        <CompanyEmployeeRouter
-          key={PATH_COMPANY_EMPLOYEE.JOB_FAIR_DETAIL_PAGE}
-          component={() => <PublicizeJobFairDetailPage />}
-          path={PATH_COMPANY_EMPLOYEE.JOB_FAIR_DETAIL_PAGE}
           exact
         />
         <CompanyEmployeeRouter
@@ -267,12 +287,6 @@ const AppRouter = () => {
           exact
         />
         <CompanyManagerRouter
-          key={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE}
-          component={() => <PublicizeJobFairDetailPage />}
-          path={PATH_COMPANY_MANAGER.JOB_FAIR_DETAIL_PAGE}
-          exact
-        />
-        <CompanyManagerRouter
           key={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}
           component={() => <OrganizeJobFairPage />}
           path={PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE}
@@ -296,12 +310,29 @@ const AppRouter = () => {
           path={PATH_COMPANY_MANAGER.QUESTION_BANK}
           exact
         />
+        <CompanyManagerRouter
+          key={PATH_COMPANY_MANAGER.CHECKLIST}
+          component={() => <JobFairCheckListPage />}
+          path={PATH_COMPANY_MANAGER.CHECKLIST}
+          exact
+        />
+        <CompanyManagerRouter
+          key={PATH_COMPANY_MANAGER.REVIEW_MAP}
+          component={() => <JobFairMapReviewPage />}
+          path={PATH_COMPANY_MANAGER.REVIEW_MAP}
+          exact
+        />
         <Route path='/index.html'>
           <Redirect to='/' />
         </Route>
         <Route path='*' component={() => <ErrorPage code={404} />} />
       </Switch>
-    </>
+      {isHasFooter(location) ? (
+        <Footer>
+          <CustomFooter />
+        </Footer>
+      ) : null}
+    </Layout>
   );
 };
 export default AppRouter;

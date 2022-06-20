@@ -1,5 +1,3 @@
-import { convertToUTCString } from './common';
-
 export const mapperJobFairAssignment = (item, index) => ({
   key: item.id,
   no: index + 1,
@@ -8,11 +6,12 @@ export const mapperJobFairAssignment = (item, index) => ({
   jobFair: item.jobFairBooth?.jobFair,
   jobFairName: item.jobFairBooth?.jobFair?.name,
   assignmentType: item.type,
-  decorateStartTime: convertToUTCString(item.jobFairBooth?.jobFair?.decorateStartTime),
-  decorateEndTime: convertToUTCString(item.jobFairBooth?.jobFair?.decorateEndTime),
+  decorateStartTime: item.jobFairBooth?.jobFair?.decorateStartTime,
+  decorateEndTime: item.jobFairBooth?.jobFair?.decorateEndTime,
   decorateStartTimeValue: item.jobFairBooth?.jobFair?.decorateStartTime,
   decorateEndTimeValue: item.jobFairBooth?.jobFair?.decorateEndTime,
-  publicStartTime: convertToUTCString(item.jobFairBooth?.jobFair?.publicStartTime),
-  publicEndTime: convertToUTCString(item.jobFairBooth?.jobFair?.publicEndTime),
-  status: item.jobFairBooth?.jobFair?.status
+  publicStartTime: item.jobFairBooth?.jobFair?.publicStartTime,
+  publicEndTime: item.jobFairBooth?.jobFair?.publicEndTime,
+  status: item.jobFairBooth?.jobFair?.status,
+  jobFairBoothId: item?.jobFairBooth?.id
 });

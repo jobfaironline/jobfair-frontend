@@ -184,3 +184,7 @@ export const deepClone = (value) => {
 
   return value;
 };
+
+export const getTimeZoneCode = () =>
+  //https://stackoverflow.com/questions/1954397/detect-timezone-abbreviation-using-javascript
+  new Date().toLocaleTimeString('en-us', { timeZoneName: 'short' }).split(' ')[2];

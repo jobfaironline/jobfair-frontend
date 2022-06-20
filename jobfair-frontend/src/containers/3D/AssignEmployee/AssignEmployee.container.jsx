@@ -1,16 +1,19 @@
 import { AssignEmployeeBoothList } from '../../../components/customized-components/AssignEmployeeBoothList/AssignEmployeeBoothList.component';
 import { AssignEmployeeModalContainer } from '../../AssignEmployeeModal/AssignEmployeeModal.container';
+import { Button } from 'antd';
 import { ChooseBoothCanvas } from '../../../components/3D/ChooseBooth/ChooseBoothCanvas.component';
+import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { SideBarComponent } from '../../../components/commons/SideBar/SideBar.component';
-import { getAssigmentByJobFairBoothId } from '../../../services/jobhub-api/AssignmentControllerService';
+import { UploadCSVModal } from '../../UploadModal/UploadCSVModal.container';
+import { getAssigmentByJobFairBoothId, uploadCSVFile } from '../../../services/jobhub-api/AssignmentControllerService';
 import { getJobFairBoothByJobFairId } from '../../../services/jobhub-api/JobFairBoothControllerService';
 import { getLayoutByJobFairId } from '../../../services/jobhub-api/LayoutControllerService';
 import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
+import { uploadUtil } from '../../../utils/uploadCSVUtil';
 import React, { useEffect, useRef, useState } from 'react';
-import ReactLoading from 'react-loading';
 
 export const AssignEmployeeContainer = (props) => {
-  const { jobFairId, onHandleNext, onHandlePrev, currentStep } = props;
+  const { jobFairId, onHandleNext, onHandlePrev, currentStep, handleGotoChecklist } = props;
   const [state, setState] = useState({
     glbMesh: undefined,
     boothDataForMesh: {},
@@ -23,6 +26,8 @@ export const AssignEmployeeContainer = (props) => {
   const [selectionRef, setSelectionRef] = useState();
   const [hoverRef, setHoverRef] = useState();
   const boothMeshesRef = useRef([]);
+  const [uploadCSVModalVisibility, setUploadCSVModalVisibility] = useState(false);
+  const [rerender, setRender] = useState(false);
 
   const onBoothClick = (boothId, meshName) => {
     const ref = boothMeshesRef?.current?.filter((meshRef) => meshRef?.current?.name === meshName)[0];
@@ -82,36 +87,59 @@ export const AssignEmployeeContainer = (props) => {
     setState((prevState) => ({ ...prevState, glbMesh: glb.scene, boothDataForMesh: boothData, boothData: data }));
   }, []);
 
-  if (state.glbMesh === undefined || state.boothDataForMesh.length === 0) {
-    return (
-      <div
-        style={{
-          width: '100vw',
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-        <ReactLoading type={'spin'} color={'#1890ff'} height={100} width={100} />
-      </div>
-    );
-  }
+  useEffect(async () => {
+    const data = await fetchBoothAssigmentData();
+    setState((prevState) => ({ ...prevState, boothData: data }));
+  }, [rerender]);
+
+  const onClickUploadCSV = () => {
+    setUploadCSVModalVisibility(true);
+  };
+
+  const onUpload = async (file) => {
+    await uploadUtil(file, uploadCSVFile, jobFairId);
+  };
+
+  const onCloseUploadModal = () => {
+    setUploadCSVModalVisibility(false);
+    setRender((prevState) => !prevState);
+  };
+
+  if (state.glbMesh === undefined || state.boothDataForMesh.length === 0)
+    return <LoadingComponent isWholePage={true} />;
 
   return (
     <>
+      <UploadCSVModal
+        visible={uploadCSVModalVisibility}
+        handleUpload={onUpload}
+        onCancel={onCloseUploadModal}
+        templateURl={`${window.location.origin}/xlsx_template/assignment_success.xlsx`}
+      />
       <SideBarComponent
         rightSide={
-          <ChooseBoothCanvas
-            mesh={state.glbMesh}
-            boothData={state.boothDataForMesh}
-            jobFairId={jobFairId}
-            onClick={onBoothClick}
-            selectionRef={selectionRef}
-            onCompanyGroundPointerOver={onBoothMouseOver}
-            onCompanyGroundPointerOut={onBoothMouseOut}
-            hoverRef={hoverRef}
-            boothMeshesRef={boothMeshesRef}
-          />
+          <>
+            <Button
+              onClick={handleGotoChecklist}
+              style={{
+                position: 'absolute',
+                zIndex: 1000,
+                right: 0
+              }}>
+              Go to checklist
+            </Button>
+            <ChooseBoothCanvas
+              mesh={state.glbMesh}
+              boothData={state.boothDataForMesh}
+              jobFairId={jobFairId}
+              onClick={onBoothClick}
+              selectionRef={selectionRef}
+              onCompanyGroundPointerOver={onBoothMouseOver}
+              onCompanyGroundPointerOut={onBoothMouseOut}
+              hoverRef={hoverRef}
+              boothMeshesRef={boothMeshesRef}
+            />
+          </>
         }
         leftSide={
           <AssignEmployeeBoothList
@@ -120,7 +148,8 @@ export const AssignEmployeeContainer = (props) => {
             data={state.boothData}
             onHoverIn={onBoothMouseOver}
             onHoverOut={onBoothMouseOut}
-            onClick={onBoothClick}
+            onBoothClick={onBoothClick}
+            onClickUploadCSV={onClickUploadCSV}
           />
         }
         nextButtonContent={'Start design landing page'}
