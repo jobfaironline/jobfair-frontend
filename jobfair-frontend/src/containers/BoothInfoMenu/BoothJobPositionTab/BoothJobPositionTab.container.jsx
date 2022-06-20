@@ -143,7 +143,7 @@ export const BoothJobPositionTabContainer = (props) => {
       <CompanyJobPositionTab {...componentProps} />;
       <Modal
         title={'Apply to job position'}
-        width={'70rem'}
+        width={'50%'}
         closable={true}
         maskClosable={true}
         footer={null}
