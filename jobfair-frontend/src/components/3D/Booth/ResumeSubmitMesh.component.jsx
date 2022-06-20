@@ -25,7 +25,7 @@ export const ResumeSubmitMeshComponent = (props) => {
       castShadow={true}
       receiveShadow={true}
       onClick={(_) => {
-        handleOpenDetail(true, '1');
+        handleOpenDetail(true, '2');
       }}
       onPointerMove={(e) => {
         toolTipPositionRef.current.x = e.offsetX + 10;
