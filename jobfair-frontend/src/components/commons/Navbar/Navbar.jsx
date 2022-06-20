@@ -1,13 +1,14 @@
 import './Navbar.styles.scss';
 import { AppstoreFilled, UserOutlined } from '@ant-design/icons';
-import { Avatar, Button, Dropdown, Menu, Space, Typography } from 'antd';
+import { Avatar, Button, Dropdown, Image, Menu, Space, Typography } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import { NotificationContainer } from '../../../containers/NotificationContainer/Notification.container';
-import { PATH } from '../../../constants/Paths/Path';
+import { PATH, PATH_ATTENDANT } from '../../../constants/Paths/Path';
 import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
 import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState } from 'react';
+import RoleType from '../../../constants/RoleType';
 import extraMenu from './MenuByRole';
 
 const NavigationBar = () => {
@@ -93,14 +94,29 @@ const AuthenticationButtonGroups = ({ handleRedirect }) => (
 const AvatarMenu = ({ logoutFunction }) => {
   const history = useHistory();
   const name = useSelector((state) => state.authentication.user.fullName);
+  const role = useSelector((state) => state.authentication?.user?.roles);
+  const profileUrl = useSelector((state) => state.authentication?.user.profileUrl);
 
   const menu = (
     <Menu
       onClick={(e) => {
-        if (e.key === 'LOGOUT') logoutFunction();
-        else if (e.key === 'CHANGE_PASSWORD_PAGE') history.push(PATH.CHANGE_PASSWORD_PAGE);
+        switch (e.key) {
+          case 'LOGOUT':
+            logoutFunction();
+            break;
+          case 'CHANGE_PASSWORD_PAGE':
+            history.push(PATH.CHANGE_PASSWORD_PAGE);
+            break;
+          case 'PROFILE':
+            switch (role) {
+              case RoleType.ATTENDANT:
+                history.push(PATH_ATTENDANT.PROFILE_PAGE);
+                break;
+            }
+        }
       }}
       style={{ zIndex: 10000000 }}>
+      <Menu.Item key='PROFILE'>Account</Menu.Item>
       <Menu.Item key='CHANGE_PASSWORD_PAGE'>Change password</Menu.Item>
       <Menu.Item key='LOGOUT'>Logout</Menu.Item>
     </Menu>
@@ -109,7 +125,13 @@ const AvatarMenu = ({ logoutFunction }) => {
   return (
     <div className={'avatar'}>
       <Dropdown overlay={menu} placement='bottomRight'>
-        <Avatar size={45} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+        <Avatar
+          size={45}
+          style={{ backgroundColor: '#87d068' }}
+          icon={
+            profileUrl ? <Image src={profileUrl} preview={false} style={{ cursor: 'pointer' }} /> : <UserOutlined />
+          }
+        />
       </Dropdown>
       <div style={{ display: 'flex', alignItems: 'center', padding: '0 1rem' }}>
         <Typography style={{ color: '#fff' }}>{name}</Typography>
