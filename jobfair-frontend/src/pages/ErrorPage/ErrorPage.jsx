@@ -3,6 +3,7 @@ import { PATH } from '../../constants/Paths/Path';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import React, { useMemo } from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const ErrorPage = ({ code = 404 }) => {
   const { isAuthUser } = useSelector((state) => state.authentication);
@@ -20,7 +21,7 @@ const ErrorPage = ({ code = 404 }) => {
     }
   }, [code]);
   return (
-    <div className='page' style={{ marginTop: '10rem' }}>
+    <PageLayoutWrapper className='page' style={{ marginTop: '10rem' }}>
       <Result
         status={code}
         title={code}
@@ -49,7 +50,7 @@ const ErrorPage = ({ code = 404 }) => {
           ) : null
         ]}
       />
-    </div>
+    </PageLayoutWrapper>
   );
 };
 export default ErrorPage;

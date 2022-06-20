@@ -1,10 +1,11 @@
 import { FAQComponent } from '../../components/customized-components/FAQ/FAQ.components';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const FAQPage = () => (
-  <div className='page faq-page'>
+  <PageLayoutWrapper className='page faq-page'>
     <FAQComponent />
-  </div>
+  </PageLayoutWrapper>
 );
 
 export default FAQPage;

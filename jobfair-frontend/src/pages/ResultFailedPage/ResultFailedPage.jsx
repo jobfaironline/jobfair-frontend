@@ -1,10 +1,11 @@
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import ResultFailedComponent from '../../components/commons/Result/ResultFailed.component';
 
 const ResultFailedPage = () => (
-  <div className='page'>
+  <PageLayoutWrapper className='page'>
     <ResultFailedComponent />
-  </div>
+  </PageLayoutWrapper>
 );
 
 export default ResultFailedPage;

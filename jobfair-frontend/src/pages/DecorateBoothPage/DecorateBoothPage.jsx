@@ -1,10 +1,11 @@
 import { DecorateBoothContainer } from '../../containers/DecorateBoothContainer/DecorateBooth.container';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const DecorateBoothPage = () => (
-  <div className={'page fullscreen-page'}>
+  <PageLayoutWrapper className={'page fullscreen-page'}>
     <DecorateBoothContainer />
-  </div>
+  </PageLayoutWrapper>
 );
 
 export default DecorateBoothPage;
