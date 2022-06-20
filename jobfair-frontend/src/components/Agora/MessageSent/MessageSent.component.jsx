@@ -11,7 +11,7 @@ const MessageSent = (prop) => {
       <div className={styles.personalMessage}>
         <div className={styles.messageLine}>
           <div className={styles.messageSent}>
-            <Typography.Text>Anonymous</Typography.Text>
+            <Typography.Text>Me</Typography.Text>
             <div className={styles.messageSentText}>{message}</div>
           </div>
         </div>
