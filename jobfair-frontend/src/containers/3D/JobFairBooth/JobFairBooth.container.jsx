@@ -151,7 +151,16 @@ export const JobFairBoothContainer = (props) => {
       const obj = JSON.parse(data);
       const userState = [];
       for (const state of obj) {
-        const model = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx');
+        const model = await loadFBXModel(`${window.location.origin}/human/Human.fbx`);
+
+        const loader = new THREE.TextureLoader();
+
+        const material = new THREE.MeshBasicMaterial({
+          map: loader.load(`${window.location.origin}/human/WalkingModel_8_LOWPOLY-COLORS_BaseColor.png`)
+        });
+        model.traverse((child) => {
+          if (child.isMesh) child.material = material;
+        });
         const idleModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx');
         const walkingModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx');
         const mixer = new THREE.AnimationMixer(model);
