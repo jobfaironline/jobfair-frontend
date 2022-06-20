@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import '../../../components/Agora/VideoCall/VideoCall.styles.scss';
 import { COMPANY_EMPLOYEE } from '../../../constants/RoleType';
-import { NotificationType } from '../../../constants/NotificationType';
+import { NotificationType } from '../../../constants/NotificationConstant';
 import { PATH, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import { getAgoraRTCToken } from '../../../services/jobhub-api/AgoraTokenControllerService';
 import { kickUser } from '../../../services/jobhub-api/InterviewControllerService';

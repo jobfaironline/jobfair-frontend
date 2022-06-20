@@ -1,5 +1,5 @@
 import { Button, Modal, notification } from 'antd';
-import { NotificationType } from '../../constants/NotificationType';
+import { NotificationType } from '../../constants/NotificationConstant';
 import {
   WaitingRoomListForIntervieweeComponent,
   WaitingRoomListForInterviewerComponent
