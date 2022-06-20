@@ -93,9 +93,10 @@ const JobFairLandingContainer = ({ jobFairId, isReview }) => {
           <div className={'time-cube'}>{convertToDateString(jobFairData?.publicEndTime)}</div>
         </div>
         <Divider />
-        <Title level={3}>About the host</Title>
-
-        <CompactCompanyProfile data={mapCompanyProfileFromAPIResponse(jobFairData?.company)} />
+        <div style={{ marginBottom: '2rem' }}>
+          <Title level={3}>About the host</Title>
+          <CompactCompanyProfile data={mapCompanyProfileFromAPIResponse(jobFairData?.company)} />
+        </div>
       </div>
     </div>
   );
