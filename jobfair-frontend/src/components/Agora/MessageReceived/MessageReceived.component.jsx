@@ -12,7 +12,7 @@ const MessageReceived = (prop) => {
       <div className={styles.personalMessage}>
         <div className={styles.namePerson}>
           <Typography variant='caption' display='block' gutterBottom>
-            {name}
+            Anonymous
           </Typography>
         </div>
         <div className={styles.messageLine}>
