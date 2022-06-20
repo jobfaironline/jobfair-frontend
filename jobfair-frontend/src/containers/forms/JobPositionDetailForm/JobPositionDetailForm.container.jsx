@@ -37,6 +37,8 @@ const JobPositionDetailFormContainer = (props) => {
   }, [jobPosition]);
 
   const componentProps = {
+    contactPersonName: jobPosition.contactPersonName,
+    contactEmail: jobPosition.contactEmail,
     form,
     onFinish,
     formItemButtons: [

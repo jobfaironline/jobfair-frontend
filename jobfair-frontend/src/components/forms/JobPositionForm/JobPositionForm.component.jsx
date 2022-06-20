@@ -34,7 +34,16 @@ const JobPositionFormComponent = (props) => {
   const [totalSelect, setTotalSelect] = useState(0);
   const [totalSkillTags, setTotalSkillTags] = useState(0);
   const { Text } = Typography;
-  const { form, formItemButtons, onFinish, onCancel, isDisplayDetail = false, extra } = props;
+  const {
+    form,
+    formItemButtons,
+    onFinish,
+    onCancel,
+    isDisplayDetail = false,
+    extra,
+    contactPersonName,
+    contactEmail
+  } = props;
   const companyId = useSelector((state) => state?.authentication?.user?.companyId);
 
   return (
@@ -197,6 +206,7 @@ const JobPositionFormComponent = (props) => {
                 width: '47%'
               }}>
               <SuggestedContactNameContainer
+                defaultValue={contactPersonName}
                 companyId={companyId}
                 onChange={(value) => {
                   form.setFieldsValue({ contactPersonName: value });
@@ -213,6 +223,7 @@ const JobPositionFormComponent = (props) => {
                 width: '47%'
               }}>
               <SuggestedContactEmailContainer
+                defaultValue={contactEmail}
                 companyId={companyId}
                 onChange={(value) => {
                   form.setFieldsValue({ contactEmail: value });
