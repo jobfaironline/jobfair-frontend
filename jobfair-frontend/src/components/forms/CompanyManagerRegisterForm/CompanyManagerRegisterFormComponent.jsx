@@ -65,7 +65,7 @@ const CompanyManagerRegisterFormComponent = ({ form, onNext, onFinish }) => (
         <Input.Password placeholder='Confirm password' />
       </Form.Item>
       <Form.Item>
-        <Button type='primary' onClick={onNext}>
+        <Button type='primary' onClick={onNext} className='button'>
           Continue
         </Button>
       </Form.Item>

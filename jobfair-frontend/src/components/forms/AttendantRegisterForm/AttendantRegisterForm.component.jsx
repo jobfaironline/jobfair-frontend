@@ -61,12 +61,12 @@ const AttendantRegisterFormComponent = ({ handleRegisterAttendant, form }) => {
           </Checkbox>
         </div>
         <Form.Item>
-          <Button type='primary' htmlType='submit' disabled={!isAgree}>
+          <Button type='primary' htmlType='submit' disabled={!isAgree} className={'button'}>
             Register
           </Button>
         </Form.Item>
         <Form.Item className='login-text'>
-          <span>Already have an account?</span> <a href={PATH.LOGIN_PAGE}>Login now !</a>
+          <span>Already have an account?</span> <a href={PATH.LOGIN_PAGE}>Login now</a>
         </Form.Item>
       </Form>
     </div>

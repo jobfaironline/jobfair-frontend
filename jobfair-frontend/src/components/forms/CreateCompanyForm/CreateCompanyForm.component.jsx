@@ -114,7 +114,7 @@ const CreateCompanyFormComponent = ({ form, onFinish, onPrev }) => {
           </Checkbox>
         </div>
         <Form.Item>
-          <Button type='primary' htmlType='submit' disabled={!isAgree}>
+          <Button type='primary' htmlType='submit' disabled={!isAgree} className='button'>
             Register
           </Button>
         </Form.Item>
