@@ -6,6 +6,7 @@ import decorateBoothReducer from './decorateBooth/decorate-booth-slice';
 import inventoryReducer from './inventory/inventory-slice';
 import webSocketReducer from './web-socket/web-socket-slice';
 import notificationReducer from './notification/notification-slice';
+import boothTabReducer from './boothInfoTab/boothInfoTab-slice';
 
 const store = configureStore({
   reducer: {
@@ -15,7 +16,8 @@ const store = configureStore({
     decorateBooth: decorateBoothReducer,
     inventory: inventoryReducer,
     webSocket: webSocketReducer,
-    notification: notificationReducer
+    notification: notificationReducer,
+    boothTab: boothTabReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

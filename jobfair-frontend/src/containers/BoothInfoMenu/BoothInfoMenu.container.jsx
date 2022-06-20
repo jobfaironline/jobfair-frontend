@@ -1,14 +1,15 @@
 import '../3D/JobFairBooth/AttendantJobFairBoothView.styles.scss';
 import { BoothJobPositionTabContainer } from './BoothJobPositionTab/BoothJobPositionTab.container';
-import { Card, Tabs, Typography, notification } from 'antd';
+import { CommentOutlined, ProfileOutlined, SolutionOutlined } from '@ant-design/icons';
 import { CompanyInformation } from '../../components/customized-components/BoothInfoMenu/BoothInformationTab/BoothInformationTab.component';
+import { Tabs, Typography, notification } from 'antd';
 import { getCompanyBoothById } from '../../services/jobhub-api/CompanyBoothControllerService';
 import { getCompanyProfileAPI } from '../../services/jobhub-api/CompanyControllerService';
 import React, { useEffect, useState } from 'react';
 import SideBar from '../../components/commons/InfoMenu/InfoMenu.component';
 
 export const BoothInfoMenuContainer = (props) => {
-  const { companyBoothId, handleOpenDetail, activeKey, openInventory, chatBoxContainer } = props;
+  const { companyBoothId, openInventory, chatBoxContainer } = props;
   const [state, setState] = useState({
     companyInformation: undefined,
     jobPositions: []
@@ -43,30 +44,46 @@ export const BoothInfoMenuContainer = (props) => {
   const sideBarProps = {
     companyInformation: state.companyInformation,
     jobPositions: state.jobPositions,
-    isShow: true,
-    handleOpenDetail,
-    activeKey,
     openInventory,
     tabs: [
-      <Tabs.TabPane tab='Chat box' key='0'>
+      <Tabs.TabPane
+        tab={
+          <div style={{ textAlign: 'center' }}>
+            <Typography.Text strong>
+              <CommentOutlined /> Chat & Video
+            </Typography.Text>
+          </div>
+        }
+        key='0'>
         {chatBoxContainer()}
       </Tabs.TabPane>,
       <Tabs.TabPane
         tab={
           <div style={{ textAlign: 'center' }}>
-            Company <br /> Information
+            <Typography.Text strong>
+              <ProfileOutlined /> Company profile
+            </Typography.Text>
           </div>
         }
         key='1'>
         <div className={'aboutCompany'}>
-          <Typography variant='button'>About Company</Typography>
           <CompanyInformation data={state.companyInformation} />
         </div>
       </Tabs.TabPane>,
-      <Tabs.TabPane tab='Job positions' key='2'>
-        <Card>
-          <BoothJobPositionTabContainer jobPositions={state.jobPositions} openInventory={openInventory} />
-        </Card>
+      <Tabs.TabPane
+        tab={
+          <div style={{ textAlign: 'center' }}>
+            <Typography.Text strong>
+              <SolutionOutlined /> Job positions
+            </Typography.Text>
+          </div>
+        }
+        key='2'>
+        <BoothJobPositionTabContainer
+          jobPositions={state.jobPositions}
+          openInventory={openInventory}
+          companyInfo={state.companyInformation}
+        />
       </Tabs.TabPane>
     ]
   };

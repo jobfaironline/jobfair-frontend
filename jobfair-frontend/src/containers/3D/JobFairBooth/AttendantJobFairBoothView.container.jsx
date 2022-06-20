@@ -3,6 +3,9 @@ import { BoothInfoMenuContainer } from '../../BoothInfoMenu/BoothInfoMenu.contai
 import { ControlTipsModalContainer } from '../../ControlTipModal/ControlTipsModal.container';
 import { InventoryContainer } from '../../Inventory/Inventory.container';
 import { JobFairBoothContainer } from './JobFairBooth.container';
+import { SideBarComponent } from '../../../components/commons/SideBar/SideBar.component';
+import { boothTabAction } from '../../../redux-flow/boothInfoTab/boothInfoTab-slice';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import ChatBoxContainer from '../../Agora/ChatBox/ChatBox.container';
 import React, { useEffect, useState } from 'react';
@@ -11,18 +14,16 @@ export const AttendantJobFairBoothViewContainer = (props) => {
   const { companyBoothId, geckoClientRef, communicationProps } = props;
   const location = useLocation();
   const { applicationId } = location.state ?? {};
-  const [tabState, setTabState] = useState({
-    isShow: false,
-    activeKey: '0'
-  });
-  const handleOpenDetail = (status, tabIndex) => {
-    setTabState((prevState) => ({ ...prevState, isShow: status, activeKey: tabIndex }));
-  };
+  const { isShow } = useSelector((state) => state.boothTab);
+  const dispatch = useDispatch();
 
   const [inventoryVisible, setInventoryVisible] = useState(false);
 
   useEffect(() => {
-    if (applicationId) handleOpenDetail(true, '1');
+    if (applicationId) {
+      dispatch(boothTabAction.setActiveKey('0'));
+      dispatch(boothTabAction.setIsShow(true));
+    }
   }, []);
 
   const openInventory = (status) => {
@@ -31,16 +32,8 @@ export const AttendantJobFairBoothViewContainer = (props) => {
   };
 
   return (
-    <>
-      <div className={'attendant-job-fair-booth-view'}>
-        <BoothInfoMenuContainer
-          companyBoothId={companyBoothId}
-          isShow={tabState.isShow}
-          activeKey={tabState.activeKey}
-          handleOpenDetail={handleOpenDetail}
-          openInventory={openInventory}
-          chatBoxContainer={() => <ChatBoxContainer {...communicationProps} />}
-        />
+    <SideBarComponent
+      rightSide={
         <div className={'booth'}>
           <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />
           <ControlTipsModalContainer>
@@ -50,13 +43,18 @@ export const AttendantJobFairBoothViewContainer = (props) => {
               <p>A/D: Rotate Left/Right</p>
             </>
           </ControlTipsModalContainer>
-          <JobFairBoothContainer
-            companyBoothId={companyBoothId}
-            handleOpenDetail={handleOpenDetail}
-            geckoClientRef={geckoClientRef}
-          />
+          <JobFairBoothContainer companyBoothId={companyBoothId} geckoClientRef={geckoClientRef} />
         </div>
-      </div>
-    </>
+      }
+      leftSide={
+        <BoothInfoMenuContainer
+          companyBoothId={companyBoothId}
+          openInventory={openInventory}
+          chatBoxContainer={() => <ChatBoxContainer {...communicationProps} />}
+        />
+      }
+      ratio={isShow ? 1.5 / 4 : 0.5 / 5}
+      isOrganizeJobFair={false}
+    />
   );
 };

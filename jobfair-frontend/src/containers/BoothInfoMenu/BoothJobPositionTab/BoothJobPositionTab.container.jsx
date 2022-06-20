@@ -19,7 +19,7 @@ import ConfirmSubmitResumeFormComponent from '../../../components/forms/SubmitRe
 import JobPositionDetailModalComponent from '../../../components/customized-components/JobPositionDetailModal/JobPositionDetailModal.component';
 
 export const BoothJobPositionTabContainer = (props) => {
-  const { jobPositions, openInventory } = props;
+  const { jobPositions, openInventory, companyInfo } = props;
   const location = useLocation();
   const { boothJobPositionId, cvId, applicationId, quizId } = location.state ?? {};
   const history = useHistory();
@@ -132,7 +132,7 @@ export const BoothJobPositionTabContainer = (props) => {
     setRequiredTestModalVisible(false);
   };
 
-  const componentProps = { jobPositions, onClick };
+  const componentProps = { jobPositions, onClick, companyInfo };
 
   return (
     <>
@@ -156,7 +156,7 @@ export const BoothJobPositionTabContainer = (props) => {
         visible={isModalVisible}
         wrapClassName={'company-job-position-tab-modal'}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <JobPositionDetailModalComponent data={selectedJobPosition} />
+          <JobPositionDetailModalComponent data={selectedJobPosition} companyInfo={companyInfo} />
           {selectedResume === undefined ? (
             <>
               <DragAndDropResumeComponent onDragOver={onDragResumeOver} onDrop={onDropResume} />

@@ -1,10 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { BasicMesh } from '../ThreeJSBaseComponent/ChildMesh.component';
 import { Html } from '@react-three/drei';
+import { boothTabAction } from '../../../redux-flow/boothInfoTab/boothInfoTab-slice';
+import { useDispatch } from 'react-redux';
 import React, { useRef } from 'react';
 
 export const ResumeSubmitMeshComponent = (props) => {
-  const { mesh, resumeSubmitRef, handleOpenDetail, onHover, isHover } = props;
+  const { mesh, resumeSubmitRef, onHover, isHover } = props;
+  const dispatch = useDispatch();
 
   const toolTipPositionRef = useRef({
     x: 0,
@@ -25,7 +28,8 @@ export const ResumeSubmitMeshComponent = (props) => {
       castShadow={true}
       receiveShadow={true}
       onClick={(_) => {
-        handleOpenDetail(true, '2');
+        dispatch(boothTabAction.setActiveKey('2'));
+        dispatch(boothTabAction.setIsShow(true));
       }}
       onPointerMove={(e) => {
         toolTipPositionRef.current.x = e.offsetX + 10;
