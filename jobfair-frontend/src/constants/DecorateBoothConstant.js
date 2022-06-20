@@ -1,4 +1,4 @@
 export const GENERIC_BOOTH_LAYOUT_URL =
-  'https://d3polnwtp0nqe6.cloudfront.net/Booth/bf78dec0-98b3-41f7-bca0-72e2c65abcfb';
+  'https://beta1.data.jobhub.works/DecoratorLayout/bfdcf3d1-d809-4197-a7fd-4611000f704c';
 
 export const IMAGE_PLANE_NAME = 'image-plane';
