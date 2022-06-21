@@ -251,7 +251,7 @@ const JobPositionFormComponent = (props) => {
             <TextArea
               placeholder='Description'
               showCount={!isDisplayDetail}
-              maxLength={3000}
+              maxLength={500}
               autoSize={{ minRows: 5 }}
               disabled={isDisplayDetail}
             />
@@ -260,7 +260,7 @@ const JobPositionFormComponent = (props) => {
             <TextArea
               placeholder='Requirements'
               showCount={!isDisplayDetail}
-              maxLength={3000}
+              maxLength={500}
               autoSize={{ minRows: 5 }}
               disabled={isDisplayDetail}
             />

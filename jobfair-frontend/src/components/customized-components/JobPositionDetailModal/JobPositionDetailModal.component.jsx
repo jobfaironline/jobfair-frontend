@@ -71,7 +71,7 @@ const JobPositionDetailModalComponent = ({ data }) => (
               <Space wrap size='4' direction='vertical'>
                 <Text strong>Required skills: </Text>
                 <Space wrap size='4'>
-                  {data.skillTagDTOS.map((skill) => (
+                  {data.skillTagDTOS?.map((skill) => (
                     <Tag color='green' style={{ fontSize: '0.9rem', padding: '1px 5px' }}>
                       {skill.name}
                     </Tag>
@@ -83,7 +83,7 @@ const JobPositionDetailModalComponent = ({ data }) => (
               <Space wrap size='4' direction='vertical'>
                 <Text strong>Category: </Text>
                 <Space wrap size='4'>
-                  {data.subCategoryDTOs.map((category) => (
+                  {data.subCategoryDTOs?.map((category) => (
                     <Tag color='blue' style={{ fontSize: '0.9rem', padding: '1px 5px' }}>
                       {category.name}
                     </Tag>

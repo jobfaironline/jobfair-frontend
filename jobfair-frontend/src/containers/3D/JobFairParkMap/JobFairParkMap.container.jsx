@@ -1,6 +1,6 @@
 import './JobFairParkMap.styles.scss';
 import * as THREE from 'three';
-import { Card, List, Typography } from 'antd';
+import { Card, Modal, Typography } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { NotificationType } from '../../../constants/NotificationConstant';
@@ -17,6 +17,7 @@ import { leaveJobFair, visitJobFair } from '../../../services/jobhub-api/VisitCo
 import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
+import JobPositionDetailModalComponent from '../../../components/customized-components/JobPositionDetailModal/JobPositionDetailModal.component';
 import React, { useEffect, useRef, useState } from 'react';
 
 const { Title, Text, Paragraph } = Typography;
@@ -194,10 +195,25 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
               {boothDialogState.boothData?.description}
             </Paragraph>
             <Title level={5}>{'Job positions'}</Title>
-            <List
-              dataSource={boothDialogState.boothData?.boothJobPositions}
-              renderItem={(item) => <Text>{item.title}</Text>}
-            />
+            <ul>
+              {boothDialogState.boothData?.boothJobPositions.map((item) => (
+                <li style={{ listStyleType: 'none' }}>
+                  <Text
+                    type='strong'
+                    onClick={() =>
+                      Modal.info({
+                        title: 'Job position detail',
+                        width: '50rem',
+                        closable: true,
+                        maskClosable: true,
+                        content: <JobPositionDetailModalComponent data={item} />
+                      })
+                    }>
+                    {item.title}
+                  </Text>
+                </li>
+              ))}
+            </ul>
           </Card>
         </div>
       ) : null}
