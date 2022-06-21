@@ -5,14 +5,9 @@ import React from 'react';
 const { Text } = Typography;
 
 export const JobPositionComponent = (props) => {
-  const { data, onClick, onDragOver, onDragLeave, onDrop } = props;
+  const { data, onClick, key } = props;
   return (
-    <List.Item
-      className={'companyJobPositionTab'}
-      onDragOver={onDragOver}
-      onDragLeave={onDragLeave}
-      onDrop={onDrop}
-      onClick={onClick}>
+    <List.Item className={'companyJobPositionTab'} onClick={onClick} key={key}>
       <div style={{ height: 'max-content', width: '100%' }}>
         <div
           key={data.id}
