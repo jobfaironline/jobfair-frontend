@@ -129,7 +129,7 @@ const FeedbackModal = () => {
         dispatch(feedbackAction.setFeedBack(true));
       }}>
       <Title level={4}>Thank you for your support</Title>
-      <Text>We will be very appreciate if you could spent 2 minutes to do our survey. </Text>
+      <Text>We will be very appreciate if you could spend 2 minutes to do our survey. </Text>
       <br />
       <Text>It means a lot to us.</Text>
     </Modal>
