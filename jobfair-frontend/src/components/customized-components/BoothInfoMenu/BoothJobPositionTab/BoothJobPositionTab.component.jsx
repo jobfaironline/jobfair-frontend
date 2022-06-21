@@ -8,10 +8,6 @@ export const CompanyJobPositionTab = (props) => {
   return (
     <List
       dataSource={jobPositions}
-      style={{
-        overflowY: 'scroll',
-        overFlowX: 'auto'
-      }}
       renderItem={(item) => (
         <JobPositionComponent
           key={item.id}
