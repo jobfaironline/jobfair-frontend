@@ -56,7 +56,7 @@ export const BoothInfoMenuContainer = (props) => {
     <div className={'booth-info-menu-container'}>
       <div className={'booth-info-menu'}>
         <div className={'header'}>
-          <Typography.Text strong style={{ fontSize: '2rem' }}>
+          <Typography.Text strong style={{ fontSize: '1.2rem' }}>
             Menu
           </Typography.Text>
           <div
@@ -71,9 +71,9 @@ export const BoothInfoMenuContainer = (props) => {
               dispatch(boothTabAction.activeKey(0));
             }}>
             {isShow ? (
-              <ShrinkOutlined style={{ fontSize: '2rem' }} />
+              <ShrinkOutlined style={{ fontSize: '1.2rem' }} />
             ) : (
-              <ArrowsAltOutlined style={{ fontSize: '2rem' }} />
+              <ArrowsAltOutlined style={{ fontSize: '1.2rem' }} />
             )}
           </div>
         </div>
@@ -89,7 +89,7 @@ export const BoothInfoMenuContainer = (props) => {
           <Tabs.TabPane
             tab={
               <div style={{ textAlign: 'center' }}>
-                <Typography.Text strong style={{ fontSize: '3rem' }}>
+                <Typography.Text strong style={{ fontSize: '2rem' }}>
                   <CommentOutlined />
                 </Typography.Text>
               </div>
@@ -100,7 +100,7 @@ export const BoothInfoMenuContainer = (props) => {
           <Tabs.TabPane
             tab={
               <div style={{ textAlign: 'center' }}>
-                <Typography.Text strong style={{ fontSize: '3rem' }}>
+                <Typography.Text strong style={{ fontSize: '2rem' }}>
                   <ProfileOutlined />
                 </Typography.Text>
               </div>
@@ -115,7 +115,7 @@ export const BoothInfoMenuContainer = (props) => {
           <Tabs.TabPane
             tab={
               <div style={{ textAlign: 'center' }}>
-                <Typography.Text strong style={{ fontSize: '3rem' }}>
+                <Typography.Text strong style={{ fontSize: '2rem' }}>
                   <SolutionOutlined />
                 </Typography.Text>
               </div>
