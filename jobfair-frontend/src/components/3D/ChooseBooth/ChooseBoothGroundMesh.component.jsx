@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+import { AvailableBoothColor, UnAvailableBoothColor } from '../../../constants/AssignmentConst';
 import { BasicMesh } from '../ThreeJSBaseComponent/ChildMesh.component';
 import React, { useRef } from 'react';
 
@@ -8,13 +8,13 @@ export const ChooseBoothGroundMesh = (props) => {
   boothMeshesRef.current.push(ref);
   if (!isAvailable) {
     const newMaterial = mesh.material.clone();
-    newMaterial.color.set('#33ff77');
+    newMaterial.color.set(UnAvailableBoothColor);
     newMaterial.transparent = true;
     mesh.material = newMaterial;
   } else {
     const newMaterial = mesh.material.clone();
-    if (color !== undefined) newMaterial.color.set('#33ff77');
-    else newMaterial.color.set('#33ff77');
+    if (color !== undefined) newMaterial.color.set(AvailableBoothColor);
+    else newMaterial.color.set(AvailableBoothColor);
     newMaterial.transparent = true;
     mesh.material = newMaterial;
   }
@@ -28,13 +28,13 @@ export const ChooseBoothGroundMesh = (props) => {
       position={mesh.position}
       rotation={mesh.rotation}
       scale={mesh.scale}
-      castShadow
-      receiveShadow
-      onPointerOver={(_) => {
+      castShadow={true}
+      receiveShadow={true}
+      onPointerOver={() => {
         if (!isAvailable) return;
         onPointerOver(mesh.name);
       }}
-      onPointerLeave={(_) => {
+      onPointerLeave={() => {
         if (!isAvailable) return;
         onPointerLeave(mesh.name);
       }}

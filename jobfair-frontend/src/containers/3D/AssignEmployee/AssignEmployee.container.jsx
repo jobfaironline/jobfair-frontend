@@ -1,3 +1,4 @@
+import { AssignBoothColors } from '../../../constants/AssignmentConst';
 import { AssignEmployeeBoothList } from '../../../components/customized-components/AssignEmployeeBoothList/AssignEmployeeBoothList.component';
 import { AssignEmployeeModalContainer } from '../../AssignEmployeeModal/AssignEmployeeModal.container';
 import { Button } from 'antd';
@@ -11,8 +12,6 @@ import { getLayoutByJobFairId } from '../../../services/jobhub-api/LayoutControl
 import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import { uploadUtil } from '../../../utils/uploadCSVUtil';
 import React, { useEffect, useRef, useState } from 'react';
-
-const assignBoothColors = ['F9C80E', 'F86624', 'EA3546', '662E9B', '43BCCD', 'FF8811', 'F4D06F', '9DD9D2', '392F5A'];
 
 export const AssignEmployeeContainer = (props) => {
   const { jobFairId, onHandleNext, onHandlePrev, currentStep, handleGotoChecklist } = props;
@@ -84,7 +83,7 @@ export const AssignEmployeeContainer = (props) => {
       const name = boothInfo.booth.name;
       boothData[name] = {
         id,
-        color: `#${assignBoothColors[index % assignBoothColors.length]}`
+        color: `#${AssignBoothColors[index % AssignBoothColors.length]}`
       };
     });
 
