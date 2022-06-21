@@ -1,10 +1,9 @@
-import './BoothInformationTab.styles.scss';
 import { Avatar, Col, Row, Tag, Typography } from 'antd';
 
 export const CompanyInformation = (props) => {
   const { data } = props;
   return (
-    <div className='tab-container'>
+    <div>
       <Avatar shape='square' size={100} src={data.companyLogoURL} />
       <Typography.Title level={3}>{data?.name}</Typography.Title>
       <Typography.Title level={4}>Company information</Typography.Title>
