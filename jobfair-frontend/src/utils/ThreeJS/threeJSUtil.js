@@ -3,7 +3,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { IMAGE_PLANE_NAME } from '../../constants/DecorateBoothConstant';
+import { IMAGE_PLANE_NAME } from '../../constants/3DConst';
 
 const loader = new GLTFLoader();
 const dracoLoader = new DRACOLoader();
@@ -192,6 +192,21 @@ export const loadFBXModel = async (url) => {
       (error) => reject(error)
     );
   });
+};
+
+export const loadCharacterModel = async (characterURL, textureURL) => {
+  const model = await loadFBXModel(characterURL);
+  if (textureURL === undefined) return model;
+
+  const loader = new THREE.TextureLoader();
+  const material = new THREE.MeshBasicMaterial({
+    map: loader.load(textureURL)
+  });
+
+  model.traverse((child) => {
+    if (child.isMesh) child.material = material;
+  });
+  return model;
 };
 
 export const getBase64Image = (img) => {

@@ -3,7 +3,7 @@ import { ControlButtonGroup } from '../../../components/customized-components/De
 import { DecorateBooth3DItemMenuContainer } from '../../SampleItemMenu/DecorateBooth3DItemMenu.container';
 import { DecorateBoothCanvas } from '../../../components/3D/DecorateBooth/DeoratedBoothCanvas/DecorateBoothCanvas.component';
 import { DecoratedBoothSideBarContainer } from './DecorateBoothSideBar.container';
-import { GENERIC_BOOTH_LAYOUT_URL } from '../../../constants/DecorateBoothConstant';
+import { GENERIC_BOOTH_LAYOUT_URL } from '../../../constants/3DConst';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { ModeConstant } from '../../../constants/AppConst';
 import { PATH } from '../../../constants/Paths/Path';

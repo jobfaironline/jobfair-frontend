@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ModeConstant } from '../../constants/AppConst';
-import { GENERIC_BOOTH_LAYOUT_URL } from '../../constants/DecorateBoothConstant';
 
 const decorateBoothSlice = createSlice({
   name: 'decorateBooth',
@@ -10,7 +9,7 @@ const decorateBoothSlice = createSlice({
     selectedSampleItem: {},
     modelItems: [],
     hoverItem: undefined,
-    modelId: undefined //TODO: will replace later
+    modelId: undefined
   },
   reducers: {
     setModelId: (state, action) => {

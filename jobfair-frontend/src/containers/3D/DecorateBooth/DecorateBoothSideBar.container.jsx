@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { DecorateBoothSideBarComponent } from '../../../components/customized-components/DecoratedBoothTool/DecoratedBoothSideBar/DecoratedBoothSideBar.component';
-import { IMAGE_PLANE_NAME } from '../../../constants/DecorateBoothConstant';
+import { IMAGE_PLANE_NAME } from '../../../constants/3DConst';
 import { decorateBoothAction } from '../../../redux-flow/decorateBooth/decorate-booth-slice';
 import { getBase64 } from '../../../utils/common';
 import { notify } from '../../../utils/toastutil';
