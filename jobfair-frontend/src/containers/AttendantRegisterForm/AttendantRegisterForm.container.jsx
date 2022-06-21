@@ -1,11 +1,10 @@
-import { Card, Form, Modal, Typography } from 'antd';
+import { Card, Form, Modal, Typography, notification } from 'antd';
 import { PATH } from '../../constants/Paths/Path';
 import { genderType } from '../../constants/GenderConst';
 import { registerAttendantAPI } from '../../services/jobhub-api/AttendantControllerService';
 import { useHistory } from 'react-router-dom';
 import AttendantRegisterFormComponent from '../../components/forms/AttendantRegisterForm/AttendantRegisterForm.component';
 import React from 'react';
-import RegisterSuccessContentComponent from '../../components/commons/RegisterSuccessContent/RegisterSuccessContent.component';
 
 const AttendantRegisterFormContainer = () => {
   const [form] = Form.useForm();
@@ -18,7 +17,11 @@ const AttendantRegisterFormContainer = () => {
     try {
       const res = await registerAttendantAPI(body);
       if (res.status === 201) {
-        Modal.success({
+        history.push(PATH.LOGIN_PAGE);
+        notification['success']({
+          message: 'Login successfully'
+        });
+        /*Modal.success({
           title: 'Register attendant account successfully !',
           width: '30rem',
           closable: true,
@@ -26,7 +29,7 @@ const AttendantRegisterFormContainer = () => {
           maskClosable: true,
           onOk: () => history.push(PATH.LOGIN_PAGE),
           content: <RegisterSuccessContentComponent email={values.email} />
-        });
+        });*/
       }
     } catch (err) {
       Modal.error({
