@@ -7,6 +7,7 @@ import { notificationAction } from '../notification/notification-slice';
 import { WebSocketClient } from '../../services/web-socket/web-socket-client';
 import { getNotification } from '../../services/jobhub-api/NotifcationControllerService';
 import { notification } from 'antd';
+import { feedbackAction } from '../feedback/feedback-slice';
 
 export const SigninHandler = (data) => {
   return async (dispatch) => {
@@ -35,5 +36,6 @@ export const logoutHandler = () => {
     dispatch(notificationAction.setData([]));
     localStorage.removeItem(USER_STORAGE);
     dispatch(authenticationActions.logout());
+    dispatch(feedbackAction.setFeedBack(false));
   };
 };

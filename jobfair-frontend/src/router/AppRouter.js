@@ -3,12 +3,13 @@ import { Footer } from 'antd/es/layout/layout';
 import { JobFairBoothReviewPage } from '../pages/JobFairBoothReviewPage/JobFairBoothReviewPage';
 import { JobFairCheckListPage } from '../pages/JobFairCheckList/JobFairCheckListPage';
 import { JobFairMapReviewPage } from '../pages/JobFairMapReviewPage/JobFairMapReviewPage';
-import { Layout, Modal } from 'antd';
+import { Layout, Modal, Typography } from 'antd';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
 import { Redirect, Route, Switch, matchPath, useLocation } from 'react-router-dom';
 import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
+import { feedbackAction } from '../redux-flow/feedback/feedback-slice';
 import { selectWebSocket } from '../redux-flow/web-socket/web-socket-selector';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AboutApplicationPage from '../pages/AboutApplicationPage';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
 import AssignTaskPage from '../pages/AssignTaskPage/AssignTaskPage';
@@ -45,7 +46,7 @@ import OrganizeJobFairPage from '../pages/OrganizeJobFairPage/OrganizeJobFairPag
 import PublicRouter from './components/PublicRouter';
 import PublicizedBoothPage from '../pages/PublicizedBoothPage/PublicizedBoothPage';
 import QuestionBankPage from '../pages/QuestionBankPage/QuestionBankPage';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
@@ -95,6 +96,46 @@ const UserAgentModal = () => {
   );
 };
 
+const { Text, Title } = Typography;
+
+const { REACT_APP_SURVEY_LINK } = process.env;
+
+const FeedbackModal = () => {
+  const hasFeedback = useSelector((state) => state?.feedback?.hasFeedback);
+  const [isVisible, setVisible] = useState(false);
+  const dispatch = useDispatch();
+  const { isAuthUser } = useSelector((state) => state.authentication);
+
+  useEffect(() => {
+    if (hasFeedback || !isAuthUser) return;
+    const timer = setTimeout(() => {
+      setVisible(true);
+    }, 1000 * 60 * 2);
+    return () => clearTimeout(timer);
+  }, [isVisible, isAuthUser]);
+
+  return (
+    <Modal
+      visible={isVisible}
+      title={'Feedback'}
+      okText={'Go to survey'}
+      closable={true}
+      onCancel={() => {
+        setVisible(false);
+      }}
+      onOk={() => {
+        window.open(REACT_APP_SURVEY_LINK);
+        setVisible(false);
+        dispatch(feedbackAction.setFeedBack(true));
+      }}>
+      <Title level={4}>Thank you for your support</Title>
+      <Text>We will be very appreciate if you could spent 2 minutes to do our survey. </Text>
+      <br />
+      <Text>It means a lot to us.</Text>
+    </Modal>
+  );
+};
+
 const AppRouter = () => {
   const location = useLocation();
 
@@ -114,6 +155,7 @@ const AppRouter = () => {
   return (
     <div>
       <UserAgentModal />
+      <FeedbackModal />
       <Layout style={{ minHeight: '100vh' }}>
         <NavigationBar />
         <Switch>
