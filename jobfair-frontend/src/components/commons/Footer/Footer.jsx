@@ -17,7 +17,7 @@ const Footer = () => (
           <FacebookOutlined
             style={{ fontSize: '2rem' }}
             onClick={() => {
-              window.location.href = 'https://www.facebook.com/TrongKhanh.Kieu';
+              window.location.href = 'https://www.facebook.com/jobhubapplication';
             }}
           />
           <span className='description'>Facebook</span>
