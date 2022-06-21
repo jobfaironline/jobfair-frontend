@@ -152,7 +152,7 @@ export const BoothJobPositionTabContainer = (props) => {
         visible={isModalVisible}
         wrapClassName={'company-job-position-tab-modal'}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <JobPositionDetailModalComponent data={selectedJobPosition} companyInfo={companyInfo} />
+          <JobPositionDetailModalComponent data={selectedJobPosition} />
           {selectedResume === undefined ? (
             <>
               <DragAndDropResumeComponent onDragOver={onDragResumeOver} onDrop={onDropResume} />
