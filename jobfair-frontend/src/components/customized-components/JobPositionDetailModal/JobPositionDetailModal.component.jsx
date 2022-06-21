@@ -1,210 +1,117 @@
-import { Col, Divider, Row, Space, Tabs, Tag, Typography } from 'antd';
-import { FileDoneOutlined, GiftOutlined, ReadOutlined } from '@ant-design/icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Col, Row, Space, Tag, Typography } from 'antd';
 import { convertEnumToString } from '../../../utils/common';
-import { faMoneyCheckDollar } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
 const { Text } = Typography;
-const { TabPane } = Tabs;
 
-const JobPositionDetailModalComponent = ({ data, companyInfo }) => (
-  <div style={{ height: 'max-content', fontSize: '1rem', marginBottom: '2rem', marginRight: '2rem' }}>
+const JobPositionDetailModalComponent = ({ data }) => (
+  <div style={{ height: 'max-content', fontSize: '1.2rem' }}>
     <div
       key='no'
       style={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start'
+        alignItems: 'center'
       }}>
-      <Text strong style={{ fontSize: '1.8rem' }}>
-        {data?.title}
-      </Text>
+      <Text strong style={{ fontSize: '1.8rem' }}>{`- Job position -`}</Text>
+      <Text strong style={{ fontSize: '1.8rem' }}>{`${data.title}`}</Text>
     </div>
-    <Space size='small' direction='vertical'>
-      <Row>
-        <Col span={8}>
-          <Text strong>Prefer language: </Text>
-        </Col>
-        <Col span={8}>
-          <Text>{data.language}</Text>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={8}>
-          <Text strong>Job level: </Text>
-        </Col>
-        <Col span={8}>
-          <Text>{data.level !== undefined ? convertEnumToString(data.level) : convertEnumToString(data.jobLevel)}</Text>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={8}>
-          <Text strong>Job type: </Text>
-        </Col>
-        <Col span={8}>
-          <Text>{convertEnumToString(data?.jobType)}</Text>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={8}>
-          <Text strong>Job location: </Text>
-        </Col>
-        <Col span={8}>
-          <Text>chua co</Text>
-        </Col>
-      </Row>
-      <Tabs defaultActiveKey='0' size='large'>
-        <TabPane
-          tab={
-            <span>
-              <Text strong>
-                <ReadOutlined /> Description
-              </Text>
-            </span>
-          }
-          key='0'>
-          <Row>
-            <Col span={12}>
-              <Text strong style={{ fontSize: '1rem' }}>
-                Job description:{' '}
-              </Text>
-              <Text style={{ fontSize: '1rem', display: 'inline-block', marginTop: '0.5rem' }}>{data.description}</Text>
-            </Col>
+    <div style={{}}>
+      <div className='sub-title' style={{}}>
+        <Text strong style={{ fontSize: '1.5rem' }}>
+          General information
+        </Text>
+      </div>
+      <Col style={{ marginLeft: '1rem' }}>
+        <Col gutter={[0, 48]}>
+          <Row key='language' style={{}}>
+            <Space>
+              <Text strong>Prefer language: </Text>
+              <Text>{data.language}</Text>
+            </Space>
           </Row>
-          <Row>
-            <Col span={12}>
-              <Text strong style={{ fontSize: '1rem', display: 'flex', marginBottom: '0.5rem' }}>
-                Job category:{'  '}
-              </Text>
-              <Space direction='vertical'>
-                {data.subCategoryDTOs.map((category) => (
-                  <Tag color='blue' style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
-                    {category.name}
-                  </Tag>
-                ))}
+          <Row gutter={[100, 0]}>
+            <Col span={8} key='level'>
+              <Space>
+                <Text strong>Job level: </Text>
+                <Text>
+                  {data.level !== undefined ? convertEnumToString(data.level) : convertEnumToString(data.jobLevel)}
+                </Text>
+              </Space>
+            </Col>
+            <Col span={12} key='type'>
+              <Space>
+                <Text strong>Job type: </Text>
+                <Text>{convertEnumToString(data?.jobType)}</Text>
               </Space>
             </Col>
           </Row>
-        </TabPane>
-        <TabPane
-          tab={
-            <span>
-              <Text strong>
-                <FileDoneOutlined />
-                Requirements
-              </Text>
-            </span>
-          }
-          key='1'>
-          <Row>
+          <Row gutter={[100, 0]}>
+            <Col span={8}>
+              <div key='contact-name'>
+                <Space>
+                  <Text strong>Contact:</Text>
+                  <Text>{data.contactPersonName}</Text>
+                </Space>
+              </div>
+            </Col>
             <Col span={12}>
-              <Text strong style={{ fontSize: '1rem' }}>
-                Job requirements:{' '}
-              </Text>
-              <Text style={{ fontSize: '1rem', display: 'inline-block', marginTop: '0.5rem' }}>
-                {data?.requirements}
-              </Text>
+              <div key='contact-email'>
+                <Space>
+                  <Text strong>Contact:</Text>
+                  <Text>{data.contactEmail}</Text>
+                </Space>
+              </div>
             </Col>
           </Row>
-          <Row>
-            <Col span={12}>
-              <Text strong style={{ fontSize: '1rem', display: 'flex', marginBottom: '0.5rem' }}>
-                Required skills:{' '}
-              </Text>
-              <Space direction='vertical'>
+          <Row key='skills'>
+            <Space wrap size='4' direction='vertical'>
+              <Text strong>Required skills: </Text>
+              <Space wrap size='4'>
                 {data.skillTagDTOS.map((skill) => (
                   <Tag color='blue' style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
                     {skill.name}
                   </Tag>
                 ))}
               </Space>
-            </Col>
+            </Space>
           </Row>
-        </TabPane>
-        <TabPane
-          tab={
-            <span>
-              <Text strong>
-                <GiftOutlined /> Benefits
-              </Text>
-            </span>
-          }
-          key='2'>
-          <Space direction='vertical'>
-            {companyInfo?.companyBenefitDTOS.map((item) => (
-              <Tag color='blue' style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
-                {item.description}
-              </Tag>
-            ))}
-          </Space>
-        </TabPane>
-      </Tabs>
-      <Divider />
-      <Row>
-        <Col span={8} style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Text strong>Number of positions: </Text>
-          <Text>{data?.numOfPosition}</Text>
+          <Row key='category'>
+            <Space wrap size='4' direction='vertical'>
+              <Text strong>Category: </Text>
+              <Space wrap size='4'>
+                {data.subCategoryDTOs.map((category) => (
+                  <Tag color='blue' style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
+                    {category.name}
+                  </Tag>
+                ))}
+              </Space>
+            </Space>
+          </Row>
         </Col>
-        <Col span={8} style={{ display: 'flex', justifyContent: 'space-between', marginLeft: '5rem' }}>
-          <Text strong>Include entrance test: </Text>
-          <Text>{data?.isHaveTest ? 'Yes' : 'No'}</Text>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={8} style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Space direction='vertical' size='small'>
-            <Text strong>Contact email: </Text>
-            <Text>{data?.contactEmail}</Text>
-          </Space>
-        </Col>
-        <Col span={8} style={{ marginLeft: '5rem' }}>
-          <Space direction='vertical' size='small'>
-            <Text strong>Contact person name: </Text>
-            <Text>{data?.contactPersonName}</Text>
-          </Space>
-        </Col>
-      </Row>
-      <Text strong>Wage: </Text>
-      <Row>
-        <Col span={8}>
-          <Text style={{ fontSize: '1rem' }}>From</Text>
-          <div
-            style={{
-              border: '1px solid',
-              borderRadius: '0.5rem',
-              width: '75%',
-              height: '70%',
-              textAlign: 'center'
-            }}>
-            <div style={{ marginTop: '0.5rem' }}>
-              <Text strong style={{ marginRight: '1rem' }}>
-                {data?.minSalary}đ
-              </Text>
-              <FontAwesomeIcon icon={faMoneyCheckDollar} size={'lg'} color={'black'} />
-            </div>
+      </Col>
+      <div className='sub-title' style={{ margin: '0 0 0 0' }}>
+        <Text strong style={{ fontSize: '1.5rem' }}>
+          Specific information
+        </Text>
+      </div>
+      <Col style={{ marginLeft: '1rem' }}>
+        <div>
+          <div key='description'>
+            <Space align='start' direction='vertical' size={'0.3rem'}>
+              <Text strong>Job description: </Text>
+              <Text>{data.description}</Text>
+            </Space>
           </div>
-        </Col>
-        <Col span={8}>
-          <Text style={{ fontSize: '1rem' }}>To</Text>
-          <div
-            style={{
-              border: '1px solid',
-              borderRadius: '0.5rem',
-              width: '75%',
-              height: '70%',
-              textAlign: 'center'
-            }}>
-            <div style={{ marginTop: '0.5rem' }}>
-              <Text strong style={{ marginRight: '1rem' }}>
-                {data?.maxSalary}đ
-              </Text>
-              <FontAwesomeIcon icon={faMoneyCheckDollar} size={'lg'} color={'black'} />
-            </div>
+          <div key='requirement'>
+            <Space align='start' direction='vertical' size={'0.3rem'}>
+              <Text strong>Job requirements: </Text>
+              <Text>{data.requirements}</Text>
+            </Space>
           </div>
-        </Col>
-      </Row>
-    </Space>
+        </div>
+      </Col>
+    </div>
   </div>
 );
 
