@@ -56,8 +56,8 @@ export const BoothInfoMenuContainer = (props) => {
     <div className={'booth-info-menu-container'}>
       <div className={'booth-info-menu'}>
         <div className={'header'}>
-          <Typography.Text strong style={{ fontSize: '1.2rem', marginLeft: '3rem' }}>
-            {state.boothData.name}
+          <Typography.Text strong style={{ fontSize: '2rem' }}>
+            Menu
           </Typography.Text>
           <div
             style={{ marginLeft: 'auto', cursor: 'pointer' }}
@@ -71,9 +71,9 @@ export const BoothInfoMenuContainer = (props) => {
               dispatch(boothTabAction.activeKey(0));
             }}>
             {isShow ? (
-              <ShrinkOutlined style={{ fontSize: '1.2rem' }} />
+              <ShrinkOutlined style={{ fontSize: '2rem' }} />
             ) : (
-              <ArrowsAltOutlined style={{ fontSize: '1.2rem' }} />
+              <ArrowsAltOutlined style={{ fontSize: '2rem' }} />
             )}
           </div>
         </div>
@@ -89,8 +89,8 @@ export const BoothInfoMenuContainer = (props) => {
           <Tabs.TabPane
             tab={
               <div style={{ textAlign: 'center' }}>
-                <Typography.Text strong>
-                  <CommentOutlined /> Chat & Video
+                <Typography.Text strong style={{ fontSize: '3rem' }}>
+                  <CommentOutlined />
                 </Typography.Text>
               </div>
             }
@@ -100,8 +100,8 @@ export const BoothInfoMenuContainer = (props) => {
           <Tabs.TabPane
             tab={
               <div style={{ textAlign: 'center' }}>
-                <Typography.Text strong>
-                  <ProfileOutlined /> Company profile
+                <Typography.Text strong style={{ fontSize: '3rem' }}>
+                  <ProfileOutlined />
                 </Typography.Text>
               </div>
             }
@@ -115,8 +115,8 @@ export const BoothInfoMenuContainer = (props) => {
           <Tabs.TabPane
             tab={
               <div style={{ textAlign: 'center' }}>
-                <Typography.Text strong>
-                  <SolutionOutlined /> Job positions
+                <Typography.Text strong style={{ fontSize: '3rem' }}>
+                  <SolutionOutlined />
                 </Typography.Text>
               </div>
             }
