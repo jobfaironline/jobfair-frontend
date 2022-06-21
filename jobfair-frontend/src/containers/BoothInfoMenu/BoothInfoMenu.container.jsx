@@ -1,30 +1,41 @@
-import '../3D/JobFairBooth/AttendantJobFairBoothView.styles.scss';
+import './BoothInfoMenu.styles.scss';
+import {
+  ArrowsAltOutlined,
+  CommentOutlined,
+  ProfileOutlined,
+  ShrinkOutlined,
+  SolutionOutlined
+} from '@ant-design/icons';
 import { BoothJobPositionTabContainer } from './BoothJobPositionTab/BoothJobPositionTab.container';
-import { CommentOutlined, ProfileOutlined, SolutionOutlined } from '@ant-design/icons';
 import { CompanyInformation } from '../../components/customized-components/BoothInfoMenu/BoothInformationTab/BoothInformationTab.component';
 import { Tabs, Typography, notification } from 'antd';
+import { boothTabAction } from '../../redux-flow/boothInfoTab/boothInfoTab-slice';
 import { getCompanyBoothById } from '../../services/jobhub-api/CompanyBoothControllerService';
-import { getCompanyProfileAPI } from '../../services/jobhub-api/CompanyControllerService';
+import { useDispatch, useSelector } from 'react-redux';
+import ChatBoxContainer from '../Agora/ChatBox/ChatBox.container';
 import React, { useEffect, useState } from 'react';
-import SideBar from '../../components/commons/InfoMenu/InfoMenu.component';
 
 export const BoothInfoMenuContainer = (props) => {
-  const { companyBoothId, openInventory, chatBoxContainer } = props;
+  const { companyBoothId, openInventory, communicationProps } = props;
+  const { isShow, activeKey } = useSelector((state) => state.boothTab);
+  const dispatch = useDispatch();
+
   const [state, setState] = useState({
     companyInformation: undefined,
-    jobPositions: []
+    jobPositions: [],
+    boothData: undefined
   });
 
   const fetchData = async () => {
     try {
-      let data = (await getCompanyBoothById(companyBoothId)).data;
-      const companyId = data.companyId;
-      const jobPositions = data.boothJobPositions;
-      data = (await getCompanyProfileAPI(companyId)).data;
+      const boothData = (await getCompanyBoothById(companyBoothId)).data;
+      const jobPositions = boothData.boothJobPositions;
+      const companyData = boothData?.jobFair?.company;
       setState((prevState) => ({
         ...prevState,
-        companyInformation: data,
-        jobPositions
+        companyInformation: companyData,
+        jobPositions,
+        boothData
       }));
     } catch (e) {
       notification['error']({
@@ -41,56 +52,85 @@ export const BoothInfoMenuContainer = (props) => {
 
   if (state.companyInformation === undefined) return null;
 
-  const sideBarProps = {
-    companyInformation: state.companyInformation,
-    jobPositions: state.jobPositions,
-    openInventory,
-    tabs: [
-      <Tabs.TabPane
-        tab={
-          <div style={{ textAlign: 'center' }}>
-            <Typography.Text strong>
-              <CommentOutlined /> Chat & Video
-            </Typography.Text>
-          </div>
-        }
-        key='0'>
-        {chatBoxContainer()}
-      </Tabs.TabPane>,
-      <Tabs.TabPane
-        tab={
-          <div style={{ textAlign: 'center' }}>
-            <Typography.Text strong>
-              <ProfileOutlined /> Company profile
-            </Typography.Text>
-          </div>
-        }
-        key='1'>
-        <div className={'aboutCompany'}>
-          <CompanyInformation data={state.companyInformation} />
-        </div>
-      </Tabs.TabPane>,
-      <Tabs.TabPane
-        tab={
-          <div style={{ textAlign: 'center' }}>
-            <Typography.Text strong>
-              <SolutionOutlined /> Job positions
-            </Typography.Text>
-          </div>
-        }
-        key='2'>
-        <BoothJobPositionTabContainer
-          jobPositions={state.jobPositions}
-          openInventory={openInventory}
-          companyInfo={state.companyInformation}
-        />
-      </Tabs.TabPane>
-    ]
-  };
-
   return (
-    <div className={'sideBar'}>
-      <SideBar {...sideBarProps} />
+    <div className={'booth-info-menu-container'}>
+      <div className={'booth-info-menu'}>
+        <div className={'header'}>
+          <Typography.Text strong style={{ fontSize: '1.2rem', marginLeft: '3rem' }}>
+            {state.boothData.name}
+          </Typography.Text>
+          <div
+            style={{ marginLeft: 'auto', cursor: 'pointer' }}
+            onClick={() => {
+              if (isShow) {
+                dispatch(boothTabAction.setIsShow(false));
+                dispatch(boothTabAction.activeKey(0));
+                return;
+              }
+              dispatch(boothTabAction.setIsShow(true));
+              dispatch(boothTabAction.activeKey(0));
+            }}>
+            {isShow ? (
+              <ShrinkOutlined style={{ fontSize: '1.2rem' }} />
+            ) : (
+              <ArrowsAltOutlined style={{ fontSize: '1.2rem' }} />
+            )}
+          </div>
+        </div>
+
+        <Tabs
+          tabPosition='left'
+          activeKey={activeKey}
+          tabBarGutter={0}
+          onTabClick={(key) => {
+            dispatch(boothTabAction.setActiveKey(key));
+            dispatch(boothTabAction.setIsShow(true));
+          }}>
+          <Tabs.TabPane
+            tab={
+              <div style={{ textAlign: 'center' }}>
+                <Typography.Text strong>
+                  <CommentOutlined /> Chat & Video
+                </Typography.Text>
+              </div>
+            }
+            key='0'>
+            {isShow ? <ChatBoxContainer {...communicationProps} /> : null}
+          </Tabs.TabPane>
+          <Tabs.TabPane
+            tab={
+              <div style={{ textAlign: 'center' }}>
+                <Typography.Text strong>
+                  <ProfileOutlined /> Company profile
+                </Typography.Text>
+              </div>
+            }
+            key='1'>
+            {isShow ? (
+              <div className={'aboutCompany'}>
+                <CompanyInformation data={state.companyInformation} />
+              </div>
+            ) : null}
+          </Tabs.TabPane>
+          <Tabs.TabPane
+            tab={
+              <div style={{ textAlign: 'center' }}>
+                <Typography.Text strong>
+                  <SolutionOutlined /> Job positions
+                </Typography.Text>
+              </div>
+            }
+            key='2'>
+            {isShow ? (
+              <BoothJobPositionTabContainer
+                jobPositions={state.jobPositions}
+                openInventory={openInventory}
+                companyInfo={state.companyInformation}
+              />
+            ) : null}
+          </Tabs.TabPane>
+        </Tabs>
+      </div>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const boothTabSlice = createSlice({
   name: 'boothTab',
   initialState: {
-    activeKey: 0,
+    activeKey: undefined,
     isShow: false
   },
   reducers: {

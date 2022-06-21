@@ -140,7 +140,7 @@ export const BoothJobPositionTabContainer = (props) => {
 
   return (
     <>
-      <CompanyJobPositionTab {...componentProps} />;
+      <CompanyJobPositionTab {...componentProps} />
       <Modal
         title={'Apply to job position'}
         width={'70rem'}
