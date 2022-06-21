@@ -19,7 +19,7 @@ import ConfirmSubmitResumeFormComponent from '../../../components/forms/SubmitRe
 import JobPositionDetailModalComponent from '../../../components/customized-components/JobPositionDetailModal/JobPositionDetailModal.component';
 
 export const BoothJobPositionTabContainer = (props) => {
-  const { jobPositions, openInventory, companyInfo } = props;
+  const { jobPositions, openInventory } = props;
   const location = useLocation();
   const { boothJobPositionId, cvId, applicationId, quizId } = location.state ?? {};
   const history = useHistory();
@@ -136,7 +136,7 @@ export const BoothJobPositionTabContainer = (props) => {
     setSelectedResume(undefined);
   };
 
-  const componentProps = { jobPositions, onClick, companyInfo };
+  const componentProps = { jobPositions, onClick };
 
   return (
     <>

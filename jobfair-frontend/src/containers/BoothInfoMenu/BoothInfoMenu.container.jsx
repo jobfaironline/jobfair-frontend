@@ -122,11 +122,7 @@ export const BoothInfoMenuContainer = (props) => {
             }
             key='2'>
             {isShow ? (
-              <BoothJobPositionTabContainer
-                jobPositions={state.jobPositions}
-                openInventory={openInventory}
-                companyInfo={state.companyInformation}
-              />
+              <BoothJobPositionTabContainer jobPositions={state.jobPositions} openInventory={openInventory} />
             ) : null}
           </Tabs.TabPane>
         </Tabs>
