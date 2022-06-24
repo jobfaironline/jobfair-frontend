@@ -43,7 +43,10 @@ const JobFairLandingContainer = ({ jobFairId, isReview }) => {
         <div
           className={'header'}
           style={{
-            background: `linear-gradient(rgba(72,159,192,0.8), rgba(0,10,72,0.8)), url("${jobFairData.thumbnailUrl}")`
+            background: `linear-gradient(rgba(72,159,192,0.8), rgba(0,10,72,0.8)), url("https://beta1.data.jobhub.works/Default/s3_background.png")`,
+            backgroundImage: '1920px 748px',
+            width: 1920,
+            height: 748
           }}>
           <div className={'overlay'}>
             <div>
