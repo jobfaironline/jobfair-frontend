@@ -16,9 +16,9 @@ const NewAccountRegisterFormComponent = () => (
       <TabPane tab='ATTENDANT' key='ATTENDANT'>
         <AttendantRegisterFormContainer />
       </TabPane>
-      {/*<TabPane tab='COMPANY' key='COMPANY'>
+      <TabPane tab='COMPANY' key='COMPANY'>
         <CompanyRegisterFormContainer />
-      </TabPane>*/}
+      </TabPane>
     </Tabs>
   </div>
 );

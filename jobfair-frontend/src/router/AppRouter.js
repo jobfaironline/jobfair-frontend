@@ -201,9 +201,16 @@ const AppRouter = () => {
           <Route path={PATH.RESULT_SUCCESS_PAGE} exact>
             <ResultSuccessPage />
           </Route>
-          <Route path={PATH.JOB_FAIR_LANDING_PAGE} exact>
-            <JobFairLandingPage />
-          </Route>
+          //TODO: uncomment later
+          {/*<Route path={PATH.JOB_FAIR_LANDING_PAGE} exact>*/}
+          {/*  <JobFairLandingPage />*/}
+          {/*</Route>*/}
+          <PublicRouter
+            key={PATH.JOB_FAIR_LANDING_PAGE}
+            component={() => <JobFairLandingPage />}
+            path={PATH.JOB_FAIR_LANDING_PAGE}
+            exact
+          />
           <PublicRouter key={PATH.LOGIN_PAGE} component={() => <LoginPage />} path={PATH.LOGIN_PAGE} exact />
           <PublicRouter key={PATH.REGISTER_PAGE} component={() => <RegisterPage />} path={PATH.REGISTER_PAGE} exact />
           <PublicRouter
