@@ -41,6 +41,15 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
   const disabledDate = (current) =>
     // Can not select days before today and today
     current && current < moment().endOf('day');
+  //TODO: Limit public range to 2 days (will be updated when implement subscription)
+  const disabledPublicRange = (current) => {
+    const now = moment();
+    const pastRange = now.endOf('day');
+    const futureRange = now.add(2, 'days').endOf('day');
+    return current && current < pastRange && current > futureRange;
+  };
+  const oneDayRange = [moment(), moment().add(1, 'days')];
+  const twoDayRange = [moment(), moment.add(2, 'days')];
   return (
     <div className={'schedule-job-fair-form'}>
       <div style={{ textAlign: 'center' }}>
@@ -63,14 +72,18 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
             name={'decorateRange'}
             rules={OrganizeJobFairValidation.decorateRange}
             className={'form-item'}>
-            <RangePicker format={DateFormat} disabledDate={disabledDate} />
+            <RangePicker
+              format={DateFormat}
+              disabledDate={disabledDate}
+              ranges={{ 'Two days lengths: ': twoDayRange }}
+            />
           </Form.Item>
           <Form.Item
             className={'form-item'}
             label={`Public time range (${timeZone})`}
             name={'publicRange'}
             rules={OrganizeJobFairValidation.publicRange}>
-            <RangePicker format={DateFormat} disabledDate={disabledDate} />
+            <RangePicker format={DateFormat} disabledDate={disabledPublicRange} />
           </Form.Item>
           <Form.Item
             className={'form-item'}
