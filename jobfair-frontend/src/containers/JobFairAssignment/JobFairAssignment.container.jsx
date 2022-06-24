@@ -9,6 +9,7 @@ import JobFairAssignmentTableColumn from '../JobFairAssignmentTable/JobFairAssig
 import MyBoothLayoutListContainer from '../MyBoothLayoutList/MyBoothLayoutList.container';
 import React, { useEffect, useState } from 'react';
 import TaskActionButton from './TaskActionButton.container';
+
 const { TabPane } = Tabs;
 const { Option } = Select;
 
@@ -28,11 +29,23 @@ const JobFairAssignmentContainer = () => {
   const fetchData = async () => {
     try {
       let res;
-      if (viewAllMode) res = await getAssignmentByEmployeeId('', currentPage, pageSize, '');
-      else res = await getAssignmentByEmployeeId('', currentPage, pageSize, '', currentTab);
-
-      setTotalRecord(res.data.totalElements);
-      setData([...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))]);
+      if (viewAllMode) {
+        res = await getAssignmentByEmployeeId('', currentPage, pageSize, '');
+        if (res.data.content.find((item) => item.type !== 'STAFF')) {
+          res = res.data.content
+            .filter((item) => item.type !== 'STAFF')
+            .map((item, index) => mapperJobFairAssignment(item, index));
+          setData([...res]);
+          setTotalRecord(res.length);
+        } else {
+          setData([...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))]);
+          setTotalRecord(res.data.totalElements);
+        }
+      } else {
+        res = await getAssignmentByEmployeeId('', currentPage, pageSize, '', currentTab);
+        setData([...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))]);
+        setTotalRecord(res.data.totalElements);
+      }
     } catch (e) {
       notification['error']({
         message: `Something went wrong! Try again latter!`,
