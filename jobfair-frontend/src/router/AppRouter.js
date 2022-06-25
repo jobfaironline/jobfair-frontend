@@ -164,7 +164,7 @@ const AppRouter = () => {
       <UserAgentModal />
       <FeedbackModal />
       <Button
-        style={{ position: 'absolute', right: '100px', top: '180px', zIndex: '10000' }}
+        style={{ position: 'fixed', right: '100px', top: '180px', zIndex: '10000', backgroundColor: '#0B0633' }}
         type='primary'
         onClick={() => {
           Modal.info({
