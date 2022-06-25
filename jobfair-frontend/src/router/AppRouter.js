@@ -89,11 +89,18 @@ function get_browser() {
 const UserAgentModal = () => {
   const browser = get_browser();
   const isDisable = browser.name !== 'Chrome' || (browser.name === 'Chrome' && browser.version < 102);
-  return (
-    <Modal closable={false} title={'Warning'} visible={isDisable} footer={null}>
-      We current do not support {browser.name} version {browser.version}. Please use Chrome with version 102 or higher
-    </Modal>
-  );
+  useEffect(() => {
+    isDisable &&
+      Modal.info({
+        title: 'Warning',
+        width: '50rem',
+        closable: true,
+        maskClosable: true,
+        content: `We current do not support ${browser.name} version ${browser.version}. Please use Chrome with version 102 or higher
+`
+      });
+  }, []);
+  return <></>;
 };
 
 const { Text, Title } = Typography;
