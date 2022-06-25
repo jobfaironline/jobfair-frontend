@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import styles from './MessageSent.module.scss';
 
 const MessageSent = (prop) => {
+  // eslint-disable-next-line no-unused-vars
   const { name, message } = prop;
   // eslint-disable-next-line no-console
   useEffect(() => console.log(message), [prop]);

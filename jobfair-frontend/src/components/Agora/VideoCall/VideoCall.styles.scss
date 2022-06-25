@@ -47,7 +47,7 @@
     }
   }
 
-  .user-icon{
+  .user-icon {
     width: 30%;
     height: 30%;
     display: flex;
@@ -59,15 +59,15 @@
     position: relative;
   }
 
-  .user-icon:hover + .user-mask{
+  .user-icon:hover + .user-mask {
     display: flex;
   }
 
-  .user-mask:hover{
+  .user-mask:hover {
     display: flex;
   }
 
-  .user-mask{
+  .user-mask {
     position: absolute;
     background: #0000008a;
     width: 100px;
@@ -81,5 +81,4 @@
     display: none;
     border-radius: 20px;
   }
-
 }

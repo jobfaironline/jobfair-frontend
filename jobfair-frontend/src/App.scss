@@ -257,7 +257,6 @@ home
 
 .notification-message-clickable {
   transition: 0.1s;
-
 }
 
 .notification-message-clickable:hover {
@@ -265,17 +264,16 @@ home
   cursor: pointer;
 }
 
-.ant-modal-header{
-  background-color: #1890ff!important;
-  color: white!important;
-  .ant-modal-title{
-    color: white!important;
+.ant-modal-header {
+  background-color: #1890ff !important;
+  color: white !important;
+  .ant-modal-title {
+    color: white !important;
   }
-
 }
 
-.ant-modal-content{
-  .ant-modal-close-x{
-    color: white!important;
+.ant-modal-content {
+  .ant-modal-close-x {
+    color: white !important;
   }
 }

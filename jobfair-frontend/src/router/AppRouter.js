@@ -1,9 +1,9 @@
+import { Button, Layout, Modal, Typography } from 'antd';
 import { default as CustomFooter } from '../components/commons/Footer/Footer';
 import { Footer } from 'antd/es/layout/layout';
 import { JobFairBoothReviewPage } from '../pages/JobFairBoothReviewPage/JobFairBoothReviewPage';
 import { JobFairCheckListPage } from '../pages/JobFairCheckList/JobFairCheckListPage';
 import { JobFairMapReviewPage } from '../pages/JobFairMapReviewPage/JobFairMapReviewPage';
-import { Layout, Modal, Typography } from 'antd';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
 import { Redirect, Route, Switch, matchPath, useLocation } from 'react-router-dom';
 import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
@@ -156,6 +156,31 @@ const AppRouter = () => {
     <div>
       <UserAgentModal />
       <FeedbackModal />
+      <Button
+        style={{ position: 'absolute', right: '100px', top: '180px', zIndex: '10000' }}
+        type='primary'
+        onClick={() => {
+          Modal.info({
+            width: '1000px',
+            title: 'Hướng dẫn sử dụng',
+            content: (
+              <div style={{ overflow: 'hidden', paddingBottom: '56.25%', position: 'relative', height: 0 }}>
+                <iframe
+                  style={{ left: 0, top: 0, height: '100%', width: '100%', position: 'absolute' }}
+                  width='853'
+                  height='480'
+                  src={`https://www.youtube.com/embed/79lQDBhVz_0`}
+                  frameBorder='0'
+                  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                  allowFullScreen
+                  title='Embedded youtube'
+                />
+              </div>
+            )
+          });
+        }}>
+        Hướng dẫn sử dụng
+      </Button>
       <Layout style={{ minHeight: '100vh' }}>
         <NavigationBar />
         <Switch>
