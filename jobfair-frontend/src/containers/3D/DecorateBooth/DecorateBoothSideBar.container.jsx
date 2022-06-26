@@ -80,8 +80,6 @@ export const DecoratedBoothSideBarContainer = (props) => {
       if (screenSize.x > screenSize.z) width = localSize.x;
       else width = localSize.z;
 
-      let plane;
-
       //create new plane
       const geometry = new THREE.PlaneGeometry(width, localSize.y);
       const material = new THREE.MeshStandardMaterial({
@@ -92,12 +90,14 @@ export const DecoratedBoothSideBarContainer = (props) => {
       //get screen center point
       const middle = new THREE.Vector3();
       screenMesh.geometry.computeBoundingBox();
-      middle.x = (screenMesh.geometry.boundingBox.max.x + screenMesh.geometry.boundingBox.min.x) / 2;
-      middle.y = (screenMesh.geometry.boundingBox.max.y + screenMesh.geometry.boundingBox.min.y) / 2;
-      middle.z = (screenMesh.geometry.boundingBox.max.z + screenMesh.geometry.boundingBox.min.z) / 2;
 
-      // eslint-disable-next-line prefer-const
-      plane = new THREE.Mesh(geometry, material);
+      const vectors = ['x', 'y', 'z'];
+      vectors.forEach((vector) => {
+        middle[vector] =
+          (screenMesh.geometry.boundingBox.max[vector] + screenMesh.geometry.boundingBox.min[vector]) / 2;
+      });
+
+      const plane = new THREE.Mesh(geometry, material);
       plane.name = IMAGE_PLANE_NAME;
 
       //rotate plane to face the screen direction
@@ -105,15 +105,14 @@ export const DecoratedBoothSideBarContainer = (props) => {
         const myAxis = new THREE.Vector3(0, 0, 1);
         plane.rotateOnAxis(myAxis, THREE.Math.degToRad(180));
         plane.position.setZ(-screenSize.z / 2 / screenMesh.scale.z - 0.4);
-        plane.position.setY(middle.y);
       } else {
         let myAxis = new THREE.Vector3(0, 1, 0);
         plane.rotateOnAxis(myAxis, THREE.Math.degToRad(90));
         myAxis = new THREE.Vector3(0, 0, 1);
         plane.rotateOnAxis(myAxis, THREE.Math.degToRad(180));
         plane.position.setX(-screenSize.x / 2 / screenMesh.scale.x - 0.4);
-        plane.position.setY(middle.y);
       }
+      plane.position.setY(middle.y);
 
       const realScreen = selectedItem?.getObjectByName('Media');
       const prevPlane = realScreen?.getObjectByName(IMAGE_PLANE_NAME);
