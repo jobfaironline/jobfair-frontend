@@ -4,7 +4,7 @@ import { DatePicker, Form, Input, TimePicker, Typography } from 'antd';
 import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairValidation';
 import { SHIFT_DISABLE_TIME } from '../../../constants/JobFairConst';
 import { getTimeZoneCode } from '../../../utils/common';
-import React from 'react';
+import React, { useRef } from 'react';
 import moment from 'moment';
 
 const { RangePicker } = DatePicker;
@@ -37,19 +37,29 @@ const mapJobFairDataToFormInitialValues = (jobFairData) => {
 const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChange }) => {
   const initialFormValue = mapJobFairDataToFormInitialValues(jobFairData);
   const timeZone = getTimeZoneCode();
+  const hackRef = useRef(null);
+  const publicValueRef = useRef(null);
+  const publicRangesRef = useRef(null);
 
   const disabledDate = (current) =>
     // Can not select days before today and today
     current && current < moment().endOf('day');
   //TODO: Limit public range to 2 days (will be updated when implement subscription)
   const disabledPublicRange = (current) => {
-    const now = moment();
-    const pastRange = now.endOf('day');
-    const futureRange = now.add(2, 'days').endOf('day');
-    return current && current < pastRange && current > futureRange;
+    if (!publicRangesRef.current) return false;
+
+    const tooLate = publicRangesRef.current[0] && current.diff(publicRangesRef.current[0], 'days') > 2;
+    const tooEarly = publicRangesRef.current[1] && publicRangesRef.current[1].diff(current, 'days') > 2;
+
+    return !!tooEarly || !!tooLate;
   };
-  const oneDayRange = [moment(), moment().add(1, 'days')];
-  const twoDayRange = [moment(), moment.add(2, 'days')];
+
+  const onOpenChange = (open) => {
+    if (open) {
+      hackRef.current = [null, null];
+      publicRangesRef.current = [moment().add(1, 'days'), null];
+    } else hackRef.current = null;
+  };
   return (
     <div className={'schedule-job-fair-form'}>
       <div style={{ textAlign: 'center' }}>
@@ -72,18 +82,26 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
             name={'decorateRange'}
             rules={OrganizeJobFairValidation.decorateRange}
             className={'form-item'}>
-            <RangePicker
-              format={DateFormat}
-              disabledDate={disabledDate}
-              ranges={{ 'Two days lengths: ': twoDayRange }}
-            />
+            <RangePicker format={DateFormat} disabledDate={disabledDate} />
           </Form.Item>
           <Form.Item
             className={'form-item'}
             label={`Public time range (${timeZone})`}
             name={'publicRange'}
             rules={OrganizeJobFairValidation.publicRange}>
-            <RangePicker format={DateFormat} disabledDate={disabledPublicRange} />
+            <RangePicker
+              format={DateFormat}
+              disabledDate={disabledPublicRange}
+              value={hackRef || publicValueRef}
+              // ranges={{
+              //   '1 Day': [moment(), moment().add(1, 'days')],
+              //   '2 Days': [moment(), moment().add(2, 'days')],
+              //   '3 Days ': [moment(), moment().add(3, 'days')]
+              // }}
+              onOpenChange={onOpenChange}
+              onChange={(value) => (publicValueRef.current = value)}
+              onCalendarChange={(value) => (publicRangesRef.current = value)}
+            />
           </Form.Item>
           <Form.Item
             className={'form-item'}
