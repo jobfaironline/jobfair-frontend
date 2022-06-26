@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 import { BoothJobPositionTabContainer } from './BoothJobPositionTab/BoothJobPositionTab.container';
 import { CompanyInformation } from '../../components/customized-components/BoothInfoMenu/BoothInformationTab/BoothInformationTab.component';
-import { Tabs, Typography, notification } from 'antd';
+import { Tabs, Tooltip, Typography, notification } from 'antd';
 import { boothTabAction } from '../../redux-flow/boothInfoTab/boothInfoTab-slice';
 import { getCompanyBoothById } from '../../services/jobhub-api/CompanyBoothControllerService';
 import { useDispatch, useSelector } from 'react-redux';
@@ -62,12 +62,7 @@ export const BoothInfoMenuContainer = (props) => {
           <div
             style={{ marginLeft: 'auto', cursor: 'pointer' }}
             onClick={() => {
-              if (isShow) {
-                dispatch(boothTabAction.setIsShow(false));
-                dispatch(boothTabAction.activeKey(0));
-                return;
-              }
-              dispatch(boothTabAction.setIsShow(true));
+              dispatch(boothTabAction.setIsShow(!isShow));
               dispatch(boothTabAction.activeKey(0));
             }}>
             {isShow ? (
@@ -89,9 +84,11 @@ export const BoothInfoMenuContainer = (props) => {
           <Tabs.TabPane
             tab={
               <div style={{ textAlign: 'center' }}>
-                <Typography.Text strong style={{ fontSize: '2rem' }}>
-                  <CommentOutlined />
-                </Typography.Text>
+                <Tooltip title={'Chat & Video'}>
+                  <Typography.Text strong style={{ fontSize: '2rem' }}>
+                    <CommentOutlined />
+                  </Typography.Text>
+                </Tooltip>
               </div>
             }
             key='0'>
@@ -100,9 +97,11 @@ export const BoothInfoMenuContainer = (props) => {
           <Tabs.TabPane
             tab={
               <div style={{ textAlign: 'center' }}>
-                <Typography.Text strong style={{ fontSize: '2rem' }}>
-                  <ProfileOutlined />
-                </Typography.Text>
+                <Tooltip title={'Company Information'}>
+                  <Typography.Text strong style={{ fontSize: '2rem' }}>
+                    <ProfileOutlined />
+                  </Typography.Text>
+                </Tooltip>
               </div>
             }
             key='1'>
@@ -115,9 +114,11 @@ export const BoothInfoMenuContainer = (props) => {
           <Tabs.TabPane
             tab={
               <div style={{ textAlign: 'center' }}>
-                <Typography.Text strong style={{ fontSize: '2rem' }}>
-                  <SolutionOutlined />
-                </Typography.Text>
+                <Tooltip title={'Job positions'}>
+                  <Typography.Text strong style={{ fontSize: '2rem' }}>
+                    <SolutionOutlined />
+                  </Typography.Text>
+                </Tooltip>
               </div>
             }
             key='2'>

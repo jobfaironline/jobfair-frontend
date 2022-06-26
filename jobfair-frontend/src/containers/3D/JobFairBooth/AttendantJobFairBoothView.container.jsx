@@ -17,11 +17,13 @@ export const AttendantJobFairBoothViewContainer = (props) => {
   const [inventoryVisible, setInventoryVisible] = useState(false);
 
   useEffect(() => {
-    if (applicationId) {
-      dispatch(boothTabAction.setActiveKey('0'));
-      dispatch(boothTabAction.setIsShow(true));
-    }
+    if (applicationId) reset();
   }, []);
+
+  const reset = () => {
+    dispatch(boothTabAction.setActiveKey('0'));
+    dispatch(boothTabAction.setIsShow(true));
+  };
 
   const openInventory = (status) => {
     if (status !== undefined) setInventoryVisible(status);
