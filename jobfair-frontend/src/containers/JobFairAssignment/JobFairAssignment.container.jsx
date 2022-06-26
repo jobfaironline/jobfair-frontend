@@ -74,7 +74,9 @@ const JobFairAssignmentContainer = () => {
       {
         title: 'Actions',
         key: 'action',
-        render: (text, record) => <TaskActionButton type={record.assignmentType} record={record} />
+        render: (text, record) => (
+          <TaskActionButton type={record.assignmentType} status={record.status} record={record} />
+        )
       }
     ],
     paginationObject: {
@@ -139,7 +141,7 @@ const JobFairAssignmentContainer = () => {
             <TabPane tab='Receptionist task' key={AssignmentConst.RECEPTION}>
               <CommonTableContainer {...jobFairAssignmentTableProps} />
             </TabPane>
-            <TabPane tab='Inteview task' key={AssignmentConst.INTERVIEWER}>
+            <TabPane tab='Interview task' key={AssignmentConst.INTERVIEWER}>
               <CommonTableContainer {...jobFairAssignmentTableProps} />
             </TabPane>
             <TabPane tab='Decorate task' key={AssignmentConst.DECORATOR}>

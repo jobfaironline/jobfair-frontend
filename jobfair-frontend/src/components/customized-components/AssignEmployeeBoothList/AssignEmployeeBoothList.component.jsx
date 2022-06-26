@@ -1,13 +1,13 @@
-import { AssignmentConst } from '../../../constants/AssignmentConst';
+import { BoothAssignmentDetail } from '../BoothAssigmentDetail/BoothAssignmentDetail.component';
 import { Button, Card, Divider, List, Skeleton, Typography } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import React from 'react';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 export const AssignEmployeeBoothList = (props) => {
-  const { data, onHoverIn, onHoverOut, onBoothClick, onClickUploadCSV } = props;
+  const { data, onHoverIn, onHoverOut, onBoothClick, onClickUploadCSV, boothData } = props;
   return (
     <>
       <div
@@ -32,59 +32,28 @@ export const AssignEmployeeBoothList = (props) => {
           itemLayout='vertical'
           size='large'
           dataSource={data}
-          renderItem={(item) => (
-            <Card
-              hoverable={true}
-              style={{ width: '350px', border: '1px solid black', borderRadius: '20px', marginBottom: '10px' }}
-              bodyStyle={{ padding: '15px' }}
-              onMouseEnter={() => onHoverIn(item.booth.name)}
-              onMouseLeave={() => onHoverOut()}
-              onClick={() => {
-                onBoothClick(item.id, item.booth.name);
-              }}>
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', alignItems: 'stretch' }}>
-                  <Title level={5}>
-                    {`Slot name: ${item.booth.name}`}
-                    <br />
-                    {item.name ? `Booth name - ${item.name}` : ''}
-                  </Title>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  <Text strong>Supervisor: </Text>
-                  {item.assignments
-                    .filter((assign) => assign.type === AssignmentConst.SUPERVISOR)
-                    .map((assign) => (
-                      <Text>
-                        {'- '}
-                        {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
-                        {assign.companyEmployee.account.lastname}
-                      </Text>
-                    ))}
-                  <Text strong>Staff:</Text>
-                  {item.assignments
-                    .filter((assign) => assign.type === AssignmentConst.STAFF)
-                    .map((assign) => (
-                      <Text>
-                        {'- '}
-                        {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
-                        {assign.companyEmployee.account.lastname}
-                      </Text>
-                    ))}
-                  <Text strong>Decorator: </Text>
-                  {item.assignments
-                    .filter((assign) => assign.type === AssignmentConst.DECORATOR)
-                    .map((assign) => (
-                      <Text>
-                        {'- '}
-                        {assign.companyEmployee.account.firstname} {assign.companyEmployee.account.middlename}{' '}
-                        {assign.companyEmployee.account.lastname}
-                      </Text>
-                    ))}
-                </div>
-              </div>
-            </Card>
-          )}
+          renderItem={(item) => {
+            const color = `${Object.values(boothData).filter((booth) => booth.id === item.id)[0]?.color}` ?? 'white';
+            return (
+              <Card
+                hoverable={true}
+                style={{
+                  width: '350px',
+                  border: '1px solid black',
+                  borderRadius: '20px',
+                  marginBottom: '10px',
+                  borderLeft: `10px solid ${color}`
+                }}
+                bodyStyle={{ padding: '15px' }}
+                onMouseEnter={() => onHoverIn(item.booth.name)}
+                onMouseLeave={() => onHoverOut()}
+                onClick={() => {
+                  onBoothClick(item.id, item.booth.name);
+                }}>
+                <BoothAssignmentDetail data={item} />
+              </Card>
+            );
+          }}
         />
       </InfiniteScroll>
     </>
