@@ -40,7 +40,7 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
 
   const disabledDate = (current) =>
     // Can not select days before today and today
-    current && current < moment().endOf('day');
+    current && current < moment().endOf('day').subtract(1, 'd');
   return (
     <div className={'schedule-job-fair-form'}>
       <div style={{ textAlign: 'center' }}>

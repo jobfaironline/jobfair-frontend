@@ -39,3 +39,18 @@ export const AssignmentBoothConstraint = {
   supervisorNum: 1,
   staffNum: 2
 };
+
+export const AssignBoothColors = [
+  'F9C80E',
+  'F86624',
+  'EA3546',
+  '662E9B',
+  '43BCCD',
+  'FF8811',
+  'F4D06F',
+  '9DD9D2',
+  '392F5A'
+];
+
+export const AvailableBoothColor = '#33ff77';
+export const UnAvailableBoothColor = '#ff0000';
