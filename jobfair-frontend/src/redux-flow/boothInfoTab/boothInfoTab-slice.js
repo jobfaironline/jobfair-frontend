@@ -12,6 +12,10 @@ const boothTabSlice = createSlice({
     },
     setIsShow: (state, action) => {
       state.isShow = action.payload;
+    },
+    reset: (state) => {
+      state.isShow = false;
+      state.activeKey = 0;
     }
   }
 });
