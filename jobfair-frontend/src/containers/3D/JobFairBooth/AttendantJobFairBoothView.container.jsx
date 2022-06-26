@@ -17,7 +17,7 @@ export const AttendantJobFairBoothViewContainer = (props) => {
   const [inventoryVisible, setInventoryVisible] = useState(false);
 
   useEffect(() => {
-    if (applicationId) dispatch(boothTabAction.reset);
+    if (applicationId) dispatch(boothTabAction.reset());
   }, []);
 
   const openInventory = (status) => {
