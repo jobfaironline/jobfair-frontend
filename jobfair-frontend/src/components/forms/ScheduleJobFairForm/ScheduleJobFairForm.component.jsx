@@ -2,7 +2,7 @@ import './ScheduleJobFairFormComponent.styles.scss';
 import { DateFormat, MinuteFormat } from '../../../constants/ApplicationConst';
 import { DatePicker, Form, Input, TimePicker, Typography } from 'antd';
 import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairValidation';
-import { SHIFT_DISABLE_TIME } from '../../../constants/JobFairConst';
+import { PUBLIC_RANGE_LIMIT, SHIFT_DISABLE_TIME } from '../../../constants/JobFairConst';
 import { getTimeZoneCode } from '../../../utils/common';
 import React, { useRef } from 'react';
 import moment from 'moment';
@@ -48,8 +48,9 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
   const disabledPublicRange = (current) => {
     if (!publicRangesRef.current) return false;
 
-    const tooLate = publicRangesRef.current[0] && current.diff(publicRangesRef.current[0], 'days') > 2;
-    const tooEarly = publicRangesRef.current[1] && publicRangesRef.current[1].diff(current, 'days') > 2;
+    const tooLate = publicRangesRef.current[0] && current.diff(publicRangesRef.current[0], 'days') > PUBLIC_RANGE_LIMIT;
+    const tooEarly =
+      publicRangesRef.current[1] && publicRangesRef.current[1].diff(current, 'days') > PUBLIC_RANGE_LIMIT;
 
     return !!tooEarly || !!tooLate;
   };

@@ -98,4 +98,4 @@ export const SHIFT_DISABLE_TIME = {
   AFTERNOON_SHIFT: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 23]
 };
 
-export const PUBLIC_TIME_RANGE = ['ONE_DAY', 'TWO_DAY', 'THREE_DAY'];
+export const PUBLIC_RANGE_LIMIT = 2;
