@@ -1,9 +1,11 @@
+import { DateFormat } from '../../constants/ApplicationConst';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JOB_FAIR_STATUS_FOR_EMPLOYEE } from '../../constants/JobFairConst';
 import { Tag, Typography } from 'antd';
-import { convertEnumToString, convertToUTCString } from '../../utils/common';
+import { convertEnumToString } from '../../utils/common';
 import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
+import moment from 'moment';
 
 const { Text } = Typography;
 
@@ -30,7 +32,7 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
     sorter: (a, b) => a.title.localeCompare(b.title),
     sortDirections: ['descend'],
     render: (text, record) => (
-      <a href='#' onClick={record.onClickJobFair}>
+      <a onClick={record.onClickJobFair}>
         <Text>{text}</Text>
         <FontAwesomeIcon icon={faExternalLink} style={{ marginLeft: '5px' }} />
       </a>
@@ -48,42 +50,26 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
     )
   },
   {
-    title: 'Decorate range time',
-    children: [
-      {
-        title: 'Start time',
-        dataIndex: 'decorateStartTime',
-        key: 'decorateStartTime',
-        ...getColumnSearchProps('decorateStartTime'),
-        render: (text, record) => <Typography>{convertToUTCString(record?.decorateStartTime)}</Typography>
-      },
-      {
-        title: 'End time',
-        dataIndex: 'decorateEndTime',
-        key: 'decorateEndTime',
-        ...getColumnSearchProps('decorateEndTime'),
-        render: (text, record) => <Typography>{convertToUTCString(record?.decorateEndTime)}</Typography>
-      }
-    ]
+    title: 'Assigner',
+    key: 'assignerFullName',
+    dataIndex: 'assignerFullName',
+    ...getColumnSearchProps('assignerFullName')
   },
   {
-    title: 'Public range time',
-    children: [
-      {
-        title: 'Start time',
-        dataIndex: 'publicStartTime',
-        key: 'publicStartTime',
-        ...getColumnSearchProps('publicStartTime'),
-        render: (text, record) => <Typography>{convertToUTCString(record?.publicStartTime)}</Typography>
-      },
-      {
-        title: 'End time',
-        dataIndex: 'publicEndTime',
-        key: 'publicEndTime',
-        ...getColumnSearchProps('publicEndTime'),
-        render: (text, record) => <Typography>{convertToUTCString(record?.publicEndTime)}</Typography>
-      }
-    ]
+    title: 'Created',
+    key: 'createTime',
+    dataIndex: 'createTime',
+    sorter: (a, b) => a.createTime - b.createTime,
+    sortDirections: ['descend'],
+    render: (text) => <Text>{moment(text).format(DateFormat)}</Text>
+  },
+  {
+    title: 'Deadline',
+    key: 'dueTime',
+    dataIndex: 'dueTime',
+    sorter: (a, b) => a.dueTime - b.dueTime,
+    sortDirections: ['descend'],
+    render: (text) => <Text>{moment(text).format(DateFormat)}</Text>
   },
   {
     title: 'Status',

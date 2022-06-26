@@ -1,11 +1,13 @@
 import './PickJobPositionForm.styles.scss';
-import { Card, Form, Image, Input, Modal, Typography, notification } from 'antd';
+import { Button, Card, Form, Image, Input, Modal, Typography, notification } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { PATH, PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import {
   assignJobPositionToBooth,
   getCompanyBoothById
 } from '../../../services/jobhub-api/JobFairBoothControllerService';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getAssignmentById } from '../../../services/jobhub-api/AssignmentControllerService';
 import { handleFieldsError } from '../../../utils/handleFIeldsError';
@@ -21,6 +23,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [arrKey, setArrKey] = useState([]);
   const [formData, setFormData] = useState();
+
   const hasFetchData = useRef(false);
   const history = useHistory();
   const [form] = Form.useForm();
@@ -91,6 +94,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
       await form.validateFields();
     } catch (e) {
       handleFieldsError(form);
+      return;
     }
     try {
       const res = await assignJobPositionToBooth(body);
@@ -117,18 +121,17 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
   }
 
   const handleView3DBooth = () => {
-    const url = generatePath(PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE, {
-      jobFairId: formData.jobFair.id,
-      companyBoothId: formData.boothId
+    const url = generatePath(PATH_COMPANY_EMPLOYEE.JOB_FAIR_BOOTH_REVIEW, {
+      boothId: formData.boothId
     });
-    history.push(url);
+    window.open(`${window.location.origin}${url}`);
   };
 
   const handleViewJobFairMap = () => {
     const url = generatePath(PATH.PUBLICIZED_BOOTH_PAGE, {
       jobFairId: formData.jobFair.id
     });
-    history.push(url);
+    window.open(`${window.location.origin}${url}`);
   };
   return (
     <>
@@ -144,57 +147,78 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
         ) : null}
       </Modal>
       <div className={'pick-job-position-container'}>
-        <div className={'left-side'}>
-          <Title level={3}>My booth profile</Title>
-          <div className={'card-container'}>
-            <Card bordered={true} className={'card'} onClick={handleView3DBooth} hoverable>
-              <Image
-                alt='example'
-                src={formData.jobFair?.thumbnailUrl}
-                preview={false}
-                height={'10rem'}
-                width={'100%'}
-              />
-              <Title level={5}>Booth decoration</Title>
-              <Text>Detail</Text>
-            </Card>
-            <Card
-              bordered={true}
-              className={'card'}
-              hoverable
-              onClick={handleViewJobFairMap}
-              style={{ marginLeft: '1rem' }}>
-              <Image
-                alt='example'
-                src={formData.jobFair?.thumbnailUrl}
-                preview={false}
-                height={'10rem'}
-                width={'100%'}
-              />
-              <Title level={5}>Job fair map</Title>
-              <Text>Detail</Text>
-            </Card>
-          </div>
-          <div className={'booth-description-container'}>
-            <Form form={form} onFinish={onFinish}>
-              <Form.Item label='Booth name' required name='name'>
-                <Input placeholder="Booth's name" />
-              </Form.Item>
-              <Form.Item label='Booth description' required name='description'>
-                <TextArea autoSize={{ minRows: 5 }} showCount maxLength={3000} placeholder='Description' />
-              </Form.Item>
-            </Form>
-          </div>
+        <div className={'button-container'}>
+          <Button
+            type={'link'}
+            onClick={() => {
+              history.push(PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE);
+            }}>
+            <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '5px' }} />
+            Back to my assignment
+          </Button>
+          <Button
+            type={'link'}
+            style={{ marginLeft: 'auto' }}
+            onClick={() => {
+              const url = generatePath(PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE, { boothId: formData.boothId });
+              history.push(url);
+            }}>
+            Go to assign task <FontAwesomeIcon icon={faArrowRight} style={{ marginLeft: '5px' }} />
+          </Button>
         </div>
-        <div className={'right-side'}>
-          <PickJobPositionForm
-            handlePickJobPosition={handlePickJobPosition}
-            form={form}
-            onFinish={onFinish}
-            handleRemove={handleRemove}
-            onChangeHaveTest={onChangeHaveTest}
-            arrKey={arrKey}
-          />
+        <div className={'content-container'}>
+          <div className={'left-side'}>
+            <Title level={3}>My booth profile</Title>
+            <div className={'card-container'}>
+              <Card bordered={true} className={'card'} onClick={handleView3DBooth} hoverable>
+                <Image
+                  alt='example'
+                  src={formData.jobFair?.thumbnailUrl}
+                  preview={false}
+                  height={'10rem'}
+                  width={'100%'}
+                />
+                <Title level={5}>Booth decoration</Title>
+                <Text>Detail</Text>
+              </Card>
+              <Card
+                bordered={true}
+                className={'card'}
+                hoverable
+                onClick={handleViewJobFairMap}
+                style={{ marginLeft: '1rem' }}>
+                <Image
+                  alt='example'
+                  src={formData.jobFair?.thumbnailUrl}
+                  preview={false}
+                  height={'10rem'}
+                  width={'100%'}
+                />
+                <Title level={5}>Job fair map</Title>
+                <Text>Detail</Text>
+              </Card>
+            </div>
+            <div className={'booth-description-container'}>
+              <Form form={form} onFinish={onFinish}>
+                <Form.Item label='Booth name' required name='name'>
+                  <Input placeholder="Booth's name" />
+                </Form.Item>
+                <Form.Item label='Booth description' required name='description'>
+                  <TextArea autoSize={{ minRows: 5 }} showCount maxLength={3000} placeholder='Description' />
+                </Form.Item>
+              </Form>
+            </div>
+          </div>
+          <div className={'right-side'}>
+            <PickJobPositionForm
+              handlePickJobPosition={handlePickJobPosition}
+              form={form}
+              onFinish={onFinish}
+              handleRemove={handleRemove}
+              onChangeHaveTest={onChangeHaveTest}
+              arrKey={arrKey}
+            />
+          </div>
         </div>
       </div>
     </>

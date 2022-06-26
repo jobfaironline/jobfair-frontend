@@ -13,18 +13,39 @@ export const RemoveResumeComponent = (props) => {
       <Divider style={{ margin: '1rem 0' }} />
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <div>
-          <Descriptions title='CV detail' bordered={false} column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}>
-            <Descriptions.Item label={<Text strong>Name </Text>}>{selectedResume?.name}</Descriptions.Item>
-            <Descriptions.Item label={<Text strong>Skills </Text>}>
+          <Text strong style={{ fontSize: '1.2rem' }}>
+            CV detail
+          </Text>
+          <Descriptions bordered={false} column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}>
+            <Descriptions.Item
+              label={
+                <Text strong style={{ fontSize: '1rem' }}>
+                  Name{' '}
+                </Text>
+              }>
+              {selectedResume?.name}
+            </Descriptions.Item>
+            <Descriptions.Item
+              label={
+                <Text strong style={{ fontSize: '1rem' }}>
+                  Skills{' '}
+                </Text>
+              }>
               {selectedResume?.skills.map((item) => (
-                <Tag color='blue'>{item.name}</Tag>
+                <Tag color='green' style={{ fontSize: '0.9rem', padding: '1px 5px' }}>
+                  {item.name}
+                </Tag>
               ))}
             </Descriptions.Item>
-            <Descriptions.Item label={<Text strong>Job level </Text>}>
-              <Tag color='blue'>{convertEnumToString(selectedResume?.jobLevel)}</Tag>
-            </Descriptions.Item>
-            <Descriptions.Item label={<Text strong>Job title </Text>}>
-              <Tag color='blue'>{selectedResume?.jobTitle}</Tag>
+            <Descriptions.Item
+              label={
+                <Text strong style={{ fontSize: '1rem' }}>
+                  Job level{' '}
+                </Text>
+              }>
+              <Tag color='purple' style={{ fontSize: '0.9rem', padding: '1px 5px' }}>
+                {convertEnumToString(selectedResume?.jobLevel)}
+              </Tag>
             </Descriptions.Item>
           </Descriptions>
         </div>
