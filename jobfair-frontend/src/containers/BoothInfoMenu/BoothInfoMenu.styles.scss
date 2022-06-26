@@ -1,0 +1,25 @@
+.booth-info-menu-container{
+  position: absolute;
+  z-index: 100;
+  .booth-info-menu{
+    background-color: white;
+    border-radius: 0 0 1rem 1rem;
+
+    .tab-header {
+      padding: 10px 10px 10px 25px;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .header{
+      display: flex;
+      align-items: center;
+      padding: 5px 1rem;
+    }
+
+    .ant-tabs-content-holder{
+      padding-right: 24px;
+      padding-bottom: 20px;
+    }
+  }
+}

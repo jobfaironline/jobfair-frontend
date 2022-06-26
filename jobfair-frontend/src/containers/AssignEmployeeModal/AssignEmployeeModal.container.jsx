@@ -157,7 +157,7 @@ export const AssignEmployeeModalContainer = (props) => {
   if (state.data === undefined || state.targetKeys === undefined) return null;
 
   return (
-    <Modal title='Assign Employee' onOk={onOK} onCancel={handleCancel} width={1000} visible={true}>
+    <Modal title='Assign Employee' onOk={onOK} onCancel={handleCancel} width={1000} visible={true} centered={true}>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
         <TableTransfer
           titles={[<Text level={3}>Available employee</Text>, <Text level={3}>Assigned employee</Text>]}

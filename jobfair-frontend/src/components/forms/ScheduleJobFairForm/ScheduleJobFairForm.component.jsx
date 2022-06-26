@@ -43,7 +43,8 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
 
   const disabledDate = (current) =>
     // Can not select days before today and today
-    current && current < moment().endOf('day');
+    current && current < moment().endOf('day').subtract(1, 'd');
+  
   //TODO: Limit public range to 2 days (will be updated when implement subscription)
   const disabledPublicRange = (current) => {
     if (!publicRangesRef.current) return false;
@@ -94,11 +95,6 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
               format={DateFormat}
               disabledDate={disabledPublicRange}
               value={hackRef || publicValueRef}
-              // ranges={{
-              //   '1 Day': [moment(), moment().add(1, 'days')],
-              //   '2 Days': [moment(), moment().add(2, 'days')],
-              //   '3 Days ': [moment(), moment().add(3, 'days')]
-              // }}
               onOpenChange={onOpenChange}
               onChange={(value) => (publicValueRef.current = value)}
               onCalendarChange={(value) => (publicRangesRef.current = value)}

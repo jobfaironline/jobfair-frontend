@@ -2,7 +2,7 @@ import './DecoratedBoothSideBar.style.scss';
 import { BlockPicker } from 'react-color';
 import { Button, Col, Descriptions, Form, Image, InputNumber, Row, Slider, Tabs, Typography, Upload } from 'antd';
 import { DeleteOutlined, RotateLeftOutlined, RotateRightOutlined, UploadOutlined } from '@ant-design/icons';
-import { SHARPNESS_MARK } from '../../../../constants/DecorateConst';
+import { SHARPNESS_MARK } from '../../../../constants/3DConst';
 import { getBase64 } from '../../../../utils/common';
 import { previewImageBase64 } from '../../../../constants/ImageDataConstants';
 import { useState } from 'react';
@@ -173,7 +173,8 @@ export const DecorateBoothSideBarComponent = (props) => {
                 width={200}
                 height={200}
                 src={previewImage}
-                fallback={previewImageBase64}></Image>
+                fallback={previewImageBase64}
+              />
               <ImgCrop aspect={ratio} beforeCrop={handleUpVideoCropImage}>
                 <Upload
                   {...loadFile}
