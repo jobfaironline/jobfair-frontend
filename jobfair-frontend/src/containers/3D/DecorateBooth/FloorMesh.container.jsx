@@ -33,7 +33,7 @@ export const FloorMeshContainer = (props) => {
     const { height: floor_height } = calculateMeshSize(mesh);
     const { x, y, z } = calculatePositionWithBoundary({
       x: planeIntersectPoint.x,
-      y: mesh.position.y + floor_height / 2 + item_height / 2,
+      y: mesh.position.y + floor_height / 2,
       z: planeIntersectPoint.z,
       x_range: floor_x_range,
       y_range: [-1000, 10000],

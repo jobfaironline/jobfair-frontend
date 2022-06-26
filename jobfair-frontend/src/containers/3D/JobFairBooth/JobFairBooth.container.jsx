@@ -1,10 +1,17 @@
 import * as THREE from 'three';
 import { CompanyBoothCanvasComponent } from '../../../components/3D/Booth/CompanyBoothCanvas.component';
+import {
+  DEFAULT_HUMAN_MODEL_TEXTURE_URL,
+  DEFAULT_HUMAN_MODEL_URL,
+  DEFAULT_IDLE_HUMAN_MODEL_URL,
+  DEFAULT_WALKING_HUMAN_MODEL_URL
+} from '../../../constants/3DConst';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import {
   addVideoTexture,
   calculateMeshSize,
   fixTextureOffset,
+  loadCharacterModel,
   loadFBXModel,
   loadGLBModel
 } from '../../../utils/ThreeJS/threeJSUtil';
@@ -63,20 +70,9 @@ export const JobFairBoothContainer = (props) => {
 
   const [user, setUser] = useState([]);
 
-  const getBoothMesh = async (companyBoothId) => {
-    const response = await getCompanyBoothLatestLayout(companyBoothId);
-    const companyBoothLayoutVideos = {};
-    const url = response.data.url;
-    response.data.companyBoothLayoutVideos?.forEach((data) => {
-      companyBoothLayoutVideos[data.itemName] = data.url;
-    });
-    const glb = await loadGLBModel(url);
-    for (const mesh of glb.scene.children) {
-      addVideoTexture(mesh, companyBoothLayoutVideos);
-      fixTextureOffset(mesh);
-    }
-    return glb.scene;
-  };
+  useEffect(() => {
+    process();
+  }, []);
 
   const process = async () => {
     const boothMesh = await getBoothMesh(companyBoothId);
@@ -84,29 +80,18 @@ export const JobFairBoothContainer = (props) => {
     const floorMesh = boothMesh.children.filter((child) => child.name === 'sand')[0];
     const floorHeight = calculateMeshSize(floorMesh).height;
     //load model
-    const model = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx');
-    //const model = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking (5).fbx");
+    const model = await loadCharacterModel(DEFAULT_HUMAN_MODEL_URL, DEFAULT_HUMAN_MODEL_TEXTURE_URL);
 
     const boothSize = calculateMeshSize(boothMesh);
 
-    model.scale.setScalar(boothSize.width / 200 / 2.5);
-    //model.position.setY(center * 2)
-    model.children.forEach((child) => {
-      if (child.isMesh) {
-        child.castShadow = true;
-        child.receiveShadow = true;
-        child.material.side = THREE.FrontSide;
-      }
-    });
+    scalingModel(model, boothSize);
 
     model.position.setY(floorMesh.position.y + floorHeight / 2);
 
     const modelSize = calculateMeshSize(model);
     //load animation
-    /* const idleModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Standing Idle (1).fbx");
-    const walkingModel = await loadFBXModel("https://d3polnwtp0nqe6.cloudfront.net/FBX/Walking4.fbx")*/
-    const idleModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx');
-    const walkingModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx');
+    const idleModel = await loadFBXModel(DEFAULT_IDLE_HUMAN_MODEL_URL);
+    const walkingModel = await loadFBXModel(DEFAULT_WALKING_HUMAN_MODEL_URL);
     const mixer = new THREE.AnimationMixer(model);
     const animations = {
       walk: mixer.clipAction(walkingModel.animations[0]),
@@ -140,59 +125,16 @@ export const JobFairBoothContainer = (props) => {
       const obj = JSON.parse(data);
       const userState = [];
       for (const state of obj) {
-        const model = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx');
-        const idleModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx');
-        const walkingModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx');
-        const mixer = new THREE.AnimationMixer(model);
-        const animations = {
-          walk: mixer.clipAction(walkingModel.animations[0]),
-          idle: mixer.clipAction(idleModel.animations[0])
-        };
-        animations.idle.play();
-        model.scale.setScalar(boothSize.width / 200 / 2.5);
-        model.children.forEach((child) => {
-          if (child.isMesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-            child.material.side = THREE.FrontSide;
-          }
-        });
-        model.position.set(state.position.x, state.position.y, state.position.z);
-        model.quaternion.set(state.quaternion.x, state.quaternion.y, state.quaternion.z, state.quaternion.w);
-        state.model = model;
-        state.mixer = mixer;
-        state.animations = animations;
-        userState.push(state);
+        const newState = await createNewCharacterModel(state, boothSize);
+        userState.push(newState);
       }
       setUser(userState);
     });
     geckoClientRef.current.on('new-user-connect', async (data) => {
       // eslint-disable-next-line no-console
       console.log('new-user-connect', data);
-      const obj = JSON.parse(data);
-      const model = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx');
-      const idleModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/ModelIdle.fbx');
-      const walkingModel = await loadFBXModel('https://d3polnwtp0nqe6.cloudfront.net/FBX/WalkingModel.fbx');
-      const mixer = new THREE.AnimationMixer(model);
-      const animations = {
-        walk: mixer.clipAction(walkingModel.animations[0]),
-        idle: mixer.clipAction(idleModel.animations[0])
-      };
-      animations.idle.play();
-      model.scale.setScalar(boothSize.width / 200 / 2.5);
-      model.children.forEach((child) => {
-        if (child.isMesh) {
-          child.castShadow = true;
-          child.receiveShadow = true;
-          child.material.side = THREE.FrontSide;
-        }
-      });
-      model.position.set(obj.position.x, obj.position.y, obj.position.z);
-      model.quaternion.set(obj.quaternion.x, obj.quaternion.y, obj.quaternion.z, obj.quaternion.w);
-
-      obj.model = model;
-      obj.mixer = mixer;
-      obj.animations = animations;
+      let obj = JSON.parse(data);
+      obj = await createNewCharacterModel(obj, boothSize);
       isChangeCamera.current = false;
       setUser((prevState) => [...prevState, obj]);
     });
@@ -210,8 +152,6 @@ export const JobFairBoothContainer = (props) => {
         state?.model.position.set(data.position.x, data.position.y, data.position.z);
         state?.model.quaternion.set(data.quaternion.x, data.quaternion.y, data.quaternion.z, data.quaternion.w);
         state.isMoving = true;
-        /*state?.animations.walk.crossFadeTo(state?.animations.idle, 0.5, true);
-        state?.animations.walk.play();*/
         return prevState;
       });
     });
@@ -220,10 +160,6 @@ export const JobFairBoothContainer = (props) => {
       setUser((prevState) => {
         const state = prevState.filter((abc) => abc.id === data.id)[0];
         state.isMoving = false;
-
-        /*state.animations.idle.crossFadeTo(state.animations.walk, 2, true);
-        state.animations.idle.play();*/
-
         return prevState;
       });
     });
@@ -245,9 +181,51 @@ export const JobFairBoothContainer = (props) => {
     }));
   };
 
-  useEffect(() => {
-    process();
-  }, []);
+  const scalingModel = (model, boothSize) => {
+    model.scale.setScalar(boothSize.width / 200 / 2.5);
+    model.children.forEach((child) => {
+      if (child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        child.material.side = THREE.FrontSide;
+      }
+    });
+  };
+
+  const createNewCharacterModel = async (characterState, boothSize) => {
+    const data = JSON.parse(JSON.stringify(characterState));
+    const model = await loadCharacterModel(DEFAULT_HUMAN_MODEL_URL, DEFAULT_HUMAN_MODEL_TEXTURE_URL);
+    const idleModel = await loadFBXModel(DEFAULT_IDLE_HUMAN_MODEL_URL);
+    const walkingModel = await loadFBXModel(DEFAULT_WALKING_HUMAN_MODEL_URL);
+    const mixer = new THREE.AnimationMixer(model);
+    const animations = {
+      walk: mixer.clipAction(walkingModel.animations[0]),
+      idle: mixer.clipAction(idleModel.animations[0])
+    };
+    animations.idle.play();
+    scalingModel(model, boothSize);
+    model.position.set(data.position.x, data.position.y, data.position.z);
+    model.quaternion.set(data.quaternion.x, data.quaternion.y, data.quaternion.z, data.quaternion.w);
+    data.model = model;
+    data.mixer = mixer;
+    data.animations = animations;
+    return data;
+  };
+
+  const getBoothMesh = async (companyBoothId) => {
+    const response = await getCompanyBoothLatestLayout(companyBoothId);
+    const companyBoothLayoutVideos = {};
+    const url = response.data.url;
+    response.data.companyBoothLayoutVideos?.forEach((data) => {
+      companyBoothLayoutVideos[data.itemName] = data.url;
+    });
+    const glb = await loadGLBModel(url);
+    for (const mesh of glb.scene.children) {
+      addVideoTexture(mesh, companyBoothLayoutVideos);
+      fixTextureOffset(mesh);
+    }
+    return glb.scene;
+  };
 
   if (state.boothMesh === undefined) return <LoadingComponent isWholePage={true} />;
   const boothSize = calculateMeshSize(state.boothMesh);
