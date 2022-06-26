@@ -1,3 +1,4 @@
+import { AssignEmployeeDetailModalContainer } from './AssignEmployeeDetailModal.container';
 import { Button, Modal, Progress, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JOB_FAIR_STATUS } from '../../constants/JobFairConst';
@@ -15,7 +16,9 @@ import { getJobFairByIDAPI, publishJobFairAPI } from '../../services/jobhub-api/
 import { getLayoutByJobFairId } from '../../services/jobhub-api/LayoutControllerService';
 import { getStatisticsByJobFair } from '../../services/jobhub-api/AssignmentControllerService';
 import { green } from '@ant-design/colors';
-import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import RoleType from '../../constants/RoleType';
 import moment from 'moment';
 
 const organizeJobFairStep = 5;
@@ -79,6 +82,7 @@ const calculateProgressPercentage = (jobFairData, layoutData, statistics) => {
 };
 
 export const JobFairCheckListContainer = ({ jobFairId }) => {
+  const role = useSelector((state) => state?.authentication?.user?.roles);
   const [state, setState] = useState({
     jobFairData: undefined,
     layoutData: undefined,
@@ -97,6 +101,7 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
 
   const history = useHistory();
   const [publishModalVisible, setPublishModalVisible] = useState(false);
+  const [assignEmployeeModalVisible, setAssignEmployeeModalVisible] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -184,6 +189,14 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
     setPublishModalVisible(true);
   };
 
+  const onCloseAssignEmployeeModal = () => {
+    setAssignEmployeeModalVisible(false);
+  };
+
+  const handleViewAssignmentDetail = () => {
+    setAssignEmployeeModalVisible(true);
+  };
+
   if (state.isLoading) return <LoadingComponent isWholePage={true} />;
 
   return (
@@ -198,16 +211,25 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
         }}>
         Are you sure to publish <Text strong>{state.jobFairData.name}</Text>?
       </Modal>
+      <AssignEmployeeDetailModalContainer
+        visible={assignEmployeeModalVisible}
+        onClose={onCloseAssignEmployeeModal}
+        jobFairId={jobFairId}
+      />
+
       <div className={'job-fair-check-list-container'}>
-        <Button
-          type={'link'}
-          onClick={() => {
-            history.push(PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE);
-          }}
-          style={{ fontSize: '1.2rem', marginTop: '1rem' }}>
-          <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: 5 }} />
-          Back to my job fair
-        </Button>
+        {role === RoleType.COMPANY_MANAGER ? (
+          <Button
+            type={'link'}
+            onClick={() => {
+              history.push(PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE);
+            }}
+            style={{ fontSize: '1.2rem', marginTop: '1rem' }}>
+            <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: 5 }} />
+            Back to my job fair
+          </Button>
+        ) : null}
+
         <div className={'progress-bar'}>
           <Progress percent={state.progressData.score} strokeColor={green[6]} />
         </div>
@@ -231,6 +253,7 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
             statistics={state.statistics}
             isChooseLayout={state.progressData.choosingLayout}
             handleEditAssignEmployee={handleEditAssignEmployee}
+            handleViewDetail={handleViewAssignmentDetail}
           />
           <Step4Component
             isFinish={state.progressData.landing}

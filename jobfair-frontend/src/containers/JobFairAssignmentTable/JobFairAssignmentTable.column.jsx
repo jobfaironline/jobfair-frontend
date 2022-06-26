@@ -1,6 +1,11 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { JOB_FAIR_STATUS_FOR_EMPLOYEE } from '../../constants/JobFairConst';
 import { Tag, Typography } from 'antd';
 import { convertEnumToString, convertToUTCString } from '../../utils/common';
+import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
+
+const { Text } = Typography;
 
 const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
   {
@@ -23,7 +28,13 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
     ...getColumnSearchProps('jobFairName'),
     onFilter: (value, record) => record.title.indexOf(value) === 0,
     sorter: (a, b) => a.title.localeCompare(b.title),
-    sortDirections: ['descend']
+    sortDirections: ['descend'],
+    render: (text, record) => (
+      <a href='#' onClick={record.onClickJobFair}>
+        <Text>{text}</Text>
+        <FontAwesomeIcon icon={faExternalLink} style={{ marginLeft: '5px' }} />
+      </a>
+    )
   },
   {
     title: 'Assignment type',
@@ -78,9 +89,24 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
     title: 'Status',
     key: 'status',
     dataIndex: 'status',
-    render: (status) => (
+    filters: [
+      {
+        text: JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE,
+        value: JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE
+      },
+      {
+        text: JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING,
+        value: JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING
+      },
+      {
+        text: JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET,
+        value: JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET
+      }
+    ],
+    onFilter: (value, record) => record.status === value,
+    render: (status, record) => (
       <>
-        <Tag color={'green'}>{status}</Tag>
+        <Tag color={record.statusColor}>{status}</Tag>
       </>
     )
   }

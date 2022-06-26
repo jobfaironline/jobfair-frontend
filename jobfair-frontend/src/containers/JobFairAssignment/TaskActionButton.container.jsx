@@ -1,11 +1,11 @@
 import { AssignmentConst } from '../../constants/AssignmentConst';
 import { Button, Space } from 'antd';
+import { JOB_FAIR_STATUS_FOR_EMPLOYEE } from '../../constants/JobFairConst';
 import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
 import { generatePath, useHistory } from 'react-router-dom';
 import React from 'react';
-import moment from 'moment';
 
-const TaskActionButton = ({ type, record }) => {
+const TaskActionButton = ({ type, status, record }) => {
   const history = useHistory();
 
   switch (type?.toUpperCase()) {
@@ -13,7 +13,7 @@ const TaskActionButton = ({ type, record }) => {
       return (
         <Space>
           <Button
-            disabled={record?.publicStartTime > moment().valueOf() || record?.publicEndTime < moment().valueOf()}
+            disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
             type='link'
             onClick={() =>
               history.push(
@@ -30,13 +30,13 @@ const TaskActionButton = ({ type, record }) => {
       return (
         <Space>
           <Button
-            disabled={record?.publicStartTime > moment().valueOf() || record?.publicEndTime < moment().valueOf()}
+            disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
             type='link'
             onClick={() => history.push(generatePath(PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE))}>
             Interview schedule
           </Button>
           <Button
-            disabled={record?.publicStartTime > moment().valueOf() || record?.publicEndTime < moment().valueOf()}
+            disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
             type='link'
             onClick={() => history.push(generatePath(PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE))}>
             Application list
@@ -48,7 +48,7 @@ const TaskActionButton = ({ type, record }) => {
         <Space>
           <Button
             type='link'
-            disabled={record?.decorateStartTime > moment().valueOf() || record?.decorateEndTime < moment().valueOf()}
+            disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
             onClick={() =>
               history.push(
                 generatePath(PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE, {
@@ -66,6 +66,7 @@ const TaskActionButton = ({ type, record }) => {
         <Space>
           <Button
             type='link'
+            disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
             onClick={() =>
               history.push(
                 generatePath(PATH_COMPANY_EMPLOYEE.BOOTH_DESCRIPTION_PAGE, {
@@ -76,6 +77,7 @@ const TaskActionButton = ({ type, record }) => {
             My booth profile
           </Button>
           <Button
+            disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
             type='link'
             onClick={() =>
               history.push(
