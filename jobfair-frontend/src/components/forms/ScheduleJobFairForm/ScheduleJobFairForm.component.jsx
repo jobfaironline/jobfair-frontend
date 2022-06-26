@@ -57,7 +57,7 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
   const onOpenChange = (open) => {
     if (open) {
       hackRef.current = [null, null];
-      publicRangesRef.current = [moment().add(1, 'days'), null];
+      publicRangesRef.current = [null, moment().add(3, 'day').endOf('day')];
     } else hackRef.current = null;
   };
   return (
