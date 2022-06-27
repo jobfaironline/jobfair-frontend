@@ -563,3 +563,20 @@ export const CategoriesConst = [
     label: 'Engineering'
   }
 ];
+
+export const SearchCategories = [
+  {
+    value: -1,
+    label: 'All'
+  },
+  ...CategoriesConst
+];
+
+export const SearchSubCategories = [
+  ...SubCategories,
+  {
+    value: -1,
+    label: 'All',
+    category_id: -1
+  }
+];

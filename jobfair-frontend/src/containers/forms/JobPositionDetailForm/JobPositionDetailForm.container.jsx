@@ -51,7 +51,7 @@ const JobPositionDetailFormContainer = (props) => {
     isDisplayDetail,
     extra: isDisplayDetail
       ? [
-          <a href={'#'} onClick={onClickUpdate}>
+          <a onClick={onClickUpdate} key={'edit'}>
             <FontAwesomeIcon icon={faPen} size={'2x'} color={'black'} />
           </a>
         ]

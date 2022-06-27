@@ -8,8 +8,9 @@ export const getAllJobFairAPI = ({
   name = '',
   direction = 'DESC',
   offset = '0',
-  pageSize = '10',
-  sortBy = 'createTime'
+  pageSize = '100',
+  sortBy = 'createTime',
+  status = null
 }) =>
   CallAPI(
     `${JOB_FAIR_END_POINT}`,
@@ -20,7 +21,8 @@ export const getAllJobFairAPI = ({
       offset,
       pageSize,
       sortBy,
-      name
+      name,
+      status
     }
   );
 
@@ -54,3 +56,5 @@ export const getJobFairForAttendant = ({
     {},
     { name, countryId, categoryId, direction, offset, pageSize, sortBy }
   );
+export const checkJobFairPublishAPI = (jobFairId) =>
+  CallAPI(`${JOB_FAIR_END_POINT}/check-publish/${jobFairId}`, 'POST', {}, {});

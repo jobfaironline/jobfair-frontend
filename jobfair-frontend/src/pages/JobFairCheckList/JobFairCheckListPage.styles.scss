@@ -12,7 +12,6 @@
   }
 
   .step-container {
-
     .ant-image-img {
       object-fit: cover;
     }
@@ -36,6 +35,7 @@
         .button-container {
           margin-left: auto;
           display: flex;
+          align-items: center;
         }
 
         .time {

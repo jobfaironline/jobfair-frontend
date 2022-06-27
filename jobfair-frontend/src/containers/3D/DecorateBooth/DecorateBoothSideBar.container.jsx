@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { DecorateBoothSideBarComponent } from '../../../components/customized-components/DecoratedBoothTool/DecoratedBoothSideBar/DecoratedBoothSideBar.component';
-import { IMAGE_PLANE_NAME } from '../../../constants/DecorateBoothConstant';
+import { IMAGE_PLANE_NAME } from '../../../constants/3DConst';
 import { decorateBoothAction } from '../../../redux-flow/decorateBooth/decorate-booth-slice';
 import { getBase64 } from '../../../utils/common';
 import { notify } from '../../../utils/toastutil';
@@ -67,30 +67,9 @@ export const DecoratedBoothSideBarContainer = (props) => {
       texture.flipY = false;
       texture.encoding = THREE.sRGBEncoding;
 
-      const screenMesh = selectedItem?.clone(false);
-      screenMesh.clear();
+      const screenItem = selectedItem?.clone(false);
+      const screenMesh = screenItem.getObjectByName('Media');
 
-      //check if screenMesh is a plane
-      if (
-        screenMesh.geometry.boundingBox.max.x - screenMesh.geometry.boundingBox.min.x === 0 ||
-        screenMesh.geometry.boundingBox.max.y - screenMesh.geometry.boundingBox.min.y === 0 ||
-        screenMesh.geometry.boundingBox.max.z - screenMesh.geometry.boundingBox.min.z === 0
-      ) {
-        texture.center.x = 0.5;
-        texture.center.y = 0.5;
-        texture.center.set(0.5, 0.5);
-        texture.rotation = Math.PI / 2;
-
-        const newMaterial = selectedItem?.material.clone();
-        newMaterial.color = new THREE.Color(0xffffff);
-        newMaterial.emissive = new THREE.Color(0x000000);
-        newMaterial.size = THREE.DoubleSide;
-        newMaterial.map = texture;
-        selectedItem.material = newMaterial;
-        return;
-      }
-
-      //get screenSize
       const scale = screenMesh.scale;
       const localSize = new THREE.Vector3();
       screenMesh.geometry.boundingBox.getSize(localSize);
@@ -98,41 +77,47 @@ export const DecoratedBoothSideBarContainer = (props) => {
 
       //calculate which dimension is the length and which dimension is the width
       let width;
-      if (screenSize.x > screenSize.z) width = screenSize.x / screenMesh.scale.x;
-      else width = screenSize.z / screenMesh.scale.z;
-
-      let plane;
+      if (screenSize.x > screenSize.z) width = localSize.x;
+      else width = localSize.z;
 
       //create new plane
-      const geometry = new THREE.PlaneGeometry(width, screenSize.y / screenMesh.scale.y);
+      const geometry = new THREE.PlaneGeometry(width, localSize.y);
       const material = new THREE.MeshStandardMaterial({
         side: THREE.DoubleSide,
         map: texture
       });
 
-      // eslint-disable-next-line prefer-const
-      plane = new THREE.Mesh(geometry, material);
+      //get screen center point
+      const middle = new THREE.Vector3();
+      screenMesh.geometry.computeBoundingBox();
+
+      const vectors = ['x', 'y', 'z'];
+      vectors.forEach((vector) => {
+        middle[vector] =
+          (screenMesh.geometry.boundingBox.max[vector] + screenMesh.geometry.boundingBox.min[vector]) / 2;
+      });
+
+      const plane = new THREE.Mesh(geometry, material);
       plane.name = IMAGE_PLANE_NAME;
+
       //rotate plane to face the screen direction
       if (screenSize.x > screenSize.z) {
         const myAxis = new THREE.Vector3(0, 0, 1);
         plane.rotateOnAxis(myAxis, THREE.Math.degToRad(180));
-
-        plane.position.setZ(-screenSize.z / 2 / screenMesh.scale.z - 0.05);
+        plane.position.setZ(-screenSize.z / 2 / screenMesh.scale.z - 0.4);
       } else {
         let myAxis = new THREE.Vector3(0, 1, 0);
         plane.rotateOnAxis(myAxis, THREE.Math.degToRad(90));
         myAxis = new THREE.Vector3(0, 0, 1);
         plane.rotateOnAxis(myAxis, THREE.Math.degToRad(180));
-
-        plane.position.setX(-screenSize.x / 2 / screenMesh.scale.x - 0.05);
+        plane.position.setX(-screenSize.x / 2 / screenMesh.scale.x - 0.4);
       }
+      plane.position.setY(middle.y);
 
-      //remove previous plane-image
-      const prevPlane = selectedItem?.getObjectByName(IMAGE_PLANE_NAME);
-      if (prevPlane !== undefined) selectedItem?.remove(prevPlane);
-
-      selectedItem?.add(plane);
+      const realScreen = selectedItem?.getObjectByName('Media');
+      const prevPlane = realScreen?.getObjectByName(IMAGE_PLANE_NAME);
+      if (prevPlane !== undefined) realScreen?.remove(prevPlane);
+      realScreen.add(plane);
     },
     showUploadList: false
   };
@@ -180,37 +165,10 @@ export const DecoratedBoothSideBarContainer = (props) => {
 
   const onChangeBrightness = (value) => {
     if (selectedItem === undefined) return;
-    let imagePlane;
-    const screenMesh = selectedItem?.clone(false);
-    screenMesh.clear();
-    //check if screenMesh is a plane
-    if (
-      screenMesh.geometry.boundingBox.max.x - screenMesh.geometry.boundingBox.min.x === 0 ||
-      screenMesh.geometry.boundingBox.max.y - screenMesh.geometry.boundingBox.min.y === 0 ||
-      screenMesh.geometry.boundingBox.max.z - screenMesh.geometry.boundingBox.min.z === 0
-    ) {
-      imagePlane = screenMesh;
-      if (!imagePlane) return;
-      if (value < 50) {
-        const blackVal = Math.round((value * 255) / 50);
-        const bkgrnd = `rgb(${blackVal}, ${blackVal}, ${blackVal})`;
-        imagePlane.material.color = new THREE.Color(bkgrnd);
-        imagePlane.material.emissive = new THREE.Color(0x000000);
-      } else {
-        const white = Math.round(((value - 50) * 255) / 50);
-        const bkgrnd = `rgb(${white}, ${white}, ${white})`;
-        imagePlane.material.emissive = new THREE.Color(bkgrnd);
-        imagePlane.material.color = new THREE.Color(0xffffff);
-      }
-      return;
-    }
-    //if screenMesh is not a plane
-    for (const child of selectedItem.children) {
-      if (child.name.includes(IMAGE_PLANE_NAME)) {
-        imagePlane = child;
-        break;
-      }
-    }
+    const screenMesh = selectedItem.getObjectByName('Media');
+    if (screenMesh === undefined) return;
+    const imagePlane = screenMesh.getObjectByName(IMAGE_PLANE_NAME);
+
     if (!imagePlane) return;
     let newMaterial;
     if (imagePlane.material.isMeshBasicMaterial) {
@@ -237,17 +195,9 @@ export const DecoratedBoothSideBarContainer = (props) => {
 
   const onChangeSharpness = (value) => {
     if (selectedItem === undefined) return;
-    let imagePlane;
-    const screenMesh = selectedItem?.clone(false);
-    screenMesh.clear();
-    //check if screenMesh is a plane
-    if (
-      screenMesh.geometry.boundingBox.max.x - screenMesh.geometry.boundingBox.min.x === 0 ||
-      screenMesh.geometry.boundingBox.max.y - screenMesh.geometry.boundingBox.min.y === 0 ||
-      screenMesh.geometry.boundingBox.max.z - screenMesh.geometry.boundingBox.min.z === 0
-    )
-      imagePlane = screenMesh;
-    else imagePlane = selectedItem.getObjectByName(IMAGE_PLANE_NAME);
+    const screenItem = selectedItem?.clone(false);
+    const screenMesh = screenItem.getObjectByName('Media');
+    const imagePlane = screenMesh.getObjectByName(IMAGE_PLANE_NAME);
 
     if (!imagePlane) return;
     switch (value) {
@@ -270,26 +220,15 @@ export const DecoratedBoothSideBarContainer = (props) => {
   };
 
   const calculateScreenRation = () => {
-    const screenMesh = selectedItem?.clone(false);
-    screenMesh.clear();
-    //check if screenMesh is a plane
-    if (
-      screenMesh.geometry.boundingBox.max.x - screenMesh.geometry.boundingBox.min.x === 0 ||
-      screenMesh.geometry.boundingBox.max.y - screenMesh.geometry.boundingBox.min.y === 0 ||
-      screenMesh.geometry.boundingBox.max.z - screenMesh.geometry.boundingBox.min.z === 0
-    ) {
-      const scale = screenMesh.scale;
-      const width = scale.x < scale.z ? scale.x : scale.z;
-      return scale.y / width;
-    }
-
+    if (selectedItem === undefined) return 0;
+    const screenItem = selectedItem?.clone(false);
+    const screenMesh = screenItem.getObjectByName('Media');
+    if (screenMesh === undefined) return 0;
     const scale = screenMesh.scale;
     const localSize = new THREE.Vector3();
     screenMesh.geometry.boundingBox.getSize(localSize);
     const screenSize = new THREE.Vector3(scale.x * localSize.x, scale.y * localSize.y, scale.z * localSize.z);
-
     const width = screenSize.x > screenSize.z ? screenSize.x : screenSize.z;
-
     return width / screenSize.y;
   };
 

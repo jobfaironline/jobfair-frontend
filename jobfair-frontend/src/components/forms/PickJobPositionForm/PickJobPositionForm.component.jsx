@@ -109,15 +109,7 @@ const PickJobPositionForm = (props) => {
                             <div className={'job-position-information'}>
                               <Text className={'label'}>Number of position: </Text>
                               <Form.Item {...restField} name={[name, 'numOfPosition']}>
-                                <InputNumber
-                                  disabled
-                                  className={'disable-input'}
-                                  placeholder={'Not enter'}
-                                  formatter={(value) => {
-                                    formatMoney(value);
-                                  }}
-                                  parser={parseMoney}
-                                />
+                                <InputNumber disabled className={'disable-input'} placeholder={'Not enter'} />
                               </Form.Item>
                             </div>
                           </div>
@@ -138,6 +130,22 @@ const PickJobPositionForm = (props) => {
             </>
           )}
         </Form.List>
+        <Form.Item shouldUpdate>
+          {() => (
+            <div style={{ display: 'flex', width: '100%', marginTop: '1rem' }}>
+              <Button
+                type='primary'
+                htmlType='submit'
+                className={'button'}
+                style={{ marginLeft: 'auto' }}
+                disabled={
+                  !form.isFieldsTouched() || form.getFieldsError().filter(({ errors }) => errors.length).length > 0
+                }>
+                Submit
+              </Button>
+            </div>
+          )}
+        </Form.Item>
       </Form>
     </>
   );

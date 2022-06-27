@@ -5,6 +5,7 @@ import {
   readAllNotification,
   readNotification
 } from '../../services/jobhub-api/NotifcationControllerService';
+import { mapperForNotification } from '../../utils/mapperForNotification';
 import { notification } from 'antd';
 import { notificationAction } from '../../redux-flow/notification/notification-slice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,7 +25,9 @@ export const NotificationContainer = () => {
 
   const onClick = async () => {
     try {
-      const notificationData = (await getNotification()).data;
+      let notificationData = (await getNotification()).data;
+      notificationData = notificationData.map((notification) => mapperForNotification(notification));
+
       dispatch(notificationAction.setData(notificationData));
       setIsVisible((prevState) => !prevState);
     } catch (e) {

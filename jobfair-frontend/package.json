@@ -51,6 +51,7 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-input-emoji": "^4.1.0",
     "react-loading": "^2.0.3",
+    "react-player": "^2.10.1",
     "react-postprocessing": "^1.4.0",
     "react-redux": "^7.2.6",
     "react-router": "^6.2.1",

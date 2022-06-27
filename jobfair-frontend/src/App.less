@@ -107,7 +107,7 @@ home
 
 .page {
   flex: 1;
-  margin-top: 126px; /*change this when navbar height is changed */
+  margin-top: 124px; /*change this when navbar height is changed */
   padding-left: 5rem;
   padding-right: 5rem;
   scroll-margin: 200px;
@@ -204,7 +204,8 @@ home
 }
 
 .disable-form {
-  .ant-input-affix-wrapper-disabled, .ant-input[disabled] {
+  .ant-input-affix-wrapper-disabled,
+  .ant-input[disabled] {
     color: black;
     background-color: white;
     box-shadow: none;
@@ -240,7 +241,7 @@ home
     cursor: default;
   }
 
-  .ant-upload.ant-upload-drag.ant-upload-disabled{
+  .ant-upload.ant-upload-drag.ant-upload-disabled {
     cursor: default;
     border: none;
     background-color: transparent;
@@ -249,5 +250,38 @@ home
   .ant-upload.ant-upload-disabled {
     cursor: default;
   }
+}
 
+.ant-layout-footer {
+  padding: 0 !important;
+  margin-top: auto !important;
+}
+
+.notification-message-clickable {
+  transition: 0.1s;
+
+}
+
+.notification-message-clickable:hover {
+  background-color: #d9d9d9 !important;
+  cursor: pointer;
+}
+
+.ant-modal-header{
+  background-color: #1890ff!important;
+  color: white!important;
+  .ant-modal-title{
+    color: white!important;
+  }
+
+}
+
+.ant-modal-content{
+  .ant-modal-close-x{
+    color: white!important;
+  }
+}
+
+.ant-dropdown {
+  z-index: 5!important;
 }

@@ -10,7 +10,7 @@ const { TabPane } = Tabs;
 const NewAccountRegisterFormComponent = () => (
   <div className='register-container'>
     <Divider orientation='center' plain>
-      <Typography.Title level={4}>Job Fair Online - Sign in</Typography.Title>
+      <Typography.Title level={4}>Job Fair Online - Register</Typography.Title>
     </Divider>
     <Tabs defaultActiveKey='ATTENDANT' centered>
       <TabPane tab='ATTENDANT' key='ATTENDANT'>

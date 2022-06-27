@@ -38,7 +38,8 @@ export const PATH_ATTENDANT = {
   INTERVIEW_ROOM_PAGE: '/attendant/interview/:roomId',
   INTERVIEW_SCHEDULE: '/attendant/interview-schedule',
   RESUME_DETAIL_PAGE: '/attendant/resume-detail',
-  ATTEMPT_TEST_PAGE: '/attendant/attempt-test/:quizId'
+  ATTEMPT_TEST_PAGE: '/attendant/attempt-test/:quizId',
+  RESUME_MANAGEMENT_PAGE: '/attendant/resume-management'
 };
 export const PATH_COMPANY_EMPLOYEE = {
   COMPANY_PROFILE_PAGE: '/employee/company-profile',
@@ -52,7 +53,9 @@ export const PATH_COMPANY_EMPLOYEE = {
   //decorate booth
   DECORATE_BOOTH_PAGE: '/employee/decorate-booth/:jobFairId/:companyBoothId',
   ASSIGN_TASK_PAGE: '/employee/assign-task/:boothId',
-  BOOTH_DESCRIPTION_PAGE: '/employee/booth-description/:assignmentId'
+  BOOTH_DESCRIPTION_PAGE: '/employee/booth-description/:assignmentId',
+  CHECKLIST: '/employee/checklist/:jobFairId',
+  JOB_FAIR_BOOTH_REVIEW: '/employee/review-booth/:boothId'
 };
 export const PATH_COMPANY_MANAGER = {
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',

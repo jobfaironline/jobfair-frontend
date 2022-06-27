@@ -1,9 +1,8 @@
 import './JobFairGridPublicContainer.styles.scss';
-import { ATTENDANT } from '../../../constants/RoleType';
-import { CategoriesConst, SubCategories } from '../../../constants/CompanyProfileConstant';
 import { Divider, Input, Select, notification } from 'antd';
-import { NotificationType } from '../../../constants/NotificationType';
+import { NotificationType } from '../../../constants/NotificationConstant';
 import { PATH } from '../../../constants/Paths/Path';
+import { SearchCategories, SearchSubCategories } from '../../../constants/CompanyProfileConstant';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getCountryOrder } from '../../../utils/common';
 import { getJobFairForAttendant } from '../../../services/jobhub-api/JobFairControllerService';
@@ -14,26 +13,41 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const { Search } = Input;
 const { Option, OptGroup } = Select;
+
 const JobFairGridPublicContainer = ({ role }) => {
   const webSocketClient = useSelector(selectWebSocket);
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const history = useHistory();
   const [searchAndFilterValue, setSearchAndFilterValue] = useState({
     searchValue: '',
     category: '',
     country: ''
   });
-  const latestData = useRef(data);
 
-  useEffect(() => {
-    fetchData();
+  const latestData = useRef(data);
+  useEffect(async () => {
+    try {
+      const res = await getJobFairForAttendant({
+        name: searchAndFilterValue.searchValue,
+        categoryId: searchAndFilterValue.category === -1 ? null : searchAndFilterValue.category,
+        countryId: searchAndFilterValue.country
+      });
+      latestData.current = res.data.content;
+      setData(res.data.content);
+    } catch (e) {
+      notification['error']({
+        message: `Error occurred: ${e.response.data.message}`
+      });
+    }
   }, [searchAndFilterValue]);
 
   useEffect(() => {
-    webSocketClient.addEvent('chang-job-fair-view', changeJobFairView);
-    return () => {
-      webSocketClient.removeEvent('chang-job-fair-view');
-    };
+    if (role !== undefined) {
+      webSocketClient.addEvent('chang-job-fair-view', changeJobFairView);
+      return () => {
+        webSocketClient.removeEvent('chang-job-fair-view');
+      };
+    }
   }, []);
 
   const changeJobFairView = (notificationData) => {
@@ -45,25 +59,6 @@ const JobFairGridPublicContainer = ({ role }) => {
       if (!jobFair) return;
       jobFair.visitCount = count;
       setData([...latestData.current]);
-    }
-  };
-
-  const fetchData = async () => {
-    try {
-      let res;
-      if (role === ATTENDANT) {
-        res = await getJobFairForAttendant({
-          name: searchAndFilterValue.searchValue,
-          categoryId: searchAndFilterValue.category,
-          countryId: searchAndFilterValue.country
-        });
-        latestData.current = res.data.content;
-        setData(res.data.content);
-      }
-    } catch (e) {
-      notification['error']({
-        message: `Error occurred: ${e.response.data.message}`
-      });
     }
   };
 
@@ -93,7 +88,7 @@ const JobFairGridPublicContainer = ({ role }) => {
     <div className={'job-fair-grid-public-container'}>
       <div className={'header'}>
         <Search
-          placeholder='Search by company name'
+          placeholder='Search by job fair name'
           onSearch={(value) => handleOnSearch(value)}
           style={{ width: '30rem', marginRight: '5rem' }}
         />
@@ -110,9 +105,9 @@ const JobFairGridPublicContainer = ({ role }) => {
               <Divider style={{ margin: '8px 0' }} />
             </>
           )}>
-          {CategoriesConst.map((category) => (
+          {SearchCategories.map((category) => (
             <OptGroup label={category.label}>
-              {SubCategories.filter((item) => item.category_id === category.value).map((item) => (
+              {SearchSubCategories.filter((item) => item.category_id === category.value).map((item) => (
                 <Option value={item.value}>{item.label}</Option>
               ))}
             </OptGroup>

@@ -1,0 +1,31 @@
+.faq {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  .left-side {
+    color: #1e3b9b;
+    font-size: 50px;
+    text-transform: uppercase;
+    font-weight: bold;
+    flex: 1;
+    margin-left: 2rem;
+  }
+
+  .right-side {
+    flex: 4;
+  }
+
+  .panel-header {
+    font-size: large;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .number {
+      font-size: 30px;
+      color: #1e3b9b;
+      margin-right: 1rem;
+      font-weight: bold;
+    }
+  }
+}

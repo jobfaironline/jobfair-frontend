@@ -94,10 +94,11 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility,
   const handlePreviewLayout = (layoutId, layoutName) => {
     const modal = Modal.info();
     modal.update({
+      centered: true,
       width: '800px',
       title: `Layout: ${layoutName}`,
       content: (
-        <div style={{ height: '700px' }}>
+        <div style={{ height: '500px' }}>
           <ReviewBoothLayoutContainer id={layoutId} type={BoothLayoutType.DECORATOR} />
         </div>
       )
@@ -112,6 +113,7 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility,
     <Modal
       footer={false}
       visible={myLayoutVisibility}
+      centered={true}
       title='My booth layout'
       onOk={handleOk}
       onCancel={handleCancel}
@@ -149,7 +151,10 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility,
                           shape='circle'
                           icon={<EyeOutlined />}
                           size='small'
-                          onClick={() => handlePreviewLayout(layout?.id, layout?.name)}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            handlePreviewLayout(layout?.id, layout?.name);
+                          }}
                         />
                       </Tooltip>
                     </Space>
