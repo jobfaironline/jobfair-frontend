@@ -39,6 +39,8 @@ const JobPositionDetailFormContainer = (props) => {
   const componentProps = {
     form,
     onFinish,
+    contactEmail: jobPosition.contactEmail,
+    contactPersonName: jobPosition.contactPersonName,
     formItemButtons: [
       <Button type='primary' className={'button'} onClick={onCancel}>
         Cancel
