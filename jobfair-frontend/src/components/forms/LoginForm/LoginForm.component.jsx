@@ -38,7 +38,10 @@ const LoginFormComponent = ({ onFinish, form }) => {
           </Form.Item>
           <Divider style={{ margin: '1rem' }} />
           <Form.Item className='register' style={{ flexDirection: 'column', alignItems: 'center' }}>
-            <span>Don't you have an account?</span> <Button type='link'>Register</Button>
+            <span>Don't you have an account?</span>{' '}
+            <Button type='link' onClick={() => history.push(PATH.REGISTER_PAGE)}>
+              Register
+            </Button>
           </Form.Item>
         </Form>
       </div>

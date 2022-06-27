@@ -56,3 +56,5 @@ export const getJobFairForAttendant = ({
     {},
     { name, countryId, categoryId, direction, offset, pageSize, sortBy }
   );
+export const checkJobFairPublishAPI = (jobFairId) =>
+  CallAPI(`${JOB_FAIR_END_POINT}/check-publish/${jobFairId}`, 'POST', {}, {});

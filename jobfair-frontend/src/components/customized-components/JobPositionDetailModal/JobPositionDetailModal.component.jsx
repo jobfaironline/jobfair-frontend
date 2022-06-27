@@ -1,3 +1,4 @@
+import './JobPositionDetailModal.styles.scss';
 import { Col, Row, Space, Tag, Typography } from 'antd';
 import { convertEnumToString } from '../../../utils/common';
 import React from 'react';
@@ -5,7 +6,7 @@ import React from 'react';
 const { Text } = Typography;
 
 const JobPositionDetailModalComponent = ({ data }) => (
-  <div style={{ height: 'max-content', fontSize: '1.2rem' }}>
+  <div className={'job-position-detail-modal'} style={{ height: 'max-content', fontSize: '1rem' }}>
     <div
       key='no'
       style={{
@@ -13,29 +14,31 @@ const JobPositionDetailModalComponent = ({ data }) => (
         flexDirection: 'column',
         alignItems: 'center'
       }}>
-      <Text strong style={{ fontSize: '1.8rem' }}>{`${data.title}`}</Text>
+      <Text strong style={{ fontSize: '1.4rem' }}>{`${data.title}`}</Text>
     </div>
     <div>
       <div className='sub-title' style={{}}>
-        <Text strong style={{ fontSize: '1.5rem' }}>
-          General information
+        <Text strong style={{ fontSize: '1.2rem' }}>
+          Job information
         </Text>
       </div>
       <Col style={{ marginLeft: '1rem' }}>
         <Col gutter={[0, 48]}>
           <Row key='language' style={{}}>
             <Space>
-              <Text strong>Prefer language: </Text>
+              <Text strong style={{ fontSize: '1rem' }}>
+                Prefer language:{' '}
+              </Text>
               <Text>{data.language}</Text>
             </Space>
           </Row>
-          <Row gutter={[100, 0]}>
-            <Col span={8} key='level'>
+          <Row>
+            <Col span={12} key='level'>
               <Space>
                 <Text strong>Job level: </Text>
-                <Text>
+                <Tag color='purple' style={{ fontSize: '0.9rem', padding: '1px 5px' }}>
                   {data.level !== undefined ? convertEnumToString(data.level) : convertEnumToString(data.jobLevel)}
-                </Text>
+                </Tag>
               </Space>
             </Col>
             <Col span={12} key='type'>
@@ -45,8 +48,8 @@ const JobPositionDetailModalComponent = ({ data }) => (
               </Space>
             </Col>
           </Row>
-          <Row gutter={[100, 0]}>
-            <Col span={8}>
+          <Row>
+            <Col span={12}>
               <div key='contact-name'>
                 <Space>
                   <Text strong>Contact:</Text>
@@ -64,36 +67,33 @@ const JobPositionDetailModalComponent = ({ data }) => (
             </Col>
           </Row>
           <Row key='skills'>
-            <Space wrap size='4' direction='vertical'>
-              <Text strong>Required skills: </Text>
-              <Space wrap size='4'>
-                {data.skillTagDTOS.map((skill) => (
-                  <Tag color='blue' style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
-                    {skill.name}
-                  </Tag>
-                ))}
+            <Col span={12}>
+              <Space wrap size='4' direction='vertical'>
+                <Text strong>Required skills: </Text>
+                <Space wrap size='4'>
+                  {data.skillTagDTOS.map((skill) => (
+                    <Tag color='green' style={{ fontSize: '0.9rem', padding: '1px 5px' }}>
+                      {skill.name}
+                    </Tag>
+                  ))}
+                </Space>
               </Space>
-            </Space>
-          </Row>
-          <Row key='category'>
-            <Space wrap size='4' direction='vertical'>
-              <Text strong>Category: </Text>
-              <Space wrap size='4'>
-                {data.subCategoryDTOs.map((category) => (
-                  <Tag color='blue' style={{ fontSize: '1rem', padding: '0.15rem 0.6rem' }}>
-                    {category.name}
-                  </Tag>
-                ))}
+            </Col>
+            <Col span={12}>
+              <Space wrap size='4' direction='vertical'>
+                <Text strong>Category: </Text>
+                <Space wrap size='4'>
+                  {data.subCategoryDTOs.map((category) => (
+                    <Tag color='blue' style={{ fontSize: '0.9rem', padding: '1px 5px' }}>
+                      {category.name}
+                    </Tag>
+                  ))}
+                </Space>
               </Space>
-            </Space>
+            </Col>
           </Row>
         </Col>
       </Col>
-      <div className='sub-title' style={{ margin: '0 0 0 0' }}>
-        <Text strong style={{ fontSize: '1.5rem' }}>
-          Specific information
-        </Text>
-      </div>
       <Col style={{ marginLeft: '1rem' }}>
         <div>
           <div key='description'>
