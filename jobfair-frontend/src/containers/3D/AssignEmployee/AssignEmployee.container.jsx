@@ -1,3 +1,4 @@
+import { AssignBoothColors } from '../../../constants/AssignmentConst';
 import { AssignEmployeeBoothList } from '../../../components/customized-components/AssignEmployeeBoothList/AssignEmployeeBoothList.component';
 import { AssignEmployeeModalContainer } from '../../AssignEmployeeModal/AssignEmployeeModal.container';
 import { Button } from 'antd';
@@ -76,13 +77,15 @@ export const AssignEmployeeContainer = (props) => {
 
     const glb = await loadGLBModel(url);
     const boothData = {};
-    for (const boothInfo of data) {
+
+    data.forEach((boothInfo, index) => {
       const id = boothInfo.id;
       const name = boothInfo.booth.name;
       boothData[name] = {
-        id
+        id,
+        color: `#${AssignBoothColors[index % AssignBoothColors.length]}`
       };
-    }
+    });
 
     setState((prevState) => ({ ...prevState, glbMesh: glb.scene, boothDataForMesh: boothData, boothData: data }));
   }, []);
@@ -150,6 +153,7 @@ export const AssignEmployeeContainer = (props) => {
             onHoverOut={onBoothMouseOut}
             onBoothClick={onBoothClick}
             onClickUploadCSV={onClickUploadCSV}
+            boothData={state.boothDataForMesh}
           />
         }
         nextButtonContent={'Start design landing page'}

@@ -6,12 +6,13 @@ import { notification } from 'antd';
 import { uploadJobFairThumbnailAPI } from '../../services/jobhub-api/JobFairControllerService';
 import { useSelector } from 'react-redux';
 import JobFairLandingPageFormComponent from '../../components/forms/JobFairLandingPageForm/JobFairLandingPageForm.component';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const CreateJobFairLandingPageContainer = ({ jobFairData, onFinish, form, jobFairId, onValueChange }) => {
   const [isError, setIsError] = useState(false);
   const [thumbnailUrl, setThumbnailUrl] = useState(jobFairData.thumbnailUrl);
   const [companyInformation, setCompanyInformation] = useState();
+  const uploadFileRef = useRef();
 
   const companyId = useSelector((state) => state.authentication.user.companyId);
 
@@ -33,23 +34,27 @@ const CreateJobFairLandingPageContainer = ({ jobFairData, onFinish, form, jobFai
 
   const uploadProps = {
     name: 'file',
-    beforeUpload: () => false,
+    beforeUpload: (file) => {
+      uploadFileRef.current = file;
+      return false;
+    },
     listType: 'picture',
     maxCount: 1,
-    onChange: async (info) => {
-      const fileExtension = info.file.name.split('.').pop();
+    onChange: async () => {
+      const file = uploadFileRef.current;
+      const fileExtension = file.name.split('.').pop();
       if (fileExtension !== 'png' && fileExtension !== 'jpg' && fileExtension !== 'jpeg') {
         notification['error']({
-          message: `${info.file.name} is not image file`
+          message: `${file.name} is not image file`
         });
         setIsError(true);
         return;
       }
       const formData = new FormData();
-      formData.append('file', info.file);
+      formData.append('file', file);
       await uploadJobFairThumbnailAPI(jobFairId, formData);
       setIsError(false);
-      const url = await getBase64(info.file);
+      const url = await getBase64(file);
       setThumbnailUrl(url);
     },
     showUploadList: !isError

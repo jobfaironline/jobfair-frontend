@@ -45,10 +45,10 @@ export const ChooseBoothCanvas = (props) => {
         shadowMap
         style={{
           width: '100%',
-          height: 'calc(100vh - 80px)',
+          height: 'calc(100vh - 124px)',
           cursor: hoverRef === undefined ? 'default' : 'pointer'
         }}
-        camera={{ far: 5000, fov: 50 }}>
+        camera={{ far: 7000, fov: 50, position: [100, 100, 0] }}>
         <CameraControls />
         <SkyComponent style={skyType} />
 
@@ -56,6 +56,7 @@ export const ChooseBoothCanvas = (props) => {
           {mesh.children.map((childMesh) => {
             if (childMesh.name.includes(BOOTH_NAME_PREFIX)) {
               const id = boothData[childMesh.name]?.id;
+              const color = boothData[childMesh.name]?.color;
               return (
                 <ChooseBoothGroundMesh
                   key={childMesh.uuid}
@@ -66,6 +67,7 @@ export const ChooseBoothCanvas = (props) => {
                   onPointerLeave={onCompanyGroundPointerOut}
                   onClick={onClick}
                   boothMeshesRef={boothMeshesRef}
+                  color={color}
                 />
               );
             }

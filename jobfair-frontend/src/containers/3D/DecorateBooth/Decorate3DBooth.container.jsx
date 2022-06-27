@@ -3,7 +3,7 @@ import { ControlButtonGroup } from '../../../components/customized-components/De
 import { DecorateBooth3DItemMenuContainer } from '../../SampleItemMenu/DecorateBooth3DItemMenu.container';
 import { DecorateBoothCanvas } from '../../../components/3D/DecorateBooth/DeoratedBoothCanvas/DecorateBoothCanvas.component';
 import { DecoratedBoothSideBarContainer } from './DecorateBoothSideBar.container';
-import { GENERIC_BOOTH_LAYOUT_URL } from '../../../constants/DecorateBoothConstant';
+import { GENERIC_BOOTH_LAYOUT_URL } from '../../../constants/3DConst';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { ModeConstant } from '../../../constants/AppConst';
 import { PATH } from '../../../constants/Paths/Path';
@@ -74,6 +74,7 @@ export const Decorate3DBoothContainer = (props) => {
   }, []);
 
   useEffect(async () => {
+    if (modelId === undefined) return;
     let url = GENERIC_BOOTH_LAYOUT_URL;
     const companyBoothLayoutVideos = {};
     try {
@@ -239,6 +240,7 @@ export const Decorate3DBoothContainer = (props) => {
     openBoothModal,
     saveIntoMyBoothLayout: () => {
       Modal.info({
+        centered: true,
         okButtonProps: { style: { display: 'none' } },
         title: 'Your layout name',
         content: (
@@ -258,7 +260,7 @@ export const Decorate3DBoothContainer = (props) => {
 
   if (modelItems.length === 0) return <LoadingComponent />;
   return (
-    <div style={{ height: 'calc(100vh - 126px)' }}>
+    <div style={{ height: 'calc(100vh - 124px)' }}>
       <MyBoothLayoutListContainer
         setMyLayoutVisibility={setMyLayoutVisibility}
         myLayoutVisibility={myLayoutVisibility}
