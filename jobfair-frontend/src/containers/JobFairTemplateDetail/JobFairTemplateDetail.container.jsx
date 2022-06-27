@@ -1,4 +1,4 @@
-import { MAIN_COLOR } from '../../styles/custom-theme';
+import { PRIMARY_COLOR } from '../../styles/custom-theme';
 import { getLayoutDetail } from '../../services/jobhub-api/LayoutControllerService';
 import { loadGLBModel } from '../../utils/ThreeJS/threeJSUtil';
 import { useParams } from 'react-router-dom';
@@ -29,7 +29,7 @@ const JobFairTemplateDetailContainer = () => {
               justifyContent: 'center',
               alignItems: 'center'
             }}>
-            <ReactLoading type={'spin'} color={MAIN_COLOR} height={100} width={100} />
+            <ReactLoading type={'spin'} color={PRIMARY_COLOR} height={100} width={100} />
           </div>
         )}
       </div>
