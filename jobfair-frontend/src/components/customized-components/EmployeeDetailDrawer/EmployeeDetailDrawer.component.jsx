@@ -1,5 +1,15 @@
 import { Col, Divider, Drawer, Row, Tag, Typography } from 'antd';
-import { convertEnumToString } from '../../../utils/common';
+
+const handleTagStatusRender = (status) => {
+  switch (status) {
+    case 'VERIFIED':
+      return <Tag color={'green'}>{status}</Tag>;
+    case 'INACTIVE':
+      return <Tag color={'red'}>{status}</Tag>;
+    default:
+      return <Tag color={'blue'}>{status}</Tag>;
+  }
+};
 
 const DescriptionItem = ({ title, content, isEnum = false }) => (
   <div className='site-description-item-profile-wrapper'>
@@ -8,7 +18,7 @@ const DescriptionItem = ({ title, content, isEnum = false }) => (
       style={{ display: 'inline', fontWeight: 'bold', marginRight: '0.5rem' }}>
       {title}:
     </p>
-    {isEnum ? <Tag color='blue'>{convertEnumToString(content)}</Tag> : <span>{` ${content}`}</span>}
+    {isEnum ? handleTagStatusRender(content) : <span>{` ${content}`}</span>}
   </div>
 );
 
