@@ -29,34 +29,36 @@ const JobFairAssignmentContainer = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
 
+  const getAssignmentCompleted = async (data) => {
+    const boothAssignmentPromises = data.map((assignment) => getAssigmentByJobFairBoothId(assignment.jobFairBooth.id));
+    const boothAssignments = await Promise.all(boothAssignmentPromises);
+    data.forEach((assignment, index) => {
+      assignment.boothAssignments = boothAssignments[index].data;
+    });
+    setData(data);
+    setTotalRecord(data.length);
+  };
+
   const fetchData = async () => {
     try {
       let res;
       if (viewAllMode) {
         res = await getAssignmentByEmployeeId('', currentPage, pageSize, '');
         if (res.data.content.find((item) => item.type !== 'STAFF')) {
-          res = res.data.content
-            .filter((item) => item.type !== 'STAFF')
-            .map((item, index) => mapperJobFairAssignment(item, index));
-          const data = [...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))];
-          const boothAssignmentPromises = data.map((assignment) =>
-            getAssigmentByJobFairBoothId(assignment.jobFairBooth.id)
-          );
-          const boothAssignments = await Promise.all(boothAssignmentPromises);
-
-          data.forEach((assignment, index) => {
-            assignment.boothAssignments = boothAssignments[index].data;
-          });
-          setData([...res]);
-          setTotalRecord(res.length);
+          const data = [
+            ...res.data.content
+              .filter((item) => item.type !== 'STAFF')
+              .map((item, index) => mapperJobFairAssignment(item, index))
+          ];
+          await getAssignmentCompleted(data);
         } else {
-          setData([...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))]);
-          setTotalRecord(res.data.totalElements);
+          const data = [...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))];
+          await getAssignmentCompleted(data);
         }
       } else {
         res = await getAssignmentByEmployeeId('', currentPage, pageSize, '', currentTab);
-        setData([...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))]);
-        setTotalRecord(res.data.totalElements);
+        const data = [...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))];
+        await getAssignmentCompleted(data);
       }
     } catch (e) {
       notification['error']({
