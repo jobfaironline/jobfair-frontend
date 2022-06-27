@@ -119,7 +119,6 @@ export const CompanyProfileContainer = () => {
         </Typography.Title>
         <a
           style={{ display: isEdit ? 'none' : 'block', marginLeft: 'auto' }}
-          href={'#'}
           onClick={() => {
             setIsEdit(true);
           }}>

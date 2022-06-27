@@ -40,7 +40,7 @@ const JobPositionDetailFormContainer = (props) => {
     form,
     onFinish,
     formItemButtons: [
-      <Button type='primary' className={'button'} onClick={onCancel}>
+      <Button className={'button'} onClick={onCancel}>
         Cancel
       </Button>,
       <Button type='primary' htmlType='submit' className={'button'}>
