@@ -82,7 +82,8 @@
     "test": "craco test",
     "eject": "react-scripts eject",
     "tien-start": "node node_modules/react-scripts/bin/react-scripts.js start",
-    "tien-format": "node node_modules/eslint/bin/eslint.js --quiet --fix . --ext .js,.jsx src/ && node node_modules/prettier/bin-prettier.js -w src/"
+    "tien-format": "node node_modules/eslint/bin/eslint.js --quiet --fix . --ext .js,.jsx src/ && node node_modules/prettier/bin-prettier.js -w src/",
+    "tien-craco": "node node_modules/@craco/craco/bin/craco.js start"
   },
   "eslintConfig": {
     "extends": [
