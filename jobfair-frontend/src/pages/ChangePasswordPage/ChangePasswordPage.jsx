@@ -2,11 +2,12 @@ import { PageHeader } from 'antd';
 import { useHistory } from 'react-router-dom';
 import ChangePasswordFormContainer from '../../containers/forms/ChangePasswordForm/ChangePasswordForm.container';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const ChangePasswordPage = () => {
   const history = useHistory();
   return (
-    <div className='page' style={{ marginTop: 80 }}>
+    <PageLayoutWrapper className='page' style={{ marginTop: 80 }}>
       <PageHeader
         className='site-page-header'
         onBack={() => history.goBack()}
@@ -14,7 +15,7 @@ const ChangePasswordPage = () => {
         subTitle=''
       />
       <ChangePasswordFormContainer />
-    </div>
+    </PageLayoutWrapper>
   );
 };
 

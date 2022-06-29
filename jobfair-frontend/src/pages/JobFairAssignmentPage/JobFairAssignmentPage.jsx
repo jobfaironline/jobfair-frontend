@@ -1,10 +1,11 @@
 import JobFairAssignmentContainer from '../../containers/JobFairAssignment/JobFairAssignment.container';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const JobFairAssignmentPage = () => (
-  <div className='page'>
+  <PageLayoutWrapper className='page'>
     <JobFairAssignmentContainer />
-  </div>
+  </PageLayoutWrapper>
 );
 
 export default JobFairAssignmentPage;

@@ -38,24 +38,67 @@
   display: flex;
   align-items: center;
   background-color: $main-color;
+  z-index: 1;
 }
 
 .sub-navbar-container {
-  position: fixed;
-  top: 80px;
-  width: 100vw;
-  background-color: $secondary-color;
-  z-index: 2;
+
+  width: 50%;
+
+  .ant-menu {
+    width: 100%;
+  }
+
+  .sub-navbar-item {
+    border-radius: 20px !important;
+    margin: 0 20px !important;
+    padding: 0 10px !important;
+  }
 
   .sub-navbar-item:hover {
     background-color: #fff;
-    border-radius: 10px 10px 0 0;
   }
 
   .sub-navbar-item {
     a:hover {
-      color: $secondary-color !important;
+      color: $main-color !important;
     }
+  }
+
+  .ant-menu-overflow-item {
+    color: #fff !important;
+    border-radius: 20px !important;
+    display: flex !important;
+
+    .ant-menu-submenu-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        font-size: 1.5rem;
+      }
+    }
+
+    
+  }
+
+  .ant-menu-overflow-item:hover {
+    color: #fff !important;
+
+    svg {
+      font-size: 1.8rem;
+    }
+  }
+
+  .ant-menu-submenu-title:hover {
+    color: #fff !important;
+    svg {
+      font-size: 1.8rem;
+    }
+  }
+  .ant-menu-horizontal>.ant-menu-submenu:after {
+    border-bottom: transparent !important;
   }
 }
 
@@ -94,4 +137,5 @@
 .avatar {
   padding: 0 1rem;
   display: flex;
+  min-width: max-content;
 }

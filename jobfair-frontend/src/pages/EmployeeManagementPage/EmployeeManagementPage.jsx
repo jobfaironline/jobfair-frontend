@@ -1,9 +1,10 @@
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import EmployeeManagementContainer from '../../containers/EmployeeManagement/EmployeeManagement.container';
 
 const EmployeeManagementPage = () => (
-  <div className='page'>
+  <PageLayoutWrapper className='page'>
     <EmployeeManagementContainer />
-  </div>
+  </PageLayoutWrapper>
 );
 
 export default EmployeeManagementPage;

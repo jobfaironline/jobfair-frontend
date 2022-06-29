@@ -1,10 +1,11 @@
 import AttendantProfileFormContainer from '../../../containers/forms/AttendantProfileForm/AttendantProfileForm.container';
 import React from 'react';
+import PageLayoutWrapper from '../../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const AttendantProfile = () => (
-  <div className='page'>
+  <PageLayoutWrapper className='page'>
     <AttendantProfileFormContainer />
-  </div>
+  </PageLayoutWrapper>
 );
 
 AttendantProfile.propTypes = {};

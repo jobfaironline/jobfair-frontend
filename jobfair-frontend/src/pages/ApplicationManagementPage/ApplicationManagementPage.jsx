@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import AttendantApplicationView from '../../containers/ApplicationView/attendant/AttendantApplicationView.container';
 import CompanyApplicationView from '../../containers/ApplicationView/company/CompanyApplicationView.container';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const { TabPane } = Tabs;
 
@@ -19,7 +20,7 @@ const ApplicationManagementPage = () => {
   };
 
   return (
-    <div className='page'>
+    <PageLayoutWrapper className='page'>
       <div style={{ margin: '4rem 0' }}>
         <Divider>
           <Typography.Title level={2}>Application management</Typography.Title>
@@ -36,7 +37,7 @@ const ApplicationManagementPage = () => {
           </TabPane>
         </Tabs>
       </div>
-    </div>
+    </PageLayoutWrapper>
   );
 };
 

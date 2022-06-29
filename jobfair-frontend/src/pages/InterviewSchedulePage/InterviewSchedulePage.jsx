@@ -1,10 +1,11 @@
 import InterviewScheduleContainer from '../../containers/InterviewScheduleCalendar/InterviewSchedule.container';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const InterviewSchedulePage = () => (
-  <div className='page padding-bottom-page'>
+  <PageLayoutWrapper className='page padding-bottom-page'>
     <InterviewScheduleContainer />
-  </div>
+  </PageLayoutWrapper>
 );
 
 export default InterviewSchedulePage;
