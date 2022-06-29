@@ -270,7 +270,7 @@ export const Decorate3DBoothContainer = (props) => {
       <div
         style={{
           display: 'flex',
-          height: mode === ModeConstant.ADD ? 'calc(100vh - 80x - 94px)' : 'calc(100vh - 80px - 64px)' //TO CHANGE CANVAS HEIGHT WHEN CHANGE MODE
+          height: 'calc(100vh - 80px - 64px)'
         }}>
         <DecoratedBoothSideBarContainer {...sideBarProps} />
         <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd} ref={meshGroupRef} renderRef={rendererRef} />
