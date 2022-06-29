@@ -1,13 +1,14 @@
 import { useParams } from 'react-router-dom';
 import AssignTaskContainer from '../../containers/AssignTask/AssignTask.container';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const AssignTaskPage = () => {
   const { boothId } = useParams();
   return (
-    <div className='page'>
+    <PageLayoutWrapper className='page'>
       <AssignTaskContainer boothId={boothId} />
-    </div>
+    </PageLayoutWrapper>
   );
 };
 

@@ -51,6 +51,7 @@ import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
 import ResumeManagmentPage from '../pages/ResumeManagementPage/ResumeManagementPage';
+import AssignmentPageBreadcumb from '../containers/AssignmentPageBreadcumb/AssignmentPageBreadcumb.container';
 
 const excludeFooterPages = [PATH.BOOTH_PAGE, PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE];
 

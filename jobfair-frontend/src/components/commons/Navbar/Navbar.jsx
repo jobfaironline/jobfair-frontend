@@ -36,35 +36,21 @@ const NavigationBar = () => {
             </div>
           </Link>
           {!role ? <AuthenticationButtonGroups handleRedirect={handleRedirect} /> : null}
+          {extraMenu(role) ? (
+            <div className={'sub-navbar-container'}>
+              <div className='Navbar'>
+                <Menu className='menu' mode='horizontal'>
+                  {extraMenu(role)}
+                </Menu>
+              </div>
+            </div>
+          ) : null}
 
-          <Space size='middle'>
+          <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
             {role ? <NotificationContainer /> : null}
-            {role ? (
-              <>
-                <Dropdown
-                  overlayStyle={{ zIndex: 0 }}
-                  visible={subNavVisible}
-                  trigger={['click']}
-                  overlay={
-                    extraMenu(role) ? (
-                      <div className={'sub-navbar-container'} style={{ position: 'relative', top: '20px' }}>
-                        <div className='Navbar'>
-                          <Menu className='menu' mode='horizontal'>
-                            {extraMenu(role)}
-                          </Menu>
-                        </div>
-                      </div>
-                    ) : null
-                  }>
-                  <AppstoreFilled
-                    style={{ fontSize: 32, color: '#FFF' }}
-                    onClick={() => setSubNavVisible((preState) => !preState)}
-                  />
-                </Dropdown>
-              </>
-            ) : null}
+
             {role ? <AvatarMenu logoutFunction={handleClick} handleRedirect={handleRedirect} /> : null}
-          </Space>
+          </div>
         </div>
       </div>
     </div>

@@ -1,8 +1,9 @@
 import { FacebookOutlined, GithubOutlined, InstagramOutlined } from '@ant-design/icons';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const ContactPage = () => (
-  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+  <PageLayoutWrapper style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
     <div style={{ flex: 1 }}>
       <div style={{ textTransform: 'uppercase', fontSize: '30px', fontWeight: 'bold', color: '#1E3B9B' }}>JobHub</div>
       <div>
@@ -27,7 +28,7 @@ const ContactPage = () => (
       </div>
     </div>
     <div style={{ flex: 4 }}>form</div>
-  </div>
+  </PageLayoutWrapper>
 );
 
 export default ContactPage;
