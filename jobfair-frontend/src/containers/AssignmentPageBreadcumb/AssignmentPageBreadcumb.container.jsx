@@ -56,9 +56,16 @@ const AssignmentPageBreadcumb = () => {
           style={{
             position: 'relative',
             top: '0',
-            margin: '0rem 5rem',
             borderBottom: '1px solid #d9d9d9',
-            padding: '0.5rem 1rem',
+            padding: `${
+              matchPath(pathname, {
+                path: PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE,
+                exact: true,
+                strict: false
+              }).isExact
+                ? '1.5rem 1rem 1rem 1rem'
+                : '1.5rem 0rem 1rem 0rem'
+            }`,
             fontSize: '1.1rem'
           }}>
           {breadcrumbItems}

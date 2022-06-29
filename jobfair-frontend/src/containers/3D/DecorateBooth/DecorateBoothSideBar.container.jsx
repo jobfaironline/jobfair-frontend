@@ -251,7 +251,7 @@ export const DecoratedBoothSideBarContainer = (props) => {
   };
 
   return (
-    <div>
+    <div style={{ border: '1px solid rgba(0, 0, 0, 0.063)' }}>
       <div style={{ width: '331px', padding: '0.5rem', border: '1px solid #00000010' }}>
         <ArrowLeftOutlined onClick={() => dispatch(decorateBoothAction.setSelectedItem(undefined))} />
       </div>
