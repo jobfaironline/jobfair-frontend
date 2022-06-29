@@ -1,4 +1,15 @@
-.gridStyle {
-  width: 75%;
-  textalign: 'center';
+.attendant-profile-form {
+  padding: 0 20% 5rem;
+
+  .ant-picker {
+    width: 100%;
+  }
+
+  .list {
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    scroll-margin-top: 126px; /*change this when navbar height is changed */;
+
+  }
+
 }

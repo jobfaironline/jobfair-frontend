@@ -25,7 +25,7 @@ const AnchorComponent = (props) => {
           }}>
           {
             <div>
-              <Anchor targetOffset={300} onClick={(e) => e.preventDefault()}>
+              <Anchor targetOffset={300}>
                 <Link href={href} title={title} />
                 {listData.map((item, index) => (
                   <Link href={item.href} title={`${index + 1}: ${item.title}`} />

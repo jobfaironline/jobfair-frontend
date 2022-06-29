@@ -19,8 +19,8 @@ export const AttendantProfileValidation = {
       REQUIRED_VALIDATOR('Birthday'),
       () => ({
         validator(_, value) {
-          const dateValue = moment(value).toDate().getTime();
-          if (!value || dateValue < Date.parse(MinimumDateOfBirth))
+          const current = moment();
+          if (!value || current.diff(value, 'years', true) < MinimumDateOfBirth)
             return Promise.reject(new Error('Age restriction required: at least 18 years'));
 
           return Promise.resolve();
@@ -58,12 +58,13 @@ export const AttendantProfileValidation = {
   educations: {
     subject: [REQUIRED_VALIDATOR('Subject')],
     school: [REQUIRED_VALIDATOR('School')],
-    achievement: [REQUIRED_VALIDATOR('Achievement')]
+    achievement: [REQUIRED_VALIDATOR('Achievement')],
+    range: [REQUIRED_VALIDATOR('Date range'), DATE_RANGE_VALIDATOR(new Date(1940, 0, 1).getTime(), Date.now())]
   },
   certifications: {
     name: [REQUIRED_VALIDATOR("Certificate's name")],
     institution: [REQUIRED_VALIDATOR('Institution')],
-    year: [REQUIRED_VALIDATOR('Year'), YEAR_VALIDATOR(1940, new Date().getFullYear())],
+    issueDate: [YEAR_VALIDATOR(1940, new Date().getFullYear())],
     certificationLink: [REQUIRED_VALIDATOR("Certificate's link"), ...URL_VALIDATOR()]
   },
   references: {
