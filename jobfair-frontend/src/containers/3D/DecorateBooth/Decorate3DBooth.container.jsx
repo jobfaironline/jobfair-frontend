@@ -39,6 +39,7 @@ import { notify } from '../../../utils/toastutil';
 import { useDispatch, useSelector } from 'react-redux';
 import MyBoothLayoutListContainer from '../../MyBoothLayoutList/MyBoothLayoutList.container';
 import React, { useEffect, useRef, useState } from 'react';
+import { BREADCUMB_HEIGHT, NAVBAR_HEIGHT } from '../../../styles/custom-theme';
 
 export const Decorate3DBoothContainer = (props) => {
   const { companyBoothId, jobFairId } = props;
@@ -260,7 +261,7 @@ export const Decorate3DBoothContainer = (props) => {
 
   if (modelItems.length === 0) return <LoadingComponent />;
   return (
-    <div style={{ height: 'calc(100vh - 80px)' }}>
+    <div style={{ height: `calc(100vh - ${NAVBAR_HEIGHT})` }}>
       <MyBoothLayoutListContainer
         setMyLayoutVisibility={setMyLayoutVisibility}
         myLayoutVisibility={myLayoutVisibility}
@@ -270,7 +271,7 @@ export const Decorate3DBoothContainer = (props) => {
       <div
         style={{
           display: 'flex',
-          height: 'calc(100vh - 80px - 64px)'
+          height: `calc(100vh - ${NAVBAR_HEIGHT} - ${BREADCUMB_HEIGHT})`
         }}>
         <DecoratedBoothSideBarContainer {...sideBarProps} />
         <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd} ref={meshGroupRef} renderRef={rendererRef} />

@@ -9,6 +9,7 @@ import { SkyComponent, SkyType } from '../ThreeJSBaseComponent/Sky.component';
 import { SkyTypeSelect } from '../ThreeJSBaseComponent/SelectSkyType.component';
 import { Stats } from '@react-three/drei';
 import React, { Fragment, useState } from 'react';
+import { NAVBAR_HEIGHT } from '../../../styles/custom-theme';
 
 export const EmployeeAssignBoothMapCanvas = (props) => {
   const { mapMesh, jobFairBoothData, boothMeshesRef, onBoothMouseOver, onBoothMouseOut, hoverRef, onClick } = props;
@@ -28,7 +29,7 @@ export const EmployeeAssignBoothMapCanvas = (props) => {
         shadowMap
         style={{
           width: '100%',
-          height: 'calc(100vh - 80px)',
+          height: `calc(100vh - ${NAVBAR_HEIGHT})`,
           cursor: hoverRef === undefined ? 'default' : 'pointer'
         }}
         camera={{ far: 5000, fov: 50 }}>

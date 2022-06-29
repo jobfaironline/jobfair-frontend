@@ -2,16 +2,19 @@ import { Breadcrumb } from 'antd';
 import React, { useState } from 'react';
 import { Link, matchPath, useLocation } from 'react-router-dom';
 import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
+import breadcumbItemsList from './BreadcumbItemsList';
 
-const breadcumbString = `{"${PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE}": "[Receptionist] - My booth", "${PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}": "[Interviewer] - My interview schedule","${PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE}": "[Interviewer] - Booth's job application","${PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE}": "[Decorator] - Decorate booth","${PATH_COMPANY_EMPLOYEE.BOOTH_DESCRIPTION_PAGE}": "[Supervisor] - My booth profile", "${PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE}": "[Supervisor] - Assign staff"}`;
-const breadcrumbNameMap = JSON.parse(breadcumbString);
+const breadcrumbNameMap = breadcumbItemsList.reduce((previousValue, currentValue) => {
+  previousValue[`${currentValue.path}`] = currentValue.title;
+  return previousValue;
+}, {});
 
 const AssignmentPageBreadcumb = () => {
   const location = useLocation();
   const pathname = location.pathname;
   const extraBreadcrumbItems = () => {
     const pathList = Object.keys(breadcrumbNameMap);
-    const tmp = pathList
+    const mappedBreadcumbItems = pathList
       .filter((pathLink) => {
         const match = matchPath(pathname, {
           path: pathLink,
@@ -31,14 +34,14 @@ const AssignmentPageBreadcumb = () => {
         return breadcrumbNameMap[match?.path];
       });
 
-    if (tmp?.length <= 0) {
+    if (mappedBreadcumbItems?.length <= 0) {
       return null;
     }
 
     return (
       <>
         <Breadcrumb.Item key='detail' style={{ fontWeight: 'bold' }}>
-          {tmp[0]}
+          {mappedBreadcumbItems[0]}
         </Breadcrumb.Item>
       </>
     );
