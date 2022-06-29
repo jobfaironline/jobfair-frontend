@@ -28,7 +28,7 @@ export const EmployeeAssignBoothMapCanvas = (props) => {
         shadowMap
         style={{
           width: '100%',
-          height: 'calc(100vh - 124px)',
+          height: 'calc(100vh - 80px)',
           cursor: hoverRef === undefined ? 'default' : 'pointer'
         }}
         camera={{ far: 5000, fov: 50 }}>

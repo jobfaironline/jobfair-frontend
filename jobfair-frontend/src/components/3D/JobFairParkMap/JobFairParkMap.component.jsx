@@ -51,7 +51,7 @@ const JobFairParkMapComponent = (props) => {
       <Canvas
         dpr={[1, 2]}
         camera={{ far: 5000, fov: 50 }}
-        style={{ width: '100%', height: 'calc(100vh - 124px)' }}
+        style={{ width: '100%', height: 'calc(100vh - 80px)' }}
         colorManagement={false}
         onCreated={({ gl }) => {
           gl.toneMapping = THREE.NoToneMapping;

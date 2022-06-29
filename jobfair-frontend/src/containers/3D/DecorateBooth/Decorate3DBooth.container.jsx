@@ -260,7 +260,7 @@ export const Decorate3DBoothContainer = (props) => {
 
   if (modelItems.length === 0) return <LoadingComponent />;
   return (
-    <div style={{ height: 'calc(100vh - 124px)' }}>
+    <div style={{ height: 'calc(100vh - 80px)' }}>
       <MyBoothLayoutListContainer
         setMyLayoutVisibility={setMyLayoutVisibility}
         myLayoutVisibility={myLayoutVisibility}
