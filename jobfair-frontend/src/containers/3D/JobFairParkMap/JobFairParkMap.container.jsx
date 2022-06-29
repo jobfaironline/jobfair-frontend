@@ -1,6 +1,6 @@
 import './JobFairParkMap.styles.scss';
 import * as THREE from 'three';
-import { Card, List, Typography } from 'antd';
+import { Card, Modal, Typography } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { NotificationType } from '../../../constants/NotificationConstant';
@@ -17,6 +17,7 @@ import { leaveJobFair, visitJobFair } from '../../../services/jobhub-api/VisitCo
 import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
+import JobPositionDetailModalComponent from '../../../components/customized-components/JobPositionDetailModal/JobPositionDetailModal.component';
 import React, { useEffect, useRef, useState } from 'react';
 
 const { Title, Text, Paragraph } = Typography;
@@ -59,6 +60,8 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
     boothData: undefined,
     visible: false
   });
+  const [isSubmodalVisible, setIsSubmodalVisible] = useState(false);
+  const jobPositionRef = useRef();
   const boothDialogLatestState = useRef(boothDialogState);
 
   useEffect(() => {
@@ -160,8 +163,20 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
     history.push(url);
   };
 
+  // const handleJobPositionDetail = (item) => {};
+
   return (
     <div className={'job-fair-park-map'}>
+      <Modal
+        title='Job position detail'
+        width={700}
+        visible={isSubmodalVisible}
+        onCancel={() => setIsSubmodalVisible(false)}
+        footer={null}
+        destroyOnClose
+        centered={true}>
+        <JobPositionDetailModalComponent data={jobPositionRef.current} />
+      </Modal>
       {boothDialogState.visible ? (
         <div className={'booth-information'}>
           <Card
@@ -194,10 +209,19 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
               {boothDialogState.boothData?.description}
             </Paragraph>
             <Title level={5}>{'Job positions'}</Title>
-            <List
-              dataSource={boothDialogState.boothData?.boothJobPositions}
-              renderItem={(item) => <Text>{item.title}</Text>}
-            />
+            <ul style={{ listStyleType: 'none' }}>
+              {boothDialogState.boothData?.boothJobPositions.map((item, index) => (
+                <li
+                  key={index}
+                  onClick={() => {
+                    // handleJobPositionDetail(item);
+                    setIsSubmodalVisible(true);
+                    jobPositionRef.current = item;
+                  }}>
+                  <Text>{item.title}</Text>
+                </li>
+              ))}
+            </ul>
           </Card>
         </div>
       ) : null}
