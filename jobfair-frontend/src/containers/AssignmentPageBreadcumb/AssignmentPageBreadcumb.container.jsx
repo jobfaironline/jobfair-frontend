@@ -62,7 +62,7 @@ const AssignmentPageBreadcumb = () => {
                 path: PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE,
                 exact: true,
                 strict: false
-              }).isExact
+              })?.isExact
                 ? '1.5rem 1rem 1rem 1rem'
                 : '1.5rem 0rem 1rem 0rem'
             }`,
