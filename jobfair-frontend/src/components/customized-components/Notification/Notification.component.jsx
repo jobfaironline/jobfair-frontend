@@ -31,18 +31,19 @@ export const NotificationComponent = (props) => {
           <List
             dataSource={notificationData}
             renderItem={(item) => (
-              <div className={'content-container'}>
+              <div
+                className={`content-container ${item.action ? 'notification-message-clickable' : ''}`}
+                onClick={() => {
+                  onRead(item.id);
+                  item.action && item.action();
+                }}>
                 <div className={'content'}>
                   <div className={'title'}>{item.title}</div>
                   <div className={'message'}>{item.message}</div>
                 </div>
                 <div className={'time'}>{getDateDifferent(item.createDate)}</div>
                 <div className={'is-read'}>
-                  <div
-                    className={'check-mark'}
-                    style={{ backgroundColor: item.read ? '#C8E0F0' : '#009AFF' }}
-                    onClick={() => onRead(item.id)}
-                  />
+                  <div className={'check-mark'} style={{ backgroundColor: item.read ? '#C8E0F0' : '#009AFF' }} />
                 </div>
               </div>
             )}

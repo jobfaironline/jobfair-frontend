@@ -36,7 +36,10 @@ export const JobPositionFormModal = (props) => {
       width={'70rem'}
       onCancel={onCancel}
       onOk={onFinish}
+      cancelButtonProps={{ style: { display: 'none' } }}
+      closable={false}
       className={'job-position-form-modal'}
+      keyboard={false}
       okText={'Confirm'}>
       <div className={'container'}>
         <Row>

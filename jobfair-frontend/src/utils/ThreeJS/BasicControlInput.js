@@ -12,7 +12,14 @@ export default class BasicControlInput {
       space: false,
       shift: false
     };
-    document.addEventListener('keydown', (e) => this._onKeyDown(e), false);
+    document.addEventListener(
+      'keydown',
+      (e) => {
+        if (e.target.className.includes('input')) return;
+        this._onKeyDown(e);
+      },
+      false
+    );
     document.addEventListener('keyup', (e) => this._onKeyUp(e), false);
   }
 

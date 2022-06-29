@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import './BoothJobPositionTab.styles.scss';
 import { CompanyJobPositionTab } from '../../../components/customized-components/BoothInfoMenu/BoothJobPositionTab/BoothJobPositionTab.component';
@@ -28,6 +28,8 @@ export const BoothJobPositionTabContainer = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedResume, setSelectedResume] = useState();
   const [applicationData, setApplicationData] = useState();
+  const [requiredTestModalVisible, setRequiredTestModalVisible] = useState(false);
+  const draftApplicationRef = useRef();
 
   useEffect(() => {
     renderAfterDoQuiz();
@@ -81,19 +83,6 @@ export const BoothJobPositionTabContainer = (props) => {
     setSelectedResume(undefined);
   };
 
-  const confirmMakeTest = async () =>
-    new Promise((resolve) => {
-      Modal.info({
-        title: 'Test required',
-        closable: true,
-        maskClosable: true,
-        centered: true,
-        content: 'This job position required an entry test. Do you want to do it?',
-        onCancel: () => resolve(false),
-        onOk: () => resolve(true)
-      });
-    });
-
   const onFinishSubmitForm = async (values) => {
     if (selectedResume === undefined) return;
 
@@ -110,16 +99,10 @@ export const BoothJobPositionTabContainer = (props) => {
 
       const response = await draftApplication(body);
       const data = response.data;
+      draftApplicationRef.current = data;
       if (selectedJobPosition.isHaveTest) {
-        const result = await confirmMakeTest();
-        if (result) {
-          const quizData = (await createQuiz(data.id)).data;
-          const url = generatePath(PATH_ATTENDANT.ATTEMPT_TEST_PAGE, {
-            quizId: quizData.id
-          });
-          history.push(url, { from: window.location.pathname });
-          return;
-        }
+        setRequiredTestModalVisible(true);
+        return;
       }
 
       await submitApplication(data.id);
@@ -136,14 +119,35 @@ export const BoothJobPositionTabContainer = (props) => {
     setSelectedResume(undefined);
   };
 
+  const onConfirmDoTest = async () => {
+    if (draftApplicationRef.current === undefined) return;
+    const quizData = (await createQuiz(draftApplicationRef.current.id)).data;
+    const url = generatePath(PATH_ATTENDANT.ATTEMPT_TEST_PAGE, {
+      quizId: quizData.id
+    });
+    history.push(url, { from: window.location.pathname });
+  };
+
+  const onCancelDoTest = () => {
+    setRequiredTestModalVisible(false);
+  };
+
   const componentProps = { jobPositions, onClick };
 
   return (
     <>
-      <CompanyJobPositionTab {...componentProps} />;
+      <CompanyJobPositionTab {...componentProps} />
+      <Modal
+        visible={requiredTestModalVisible}
+        onOk={onConfirmDoTest}
+        onCancel={onCancelDoTest}
+        title={'Test required'}
+        centered={true}>
+        This job position required an entry test. Do you want to do it?
+      </Modal>
       <Modal
         title={'Apply to job position'}
-        width={'70rem'}
+        width={'50%'}
         closable={true}
         maskClosable={true}
         footer={null}

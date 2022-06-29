@@ -191,12 +191,20 @@ const OrganizeJobFairContainer = () => {
             handleFieldsError(form);
           }
         };
+      case 2:
+        return async () => {
+          if (jobFairData.thumbnailUrl) setIsError(false);
+          setIsError(true);
+          setCurrentStep(currentStep + 1);
+        };
       case 3:
         return async () => {
           try {
             await form.validateFields();
             await updateJobFairAtLandingPage(form.getFieldsValue(true));
-            const url = generatePath(PATH_COMPANY_MANAGER.CHECKLIST, { jobFairId });
+            const url = generatePath(PATH_COMPANY_MANAGER.CHECKLIST, {
+              jobFairId: jobFairId ? jobFairId : jobFairData.id
+            });
             history.push(url);
           } catch (e) {
             handleFieldsError(form);

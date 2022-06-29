@@ -4,10 +4,10 @@ import React from 'react';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const RegisterPage = () => (
-  <PageLayoutWrapper className='page register-page'>
+  <PageLayoutWrapper className='page register-page  fullscreen-page non-sub-nav-bar'>
     <div style={{ display: 'flex' }}>
       <div className='leftside-container'>
-        <div className='login-container animate__fadeInDown'>
+        <div className='register-container'>
           <NewAccountRegisterFormComponent />
         </div>
       </div>

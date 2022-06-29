@@ -3,7 +3,7 @@ import { StepComponent } from './Step.component';
 const { Text } = Typography;
 
 export const Step3Component = (props) => {
-  const { isFinish, statistics, handleEditAssignEmployee, isPublish, isChooseLayout } = props;
+  const { isFinish, statistics, handleEditAssignEmployee, isPublish, isChooseLayout, handleViewDetail } = props;
   return (
     <StepComponent isFinish={isFinish}>
       <div className={'title'}>
@@ -12,7 +12,7 @@ export const Step3Component = (props) => {
             Step 3: Assign employee
           </Text>
           <Row className={'time'}>
-            <Col span={6}>
+            <Col span={8}>
               <Text>Number of assigned employee: </Text>
             </Col>
             <Col>
@@ -22,7 +22,7 @@ export const Step3Component = (props) => {
             </Col>
           </Row>
           <Row className={'time'}>
-            <Col span={6}>
+            <Col span={8}>
               <Text>Number of assigned booth: </Text>
             </Col>
             <Col>
@@ -34,6 +34,9 @@ export const Step3Component = (props) => {
         </div>
 
         <div className={'button-container'}>
+          <Button onClick={handleViewDetail} className={'button'} type={'primary'} style={{ marginRight: '5px' }}>
+            View detail
+          </Button>
           {!isChooseLayout ? (
             <Tooltip title={'Please choose layout for job fair first'}>
               {/* need to wrap span outside disable button if using tool tip: https://github.com/react-component/tooltip/issues/18#issuecomment-411476678*/}
