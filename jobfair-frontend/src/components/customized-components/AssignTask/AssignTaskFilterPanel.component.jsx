@@ -1,5 +1,5 @@
 import { AssignmentConst } from '../../../constants/AssignmentConst';
-import { Badge, Button, Checkbox, Form, Input, Typography } from 'antd';
+import { Badge, Button, Checkbox, Divider, Form, Input, Typography } from 'antd';
 import React from 'react';
 
 export const AssignTaskFilterPanel = (props) => {
@@ -14,25 +14,36 @@ export const AssignTaskFilterPanel = (props) => {
         initialValues={{
           searchValue: '',
           filter: []
-        }}>
-        <Typography.Title level={4}>Filter</Typography.Title>
-        <Typography.Title level={5}>Name</Typography.Title>
-        <Form.Item name={'searchValue'}>
-          <Input placeholder={"Employee's name"} />
+        }}
+        style={{ display: 'flex' }}>
+        <Form.Item
+          name={'searchValue'}
+          label={
+            <Typography.Title level={5} style={{ margin: 0 }}>
+              Name
+            </Typography.Title>
+          }>
+          <Input placeholder={"Employee's name"} style={{ width: '20rem' }} />
         </Form.Item>
-        <Typography.Title level={5}>Role</Typography.Title>
-        <Form.Item name={'filter'}>
-          <Checkbox.Group>
+        <Form.Item
+          style={{ marginLeft: '1rem' }}
+          name={'filter'}
+          label={
+            <Typography.Title level={5} style={{ margin: 0 }}>
+              Role
+            </Typography.Title>
+          }>
+          <Checkbox.Group style={{ display: 'flex' }}>
             <Checkbox value={AssignmentConst.RECEPTION}>
               <Badge color={'#02fd02'} text={'RECEPTION'} />
             </Checkbox>
-            <br />
             <Checkbox value={AssignmentConst.INTERVIEWER}>
               <Badge color={'#dfdf149e'} text={'INTERVIEWER'} />
             </Checkbox>
           </Checkbox.Group>
         </Form.Item>
-        <div style={{ marginTop: '1rem', display: 'flex' }}>
+        <Divider type={'vertical'} />
+        <div style={{ display: 'flex' }}>
           <Button style={{ marginLeft: 'auto', marginRight: '1rem' }} htmlType={'reset'}>
             Reset
           </Button>

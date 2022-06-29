@@ -1,0 +1,235 @@
+@import 'src/styles/custom-theme';
+@import '~antd/dist/antd.less';
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  overflow-x: hidden;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+  'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.container-fluid {
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 0 15px;
+  background: #cfcdcf;
+}
+
+.ant-layout {
+  background: #fff !important;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+
+  > div:first-child {
+    > div:first-child {
+      position: absolute !important;
+      inset: 0 !important;
+      overflow-x: hidden !important;
+      margin-bottom: 0 !important;
+    }
+  }
+}
+
+.page {
+  flex: 1;
+  margin-top: 124px; /*change this when navbar height is changed */
+  padding-left: 5rem;
+  padding-right: 5rem;
+  scroll-margin: 200px;
+}
+
+.fullscreen-page {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+.non-sub-nav-bar {
+  margin-top: 80px !important;
+}
+
+.padding-bottom-page {
+  padding-bottom: 5rem;
+}
+
+.leftside-container {
+  flex: 1;
+  min-width: 500px;
+  width: 40vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.rightside-container {
+  width: 60vw;
+  overflow: hidden;
+  background: #c33764; /* fallback colour. Make sure this is just one solid colour. */
+  background: -webkit-linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8));
+  background: linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8)); /* The least supported option. */
+}
+
+.rightside-container img {
+  object-fit: contain;
+  opacity: 0.4;
+}
+
+.header .ant-anchor-wrapper {
+  background: none;
+}
+
+.header .ant-anchor {
+  display: flex;
+}
+
+.header .ant-anchor-ink {
+  display: none;
+}
+
+.header .ant-anchor-link {
+  padding: 0 20px;
+  line-height: 1.4;
+  position: relative;
+}
+
+.header .ant-anchor-link:before,
+.header .ant-anchor-link:after {
+  content: '';
+  background: #1890ff;
+  width: 1px;
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 30%;
+  opacity: 0;
+  transition: all 0.3s linear;
+}
+
+.header .ant-anchor-link:after {
+  left: auto;
+  right: 30%;
+}
+
+.header .ant-anchor-link.ant-anchor-link-active:before,
+.header .ant-anchor-link:hover:before {
+  left: 5%;
+  opacity: 1;
+}
+
+.header .ant-anchor-link.ant-anchor-link-active:after,
+.header .ant-anchor-link:hover:after {
+  right: 5%;
+  opacity: 1;
+}
+
+.button {
+  height: 44px !important;
+  padding: 10px 32px !important;
+  border-radius: 8px !important;
+}
+
+.disable-form {
+  .ant-input-affix-wrapper-disabled,
+  .ant-input[disabled] {
+    color: black;
+    background-color: #FFFFFF;
+    box-shadow: none;
+    border: none;
+    cursor: default;
+    opacity: 1;
+    padding: 4px 0;
+  }
+
+  .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    color: black;
+    background: #FFFFFF !important;
+    cursor: default;
+    border: none;
+    padding: 0;
+  }
+
+  .ant-select-disabled .ant-select-arrow {
+    display: none;
+  }
+
+  .ant-select-disabled.ant-select-multiple .ant-select-selection-item {
+    color: black;
+    border-color: #d9d9d9;
+    cursor: default;
+  }
+
+  .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector input {
+    cursor: default;
+  }
+
+  .ant-checkbox-disabled .ant-checkbox-inner {
+    cursor: default;
+  }
+
+  .ant-upload.ant-upload-drag.ant-upload-disabled {
+    cursor: default;
+    border: none;
+    background-color: transparent;
+  }
+
+  .ant-upload.ant-upload-disabled {
+    cursor: default;
+  }
+}
+
+.ant-layout-footer {
+  padding: 0 !important;
+  margin-top: auto !important;
+}
+
+.notification-message-clickable {
+  transition: 0.1s;
+
+}
+
+.notification-message-clickable:hover {
+  background-color: #d9d9d9 !important;
+  cursor: pointer;
+}
+
+.ant-modal-header {
+  background-color: @main-color !important;
+  color: #FFFFFF !important;
+
+  .ant-modal-title {
+    color: #FFFFFF !important;
+  }
+
+}
+
+.ant-modal-content {
+  .ant-modal-close-x {
+    color: #FFFFFF !important;
+  }
+}
+
+.ant-dropdown {
+  z-index: 5 !important;
+}

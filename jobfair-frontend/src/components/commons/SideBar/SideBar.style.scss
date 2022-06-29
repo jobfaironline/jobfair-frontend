@@ -1,3 +1,5 @@
+@import "src/styles/custom-theme";
+
 .organize-job-fair-side-bar {
   .button-container {
     margin-top: auto;
@@ -11,7 +13,7 @@
   }
 
   .confirm-button {
-    background-color: #1890ff;
+    background-color: $main-color;
     color: white;
     display: flex;
     align-content: center;
@@ -33,7 +35,7 @@
   .prev-button {
     padding: 10px 20px;
     font-size: 17px;
-    color: #1890ff;
+    color: $main-color;
     display: block;
     background-color: transparent;
     border: none;
@@ -45,7 +47,7 @@
   .side-bar-left-side-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 126px);
+    height: calc(100vh - 124px);
     overflow-y: hidden;
     border: 0.5px solid gray;
     border-radius: 5px;

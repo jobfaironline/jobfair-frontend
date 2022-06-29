@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { Card, List, Typography } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
-import { NotificationType } from '../../../constants/NotificationType';
+import { NotificationType } from '../../../constants/NotificationConstant';
 import { PATH } from '../../../constants/Paths/Path';
 import { addVideoTexture, fixTextureOffset, loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import { faHeart, faUsers, faX } from '@fortawesome/free-solid-svg-icons';
