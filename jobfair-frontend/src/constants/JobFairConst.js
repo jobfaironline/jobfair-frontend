@@ -33,3 +33,5 @@ export const JOB_FAIR_STATUS_FOR_EMPLOYEE = {
   HAPPENING: 'HAPPENING',
   DONE: 'DONE'
 };
+
+export const PUBLIC_RANGE_LIMIT = 2;
