@@ -37,30 +37,25 @@ const mapJobFairDataToFormInitialValues = (jobFairData) => {
 const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChange }) => {
   const initialFormValue = mapJobFairDataToFormInitialValues(jobFairData);
   const timeZone = getTimeZoneCode();
-  const hackRef = useRef(null);
-  const publicValueRef = useRef(null);
   const publicRangesRef = useRef(null);
+  const decorateRangesRef = useRef(null);
 
-  const disabledDate = (current) =>
-    // Can not select days before today and today
-    current && current < moment().endOf('day');
+  const disabledPastDate = (current) => current && current < moment().endOf('day').subtract(1, 'days');
+
   //TODO: Limit public range to 2 days (will be updated when implement subscription)
   const disabledPublicRange = (current) => {
-    if (!publicRangesRef.current) return false;
+    //disable past date
+    if (current < moment().endOf('day').subtract(1, 'days')) return true;
+    //disable pass decorate time
+    if (decorateRangesRef.current) if (current.isBefore(decorateRangesRef.current[1])) return true;
 
+    if (!publicRangesRef.current) return false;
     const tooLate = publicRangesRef.current[0] && current.diff(publicRangesRef.current[0], 'days') > PUBLIC_RANGE_LIMIT;
     const tooEarly =
       publicRangesRef.current[1] && publicRangesRef.current[1].diff(current, 'days') > PUBLIC_RANGE_LIMIT;
-
     return !!tooEarly || !!tooLate;
   };
 
-  const onOpenChange = (open) => {
-    if (open) {
-      hackRef.current = [null, null];
-      publicRangesRef.current = [null, moment().add(3, 'day').endOf('day')];
-    } else hackRef.current = null;
-  };
   return (
     <div className={'schedule-job-fair-form'}>
       <div style={{ textAlign: 'center' }}>
@@ -83,7 +78,11 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
             name={'decorateRange'}
             rules={OrganizeJobFairValidation.decorateRange}
             className={'form-item'}>
-            <RangePicker format={DateFormat} disabledDate={disabledDate} />
+            <RangePicker
+              format={DateFormat}
+              disabledDate={disabledPastDate}
+              onCalendarChange={(value) => (decorateRangesRef.current = value)}
+            />
           </Form.Item>
           <Form.Item
             className={'form-item'}
@@ -93,9 +92,6 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
             <RangePicker
               format={DateFormat}
               disabledDate={disabledPublicRange}
-              value={hackRef || publicValueRef}
-              onOpenChange={onOpenChange}
-              onChange={(value) => (publicValueRef.current = value)}
               onCalendarChange={(value) => (publicRangesRef.current = value)}
             />
           </Form.Item>
