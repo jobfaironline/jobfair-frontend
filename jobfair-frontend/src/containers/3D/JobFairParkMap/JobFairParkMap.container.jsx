@@ -163,8 +163,6 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
     history.push(url);
   };
 
-  // const handleJobPositionDetail = (item) => {};
-
   return (
     <div className={'job-fair-park-map'}>
       <Modal
@@ -214,7 +212,6 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
                 <li
                   key={index}
                   onClick={() => {
-                    // handleJobPositionDetail(item);
                     setIsSubmodalVisible(true);
                     jobPositionRef.current = item;
                   }}>

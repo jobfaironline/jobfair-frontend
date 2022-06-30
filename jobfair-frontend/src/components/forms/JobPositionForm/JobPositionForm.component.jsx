@@ -1,4 +1,3 @@
-/* eslint-disable no-empty-function */
 import './JobPositionForm.styles.scss';
 import { Card, Divider, Form, Input, Select, Space, Typography } from 'antd';
 import { CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories } from '../../../constants/CompanyProfileConstant';
@@ -76,9 +75,7 @@ const JobPositionFormComponent = (props) => {
               style={{ width: '23%' }}>
               <Select
                 showSearch
-                onChange={() => {}}
                 filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                onSearch={() => {}}
                 disabled={isDisplayDetail}>
                 {JobLevelConst.map((item) => (
                   <Option value={item.value}>{item.label}</Option>
@@ -93,9 +90,7 @@ const JobPositionFormComponent = (props) => {
               style={{ width: '23.5%', marginLeft: '2rem' }}>
               <Select
                 showSearch
-                onChange={() => {}}
                 filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                onSearch={() => {}}
                 disabled={isDisplayDetail}>
                 {JobTypeConst.map((item) => (
                   <Option value={item.value}>{item.label}</Option>
@@ -140,7 +135,6 @@ const JobPositionFormComponent = (props) => {
 
                   setTotalSkillTags(value.length);
                 }}
-                onSearch={() => {}}
                 dropdownRender={(menu) => (
                   <>
                     {menu}
