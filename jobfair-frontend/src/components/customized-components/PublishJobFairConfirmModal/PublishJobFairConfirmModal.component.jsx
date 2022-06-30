@@ -142,7 +142,7 @@ export const PublishJobFairConfirmModal = (props) => {
         </Typography.Paragraph>
 
         <Text>
-          Are you sure to publish <Text strong>{jobFairData.name}</Text>?
+          Are you sure to publish "<Text strong>{jobFairData.name}</Text>"?
         </Text>
         <br />
         <Checkbox

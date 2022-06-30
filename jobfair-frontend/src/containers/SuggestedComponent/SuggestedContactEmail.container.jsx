@@ -3,7 +3,7 @@ import { handleCreateListEmailFromListAccount } from '../../utils/common';
 import React, { useEffect, useState } from 'react';
 import SuggestedItemContainer from './SuggestedItem.container';
 
-const SuggestedContactEmailContainer = ({ companyId, onChange, disabled }) => {
+const SuggestedContactEmailContainer = ({ companyId, onChange, disabled, defaultValue }) => {
   const [suggestionList, setSuggestionList] = useState([]);
   useEffect(() => {
     getEmployeesAPI({ companyId })
@@ -24,7 +24,14 @@ const SuggestedContactEmailContainer = ({ companyId, onChange, disabled }) => {
     }
     return res;
   };
-  return <SuggestedItemContainer handleSearch={handleContactNameSearch} onChange={onChange} disabled={disabled} />;
+  return (
+    <SuggestedItemContainer
+      handleSearch={handleContactNameSearch}
+      onChange={onChange}
+      disabled={disabled}
+      defaultValue={defaultValue}
+    />
+  );
 };
 
 export default SuggestedContactEmailContainer;

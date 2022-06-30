@@ -1,4 +1,3 @@
-/* eslint-disable no-empty-function */
 import './JobPositionForm.styles.scss';
 import { Card, Divider, Form, Input, Select, Space, Typography } from 'antd';
 import { CategoriesConst, NUM_OF_SIZE_MAXIMUM, SubCategories } from '../../../constants/CompanyProfileConstant';
@@ -34,7 +33,16 @@ const JobPositionFormComponent = (props) => {
   const [totalSelect, setTotalSelect] = useState(0);
   const [totalSkillTags, setTotalSkillTags] = useState(0);
   const { Text } = Typography;
-  const { form, formItemButtons, onFinish, onCancel, isDisplayDetail = false, extra } = props;
+  const {
+    form,
+    formItemButtons,
+    onFinish,
+    onCancel,
+    isDisplayDetail = false,
+    extra,
+    contactEmail,
+    contactPersonName
+  } = props;
   const companyId = useSelector((state) => state?.authentication?.user?.companyId);
 
   return (
@@ -50,21 +58,24 @@ const JobPositionFormComponent = (props) => {
           </div>
         }>
         <Form onFinish={onFinish} form={form} {...formItemLayout} layout='vertical' labelCol={21} wrapperCol={21}>
-          <Form.Item label='Job title' name='title' required rules={JobPositionValidation.title}>
-            <Input placeholder='Job title' disabled={isDisplayDetail} />
-          </Form.Item>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Form.Item
-              label='Job level'
+              label={<Text strong>Job title</Text>}
+              name='title'
+              required
+              rules={JobPositionValidation.title}
+              style={{ width: '23.5%' }}>
+              <Input placeholder='Job title' disabled={isDisplayDetail} />
+            </Form.Item>
+            <Form.Item
+              label={<Text strong>Job level</Text>}
               required
               name='level'
               rules={JobPositionValidation.jobLevel}
-              style={{ width: '30%' }}>
+              style={{ width: '23%' }}>
               <Select
                 showSearch
-                onChange={() => {}}
                 filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                onSearch={() => {}}
                 disabled={isDisplayDetail}>
                 {JobLevelConst.map((item) => (
                   <Option value={item.value}>{item.label}</Option>
@@ -72,16 +83,14 @@ const JobPositionFormComponent = (props) => {
               </Select>
             </Form.Item>
             <Form.Item
-              label='Job type'
+              label={<Text strong>Job type</Text>}
               required
               rules={JobPositionValidation.jobType}
               name='jobType'
-              style={{ width: '30%' }}>
+              style={{ width: '23.5%', marginLeft: '2rem' }}>
               <Select
                 showSearch
-                onChange={() => {}}
                 filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                onSearch={() => {}}
                 disabled={isDisplayDetail}>
                 {JobTypeConst.map((item) => (
                   <Option value={item.value}>{item.label}</Option>
@@ -89,11 +98,11 @@ const JobPositionFormComponent = (props) => {
               </Select>
             </Form.Item>
             <Form.Item
-              label='Prefer language'
+              label={<Text strong>Prefer language</Text>}
               name={'preferredLanguage'}
               required
               rules={JobPositionValidation.language}
-              style={{ width: '30%' }}>
+              style={{ width: '23.5%' }}>
               <Select
                 showSearch
                 placeholder='Search to Select'
@@ -111,7 +120,7 @@ const JobPositionFormComponent = (props) => {
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Form.Item
-              label='Skill tags'
+              label={<Text strong>Skill tags</Text>}
               required
               rules={JobPositionValidation.skillTags}
               name='skillTagIds'
@@ -126,7 +135,6 @@ const JobPositionFormComponent = (props) => {
 
                   setTotalSkillTags(value.length);
                 }}
-                onSearch={() => {}}
                 dropdownRender={(menu) => (
                   <>
                     {menu}
@@ -147,7 +155,7 @@ const JobPositionFormComponent = (props) => {
               </Select>
             </Form.Item>
             <Form.Item
-              label='Category tag'
+              label={<Text strong>Category tag</Text>}
               required
               rules={JobPositionValidation.jobCategory}
               name='subCategoryIds'
@@ -189,7 +197,7 @@ const JobPositionFormComponent = (props) => {
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Form.Item
-              label='Contact person'
+              label={<Text strong>Contact person</Text>}
               required
               rules={JobPositionValidation.contactPerson}
               name='contactPersonName'
@@ -197,6 +205,7 @@ const JobPositionFormComponent = (props) => {
                 width: '47%'
               }}>
               <SuggestedContactNameContainer
+                defaultValue={contactPersonName}
                 companyId={companyId}
                 onChange={(value) => {
                   form.setFieldsValue({ contactPersonName: value });
@@ -205,7 +214,7 @@ const JobPositionFormComponent = (props) => {
               />
             </Form.Item>
             <Form.Item
-              label='Email for applications'
+              label={<Text strong>Email for applications</Text>}
               required
               rules={JobPositionValidation.email}
               name='contactEmail'
@@ -213,6 +222,7 @@ const JobPositionFormComponent = (props) => {
                 width: '47%'
               }}>
               <SuggestedContactEmailContainer
+                defaultValue={contactEmail}
                 companyId={companyId}
                 onChange={(value) => {
                   form.setFieldsValue({ contactEmail: value });
@@ -236,7 +246,11 @@ const JobPositionFormComponent = (props) => {
           {/*  }}>*/}
           {/*  <Input placeholder='Location' />*/}
           {/*</Form.Item>*/}
-          <Form.Item label='Description' required rules={JobPositionValidation.description} name='description'>
+          <Form.Item
+            label={<Text strong>Description</Text>}
+            required
+            rules={JobPositionValidation.description}
+            name='description'>
             <TextArea
               placeholder='Description'
               showCount={!isDisplayDetail}
@@ -245,7 +259,11 @@ const JobPositionFormComponent = (props) => {
               disabled={isDisplayDetail}
             />
           </Form.Item>
-          <Form.Item label='Requirements' required rules={JobPositionValidation.requirements} name='requirements'>
+          <Form.Item
+            label={<Text strong>Requirements</Text>}
+            required
+            rules={JobPositionValidation.requirements}
+            name='requirements'>
             <TextArea
               placeholder='Requirements'
               showCount={!isDisplayDetail}
