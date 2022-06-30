@@ -1,4 +1,5 @@
 import { Button, Form, Input, Modal, Spin, notification } from 'antd';
+import { UploadTemplateValidation } from '../../validate/UploadTemplateValidation';
 import { getBase64 } from '../../utils/common';
 import {
   uploadTemplateAPI,
@@ -83,7 +84,7 @@ const UploadJobFairLayoutModalContainer = ({ visible, onCancel, onSubmit }) => {
         <Form.Item
           label='Name'
           name={'name'}
-          rules={[]}
+          rules={UploadTemplateValidation.name}
           style={{
             display: 'inline-block',
             width: '50%',
@@ -94,7 +95,7 @@ const UploadJobFairLayoutModalContainer = ({ visible, onCancel, onSubmit }) => {
         <Form.Item
           label='Description'
           name={'description'}
-          rules={[]}
+          rules={UploadTemplateValidation.description}
           style={{
             display: 'inline-block',
             width: '100%',
@@ -104,6 +105,7 @@ const UploadJobFairLayoutModalContainer = ({ visible, onCancel, onSubmit }) => {
         </Form.Item>
         <Form.Item
           label='File glb'
+          riles={UploadTemplateValidation.fileGLB}
           style={{
             display: 'inline-block',
             marginRight: '1rem'
