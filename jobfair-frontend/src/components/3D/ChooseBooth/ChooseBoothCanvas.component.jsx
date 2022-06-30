@@ -9,6 +9,7 @@ import { SkyComponent, SkyType } from '../ThreeJSBaseComponent/Sky.component';
 import { SkyTypeSelect } from '../ThreeJSBaseComponent/SelectSkyType.component';
 import { Stats } from '@react-three/drei';
 import React, { Fragment, useState } from 'react';
+import { NAVBAR_HEIGHT } from '../../../styles/custom-theme';
 
 export const ChooseBoothCanvas = (props) => {
   const {
@@ -45,7 +46,7 @@ export const ChooseBoothCanvas = (props) => {
         shadowMap
         style={{
           width: '100%',
-          height: 'calc(100vh - 124px)',
+          height: `calc(100vh - ${NAVBAR_HEIGHT})`,
           cursor: hoverRef === undefined ? 'default' : 'pointer'
         }}
         camera={{ far: 7000, fov: 50, position: [100, 100, 0] }}>

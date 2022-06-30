@@ -42,7 +42,7 @@ const JobPositionDetailFormContainer = (props) => {
     contactEmail: jobPosition.contactEmail,
     contactPersonName: jobPosition.contactPersonName,
     formItemButtons: [
-      <Button type='primary' className={'button'} onClick={onCancel}>
+      <Button className={'button'} onClick={onCancel}>
         Cancel
       </Button>,
       <Button type='primary' htmlType='submit' className={'button'}>

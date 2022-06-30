@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import RTMClient from '../../services/agora/RTMClient';
 import React, { useEffect, useRef } from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const config = {
   mode: 'rtc',
@@ -70,13 +71,13 @@ const AttendantJobFairPage = () => {
   };
 
   return (
-    <div className={'page fullscreen-page'} style={{ overflow: 'hidden' }}>
+    <PageLayoutWrapper className={'page fullscreen-page'} style={{ overflow: 'hidden' }}>
       <AttendantJobFairBoothViewContainer
         companyBoothId={companyBoothId}
         geckoClientRef={geckoClientRef}
         communicationProps={communicationProps}
       />
-    </div>
+    </PageLayoutWrapper>
   );
 };
 

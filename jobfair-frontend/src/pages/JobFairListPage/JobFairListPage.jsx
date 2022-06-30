@@ -1,14 +1,15 @@
 import { useSelector } from 'react-redux';
 import JobFairGridPublicContainer from '../../containers/JobFairList/public/JobFairGridPublicContainer';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const JobFairListPage = () => {
   const role = useSelector((state) => state.authentication.user.roles);
 
   return (
-    <div className='page'>
+    <PageLayoutWrapper className='page'>
       <JobFairGridPublicContainer role={role} />
-    </div>
+    </PageLayoutWrapper>
   );
 };
 
