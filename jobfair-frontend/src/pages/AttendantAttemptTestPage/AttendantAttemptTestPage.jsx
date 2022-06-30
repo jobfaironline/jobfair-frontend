@@ -1,6 +1,7 @@
 import { useLocation, useParams } from 'react-router-dom';
 import AttendantAttemptTestContainer from '../../containers/AttendantAttemptTest/AttendantAttemptTest.container';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const AttendantAttemptTestPage = () => {
   const { quizId } = useParams();
@@ -8,9 +9,9 @@ const AttendantAttemptTestPage = () => {
   const fromUrl = location.state?.from;
 
   return (
-    <div className='page padding-bottom-page'>
+    <PageLayoutWrapper className='page padding-bottom-page'>
       <AttendantAttemptTestContainer quizId={quizId} fromUrl={fromUrl} />
-    </div>
+    </PageLayoutWrapper>
   );
 };
 

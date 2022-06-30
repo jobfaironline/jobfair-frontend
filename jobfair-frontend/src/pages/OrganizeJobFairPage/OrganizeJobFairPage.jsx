@@ -1,10 +1,11 @@
 import OrganizeJobFairContainer from '../../containers/OrganizeJobFair/OrganizeJobFair.container';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const OrganizeJobFairPage = () => (
-  <div className='page fullscreen-page'>
+  <PageLayoutWrapper className='page fullscreen-page'>
     <OrganizeJobFairContainer />
-  </div>
+  </PageLayoutWrapper>
 );
 
 export default OrganizeJobFairPage;

@@ -1,10 +1,11 @@
 import JobFairTemplateContainer from '../../containers/JobFairTemplate/JobFairTemplate.container';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const JobFairTemplatePage = () => (
-  <div className='page'>
+  <PageLayoutWrapper className='page'>
     <JobFairTemplateContainer />
-  </div>
+  </PageLayoutWrapper>
 );
 
 export default JobFairTemplatePage;

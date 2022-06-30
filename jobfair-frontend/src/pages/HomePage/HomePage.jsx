@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import HomePageHeaderComponent from '../../components/customized-components/HomePage/HomePageHeader.component';
 import React from 'react';
 import RoleType from '../../constants/RoleType';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const HomePage = () => {
   const history = useHistory();
@@ -21,7 +22,7 @@ const HomePage = () => {
   }
 
   return (
-    <div className='page fullscreen-page non-sub-nav-bar'>
+    <PageLayoutWrapper className='page fullscreen-page non-sub-nav-bar'>
       <div>
         <HomePageHeaderComponent />
         <div style={{ width: '100%', height: '10rem', backgroundColor: '#E5EAFB' }} />
@@ -31,7 +32,7 @@ const HomePage = () => {
           <FAQComponent />
         </div>
       </div>
-    </div>
+    </PageLayoutWrapper>
   );
 };
 export default HomePage;

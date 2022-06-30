@@ -71,7 +71,7 @@ const EmployeeTableColumn = () => [
           break;
         case 'REGISTERED':
           objStatus = {
-            color: 'processing',
+            color: 'blue',
             message: 'Registered'
           };
           break;

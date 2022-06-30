@@ -1,9 +1,10 @@
 import ForgotPasswordFormContainer from '../../containers/forms/ForgotPasswordForm/ForgotPasswordForm.container';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const ForgotPasswordPage = () => (
-  <div className='page'>
+  <PageLayoutWrapper className='page'>
     <ForgotPasswordFormContainer />
-  </div>
+  </PageLayoutWrapper>
 );
 export default ForgotPasswordPage;
