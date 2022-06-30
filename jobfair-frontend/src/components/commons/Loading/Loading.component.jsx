@@ -1,3 +1,4 @@
+import { PRIMARY_COLOR } from '../../../styles/custom-theme';
 import React from 'react';
 import ReactLoading from 'react-loading';
 
@@ -10,6 +11,6 @@ export const LoadingComponent = ({ isWholePage = false }) => (
       justifyContent: 'center',
       alignItems: 'center'
     }}>
-    <ReactLoading type={'spin'} color={'#1890ff'} height={'100px'} width={'100px'} />
+    <ReactLoading type={'spin'} color={PRIMARY_COLOR} height={'100px'} width={'100px'} />
   </div>
 );

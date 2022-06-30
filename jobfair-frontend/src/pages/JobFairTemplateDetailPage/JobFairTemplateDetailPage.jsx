@@ -1,10 +1,11 @@
 import JobFairTemplateDetailContainer from '../../containers/JobFairTemplateDetail/JobFairTemplateDetail.container';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const JobFairTemplateDetailPage = () => (
-  <div className='page fullscreen-page'>
+  <PageLayoutWrapper className='page fullscreen-page'>
     <JobFairTemplateDetailContainer />
-  </div>
+  </PageLayoutWrapper>
 );
 
 export default JobFairTemplateDetailPage;

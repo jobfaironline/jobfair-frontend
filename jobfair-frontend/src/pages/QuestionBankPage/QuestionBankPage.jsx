@@ -5,6 +5,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useHistory, useLocation } from 'react-router-dom';
 import QuestionBankContainer from '../../containers/QuestionBank/QuestionBank.container';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const QuestionBankPage = () => {
   const location = useLocation();
@@ -12,7 +13,7 @@ const QuestionBankPage = () => {
   const history = useHistory();
 
   return (
-    <div className='page question-bank-page'>
+    <PageLayoutWrapper className='page question-bank-page'>
       <div className={'page-title'}>
         <Typography.Title level={2}>Question bank management</Typography.Title>
       </div>
@@ -25,7 +26,7 @@ const QuestionBankPage = () => {
         <Typography.Title level={5}>Return to company profile page</Typography.Title>
       </a>
       <QuestionBankContainer jobPositionId={jobPositionId} />
-    </div>
+    </PageLayoutWrapper>
   );
 };
 

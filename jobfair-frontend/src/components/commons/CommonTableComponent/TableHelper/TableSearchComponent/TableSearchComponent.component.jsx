@@ -1,4 +1,5 @@
 import { Button, Input, Space } from 'antd';
+import { PRIMARY_COLOR } from '../../../../../styles/custom-theme';
 import Highlighter from 'react-highlight-words';
 import SearchOutlined from '@ant-design/icons/SearchOutlined';
 
@@ -42,7 +43,7 @@ const getColumnSearchProps = (searchText, setSearchText, searchedColumn, setSear
           </Space>
         </div>
       ),
-      filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+      filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? PRIMARY_COLOR : undefined }} />,
       onFilter: (value, record) =>
         record[dataIndex] ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()) : '',
       onFilterDropdownVisibleChange: (visible) => {

@@ -6,13 +6,14 @@ import JobFairHappeningContainer from '../../containers/JobFairList/admin/JobFai
 import JobFairIncomingContainer from '../../containers/JobFairList/admin/JobFairIncoming.container';
 import JobFairOccurredContainer from '../../containers/JobFairList/admin/JobFairOccurred.container';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const { TabPane } = Tabs;
 const JobFairTablePage = () => {
   const role = useSelector((state) => state.authentication?.user?.roles);
 
   return (
-    <div className='page jobfair-list-page'>
+    <PageLayoutWrapper className='page jobfair-list-page'>
       <div style={{ padding: '2rem 0' }}>
         <Divider>
           <Typography.Title level={2}>Job fair list</Typography.Title>
@@ -29,7 +30,7 @@ const JobFairTablePage = () => {
           </TabPane>
         </Tabs>
       </div>
-    </div>
+    </PageLayoutWrapper>
   );
 };
 
