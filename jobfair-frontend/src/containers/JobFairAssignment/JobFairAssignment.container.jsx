@@ -39,27 +39,46 @@ const JobFairAssignmentContainer = () => {
     setTotalRecord(data.length);
   };
 
+  const filterStaffAssignment = (assignments) => {
+    const assignmentsByBooth = assignments.reduce((prev, current) => {
+      const jobFairBoothId = current.jobFairBooth.id;
+      if (prev[jobFairBoothId] !== undefined) {
+        prev[jobFairBoothId].push(current);
+        return prev;
+      }
+      prev[jobFairBoothId] = [current];
+      return prev;
+    }, {});
+    const result = [];
+    Object.keys(assignmentsByBooth).forEach((boothId) => {
+      const assignments = assignmentsByBooth[boothId];
+      const isHasStaff = assignments.some((assignment) => assignment.type === AssignmentConst.STAFF);
+      if (!isHasStaff) {
+        result.push(...assignments);
+        return;
+      }
+      const isHasInterviewer = assignments.some((assignment) => assignment.type === AssignmentConst.INTERVIEWER);
+      const isHasReceptionist = assignments.some((assignment) => assignment.type === AssignmentConst.RECEPTION);
+      if (isHasInterviewer || isHasReceptionist)
+        result.push(...assignments.filter((assignment) => assignment.type !== AssignmentConst.STAFF));
+      else result.push(...assignments);
+    });
+    return result;
+  };
+
   const fetchData = async () => {
     try {
-      let res;
-      if (viewAllMode) {
-        res = await getAssignmentByEmployeeId('', currentPage, pageSize, '');
-        if (res.data.content.find((item) => item.type !== 'STAFF')) {
-          const data = [
-            ...res.data.content
-              .filter((item) => item.type !== 'STAFF')
-              .map((item, index) => mapperJobFairAssignment(item, index))
-          ];
-          await getAssignmentCompleted(data);
-        } else {
-          const data = [...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))];
-          await getAssignmentCompleted(data);
-        }
-      } else {
-        res = await getAssignmentByEmployeeId('', currentPage, pageSize, '', currentTab);
-        const data = [...res.data.content.map((item, index) => mapperJobFairAssignment(item, index))];
+      if (!viewAllMode) {
+        const res = await getAssignmentByEmployeeId('', currentPage, pageSize, '', currentTab);
+        const data = res.data.content.map((item, index) => mapperJobFairAssignment(item, index));
         await getAssignmentCompleted(data);
+        return;
       }
+      const res = await getAssignmentByEmployeeId('', currentPage, pageSize, '');
+      let data = res.data.content;
+      data = filterStaffAssignment(data);
+      data = data.map((item, index) => mapperJobFairAssignment(item, index));
+      await getAssignmentCompleted(data);
     } catch (e) {
       notification['error']({
         message: `Something went wrong! Try again latter!`,
