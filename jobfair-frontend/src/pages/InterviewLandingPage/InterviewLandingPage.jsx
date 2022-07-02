@@ -2,11 +2,12 @@ import { Button } from 'antd';
 import { PATH_ATTENDANT } from '../../constants/Paths/Path';
 import { generatePath, useHistory } from 'react-router-dom';
 import React from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const InterviewLandingPage = () => {
   const history = useHistory();
   return (
-    <div className='page'>
+    <PageLayoutWrapper className='page'>
       <Button
         onClick={() => {
           const url = generatePath(PATH_ATTENDANT.INTERVIEW_ROOM_PAGE, {
@@ -16,7 +17,7 @@ const InterviewLandingPage = () => {
         }}>
         Join the interview meeting now
       </Button>
-    </div>
+    </PageLayoutWrapper>
   );
 };
 

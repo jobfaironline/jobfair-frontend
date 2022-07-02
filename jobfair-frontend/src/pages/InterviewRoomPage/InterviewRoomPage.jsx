@@ -5,6 +5,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import InterviewRoomContainer from '../../containers/InterviewRoom/InterviewRoom.container';
 import RTMClient from '../../services/agora/RTMClient';
 import React, { useEffect, useRef } from 'react';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const config = {
   mode: 'rtc',
@@ -48,14 +49,14 @@ const InterviewRoomPage = () => {
   };
 
   return (
-    <div className='page' style={{ padding: 0 }}>
+    <PageLayoutWrapper className='page' style={{ padding: 0 }}>
       <InterviewRoomContainer
         audioTrackRef={audioTrackRef}
         cameraTrackRef={cameraTrackRef}
         roomType={location.pathname}
         channelId={channelId}
       />
-    </div>
+    </PageLayoutWrapper>
   );
 };
 

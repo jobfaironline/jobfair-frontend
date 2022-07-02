@@ -7,6 +7,7 @@ import { SkyTypeSelect } from '../ThreeJSBaseComponent/SelectSkyType.component';
 import { Stage, Stats } from '@react-three/drei';
 import { makeTextSprite } from '../../../utils/ThreeJS/sprite-util';
 import React, { useState } from 'react';
+import { NAVBAR_HEIGHT } from '../../../styles/custom-theme';
 
 const BoothMesh = React.forwardRef((props, ref) => {
   const { mesh, onclick } = props;
@@ -51,7 +52,7 @@ const JobFairParkMapComponent = (props) => {
       <Canvas
         dpr={[1, 2]}
         camera={{ far: 5000, fov: 50 }}
-        style={{ width: '100%', height: 'calc(100vh - 124px)' }}
+        style={{ width: '100%', height: `calc(100vh - ${NAVBAR_HEIGHT})` }}
         colorManagement={false}
         onCreated={({ gl }) => {
           gl.toneMapping = THREE.NoToneMapping;

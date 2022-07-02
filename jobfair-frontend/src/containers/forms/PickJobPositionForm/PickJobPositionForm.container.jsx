@@ -1,4 +1,5 @@
 import './PickJobPositionForm.styles.scss';
+import { BoothDescriptionValidation } from '../../../validate/BoothDescriptionValidation';
 import { Button, Card, Form, Image, Input, Modal, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
@@ -200,10 +201,10 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
             </div>
             <div className={'booth-description-container'}>
               <Form form={form} onFinish={onFinish}>
-                <Form.Item label='Booth name' required name='name'>
+                <Form.Item label='Booth name' name='name' rules={BoothDescriptionValidation.name}>
                   <Input placeholder="Booth's name" />
                 </Form.Item>
-                <Form.Item label='Booth description' required name='description'>
+                <Form.Item label='Booth description' name='description' rules={BoothDescriptionValidation.description}>
                   <TextArea autoSize={{ minRows: 5 }} showCount maxLength={3000} placeholder='Description' />
                 </Form.Item>
               </Form>

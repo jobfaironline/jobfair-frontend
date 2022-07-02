@@ -7,7 +7,7 @@ export const ControlButtonGroup = (props) => {
   const { addMoreComponentHandle, saveHandle, reviewHandle, openBoothModal, saveIntoMyBoothLayout } = props;
 
   return (
-    <div style={{ position: 'absolute', top: '136px', right: '10px' }}>
+    <div style={{ position: 'absolute', top: '180px', right: '10px' }}>
       <Space direction='vertical' align='end'>
         <Button
           style={{ width: '12rem' }}
