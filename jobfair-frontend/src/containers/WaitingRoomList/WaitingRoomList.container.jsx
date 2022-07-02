@@ -20,7 +20,14 @@ import { useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 
-export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId, setInterviewingData }) => {
+export const WaitingRoomListForInterviewerContainer = ({
+  channelId,
+  scheduleId,
+  setInterviewingData,
+  interviewingData,
+  agoraUserListRef
+}) => {
+  const rerender = useSelector((state) => state?.interviewRoom?.rerender);
   const [intervieweeList, setIntervieweeList] = useState([]);
   const intervieweeListRef = useRef(intervieweeList);
   const [scheduleInfo, setScheduleInfo] = useState({});
@@ -29,7 +36,6 @@ export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId, 
   const fetchScheduleInfo = async () => {
     try {
       const { data } = await getScheduleById(scheduleId);
-
       setScheduleInfo(data);
     } catch (e) {
       notification['error']({
@@ -50,18 +56,21 @@ export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId, 
 
   useEffect(() => {
     const fetchData = async () => {
-      scheduleInfo?.waitingRoomId &&
-        (await mappingTodayScheduleAndWaitingRoomList(
+      if (scheduleInfo?.waitingRoomId) {
+        await mappingTodayScheduleAndWaitingRoomList(
           setIntervieweeList,
           scheduleInfo?.waitingRoomId,
           intervieweeListRef,
           channelId,
-          setInterviewingData
-        ));
+          setInterviewingData,
+          interviewingData,
+          agoraUserListRef
+        );
+      }
     };
 
     fetchData();
-  }, [scheduleInfo]);
+  }, [scheduleInfo, rerender]);
 
   useEffect(() => {
     webSocketClient.addEvent('change-waiting-room-list', changeWaitingRoomList);
@@ -81,7 +90,9 @@ export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId, 
             scheduleInfo?.waitingRoomId,
             intervieweeListRef,
             channelId,
-            setInterviewingData
+            setInterviewingData,
+            interviewingData,
+            agoraUserListRef
           ));
       };
 
@@ -97,7 +108,9 @@ const mappingTodayScheduleAndWaitingRoomList = async (
   waitingRoomId,
   intervieweeListRef,
   interviewRoomId,
-  setInterviewingData
+  setInterviewingData,
+  interviewingData,
+  agoraUserListRef
 ) => {
   const handleInvite = async (attendantId, applicationId) => {
     try {
@@ -154,7 +167,6 @@ const mappingTodayScheduleAndWaitingRoomList = async (
 
   try {
     const { data: waitingRoomList } = await getWaitingRoomInfo(waitingRoomId);
-
     // eslint-disable-next-line no-unused-vars
     const InterviewStatusButton = ({ data, scheduleInfo, channelId }) => {
       const handleEndInterview = async () => {
@@ -196,6 +208,9 @@ const mappingTodayScheduleAndWaitingRoomList = async (
           });
         }
       };
+
+      const t = agoraUserListRef.current;
+      if (agoraUserListRef.current.length <= 0) return null;
 
       switch (data.status) {
         case 'NOT_YET':

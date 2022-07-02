@@ -10,6 +10,7 @@ import { ResumeSubmitMeshComponent } from './ResumeSubmitMesh.component';
 import { Select } from 'antd';
 import { SkyComponent, SkyType } from '../ThreeJSBaseComponent/Sky.component';
 import React, { useRef, useState } from 'react';
+import { NAVBAR_HEIGHT } from '../../../styles/custom-theme';
 
 const { Option } = Select;
 
@@ -75,7 +76,7 @@ export const CompanyBoothCanvasComponent = (props) => {
       <Canvas
         dpr={[1, 2]}
         camera={{ fov: 45, zoom: 0.04 / zoom }}
-        style={{ width: '100%', height: 'calc(100vh - 124px)' }}
+        style={{ width: '100%', height: `calc(100vh - ${NAVBAR_HEIGHT} )` }}
         onCreated={(state) => {
           cameraRef.current = state.camera;
         }}>

@@ -34,11 +34,7 @@ const VideoCallComponent = (props) => {
     return (
       <div className={'video-call'} style={{ height, width, padding: '2rem' }}>
         <div className={'topVideoCall'} style={{ padding: '0rem 0.5rem' }}>
-          <div className={'iconMail'}>
-            <Tag color='default'>
-              <MailOutlined /> 90
-            </Tag>
-          </div>
+          <div className={'iconMail'}></div>
           {/*TODO: the 'type' props will decide the style of component*/}
           <div className={'videoCall'}>
             {users.length > 0 ? (
@@ -199,11 +195,7 @@ const VideoCallComponent = (props) => {
   return (
     <div className={'video-call'} style={{ height, width, padding: '2rem' }}>
       <div className={'topVideoCall'} style={{ padding: '0rem 0.5rem' }}>
-        <div className={'iconMail'}>
-          <Tag color='default'>
-            <MailOutlined /> 90
-          </Tag>
-        </div>
+        <div className={'iconMail'}></div>
         {/*TODO: the 'type' props will decide the style of component*/}
         <div className={'videoCall'} style={{ width: '11rem' }}>
           {cameraReady && !muteState.video ? (

@@ -12,6 +12,7 @@ import { notificationAction } from '../../../redux-flow/notification/notificatio
 import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
 import { useHistory } from 'react-router-dom';
 import VideoCallComponent from '../../../components/Agora/VideoCall/VideoCall.component';
+import { interviewRoomAction } from '../../../redux-flow/interviewRoom/interview-room-slice';
 
 const { REACT_APP_AGORA_APP_ID } = process.env;
 const VideoCallContainer = (props) => {
@@ -66,6 +67,7 @@ const VideoCallContainer = (props) => {
           if (user.uid === prevState.invitingAttendantId) return { ...prevState, isInterviewing: true };
           return prevState;
         });
+      dispatch(interviewRoomAction.setRerender());
       setUsers((prevUsers) => [...prevUsers, user]);
     });
 

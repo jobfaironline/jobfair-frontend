@@ -49,7 +49,7 @@ const InterviewRoomPage = () => {
   };
 
   return (
-    <PageLayoutWrapper className='page' style={{ padding: 0 }}>
+    <PageLayoutWrapper className='page fullscreen-page' style={{ padding: 0 }}>
       <InterviewRoomContainer
         audioTrackRef={audioTrackRef}
         cameraTrackRef={cameraTrackRef}

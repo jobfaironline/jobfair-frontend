@@ -136,6 +136,8 @@ const InterviewRoomContainer = (props) => {
                 channelId={channelId}
                 scheduleId={scheduleId}
                 setInterviewingData={setInterviewingData}
+                interviewingData={interviewingData}
+                agoraUserListRef={userListRef}
               />
             ) : null}
             <Card>
@@ -177,7 +179,12 @@ const InterviewRoomContainer = (props) => {
             />
           ) : null}
           {roomType.includes('interview') && role === 'COMPANY_EMPLOYEE' ? (
-            <WaitingRoomListForInterviewerContainer channelId={channelId} scheduleId={scheduleId} />
+            <WaitingRoomListForInterviewerContainer
+              channelId={channelId}
+              scheduleId={scheduleId}
+              agoraUserListRef={userListRef}
+              interviewingData={interviewingData}
+            />
           ) : null}
           <Card>
             <ChatBoxContainer type={'INTERVIEW_ROOM'} />

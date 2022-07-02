@@ -110,7 +110,7 @@ const AvatarMenu = ({ logoutFunction }) => {
 
   return (
     <div className={'avatar'}>
-      <Dropdown overlay={menu} placement='bottomRight'>
+      <Dropdown overlay={menu} placement='bottomRight' overlayStyle={{ zIndex: 10 }}>
         <Avatar
           size={45}
           style={{ backgroundColor: '#87d068' }}

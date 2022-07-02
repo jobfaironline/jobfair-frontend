@@ -1,7 +1,6 @@
 .video-call {
   .topVideoCall {
     position: relative;
-    z-index: 3;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -15,7 +14,7 @@
       padding: 10px;
       height: 7rem;
       left: 100%;
-      z-index: 1000;
+      z-index: 1;
     }
   }
 
@@ -30,7 +29,6 @@
     max-width: 100%;
     height: 10rem;
     max-height: 10rem;
-    z-index: 2;
 
     .videoIcon {
       display: flex;
