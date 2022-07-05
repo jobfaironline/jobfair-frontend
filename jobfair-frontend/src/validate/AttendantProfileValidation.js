@@ -2,6 +2,7 @@ import {
   DATE_RANGE_VALIDATOR,
   EMAIL_VALIDATOR,
   MAX_LENGTH_VALIDATOR,
+  NAME_VALIDATOR,
   PHONE_VALIDATOR,
   REQUIRED_VALIDATOR,
   URL_VALIDATOR,
@@ -10,11 +11,17 @@ import {
 import { MinimumDateOfBirth } from '../constants/ApplicationConst';
 import moment from 'moment';
 
+export const AccountProfileValidation = {
+  email: [REQUIRED_VALIDATOR('Email'), ...EMAIL_VALIDATOR()],
+  phone: [REQUIRED_VALIDATOR('Phone'), ...PHONE_VALIDATOR()],
+  firstname: [REQUIRED_VALIDATOR('First name'), MAX_LENGTH_VALIDATOR('First name', 100), NAME_VALIDATOR('First name')],
+  middlename: [MAX_LENGTH_VALIDATOR('Middle name', 100), NAME_VALIDATOR('Middle name')],
+  lastname: [REQUIRED_VALIDATOR('Last name'), MAX_LENGTH_VALIDATOR('Last name', 100), NAME_VALIDATOR('Last name')]
+};
+
 export const AttendantProfileValidation = {
   account: {
-    email: [REQUIRED_VALIDATOR('Email'), ...EMAIL_VALIDATOR()],
     countryId: [REQUIRED_VALIDATOR('Country')],
-    phone: [REQUIRED_VALIDATOR('Phone'), ...PHONE_VALIDATOR()],
     dob: [
       REQUIRED_VALIDATOR('Birthday'),
       () => ({
@@ -26,10 +33,7 @@ export const AttendantProfileValidation = {
           return Promise.resolve();
         }
       })
-    ],
-    firstname: [REQUIRED_VALIDATOR('First name'), MAX_LENGTH_VALIDATOR('First name', 100)],
-    middlename: [MAX_LENGTH_VALIDATOR('Middle name', 100)],
-    lastname: [REQUIRED_VALIDATOR('Last name'), MAX_LENGTH_VALIDATOR('Last name', 100)]
+    ]
   },
   address: [REQUIRED_VALIDATOR('Address'), MAX_LENGTH_VALIDATOR('Address', 1000)],
   yearOfExp: [

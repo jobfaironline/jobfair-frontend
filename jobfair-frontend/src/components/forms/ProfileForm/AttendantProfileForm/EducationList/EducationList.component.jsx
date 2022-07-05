@@ -1,11 +1,11 @@
 import './EducationList.style.scss';
 import { ArrowRightOutlined, DeleteOutlined, ShrinkOutlined } from '@ant-design/icons';
-import { AttendantProfileValidation } from '../../../../validate/AttendantProfileValidation';
+import { AttendantProfileValidation } from '../../../../../validate/AttendantProfileValidation';
 import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Typography } from 'antd';
-import { EditableList } from '../../../commons/EditableList/EditableList.component';
+import { EditableList } from '../../../../commons/EditableList/EditableList.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MonthFormat } from '../../../../constants/ApplicationConst';
-import { QualificationConst } from '../../../../constants/AttendantConstants';
+import { MonthFormat } from '../../../../../constants/ApplicationConst';
+import { QualificationConst } from '../../../../../constants/AttendantConstants';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import TextArea from 'antd/es/input/TextArea';

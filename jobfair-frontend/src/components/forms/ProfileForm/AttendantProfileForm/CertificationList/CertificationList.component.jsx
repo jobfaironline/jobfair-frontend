@@ -1,9 +1,9 @@
-import { AttendantProfileValidation } from '../../../../validate/AttendantProfileValidation';
+import { AttendantProfileValidation } from '../../../../../validate/AttendantProfileValidation';
 import { Button, Card, Col, DatePicker, Form, Input, Row, Typography } from 'antd';
 import { DeleteOutlined, ShrinkOutlined } from '@ant-design/icons';
-import { EditableList } from '../../../commons/EditableList/EditableList.component';
+import { EditableList } from '../../../../commons/EditableList/EditableList.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MonthFormat } from '../../../../constants/ApplicationConst';
+import { MonthFormat } from '../../../../../constants/ApplicationConst';
 import { faPen, faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 

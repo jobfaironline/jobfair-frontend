@@ -1,4 +1,4 @@
-import { AttendantProfileValidation } from '../../../../validate/AttendantProfileValidation';
+import { AttendantProfileValidation } from '../../../../../validate/AttendantProfileValidation';
 import { Button, Card, Col, Form, Input, Rate, Row, Typography } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import React from 'react';

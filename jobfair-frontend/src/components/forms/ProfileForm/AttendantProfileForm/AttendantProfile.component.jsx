@@ -1,78 +1,30 @@
-import { AttendantProfileValidation } from '../../../validate/AttendantProfileValidation';
+import { AccountProfile } from '../AccountProfile.component';
+import { AttendantProfileValidation } from '../../../../validate/AttendantProfileValidation';
 import { Card, Col, DatePicker, Form, Input, Radio, Row, Select } from 'antd';
-import {
-  CountryConst,
-  GenderConst,
-  JobLevelConst,
-  MaritalConst,
-  ResidenceConst
-} from '../../../constants/AttendantConstants';
-import { DateFormat } from '../../../constants/ApplicationConst';
-import { convertToDateValue } from '../../../utils/common';
+import { CountryConst, JobLevelConst, MaritalConst, ResidenceConst } from '../../../../constants/AttendantConstants';
+import { DateFormat } from '../../../../constants/ApplicationConst';
+import { convertToDateValue } from '../../../../utils/common';
 import React from 'react';
 
 const { Option } = Select;
 
 export const AttendantProfile = ({ form, id }) => (
   <Card className={'list anchor'} id={id}>
+    <AccountProfile />
     <Row gutter={10}>
       <Col span={8}>
-        <Form.Item
-          label='First name'
-          name={['account', 'firstname']}
-          hasFeedback
-          rules={AttendantProfileValidation.account.firstname}>
-          <Input placeholder='First name' style={{ width: '100%' }} />
-        </Form.Item>
-      </Col>
-      <Col span={8}>
-        <Form.Item
-          label='Middle name'
-          name={['account', 'middlename']}
-          hasFeedback
-          rules={AttendantProfileValidation.account.middlename}>
-          <Input placeholder='Middle name' style={{ width: '100%' }} />
-        </Form.Item>
-      </Col>
-      <Col span={8}>
-        <Form.Item
-          label='Last name'
-          name={['account', 'lastname']}
-          hasFeedback
-          rules={AttendantProfileValidation.account.lastname}>
-          <Input placeholder='Last name' style={{ width: '100%' }} />
-        </Form.Item>
-      </Col>
-    </Row>
-    <Row gutter={10}>
-      <Col span={12}>
-        <Form.Item
-          label='Phone number'
-          name={['account', 'phone']}
-          hasFeedback
-          rules={AttendantProfileValidation.account.phone}>
-          <Input placeholder='Phone' style={{ width: '100%' }} />
-        </Form.Item>
-      </Col>
-      <Col span={12}>
         <Form.Item label='Date of birth' name='dob' hasFeedback rules={AttendantProfileValidation.account.dob}>
           <DatePicker format={DateFormat} onChange={(date, dateString) => convertToDateValue(dateString)} />
         </Form.Item>
       </Col>
-    </Row>
-    <Row gutter={10}>
       <Col span={8}>
         <Form.Item label='Title' name='title' hasFeedback rules={AttendantProfileValidation.title}>
-          <Input placeholder='Title' style={{ width: '100%' }} />
-        </Form.Item>
-      </Col>
-      <Col span={8}>
-        <Form.Item label='Gender' name={['account', 'gender']}>
-          <Radio.Group>
-            {GenderConst.map((item) => (
-              <Radio.Button value={item.enumName}>{item.name}</Radio.Button>
-            ))}
-          </Radio.Group>
+          <Select>
+            <Option value={'Mr'}>{'Mr'}</Option>
+            <Option value={'Miss'}>{'Miss'}</Option>
+            <Option value={'Mrs'}>{'Mrs'}</Option>
+            <Option value={'Other'}>{'Other'}</Option>
+          </Select>
         </Form.Item>
       </Col>
       <Col span={8}>

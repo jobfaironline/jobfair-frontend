@@ -14,6 +14,10 @@ export const EditableList = ({ form, formItemName, buttonText, ReadComponent, Up
   const collapse = async (id) => {
     try {
       await form.validateFields();
+      const fieldData = form.getFieldValue(formItemName);
+      fieldData.forEach((item) => {
+        if (item.id === id) item.isEmpty = false;
+      });
       setEditItemIds((prevState) => prevState.filter((item) => item.id === id));
     } catch (e) {
       const errorFieldNames = e.errorFields.map((obj) => obj.name[0]);
@@ -26,7 +30,7 @@ export const EditableList = ({ form, formItemName, buttonText, ReadComponent, Up
       {(fields, { add, remove }) => {
         const addItem = () => {
           const newId = uuidv4();
-          add({ id: newId, isNew: true });
+          add({ id: newId, isNew: true, isEmpty: true });
           onEditItem(newId);
         };
         return (
@@ -35,6 +39,7 @@ export const EditableList = ({ form, formItemName, buttonText, ReadComponent, Up
               const item = form.getFieldValue(formItemName)?.[name];
               const id = item?.id;
               const isNew = item?.isNew;
+              const isEmpty = item?.isEmpty;
               const removeHistory = () => {
                 collapse(id);
                 remove(name);
@@ -42,7 +47,7 @@ export const EditableList = ({ form, formItemName, buttonText, ReadComponent, Up
 
               return (
                 <div style={{ marginBottom: '1rem' }} key={id}>
-                  {editItemIds.includes(id) || isNew ? (
+                  {editItemIds.includes(id) || (isNew && isEmpty) ? (
                     <UpdateComponent
                       key={key}
                       restField={restField}

@@ -1,4 +1,4 @@
-import { PHONE_REGEX } from '../constants/RegexConstant';
+import { NAME_REGEX, PHONE_REGEX } from '../constants/RegexConstant';
 import { convertToDateString } from '../utils/common';
 import moment from 'moment';
 
@@ -15,6 +15,16 @@ export const MAX_LENGTH_VALIDATOR = (fieldName, maxValue) => ({
 export const MIN_LENGTH_VALIDATOR = (fieldName, minValue) => ({
   min: minValue,
   message: `${fieldName} has min value of length is ${minValue}`
+});
+
+export const NAME_VALIDATOR = (fieldName) => ({
+  validator(_, value) {
+    if (!value) return Promise.resolve();
+    const result = NAME_REGEX.test(value);
+    if (result) return Promise.reject(new Error(`${fieldName} cannot contains special characters`));
+
+    return Promise.resolve();
+  }
 });
 
 export const EMAIL_VALIDATOR = () => [

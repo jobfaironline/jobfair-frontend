@@ -1,23 +1,25 @@
-import { Form, Modal, Typography, notification } from 'antd';
-import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
-import { PATH } from '../../../constants/Paths/Path';
+import { ActivityList } from '../../../../components/forms/ProfileForm/AttendantProfileForm/ActivityList/ActivityList.component';
+import { AttendantProfile } from '../../../../components/forms/ProfileForm/AttendantProfileForm/AttendantProfile.component';
+import { CertificationList } from '../../../../components/forms/ProfileForm/AttendantProfileForm/CertificationList/CertificationList.component';
+import { EducationList } from '../../../../components/forms/ProfileForm/AttendantProfileForm/EducationList/EducationList.component';
+import { Form, notification } from 'antd';
+import { LoadingComponent } from '../../../../components/commons/Loading/Loading.component';
+import { ProfileFormContainer } from '../ProfileForm.container';
+import { ReferenceList } from '../../../../components/forms/ProfileForm/AttendantProfileForm/ReferencesList/ReferencesList.component';
+import { SkillList } from '../../../../components/forms/ProfileForm/AttendantProfileForm/SkillList/SkillList.component';
+import { WorkHistoryList } from '../../../../components/forms/ProfileForm/AttendantProfileForm/WorkHistoryList/WorkHistoryList.component';
 import {
   convertToDateString,
   convertToDateValue,
   convertToMoment,
   deepClone,
   handleConvertRangePicker
-} from '../../../utils/common';
-import { deactivateOwnAccountAPI } from '../../../services/jobhub-api/AccountControllerService';
+} from '../../../../utils/common';
 import {
   getAttendantDetailAPI,
   updateAttendantProfileAPI
-} from '../../../services/jobhub-api/AttendantControllerService';
-import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
-import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import AttendantProfileFormComponent from '../../../components/forms/AttendantProfileForm/AttendantProfileForm.component';
+} from '../../../../services/jobhub-api/AttendantControllerService';
+import { useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
@@ -78,17 +80,21 @@ const mapperProfileDate = (data) => ({
   })
 });
 
-const { Text, Title } = Typography;
+const formTitles = [
+  { title: 'Profile', href: '#profile' },
+  { title: 'Skills', href: '#skills' },
+  { title: 'Work history', href: '#work-histories' },
+  { title: 'Education', href: '#educations' },
+  { title: 'Certification', href: '#certifications' },
+  { title: 'Reference', href: '#references' },
+  { title: 'Activity', href: '#activities' }
+];
 
 const AttendantProfileFormContainer = () => {
   const [form] = Form.useForm();
   const attendantId = useSelector((state) => state.authentication.user.userId);
-  const webSocketClient = useSelector(selectWebSocket);
-  const history = useHistory();
-  const dispatch = useDispatch();
 
   const [data, setData] = useState({});
-  const [deactivateAccountModalVisibility, setDeactivateAccountModalVisibility] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -100,8 +106,7 @@ const AttendantProfileFormContainer = () => {
       setData(mapperProfileDate(data));
     } catch (e) {
       notification['error']({
-        message: `Fetch attendant profile failed`,
-        description: `Failed for attendant with ${attendantId}`
+        message: `Fetch attendant profile failed`
       });
     }
   };
@@ -131,8 +136,7 @@ const AttendantProfileFormContainer = () => {
       await updateAttendantProfileAPI(body);
       fetchData();
       notification['success']({
-        message: `Update attendant profile successfully`,
-        description: `Update attendant: ${attendantId} successfully`
+        message: `Update attendant profile successfully`
       });
     } catch (e) {
       notification['error']({
@@ -142,43 +146,19 @@ const AttendantProfileFormContainer = () => {
     }
   };
 
-  const handleDeactivateAccount = async () => {
-    await deactivateOwnAccountAPI();
-    webSocketClient?.close();
-    dispatch(logoutHandler());
-    history.push(PATH.INDEX);
-  };
-
-  const openDeactivateAccount = () => {
-    setDeactivateAccountModalVisibility(true);
-  };
-
-  const handleChangePassword = () => {
-    history.push(PATH.CHANGE_PASSWORD_PAGE);
-  };
-
   if (data === undefined || data === null || Object.keys(data).length === 0)
     return <LoadingComponent isWholePage={true} />;
 
   return (
-    <>
-      <Modal
-        visible={deactivateAccountModalVisibility}
-        title={'Deactivate account'}
-        okText={'Deactivate'}
-        onOk={handleDeactivateAccount}
-        onCancel={() => setDeactivateAccountModalVisibility(false)}>
-        <Title level={4}>Are you sure to deactivate your account? </Title>
-        <Text> You can always reactive your account by login again </Text>
-      </Modal>
-      <AttendantProfileFormComponent
-        form={form}
-        onFinish={onFinish}
-        data={data}
-        onDeactivateAccount={openDeactivateAccount}
-        onChangePassword={handleChangePassword}
-      />
-    </>
+    <ProfileFormContainer form={form} onFinish={onFinish} data={data} formTitle={formTitles}>
+      <AttendantProfile form={form} id={'profile'} />
+      <SkillList id={'skills'} />
+      <WorkHistoryList form={form} id={'work-histories'} />
+      <EducationList form={form} id={'educations'} />
+      <CertificationList form={form} id={'certifications'} />
+      <ReferenceList form={form} id={'references'} />
+      <ActivityList form={form} id={'activities'} />
+    </ProfileFormContainer>
   );
 };
 
