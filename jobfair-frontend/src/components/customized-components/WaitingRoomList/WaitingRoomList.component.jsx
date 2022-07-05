@@ -7,7 +7,9 @@ export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => {
       <div>
         <Typography.Title level={3}>Danh sách ứng viên</Typography.Title>
         {waitingList.map((interviewee, index, arr) => {
-          const isHavingInterview = arr?.filter((interview) => interview.status === 'INTERVIEWING');
+          const isHavingInterview = arr?.filter(
+            (interview) => interview.status === 'INTERVIEWING' || interview.status === 'SUBMITTED_REPORT'
+          );
 
           return (
             <div className='name-holder'>
@@ -19,7 +21,9 @@ export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => {
                   }`}
                 </Col>
                 <Col span={8}>
-                  {interviewee?.status !== 'INTERVIEWING' && isHavingInterview?.length > 0 ? null : (
+                  {interviewee?.status !== 'INTERVIEWING' &&
+                  interviewee?.status !== 'SUBMITTED_REPORT' &&
+                  isHavingInterview?.length > 0 ? null : (
                     <Button
                       type='primary'
                       shape='round'

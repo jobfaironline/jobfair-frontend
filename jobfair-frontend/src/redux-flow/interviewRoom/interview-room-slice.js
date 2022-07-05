@@ -35,6 +35,15 @@ const interviewRoomSlice = createSlice({
           invitingApplicationId: undefined
         }
       };
+    },
+    resetApplicationData: (state) => {
+      return {
+        ...state,
+        currentInterviewingApplication: {
+          ...state.currentInterviewingApplication,
+          applicationData: undefined
+        }
+      };
     }
   },
   extraReducers: (builder) => {

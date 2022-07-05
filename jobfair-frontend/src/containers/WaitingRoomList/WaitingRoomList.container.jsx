@@ -173,7 +173,7 @@ const mappingTodayScheduleAndWaitingRoomList = async (
               interviewRoomId,
               agoraUserListRef
             ));
-          dispatch(interviewRoomAction.resetCurrentInterviewingApplication());
+          dispatch(interviewRoomAction.resetApplicationData());
         } catch (e) {
           notification['error']({
             message: `Something went wrong! Try again latter!`,
@@ -205,12 +205,10 @@ const mappingTodayScheduleAndWaitingRoomList = async (
         }
       };
 
-      console.log(agoraUserListRef?.current);
-      console.log(`${agoraUserListRef?.current?.indexOf(0)?.uid} !== ${data?.attendantId}`);
-
       if (
-        !agoraUserListRef?.current?.length &&
-        (agoraUserListRef.current.length <= 0 || agoraUserListRef.current[0].uid !== data?.attendantId)
+        agoraUserListRef?.current?.length &&
+        agoraUserListRef.current.length > 0 &&
+        agoraUserListRef.current[0].uid !== data?.attendantId
       )
         return null;
 
@@ -221,7 +219,7 @@ const mappingTodayScheduleAndWaitingRoomList = async (
               Start
             </Button>
           );
-        case 'INTERVIEWING':
+        case 'SUBMITTED_REPORT':
           return (
             <Button type='primary' shape='round' onClick={() => handleEndInterview()}>
               End
