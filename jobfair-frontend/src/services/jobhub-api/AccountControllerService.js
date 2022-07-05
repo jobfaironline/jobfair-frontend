@@ -1,6 +1,7 @@
 import { CallAPI } from '../axiosBase';
 import {
   ENDPOINT_CHANGE_PASSWORD,
+  ENDPOINT_DEACTIVATE_ACCOUNT,
   ENDPOINT_FORGOT_PASSWORD,
   ENDPOINT_GET_ACCOUNT_BY_ID,
   ENDPOINT_GET_GENERAL_INFO
@@ -18,3 +19,5 @@ export const getGeneralInfoAPI = (email) =>
       email
     }
   );
+
+export const deactivateOwnAccountAPI = () => CallAPI(ENDPOINT_DEACTIVATE_ACCOUNT, 'GET');

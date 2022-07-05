@@ -4,11 +4,9 @@ import { AttendantProfile } from './AttendantProfile.component';
 import { BackTop, Button, Divider, Form, Typography } from 'antd';
 import { CertificationList } from './CertificationList/CertificationList.component';
 import { EducationList } from './EducationList/EducationList.component';
-import { PATH } from '../../../constants/Paths/Path';
 import { ReferenceList } from './ReferencesList/ReferencesList.component';
 import { SkillList } from './SkillList/SkillList.component';
 import { WorkHistoryList } from './WorkHistoryList/WorkHistoryList.component';
-import { useHistory } from 'react-router-dom';
 import AnchorComponent from '../../commons/Anchor/Achor.component';
 import React from 'react';
 
@@ -24,8 +22,7 @@ const formTitles = [
   { title: 'Activity', href: '#activities' }
 ];
 
-const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
-  const history = useHistory();
+const AttendantProfileFormComponent = ({ form, onFinish, data, onDeactivateAccount, onChangePassword }) => {
   form.setFieldsValue({ ...data });
   const email = form.getFieldValue('account')?.email;
 
@@ -38,11 +35,12 @@ const AttendantProfileFormComponent = ({ form, onFinish, data }) => {
       </Divider>
       <div style={{ marginBottom: '1rem' }}>
         <Text>{email}</Text> -{' '}
-        <a
-          onClick={() => {
-            history.push(PATH.CHANGE_PASSWORD_PAGE);
-          }}>
+        <a style={{ textDecoration: 'underline' }} onClick={onChangePassword}>
           <Text strong>Change password</Text>
+        </a>{' '}
+        -{' '}
+        <a style={{ textDecoration: 'underline' }} onClick={onDeactivateAccount}>
+          <Text strong>Deactivate account</Text>
         </a>
       </div>
       <div style={{ position: 'fixed', left: '10%' }}>
