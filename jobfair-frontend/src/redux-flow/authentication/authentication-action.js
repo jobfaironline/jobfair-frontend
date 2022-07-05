@@ -37,3 +37,19 @@ export const logoutHandler = () => {
     dispatch(authenticationActions.logout());
   };
 };
+
+export const changeProfileURL = (imageURL) => {
+  return async (dispatch) => {
+    const data = JSON.parse(localStorage.getItem(USER_STORAGE));
+    localStorage.setItem(USER_STORAGE, JSON.stringify({ ...data, profileUrl: imageURL }));
+    dispatch(authenticationActions.updateUserProfileImage(imageURL));
+  };
+};
+
+export const changeUserFullName = (fullName) => {
+  return async (dispatch) => {
+    const data = JSON.parse(localStorage.getItem(USER_STORAGE));
+    localStorage.setItem(USER_STORAGE, JSON.stringify({ ...data, fullName: fullName }));
+    dispatch(authenticationActions.updateUserFullName(fullName));
+  };
+};
