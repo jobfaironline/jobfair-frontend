@@ -17,6 +17,7 @@ import VideoCallContainer from '../Agora/VideoCall/VideoCall.container';
 
 const InterviewRoomContainer = (props) => {
   const role = useSelector((state) => state.authentication.user.roles);
+  const interviewingData = useSelector((state) => state?.interviewRoom?.currentInterviewingApplication);
   const location = useLocation();
 
   const { scheduleId, roomId: channelId } = useParams();
@@ -27,12 +28,6 @@ const InterviewRoomContainer = (props) => {
   const [audioTrack, setAudioTrack] = useState(null);
   const [cameraReady, setCameraReady] = useState(false);
   const [cameraTrack, setCameraTrack] = useState(null);
-  const [interviewingData, setInterviewingData] = useState({
-    isInterviewing: false,
-    applicationData: undefined,
-    invitingApplicationId: undefined,
-    invitingAttendantId: undefined
-  });
 
   const [form] = Form.useForm();
 
@@ -50,16 +45,6 @@ const InterviewRoomContainer = (props) => {
       setCameraReady(true);
     });
   }, []);
-
-  useEffect(() => {
-    if (interviewingData.isInterviewing) fetchApplicationData();
-  }, [interviewingData.isInterviewing]);
-
-  const fetchApplicationData = async () => {
-    const response = await getApplicationById(interviewingData.invitingApplicationId);
-    const data = response.data;
-    setInterviewingData((prevState) => ({ ...prevState, applicationData: data }));
-  };
 
   const handleSubmitReport = async (values) => {
     try {
@@ -99,9 +84,8 @@ const InterviewRoomContainer = (props) => {
                   width={'100%'}
                   userListRef={userListRef}
                   layoutMode={location.pathname.includes('waiting-room') ? 'WAITINGROOM' : 'INTERVIEWROOM'}
-                  setInterviewingData={setInterviewingData}
                 />
-                {interviewingData.isInterviewing && interviewingData.applicationData !== undefined ? (
+                {interviewingData.applicationData !== undefined ? (
                   <div>
                     <CompactResumeDetail data={interviewingData.applicationData} />
                   </div>
@@ -109,7 +93,7 @@ const InterviewRoomContainer = (props) => {
               </>
             }
             leftSide={
-              interviewingData.isInterviewing ? (
+              interviewingData.applicationData !== undefined ? (
                 <div style={{ padding: '2rem' }}>
                   <InterviewReportForm form={form} onFinish={handleSubmitReport} />
                 </div>
@@ -135,8 +119,6 @@ const InterviewRoomContainer = (props) => {
               <WaitingRoomListForInterviewerContainer
                 channelId={channelId}
                 scheduleId={scheduleId}
-                setInterviewingData={setInterviewingData}
-                interviewingData={interviewingData}
                 agoraUserListRef={userListRef}
               />
             ) : null}

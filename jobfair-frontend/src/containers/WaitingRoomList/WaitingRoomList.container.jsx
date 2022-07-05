@@ -16,17 +16,13 @@ import {
 } from '../../services/jobhub-api/InterviewControllerService';
 import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
+import { interviewRoomAction } from '../../redux-flow/interviewRoom/interview-room-slice';
+import { fetchInterviewingApplicationData } from '../../redux-flow/interviewRoom/interview-room-action';
 
-export const WaitingRoomListForInterviewerContainer = ({
-  channelId,
-  scheduleId,
-  setInterviewingData,
-  interviewingData,
-  agoraUserListRef
-}) => {
+export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId, agoraUserListRef }) => {
   const rerender = useSelector((state) => state?.interviewRoom?.rerender);
   const [intervieweeList, setIntervieweeList] = useState([]);
   const intervieweeListRef = useRef(intervieweeList);
@@ -62,8 +58,6 @@ export const WaitingRoomListForInterviewerContainer = ({
           scheduleInfo?.waitingRoomId,
           intervieweeListRef,
           channelId,
-          setInterviewingData,
-          interviewingData,
           agoraUserListRef
         );
       }
@@ -90,8 +84,6 @@ export const WaitingRoomListForInterviewerContainer = ({
             scheduleInfo?.waitingRoomId,
             intervieweeListRef,
             channelId,
-            setInterviewingData,
-            interviewingData,
             agoraUserListRef
           ));
       };
@@ -108,19 +100,11 @@ const mappingTodayScheduleAndWaitingRoomList = async (
   waitingRoomId,
   intervieweeListRef,
   interviewRoomId,
-  setInterviewingData,
-  interviewingData,
   agoraUserListRef
 ) => {
   const handleInvite = async (attendantId, applicationId) => {
     try {
       const res = await inviteInterviewee(attendantId, interviewRoomId);
-      setInterviewingData !== undefined &&
-        setInterviewingData((prevState) => ({
-          ...prevState,
-          invitingApplicationId: applicationId,
-          invitingAttendantId: attendantId
-        }));
       if (res?.status === 202) {
         const swapHandle = async () => {
           //need to swap
@@ -137,7 +121,7 @@ const mappingTodayScheduleAndWaitingRoomList = async (
                 waitingRoomId,
                 intervieweeListRef,
                 interviewRoomId,
-                setInterviewingData
+                agoraUserListRef
               ));
             //invite again
             await inviteInterviewee(attendantId, interviewRoomId);
@@ -169,6 +153,15 @@ const mappingTodayScheduleAndWaitingRoomList = async (
     const { data: waitingRoomList } = await getWaitingRoomInfo(waitingRoomId);
     // eslint-disable-next-line no-unused-vars
     const InterviewStatusButton = ({ data, scheduleInfo, channelId }) => {
+      const dispatch = useDispatch();
+
+      useEffect(() => {
+        if (data?.status && data?.status === 'INTERVIEWING') {
+          dispatch(interviewRoomAction.setCurrentInterviewingApplicationId(data?.id));
+          dispatch(fetchInterviewingApplicationData({ applicationId: data?.id }));
+        }
+      }, []);
+
       const handleEndInterview = async () => {
         try {
           await endInterview(data?.attendantId, data?.interviewRoomId);
@@ -178,8 +171,9 @@ const mappingTodayScheduleAndWaitingRoomList = async (
               waitingRoomId,
               intervieweeListRef,
               interviewRoomId,
-              setInterviewingData
+              agoraUserListRef
             ));
+          dispatch(interviewRoomAction.resetCurrentInterviewingApplication());
         } catch (e) {
           notification['error']({
             message: `Something went wrong! Try again latter!`,
@@ -192,13 +186,15 @@ const mappingTodayScheduleAndWaitingRoomList = async (
       const handleStartInterview = async () => {
         try {
           await startInterview(data?.attendantId, data?.interviewRoomId);
+          dispatch(interviewRoomAction.setCurrentInterviewingApplicationId(data?.id));
+          dispatch(fetchInterviewingApplicationData({ applicationId: data?.id }));
           waitingRoomId &&
             (await mappingTodayScheduleAndWaitingRoomList(
               setIntervieweeList,
               waitingRoomId,
               intervieweeListRef,
               interviewRoomId,
-              setInterviewingData
+              agoraUserListRef
             ));
         } catch (e) {
           notification['error']({
@@ -209,8 +205,14 @@ const mappingTodayScheduleAndWaitingRoomList = async (
         }
       };
 
-      const t = agoraUserListRef.current;
-      if (agoraUserListRef.current.length <= 0) return null;
+      console.log(agoraUserListRef?.current);
+      console.log(`${agoraUserListRef?.current?.indexOf(0)?.uid} !== ${data?.attendantId}`);
+
+      if (
+        !agoraUserListRef?.current?.length &&
+        (agoraUserListRef.current.length <= 0 || agoraUserListRef.current[0].uid !== data?.attendantId)
+      )
+        return null;
 
       switch (data.status) {
         case 'NOT_YET':

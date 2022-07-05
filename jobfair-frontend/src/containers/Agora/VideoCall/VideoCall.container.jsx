@@ -19,8 +19,7 @@ const VideoCallContainer = (props) => {
   const history = useHistory();
   //TODO: remove later
   const dispatch = useDispatch();
-  const { audioReady, audioTrack, cameraReady, cameraTrack, type, layoutMode, userListRef, setInterviewingData } =
-    props;
+  const { audioReady, audioTrack, cameraReady, cameraTrack, type, layoutMode, userListRef } = props;
 
   const [isRTCClientReady, setIsRTCClientReady] = useState(false);
   const [users, setUsers] = useState([]);
@@ -62,11 +61,6 @@ const VideoCallContainer = (props) => {
 
   async function initializeRTCClient(rtcClient, rtcToken, userId) {
     rtcClient.on('user-joined', async (user) => {
-      setInterviewingData !== undefined &&
-        setInterviewingData((prevState) => {
-          if (user.uid === prevState.invitingAttendantId) return { ...prevState, isInterviewing: true };
-          return prevState;
-        });
       dispatch(interviewRoomAction.setRerender());
       setUsers((prevUsers) => [...prevUsers, user]);
     });
@@ -101,6 +95,7 @@ const VideoCallContainer = (props) => {
       console.log('leaving', user);
       dispatch(notificationAction.setInRoom(false)); //TODO: remove later
       setUsers((prevUsers) => prevUsers.filter((User) => User.uid !== user.uid));
+      dispatch(interviewRoomAction.setRerender());
     });
 
     await rtcClient.join(REACT_APP_AGORA_APP_ID, channelId, rtcToken, userId);
