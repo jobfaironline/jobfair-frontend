@@ -1,5 +1,5 @@
-import React from 'react';
 import AssignmentPageBreadcumb from '../../../containers/AssignmentPageBreadcumb/AssignmentPageBreadcumb.container';
+import React from 'react';
 
 const PageLayoutWrapper = (props) => {
   const { children, ...otherProps } = props;

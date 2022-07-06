@@ -1,9 +1,10 @@
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import React from 'react';
 
-const ResumeManagmentPage = () => (
-  <>
+const ResumeManagementPage = () => (
+  <PageLayoutWrapper className={'page'}>
     <h1>My resume page</h1>
-  </>
+  </PageLayoutWrapper>
 );
 
-export default ResumeManagmentPage;
+export default ResumeManagementPage;

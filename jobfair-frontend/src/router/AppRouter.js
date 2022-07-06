@@ -50,8 +50,7 @@ import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
-import ResumeManagmentPage from '../pages/ResumeManagementPage/ResumeManagementPage';
-import AssignmentPageBreadcumb from '../containers/AssignmentPageBreadcumb/AssignmentPageBreadcumb.container';
+import ResumeManagementPage from '../pages/ResumeManagementPage/ResumeManagementPage';
 
 const excludeFooterPages = [PATH.BOOTH_PAGE, PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE];
 
@@ -191,7 +190,7 @@ const AppRouter = () => {
         />
         <AttendantRouter
           key={PATH_ATTENDANT.RESUME_MANAGEMENT_PAGE}
-          component={() => <ResumeManagmentPage />}
+          component={() => <ResumeManagementPage />}
           path={PATH_ATTENDANT.RESUME_MANAGEMENT_PAGE}
           exact
         />
