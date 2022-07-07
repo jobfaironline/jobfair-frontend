@@ -69,6 +69,25 @@ const defaultColumns = () => [
       }
       return <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>;
     }
+  },
+  {
+    title: 'Matching point',
+    dataIndex: 'matchingPoint',
+    key: 'matchingPoint',
+    width: '10%',
+    sorter: (a, b) => a.matchingPoint * 100 - b.matchingPoint * 100,
+    render: (num) => {
+      let tagColor = 'red';
+      if (num > 0.5) tagColor = 'gold';
+      if (num > 0.7) tagColor = 'green';
+      return (
+        <div style={{ display: 'flex' }}>
+          <Tag color={tagColor} style={{ marginLeft: 'auto' }}>
+            {Math.round(num * 100)} %
+          </Tag>
+        </div>
+      );
+    }
   }
 ];
 

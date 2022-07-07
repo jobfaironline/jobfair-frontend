@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Card, Spin } from 'antd';
+import { Card, Spin, Tag, Typography } from 'antd';
 import { QualificationConst } from '../../../constants/AttendantConstants';
 import { convertDobToAge, convertEnumToString } from '../../../utils/common';
 import EvaluationFormComponent from '../../forms/EvaluationForm/EvaluationForm.component';
@@ -13,6 +13,11 @@ const ResumeDetailComponent = (props) => {
   if (data === undefined || data === null) return <Spin />;
 
   //TODO: refactor mapping later
+
+  let tagColor = 'red';
+  if (data.matchingPoint > 0.5) tagColor = 'gold';
+  if (data.matchingPoint > 0.7) tagColor = 'green';
+
   const educations = !!data?.candidateEducation
     ? data.candidateEducation.map((item, index) => ({
         id: index,
@@ -191,6 +196,9 @@ const ResumeDetailComponent = (props) => {
             title='Evaluate this registration'
             style={{ width: 500, margin: '2rem auto' }}
             headStyle={{ fontWeight: 700, fontSize: 24 }}>
+            <Typography.Text>
+              This resume matching point is: <Tag color={tagColor}>{Math.round(data.matchingPoint * 100)} %</Tag>
+            </Typography.Text>
             <div style={{ marginLeft: '5rem' }}>
               <EvaluationFormComponent onFinish={onFinish} name='applicationId' id={data.id} />
             </div>
