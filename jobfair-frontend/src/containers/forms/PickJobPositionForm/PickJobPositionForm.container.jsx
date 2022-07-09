@@ -1,15 +1,13 @@
 import './PickJobPositionForm.styles.scss';
 import { BoothDescriptionValidation } from '../../../validate/BoothDescriptionValidation';
-import { Button, Card, Form, Image, Input, Modal, Typography, notification } from 'antd';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Card, Form, Image, Input, Modal, Typography, notification } from 'antd';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { PATH, PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import {
   assignJobPositionToBooth,
   getCompanyBoothById
 } from '../../../services/jobhub-api/JobFairBoothControllerService';
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { generatePath, useHistory } from 'react-router-dom';
+import { generatePath } from 'react-router-dom';
 import { getAssignmentById } from '../../../services/jobhub-api/AssignmentControllerService';
 import { handleFieldsError } from '../../../utils/handleFIeldsError';
 import { mapperCompanyBooth } from '../../../utils/mapperCompanyBoooth';
@@ -26,7 +24,6 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
   const [formData, setFormData] = useState();
 
   const hasFetchData = useRef(false);
-  const history = useHistory();
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -148,25 +145,6 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
         ) : null}
       </Modal>
       <div className={'pick-job-position-container'}>
-        <div className={'button-container'}>
-          <Button
-            type={'link'}
-            onClick={() => {
-              history.push(PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE);
-            }}>
-            <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '5px' }} />
-            Back to my assignment
-          </Button>
-          <Button
-            type={'link'}
-            style={{ marginLeft: 'auto' }}
-            onClick={() => {
-              const url = generatePath(PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE, { boothId: formData.boothId });
-              history.push(url);
-            }}>
-            Go to assign task <FontAwesomeIcon icon={faArrowRight} style={{ marginLeft: '5px' }} />
-          </Button>
-        </div>
         <div className={'content-container'}>
           <div className={'left-side'}>
             <Title level={3}>My booth profile</Title>

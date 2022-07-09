@@ -150,7 +150,7 @@ const AttendantProfileFormContainer = () => {
     return <LoadingComponent isWholePage={true} />;
 
   return (
-    <ProfileFormContainer form={form} onFinish={onFinish} data={data} formTitle={formTitles}>
+    <ProfileFormContainer form={form} onFinish={onFinish} data={data} formAnchorTitles={formTitles}>
       <AttendantProfile form={form} id={'profile'} />
       <SkillList id={'skills'} />
       <WorkHistoryList form={form} id={'work-histories'} />

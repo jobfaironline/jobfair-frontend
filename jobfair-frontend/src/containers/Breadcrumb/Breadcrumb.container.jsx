@@ -1,17 +1,18 @@
 import { Breadcrumb } from 'antd';
-import React, { useState } from 'react';
-import { Link, matchPath, useLocation } from 'react-router-dom';
+import { Link, generatePath, matchPath, useLocation, useParams } from 'react-router-dom';
 import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
-import breadcumbItemsList from './BreadcumbItemsList';
+import React from 'react';
+import breadcrumbItemsList from './BreadcrumbItemsList';
 
-const breadcrumbNameMap = breadcumbItemsList.reduce((previousValue, currentValue) => {
-  previousValue[`${currentValue.path}`] = currentValue.title;
+const breadcrumbNameMap = breadcrumbItemsList.reduce((previousValue, currentValue) => {
+  previousValue[`${currentValue.path}`] = currentValue;
   return previousValue;
 }, {});
 
-const AssignmentPageBreadcumb = () => {
+const BreadcrumbContainer = () => {
   const location = useLocation();
   const pathname = location.pathname;
+  const params = useParams();
   const extraBreadcrumbItems = () => {
     const pathList = Object.keys(breadcrumbNameMap);
     const mappedBreadcumbItems = pathList
@@ -34,27 +35,32 @@ const AssignmentPageBreadcumb = () => {
         return breadcrumbNameMap[match?.path];
       });
 
-    if (mappedBreadcumbItems?.length <= 0) {
-      return null;
-    }
+    if (mappedBreadcumbItems?.length <= 0) return null;
 
+    let url = mappedBreadcumbItems[0].parentPath;
+    if (mappedBreadcumbItems[0].hasParam) {
+      const paramObj = mappedBreadcumbItems[0].paramNames.reduce((prev, current) => {
+        prev[current] = params[current];
+        return prev;
+      }, {});
+      url = generatePath(mappedBreadcumbItems[0].parentPath, paramObj);
+    }
     return (
       <>
+        <Breadcrumb.Item key='home'>
+          <Link to={url}>{mappedBreadcumbItems[0].parentTitle}</Link>
+        </Breadcrumb.Item>
         <Breadcrumb.Item key='detail' style={{ fontWeight: 'bold' }}>
-          {mappedBreadcumbItems[0]}
+          {mappedBreadcumbItems[0].title}
         </Breadcrumb.Item>
       </>
     );
   };
-  const breadcrumbItems = [
-    <Breadcrumb.Item key='home'>
-      <Link to={PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE}>My Assignment</Link>
-    </Breadcrumb.Item>
-  ].concat(extraBreadcrumbItems());
+  const breadcrumbItems = extraBreadcrumbItems();
 
   return (
     <>
-      {extraBreadcrumbItems() ? (
+      {breadcrumbItems ? (
         <Breadcrumb
           style={{
             position: 'relative',
@@ -78,4 +84,4 @@ const AssignmentPageBreadcumb = () => {
   );
 };
 
-export default AssignmentPageBreadcumb;
+export default BreadcrumbContainer;

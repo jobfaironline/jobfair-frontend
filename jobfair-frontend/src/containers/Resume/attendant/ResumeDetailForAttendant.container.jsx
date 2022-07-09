@@ -1,12 +1,13 @@
 import { Button, Typography, notification } from 'antd';
 import { CountryConst, QualificationConst } from '../../../constants/AttendantConstants';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
+import { PATH_ATTENDANT } from '../../../constants/Paths/Path';
 import { ResumeDetailComponent } from '../../../components/customized-components/Resume/ResumeDetail.component';
+import { generatePath, useHistory } from 'react-router-dom';
 import { getAttendantCvById } from '../../../services/jobhub-api/CvControllerService';
-import { getAttendantDetailAPI } from '../../../services/jobhub-api/AttendantControllerService';
 import React, { useEffect, useState } from 'react';
 
-const mapperResumeDetail = (attendantData, resume) => {
+const mapperResumeDetail = (resume) => {
   const result = resume.educations
     ?.map((item) => item.qualificationId)
     .map((name) => {
@@ -17,15 +18,16 @@ const mapperResumeDetail = (attendantData, resume) => {
   const highestEducationLevel =
     result !== undefined ? QualificationConst.find((item) => item.id === result[0])?.name : '';
   return {
+    ...resume,
     overviewData: {
-      fullName: `${attendantData.account.firstname} ${attendantData.account.middlename} ${attendantData.account.lastname}`,
-      email: attendantData.account?.email,
-      phoneNumber: attendantData.account?.phone,
+      fullName: `${resume.fullName}`,
+      email: resume.email,
+      phoneNumber: resume.phone,
       jobTitle: resume.jobTitle,
       yearOfExperience: resume.yearOfExp,
-      location: CountryConst.find((item) => (item.id = attendantData.countryId))?.name,
+      location: CountryConst.find((item) => (item.id = resume.countryId))?.name,
       educationLevel: highestEducationLevel,
-      profileImage: attendantData.account.profileImageUrl,
+      profileImage: resume.profileImageUrl,
       jobLevel: resume.jobLevel
     },
     skills: resume.skills,
@@ -34,19 +36,13 @@ const mapperResumeDetail = (attendantData, resume) => {
     educations: resume.educations,
     references: resume.references,
     workHistories: resume.workHistories,
-    about: `Hello my name is James Rogers and Painter from Miami. In pharetra orci dignissim, blandit mi semper,
-  ultricies diam. Suspendisse malesuada suscipit nunc non volutpat. Sed porta nulla id orci laoreet tempor
-  non consequat enim. Sed vitae aliquam velit. Aliquam ante erat, blandit at pretium et, accumsan ac est.
-  Integer vehicula rhoncus molestie. Morbi ornare ipsum sed sem condimentum, et pulvinar tortor luctus.
-  Suspendisse condimentum lorem ut elementum aliquam. Mauris nec erat ut libero vulputate pulvinar. Aliquam
-  ante erat, blandit at pretium et, accumsan ac est. Integer vehicula rhoncus molestie. Morbi ornare ipsum
-  sed sem condimentum, et pulvinar tortor luctus. Suspendisse condimentum lorem ut elementum aliquam. Mauris
-  nec erat ut libero vulputate pulvinar.'`
+    about: resume.aboutMe
   };
 };
 
 const ResumeDetailForAttendantContainer = (props) => {
-  const { resumeId, attendantId } = props;
+  const { resumeId } = props;
+  const history = useHistory();
   const [data, setData] = useState(undefined);
 
   useEffect(() => {
@@ -56,8 +52,7 @@ const ResumeDetailForAttendantContainer = (props) => {
   const fetchData = async () => {
     try {
       const { data: resume } = await getAttendantCvById(resumeId);
-      const { data: attendantData } = await getAttendantDetailAPI(attendantId);
-      const data = mapperResumeDetail(attendantData, resume);
+      const data = mapperResumeDetail(resume);
       setData(data);
     } catch (e) {
       notification['error']({
@@ -68,13 +63,18 @@ const ResumeDetailForAttendantContainer = (props) => {
     }
   };
 
+  const handleEditResume = () => {
+    const url = generatePath(PATH_ATTENDANT.EDIT_RESUME_PAGE, { id: resumeId });
+    history.push(url);
+  };
+
   if (data === undefined) return <LoadingComponent isWholePage={true} />;
 
   return (
     <div style={{ marginTop: '1rem' }}>
       <div style={{ display: 'flex' }}>
-        <Typography.Title level={2}>My resume</Typography.Title>
-        <Button className={'button'} type={'primary'} style={{ marginLeft: '1rem' }}>
+        <Typography.Title level={2}>{data.name}</Typography.Title>
+        <Button className={'button'} type={'primary'} style={{ marginLeft: '1rem' }} onClick={handleEditResume}>
           Edit resume
         </Button>
       </div>
