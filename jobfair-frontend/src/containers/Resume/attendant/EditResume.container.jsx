@@ -7,12 +7,56 @@ import { ReferenceList } from '../../../components/forms/ProfileForm/AttendantPr
 import { ResumeOverviewInformation } from '../../../components/customized-components/Resume/form/ResumeOverviewInformation.component';
 import { SkillList } from '../../../components/forms/ProfileForm/AttendantProfileForm/SkillList/SkillList.component';
 import { WorkHistoryList } from '../../../components/forms/ProfileForm/AttendantProfileForm/WorkHistoryList/WorkHistoryList.component';
-import { convertToMoment, getBase64 } from '../../../utils/common';
-import { getAttendantCvById } from '../../../services/jobhub-api/CvControllerService';
+import { convertToMoment, deepClone, getBase64, handleConvertRangePicker } from '../../../utils/common';
+import { getAttendantCvById, updateCv, uploadProfileImage } from '../../../services/jobhub-api/CvControllerService';
 import AnchorComponent from '../../../components/commons/Anchor/Achor.component';
 import React, { useEffect, useRef, useState } from 'react';
 import UploadComponent from '../../../components/commons/UploadComponent/Upload.component';
 import moment from 'moment';
+
+const removeIdNewItem = (data) => {
+  const result = deepClone(data);
+  result.forEach((history) => {
+    if (history.isNew) history.id = null;
+  });
+  return result;
+};
+
+const mapperForWorkHistoryRequestBody = (workHistories) => {
+  let result = deepClone(workHistories);
+  result = handleConvertRangePicker(result);
+  result = removeIdNewItem(result);
+  return result;
+};
+
+const mapperForEducationRequestBody = (educations) => {
+  let result = deepClone(educations);
+  result = handleConvertRangePicker(result);
+  result = removeIdNewItem(result);
+  return result;
+};
+
+const mapperForReferencesRequestBody = (references) => {
+  let result = deepClone(references);
+  result = removeIdNewItem(result);
+  return result;
+};
+
+const mapperForCertificationRequestBody = (certifications) => {
+  let result = deepClone(certifications);
+  result.forEach((certification) => {
+    certification.issueDate = certification.issueDate ? certification.issueDate.unix() * 1000 : null;
+  });
+  result = removeIdNewItem(result);
+  return result;
+};
+
+const mapperForActivitiesRequestBody = (activities) => {
+  let result = deepClone(activities);
+  result = handleConvertRangePicker(result);
+  result = removeIdNewItem(result);
+  return result;
+};
 
 const formTitles = [
   { title: 'Overview', href: '#overview' },
@@ -88,8 +132,8 @@ export const EditResumeContainer = (props) => {
         const url = await getBase64(file);
         const formData = new FormData();
         formData.append('file', file);
-        /*await uploadProfileImage(formData);
-        dispatch(changeProfileURL(url));*/
+        formData.append('cvId', resumeId);
+        await uploadProfileImage(formData);
         setMediaUrl(url);
         message.success('Upload profile image successfully');
       } catch (err) {
@@ -103,7 +147,28 @@ export const EditResumeContainer = (props) => {
     maxCount: 1
   };
 
-  const onFinish = () => {};
+  const onFinish = async (values) => {
+    const body = {
+      ...values,
+      activities: mapperForActivitiesRequestBody(values.activities),
+      certifications: mapperForCertificationRequestBody(values.certifications),
+      educations: mapperForEducationRequestBody(values.educations),
+      references: mapperForReferencesRequestBody(values.references),
+      workHistories: mapperForWorkHistoryRequestBody(values.workHistories)
+    };
+
+    try {
+      await updateCv(resumeId, body);
+      notification['success']({
+        message: `Update account profile successfully`
+      });
+    } catch (e) {
+      notification['error']({
+        message: `Update profile failed`,
+        description: `There is problem while updating, try again later`
+      });
+    }
+  };
 
   if (data === undefined || imageUrl === undefined) return <LoadingComponent isWholePage={true} />;
 

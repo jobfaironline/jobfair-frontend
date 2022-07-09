@@ -1,7 +1,6 @@
 import { AccountProfileValidation, AttendantProfileValidation } from '../../../../validate/AttendantProfileValidation';
 import { Card, Col, Form, Input, Row, Select, Typography } from 'antd';
-import { CountryConst } from '../../../../constants/AttendantConstants';
-import { JobLevelConst } from '../../../../constants/JobPositionConst';
+import { CountryConst, JobLevelConst } from '../../../../constants/AttendantConstants';
 
 const { Title } = Typography;
 const { Option } = Select;

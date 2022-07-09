@@ -1,5 +1,7 @@
 import { Card, Timeline, Typography } from 'antd';
+import { MonthFormat } from '../../../../constants/ApplicationConst';
 import React from 'react';
+import moment from 'moment';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -21,7 +23,7 @@ export const ResumeWorkHistoryList = (props) => {
             </Text>
             <br />
             <Text>
-              {history?.fromDate} - {history?.toDate}
+              {moment(history?.fromDate).format(MonthFormat)} - {moment(history?.toDate).format(MonthFormat)}
             </Text>
             <Paragraph style={{ marginTop: '5px' }}>{history?.description}</Paragraph>
           </Timeline.Item>

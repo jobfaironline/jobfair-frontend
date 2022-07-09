@@ -1,7 +1,9 @@
 import { Button, Card, Timeline, Typography } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { MonthFormat } from '../../../../constants/ApplicationConst';
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
+import moment from 'moment';
 
 const { Title, Text } = Typography;
 
@@ -22,7 +24,7 @@ export const ResumeCertificationList = (props) => {
               {certification?.institution}
             </Text>
             <br />
-            <Text>Issued date: {certification?.issueDate}</Text>
+            <Text>Issued date: {moment(certification?.issueDate).format(MonthFormat)}</Text>
             <br />
             <Button
               style={{ padding: '5px 1rem', marginTop: '5px', borderRadius: '8px' }}

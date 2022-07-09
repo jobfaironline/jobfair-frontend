@@ -22,7 +22,11 @@ const AnchorComponent = (props) => {
             background: '#FFF'
           }}>
           {
-            <Anchor targetOffset={300}>
+            <Anchor
+              targetOffset={300}
+              onClick={(e) => {
+                e.preventDefault();
+              }}>
               <Link href={href} title={title} />
               {listData.map((item, index) => (
                 <Link href={item.href} title={`${index + 1}: ${item.title}`} />
