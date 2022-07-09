@@ -38,7 +38,7 @@ export const PATH_ATTENDANT = {
   JOB_FAIR_DETAIL_PAGE: '/attendant/job-fair-detail',
   INTERVIEW_ROOM_PAGE: '/attendant/interview/:roomId',
   INTERVIEW_SCHEDULE: '/attendant/interview-schedule',
-  RESUME_DETAIL_PAGE: '/attendant/resume-detail',
+  RESUME_DETAIL_PAGE: '/attendant/resume-detail/:id',
   ATTEMPT_TEST_PAGE: '/attendant/attempt-test/:quizId',
   RESUME_MANAGEMENT_PAGE: '/attendant/resume-management'
 };
@@ -46,7 +46,7 @@ export const PATH_COMPANY_EMPLOYEE = {
   PROFILE_PAGE: `/profile`,
   COMPANY_PROFILE_PAGE: '/employee/company-profile',
   APPLICATION_MANAGEMENT_PAGE: '/employee/application-management',
-  RESUME_DETAIL_PAGE: '/employee/resume-detail',
+  RESUME_DETAIL_PAGE: '/employee/resume-detail/:id',
   JOB_FAIR_DETAIL_PAGE: '/employee/job-fair-detail',
   ASSIGN_BOOTH_MAP_PAGE: '/employee/assign-map/:assignmentId',
   JOB_FAIR_ASSIGNMENT_PAGE: '/employee/job-fair-assignment',
@@ -66,7 +66,7 @@ export const PATH_COMPANY_MANAGER = {
   COMPANY_PROFILE_PAGE: '/company/company-profile',
   JOB_FAIR_DETAIL_PAGE: '/company/job-fair-detail',
   APPLICATION_MANAGEMENT_PAGE: '/company/application-management',
-  RESUME_DETAIL_PAGE: '/company/resume-detail',
+  RESUME_DETAIL_PAGE: '/company/resume-detail/:id',
   ORGANIZE_JOB_FAIR_PAGE: '/company/organize-job-fair',
   JOB_FAIR_GRID_PAGE: '/company/my-job-fair',
   TEMPLATE_GRID_PAGE: '/company/my-template',

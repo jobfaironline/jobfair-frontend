@@ -1,17 +1,17 @@
-import { Divider, Input, Modal, Select } from 'antd';
+import { Divider, Input, Select } from 'antd';
+import { PATH_ATTENDANT } from '../../constants/Paths/Path';
 import { SearchCategories, SearchSubCategories } from '../../constants/CompanyProfileConstant';
-import { getAttendantCv, getAttendantCvById } from '../../services/jobhub-api/CvControllerService';
+import { generatePath, useHistory } from 'react-router-dom';
+import { getAttendantCv } from '../../services/jobhub-api/CvControllerService';
 import { getCountryOrder } from '../../utils/common';
-import { useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
-import ResumeDetailForAttendantContainer from '../Resume/attendant/ResumeDetailForAttendant.container';
 import ResumeGridComponent from '../../components/customized-components/ResumeGrid/ResumeGrid.component';
 
 const { Search } = Input;
 const { OptGroup, Option } = Select;
 const MyResumeListContainer = () => {
   const [data, setData] = useState();
-  const attendantId = useSelector((state) => state.authentication.user.userId);
+  const history = useHistory();
 
   useEffect(async () => {
     const res = await getAttendantCv();
@@ -22,20 +22,15 @@ const MyResumeListContainer = () => {
     setData(content);
   }, []);
 
+  // eslint-disable-next-line no-empty-function
   const handleAddCv = () => {};
 
   const handleViewCvDetail = (resumeId) => {
-    const resume = getAttendantCvById(resumeId);
-    Modal.info({
-      title: 'Resume detail',
-      width: '90rem',
-      closable: true,
-      maskClosable: true,
-      content: <ResumeDetailForAttendantContainer resume={resume} attendantId={attendantId} />
-    });
-    return <></>;
+    const url = generatePath(PATH_ATTENDANT.RESUME_DETAIL_PAGE, { id: resumeId });
+    history.push(url);
   };
 
+  // eslint-disable-next-line no-empty-function
   const handleDeleteCv = () => {};
 
   return (

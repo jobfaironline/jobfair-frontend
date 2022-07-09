@@ -1,6 +1,7 @@
 import './App.less';
 import 'animate.css';
 import { BrowserRouter } from 'react-router-dom';
+import { LoadingComponent } from './components/commons/Loading/Loading.component';
 import { Provider } from 'react-redux';
 import AppRouter from './router/AppRouter';
 import ErrorHandlerComponent from './components/commons/ErrorHandler/ErrorHandler.component';
@@ -13,7 +14,7 @@ function App() {
     <BrowserRouter>
       <ErrorHandlerComponent>
         <Provider store={store}>
-          <Suspense fallback='loading'>
+          <Suspense fallback={<LoadingComponent isWholePage={true} />}>
             <Scrollbars
               style={{ width: '100%', height: '100%' }}
               hideTracksWhenNotNeeded={true}

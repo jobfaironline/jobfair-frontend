@@ -5,6 +5,7 @@ import { Character } from './Character.component';
 import { ContactShadows, OrbitControls, Stage, useContextBridge } from '@react-three/drei';
 import { EffectComposer, Outline } from '@react-three/postprocessing';
 import { FirstPersonControl } from '../ThreeJSBaseComponent/FirstPersonControl.component';
+import { NAVBAR_HEIGHT } from '../../../styles/custom-theme';
 import { ReactReduxContext } from 'react-redux';
 import { ResumeSubmitMeshComponent } from './ResumeSubmitMesh.component';
 import { Select } from 'antd';
@@ -75,7 +76,7 @@ export const CompanyBoothCanvasComponent = (props) => {
       <Canvas
         dpr={[1, 2]}
         camera={{ fov: 45, zoom: 0.04 / zoom }}
-        style={{ width: '100%', height: 'calc(100vh - 124px)' }}
+        style={{ width: '100%', height: `calc(100vh - ${NAVBAR_HEIGHT})` }}
         onCreated={(state) => {
           cameraRef.current = state.camera;
         }}>
