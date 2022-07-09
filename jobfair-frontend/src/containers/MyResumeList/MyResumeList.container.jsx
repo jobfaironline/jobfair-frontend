@@ -1,88 +1,103 @@
-import { Divider, Input, Select } from 'antd';
+import { Input, Modal, Typography, notification } from 'antd';
 import { PATH_ATTENDANT } from '../../constants/Paths/Path';
-import { SearchCategories, SearchSubCategories } from '../../constants/CompanyProfileConstant';
+import { deleteCv, getAttendantCv } from '../../services/jobhub-api/CvControllerService';
 import { generatePath, useHistory } from 'react-router-dom';
-import { getAttendantCv } from '../../services/jobhub-api/CvControllerService';
-import { getCountryOrder } from '../../utils/common';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ResumeGridComponent from '../../components/customized-components/ResumeGrid/ResumeGrid.component';
 
 const { Search } = Input;
-const { OptGroup, Option } = Select;
 const MyResumeListContainer = () => {
   const [data, setData] = useState();
   const history = useHistory();
 
-  useEffect(async () => {
-    const res = await getAttendantCv();
-    let content = [];
-    if (res.status === 200) content = res.data;
+  const [confirmDeleteVisibility, setConfirmDeleteVisibility] = useState(false);
+  const seletedResumeIdRef = useRef();
 
-    content.unshift({ isFirst: true });
-    setData(content);
+  useEffect(() => {
+    fetchData();
   }, []);
 
-  // eslint-disable-next-line no-empty-function
-  const handleAddCv = () => {};
+  const fetchData = async () => {
+    try {
+      const res = await getAttendantCv();
+      let content = [];
+      if (res.status === 200) content = res.data;
+
+      content.unshift({ isFirst: true });
+      setData(content);
+    } catch (e) {
+      notification['error']({
+        message: `Fetch resumes fail`,
+        description: `There is problem while fetching data, try again later`,
+        duration: 2
+      });
+    }
+  };
+
+  const handleAddCv = () => {
+    history.push(PATH_ATTENDANT.ADD_RESUME_PAGE);
+  };
 
   const handleViewCvDetail = (resumeId) => {
     const url = generatePath(PATH_ATTENDANT.RESUME_DETAIL_PAGE, { id: resumeId });
     history.push(url);
   };
 
-  // eslint-disable-next-line no-empty-function
-  const handleDeleteCv = () => {};
+  const handleDeleteCv = async (resumeId) => {
+    seletedResumeIdRef.current = resumeId;
+    setConfirmDeleteVisibility(true);
+  };
+
+  const closeModal = () => {
+    setConfirmDeleteVisibility(false);
+  };
+
+  const deleteCV = async () => {
+    if (seletedResumeIdRef.current === undefined) return;
+    try {
+      await deleteCv(seletedResumeIdRef.current);
+      notification['success']({
+        message: `Success`,
+        description: `Delete successfully`,
+        duration: 2
+      });
+      closeModal();
+      fetchData();
+    } catch (e) {
+      notification['error']({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while delete cv, try again later`,
+        duration: 2
+      });
+    }
+  };
+
+  // eslint-disable-next-line no-unused-vars,no-empty-function
+  const handleOnSearch = (searchValue) => {};
 
   return (
-    <div className={'job-fair-grid-public-container'}>
-      <div className={'header'}>
-        <Search
-          placeholder='Search by job fair name'
-          // onSearch={(value) => handleOnSearch(value)}
-          style={{ width: '30rem', marginRight: '5rem' }}
+    <>
+      <Modal visible={confirmDeleteVisibility} title={'Delete confirmation'} onCancel={closeModal} onOk={deleteCV}>
+        <Typography.Text>
+          Deleting this document will permanently remove it and all of it's content. This cannot be undone.
+        </Typography.Text>
+      </Modal>
+      <div className={'job-fair-grid-public-container'}>
+        <div className={'header'}>
+          <Search
+            placeholder='Search by resume name'
+            onSearch={(value) => handleOnSearch(value)}
+            style={{ width: '30rem', marginRight: '5rem' }}
+          />
+        </div>
+        <ResumeGridComponent
+          data={data}
+          onAddCv={handleAddCv}
+          handleViewCvDetail={handleViewCvDetail}
+          handleDeleteCv={handleDeleteCv}
         />
-        <Select
-          style={{ width: '20rem' }}
-          showSearch
-          allowClear
-          placeholder={'Filter by category'}
-          // onChange={(value) => filterJobFair('category', value)}
-          // onClear={() => filterJobFair('category', '')}
-          dropdownRender={(menu) => (
-            <>
-              {menu}
-              <Divider style={{ margin: '8px 0' }} />
-            </>
-          )}>
-          {SearchCategories.map((category) => (
-            <OptGroup label={category.label}>
-              {SearchSubCategories.filter((item) => item.category_id === category.value).map((item) => (
-                <Option value={item.value}>{item.label}</Option>
-              ))}
-            </OptGroup>
-          ))}
-        </Select>
-        <Select
-          showSearch
-          allowClear
-          placeholder='Filter by country'
-          //TODO: wait for implement company location
-          style={{ width: 200, display: 'none' }}
-          // onChange={(value) => filterJobFair('country', value)}
-          // onClear={() => filterJobFair('country', '')}
-        >
-          {getCountryOrder().map((item) => (
-            <Option value={item.id}>{item.name}</Option>
-          ))}
-        </Select>
       </div>
-      <ResumeGridComponent
-        data={data}
-        onAddCv={handleAddCv}
-        handleViewCvDetail={handleViewCvDetail}
-        handleDeleteCv={handleDeleteCv}
-      />
-    </div>
+    </>
   );
 };
 

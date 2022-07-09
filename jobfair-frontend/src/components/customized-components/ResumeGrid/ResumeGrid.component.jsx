@@ -1,14 +1,19 @@
-import { Card, List, Tooltip, Typography } from 'antd';
+import './ResumeGrid.styles.scss';
+import { Avatar, Card, List, Tooltip, Typography } from 'antd';
+import { DateFormat } from '../../../constants/ApplicationConst';
+import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
+import moment from 'moment';
+
+const { Text, Title } = Typography;
 
 const ResumeGridComponent = (props) => {
-  const { data, onAddCv, handleViewCvDetail, handleDeleteCv, handleEditCv } = props;
+  const { data, onAddCv, handleViewCvDetail, handleDeleteCv } = props;
 
-  const defaultImage = '/miku.jpg';
   return (
-    <div className={'job-fair-grid'}>
+    <div className={'resume-grid'}>
       <List
         grid={{ gutter: 20, xs: 1, sm: 3, md: 3, lg: 5, xl: 5, xxl: 5 }}
         dataSource={data}
@@ -22,33 +27,23 @@ const ResumeGridComponent = (props) => {
           }
           return (
             <Card
-              hoverable={true}
+              bordered={false}
               className={'card'}
-              cover={
-                <img src={item.thumbnailUrl ? item.thumbnailUrl : defaultImage} alt={item.name} className={'cover'} />
-              }
-              onClick={() => handleViewCvDetail(item.id)}>
-              <div style={{ display: 'flex' }}>
-                <Card.Meta
-                  title={
-                    <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                      <Typography.Text>{item.name}</Typography.Text>
-                      <div style={{ marginLeft: '0.5rem' }} onClick={() => handleEditCv(item.id)}>
-                        <Tooltip title={'Edit cv'}>
-                          <FontAwesomeIcon icon={faEdit} />
-                        </Tooltip>
-                      </div>
-                    </div>
-                  }
-                  description={<Typography.Text>Latest update time: ...</Typography.Text>}
-                />
-                <div className={'card-footer'}>
-                  <div className={'card-footer-item'} onClick={() => handleDeleteCv(item.id)}>
-                    <Tooltip title={'Delete this cv'}>
-                      <FontAwesomeIcon icon={faTrash} />
-                    </Tooltip>
-                  </div>
-                </div>
+              actions={[
+                <Tooltip title={'Edit'}>
+                  <EyeOutlined key='edit' onClick={() => handleViewCvDetail(item.id)} />
+                </Tooltip>,
+                <Tooltip title={'Delete'}>
+                  <DeleteOutlined key='ellipsis' onClick={() => handleDeleteCv(item.id)} />
+                </Tooltip>
+              ]}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Avatar src={item.profileImageUrl} alt={item.name} size={128} />
+                <Title level={4} style={{ margin: '0' }}>
+                  {item.name}
+                </Title>
+                <Text>Created: {moment(item.createTime).format(DateFormat)}</Text>
+                <Text>Last update: {moment(item.updateTime).format(DateFormat)}</Text>
               </div>
             </Card>
           );

@@ -1,11 +1,10 @@
-import MyResumeListContainer from '../../containers/MyResumeList/MyResumeList.container';
+import { EditResumeContainer } from '../../containers/Resume/attendant/EditResume.container';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import React from 'react';
 
-const ResumeManagementPage = () => (
+const ResumeAddPage = () => (
   <PageLayoutWrapper className={'page'}>
-    <MyResumeListContainer />
+    <EditResumeContainer />;
   </PageLayoutWrapper>
 );
-
-export default ResumeManagementPage;
+export default ResumeAddPage;

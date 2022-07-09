@@ -8,7 +8,12 @@ import { ResumeOverviewInformation } from '../../../components/customized-compon
 import { SkillList } from '../../../components/forms/ProfileForm/AttendantProfileForm/SkillList/SkillList.component';
 import { WorkHistoryList } from '../../../components/forms/ProfileForm/AttendantProfileForm/WorkHistoryList/WorkHistoryList.component';
 import { convertToMoment, deepClone, getBase64, handleConvertRangePicker } from '../../../utils/common';
-import { getAttendantCvById, updateCv, uploadProfileImage } from '../../../services/jobhub-api/CvControllerService';
+import {
+  draftCv,
+  getAttendantCvById,
+  updateCv,
+  uploadProfileImage
+} from '../../../services/jobhub-api/CvControllerService';
 import AnchorComponent from '../../../components/commons/Anchor/Achor.component';
 import React, { useEffect, useRef, useState } from 'react';
 import UploadComponent from '../../../components/commons/UploadComponent/Upload.component';
@@ -94,6 +99,7 @@ export const EditResumeContainer = (props) => {
   const [data, setData] = useState();
   const [imageUrl, setMediaUrl] = useState();
   const uploadFileRef = useRef();
+  const resumerIdRef = useRef(resumeId);
 
   useEffect(() => {
     fetchData();
@@ -101,7 +107,11 @@ export const EditResumeContainer = (props) => {
 
   const fetchData = async () => {
     try {
-      let { data: resume } = await getAttendantCvById(resumeId);
+      if (resumerIdRef.current === undefined) {
+        const { data } = await draftCv();
+        resumerIdRef.current = data.id;
+      }
+      let { data: resume } = await getAttendantCvById(resumerIdRef.current);
       resume = mapperProfileDate(resume);
       setData(resume);
       setMediaUrl(resume.profileImageUrl);
@@ -132,7 +142,7 @@ export const EditResumeContainer = (props) => {
         const url = await getBase64(file);
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('cvId', resumeId);
+        formData.append('cvId', resumerIdRef.current);
         await uploadProfileImage(formData);
         setMediaUrl(url);
         message.success('Upload profile image successfully');
@@ -158,7 +168,7 @@ export const EditResumeContainer = (props) => {
     };
 
     try {
-      await updateCv(resumeId, body);
+      await updateCv(resumerIdRef.current, body);
       notification['success']({
         message: `Update account profile successfully`
       });
@@ -177,7 +187,7 @@ export const EditResumeContainer = (props) => {
     <div className={'profile-form'}>
       <Divider orientation='left'>
         <Title level={2} id={'account-profile'} style={{ scrollMarginTop: '126px' }}>
-          {data.name}
+          {data?.name ? data.name : 'Untitle'}
         </Title>
       </Divider>
       <div style={{ position: 'fixed', left: '5%' }}>

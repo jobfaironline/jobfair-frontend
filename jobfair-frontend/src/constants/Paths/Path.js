@@ -41,7 +41,8 @@ export const PATH_ATTENDANT = {
   RESUME_DETAIL_PAGE: '/attendant/resume-detail/:id',
   ATTEMPT_TEST_PAGE: '/attendant/attempt-test/:quizId',
   RESUME_MANAGEMENT_PAGE: '/attendant/resume-management',
-  EDIT_RESUME_PAGE: '/attendant/resume-detail/:id/edit'
+  EDIT_RESUME_PAGE: '/attendant/resume-detail/:id/edit',
+  ADD_RESUME_PAGE: '/attendant/add-resume'
 };
 export const PATH_COMPANY_EMPLOYEE = {
   PROFILE_PAGE: `/profile`,

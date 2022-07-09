@@ -49,6 +49,7 @@ import React, { useEffect } from 'react';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
+import ResumeAddPage from '../pages/ResumeAddPage/ResumeAddPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
 import ResumeEditPage from '../pages/ResumeEditPage/ResumeEditPage';
 import ResumeManagementPage from '../pages/ResumeManagementPage/ResumeManagementPage';
@@ -199,6 +200,12 @@ const AppRouter = () => {
           key={PATH_ATTENDANT.EDIT_RESUME_PAGE}
           component={() => <ResumeEditPage />}
           path={PATH_ATTENDANT.EDIT_RESUME_PAGE}
+          exact
+        />
+        <AttendantRouter
+          key={PATH_ATTENDANT.ADD_RESUME_PAGE}
+          component={() => <ResumeAddPage />}
+          path={PATH_ATTENDANT.ADD_RESUME_PAGE}
           exact
         />
         <CompanyEmployeeRouter

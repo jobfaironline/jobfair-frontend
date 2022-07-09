@@ -50,6 +50,12 @@ const breadcrumbItemsList = [
     parentTitle: 'My resume',
     hasParam: true,
     paramNames: ['id']
+  },
+  {
+    path: PATH_ATTENDANT.ADD_RESUME_PAGE,
+    title: 'New resume',
+    parentPath: PATH_ATTENDANT.RESUME_MANAGEMENT_PAGE,
+    parentTitle: 'Resume list'
   }
 ];
 

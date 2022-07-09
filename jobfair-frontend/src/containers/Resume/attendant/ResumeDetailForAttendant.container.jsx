@@ -20,7 +20,7 @@ const mapperResumeDetail = (resume) => {
   return {
     ...resume,
     overviewData: {
-      fullName: `${resume.fullName}`,
+      fullName: resume.fullName,
       email: resume.email,
       phoneNumber: resume.phone,
       jobTitle: resume.jobTitle,
