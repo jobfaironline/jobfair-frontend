@@ -2,6 +2,7 @@ import { Input, Modal, Typography, notification } from 'antd';
 import { PATH_ATTENDANT } from '../../constants/Paths/Path';
 import { deleteCv, getAttendantCv } from '../../services/jobhub-api/CvControllerService';
 import { generatePath, useHistory } from 'react-router-dom';
+import PaginationComponent from '../../components/commons/PaginationComponent/Pagination.component';
 import React, { useEffect, useRef, useState } from 'react';
 import ResumeGridComponent from '../../components/customized-components/ResumeGrid/ResumeGrid.component';
 
@@ -11,20 +12,26 @@ const MyResumeListContainer = () => {
   const history = useHistory();
 
   const [confirmDeleteVisibility, setConfirmDeleteVisibility] = useState(false);
-  const seletedResumeIdRef = useRef();
+  const selectedResumeIdRef = useRef();
+  const [searchValue, setSearchValue] = useState('');
+
+  //pagination
+  const [totalRecord, setTotalRecord] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageSize, setPageSize] = useState(9);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [currentPage, pageSize, searchValue]);
 
   const fetchData = async () => {
     try {
-      const res = await getAttendantCv();
+      const res = await getAttendantCv({ offset: currentPage, pageSize, name: searchValue });
       let content = [];
-      if (res.status === 200) content = res.data;
-
+      if (res.status === 200) content = res.data.content;
       content.unshift({ isFirst: true });
       setData(content);
+      setTotalRecord(res.data.totalElements);
     } catch (e) {
       notification['error']({
         message: `Fetch resumes fail`,
@@ -44,7 +51,7 @@ const MyResumeListContainer = () => {
   };
 
   const handleDeleteCv = async (resumeId) => {
-    seletedResumeIdRef.current = resumeId;
+    selectedResumeIdRef.current = resumeId;
     setConfirmDeleteVisibility(true);
   };
 
@@ -53,9 +60,9 @@ const MyResumeListContainer = () => {
   };
 
   const deleteCV = async () => {
-    if (seletedResumeIdRef.current === undefined) return;
+    if (selectedResumeIdRef.current === undefined) return;
     try {
-      await deleteCv(seletedResumeIdRef.current);
+      await deleteCv(selectedResumeIdRef.current);
       notification['success']({
         message: `Success`,
         description: `Delete successfully`,
@@ -72,8 +79,16 @@ const MyResumeListContainer = () => {
     }
   };
 
-  // eslint-disable-next-line no-unused-vars,no-empty-function
-  const handleOnSearch = (searchValue) => {};
+  const handleOnSearch = (searchValue) => {
+    setSearchValue(searchValue);
+  };
+
+  const handlePageChange = (page, pageSize) => {
+    //-1 for addition 1 empty card
+    if (page > 0) setCurrentPage(page - 1);
+    else setCurrentPage(page);
+    setPageSize(pageSize - 1);
+  };
 
   return (
     <>
@@ -84,6 +99,7 @@ const MyResumeListContainer = () => {
       </Modal>
       <div className={'job-fair-grid-public-container'}>
         <div className={'header'}>
+          <h2 style={{ margin: '0 1rem' }}>Resume list</h2>
           <Search
             placeholder='Search by resume name'
             onSearch={(value) => handleOnSearch(value)}
@@ -96,6 +112,11 @@ const MyResumeListContainer = () => {
           handleViewCvDetail={handleViewCvDetail}
           handleDeleteCv={handleDeleteCv}
         />
+        <div style={{ display: 'flex', marginBottom: '1rem', marginTop: 'auto' }}>
+          <div style={{ marginLeft: 'auto' }}>
+            <PaginationComponent handlePageChange={handlePageChange} totalRecord={totalRecord} />
+          </div>
+        </div>
       </div>
     </>
   );

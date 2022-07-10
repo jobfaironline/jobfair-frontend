@@ -3,7 +3,7 @@ import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLa
 import React from 'react';
 
 const ResumeManagementPage = () => (
-  <PageLayoutWrapper className={'page'}>
+  <PageLayoutWrapper className={'page'} style={{ display: 'flex' }}>
     <MyResumeListContainer />
   </PageLayoutWrapper>
 );
