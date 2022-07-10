@@ -1,5 +1,5 @@
 import { ActivityList } from '../../../components/forms/ProfileForm/AttendantProfileForm/ActivityList/ActivityList.component';
-import { Avatar, BackTop, Button, Form, Input, Typography, message, notification } from 'antd';
+import { Avatar, BackTop, Button, Form, Input, Modal, Typography, message, notification } from 'antd';
 import { CertificationList } from '../../../components/forms/ProfileForm/AttendantProfileForm/CertificationList/CertificationList.component';
 import { EducationList } from '../../../components/forms/ProfileForm/AttendantProfileForm/EducationList/EducationList.component';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
@@ -140,6 +140,7 @@ export const EditResumeContainer = (props) => {
   const [imageUrl, setMediaUrl] = useState();
   const uploadFileRef = useRef();
   const resumeIdRef = useRef(resumeId);
+  const [confirmImportModalVisibility, setConfirmImportModalVisibility] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -243,11 +244,20 @@ export const EditResumeContainer = (props) => {
     }
   };
 
+  const onImportFromProfile = () => {
+    setConfirmImportModalVisibility(true);
+  };
+
+  const onCloseImportModal = () => {
+    setConfirmImportModalVisibility(false);
+  };
+
   const handleImportFromProfile = async () => {
     try {
       const { data } = await getAttendantDetailAPI(userId);
       fetchProfileImage(data.account.profileImageUrl);
       setData((prevState) => mappingAttendantProfileToResumeData(data, prevState));
+      onCloseImportModal();
     } catch (e) {
       notification['error']({
         message: `Fetch attendant profile failed`
@@ -259,59 +269,68 @@ export const EditResumeContainer = (props) => {
 
   form.setFieldsValue({ ...data });
   return (
-    <div className={'profile-form'}>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Form form={form}>
-          <Form.Item
-            name={['name']}
-            hasFeedback
-            id={'account-profile'}
-            style={{ scrollMarginTop: '126px', marginTop: '1rem' }}>
-            <Input placeholder='Untitled' id={'cvName'} style={{ width: '100%' }} />
-          </Form.Item>
-        </Form>
+    <>
+      <Modal
+        visible={confirmImportModalVisibility}
+        title={'Import from profile'}
+        onOk={handleImportFromProfile}
+        onCancel={onCloseImportModal}>
+        Are you sure to import all fields from your profile? This will override every fields in your CV
+      </Modal>
+      <div className={'profile-form'}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Form form={form}>
+            <Form.Item
+              name={['name']}
+              hasFeedback
+              id={'account-profile'}
+              style={{ scrollMarginTop: '126px', marginTop: '1rem' }}>
+              <Input placeholder='Untitled' id={'cvName'} style={{ width: '100%' }} />
+            </Form.Item>
+          </Form>
 
-        <Button className={'button'} type={'primary'} style={{ marginLeft: 'auto' }} onClick={handleImportFromProfile}>
-          Import from your profile
-        </Button>
-      </div>
-
-      <div style={{ position: 'fixed', left: '5%' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <UploadComponent uploadProps={mediaUpload} isImageCrop={true} aspect={1 / 1}>
-            <div style={{ display: 'flex', flexDirection: 'column', margin: '2rem' }}>
-              <Avatar size={200} src={imageUrl} alt='avatar' style={{ maxHeight: '200px' }} />
-              <Text style={{ marginTop: '1rem' }} strong>
-                Change avatar
-              </Text>
-            </div>
-          </UploadComponent>
-        </div>
-      </div>
-      <div style={{ position: 'fixed', right: '15%' }}>
-        <AnchorComponent listData={formTitles} href={'#account-profile'} title={'Account profile'} />
-      </div>
-      <Form
-        form={form}
-        onFinish={onFinish}
-        requiredMark='required'
-        autoComplete='off'
-        layout={'vertical'}
-        scrollToFirstError={{ block: 'center', behavior: 'smooth' }}>
-        <ResumeOverviewInformation form={form} id={'overview'} />
-        <SkillList id={'skills'} />
-        <WorkHistoryList form={form} id={'work-histories'} />
-        <EducationList form={form} id={'educations'} />
-        <CertificationList form={form} id={'certifications'} />
-        <ReferenceList form={form} id={'references'} />
-        <ActivityList form={form} id={'activities'} />
-        <div style={{ display: 'flex', marginTop: '1rem' }}>
-          <Button type='primary' htmlType='submit' className={'button'} style={{ marginLeft: 'auto' }}>
-            Save
+          <Button className={'button'} type={'primary'} style={{ marginLeft: 'auto' }} onClick={onImportFromProfile}>
+            Import from your profile
           </Button>
         </div>
-      </Form>
-      <BackTop visibilityHeight={500} target={() => document} />
-    </div>
+
+        <div style={{ position: 'fixed', left: '5%' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <UploadComponent uploadProps={mediaUpload} isImageCrop={true} aspect={1 / 1}>
+              <div style={{ display: 'flex', flexDirection: 'column', margin: '2rem' }}>
+                <Avatar size={200} src={imageUrl} alt='avatar' style={{ maxHeight: '200px' }} />
+                <Text style={{ marginTop: '1rem' }} strong>
+                  Change avatar
+                </Text>
+              </div>
+            </UploadComponent>
+          </div>
+        </div>
+        <div style={{ position: 'fixed', right: '15%' }}>
+          <AnchorComponent listData={formTitles} href={'#account-profile'} title={'Account profile'} />
+        </div>
+        <Form
+          form={form}
+          onFinish={onFinish}
+          requiredMark='required'
+          autoComplete='off'
+          layout={'vertical'}
+          scrollToFirstError={{ block: 'center', behavior: 'smooth' }}>
+          <ResumeOverviewInformation form={form} id={'overview'} />
+          <SkillList id={'skills'} />
+          <WorkHistoryList form={form} id={'work-histories'} />
+          <EducationList form={form} id={'educations'} />
+          <CertificationList form={form} id={'certifications'} />
+          <ReferenceList form={form} id={'references'} />
+          <ActivityList form={form} id={'activities'} />
+          <div style={{ display: 'flex', marginTop: '1rem' }}>
+            <Button type='primary' htmlType='submit' className={'button'} style={{ marginLeft: 'auto' }}>
+              Save
+            </Button>
+          </div>
+        </Form>
+        <BackTop visibilityHeight={500} target={() => document} />
+      </div>
+    </>
   );
 };
