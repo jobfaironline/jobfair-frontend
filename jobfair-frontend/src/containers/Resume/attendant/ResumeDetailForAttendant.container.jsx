@@ -8,13 +8,14 @@ import { getAttendantCvById } from '../../../services/jobhub-api/CvControllerSer
 import React, { useEffect, useState } from 'react';
 
 const mapperResumeDetail = (resume) => {
-  const result = resume.educations
-    ?.map((item) => item.qualificationId)
-    .map((name) => {
-      const result = QualificationConst.find((qualification) => qualification.enumName === name);
-      return result.id;
-    })
-    .sort();
+  const result =
+    resume.educations
+      ?.map((item) => item?.qualificationId)
+      .map((name) => {
+        const result = QualificationConst.find((qualification) => qualification.enumName === name);
+        return result.id;
+      })
+      ?.sort() ?? 'No information';
   const highestEducationLevel =
     result !== undefined ? QualificationConst.find((item) => item.id === result[0])?.name : '';
   return {

@@ -8,8 +8,14 @@
   .list {
     border-radius: 8px;
     margin-bottom: 1rem;
-    scroll-margin-top: 126px; /*change this when navbar height is changed */;
+    scroll-margin-top: 126px; /*change this when navbar height is changed */
+  ;
 
+  }
+
+  #cvName {
+    font-size: 1.5rem;
+    font-weight: bold;
   }
 
 }
