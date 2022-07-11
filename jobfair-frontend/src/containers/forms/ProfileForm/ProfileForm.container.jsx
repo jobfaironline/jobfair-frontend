@@ -17,7 +17,7 @@ import UploadComponent from '../../../components/commons/UploadComponent/Upload.
 
 const { Title, Text } = Typography;
 
-export const ProfileFormContainer = ({ form, onFinish, data, formTitle, canDeactivate = true, children }) => {
+export const ProfileFormContainer = ({ form, onFinish, data, formAnchorTitles, canDeactivate = true, children }) => {
   const [imageUrl, setMediaUrl] = useState(data.account.profileImageUrl);
   const [deactivateAccountModalVisibility, setDeactivateAccountModalVisibility] = useState(false);
   const uploadFileRef = useRef();
@@ -128,7 +128,7 @@ export const ProfileFormContainer = ({ form, onFinish, data, formTitle, canDeact
           </Card>
         </div>
         <div style={{ position: 'fixed', right: '15%' }}>
-          <AnchorComponent listData={formTitle} href={'#account-profile'} title={'Account profile'} />
+          <AnchorComponent listData={formAnchorTitles} href={'#account-profile'} title={'Account profile'} />
         </div>
         <Form
           form={form}
@@ -144,7 +144,7 @@ export const ProfileFormContainer = ({ form, onFinish, data, formTitle, canDeact
             </Button>
           </div>
         </Form>
-        <BackTop />
+        <BackTop visibilityHeight={500} target={() => document} />
       </div>
     </>
   );

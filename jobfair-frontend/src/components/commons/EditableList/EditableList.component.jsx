@@ -18,10 +18,18 @@ export const EditableList = ({ form, formItemName, buttonText, ReadComponent, Up
       fieldData.forEach((item) => {
         if (item.id === id) item.isEmpty = false;
       });
-      setEditItemIds((prevState) => prevState.filter((item) => item.id === id));
+      setEditItemIds((prevState) => prevState.filter((item) => item?.id === id));
     } catch (e) {
       const errorFieldNames = e.errorFields.map((obj) => obj.name[0]);
       if (errorFieldNames.includes(formItemName)) handleFieldsError(form);
+      else {
+        //if the current card doesn't have error allow collapse
+        const fieldData = form.getFieldValue(formItemName);
+        fieldData.forEach((item) => {
+          if (item.id === id) item.isEmpty = false;
+        });
+        setEditItemIds((prevState) => prevState.filter((item) => item?.id === id));
+      }
     }
   };
 

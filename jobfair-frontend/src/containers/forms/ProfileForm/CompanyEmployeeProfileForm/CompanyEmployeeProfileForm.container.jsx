@@ -57,7 +57,12 @@ export const CompanyEmployeeProfileFormContainer = () => {
     return <LoadingComponent isWholePage={true} />;
 
   return (
-    <ProfileFormContainer form={form} onFinish={onFinish} data={data} formTitle={formTitles} canDeactivate={false}>
+    <ProfileFormContainer
+      form={form}
+      onFinish={onFinish}
+      data={data}
+      formAnchorTitles={formTitles}
+      canDeactivate={false}>
       <Card className={'list anchor'} id={'profile'}>
         <AccountProfile />
       </Card>

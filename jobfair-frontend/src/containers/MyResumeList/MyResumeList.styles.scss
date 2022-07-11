@@ -1,13 +1,8 @@
-.job-fair-grid-public-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+.my-resume-list-container {
   .header {
     padding-top: 2rem;
     margin-bottom: 2rem;
     display: flex;
-    align-items: center;
-
 
     .ant-input-search-button {
       border-bottom-right-radius: 8px !important;

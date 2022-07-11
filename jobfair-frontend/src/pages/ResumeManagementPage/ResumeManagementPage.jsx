@@ -1,9 +1,11 @@
+import MyResumeListContainer from '../../containers/MyResumeList/MyResumeList.container';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import React from 'react';
 
-const ResumeManagmentPage = () => (
-  <>
-    <h1>My resume page</h1>
-  </>
+const ResumeManagementPage = () => (
+  <PageLayoutWrapper className={'page'} style={{ display: 'flex' }}>
+    <MyResumeListContainer />
+  </PageLayoutWrapper>
 );
 
-export default ResumeManagmentPage;
+export default ResumeManagementPage;

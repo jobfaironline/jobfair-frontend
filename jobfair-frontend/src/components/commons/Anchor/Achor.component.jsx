@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 const { Link } = Anchor;
 const AnchorComponent = (props) => {
   const { listData, href, title } = props;
-  const [isHide, setIsHide] = useState(false);
+  const [isHide, setIsHide] = useState(true);
   const handleOnOpenMenu = (status) => {
     setIsHide(status);
   };
@@ -22,7 +22,11 @@ const AnchorComponent = (props) => {
             background: '#FFF'
           }}>
           {
-            <Anchor targetOffset={300}>
+            <Anchor
+              targetOffset={300}
+              onClick={(e) => {
+                e.preventDefault();
+              }}>
               <Link href={href} title={title} />
               {listData.map((item, index) => (
                 <Link href={item.href} title={`${index + 1}: ${item.title}`} />
