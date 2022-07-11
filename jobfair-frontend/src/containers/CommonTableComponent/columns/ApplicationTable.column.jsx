@@ -1,5 +1,5 @@
 import { Tag } from 'antd';
-import { convertToDateString } from '../../../utils/common';
+import { convertToDateString, getMatchingPointColor } from '../../../utils/common';
 import React from 'react';
 
 const defaultColumns = () => [
@@ -77,9 +77,7 @@ const defaultColumns = () => [
     width: '10%',
     sorter: (a, b) => a.matchingPoint * 100 - b.matchingPoint * 100,
     render: (num) => {
-      let tagColor = 'red';
-      if (num > 0.5) tagColor = 'gold';
-      if (num > 0.7) tagColor = 'green';
+      const tagColor = getMatchingPointColor(num);
       return (
         <div style={{ display: 'flex' }}>
           <Tag color={tagColor} style={{ marginLeft: 'auto' }}>

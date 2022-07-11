@@ -188,3 +188,10 @@ export const deepClone = (value) => {
 export const getTimeZoneCode = () =>
   //https://stackoverflow.com/questions/1954397/detect-timezone-abbreviation-using-javascript
   new Date().toLocaleTimeString('en-us', { timeZoneName: 'short' }).split(' ')[2];
+
+export const getMatchingPointColor = (value) => {
+  let tagColor = 'red';
+  if (value > 0.5) tagColor = 'gold';
+  if (value > 0.7) tagColor = 'green';
+  return tagColor;
+};

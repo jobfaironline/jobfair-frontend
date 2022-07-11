@@ -5,6 +5,7 @@ import {
   evaluateApplication,
   getApplicationForCompany
 } from '../../../services/jobhub-api/ApplicationControllerService';
+import { getMatchingPointColor } from '../../../utils/common';
 import { useHistory } from 'react-router-dom';
 import EvaluationFormComponent from '../../../components/forms/EvaluationForm/EvaluationForm.component';
 import React, { useEffect, useState } from 'react';
@@ -56,10 +57,8 @@ const ResumeDetailForCompanyContainer = ({ resumeId }) => {
 
   if (data === undefined) return <LoadingComponent isWholePage={true} />;
 
-  let tagColor = 'red';
   data.matchingPoint = data.matchingPoint !== undefined ? data.matchingPoint : 0;
-  if (data.matchingPoint > 0.5) tagColor = 'gold';
-  if (data.matchingPoint > 0.7) tagColor = 'green';
+  const tagColor = getMatchingPointColor(data.matchingPoint);
 
   return (
     <div style={{ marginTop: '1rem' }}>
