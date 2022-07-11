@@ -257,7 +257,12 @@ export const EditResumeContainer = (props) => {
     try {
       const { data } = await getAttendantDetailAPI(userId);
       fetchProfileImage(data.account.profileImageUrl);
-      setData((prevState) => mappingAttendantProfileToResumeData(data, prevState));
+
+      setData((prevState) => {
+        const result = mappingAttendantProfileToResumeData(data, prevState);
+        form.setFieldsValue({ ...result });
+        return result;
+      });
       onCloseImportModal();
     } catch (e) {
       notification['error']({
@@ -277,33 +282,21 @@ export const EditResumeContainer = (props) => {
         onCancel={onCloseImportModal}>
         Are you sure to import all fields from your profile? This will override every fields in your CV
       </Modal>
-      <div className={'profile-form'} style={{ paddingTop: '5rem' }}>
+      <div className={'profile-form'} style={{ marginTop: '1rem' }}>
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
             position: 'fixed',
-            top: '5rem',
-            width: '55%',
-            zIndex: 5,
-            backgroundColor: '#FFF'
+            left: '5%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'strech',
+            width: '15%'
           }}>
           <Form form={form}>
-            <Form.Item
-              name={['name']}
-              hasFeedback
-              id={'account-profile'}
-              style={{ scrollMarginTop: '126px', marginTop: '1rem' }}>
-              <Input placeholder='Untitled' id={'cvName'} style={{ width: '100%' }} />
+            <Form.Item name={['name']} hasFeedback id={'account-profile'} style={{ marginTop: '1rem' }}>
+              <Input placeholder='Untitled' id={'cvName'} />
             </Form.Item>
           </Form>
-
-          <Button className={'button'} type={'primary'} style={{ marginLeft: 'auto' }} onClick={onImportFromProfile}>
-            Import from your profile
-          </Button>
-        </div>
-
-        <div style={{ position: 'fixed', left: '5%' }}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <UploadComponent uploadProps={mediaUpload} isImageCrop={true} aspect={1 / 1}>
               <div style={{ display: 'flex', flexDirection: 'column', margin: '2rem' }}>
@@ -314,6 +307,9 @@ export const EditResumeContainer = (props) => {
               </div>
             </UploadComponent>
           </div>
+          <Button className={'button'} type={'primary'} style={{ marginTop: '1rem' }} onClick={onImportFromProfile}>
+            Import from your profile
+          </Button>
         </div>
         <div style={{ position: 'fixed', right: '10%' }}>
           <AnchorComponent listData={formTitles} href={'#edit-resume'} title={'Edit resume'} />

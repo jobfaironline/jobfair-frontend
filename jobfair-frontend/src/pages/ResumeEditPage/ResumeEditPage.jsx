@@ -1,4 +1,3 @@
-import './ResumeEditPage.styles.scss';
 import { EditResumeContainer } from '../../containers/Resume/attendant/EditResume.container';
 import { useParams } from 'react-router-dom';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
@@ -8,7 +7,7 @@ const ResumeDetailPage = () => {
   const { id } = useParams();
 
   return (
-    <PageLayoutWrapper className={'page resume-edit-page'}>
+    <PageLayoutWrapper className={'page'}>
       <EditResumeContainer resumeId={id} />;
     </PageLayoutWrapper>
   );
