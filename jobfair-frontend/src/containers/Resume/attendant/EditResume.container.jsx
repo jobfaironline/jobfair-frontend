@@ -317,7 +317,7 @@ export const EditResumeContainer = (props) => {
           layout={'vertical'}
           scrollToFirstError={{ block: 'center', behavior: 'smooth' }}>
           <ResumeOverviewInformation form={form} id={'overview'} />
-          <SkillList id={'skills'} />
+          <SkillList id={'skills'} form={form} />
           <WorkHistoryList form={form} id={'work-histories'} />
           <EducationList form={form} id={'educations'} />
           <CertificationList form={form} id={'certifications'} />
