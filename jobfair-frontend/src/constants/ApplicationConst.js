@@ -28,7 +28,16 @@ export const TestStatus = {
 };
 
 export const MatchingPointColor = {
-  low: 'red',
-  medium: 'gold',
-  high: 'green'
+  low: {
+    color: 'red',
+    score: 0.0
+  },
+  medium: {
+    color: 'gold',
+    score: 0.5
+  },
+  high: {
+    color: 'green',
+    score: 0.7
+  }
 };
