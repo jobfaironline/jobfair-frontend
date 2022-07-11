@@ -155,6 +155,7 @@ export const EditResumeContainer = (props) => {
       }
       let { data: resume } = await getAttendantCvById(resumeIdRef.current);
       resume = mapperResumeData(resume);
+      form.setFieldsValue({ ...resume });
       setData(resume);
       setMediaUrl(resume.profileImageUrl);
     } catch (e) {
@@ -267,7 +268,6 @@ export const EditResumeContainer = (props) => {
 
   if (data === undefined || imageUrl === undefined) return <LoadingComponent isWholePage={true} />;
 
-  form.setFieldsValue({ ...data });
   return (
     <>
       <Modal
