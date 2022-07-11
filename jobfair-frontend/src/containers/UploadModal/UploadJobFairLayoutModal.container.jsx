@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Spin, notification } from 'antd';
+import { Button, Form, Input, Modal, Spin, Typography, notification } from 'antd';
 import { UploadTemplateValidation } from '../../validate/UploadTemplateValidation';
 import { getBase64 } from '../../utils/common';
 import {
@@ -6,7 +6,6 @@ import {
   uploadTemplateMetaDataAPI,
   uploadThumbnailAPI
 } from '../../services/jobhub-api/LayoutControllerService';
-import ImgCrop from 'antd-img-crop';
 import React, { useRef, useState } from 'react';
 import UploadComponent from '../../components/commons/UploadComponent/Upload.component';
 
@@ -14,36 +13,64 @@ const { TextArea } = Input;
 const UploadJobFairLayoutModalContainer = ({ visible, onCancel, onSubmit }) => {
   const glbFormData = useRef(new FormData());
   const thumbnailFormData = useRef(new FormData());
+  const cropThumbnailFileRef = useRef();
 
   const [thumbnailUrl, setThumbnailUrl] = useState();
   const [hasUploadGlb, setHasUploadGlb] = useState(false);
 
   const [uploadState, setUploadState] = useState(false);
+  const [glbHasError, setGlbHasError] = useState(false);
+  const [thumbnailHasError, setThumbnailHasError] = useState(false);
+
+  const [form] = Form.useForm();
 
   const onFinish = async (values) => {
+    if (glbHasError || thumbnailHasError) return;
     const body = {
       name: values.name,
       description: values.description
     };
     setUploadState(true);
     const res = await uploadTemplateMetaDataAPI(body);
-    await uploadTemplateAPI(res.data.id, glbFormData.current);
-    await uploadThumbnailAPI(res.data.id, thumbnailFormData.current);
+    try {
+      await uploadTemplateAPI(res.data.id, glbFormData.current);
+    } catch (e) {
+      setGlbHasError(true);
+      return;
+    }
+    try {
+      await uploadThumbnailAPI(res.data.id, thumbnailFormData.current);
+    } catch (e) {
+      setThumbnailHasError(true);
+      return;
+    }
     notification['success']({
       message: `upload successfully`
     });
-    setUploadState(false);
+    resetState();
     //force render to fetch data after upload
     if (onSubmit) onSubmit();
   };
 
   const thumbnailUploadProps = {
     name: 'file',
-    beforeUpload: () => false,
+    beforeUpload: (file) => {
+      cropThumbnailFileRef.current = file;
+      return false;
+    },
     onChange: async (info) => {
-      const url = await getBase64(info.file);
+      if (info.fileList.length === 0) return;
+      if (info.file.type !== 'image/png' && info.file.type !== 'image/jpeg') {
+        notification['error']({
+          message: `${info.file.name} is not png/jpeg file`
+        });
+        setThumbnailHasError(true);
+        return;
+      }
+      const url = await getBase64(cropThumbnailFileRef.current);
       setThumbnailUrl(url);
-      thumbnailFormData.current.append('file', info.file);
+      thumbnailFormData.current.append('file', cropThumbnailFileRef.current);
+      setThumbnailHasError(false);
     },
     onRemove: async () => {
       setThumbnailUrl(undefined);
@@ -56,14 +83,18 @@ const UploadJobFairLayoutModalContainer = ({ visible, onCancel, onSubmit }) => {
     name: 'file',
     beforeUpload: () => false,
     onChange: async (info) => {
+      if (info.fileList.length === 0) return;
       const fileExtension = info.file.name.split('.').pop();
       if (fileExtension !== 'glb') {
+        setGlbHasError(true);
+
         notification['error']({
           message: `${info.file.name} is not glb file`
         });
         return;
       }
       glbFormData.current.append('file', info.file);
+      setGlbHasError(false);
 
       if (info.fileList.length > 0) setHasUploadGlb(true);
     },
@@ -74,9 +105,36 @@ const UploadJobFairLayoutModalContainer = ({ visible, onCancel, onSubmit }) => {
     maxCount: 1
   };
 
+  const onSubmitClick = () => {
+    if (!glbFormData.current.get('file')) setGlbHasError(true);
+    if (!thumbnailFormData.current.get('file')) setThumbnailHasError(true);
+  };
+
+  const onInternalCancel = () => {
+    onCancel();
+    resetState();
+  };
+
+  const resetState = () => {
+    glbFormData.current = new FormData();
+    thumbnailFormData.current = new FormData();
+    setThumbnailUrl(undefined);
+    setHasUploadGlb(undefined);
+    setUploadState(false);
+    setGlbHasError(false);
+    setThumbnailHasError(false);
+    form.resetFields();
+  };
+
   return (
-    <Modal visible={visible} title={'Upload your template as .glb file'} footer={null} onCancel={onCancel} centered>
+    <Modal
+      visible={visible}
+      title={'Upload your template as .glb file'}
+      footer={null}
+      onCancel={onInternalCancel}
+      centered>
       <Form
+        form={form}
         requiredMark='required'
         autoComplete='off'
         onFinish={onFinish}
@@ -105,7 +163,8 @@ const UploadJobFairLayoutModalContainer = ({ visible, onCancel, onSubmit }) => {
         </Form.Item>
         <Form.Item
           label='File glb'
-          riles={UploadTemplateValidation.fileGLB}
+          required={true}
+          rules={UploadTemplateValidation.fileGLB}
           style={{
             display: 'inline-block',
             marginRight: '1rem'
@@ -113,21 +172,30 @@ const UploadJobFairLayoutModalContainer = ({ visible, onCancel, onSubmit }) => {
           <UploadComponent uploadProps={glbUploadProps}>
             {hasUploadGlb ? <div>Override upload</div> : undefined}
           </UploadComponent>
+          {glbHasError ? (
+            <Typography.Text style={{ color: 'red' }}>
+              {!glbFormData.current.get('file') ? 'File glb is required' : 'Invalid glb file'}
+            </Typography.Text>
+          ) : null}
         </Form.Item>
         <Form.Item
           label='Thumbnail'
+          required={true}
           style={{
             display: 'inline-block',
             marginRight: '1rem'
           }}>
-          <ImgCrop rotate>
-            <UploadComponent uploadProps={thumbnailUploadProps}>
-              {thumbnailUrl ? <img src={thumbnailUrl} alt='avatar' style={{ width: '100%' }} /> : undefined}
-            </UploadComponent>
-          </ImgCrop>
+          <UploadComponent uploadProps={thumbnailUploadProps} isImageCrop={true} aspect={2 / 1}>
+            {thumbnailUrl ? <img src={thumbnailUrl} alt='avatar' style={{ width: '100%' }} /> : undefined}
+          </UploadComponent>
+          {thumbnailHasError ? (
+            <Typography.Text style={{ color: 'red' }}>
+              {!thumbnailFormData.current.get('file') ? 'Thumbnail is required' : 'Invalid thumbnail file'}
+            </Typography.Text>
+          ) : null}
         </Form.Item>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Button type='primary' htmlType='submit' style={{ marginRight: '1rem' }}>
+          <Button type='primary' htmlType='submit' style={{ marginRight: '1rem' }} onClick={onSubmitClick}>
             Upload
           </Button>
           <div style={{ display: uploadState ? 'flex' : 'none', alignItems: 'center', justifyContent: 'center' }}>
