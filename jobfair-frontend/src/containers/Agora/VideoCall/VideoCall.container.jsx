@@ -59,6 +59,7 @@ const VideoCallContainer = (props) => {
   }
 
   const rtcClient = useSelector((state) => state.agora.rtcClient);
+  const rtmClient = useSelector((state) => state.agora.rtmClient);
   const channelId = useSelector((state) => state.agora.channelId);
   useEffect(async () => {
     const rtcToken = await getAgoraRTCToken(channelId)
@@ -84,6 +85,7 @@ const VideoCallContainer = (props) => {
   };
   const handleClose = async () => {
     await rtcClient.leave();
+    await rtmClient.leaveChannel(channelId);
     notification.success({
       description: 'You have left the channel'
     });

@@ -24,7 +24,7 @@ export const InventoryContainer = (props) => {
   });
 
   const fetchData = async () => {
-    const response = await getAttendantCv();
+    const response = await getAttendantCv({});
     const data = response.data;
     const obj = {};
     for (let i = 1; i < data.length + 1; i++) {

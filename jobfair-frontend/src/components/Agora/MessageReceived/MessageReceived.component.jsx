@@ -1,24 +1,18 @@
-import { useEffect } from 'react';
+import { ChatMessageType } from '../../../constants/ChatMessageConst';
+import { Typography } from 'antd';
 import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
 import styles from './MessageReceived.module.scss';
 
 const MessageReceived = (prop) => {
-  const { name, message, avatar } = prop;
-  // eslint-disable-next-line no-console
-  useEffect(() => console.log(message), [prop]);
+  const { name, message, avatar, previousMessage } = prop;
+  const isSamePerson =
+    previousMessage?.type === ChatMessageType.OTHER_MESSAGE && previousMessage?.senderId !== message.senderId;
   return (
-    <div className={styles.message}>
+    <div className={styles.message} style={{ marginTop: isSamePerson ? '3px' : '10px' }}>
       <div className={styles.personalMessage}>
-        <div className={styles.namePerson}>
-          <Typography variant='caption' display='block' gutterBottom>
-            {name}
-          </Typography>
-        </div>
+        <Typography.Text style={{ display: isSamePerson ? 'none' : 'block' }}>{name}</Typography.Text>
         <div className={styles.messageLine}>
-          <div className={styles.avatar}>
-            <Avatar alt={name} src={avatar} sx={{ width: 26, height: 26 }} />
-          </div>
+          <Avatar alt={name} src={avatar} sx={{ width: 26, height: 26 }} />
           <div className={styles.messageReceived}>
             <div className={styles.messageReceivedText}>{message}</div>
           </div>
