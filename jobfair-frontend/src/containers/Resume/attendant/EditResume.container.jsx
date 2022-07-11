@@ -70,13 +70,13 @@ const mapperForActivitiesRequestBody = (activities) => {
 };
 
 const formTitles = [
-  { title: 'Overview', href: '#overview' },
+  { title: 'Overview information', href: '#overview' },
   { title: 'Skills', href: '#skills' },
-  { title: 'Work history', href: '#work-histories' },
-  { title: 'Education', href: '#educations' },
-  { title: 'Certification', href: '#certifications' },
-  { title: 'Reference', href: '#references' },
-  { title: 'Activity', href: '#activities' }
+  { title: 'Work histories', href: '#work-histories' },
+  { title: 'Educations', href: '#educations' },
+  { title: 'Certifications', href: '#certifications' },
+  { title: 'References', href: '#references' },
+  { title: 'Activities', href: '#activities' }
 ];
 
 const mapperResumeData = (resume) => ({
@@ -277,8 +277,17 @@ export const EditResumeContainer = (props) => {
         onCancel={onCloseImportModal}>
         Are you sure to import all fields from your profile? This will override every fields in your CV
       </Modal>
-      <div className={'profile-form'}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div className={'profile-form'} style={{ paddingTop: '5rem' }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            position: 'fixed',
+            top: '5rem',
+            width: '55%',
+            zIndex: 5,
+            backgroundColor: '#FFF'
+          }}>
           <Form form={form}>
             <Form.Item
               name={['name']}
@@ -306,8 +315,8 @@ export const EditResumeContainer = (props) => {
             </UploadComponent>
           </div>
         </div>
-        <div style={{ position: 'fixed', right: '15%' }}>
-          <AnchorComponent listData={formTitles} href={'#account-profile'} title={'Account profile'} />
+        <div style={{ position: 'fixed', right: '10%' }}>
+          <AnchorComponent listData={formTitles} href={'#edit-resume'} title={'Edit resume'} />
         </div>
         <Form
           form={form}
