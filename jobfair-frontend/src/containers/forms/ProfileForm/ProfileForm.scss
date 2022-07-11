@@ -1,3 +1,4 @@
+@import "src/styles/custom-theme";
 .profile-form {
   padding: 0 20% 5rem;
 
@@ -8,8 +9,7 @@
   .list {
     border-radius: 8px;
     margin-bottom: 1rem;
-    scroll-margin-top: 126px; /*change this when navbar height is changed */
-  ;
+    scroll-margin-top: $navbar-height;
 
   }
 

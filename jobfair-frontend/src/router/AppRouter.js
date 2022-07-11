@@ -215,6 +215,12 @@ const AppRouter = () => {
           exact
         />
         <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.PROFILE_PAGE}
+          component={() => <AccountProfilePage />}
+          path={PATH_COMPANY_EMPLOYEE.PROFILE_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
           key={PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE}
           component={() => <DecorateBoothPage />}
           path={PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE}
