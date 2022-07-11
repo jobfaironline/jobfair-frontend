@@ -1,5 +1,5 @@
 import { CountryConst } from '../constants/AttendantConstants';
-import { DateFormat } from '../constants/ApplicationConst';
+import { DateFormat, MatchingPointColor } from '../constants/ApplicationConst';
 import { JOB_FAIR_PLAN_STATUS } from '../constants/JobFairConst';
 import { Progress, Tag } from 'antd';
 import React from 'react';
@@ -190,8 +190,8 @@ export const getTimeZoneCode = () =>
   new Date().toLocaleTimeString('en-us', { timeZoneName: 'short' }).split(' ')[2];
 
 export const getMatchingPointColor = (value) => {
-  let tagColor = 'red';
-  if (value > 0.5) tagColor = 'gold';
-  if (value > 0.7) tagColor = 'green';
+  let tagColor = MatchingPointColor.low;
+  if (value > 0.5) tagColor = MatchingPointColor.medium;
+  if (value > 0.7) tagColor = MatchingPointColor.high;
   return tagColor;
 };
