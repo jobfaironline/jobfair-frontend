@@ -1,19 +1,17 @@
 import './Navbar.styles.scss';
-import { AppstoreFilled, UserOutlined } from '@ant-design/icons';
-import { Avatar, Button, Dropdown, Image, Menu, Space, Typography } from 'antd';
+import { Avatar, Button, Dropdown, Image, Menu, Typography } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import { NotificationContainer } from '../../../containers/NotificationContainer/Notification.container';
 import { PATH, PATH_ATTENDANT } from '../../../constants/Paths/Path';
+import { UserOutlined } from '@ant-design/icons';
 import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
 import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useState } from 'react';
-import RoleType from '../../../constants/RoleType';
+import React from 'react';
 import extraMenu from './MenuByRole';
 
 const NavigationBar = () => {
   const role = useSelector((state) => state?.authentication?.user?.roles);
-  const [subNavVisible, setSubNavVisible] = useState(true);
   const webSocketClient = useSelector(selectWebSocket);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -80,7 +78,6 @@ const AuthenticationButtonGroups = ({ handleRedirect }) => (
 const AvatarMenu = ({ logoutFunction }) => {
   const history = useHistory();
   const name = useSelector((state) => state.authentication.user.fullName);
-  const role = useSelector((state) => state.authentication?.user?.roles);
   const profileUrl = useSelector((state) => state.authentication?.user.profileUrl);
 
   const menu = (
@@ -94,11 +91,8 @@ const AvatarMenu = ({ logoutFunction }) => {
             history.push(PATH.CHANGE_PASSWORD_PAGE);
             break;
           case 'PROFILE':
-            switch (role) {
-              case RoleType.ATTENDANT:
-                history.push(PATH_ATTENDANT.PROFILE_PAGE);
-                break;
-            }
+            history.push(PATH_ATTENDANT.PROFILE_PAGE);
+            break;
         }
       }}
       style={{ zIndex: 10000000 }}>

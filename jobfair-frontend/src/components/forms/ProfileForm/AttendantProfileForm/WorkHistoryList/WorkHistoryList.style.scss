@@ -1,0 +1,22 @@
+.work-history{
+  display: flex;
+  flex-direction: column;
+  .container{
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    .month{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #f8f8f8;
+      font-size: 1rem;
+      padding: 5px;
+      border-radius: 8px;
+      margin-right: 1rem;
+    }
+
+  }
+}

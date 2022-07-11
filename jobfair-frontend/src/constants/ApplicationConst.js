@@ -15,9 +15,9 @@ export const DateFormat = 'MMMM DD,YYYY';
 export const HourMinuteDateFormat = 'YYYY-MMMM-DD';
 export const CustomDateFormat = 'MMMM DD,YYYY HH:mm';
 export const MinuteFormat = 'HH:mm';
+export const MonthFormat = 'MMMM, YYYY';
 
-export const MinimumDateOfBirth = '01 Jan 2004'; //18 years old
-
+export const MinimumDateOfBirth = 18;
 export const TestStatus = {
   PASS: 'PASS',
   FAIL: 'FAIL',

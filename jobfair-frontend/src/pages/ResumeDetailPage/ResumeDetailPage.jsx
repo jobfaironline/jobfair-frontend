@@ -10,7 +10,7 @@ const ResumeDetailPage = () => {
   const { resumeId } = location.state;
 
   return (
-    <div className='page'>
+    <div className='page resume-detail'>
       <PageHeader className='site-page-header' onBack={() => history.goBack()} title='Resume Detail Page' />
       <ResumeDetailForCompanyContainer resumeId={resumeId} />
     </div>

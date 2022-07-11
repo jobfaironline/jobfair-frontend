@@ -1,4 +1,4 @@
-import { PHONE_REGEX } from '../constants/RegexConstant';
+import { NAME_REGEX, PHONE_REGEX } from '../constants/RegexConstant';
 import { convertToDateString } from '../utils/common';
 import moment from 'moment';
 
@@ -15,6 +15,16 @@ export const MAX_LENGTH_VALIDATOR = (fieldName, maxValue) => ({
 export const MIN_LENGTH_VALIDATOR = (fieldName, minValue) => ({
   min: minValue,
   message: `${fieldName} has min value of length is ${minValue}`
+});
+
+export const NAME_VALIDATOR = (fieldName) => ({
+  validator(_, value) {
+    if (!value) return Promise.resolve();
+    const result = NAME_REGEX.test(value);
+    if (result) return Promise.reject(new Error(`${fieldName} cannot contains special characters`));
+
+    return Promise.resolve();
+  }
 });
 
 export const EMAIL_VALIDATOR = () => [
@@ -88,9 +98,10 @@ export const DATE_RANGE_VALIDATOR = (minTime, maxTime) => () => ({
 
 export const YEAR_VALIDATOR = (minYear, maxYear) => () => ({
   validator(_, value) {
-    if (!value || value < minYear) return Promise.reject(new Error(`The minimum year is ${minYear} years`));
+    if (!value) return Promise.resolve();
+    if (value.year() < minYear) return Promise.reject(new Error(`The minimum year is ${minYear} years`));
 
-    if (value > maxYear) return Promise.reject(new Error(`The year must lower than ${maxYear}`));
+    if (value.year() > maxYear) return Promise.reject(new Error(`The year must lower than ${maxYear}`));
 
     return Promise.resolve();
   }
