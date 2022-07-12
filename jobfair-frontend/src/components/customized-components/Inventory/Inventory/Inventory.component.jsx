@@ -1,4 +1,5 @@
 import './Inventory.component.scss';
+import { HUMAN_THUMBNAIL_URL } from '../../../../constants/3DConst';
 import { ItemSlot } from '../ItemSlot/ItemSlot.component';
 import React from 'react';
 
@@ -9,7 +10,7 @@ export const Inventory = (props) => {
     <div className={'panel'} style={{ visibility: visible ? 'visible' : 'hidden' }}>
       <h1>Inventory</h1>
       <div className={'characterContainer'}>
-        <img src={`${window.location.origin}/icon/background.png`} alt={'Character image'} />
+        <img src={HUMAN_THUMBNAIL_URL} alt={'Character image'} />
       </div>
       <div className={'itemRow'}>
         {Object.keys(inventory).map((key) => (

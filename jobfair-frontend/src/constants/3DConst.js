@@ -14,3 +14,4 @@ export const DEFAULT_HUMAN_MODEL_URL = `${window.location.origin}/human/Human.fb
 export const DEFAULT_IDLE_HUMAN_MODEL_URL = `${window.location.origin}/human/ModelIdle.fbx`;
 export const DEFAULT_WALKING_HUMAN_MODEL_URL = `${window.location.origin}/human/WalkingModel.fbx`;
 export const DEFAULT_HUMAN_MODEL_TEXTURE_URL = `${window.location.origin}/human/WalkingModel_8_LOWPOLY-COLORS_BaseColor.png`;
+export const HUMAN_THUMBNAIL_URL = `${window.location.origin}/human/HumanThumbnail.png`;
