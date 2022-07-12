@@ -15,6 +15,7 @@ const TaskActionButton = ({ type, status, record }) => {
       return (
         <Space>
           <Button
+            style={{ paddingLeft: 0 }}
             disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
             type='link'
             onClick={() =>
@@ -32,12 +33,14 @@ const TaskActionButton = ({ type, status, record }) => {
       return (
         <Space>
           <Button
+            style={{ paddingLeft: 0 }}
             disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
             type='link'
             onClick={() => history.push(generatePath(PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE))}>
             Interview schedule
           </Button>
           <Button
+            style={{ paddingLeft: 0 }}
             disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
             type='link'
             onClick={() => history.push(generatePath(PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE))}>
@@ -49,6 +52,7 @@ const TaskActionButton = ({ type, status, record }) => {
       return (
         <Space>
           <Button
+            style={{ paddingLeft: 0 }}
             type='link'
             disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
             onClick={() =>
@@ -72,6 +76,7 @@ const TaskActionButton = ({ type, status, record }) => {
       return (
         <Space>
           <Button
+            style={{ paddingLeft: 0 }}
             type='link'
             disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
             onClick={() =>
@@ -87,6 +92,7 @@ const TaskActionButton = ({ type, status, record }) => {
             My booth profile
           </Button>
           <Button
+            style={{ paddingLeft: 0 }}
             disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
             type='link'
             onClick={() =>

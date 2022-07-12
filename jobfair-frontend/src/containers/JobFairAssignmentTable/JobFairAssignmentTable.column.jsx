@@ -14,6 +14,7 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
     title: 'No',
     dataIndex: 'no',
     key: 'no',
+    width: '3%',
     render(text) {
       return {
         props: {
@@ -27,6 +28,7 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
     title: 'Job fair name',
     dataIndex: 'jobFairName',
     key: 'jobFairName',
+    width: '15%',
     ...getColumnSearchProps('jobFairName'),
     onFilter: (value, record) => record.title.indexOf(value) === 0,
     sorter: (a, b) => a.title.localeCompare(b.title),
@@ -42,6 +44,7 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
     title: 'Assignment type',
     dataIndex: 'assignmentType',
     key: 'assignmentType',
+    width: '15%',
     ...getColumnSearchProps('assignmentType'),
     render: (assignmentType) => (
       <>
@@ -51,12 +54,14 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
   },
   {
     title: 'Assigner',
+    width: '18%',
     key: 'assignerFullName',
     dataIndex: 'assignerFullName',
     ...getColumnSearchProps('assignerFullName')
   },
   {
     title: 'Created',
+    width: '10%',
     key: 'createTime',
     dataIndex: 'createTime',
     sorter: (a, b) => a.createTime - b.createTime,
@@ -65,6 +70,7 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
   },
   {
     title: 'Deadline',
+    width: '10%',
     key: 'dueTime',
     dataIndex: 'dueTime',
     sorter: (a, b) => a.dueTime - b.dueTime,
@@ -74,6 +80,7 @@ const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
   {
     title: 'Status',
     key: 'status',
+    width: '10%',
     dataIndex: 'status',
     filters: [
       {
