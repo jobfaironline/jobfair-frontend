@@ -4,16 +4,11 @@ import { fetchNotification } from './notification-action';
 const notificationSlice = createSlice({
   name: 'notification',
   initialState: {
-    data: [],
-    inRoom: false //TODO: remove later
+    data: []
   },
   reducers: {
     setData: (state, action) => {
       state.data = action.payload;
-    },
-    setInRoom: (state, action) => {
-      //TODO: remove later
-      state.inRoom = action.payload;
     },
     addNotification: (state, action) => {
       state.data.push(action.payload);

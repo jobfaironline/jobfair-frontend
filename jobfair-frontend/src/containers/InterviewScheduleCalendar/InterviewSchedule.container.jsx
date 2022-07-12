@@ -110,7 +110,7 @@ const InterviewScheduleContainer = () => {
             style={{ borderRadius: 8 }}
             onClick={() => {
               if (data?.waitingRoomId)
-                window.location.href = `/attendant/waiting-room/${data.id}/${data.waitingRoomId}`; //TODO: replace with real data later
+                window.location.href = `/attendant/waiting-room/${data.id}/${data.waitingRoomId}`;
             }}>
             Join waiting room
           </Button>

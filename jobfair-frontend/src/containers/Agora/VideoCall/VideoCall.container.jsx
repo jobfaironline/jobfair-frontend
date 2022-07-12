@@ -17,7 +17,6 @@ import VideoCallComponent from '../../../components/Agora/VideoCall/VideoCall.co
 const { REACT_APP_AGORA_APP_ID } = process.env;
 const VideoCallContainer = (props) => {
   const history = useHistory();
-  //TODO: remove later
   const dispatch = useDispatch();
   const { audioReady, audioTrack, cameraReady, cameraTrack, type, layoutMode, userListRef } = props;
 
