@@ -19,10 +19,12 @@ export const SideBarComponent = ({
   isDisplayNextButton = true,
   isDisplayPrevButton = true,
   currentStep,
-  isOrganizeJobFair = true
+  isOrganizeJobFair = true,
+  leftSideMinWidth = 0,
+  rightSideMinWidth = 0
 }) => (
   <Row wrap={false} className={'organize-job-fair-side-bar'}>
-    <Col flex={ratio.toString()}>
+    <Col flex={ratio.toString()} style={{ minWidth: leftSideMinWidth }}>
       <div className={'side-bar-left-side-container'}>
         {isOrganizeJobFair ? (
           <>
@@ -63,6 +65,8 @@ export const SideBarComponent = ({
         ) : null}
       </div>
     </Col>
-    <Col flex={(1 - ratio).toString()}>{rightSide}</Col>
+    <Col flex={(1 - ratio).toString()} style={{ minWidth: rightSideMinWidth }}>
+      {rightSide}
+    </Col>
   </Row>
 );

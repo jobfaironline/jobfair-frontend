@@ -111,7 +111,13 @@ const InterviewRoomContainer = (props) => {
           />
         }
         leftSide={
-          <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', flex: '1' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              flexDirection: 'column',
+              flex: '1'
+            }}>
             {/* TODO: dynamic this based on role */}
             {roomType.includes('waiting-room') ? (
               <WaitingRoomListForIntervieweeContainer
@@ -134,6 +140,7 @@ const InterviewRoomContainer = (props) => {
         }
         ratio={2 / 7}
         isOrganizeJobFair={false}
+        leftSideMinWidth={300}
       />
     );
   }
@@ -178,7 +185,7 @@ const InterviewRoomContainer = (props) => {
           </Card>
         </div>
       }
-      ratio={1 / 4.5}
+      ratio={2 / 7}
       isOrganizeJobFair={false}
     />
   );

@@ -1,4 +1,4 @@
-import { Button, Card, Col, Row, Typography } from 'antd';
+import { Button, Card, Col, Divider, Row, Typography } from 'antd';
 import React from 'react';
 
 export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => {
@@ -7,25 +7,18 @@ export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => {
       <div>
         <Typography.Title level={3}>Danh sách ứng viên</Typography.Title>
         {waitingList.map((interviewee, index, arr) => {
-          const isHavingInterview = arr?.filter(
-            (interview) => interview.status === 'INTERVIEWING' || interview.status === 'SUBMITTED_REPORT'
-          );
-
           return (
             <div className='name-holder'>
               <Row>
-                <Col xl={8} sm={12}>
-                  {interviewee.attendantName}
-                </Col>
-                <Col xl={8} sm={12}>
+                <Col span={12}>{interviewee.attendantName}</Col>
+                <Col span={12}>
                   {`${new Date(interviewee.beginTime).toTimeString().split(' ')[0]} - ${
                     new Date(interviewee.endTime).toTimeString().split(' ')[0]
                   }`}
                 </Col>
-                <Col xl={8} sm={24}>
-                  {interviewee?.buttonStatus()}
-                </Col>
+                <Col span={24}>{interviewee?.buttonStatus()}</Col>
               </Row>
+              <Divider style={{ margin: '0.5rem 0rem' }} />
             </div>
           );
         })}
