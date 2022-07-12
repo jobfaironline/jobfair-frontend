@@ -25,7 +25,7 @@ export const InventoryContainer = (props) => {
 
   const fetchData = async () => {
     const response = await getAttendantCv({});
-    const data = response.data;
+    const data = response.data.content;
     const obj = {};
     for (let i = 1; i < data.length + 1; i++) {
       const key = `slot-${i}`;

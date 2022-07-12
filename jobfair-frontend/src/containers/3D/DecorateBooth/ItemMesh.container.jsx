@@ -12,7 +12,7 @@ import { useDrag } from 'react-use-gesture';
 import React, { useRef, useState } from 'react';
 
 export const ItemMeshContainer = (props) => {
-  const { mesh, floorMesh } = props;
+  const { mesh, floorMesh, hasUnsavedChangeRef } = props;
   const { selectedItem, mode } = useSelector((state) => state.decorateBooth);
   const itemRef = useRef();
   const [position, setPosition] = useState(mesh.position);
@@ -22,6 +22,7 @@ export const ItemMeshContainer = (props) => {
     ({ event, active }) => {
       if (mode !== ModeConstant.SELECT && mode !== ModeConstant.DRAGGING) return;
       if (selectedItem?.uuid !== itemRef.current.uuid) return;
+      hasUnsavedChangeRef.current = true;
       if (active) {
         //get intersection point between click coordinate and plane coordinate
         const planeIntersectPoint = new THREE.Vector3();
