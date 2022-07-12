@@ -20,20 +20,7 @@ export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => {
                     new Date(interviewee.endTime).toTimeString().split(' ')[0]
                   }`}
                 </Col>
-                <Col span={8}>
-                  {interviewee?.status !== 'INTERVIEWING' &&
-                  interviewee?.status !== 'SUBMITTED_REPORT' &&
-                  isHavingInterview?.length > 0 ? null : (
-                    <Button
-                      type='primary'
-                      shape='round'
-                      disabled={!interviewee.inRoom} //TODO: remove later
-                      onClick={interviewee.handleInvite}>
-                      {!interviewee.inRoom ? 'Not in waiting room' : 'invite'}
-                    </Button>
-                  )}
-                </Col>
-                <Col span={4}>{interviewee?.buttonStatus()}</Col>
+                <Col span={8}>{interviewee?.buttonStatus()}</Col>
               </Row>
             </div>
           );

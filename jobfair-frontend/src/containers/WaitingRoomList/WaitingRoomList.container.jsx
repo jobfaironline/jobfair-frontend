@@ -152,7 +152,7 @@ const mappingTodayScheduleAndWaitingRoomList = async (
   try {
     const { data: waitingRoomList } = await getWaitingRoomInfo(waitingRoomId);
     // eslint-disable-next-line no-unused-vars
-    const InterviewStatusButton = ({ data, scheduleInfo, channelId }) => {
+    const InterviewStatusButton = ({ data, scheduleInfo, channelId, handleInvite }) => {
       const dispatch = useDispatch();
 
       useEffect(() => {
@@ -212,6 +212,23 @@ const mappingTodayScheduleAndWaitingRoomList = async (
       )
         return null;
 
+      console.log(data);
+
+      if (
+        data?.status !== 'INTERVIEWING' &&
+        data?.status !== 'SUBMITTED_REPORT' &&
+        agoraUserListRef?.current?.length <= 0
+      )
+        return (
+          <Button
+            type='primary'
+            shape='round'
+            disabled={!data?.inWaitingRoom} //TODO: remove later
+            onClick={handleInvite}>
+            {!data?.inWaitingRoom ? 'Not in waiting room' : 'invite'}
+          </Button>
+        );
+
       switch (data.status) {
         case 'NOT_YET':
           return (
@@ -256,7 +273,9 @@ const mappingTodayScheduleAndWaitingRoomList = async (
           interviewLink: item.url,
           badgeType: item.status,
           inRoom: item.inWaitingRoom,
-          buttonStatus: () => <InterviewStatusButton data={item} />,
+          buttonStatus: () => (
+            <InterviewStatusButton data={item} handleInvite={() => handleInvite(item.attendantId, item.id)} />
+          ),
           handleInvite: () => handleInvite(item.attendantId, item.id)
         };
         return tmp;
