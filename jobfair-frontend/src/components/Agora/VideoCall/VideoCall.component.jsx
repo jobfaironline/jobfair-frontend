@@ -74,7 +74,7 @@ const VideoCallComponent = (props) => {
                                 justifyContent: 'center',
                                 alignItems: 'center'
                               }}>
-                              <Avatar shape='circle' style={{ height: '70%' }} icon={<UserOutlined />} />
+                              <Avatar shape='circle' size={64} icon={<UserOutlined />} />
                             </div>
                           </div>
                         );
@@ -128,7 +128,7 @@ const VideoCallComponent = (props) => {
                   justifyContent: 'center',
                   alignItems: 'center'
                 }}>
-                <Avatar shape='circle' style={{ height: '70%' }} icon={<UserOutlined />} />
+                <Avatar shape='circle' size={180} icon={<UserOutlined />} />
               </div>
             </div>
           )}

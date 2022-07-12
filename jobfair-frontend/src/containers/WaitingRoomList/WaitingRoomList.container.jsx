@@ -254,9 +254,9 @@ const mappingTodayScheduleAndWaitingRoomList = async (
               End
             </Button>
           );
-        case 'REQUEST_CHANGE':
+        case 'FAIL':
           return (
-            <Button type='primary' shape='round' disabled={true}>
+            <Button type='primary' shape='round' disabled style={{ background: 'red', color: 'white' }}>
               Changing
             </Button>
           );

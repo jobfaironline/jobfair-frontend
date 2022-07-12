@@ -6,23 +6,25 @@ export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => {
     <Card style={{ height: '100%' }}>
       <div>
         <Typography.Title level={3}>Danh sách ứng viên</Typography.Title>
-        {waitingList.map((interviewee, index, arr) => {
-          return (
-            <div className='name-holder'>
-              <Row>
-                <Col span={12}>{interviewee.attendantName}</Col>
-                <Col span={12}>
-                  {`${new Date(interviewee.beginTime).toTimeString().split(' ')[0]} - ${
-                    new Date(interviewee.endTime).toTimeString().split(' ')[0]
-                  }`}
-                </Col>
-                <Col span={12}>{interviewee?.buttonStatus()}</Col>
-                <Col span={12}>{interviewee?.kickButton()}</Col>
-              </Row>
-              <Divider style={{ margin: '0.5rem 0rem' }} />
-            </div>
-          );
-        })}
+        <div style={{ height: '350px', overflowY: 'scroll' }}>
+          {waitingList.map((interviewee, index, arr) => {
+            return (
+              <div className='name-holder'>
+                <Row>
+                  <Col span={12}>{interviewee.attendantName}</Col>
+                  <Col span={12}>
+                    {`${new Date(interviewee.beginTime).toTimeString().split(' ')[0]} - ${
+                      new Date(interviewee.endTime).toTimeString().split(' ')[0]
+                    }`}
+                  </Col>
+                  <Col span={12}>{interviewee?.buttonStatus()}</Col>
+                  <Col span={12}>{interviewee?.kickButton()}</Col>
+                </Row>
+                <Divider style={{ margin: '0.5rem 0rem' }} />
+              </div>
+            );
+          })}
+        </div>
       </div>
     </Card>
   );
