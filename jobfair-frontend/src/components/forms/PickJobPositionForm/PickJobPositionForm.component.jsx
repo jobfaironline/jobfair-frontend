@@ -12,7 +12,7 @@ const PickJobPositionForm = (props) => {
 
   const finishModal = async () => {
     try {
-      await form.validateFields();
+      await form.validateFields(['jobPositions']);
       setJobPositionModalData((prevState) => ({ ...prevState, visible: false }));
     } catch (e) {
       //ignore

@@ -55,7 +55,7 @@ import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
 import ResumeEditPage from '../pages/ResumeEditPage/ResumeEditPage';
 import ResumeManagementPage from '../pages/ResumeManagementPage/ResumeManagementPage';
 
-const excludeFooterPages = [PATH.BOOTH_PAGE, PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE];
+const excludeFooterPages = [PATH.BOOTH_PAGE, PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE, PATH.PUBLICIZED_BOOTH_PAGE];
 
 const isHasFooter = (location) =>
   !excludeFooterPages.some((path) => {
