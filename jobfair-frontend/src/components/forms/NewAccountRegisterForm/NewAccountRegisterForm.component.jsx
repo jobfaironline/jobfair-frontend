@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars,no-empty-function */
 import './NewAccountRegisterForm.styles.scss';
 import { Divider, Tabs, Typography } from 'antd';
 import AttendantRegisterFormContainer from '../../../containers/AttendantRegisterForm/AttendantRegisterForm.container';

@@ -1,11 +1,11 @@
-import { Button, Space } from 'antd';
-import { convertEnumToString } from '../../utils/common';
+import { Button, Input, Space } from 'antd';
+import { convertEnumToString, deepClone } from '../../utils/common';
 import { fetchJobPositions } from '../../redux-flow/jobPositions/job-positions-action';
 import { useDispatch, useSelector } from 'react-redux';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import JobPositionSubmodalContainer from '../JobPosition/JobPositionSubmodal.container';
 import PickJobPositionTableColumn from './PickJobPositionTable.column';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 
 const PickJobPositionTable = ({ selectable, form, calculateKeyArr }) => {
   //pagination
@@ -19,6 +19,7 @@ const PickJobPositionTable = ({ selectable, form, calculateKeyArr }) => {
   const jobPositionData = useSelector((state) => state?.jobPosition.data);
 
   const dispatch = useDispatch();
+  const searchValueRef = useRef('');
 
   //select table logic
   const [initialSelectedValues, setInitialSelectedValues] = useState(() =>
@@ -76,7 +77,7 @@ const PickJobPositionTable = ({ selectable, form, calculateKeyArr }) => {
   };
 
   const fetchData = async (currentPage, pageSize) => {
-    dispatch(fetchJobPositions({ currentPage, pageSize }));
+    dispatch(fetchJobPositions({ currentPage, pageSize, jobTitle: '' }));
   };
 
   useLayoutEffect(() => {
@@ -84,15 +85,12 @@ const PickJobPositionTable = ({ selectable, form, calculateKeyArr }) => {
   }, [currentPage, pageSize]);
 
   const jobPositionTableProps = {
-    tableData: jobPositionData.map((item) => ({
+    tableData: deepClone(jobPositionData).map((item) => ({
       ...item,
       jobType: convertEnumToString(item?.jobType),
       level: convertEnumToString(item?.level)
     })),
     tableColumns: PickJobPositionTableColumn,
-    onSearch: () => {
-      //TODO: fetch data for search
-    },
     extra: [
       {
         title: 'Actions',
@@ -117,7 +115,14 @@ const PickJobPositionTable = ({ selectable, form, calculateKeyArr }) => {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <p style={{ marginBottom: '5px' }}>Search job position</p>
+      <Input.Search
+        onSearch={(value) => {
+          searchValueRef.current = value;
+          dispatch(fetchJobPositions({ currentPage, pageSize, jobTitle: value }));
+        }}
+      />
       <JobPositionSubmodalContainer
         jobPositionId={neededJobPositionDetail}
         visible={modalVisible}

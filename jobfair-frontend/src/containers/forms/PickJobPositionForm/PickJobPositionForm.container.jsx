@@ -136,6 +136,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
       <Modal
         width={800}
         title='Choose job position'
+        style={{ top: '2rem', verticalAlign: 'top' }}
         visible={modalVisible}
         onCancel={handleCloseModal}
         footer={null}
