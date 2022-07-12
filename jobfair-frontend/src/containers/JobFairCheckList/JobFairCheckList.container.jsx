@@ -13,6 +13,7 @@ import { Step4Component } from '../../components/customized-components/JobFairCh
 import { Step5Component } from '../../components/customized-components/JobFairCheckList/Step5.component';
 import {
   checkJobFairPublishAPI,
+  deleteJobFairDraftAPI,
   getJobFairByIDAPI,
   publishJobFairAPI
 } from '../../services/jobhub-api/JobFairControllerService';
@@ -223,6 +224,22 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
     setPublishModalVisible(false);
   };
 
+  const handleDeleteJobFairDraft = async () => {
+    try {
+      await deleteJobFairDraftAPI(jobFairId);
+      history.push(PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE);
+      notification['success']({
+        message: 'Delete job fair successfully'
+      });
+    } catch (e) {
+      notification['error']({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while deleting job fair draft, try again later`,
+        duration: 2
+      });
+    }
+  };
+
   if (state.isLoading) return <LoadingComponent isWholePage={true} />;
 
   return (
@@ -242,15 +259,24 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
 
       <div className={'job-fair-check-list-container'}>
         {role === RoleType.COMPANY_MANAGER ? (
-          <Button
-            type={'link'}
-            onClick={() => {
-              history.push(PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE);
-            }}
-            style={{ fontSize: '1.2rem', marginTop: '1rem' }}>
-            <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: 5 }} />
-            Back to my job fair
-          </Button>
+          <div style={{ display: 'flex', alignItems: 'center', marginTop: '1rem' }}>
+            <Button
+              type={'link'}
+              onClick={() => {
+                history.push(PATH_COMPANY_MANAGER.JOB_FAIR_GRID_PAGE);
+              }}
+              style={{ fontSize: '1.2rem' }}>
+              <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: 5 }} />
+              Back to my job fair
+            </Button>
+            <Button
+              type={'primary'}
+              className={'button'}
+              style={{ marginLeft: 'auto', display: state.progressData.score === 100 ? 'none' : 'block' }}
+              onClick={handleDeleteJobFairDraft}>
+              Delete job fair
+            </Button>
+          </div>
         ) : null}
 
         <div className={'progress-bar'}>
