@@ -9,6 +9,7 @@ import {
   getScheduleById,
   getWaitingRoomInfo,
   inviteInterviewee,
+  kickUser,
   leaveWaitingRoom,
   startInterview,
   swapSchedule,
@@ -234,6 +235,12 @@ const mappingTodayScheduleAndWaitingRoomList = async (
               Start
             </Button>
           );
+        case 'INTERVIEWING':
+          return (
+            <Button type='primary' shape='round' disabled>
+              Is interviewing
+            </Button>
+          );
         case 'SUBMITTED_REPORT':
           return (
             <Button type='primary' shape='round' onClick={() => handleEndInterview()}>
@@ -257,6 +264,22 @@ const mappingTodayScheduleAndWaitingRoomList = async (
       }
     };
 
+    const handleKickUser = async (channelId, userId) => {
+      try {
+        await kickUser(userId, channelId);
+        notification['success']({
+          message: `Kick user successfully`,
+          duration: 2
+        });
+      } catch (e) {
+        notification['error']({
+          message: `Something went wrong! Try again latter!`,
+          description: `There is problem while kicking, try again later`,
+          duration: 2
+        });
+      }
+    };
+
     const intervieweeListData = waitingRoomList
       .map((item) => {
         const date = moment.unix(item.beginTime / 1000);
@@ -274,7 +297,19 @@ const mappingTodayScheduleAndWaitingRoomList = async (
           buttonStatus: () => (
             <InterviewStatusButton data={item} handleInvite={() => handleInvite(item.attendantId, item.id)} />
           ),
-          handleInvite: () => handleInvite(item.attendantId, item.id)
+          handleInvite: () => handleInvite(item.attendantId, item.id),
+          kickButton: () =>
+            agoraUserListRef?.current?.length &&
+            agoraUserListRef.current.length > 0 &&
+            agoraUserListRef.current[0].uid === item?.attendantId ? (
+              <Button
+                onClick={() => {
+                  handleKickUser(interviewRoomId, item?.attendantId);
+                }}
+                shape='round'>
+                Remove
+              </Button>
+            ) : null
         };
         return tmp;
       })

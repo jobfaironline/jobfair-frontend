@@ -3,7 +3,7 @@ import React from 'react';
 
 export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => {
   return (
-    <Card>
+    <Card style={{ height: '100%' }}>
       <div>
         <Typography.Title level={3}>Danh sách ứng viên</Typography.Title>
         {waitingList.map((interviewee, index, arr) => {
@@ -16,7 +16,8 @@ export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => {
                     new Date(interviewee.endTime).toTimeString().split(' ')[0]
                   }`}
                 </Col>
-                <Col span={24}>{interviewee?.buttonStatus()}</Col>
+                <Col span={12}>{interviewee?.buttonStatus()}</Col>
+                <Col span={12}>{interviewee?.kickButton()}</Col>
               </Row>
               <Divider style={{ margin: '0.5rem 0rem' }} />
             </div>
