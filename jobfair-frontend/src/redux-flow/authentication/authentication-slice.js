@@ -33,6 +33,12 @@ const authenticationSlice = createSlice({
     },
     logout: (state) => {
       return { ...state, isAuthUser: false, user: {} };
+    },
+    updateUserProfileImage: (state, action) => {
+      return { ...state, user: { ...state.user, profileUrl: action.payload } };
+    },
+    updateUserFullName: (state, action) => {
+      return { ...state, user: { ...state.user, fullName: action.payload } };
     }
   }
 });

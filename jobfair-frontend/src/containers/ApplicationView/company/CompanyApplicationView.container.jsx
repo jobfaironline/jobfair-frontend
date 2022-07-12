@@ -2,8 +2,8 @@ import { COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../../constants/RoleType';
 import { EyeOutlined } from '@ant-design/icons';
 import { Input, Space, Tooltip, notification } from 'antd';
 import { PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path';
+import { generatePath, useHistory } from 'react-router-dom';
 import { getAllApplication } from '../../../services/jobhub-api/ApplicationControllerService';
-import { useHistory } from 'react-router-dom';
 import ApplicationTableColumn from '../../CommonTableComponent/columns/ApplicationTable.column';
 import CommonTableContainer from '../../CommonTableComponent/CommonTableComponent.container';
 import React, { useEffect, useState } from 'react';
@@ -63,16 +63,16 @@ const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
 
   const handleViewResumeDetail = (resumeId, role) => {
     switch (role) {
-      case COMPANY_MANAGER:
-        history.push(PATH_COMPANY_MANAGER.RESUME_DETAIL_PAGE, {
-          resumeId
-        });
+      case COMPANY_MANAGER: {
+        const url = generatePath(PATH_COMPANY_MANAGER.RESUME_DETAIL_PAGE, { id: resumeId });
+        history.push(url);
         break;
-      case COMPANY_EMPLOYEE:
-        history.push(PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE, {
-          resumeId
-        });
+      }
+      case COMPANY_EMPLOYEE: {
+        const url = generatePath(PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE, { id: resumeId });
+        history.push(url);
         break;
+      }
       default:
         return null;
     }

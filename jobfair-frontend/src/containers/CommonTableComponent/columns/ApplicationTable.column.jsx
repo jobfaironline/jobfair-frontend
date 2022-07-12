@@ -1,5 +1,5 @@
 import { Tag } from 'antd';
-import { convertToDateString } from '../../../utils/common';
+import { convertToDateString, getMatchingPointColor } from '../../../utils/common';
 import React from 'react';
 
 const defaultColumns = () => [
@@ -68,6 +68,23 @@ const defaultColumns = () => [
           break;
       }
       return <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>;
+    }
+  },
+  {
+    title: 'Matching point',
+    dataIndex: 'matchingPoint',
+    key: 'matchingPoint',
+    width: '10%',
+    sorter: (a, b) => a.matchingPoint * 100 - b.matchingPoint * 100,
+    render: (num) => {
+      const tagColor = getMatchingPointColor(num);
+      return (
+        <div style={{ display: 'flex' }}>
+          <Tag color={tagColor} style={{ marginLeft: 'auto' }}>
+            {Math.round(num * 100)} %
+          </Tag>
+        </div>
+      );
     }
   }
 ];

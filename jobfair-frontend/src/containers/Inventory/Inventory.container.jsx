@@ -74,7 +74,7 @@ export const InventoryContainer = (props) => {
       width: '90rem',
       closable: true,
       maskClosable: true,
-      content: <ResumeDetailForAttendantContainer resume={resume} attendantId={attendantId} />
+      content: <ResumeDetailForAttendantContainer resumeId={resume.id} attendantId={attendantId} />
     });
   };
 

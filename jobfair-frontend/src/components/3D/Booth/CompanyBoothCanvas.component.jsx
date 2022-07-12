@@ -76,7 +76,7 @@ export const CompanyBoothCanvasComponent = (props) => {
       <Canvas
         dpr={[1, 2]}
         camera={{ fov: 45, zoom: 0.04 / zoom }}
-        style={{ width: '100%', height: `calc(100vh - ${NAVBAR_HEIGHT} )` }}
+        style={{ width: '100%', height: `calc(100vh - ${NAVBAR_HEIGHT})` }}
         onCreated={(state) => {
           cameraRef.current = state.camera;
         }}>

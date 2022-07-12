@@ -1,5 +1,5 @@
 import { CountryConst } from '../constants/AttendantConstants';
-import { DateFormat } from '../constants/ApplicationConst';
+import { DateFormat, MatchingPointColor } from '../constants/ApplicationConst';
 import { JOB_FAIR_PLAN_STATUS } from '../constants/JobFairConst';
 import { Progress, Tag } from 'antd';
 import React from 'react';
@@ -188,3 +188,10 @@ export const deepClone = (value) => {
 export const getTimeZoneCode = () =>
   //https://stackoverflow.com/questions/1954397/detect-timezone-abbreviation-using-javascript
   new Date().toLocaleTimeString('en-us', { timeZoneName: 'short' }).split(' ')[2];
+
+export const getMatchingPointColor = (value) => {
+  let tagColor = MatchingPointColor.low.color;
+  if (value > MatchingPointColor.medium.score) tagColor = MatchingPointColor.medium.color;
+  if (value > MatchingPointColor.high.score) tagColor = MatchingPointColor.high.color;
+  return tagColor;
+};

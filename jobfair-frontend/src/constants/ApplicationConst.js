@@ -15,9 +15,9 @@ export const DateFormat = 'MMMM DD,YYYY';
 export const HourMinuteDateFormat = 'YYYY-MMMM-DD';
 export const CustomDateFormat = 'MMMM DD,YYYY HH:mm';
 export const MinuteFormat = 'HH:mm';
+export const MonthFormat = 'MMMM, YYYY';
 
-export const MinimumDateOfBirth = '01 Jan 2004'; //18 years old
-
+export const MinimumDateOfBirth = 18;
 export const TestStatus = {
   PASS: 'PASS',
   FAIL: 'FAIL',
@@ -25,4 +25,19 @@ export const TestStatus = {
   NOT_TAKEN: 'NOT_TAKEN',
   NO_TEST: 'NO_TEST',
   DONE: 'DONE'
+};
+
+export const MatchingPointColor = {
+  low: {
+    color: 'red',
+    score: 0.0
+  },
+  medium: {
+    color: 'gold',
+    score: 0.5
+  },
+  high: {
+    color: 'green',
+    score: 0.7
+  }
 };

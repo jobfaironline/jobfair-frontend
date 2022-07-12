@@ -8,7 +8,6 @@ import { logoutHandler } from '../../../redux-flow/authentication/authentication
 import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
 import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
-import RoleType from '../../../constants/RoleType';
 import extraMenu from './MenuByRole';
 
 const NavigationBar = () => {
@@ -79,7 +78,6 @@ const AuthenticationButtonGroups = ({ handleRedirect }) => (
 const AvatarMenu = ({ logoutFunction }) => {
   const history = useHistory();
   const name = useSelector((state) => state.authentication.user.fullName);
-  const role = useSelector((state) => state.authentication?.user?.roles);
   const profileUrl = useSelector((state) => state.authentication?.user.profileUrl);
 
   const menu = (
@@ -93,11 +91,8 @@ const AvatarMenu = ({ logoutFunction }) => {
             history.push(PATH.CHANGE_PASSWORD_PAGE);
             break;
           case 'PROFILE':
-            switch (role) {
-              case RoleType.ATTENDANT:
-                history.push(PATH_ATTENDANT.PROFILE_PAGE);
-                break;
-            }
+            history.push(PATH_ATTENDANT.PROFILE_PAGE);
+            break;
         }
       }}
       style={{ zIndex: 10000000 }}>

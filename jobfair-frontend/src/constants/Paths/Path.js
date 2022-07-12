@@ -24,6 +24,7 @@ export const PATH = {
   JOB_FAIR_LANDING_PAGE: `/landing-job-fair/:jobFairId`
 };
 export const PATH_ADMIN = {
+  PROFILE_PAGE: `/profile`,
   JOB_FAIR_LIST_PAGE: '/admin/job-fair-list',
   APPROVAL_REGISTRATION_PAGE: '/admin/approval-registration/:jobFairId',
   JOB_FAIR_DETAIL_PAGE: '/admin/job-fair-detail',
@@ -31,21 +32,24 @@ export const PATH_ADMIN = {
   COMPANY_REGISTRATION_DETAIL_PAGE: '/admin/company-registration-detail'
 };
 export const PATH_ATTENDANT = {
-  PROFILE_PAGE: `/attendant/profile`,
+  PROFILE_PAGE: `/profile`,
   JOB_FAIR_LIST_PAGE: '/attendant/job-fair-list',
   APPLICATION_MANAGEMENT_PAGE: '/attendant/application-management',
   JOB_FAIR_DETAIL_PAGE: '/attendant/job-fair-detail',
   INTERVIEW_ROOM_PAGE: '/attendant/interview/:scheduleId/:roomId',
   WAITING_ROOM_PAGE: '/attendant/waiting-room/:scheduleId/:roomId',
   INTERVIEW_SCHEDULE: '/attendant/interview-schedule',
-  RESUME_DETAIL_PAGE: '/attendant/resume-detail',
+  RESUME_DETAIL_PAGE: '/attendant/resume-detail/:id',
   ATTEMPT_TEST_PAGE: '/attendant/attempt-test/:quizId',
-  RESUME_MANAGEMENT_PAGE: '/attendant/resume-management'
+  RESUME_MANAGEMENT_PAGE: '/attendant/resume-management',
+  EDIT_RESUME_PAGE: '/attendant/resume-detail/:id/edit',
+  ADD_RESUME_PAGE: '/attendant/add-resume'
 };
 export const PATH_COMPANY_EMPLOYEE = {
+  PROFILE_PAGE: `/profile`,
   COMPANY_PROFILE_PAGE: '/employee/company-profile',
   APPLICATION_MANAGEMENT_PAGE: '/employee/application-management',
-  RESUME_DETAIL_PAGE: '/employee/resume-detail',
+  RESUME_DETAIL_PAGE: '/employee/resume-detail/:id',
   JOB_FAIR_DETAIL_PAGE: '/employee/job-fair-detail',
   ASSIGN_BOOTH_MAP_PAGE: '/employee/assign-map/:assignmentId',
   JOB_FAIR_ASSIGNMENT_PAGE: '/employee/job-fair-assignment',
@@ -59,12 +63,13 @@ export const PATH_COMPANY_EMPLOYEE = {
   JOB_FAIR_BOOTH_REVIEW: '/employee/review-booth/:boothId'
 };
 export const PATH_COMPANY_MANAGER = {
+  PROFILE_PAGE: `/profile`,
   EMPLOYEE_MANAGEMENT_PAGE: '/company/employee-management',
   REGISTER_JOB_FAIR_FORM_PAGE: '/company/register-job-fair',
   COMPANY_PROFILE_PAGE: '/company/company-profile',
   JOB_FAIR_DETAIL_PAGE: '/company/job-fair-detail',
   APPLICATION_MANAGEMENT_PAGE: '/company/application-management',
-  RESUME_DETAIL_PAGE: '/company/resume-detail',
+  RESUME_DETAIL_PAGE: '/company/resume-detail/:id',
   ORGANIZE_JOB_FAIR_PAGE: '/company/organize-job-fair',
   JOB_FAIR_GRID_PAGE: '/company/my-job-fair',
   TEMPLATE_GRID_PAGE: '/company/my-template',

@@ -21,7 +21,7 @@ const ApplicationManagementPage = () => {
 
   return (
     <PageLayoutWrapper className='page'>
-      <div style={{ margin: '4rem 0' }}>
+      <div>
         <Divider>
           <Typography.Title level={2}>Application management</Typography.Title>
         </Divider>

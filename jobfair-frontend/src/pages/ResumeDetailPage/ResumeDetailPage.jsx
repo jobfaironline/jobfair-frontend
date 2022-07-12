@@ -1,19 +1,18 @@
-import './ResumeDetailPage.styles.scss';
-import { PageHeader } from 'antd';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import React from 'react';
+import ResumeDetailForAttendantContainer from '../../containers/Resume/attendant/ResumeDetailForAttendant.container';
 import ResumeDetailForCompanyContainer from '../../containers/Resume/company/ResumeDetailForCompany.container';
+import RoleType from '../../constants/RoleType';
 
 const ResumeDetailPage = () => {
-  const history = useHistory();
-  const location = useLocation();
-  const { resumeId } = location.state;
+  const { id } = useParams();
+  const { roles: role } = useSelector((state) => state.authentication.user);
 
-  return (
-    <div className='page'>
-      <PageHeader className='site-page-header' onBack={() => history.goBack()} title='Resume Detail Page' />
-      <ResumeDetailForCompanyContainer resumeId={resumeId} />
-    </div>
-  );
+  let container = <ResumeDetailForCompanyContainer resumeId={id} />;
+  if (role === RoleType.ATTENDANT) container = <ResumeDetailForAttendantContainer resumeId={id} />;
+
+  return <PageLayoutWrapper className={'page'}>{container}</PageLayoutWrapper>;
 };
 export default ResumeDetailPage;

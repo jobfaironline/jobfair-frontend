@@ -10,11 +10,11 @@ import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage'
 import { selectWebSocket } from '../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import AboutApplicationPage from '../pages/AboutApplicationPage';
+import AccountProfilePage from '../pages/ProfilePage/Account/AccountProfilePage';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
 import AssignTaskPage from '../pages/AssignTaskPage/AssignTaskPage';
 import AttendantAttemptTestPage from '../pages/AttendantAttemptTestPage/AttendantAttemptTestPage';
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage';
-import AttendantProfile from '../pages/ProfilePage/Attendant/AttendantProfilePage';
 import AttendantRouter from './components/AttendantRouter';
 import BoothDescriptionPage from '../pages/BoothDescriptionPage/BoothDescriptionPage';
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage';
@@ -49,8 +49,10 @@ import React, { useEffect } from 'react';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
+import ResumeAddPage from '../pages/ResumeAddPage/ResumeAddPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
-import ResumeManagmentPage from '../pages/ResumeManagementPage/ResumeManagementPage';
+import ResumeEditPage from '../pages/ResumeEditPage/ResumeEditPage';
+import ResumeManagementPage from '../pages/ResumeManagementPage/ResumeManagementPage';
 
 const excludeFooterPages = [PATH.BOOTH_PAGE, PATH_COMPANY_MANAGER.ORGANIZE_JOB_FAIR_PAGE];
 
@@ -123,6 +125,9 @@ const AppRouter = () => {
         <Route path={PATH_ADMIN.JOB_FAIR_LIST_PAGE} exact>
           <JobFairTablePage />
         </Route>
+        <Route path={PATH_ADMIN.PROFILE_PAGE} exact>
+          <AccountProfilePage />
+        </Route>
         <Route path={PATH.RESULT_SUCCESS_PAGE} exact>
           <ResultSuccessPage />
         </Route>
@@ -145,7 +150,7 @@ const AppRouter = () => {
         />
         <AttendantRouter
           key={PATH_ATTENDANT.PROFILE_PAGE}
-          component={() => <AttendantProfile />}
+          component={() => <AccountProfilePage />}
           path={PATH_ATTENDANT.PROFILE_PAGE}
           exact
         />
@@ -187,14 +192,32 @@ const AppRouter = () => {
         />
         <AttendantRouter
           key={PATH_ATTENDANT.RESUME_MANAGEMENT_PAGE}
-          component={() => <ResumeManagmentPage />}
+          component={() => <ResumeManagementPage />}
           path={PATH_ATTENDANT.RESUME_MANAGEMENT_PAGE}
           exact
         />
         <AttendantRouter
-          key={PATH_ATTENDANT.WAITING_ROOM_PAGE}
-          component={() => <InterviewRoomPage />}
-          path={PATH_ATTENDANT.WAITING_ROOM_PAGE}
+          key={PATH_ATTENDANT.EDIT_RESUME_PAGE}
+          component={() => <ResumeEditPage />}
+          path={PATH_ATTENDANT.EDIT_RESUME_PAGE}
+          exact
+        />
+        <AttendantRouter
+          key={PATH_ATTENDANT.ADD_RESUME_PAGE}
+          component={() => <ResumeAddPage />}
+          path={PATH_ATTENDANT.ADD_RESUME_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.PROFILE_PAGE}
+          component={() => <AccountProfilePage />}
+          path={PATH_COMPANY_EMPLOYEE.PROFILE_PAGE}
+          exact
+        />
+        <CompanyEmployeeRouter
+          key={PATH_COMPANY_EMPLOYEE.PROFILE_PAGE}
+          component={() => <AccountProfilePage />}
+          path={PATH_COMPANY_EMPLOYEE.PROFILE_PAGE}
           exact
         />
         <CompanyEmployeeRouter
@@ -273,6 +296,12 @@ const AppRouter = () => {
           key={PATH_COMPANY_EMPLOYEE.JOB_FAIR_BOOTH_REVIEW}
           component={() => <JobFairBoothReviewPage />}
           path={PATH_COMPANY_EMPLOYEE.JOB_FAIR_BOOTH_REVIEW}
+          exact
+        />
+        <CompanyManagerRouter
+          key={PATH_COMPANY_MANAGER.PROFILE_PAGE}
+          component={() => <AccountProfilePage />}
+          path={PATH_COMPANY_MANAGER.PROFILE_PAGE}
           exact
         />
         <CompanyManagerRouter

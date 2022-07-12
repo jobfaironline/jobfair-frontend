@@ -1,4 +1,4 @@
-import AssignmentPageBreadcumb from '../../../containers/AssignmentPageBreadcumb/AssignmentPageBreadcumb.container';
+import BreadcrumbContainer from '../../../containers/Breadcrumb/Breadcrumb.container';
 import React from 'react';
 
 const PageLayoutWrapper = (props) => {
@@ -7,7 +7,7 @@ const PageLayoutWrapper = (props) => {
   return (
     <>
       <div {...otherProps}>
-        <AssignmentPageBreadcumb />
+        <BreadcrumbContainer />
         {children}
       </div>
     </>

@@ -3,6 +3,9 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(@navbar-height);
+  scroll-margin-top: calc(@navbar-height);
+
 }
 
 * {
@@ -231,3 +234,22 @@ code {
 .ant-dropdown {
   z-index: 5 !important;
 }
+
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #CFD8DC;
+
+}
+::-webkit-scrollbar-thumb {
+  background-color: @button-bg-color ;
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
