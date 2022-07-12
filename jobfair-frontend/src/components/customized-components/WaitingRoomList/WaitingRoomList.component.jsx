@@ -14,13 +14,17 @@ export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => {
           return (
             <div className='name-holder'>
               <Row>
-                <Col span={8}>{interviewee.attendantName}</Col>
-                <Col span={4}>
+                <Col xl={8} sm={12}>
+                  {interviewee.attendantName}
+                </Col>
+                <Col xl={8} sm={12}>
                   {`${new Date(interviewee.beginTime).toTimeString().split(' ')[0]} - ${
                     new Date(interviewee.endTime).toTimeString().split(' ')[0]
                   }`}
                 </Col>
-                <Col span={8}>{interviewee?.buttonStatus()}</Col>
+                <Col xl={8} sm={24}>
+                  {interviewee?.buttonStatus()}
+                </Col>
               </Row>
             </div>
           );

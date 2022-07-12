@@ -33,6 +33,7 @@ const InterviewRoomPage = () => {
   useEffect(() => cleanUp, []);
 
   const cleanUp = () => {
+    console.log('hellu');
     //close all audio and camera tracks
     audioTrackRef.current?.close();
     cameraTrackRef.current?.close();

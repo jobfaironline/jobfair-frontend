@@ -3,6 +3,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { convertEnumToString } from '../../../utils/common';
 import React from 'react';
 import ResumeDetailForAttendantContainer from '../../../containers/Resume/attendant/ResumeDetailForAttendant.container';
+import './CompactResumeDetail.style.scss';
 
 export const CompactResumeDetail = (props) => {
   const { data } = props;
@@ -18,7 +19,7 @@ export const CompactResumeDetail = (props) => {
   };
 
   return (
-    <div style={{ padding: '1rem 3rem' }}>
+    <div className='compact-resume-wrapper'>
       <Card>
         <div style={{ display: 'flex', justifyContent: 'center', width: '100%', padding: '1rem' }}>
           <Avatar size={80} icon={<UserOutlined />} />
@@ -27,14 +28,14 @@ export const CompactResumeDetail = (props) => {
           <Descriptions.Item label='Full name' span={24}>
             {data.attendant.account.firstname} {data.attendant.account.middlename} {data.attendant.account.lastname}
           </Descriptions.Item>
-          <Descriptions.Item label='Email' span={24}>
+          <Descriptions.Item label='Email' span={24} className='unimportant-field'>
             {data.email}
           </Descriptions.Item>
           <Descriptions.Item label='Phone' span={24}>
             {' '}
             {data.phone}
           </Descriptions.Item>
-          <Descriptions.Item label='Year of exp:' span={24}>
+          <Descriptions.Item label='Year of exp:' span={24} className='unimportant-field'>
             {' '}
             {data.yearOfExp}
           </Descriptions.Item>

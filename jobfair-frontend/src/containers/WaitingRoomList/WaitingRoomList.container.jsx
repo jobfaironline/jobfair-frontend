@@ -212,8 +212,6 @@ const mappingTodayScheduleAndWaitingRoomList = async (
       )
         return null;
 
-      console.log(data);
-
       if (
         data?.status !== 'INTERVIEWING' &&
         data?.status !== 'SUBMITTED_REPORT' &&
