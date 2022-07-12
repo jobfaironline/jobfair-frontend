@@ -136,7 +136,7 @@ const mappingTodayScheduleAndWaitingRoomList = async (
         };
 
         //show confirm popup
-        Modal.info({
+        Modal.confirm({
           title: 'Are you sure you wanna swap this schedule?',
           onOk: () => swapHandle()
         });
@@ -247,7 +247,7 @@ const mappingTodayScheduleAndWaitingRoomList = async (
         case 'INTERVIEWING':
           return (
             <Button type='primary' shape='round' disabled>
-              Is interviewing
+              Interviewing
             </Button>
           );
         case 'SUBMITTED_REPORT':
@@ -271,13 +271,13 @@ const mappingTodayScheduleAndWaitingRoomList = async (
       try {
         await kickUser(userId, channelId);
         notification['success']({
-          message: `Kick user successfully`,
+          message: `Remove user successfully`,
           duration: 2
         });
       } catch (e) {
         notification['error']({
           message: `Something went wrong! Try again latter!`,
-          description: `There is problem while kicking, try again later`,
+          description: `There is problem while removing, try again later`,
           duration: 2
         });
       }
