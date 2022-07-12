@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 import JobFairHappeningContainer from '../../containers/JobFairList/admin/JobFairHappening.container';
 import JobFairIncomingContainer from '../../containers/JobFairList/admin/JobFairIncoming.container';
 import JobFairOccurredContainer from '../../containers/JobFairList/admin/JobFairOccurred.container';
-import React from 'react';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
+import React from 'react';
 
 const { TabPane } = Tabs;
 const JobFairTablePage = () => {

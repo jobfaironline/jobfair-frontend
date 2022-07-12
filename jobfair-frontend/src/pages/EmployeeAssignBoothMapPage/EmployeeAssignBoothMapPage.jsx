@@ -1,6 +1,6 @@
 import { EmployeeAssignBoothMapContainer } from '../../containers/3D/EmployeeAssignBoothMap/EmployeeAssignBoothMap.container';
-import React from 'react';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
+import React from 'react';
 
 const EmployeeAssignBoothMapPage = () => (
   <PageLayoutWrapper className='page fullscreen-page'>

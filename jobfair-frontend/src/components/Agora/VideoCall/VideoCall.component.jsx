@@ -1,8 +1,8 @@
 import './VideoCall.styles.scss';
 import { AgoraVideoPlayer } from 'agora-rtc-react';
-import { Avatar, Badge, Button, Tag, Tooltip } from 'antd';
+import { Avatar, Badge, Button, Tooltip } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MailOutlined, UserOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import {
   faMicrophone,
   faMicrophoneSlash,

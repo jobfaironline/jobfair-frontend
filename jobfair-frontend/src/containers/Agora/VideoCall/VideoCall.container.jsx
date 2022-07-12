@@ -6,13 +6,13 @@ import { COMPANY_EMPLOYEE } from '../../../constants/RoleType';
 import { NotificationType } from '../../../constants/NotificationConstant';
 import { PATH, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import { getAgoraRTCToken } from '../../../services/jobhub-api/AgoraTokenControllerService';
+import { interviewRoomAction } from '../../../redux-flow/interviewRoom/interview-room-slice';
 import { kickUser } from '../../../services/jobhub-api/InterviewControllerService';
 import { notification } from 'antd';
 import { notificationAction } from '../../../redux-flow/notification/notification-slice';
 import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
 import { useHistory } from 'react-router-dom';
 import VideoCallComponent from '../../../components/Agora/VideoCall/VideoCall.component';
-import { interviewRoomAction } from '../../../redux-flow/interviewRoom/interview-room-slice';
 
 const { REACT_APP_AGORA_APP_ID } = process.env;
 const VideoCallContainer = (props) => {

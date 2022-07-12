@@ -2,8 +2,8 @@ import { Divider, Tabs, Typography } from 'antd';
 import { useSelector } from 'react-redux';
 import AttendantApplicationView from '../../containers/ApplicationView/attendant/AttendantApplicationView.container';
 import CompanyApplicationView from '../../containers/ApplicationView/company/CompanyApplicationView.container';
-import React from 'react';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
+import React from 'react';
 
 const { TabPane } = Tabs;
 

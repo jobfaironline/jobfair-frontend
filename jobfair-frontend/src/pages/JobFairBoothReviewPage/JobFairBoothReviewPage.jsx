@@ -1,7 +1,7 @@
 import { BoothLayoutType } from '../../constants/LayoutConstant';
+import { NAVBAR_HEIGHT } from '../../styles/custom-theme';
 import { ReviewBoothLayoutContainer } from '../../containers/3D/ReviewBoothLayout/ReviewBoothLayout.container';
 import { useParams } from 'react-router-dom';
-import { NAVBAR_HEIGHT } from '../../styles/custom-theme';
 
 export const JobFairBoothReviewPage = () => {
   const { boothId } = useParams();

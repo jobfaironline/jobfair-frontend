@@ -5,12 +5,12 @@ import { Character } from './Character.component';
 import { ContactShadows, OrbitControls, Stage, useContextBridge } from '@react-three/drei';
 import { EffectComposer, Outline } from '@react-three/postprocessing';
 import { FirstPersonControl } from '../ThreeJSBaseComponent/FirstPersonControl.component';
+import { NAVBAR_HEIGHT } from '../../../styles/custom-theme';
 import { ReactReduxContext } from 'react-redux';
 import { ResumeSubmitMeshComponent } from './ResumeSubmitMesh.component';
 import { Select } from 'antd';
 import { SkyComponent, SkyType } from '../ThreeJSBaseComponent/Sky.component';
 import React, { useRef, useState } from 'react';
-import { NAVBAR_HEIGHT } from '../../../styles/custom-theme';
 
 const { Option } = Select;
 

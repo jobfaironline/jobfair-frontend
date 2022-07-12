@@ -2,6 +2,7 @@ import { Button, Result, Typography } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import { PATH } from '../../constants/Paths/Path';
 import { useSelector } from 'react-redux';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import React from 'react';
 
 const { Paragraph, Text } = Typography;

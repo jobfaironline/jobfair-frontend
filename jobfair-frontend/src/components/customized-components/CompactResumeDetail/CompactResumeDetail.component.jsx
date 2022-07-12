@@ -1,9 +1,9 @@
+import './CompactResumeDetail.style.scss';
 import { Avatar, Button, Card, Descriptions, Modal } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { convertEnumToString } from '../../../utils/common';
 import React from 'react';
 import ResumeDetailForAttendantContainer from '../../../containers/Resume/attendant/ResumeDetailForAttendant.container';
-import './CompactResumeDetail.style.scss';
 
 export const CompactResumeDetail = (props) => {
   const { data } = props;

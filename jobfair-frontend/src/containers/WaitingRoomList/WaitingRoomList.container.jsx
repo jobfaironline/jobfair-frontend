@@ -15,13 +15,13 @@ import {
   swapSchedule,
   visitWaitingRoom
 } from '../../services/jobhub-api/InterviewControllerService';
+import { fetchInterviewingApplicationData } from '../../redux-flow/interviewRoom/interview-room-action';
+import { interviewRoomAction } from '../../redux-flow/interviewRoom/interview-room-slice';
 import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
-import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
-import { interviewRoomAction } from '../../redux-flow/interviewRoom/interview-room-slice';
-import { fetchInterviewingApplicationData } from '../../redux-flow/interviewRoom/interview-room-action';
 
 export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId, agoraUserListRef }) => {
   const rerender = useSelector((state) => state?.interviewRoom?.rerender);
@@ -206,12 +206,13 @@ const mappingTodayScheduleAndWaitingRoomList = async (
         }
       };
 
-      if (data?.status === 'DONE')
+      if (data?.status === 'DONE') {
         return (
           <Button type='primary' shape='round' disabled style={{ background: 'green', color: 'white' }}>
             Done
           </Button>
         );
+      }
 
       if (
         agoraUserListRef?.current?.length &&
@@ -224,7 +225,7 @@ const mappingTodayScheduleAndWaitingRoomList = async (
         data?.status !== 'INTERVIEWING' &&
         data?.status !== 'SUBMITTED_REPORT' &&
         agoraUserListRef?.current?.length <= 0
-      )
+      ) {
         return (
           <Button
             type='primary'
@@ -234,6 +235,7 @@ const mappingTodayScheduleAndWaitingRoomList = async (
             {!data?.inWaitingRoom ? 'Not in waiting room' : 'invite'}
           </Button>
         );
+      }
 
       switch (data.status) {
         case 'NOT_YET':

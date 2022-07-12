@@ -1,7 +1,7 @@
 import { Breadcrumb } from 'antd';
-import React, { useState } from 'react';
 import { Link, matchPath, useLocation } from 'react-router-dom';
 import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
+import React from 'react';
 import breadcumbItemsList from './BreadcumbItemsList';
 
 const breadcrumbNameMap = breadcumbItemsList.reduce((previousValue, currentValue) => {
@@ -34,9 +34,7 @@ const AssignmentPageBreadcumb = () => {
         return breadcrumbNameMap[match?.path];
       });
 
-    if (mappedBreadcumbItems?.length <= 0) {
-      return null;
-    }
+    if (mappedBreadcumbItems?.length <= 0) return null;
 
     return (
       <>

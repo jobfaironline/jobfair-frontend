@@ -6,15 +6,14 @@ import {
   WaitingRoomListForIntervieweeContainer,
   WaitingRoomListForInterviewerContainer
 } from '../WaitingRoomList/WaitingRoomList.container';
-import { getApplicationById } from '../../services/jobhub-api/ApplicationControllerService';
+import { interviewRoomAction } from '../../redux-flow/interviewRoom/interview-room-slice';
 import { submitReport } from '../../services/jobhub-api/InterviewControllerService';
-import { useLocation, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useParams } from 'react-router-dom';
 import AgoraRTC from 'agora-rtc-react';
 import ChatBoxContainer from '../Agora/ChatBox/ChatBox.container';
 import React, { useEffect, useRef, useState } from 'react';
 import VideoCallContainer from '../Agora/VideoCall/VideoCall.container';
-import { interviewRoomAction } from '../../redux-flow/interviewRoom/interview-room-slice';
 
 const InterviewRoomContainer = (props) => {
   const role = useSelector((state) => state.authentication.user.roles);

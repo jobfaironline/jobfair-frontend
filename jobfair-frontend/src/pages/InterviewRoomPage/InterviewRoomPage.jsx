@@ -3,9 +3,9 @@ import { createClient } from 'agora-rtc-react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import InterviewRoomContainer from '../../containers/InterviewRoom/InterviewRoom.container';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import RTMClient from '../../services/agora/RTMClient';
 import React, { useEffect, useRef } from 'react';
-import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const config = {
   mode: 'rtc',

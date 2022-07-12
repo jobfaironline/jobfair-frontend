@@ -1,17 +1,17 @@
 .compact-resume-wrapper {
-    padding: 1rem 3rem;
+  padding: 1rem 3rem;
 }
 
 .unimportant-field {
-    display: block;
+  display: block;
 }
 
 @media only screen and (max-width: 1200px) {
-    .compact-resume-wrapper {
-        padding: 1rem;
-    }
-
-    .unimportant-field {
-        display: none;
-    }
+  .compact-resume-wrapper {
+    padding: 1rem;
   }
+
+  .unimportant-field {
+    display: none;
+  }
+}

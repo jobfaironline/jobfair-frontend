@@ -1,7 +1,7 @@
 import './RegisterPage.styles.scss';
 import NewAccountRegisterFormComponent from '../../components/forms/NewAccountRegisterForm/NewAccountRegisterForm.component';
-import React from 'react';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
+import React from 'react';
 
 const RegisterPage = () => (
   <PageLayoutWrapper className='page register-page  fullscreen-page non-sub-nav-bar'>

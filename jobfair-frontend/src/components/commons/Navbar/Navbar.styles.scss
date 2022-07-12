@@ -42,7 +42,6 @@
 }
 
 .sub-navbar-container {
-
   width: 50%;
 
   .ant-menu {
@@ -79,8 +78,6 @@
         font-size: 1.5rem;
       }
     }
-
-    
   }
 
   .ant-menu-overflow-item:hover {
@@ -97,7 +94,7 @@
       font-size: 1.8rem;
     }
   }
-  .ant-menu-horizontal>.ant-menu-submenu:after {
+  .ant-menu-horizontal > .ant-menu-submenu:after {
     border-bottom: transparent !important;
   }
 }
@@ -138,4 +135,12 @@
   padding: 0 1rem;
   display: flex;
   min-width: max-content;
+
+  
+}
+
+.dropdown-avatar.ant-dropdown {
+
+  z-index: 1000 !important;
+
 }

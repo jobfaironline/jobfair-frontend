@@ -5,11 +5,11 @@ import { Canvas } from '@react-three/fiber';
 import { ChooseBoothGroundMesh } from '../ChooseBooth/ChooseBoothGroundMesh.component';
 import { EffectComposer, Outline } from '@react-three/postprocessing';
 import { KernelSize, Resizer } from 'postprocessing';
+import { NAVBAR_HEIGHT } from '../../../styles/custom-theme';
 import { SkyComponent, SkyType } from '../ThreeJSBaseComponent/Sky.component';
 import { SkyTypeSelect } from '../ThreeJSBaseComponent/SelectSkyType.component';
 import { Stats } from '@react-three/drei';
 import React, { Fragment, useState } from 'react';
-import { NAVBAR_HEIGHT } from '../../../styles/custom-theme';
 
 export const EmployeeAssignBoothMapCanvas = (props) => {
   const { mapMesh, jobFairBoothData, boothMeshesRef, onBoothMouseOver, onBoothMouseOut, hoverRef, onClick } = props;
