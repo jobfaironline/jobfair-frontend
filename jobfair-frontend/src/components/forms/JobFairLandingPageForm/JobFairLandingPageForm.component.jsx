@@ -19,7 +19,7 @@ const JobFairLandingPageFormComponent = ({
 }) => (
   <div className={'job-fair-landing-page'}>
     <div style={{ textAlign: 'center' }}>
-      <Title level={4}>Schedule job fair event</Title>
+      <Title level={4}>Design landing page</Title>
       <Tooltip title='Review landing page'>
         <EyeOutlined className={'icon'} onClick={handleReviewLandingPage} />
       </Tooltip>
@@ -36,15 +36,26 @@ const JobFairLandingPageFormComponent = ({
       onFinish={onFinish}
       onValuesChange={onValueChange}
       scrollToFirstError={{ block: 'center', behavior: 'smooth' }}>
-      <Form.Item label='Thumbnail' name={'thumbnail'} className={'form-item'} required>
+      <Form.Item
+        label='Thumbnail'
+        name={'thumbnail'}
+        className={'form-item'}
+        tooltip={'Thumbnail for your landing page'}
+        required>
         <UploadComponent uploadProps={uploadProps} aspect={2 / 1} isImageCrop={true}>
           {thumbnailUrl ? <img src={thumbnailUrl} alt='avatar' style={{ width: '100%' }} /> : undefined}
         </UploadComponent>
       </Form.Item>
-      <Form.Item label='Host name' name={'hostName'} rules={OrganizeJobFairValidation.hostname} className={'form-item'}>
+      <Form.Item
+        tooltip={'Name of your job fair host. Default is your company name.'}
+        label='Host name'
+        name={'hostName'}
+        rules={OrganizeJobFairValidation.hostname}
+        className={'form-item'}>
         <Input placeholder='Host name' />
       </Form.Item>
       <Form.Item
+        tooltip={'The target attendant of your job fair.'}
         label='Target attendant'
         name={'targetAttendant'}
         rules={OrganizeJobFairValidation.targetAttendant}
@@ -52,6 +63,7 @@ const JobFairLandingPageFormComponent = ({
         <Input placeholder='Target attendant' />
       </Form.Item>
       <Form.Item
+        tooltip={'Tell briefly your attendant what this job fair is about.'}
         label='Description'
         name={'description'}
         rules={OrganizeJobFairValidation.description}

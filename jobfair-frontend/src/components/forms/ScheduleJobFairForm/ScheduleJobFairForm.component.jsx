@@ -70,13 +70,31 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
           onFinish={onFinish}
           onValuesChange={onValueChange}
           scrollToFirstError={{ block: 'center', behavior: 'smooth' }}>
-          <Form.Item label='Name' name={'name'} rules={OrganizeJobFairValidation.name} className={'form-item'}>
+          <Form.Item
+            label='Name'
+            name={'name'}
+            tooltip={'Name of your job fair'}
+            rules={OrganizeJobFairValidation.name}
+            className={'form-item'}>
             <Input placeholder='Job fair name' />
           </Form.Item>
           <Form.Item
             label={`Decoration booth time range (${timeZone})`}
             name={'decorateRange'}
             rules={OrganizeJobFairValidation.decorateRange}
+            tooltip={
+              <>
+                <p>
+                  The decoration range is the time range in which your employee can freely decorate, provide information
+                  for their booths.
+                </p>
+                <p>
+                  After this time, your employee cannot change anything. If they have not provide any information for
+                  their booth, default information will be filled
+                </p>
+                <p>The decoration range cannot end after the public range has started</p>
+              </>
+            }
             className={'form-item'}>
             <RangePicker
               format={DateFormat}
@@ -88,7 +106,13 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
             className={'form-item'}
             label={`Public time range (${timeZone})`}
             name={'publicRange'}
-            rules={OrganizeJobFairValidation.publicRange}>
+            rules={OrganizeJobFairValidation.publicRange}
+            tooltip={
+              <>
+                <p>The public range is the time range in which your job fair will be public to numerous attendants.</p>
+                <p>The public range cannot start before the decoration range has ended</p>
+              </>
+            }>
             <RangePicker
               format={DateFormat}
               disabledDate={disabledPublicRange}
@@ -99,7 +123,13 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
             className={'form-item'}
             label={`Morning shift (${timeZone})`}
             name={'morningShift'}
-            rules={OrganizeJobFairValidation.morningShift}>
+            rules={OrganizeJobFairValidation.morningShift}
+            tooltip={
+              <>
+                <p>We divided the job fair into 2 shifts so that you can allocate your employees better</p>
+                <p>The morning shift can start between 7:00 and 12:00</p>
+              </>
+            }>
             <TimePicker.RangePicker
               format={MinuteFormat}
               disabledTime={() => ({
@@ -111,7 +141,13 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
             className={'form-item'}
             label={`Afternoon shift (${timeZone})`}
             name={'afternoonShift'}
-            rules={OrganizeJobFairValidation.afternoonShift}>
+            rules={OrganizeJobFairValidation.afternoonShift}
+            tooltip={
+              <>
+                <p>We divided the job fair into 2 shifts so that you can allocate your employees better</p>
+                <p>The afternoon shift can start between 12:00 and 22:00</p>
+              </>
+            }>
             <TimePicker.RangePicker
               format={MinuteFormat}
               disabledTime={() => ({

@@ -13,7 +13,7 @@ const SelectJobFairTemplateComponent = (props) => {
       <InfiniteScroll
         dataLength={listData?.length}
         loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-        endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+        endMessage={<Divider plain>It is all, nothing more</Divider>}
         style={{ height: '60vh', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <List
           itemLayout='vertical'

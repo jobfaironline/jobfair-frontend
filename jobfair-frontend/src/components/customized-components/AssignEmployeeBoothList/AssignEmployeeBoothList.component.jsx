@@ -1,6 +1,6 @@
 import { BoothAssignmentDetail } from '../BoothAssigmentDetail/BoothAssignmentDetail.component';
-import { Button, Card, Divider, List, Skeleton, Typography } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Button, Card, Divider, List, Skeleton, Tooltip, Typography } from 'antd';
+import { QuestionCircleOutlined, UploadOutlined } from '@ant-design/icons';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import React from 'react';
 
@@ -18,7 +18,21 @@ export const AssignEmployeeBoothList = (props) => {
           justifyContent: 'center',
           marginBottom: '1rem'
         }}>
-        <Title level={5}>Assign employee</Title>
+        <Title level={5}>
+          Assign employee
+          <Tooltip
+            placement={'bottom'}
+            title={
+              <>
+                <p>Assign your employee to different booth slots</p>
+                <p>Each booth slot must have at least 1 supervisor, 1 decorator and 2 staffs</p>
+                <p>Supervisor is responsible for assigning staffs to become Interviewer and Receptionist</p>
+                <p>Decorator is responsible for decorate booth</p>
+              </>
+            }>
+            <QuestionCircleOutlined style={{ marginLeft: '5px' }} />
+          </Tooltip>
+        </Title>
         <Button style={{ marginLeft: '1rem' }} type={'primary'} icon={<UploadOutlined />} onClick={onClickUploadCSV}>
           Upload CSV
         </Button>
@@ -26,7 +40,7 @@ export const AssignEmployeeBoothList = (props) => {
       <InfiniteScroll
         dataLength={data?.length}
         loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-        endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+        endMessage={<Divider plain>It is all, nothing more</Divider>}
         style={{ height: '65vh', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <List
           itemLayout='vertical'
