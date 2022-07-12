@@ -1,5 +1,5 @@
 import { AssignEmployeeDetailModalContainer } from './AssignEmployeeDetailModal.container';
-import { Button, Progress, notification } from 'antd';
+import { Button, Progress, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JOB_FAIR_STATUS } from '../../constants/JobFairConst';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
@@ -83,6 +83,8 @@ const calculateProgressPercentage = (jobFairData, layoutData, statistics) => {
   }
   return progressData;
 };
+
+const { Text } = Typography;
 
 export const JobFairCheckListContainer = ({ jobFairId }) => {
   const role = useSelector((state) => state?.authentication?.user?.roles);
@@ -254,6 +256,22 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
         <div className={'progress-bar'}>
           <Progress percent={state.progressData.score} strokeColor={green[6]} />
         </div>
+        {state.progressData.score === 100 ? (
+          <div style={{ marginLeft: '1rem', fontSize: '1rem' }}>
+            <Text>
+              This job fair has been <Text strong>published</Text>. You <Text strong>cannot</Text> edit the following
+              information:
+            </Text>
+            <Typography.Paragraph>
+              <ul>
+                <li>3D layout</li>
+                <li>Schedule</li>
+                <li>Employee assignment</li>
+                <li>Landing page</li>
+              </ul>
+            </Typography.Paragraph>
+          </div>
+        ) : null}
         <div className={'step-container'}>
           <Step1Component
             isFinish={state.progressData.choosingLayout}
