@@ -28,6 +28,7 @@
     "animate.css": "^4.1.1",
     "antd": "^4.18.5",
     "antd-img-crop": "^4.2.0",
+    "antd-password-input-strength": "^2.0.1",
     "axios": "^0.25.0",
     "craco-less": "^2.0.0",
     "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
