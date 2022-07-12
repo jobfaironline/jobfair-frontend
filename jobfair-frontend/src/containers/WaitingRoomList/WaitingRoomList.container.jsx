@@ -206,6 +206,13 @@ const mappingTodayScheduleAndWaitingRoomList = async (
         }
       };
 
+      if (data?.status === 'DONE')
+        return (
+          <Button type='primary' shape='round' disabled style={{ background: 'green', color: 'white' }}>
+            Done
+          </Button>
+        );
+
       if (
         agoraUserListRef?.current?.length &&
         agoraUserListRef.current.length > 0 &&
@@ -245,12 +252,6 @@ const mappingTodayScheduleAndWaitingRoomList = async (
           return (
             <Button type='primary' shape='round' onClick={() => handleEndInterview()}>
               End
-            </Button>
-          );
-        case 'DONE':
-          return (
-            <Button type='primary' shape='round' disabled={true}>
-              Done
             </Button>
           );
         case 'REQUEST_CHANGE':
