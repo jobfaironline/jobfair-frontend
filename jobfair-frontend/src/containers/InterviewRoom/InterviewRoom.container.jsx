@@ -64,7 +64,7 @@ const CompanyEmployeeInterviewRoomContainer = (props) => {
 
   const thirdColumn = (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <div style={{ flex: 1 }}>
+      <div style={{ height: '40%' }}>
         <VideoCallContainer
           audioReady={audioReady}
           audioTrack={audioTrack}
@@ -130,9 +130,9 @@ const AttendantInterviewRoomContainer = (props) => {
       </Card>
     </div>
   );
-  /*return <SideBarComponent rightSide={firstColumn} leftSide={secondColumn} ratio={2 / 7} isOrganizeJobFair={false} />;*/
+
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', minHeight: `calc(100vh - ${NAVBAR_HEIGHT}` }}>
       <div style={{ gridColumn: 'span 1', display: 'flex' }}>{firstColumn}</div>
       <div style={{ gridColumn: 'span 2', display: 'flex' }}>{secondColumn}</div>
     </div>
