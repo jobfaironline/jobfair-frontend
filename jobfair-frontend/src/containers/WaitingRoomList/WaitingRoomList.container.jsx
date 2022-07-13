@@ -16,15 +16,17 @@ import {
   visitWaitingRoom
 } from '../../services/jobhub-api/InterviewControllerService';
 import { fetchInterviewingApplicationData } from '../../redux-flow/interviewRoom/interview-room-action';
+import { generatePath } from 'react-router-dom';
 import { interviewRoomAction } from '../../redux-flow/interviewRoom/interview-room-slice';
 import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import React, { useEffect, useRef, useState } from 'react';
 import moment from 'moment';
 
 export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId, agoraUserListRef }) => {
   const rerender = useSelector((state) => state?.interviewRoom?.rerender);
+  const newJoinedUserName = useSelector((state) => state?.interviewRoom?.newJoinedUserName);
+  const rerenderUserJoin = useSelector((state) => state?.interviewRoom?.rerenderUserJoin);
   const [intervieweeList, setIntervieweeList] = useState([]);
   const intervieweeListRef = useRef(intervieweeList);
   const [scheduleInfo, setScheduleInfo] = useState({});
@@ -50,6 +52,14 @@ export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId, 
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (newJoinedUserName === undefined) return;
+    notification['info']({
+      message: `${newJoinedUserName} joined`,
+      duration: 2
+    });
+  }, [rerenderUserJoin]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -92,7 +102,6 @@ export const WaitingRoomListForInterviewerContainer = ({ channelId, scheduleId, 
       fetch();
     }
   };
-
   return <WaitingRoomListForInterviewerComponent waitingList={intervieweeList} />;
 };
 
@@ -330,21 +339,30 @@ const mappingTodayScheduleAndWaitingRoomList = async (
 };
 
 export const WaitingRoomListForIntervieweeContainer = ({ channelId, scheduleId }) => {
-  const [interviewTurn, setInterviewTurn] = useState(0);
-  const interviewTurnRef = useRef(interviewTurn);
-  // const [userSchedule, setUserSchedule] = useState({}); //TODO: will fetch data later
+  const [userSchedule, setUserSchedule] = useState([]);
 
   const webSocketClient = useSelector(selectWebSocket);
-  const history = useHistory();
+
+  const cleanUp = () => {
+    leaveWaitingRoom(channelId);
+    webSocketClient.removeEvent('get-invitation', getInvitaion);
+  };
 
   useEffect(() => {
+    fetchData();
     visitWaitingRoom(channelId);
     webSocketClient.addEvent('get-invitation', getInvitaion);
+    window.addEventListener('beforeunload', cleanUp);
     return () => {
-      leaveWaitingRoom(channelId);
-      webSocketClient.removeEvent('get-invitation', getInvitaion);
+      window.removeEventListener('beforeunload', cleanUp);
+      cleanUp();
     };
   }, []);
+
+  const fetchData = async () => {
+    const { data } = await getWaitingRoomInfo(channelId);
+    setUserSchedule(data);
+  };
 
   const getInvitaion = (notificationData) => {
     if (notificationData.notificationType === NotificationType.INTERVIEW_ROOM) {
@@ -356,7 +374,8 @@ export const WaitingRoomListForIntervieweeContainer = ({ channelId, scheduleId }
           type='primary'
           size='small'
           onClick={() => {
-            history.push(`/attendant/interview/${scheduleId}/${messageObject.interviewRoomId}`);
+            const url = generatePath(`/attendant/interview/${scheduleId}/${messageObject.interviewRoomId}`);
+            window.location.href = url;
             notification.close(key);
           }}>
           Let's go!
@@ -370,33 +389,8 @@ export const WaitingRoomListForIntervieweeContainer = ({ channelId, scheduleId }
         key,
         duration: 0
       });
-    } else if (notificationData.notificationType === NotificationType.WAITING_ROOM)
-      checkTurn(setInterviewTurn, channelId, interviewTurnRef);
+    }
   };
 
-  return (
-    <WaitingRoomListForIntervieweeComponent
-      turn={interviewTurn}
-      userSchedule={{
-        fullName: 'Kim Anh',
-        beginTime: 1556175797428,
-        endTime: 1556175797428
-      }} //TODO: replace dynamic later
-    />
-  );
-};
-
-const checkTurn = async (setInterviewTurn, waitingRoomId, interviewTurnRef) => {
-  try {
-    const { data } = await getWaitingRoomInfo(waitingRoomId);
-
-    interviewTurnRef.current = data.turn;
-    setInterviewTurn(data.turn);
-  } catch (e) {
-    notification['error']({
-      message: `Something went wrong! Try again latter!`,
-      description: `There is problem while fetching data, try again later`,
-      duration: 2
-    });
-  }
+  return <WaitingRoomListForIntervieweeComponent userSchedules={userSchedule} />;
 };

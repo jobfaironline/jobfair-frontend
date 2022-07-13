@@ -1,4 +1,4 @@
-import { Card, Form, notification } from 'antd';
+import { Card, Form, Typography, notification } from 'antd';
 import { CompactResumeDetail } from '../../components/customized-components/CompactResumeDetail/CompactResumeDetail.component';
 import { InterviewReportForm } from '../../components/forms/InterviewReportForm/InterviewReportForm.component';
 import { NAVBAR_HEIGHT } from '../../styles/custom-theme';
@@ -32,13 +32,6 @@ const CompanyEmployeeInterviewRoomContainer = (props) => {
         flex: 1,
         justifyContent: 'space-between'
       }}>
-      {roomType.includes('waiting-room') ? (
-        <WaitingRoomListForIntervieweeContainer
-          channelId={channelId}
-          scheduleId={scheduleId}
-          agoraUserListRef={userListRef}
-        />
-      ) : null}
       {roomType.includes('interview') && role === RoleType.COMPANY_EMPLOYEE ? (
         <WaitingRoomListForInterviewerContainer
           channelId={channelId}
@@ -118,6 +111,9 @@ const AttendantInterviewRoomContainer = (props) => {
   );
   const firstColumn = (
     <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', flex: '1' }}>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+        <Typography.Title level={3}>Interview room</Typography.Title>
+      </div>
       {roomType.includes('waiting-room') ? (
         <WaitingRoomListForIntervieweeContainer
           channelId={channelId}
