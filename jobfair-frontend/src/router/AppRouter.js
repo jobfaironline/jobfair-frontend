@@ -217,6 +217,12 @@ const AppRouter = () => {
             path={PATH_ATTENDANT.ADD_RESUME_PAGE}
             exact
           />
+          <AttendantRouter
+            key={PATH_ATTENDANT.WAITING_ROOM_PAGE}
+            component={() => <InterviewRoomPage />}
+            path={PATH_ATTENDANT.WAITING_ROOM_PAGE}
+            exact
+          />
           <CompanyEmployeeRouter
             key={PATH_COMPANY_EMPLOYEE.PROFILE_PAGE}
             component={() => <AccountProfilePage />}
