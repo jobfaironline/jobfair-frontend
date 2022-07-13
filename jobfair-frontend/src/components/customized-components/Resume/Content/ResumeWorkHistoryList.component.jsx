@@ -13,7 +13,7 @@ export const ResumeWorkHistoryList = (props) => {
         Work & Experience
       </Title>
       <Timeline pending={true} pendingDot={<></>}>
-        {data.map((history) => (
+        {data?.map((history) => (
           <Timeline.Item>
             <Title style={{ marginBottom: '0' }} level={4}>
               {history?.position}

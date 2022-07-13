@@ -66,15 +66,12 @@ export const handleConvertRangePicker = (data) => {
 
 //convert enum status to string
 export const convertEnumToString = (data) => {
-  if (data !== undefined) {
-    const arr = data.includes('_') ? data.split('_') : Array.of(data); //['INTERN', 'SHIP', 'STUDENT']
-    const result = arr
-      .map((item) => item.toString().toLowerCase())
-      .map((item) => item[0].toUpperCase() + item.slice(1))
-      .join(' ');
-    return result;
-  }
-  return data;
+  if (!data) return data;
+  const arr = data.includes('_') ? data.split('_') : Array.of(data); //['INTERN', 'SHIP', 'STUDENT']
+  return arr
+    .map((item) => item.toString().toLowerCase())
+    .map((item) => item[0].toUpperCase() + item.slice(1))
+    .join(' ');
 };
 
 export const convertToUTCString = (data) => new Date(data).toUTCString();
@@ -194,4 +191,25 @@ export const getMatchingPointColor = (value) => {
   if (value > MatchingPointColor.medium.score) tagColor = MatchingPointColor.medium.color;
   if (value > MatchingPointColor.high.score) tagColor = MatchingPointColor.high.color;
   return tagColor;
+};
+
+export const getCurrentUserAgent = () => {
+  const ua = navigator.userAgent;
+  let tem;
+  let M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+  if (/trident/i.test(M[1])) {
+    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+    return { name: 'IE', version: tem[1] || '' };
+  }
+  if (M[1] === 'Chrome') {
+    tem = ua.match(/\bOPR|Edge\/(\d+)/);
+    if (tem != null) return { name: 'Opera', version: tem[1] };
+  }
+  M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+  if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
+
+  return {
+    name: M[0],
+    version: M[1]
+  };
 };

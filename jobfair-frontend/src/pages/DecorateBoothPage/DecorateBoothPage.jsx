@@ -3,7 +3,7 @@ import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLa
 import React from 'react';
 
 const DecorateBoothPage = () => (
-  <PageLayoutWrapper className={'page fullscreen-page'}>
+  <PageLayoutWrapper className={'page fullscreen-page'} style={{ overflowY: 'hidden' }}>
     <DecorateBoothContainer />
   </PageLayoutWrapper>
 );

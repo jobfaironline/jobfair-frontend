@@ -15,10 +15,10 @@ export const ResumeDetailComponent = (props) => {
   return (
     <div className='resume-detail'>
       <Row gutter={15}>
-        <Col span={6}>
+        <Col span={7}>
           <ResumeOverview userOverview={data.overviewData} />
         </Col>
-        <Col span={18}>
+        <Col span={17}>
           <Card style={{ borderRadius: '8px' }} className={'list'}>
             <Title id='candidatesAbout' level={4}>
               Candidates About

@@ -39,3 +39,12 @@ export const ModeConstant = {
   DELETE: 2,
   DRAGGING: 3
 };
+
+export const passwordStrengthSetting = {
+  colorScheme: {
+    levels: ['#ff4033', '#fe940d', '#ffd908', '#cbe11d', '#6ecc3a'],
+    noLevel: 'lightgrey'
+  },
+  height: 5,
+  alwaysVisible: false
+};

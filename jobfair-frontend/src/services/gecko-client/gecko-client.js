@@ -49,6 +49,10 @@ export class GeckoClient extends EventEmitter {
   }
 
   close() {
-    if (this.channel !== undefined) this.channel.close();
+    try {
+      if (this.channel !== undefined) this.channel?.close();
+    } catch (e) {
+      //ignore
+    }
   }
 }

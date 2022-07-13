@@ -1,6 +1,8 @@
 import './ResetPasswordForm.scss';
 import { Button, Card, Form, Input } from 'antd';
 import { ChangePasswordValidation } from '../../../validate/ChangePasswordValidation';
+import { PasswordInput } from 'antd-password-input-strength';
+import { passwordStrengthSetting } from '../../../constants/AppConst';
 import React from 'react';
 import ReactCodeInput from 'react-code-input';
 import Typography from '@mui/material/Typography';
@@ -40,7 +42,11 @@ const ResetPasswordFormComponent = ({ onFinish, form, email, setOtpCode }) => {
             hasFeedback
             rules={ChangePasswordValidation.newPassword}
             style={{ display: 'inline-block', width: '100%' }}>
-            <Input.Password />
+            <PasswordInput
+              settings={passwordStrengthSetting}
+              placeholder={'At least 2 characters'}
+              autoComplete='new-password'
+            />
           </Form.Item>
           <Form.Item
             label='Confirm password'

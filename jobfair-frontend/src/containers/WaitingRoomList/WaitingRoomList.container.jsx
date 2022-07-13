@@ -367,7 +367,8 @@ export const WaitingRoomListForIntervieweeContainer = ({ channelId, scheduleId }
         message: 'New invitation',
         description: 'Start your interview now!',
         btn,
-        key
+        key,
+        duration: 0
       });
     } else if (notificationData.notificationType === NotificationType.WAITING_ROOM)
       checkTurn(setInterviewTurn, channelId, interviewTurnRef);

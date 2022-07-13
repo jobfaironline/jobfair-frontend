@@ -1,4 +1,3 @@
-import './JobPositionDetailModal.styles.scss';
 import { Col, Row, Space, Tag, Typography } from 'antd';
 import { convertEnumToString } from '../../../utils/common';
 import React from 'react';

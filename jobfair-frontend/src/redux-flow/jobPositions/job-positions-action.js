@@ -3,8 +3,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchJobPositions = createAsyncThunk(
   'jobPositions/fetchJobPositions',
-  async ({ currentPage, pageSize }) => {
-    const res = await getJobPositionsAPI('DESC', currentPage, pageSize, 'createdDate');
+  async ({ currentPage, pageSize, jobTitle }) => {
+    const res = await getJobPositionsAPI('DESC', currentPage, pageSize, 'createdDate', jobTitle);
     return res.data;
   }
 );

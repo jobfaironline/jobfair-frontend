@@ -1,5 +1,6 @@
 import './ChooseTemplateJobFair.style.scss';
-import { Button, Tabs, Typography } from 'antd';
+import { Button, Tabs, Tooltip, Typography } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import SelectCompanyTemplateJobFairContainer from '../SelectCompanyTemplateJobFair/SelectCompanyTemplateJobFair.container';
 
@@ -12,7 +13,15 @@ const ChooseTemplateJobFairContainer = ({ handleLoad3DMap, onNext, layoutData })
   return (
     <div className={'choose-template-job-fair-container'}>
       <div style={{ textAlign: 'center' }}>
-        <Title level={5}>Choose job fair template</Title>
+        <Title level={5}>
+          Choose job fair layout
+          <Tooltip
+            title={
+              "Job fair layout will be the 3D base of your job fair upon which you can decorate your company's booth"
+            }>
+            <QuestionCircleOutlined style={{ marginLeft: '5px' }} />
+          </Tooltip>
+        </Title>
       </div>
       <Tabs defaultActiveKey='1' centered destroyInactiveTabPane>
         <TabPane tab={'Use default template'} key={1}>

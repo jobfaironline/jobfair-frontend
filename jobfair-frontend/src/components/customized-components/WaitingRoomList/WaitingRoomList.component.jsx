@@ -1,23 +1,32 @@
 import { Card, Col, Divider, Row, Typography } from 'antd';
+import { MinuteFormat } from '../../../constants/ApplicationConst';
 import React from 'react';
+import moment from 'moment';
 
 export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => (
-  <Card style={{ height: '100%' }}>
+  <Card>
     <div>
-      <Typography.Title level={3}>Danh sách ứng viên</Typography.Title>
-      <div style={{ height: '350px', overflowY: 'scroll' }}>
+      <Typography.Title level={3}>Candidate list</Typography.Title>
+      <div style={{ height: '350px', overflowY: 'auto' }}>
         {waitingList.map((interviewee) => (
           <div className='name-holder'>
-            <Row>
-              <Col span={12}>{interviewee.attendantName}</Col>
-              <Col span={12}>
-                {`${new Date(interviewee.beginTime).toTimeString().split(' ')[0]} - ${
-                  new Date(interviewee.endTime).toTimeString().split(' ')[0]
-                }`}
-              </Col>
-              <Col span={12}>{interviewee?.buttonStatus()}</Col>
-              <Col span={12}>{interviewee?.kickButton()}</Col>
-            </Row>
+            <div style={{ display: 'flex', gap: '5px 1rem', flexWrap: 'wrap' }}>
+              <div>
+                <Typography.Text strong>Name: </Typography.Text>
+                {interviewee.attendantName}
+              </div>
+              <div>
+                <Typography.Text strong>Schedule: </Typography.Text>
+                {moment(interviewee.beginTime).format(MinuteFormat)}
+                {' - '}
+                {moment(interviewee.endTime).format(MinuteFormat)}
+              </div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '5px 5px', flexWrap: 'wrap', marginTop: '5px' }}>
+              <Typography.Text strong>Action:</Typography.Text>
+              {interviewee?.buttonStatus()}
+              {interviewee?.kickButton()}
+            </div>
             <Divider style={{ margin: '0.5rem 0rem' }} />
           </div>
         ))}
@@ -29,7 +38,7 @@ export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => (
 export const WaitingRoomListForIntervieweeComponent = ({ userSchedule }) => (
   <Card>
     <div>
-      <Typography.Title level={3}>Phòng chờ phỏng vấn</Typography.Title>
+      <Typography.Title level={3}>Waiting room</Typography.Title>
       {/* <div>
         <Row>
           <Col span={10}>Số lượt tiếp theo</Col>

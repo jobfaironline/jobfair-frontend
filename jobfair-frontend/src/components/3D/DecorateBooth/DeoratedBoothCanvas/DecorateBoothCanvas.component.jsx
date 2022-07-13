@@ -1,3 +1,4 @@
+import { BREADCUMB_HEIGHT, NAVBAR_HEIGHT } from '../../../../styles/custom-theme';
 import { CameraControls } from '../../ThreeJSBaseComponent/CameraControls.component';
 import { Canvas } from '@react-three/fiber';
 import { EffectComposer, Outline } from '@react-three/postprocessing';
@@ -9,7 +10,7 @@ import { Stage, useContextBridge } from '@react-three/drei';
 import React from 'react';
 
 export const DecorateBoothCanvas = React.forwardRef((props, ref) => {
-  const { modelItems, handleAdd, renderRef } = props;
+  const { modelItems, handleAdd, renderRef, hasUnsavedChangeRef } = props;
   const ContextBridge = useContextBridge(ReactReduxContext);
   const { hoverItem, selectedItem, mode } = useSelector((state) => state.decorateBooth);
 
@@ -30,7 +31,7 @@ export const DecorateBoothCanvas = React.forwardRef((props, ref) => {
       camera={{ fov: 40, zoom: 1.2, position: [-1, 1, -1] }}
       style={{
         width: '100vw',
-        height: '100%'
+        height: `calc(100vh - ${NAVBAR_HEIGHT} - ${BREADCUMB_HEIGHT})`
       }}
       onCreated={(state) => {
         renderRef.current = state.gl;
@@ -42,7 +43,14 @@ export const DecorateBoothCanvas = React.forwardRef((props, ref) => {
             {modelItems.map((mesh) => {
               if (mesh === floorMesh) return <FloorMeshContainer key={mesh.uuid} mesh={mesh} handleAdd={handleAdd} />;
 
-              return <ItemMeshContainer key={mesh.uuid} mesh={mesh} floorMesh={floorMesh} />;
+              return (
+                <ItemMeshContainer
+                  key={mesh.uuid}
+                  mesh={mesh}
+                  floorMesh={floorMesh}
+                  hasUnsavedChangeRef={hasUnsavedChangeRef}
+                />
+              );
             })}
           </group>
         </Stage>

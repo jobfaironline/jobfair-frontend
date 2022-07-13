@@ -1,6 +1,8 @@
 import { AttendantRegisterValidation } from '../../../validate/RegisterValidation';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { PATH } from '../../../constants/Paths/Path';
+import { PasswordInput } from 'antd-password-input-strength';
+import { passwordStrengthSetting } from '../../../constants/AppConst';
 import React, { useState } from 'react';
 
 const AttendantRegisterFormComponent = ({ handleRegisterAttendant, form }) => {
@@ -43,7 +45,11 @@ const AttendantRegisterFormComponent = ({ handleRegisterAttendant, form }) => {
           rules={AttendantRegisterValidation.password}
           hasFeedback
           style={{ display: 'inline-block', width: '100%' }}>
-          <Input.Password placeholder='At least 2 characters' autoComplete='new-password' />
+          <PasswordInput
+            settings={passwordStrengthSetting}
+            placeholder={'At least 2 characters'}
+            autoComplete='new-password'
+          />
         </Form.Item>
         <Form.Item
           label='Confirm password'

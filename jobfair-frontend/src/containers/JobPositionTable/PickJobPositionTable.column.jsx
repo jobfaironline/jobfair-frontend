@@ -1,8 +1,9 @@
-const PickJobPositionTableColumn = (getColumnSearchProps) => [
+const PickJobPositionTableColumn = () => [
   {
     title: 'No',
     dataIndex: 'no',
     key: 'no',
+    width: '10%',
     render(text) {
       return {
         props: {
@@ -16,22 +17,22 @@ const PickJobPositionTableColumn = (getColumnSearchProps) => [
     title: 'Job title',
     dataIndex: 'title',
     key: 'title',
-    ...getColumnSearchProps('title'),
+    width: '40%',
     onFilter: (value, record) => record.title.indexOf(value) === 0,
-    sorter: (a, b) => a.title.localeCompare(b.title),
-    sortDirections: ['descend']
+    sorter: (a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()),
+    sortDirections: ['ascend']
   },
   {
     title: 'Job type',
     dataIndex: 'jobType',
     key: 'jobType',
-    ...getColumnSearchProps('jobType')
+    width: '20%'
   },
   {
     title: 'Job level',
     dataIndex: 'level',
     key: 'level',
-    ...getColumnSearchProps('level')
+    width: '30%'
   }
 ];
 

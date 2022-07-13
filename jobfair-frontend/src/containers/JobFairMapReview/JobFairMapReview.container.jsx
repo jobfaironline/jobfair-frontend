@@ -20,7 +20,7 @@ export const JobFairMapReviewContainer = ({ layoutId }) => {
   if (layoutGlb === undefined) return <LoadingComponent isWholePage={true} />;
 
   return (
-    <div style={{ paddingTop: '126px' }}>
+    <div>
       <JobFairParkMapComponent mapMesh={layoutGlb} />
     </div>
   );

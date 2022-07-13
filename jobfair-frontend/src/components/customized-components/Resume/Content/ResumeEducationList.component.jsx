@@ -13,7 +13,7 @@ const ResumeEducationList = (props) => {
         Education
       </Title>
       <Timeline pending={true} pendingDot={<></>}>
-        {data.map((education) => (
+        {data?.map((education) => (
           <Timeline.Item>
             <Title style={{ marginBottom: '0' }} level={4}>
               {education?.school}

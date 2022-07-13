@@ -1,7 +1,7 @@
 import { Card, Form, notification } from 'antd';
 import { CompactResumeDetail } from '../../components/customized-components/CompactResumeDetail/CompactResumeDetail.component';
 import { InterviewReportForm } from '../../components/forms/InterviewReportForm/InterviewReportForm.component';
-import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
+import { NAVBAR_HEIGHT } from '../../styles/custom-theme';
 import {
   WaitingRoomListForIntervieweeContainer,
   WaitingRoomListForInterviewerContainer
@@ -13,15 +13,136 @@ import { useLocation, useParams } from 'react-router-dom';
 import AgoraRTC from 'agora-rtc-react';
 import ChatBoxContainer from '../Agora/ChatBox/ChatBox.container';
 import React, { useEffect, useRef, useState } from 'react';
+import RoleType from '../../constants/RoleType';
 import VideoCallContainer from '../Agora/VideoCall/VideoCall.container';
+
+const CompanyEmployeeInterviewRoomContainer = (props) => {
+  const { audioReady, audioTrack, cameraReady, cameraTrack, userListRef, form, handleSubmitReport, roomType } = props;
+
+  const location = useLocation();
+  const { scheduleId, roomId: channelId } = useParams();
+  const interviewingData = useSelector((state) => state?.interviewRoom?.currentInterviewingApplication);
+  const role = useSelector((state) => state.authentication.user.roles);
+
+  const firstColumn = (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+        justifyContent: 'space-between'
+      }}>
+      {roomType.includes('waiting-room') ? (
+        <WaitingRoomListForIntervieweeContainer
+          channelId={channelId}
+          scheduleId={scheduleId}
+          agoraUserListRef={userListRef}
+        />
+      ) : null}
+      {roomType.includes('interview') && role === RoleType.COMPANY_EMPLOYEE ? (
+        <WaitingRoomListForInterviewerContainer
+          channelId={channelId}
+          scheduleId={scheduleId}
+          agoraUserListRef={userListRef}
+        />
+      ) : null}
+      <Card>
+        <ChatBoxContainer type={'INTERVIEW_ROOM'} width={'100%'} />
+      </Card>
+    </div>
+  );
+
+  const secondColumn =
+    interviewingData?.applicationData?.interviewStatus &&
+    interviewingData.applicationData.interviewStatus === 'INTERVIEWING' ? (
+      <div style={{ padding: '1.5rem 0 2rem 1rem', flex: 1 }}>
+        <InterviewReportForm form={form} onFinish={handleSubmitReport} />
+      </div>
+    ) : (
+      <div />
+    );
+
+  const thirdColumn = (
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <div style={{ height: '40%' }}>
+        <VideoCallContainer
+          audioReady={audioReady}
+          audioTrack={audioTrack}
+          cameraReady={cameraReady}
+          cameraTrack={cameraTrack}
+          type={'INTERVIEW_ROOM'}
+          height={'100%'}
+          width={'100%'}
+          userListRef={userListRef}
+          layoutMode={location.pathname.includes('waiting-room') ? 'WAITINGROOM' : 'INTERVIEWROOM'}
+        />
+      </div>
+
+      {interviewingData.applicationData !== undefined ? (
+        <div style={{ flex: 1 }}>
+          <CompactResumeDetail data={interviewingData.applicationData} />
+        </div>
+      ) : null}
+    </div>
+  );
+
+  return (
+    <div
+      style={{ display: 'grid', gridTemplateColumns: 'repeat(10, 1fr)', minHeight: `calc(100vh - ${NAVBAR_HEIGHT}` }}>
+      <div style={{ gridColumn: 'span 3', display: 'flex' }}>{firstColumn}</div>
+      <div style={{ gridColumn: 'span 4', display: 'flex' }}>{secondColumn}</div>
+      <div style={{ gridColumn: 'span 3', display: 'flex' }}>{thirdColumn}</div>
+    </div>
+  );
+};
+
+const AttendantInterviewRoomContainer = (props) => {
+  const { audioReady, audioTrack, cameraReady, cameraTrack, userListRef, roomType } = props;
+  const location = useLocation();
+  const { scheduleId, roomId: channelId } = useParams();
+
+  const secondColumn = (
+    <>
+      <VideoCallContainer
+        audioReady={audioReady}
+        audioTrack={audioTrack}
+        cameraReady={cameraReady}
+        cameraTrack={cameraTrack}
+        type={'INTERVIEW_ROOM'}
+        height={'87vh'}
+        width={'100%'}
+        userListRef={userListRef}
+        layoutMode={location.pathname.includes('waiting-room') ? 'WAITINGROOM' : 'INTERVIEWROOM'}
+      />
+    </>
+  );
+  const firstColumn = (
+    <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', flex: '1' }}>
+      {roomType.includes('waiting-room') ? (
+        <WaitingRoomListForIntervieweeContainer
+          channelId={channelId}
+          scheduleId={scheduleId}
+          agoraUserListRef={userListRef}
+        />
+      ) : null}
+      <Card>
+        <ChatBoxContainer type={'INTERVIEW_ROOM'} width={'100%'} />
+      </Card>
+    </div>
+  );
+
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', minHeight: `calc(100vh - ${NAVBAR_HEIGHT}` }}>
+      <div style={{ gridColumn: 'span 1', display: 'flex' }}>{firstColumn}</div>
+      <div style={{ gridColumn: 'span 2', display: 'flex' }}>{secondColumn}</div>
+    </div>
+  );
+};
 
 const InterviewRoomContainer = (props) => {
   const role = useSelector((state) => state.authentication.user.roles);
   const interviewingData = useSelector((state) => state?.interviewRoom?.currentInterviewingApplication);
   const dispatch = useDispatch();
-  const location = useLocation();
-
-  const { scheduleId, roomId: channelId } = useParams();
 
   const { audioTrackRef, cameraTrackRef, roomType } = props;
   const userListRef = useRef([]);
@@ -70,124 +191,30 @@ const InterviewRoomContainer = (props) => {
     }
   };
 
-  if (role === 'COMPANY_EMPLOYEE') {
-    return (
-      <SideBarComponent
-        rightSide={
-          <SideBarComponent
-            rightSide={
-              <>
-                <VideoCallContainer
-                  audioReady={audioReady}
-                  audioTrack={audioTrack}
-                  cameraReady={cameraReady}
-                  cameraTrack={cameraTrack}
-                  type={'INTERVIEW_ROOM'}
-                  height={'40%'}
-                  width={'100%'}
-                  userListRef={userListRef}
-                  layoutMode={location.pathname.includes('waiting-room') ? 'WAITINGROOM' : 'INTERVIEWROOM'}
-                />
-                {interviewingData.applicationData !== undefined ? (
-                  <div>
-                    <CompactResumeDetail data={interviewingData.applicationData} />
-                  </div>
-                ) : null}
-              </>
-            }
-            leftSide={
-              interviewingData?.applicationData?.interviewStatus &&
-              interviewingData.applicationData.interviewStatus === 'INTERVIEWING' ? (
-                <div style={{ padding: '2rem' }}>
-                  <InterviewReportForm form={form} onFinish={handleSubmitReport} />
-                </div>
-              ) : (
-                <div />
-              )
-            }
-            ratio={3 / 5}
-            isOrganizeJobFair={false}
-          />
-        }
-        leftSide={
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              flexDirection: 'column',
-              flex: '1'
-            }}>
-            {/* TODO: dynamic this based on role */}
-            {roomType.includes('waiting-room') ? (
-              <WaitingRoomListForIntervieweeContainer
-                channelId={channelId}
-                scheduleId={scheduleId}
-                agoraUserListRef={userListRef}
-              />
-            ) : null}
-            {roomType.includes('interview') && role === 'COMPANY_EMPLOYEE' ? (
-              <WaitingRoomListForInterviewerContainer
-                channelId={channelId}
-                scheduleId={scheduleId}
-                agoraUserListRef={userListRef}
-              />
-            ) : null}
-            <Card>
-              <ChatBoxContainer type={'INTERVIEW_ROOM'} />
-            </Card>
-          </div>
-        }
-        ratio={2 / 7}
-        isOrganizeJobFair={false}
-        leftSideMinWidth={300}
-      />
-    );
-  }
+  const companyEmployeeInterviewingRoomProps = {
+    audioReady,
+    audioTrack,
+    cameraReady,
+    cameraTrack,
+    userListRef,
+    form,
+    handleSubmitReport,
+    roomType
+  };
 
-  return (
-    <SideBarComponent
-      rightSide={
-        <>
-          <VideoCallContainer
-            audioReady={audioReady}
-            audioTrack={audioTrack}
-            cameraReady={cameraReady}
-            cameraTrack={cameraTrack}
-            type={'INTERVIEW_ROOM'}
-            height={'87vh'}
-            width={'100%'}
-            userListRef={userListRef}
-            layoutMode={location.pathname.includes('waiting-room') ? 'WAITINGROOM' : 'INTERVIEWROOM'}
-          />
-        </>
-      }
-      leftSide={
-        <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', flex: '1' }}>
-          {/* TODO: dynamic this based on role */}
-          {roomType.includes('waiting-room') ? (
-            <WaitingRoomListForIntervieweeContainer
-              channelId={channelId}
-              scheduleId={scheduleId}
-              agoraUserListRef={userListRef}
-            />
-          ) : null}
-          {roomType.includes('interview') && role === 'COMPANY_EMPLOYEE' ? (
-            <WaitingRoomListForInterviewerContainer
-              channelId={channelId}
-              scheduleId={scheduleId}
-              agoraUserListRef={userListRef}
-              interviewingData={interviewingData}
-            />
-          ) : null}
-          <Card>
-            <ChatBoxContainer type={'INTERVIEW_ROOM'} />
-          </Card>
-        </div>
-      }
-      ratio={2 / 7}
-      isOrganizeJobFair={false}
-    />
-  );
+  const attendantInterviewingRoomProps = {
+    audioReady,
+    audioTrack,
+    cameraReady,
+    cameraTrack,
+    userListRef,
+    roomType
+  };
+
+  if (role === 'COMPANY_EMPLOYEE')
+    return <CompanyEmployeeInterviewRoomContainer {...companyEmployeeInterviewingRoomProps} />;
+
+  return <AttendantInterviewRoomContainer {...attendantInterviewingRoomProps} />;
 };
 
 export default InterviewRoomContainer;

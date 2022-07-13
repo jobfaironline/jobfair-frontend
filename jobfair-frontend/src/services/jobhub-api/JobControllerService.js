@@ -2,7 +2,7 @@ import { CallAPI } from '../axiosBase';
 import { ENDPOINT_JOB_CONTROLLER } from '../../constants/Endpoints/jobhub-api/JobControllerEndpoint';
 
 export const createJobPositionsAPI = (data) => CallAPI(`${ENDPOINT_JOB_CONTROLLER}`, 'POST', data);
-export const getJobPositionsAPI = (direction, offset, pageSize, sortBy) =>
+export const getJobPositionsAPI = (direction, offset, pageSize, sortBy, jobTitle) =>
   CallAPI(
     `${ENDPOINT_JOB_CONTROLLER}`,
     'GET',
@@ -11,7 +11,8 @@ export const getJobPositionsAPI = (direction, offset, pageSize, sortBy) =>
       direction,
       offset,
       pageSize,
-      sortBy
+      sortBy,
+      jobTitle
     }
   );
 export const updateJobPositionAPI = (body, id) => CallAPI(`${ENDPOINT_JOB_CONTROLLER}/${id}`, 'PUT', body);

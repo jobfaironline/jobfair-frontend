@@ -11,7 +11,7 @@ export const ResumeReferenceList = (props) => {
         References
       </Title>
       <Timeline pending={true} pendingDot={<></>}>
-        {data.map((reference) => (
+        {data?.map((reference) => (
           <Timeline.Item>
             <Title style={{ marginBottom: '0' }} level={4}>
               {reference?.fullName}

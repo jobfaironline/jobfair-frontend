@@ -4,6 +4,7 @@ import { ControlButtonGroup } from '../../../components/customized-components/De
 import { DecorateBooth3DItemMenuContainer } from '../../SampleItemMenu/DecorateBooth3DItemMenu.container';
 import { DecorateBoothCanvas } from '../../../components/3D/DecorateBooth/DeoratedBoothCanvas/DecorateBoothCanvas.component';
 import { DecoratedBoothSideBarContainer } from './DecorateBoothSideBar.container';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { GENERIC_BOOTH_LAYOUT_URL } from '../../../constants/3DConst';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { ModeConstant } from '../../../constants/AppConst';
@@ -51,6 +52,7 @@ export const Decorate3DBoothContainer = (props) => {
   const [myLayoutVisibility, setMyLayoutVisibility] = useState(false);
   const meshGroupRef = useRef();
   const rendererRef = useRef();
+  const hasUnsavedChangeRef = useRef(false);
 
   useEffect(async () => {
     let url = GENERIC_BOOTH_LAYOUT_URL;
@@ -109,6 +111,7 @@ export const Decorate3DBoothContainer = (props) => {
   });
 
   const uploadVideo = async (textureObj, layoutId, itemName, isSaveInMyBoothLayout) => {
+    hasUnsavedChangeRef.current = true;
     if (textureObj.texture.image.src.substring(0, 4) !== 'data') {
       if (isSaveInMyBoothLayout) {
         return saveLayoutVideoWithUrlIntoMyBoothLayout({
@@ -135,6 +138,8 @@ export const Decorate3DBoothContainer = (props) => {
   };
 
   const saveHandle = async (isSaveInMyBoothLayout, layoutName) => {
+    hasUnsavedChangeRef.current = false;
+
     let sceneNode = meshGroupRef.current.parent;
     while (sceneNode.type !== 'Scene') sceneNode = sceneNode.parent;
 
@@ -176,7 +181,9 @@ export const Decorate3DBoothContainer = (props) => {
     else dispatch(decorateBoothAction.setMode(ModeConstant.ADD));
   };
 
-  const reviewHandle = () => {
+  const reviewHandle = async () => {
+    const result = await confirmUnsavedChange();
+    if (!result) return;
     const url = generatePath(PATH.PUBLICIZED_BOOTH_PAGE, {
       jobFairId
     });
@@ -184,26 +191,31 @@ export const Decorate3DBoothContainer = (props) => {
   };
 
   const handleOnRotationLeft = () => {
+    hasUnsavedChangeRef.current = true;
     if (selectedItem === undefined) return;
 
     rotateModelLeft(selectedItem, 10);
   };
 
   const handleOnRotationRight = () => {
+    hasUnsavedChangeRef.current = true;
     if (selectedItem === undefined) return;
 
     rotateModelRight(selectedItem, 10);
   };
 
   const handleDelete = () => {
+    hasUnsavedChangeRef.current = true;
     setModelItems((prevState) => prevState.filter((itemMesh) => itemMesh.uuid !== selectedItem.uuid));
   };
 
   const handleAdd = (mesh) => {
+    hasUnsavedChangeRef.current = true;
     setModelItems((prevState) => [...prevState, mesh]);
   };
 
   const handleKeyDown = (event) => {
+    hasUnsavedChangeRef.current = true;
     if (selectedItem === undefined) return;
 
     switch (event.keyCode) {
@@ -234,6 +246,29 @@ export const Decorate3DBoothContainer = (props) => {
     setMyLayoutVisibility(true);
   };
 
+  const confirmUnsavedChange = () =>
+    new Promise((resolve) => {
+      if (hasUnsavedChangeRef.current === false) {
+        resolve(true);
+        return;
+      }
+
+      Modal.confirm({
+        centered: true,
+        title: 'Unsaved change',
+        icon: <ExclamationCircleOutlined />,
+        cancelText: 'Cancel',
+        okText: 'Continue',
+        content: <>You have unsaved change! Do you want to continue?</>,
+        onOk: () => {
+          resolve(true);
+        },
+        onCancel: () => {
+          resolve(false);
+        }
+      });
+    });
+
   const controlButtonsProps = {
     addMoreComponentHandle,
     saveHandle: () => saveHandle(),
@@ -261,25 +296,33 @@ export const Decorate3DBoothContainer = (props) => {
 
   if (modelItems.length === 0) return <LoadingComponent />;
   return (
-    <div style={{ height: `calc(100vh - ${NAVBAR_HEIGHT})` }}>
-      <MyBoothLayoutListContainer
-        setMyLayoutVisibility={setMyLayoutVisibility}
-        myLayoutVisibility={myLayoutVisibility}
-      />
-      <DecorateBooth3DItemMenuContainer />
-      <Stats />
-      <div
-        style={{
-          display: 'flex',
-          height: `calc(100vh - ${NAVBAR_HEIGHT} - ${BREADCUMB_HEIGHT})`
-        }}>
-        <DecoratedBoothSideBarContainer {...sideBarProps} />
-        <DecorateBoothCanvas modelItems={modelItems} handleAdd={handleAdd} ref={meshGroupRef} renderRef={rendererRef} />
-      </div>
+    <>
+      <div style={{ height: `calc(100vh - ${NAVBAR_HEIGHT}) - ${BREADCUMB_HEIGHT}` }}>
+        <MyBoothLayoutListContainer
+          setMyLayoutVisibility={setMyLayoutVisibility}
+          myLayoutVisibility={myLayoutVisibility}
+        />
+        <DecorateBooth3DItemMenuContainer />
+        <Stats />
+        <div
+          style={{
+            display: 'flex',
+            height: `calc(100vh - ${NAVBAR_HEIGHT} - ${BREADCUMB_HEIGHT})`
+          }}>
+          <DecoratedBoothSideBarContainer {...sideBarProps} />
+          <DecorateBoothCanvas
+            hasUnsavedChangeRef={hasUnsavedChangeRef}
+            modelItems={modelItems}
+            handleAdd={handleAdd}
+            ref={meshGroupRef}
+            renderRef={rendererRef}
+          />
+        </div>
 
-      <ControlButtonGroup {...controlButtonsProps} />
-      <ToastContainer />
-    </div>
+        <ControlButtonGroup {...controlButtonsProps} />
+        <ToastContainer />
+      </div>
+    </>
   );
 };
 

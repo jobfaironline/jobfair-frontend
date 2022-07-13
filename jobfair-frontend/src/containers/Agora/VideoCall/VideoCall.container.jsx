@@ -28,6 +28,7 @@ const VideoCallContainer = (props) => {
   const rtcClient = useSelector((state) => state.agora.rtcClient);
   const channelId = useSelector((state) => state.agora.channelId);
   const webSocketClient = useSelector(selectWebSocket);
+  const rtmClient = useSelector((state) => state.agora.rtmClient);
 
   useEffect(() => {
     webSocketClient.addEvent('is-kick', async (notificationData) => {
@@ -100,6 +101,11 @@ const VideoCallContainer = (props) => {
     await rtcClient.join(REACT_APP_AGORA_APP_ID, channelId, rtcToken, userId);
   }
 
+  useEffect(async () => {
+    if (isRTCClientReady && audioReady && audioTrack) await rtcClient.publish(audioTrack);
+    if (isRTCClientReady && cameraReady && cameraTrack) await rtcClient.publish(cameraTrack);
+  }, [cameraReady, audioReady, isRTCClientReady]);
+
   const handleMute = async (type) => {
     if (type === 'audio') {
       await audioTrack.setMuted(!muteState.audio);
@@ -111,6 +117,7 @@ const VideoCallContainer = (props) => {
   };
   const handleClose = async (isKicked = false) => {
     await rtcClient.leave();
+    await rtmClient.leaveChannel(channelId);
     notification.success({
       description: isKicked ? 'You have been removed by the host' : 'You have left the channel'
     });
@@ -127,7 +134,6 @@ const VideoCallContainer = (props) => {
       }
     } else history.push(PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE);
   };
-
   const handleKickUser = (userId) => {
     kickUser(userId, channelId);
   };

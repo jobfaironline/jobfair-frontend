@@ -3,9 +3,9 @@ import InputEmoji from 'react-input-emoji';
 import React from 'react';
 
 const ChatBoxComponent = (props) => {
-  const { messageList, videoCallComponent, onEnter } = props;
+  const { messageList, videoCallComponent, onEnter, width = '30vw' } = props;
   return (
-    <div className={'chat-box'}>
+    <div className={'chat-box'} style={{ width }}>
       <div className={'chatContainer'}>
         <div className={'videoContainer'}>{videoCallComponent()}</div>
         <div className={'chatZone'}>
