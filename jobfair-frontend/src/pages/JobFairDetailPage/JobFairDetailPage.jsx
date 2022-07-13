@@ -1,8 +1,8 @@
 import { PageHeader } from 'antd';
 import { useHistory } from 'react-router-dom';
 import JobFairDetailContainer from '../../containers/JobFairDetail/JobFairDetail.container';
-import React from 'react';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
+import React from 'react';
 
 const JobFairDetailPage = () => {
   const history = useHistory();

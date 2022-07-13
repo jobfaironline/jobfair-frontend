@@ -2,6 +2,7 @@ import { Button, Result, Typography } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import { PATH } from '../../constants/Paths/Path';
 import { useSelector } from 'react-redux';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import React from 'react';
 
 const { Paragraph, Text } = Typography;
@@ -12,7 +13,7 @@ export const ResultSuccessPage = () => {
   const email = useSelector((state) => state.authentication?.user?.email);
 
   return (
-    <div className='page'>
+    <PageLayoutWrapper className='page'>
       <Result status='success' title='Register successfully'>
         <div className='desc'>
           <Paragraph>
@@ -37,6 +38,6 @@ export const ResultSuccessPage = () => {
           </Button>
         </div>
       </Result>
-    </div>
+    </PageLayoutWrapper>
   );
 };

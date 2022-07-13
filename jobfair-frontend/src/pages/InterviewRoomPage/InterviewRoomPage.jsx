@@ -1,11 +1,11 @@
 import { agoraAction } from '../../redux-flow/agora/agora-slice';
 import { createClient } from 'agora-rtc-react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import InterviewRoomContainer from '../../containers/InterviewRoom/InterviewRoom.container';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import RTMClient from '../../services/agora/RTMClient';
 import React, { useEffect, useRef } from 'react';
-import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const config = {
   mode: 'rtc',
@@ -19,6 +19,7 @@ const rtm = new RTMClient();
 rtm.init(REACT_APP_AGORA_APP_ID);
 
 const InterviewRoomPage = () => {
+  const location = useLocation();
   const { roomId } = useParams();
   //channelId is the booth's id
   const channelId = roomId;
@@ -29,9 +30,9 @@ const InterviewRoomPage = () => {
   dispatch(agoraAction.setRTCClient(useClient()));
   dispatch(agoraAction.setChannelId(channelId));
 
-  useEffect(() => initializeRoomChat(), []);
+  useEffect(() => cleanUp);
 
-  const initializeRoomChat = () => {
+  const cleanUp = () => {
     //close all audio and camera tracks
     audioTrackRef.current?.close();
     cameraTrackRef.current?.close();
@@ -48,8 +49,13 @@ const InterviewRoomPage = () => {
   };
 
   return (
-    <PageLayoutWrapper className='page' style={{ padding: 0 }}>
-      <InterviewRoomContainer audioTrackRef={audioTrackRef} cameraTrackRef={cameraTrackRef} />
+    <PageLayoutWrapper className='page fullscreen-page' style={{ padding: 0 }}>
+      <InterviewRoomContainer
+        audioTrackRef={audioTrackRef}
+        cameraTrackRef={cameraTrackRef}
+        roomType={location.pathname}
+        channelId={channelId}
+      />
     </PageLayoutWrapper>
   );
 };

@@ -1,3 +1,4 @@
+import { BREADCUMB_HEIGHT, NAVBAR_HEIGHT } from '../../../styles/custom-theme';
 import { Button, Form, Input, Modal, notification } from 'antd';
 import { ControlButtonGroup } from '../../../components/customized-components/DecoratedBoothTool/ControlButton/ControlButtonGroup.component';
 import { DecorateBooth3DItemMenuContainer } from '../../SampleItemMenu/DecorateBooth3DItemMenu.container';
@@ -39,7 +40,6 @@ import { notify } from '../../../utils/toastutil';
 import { useDispatch, useSelector } from 'react-redux';
 import MyBoothLayoutListContainer from '../../MyBoothLayoutList/MyBoothLayoutList.container';
 import React, { useEffect, useRef, useState } from 'react';
-import { BREADCUMB_HEIGHT, NAVBAR_HEIGHT } from '../../../styles/custom-theme';
 
 export const Decorate3DBoothContainer = (props) => {
   const { companyBoothId, jobFairId } = props;

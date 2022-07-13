@@ -1,5 +1,5 @@
-import React from 'react';
 import PageLayoutWrapper from '../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
+import React from 'react';
 
 const AboutApplicationPage = () => (
   <PageLayoutWrapper className='page'>

@@ -2,12 +2,12 @@ import * as THREE from 'three';
 import { BasicMesh } from '../ThreeJSBaseComponent/ChildMesh.component';
 import { CameraControls } from '../ThreeJSBaseComponent/CameraControls.component';
 import { Canvas } from '@react-three/fiber';
+import { NAVBAR_HEIGHT } from '../../../styles/custom-theme';
 import { SkyComponent, SkyType } from '../ThreeJSBaseComponent/Sky.component';
 import { SkyTypeSelect } from '../ThreeJSBaseComponent/SelectSkyType.component';
 import { Stage, Stats } from '@react-three/drei';
 import { makeTextSprite } from '../../../utils/ThreeJS/sprite-util';
 import React, { useState } from 'react';
-import { NAVBAR_HEIGHT } from '../../../styles/custom-theme';
 
 const BoothMesh = React.forwardRef((props, ref) => {
   const { mesh, onclick } = props;

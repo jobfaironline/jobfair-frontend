@@ -1,6 +1,6 @@
 import JobFairGridManagerContainer from '../../containers/JobFairList/manager/JobFairGridManager.container';
-import React from 'react';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
+import React from 'react';
 
 const JobFairGridManagerPage = () => (
   <PageLayoutWrapper className='page'>
