@@ -1,6 +1,6 @@
 import OrganizeJobFairContainer from '../../containers/OrganizeJobFair/OrganizeJobFair.container';
-import React from 'react';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
+import React from 'react';
 
 const OrganizeJobFairPage = () => (
   <PageLayoutWrapper className='page fullscreen-page'>

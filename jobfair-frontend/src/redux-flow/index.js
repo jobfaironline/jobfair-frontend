@@ -7,6 +7,7 @@ import inventoryReducer from './inventory/inventory-slice';
 import webSocketReducer from './web-socket/web-socket-slice';
 import notificationReducer from './notification/notification-slice';
 import boothTabReducer from './boothInfoTab/boothInfoTab-slice';
+import interviewRoomReducer from './interviewRoom/interview-room-slice';
 
 const store = configureStore({
   reducer: {
@@ -17,7 +18,8 @@ const store = configureStore({
     inventory: inventoryReducer,
     webSocket: webSocketReducer,
     notification: notificationReducer,
-    boothTab: boothTabReducer
+    boothTab: boothTabReducer,
+    interviewRoom: interviewRoomReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

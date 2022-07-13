@@ -1,7 +1,7 @@
-.booth-info-menu-container{
+.booth-info-menu-container {
   position: absolute;
   z-index: 100;
-  .booth-info-menu{
+  .booth-info-menu {
     background-color: white;
     border-radius: 0 0 1rem 1rem;
 
@@ -11,13 +11,13 @@
       flex-direction: row;
     }
 
-    .header{
+    .header {
       display: flex;
       align-items: center;
       padding: 5px 1rem;
     }
 
-    .ant-tabs-content-holder{
+    .ant-tabs-content-holder {
       padding-right: 24px;
       padding-bottom: 20px;
     }

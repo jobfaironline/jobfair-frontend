@@ -1,7 +1,7 @@
 import { useLocation, useParams } from 'react-router-dom';
 import AttendantAttemptTestContainer from '../../containers/AttendantAttemptTest/AttendantAttemptTest.container';
-import React from 'react';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
+import React from 'react';
 
 const AttendantAttemptTestPage = () => {
   const { quizId } = useParams();

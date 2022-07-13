@@ -1,7 +1,8 @@
+import './VideoCall.styles.scss';
 import { AgoraVideoPlayer } from 'agora-rtc-react';
-import { Avatar, Badge, Button, Tag, Tooltip } from 'antd';
+import { Avatar, Badge, Button, Tooltip } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MailOutlined, UserOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import {
   faMicrophone,
   faMicrophoneSlash,
@@ -14,18 +15,26 @@ import PowerOffIcon from '@mui/icons-material/PowerOff';
 import React from 'react';
 
 const VideoCallComponent = (props) => {
-  const { cameraReady, muteState, users, audioTrack, cameraTrack, handleMute, handleClose, height, width, layoutMode } =
-    props;
+  const {
+    cameraReady,
+    muteState,
+    users,
+    audioTrack,
+    cameraTrack,
+    handleMute,
+    handleClose,
+    height,
+    width,
+    layoutMode,
+    kickUser,
+    isKickable = false
+  } = props;
 
   if (layoutMode === 'WAITINGROOM') {
     return (
       <div className={'video-call'} style={{ height, width, padding: '2rem' }}>
         <div className={'topVideoCall'} style={{ padding: '0rem 0.5rem' }}>
-          <div className={'iconMail'}>
-            <Tag color='default'>
-              <MailOutlined /> 90
-            </Tag>
-          </div>
+          <div className={'iconMail'}></div>
           {/*TODO: the 'type' props will decide the style of component*/}
           <div className={'videoCall'}>
             {users.length > 0 ? (
@@ -119,7 +128,7 @@ const VideoCallComponent = (props) => {
                   justifyContent: 'center',
                   alignItems: 'center'
                 }}>
-                <Avatar shape='circle' size={256} icon={<UserOutlined />} />
+                <Avatar shape='circle' size={180} icon={<UserOutlined />} />
               </div>
             </div>
           )}
@@ -186,11 +195,7 @@ const VideoCallComponent = (props) => {
   return (
     <div className={'video-call'} style={{ height, width, padding: '2rem' }}>
       <div className={'topVideoCall'} style={{ padding: '0rem 0.5rem' }}>
-        <div className={'iconMail'}>
-          <Tag color='default'>
-            <MailOutlined /> 90
-          </Tag>
-        </div>
+        <div className={'iconMail'}></div>
         {/*TODO: the 'type' props will decide the style of component*/}
         <div className={'videoCall'} style={{ width: '11rem' }}>
           {cameraReady && !muteState.video ? (
@@ -224,12 +229,28 @@ const VideoCallComponent = (props) => {
               users.map((user) => {
                 if (user.videoTrack) {
                   return (
-                    <AgoraVideoPlayer
-                      style={{ height: '100%', width: '100%' }}
-                      className='vid'
-                      videoTrack={user.videoTrack}
-                      key={user.uid}
-                    />
+                    <div style={{ height: '100%', width: '100%' }}>
+                      <AgoraVideoPlayer
+                        style={{ height: '100%', width: '100%' }}
+                        className='vid'
+                        videoTrack={user.videoTrack}
+                        key={user.uid}
+                      />
+                      {isKickable ? <div className={'user-icon'} /> : null}
+                      {isKickable ? (
+                        <div className={'user-mask'}>
+                          <Tooltip title={'Remove this user'}>
+                            <div
+                              style={{ color: '#FFF' }}
+                              onClick={() => {
+                                kickUser(user.uid);
+                              }}>
+                              Remove
+                            </div>
+                          </Tooltip>
+                        </div>
+                      ) : null}
+                    </div>
                   );
                 } else {
                   return (

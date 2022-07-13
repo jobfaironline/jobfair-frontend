@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import AssignTaskContainer from '../../containers/AssignTask/AssignTask.container';
-import React from 'react';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
+import React from 'react';
 
 const AssignTaskPage = () => {
   const { boothId } = useParams();

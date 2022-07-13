@@ -1,6 +1,6 @@
 import { FacebookOutlined, GithubOutlined, InstagramOutlined } from '@ant-design/icons';
-import React from 'react';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
+import React from 'react';
 
 const ContactPage = () => (
   <PageLayoutWrapper style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>

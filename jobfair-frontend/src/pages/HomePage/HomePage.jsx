@@ -4,9 +4,9 @@ import { PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../../constants/Pat
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import HomePageHeaderComponent from '../../components/customized-components/HomePage/HomePageHeader.component';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import React from 'react';
 import RoleType from '../../constants/RoleType';
-import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const HomePage = () => {
   const history = useHistory();

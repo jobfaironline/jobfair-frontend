@@ -1,8 +1,8 @@
 import './LoginPage.styles.scss';
 import { injectStyle } from 'react-toastify/dist/inject-style';
 import LoginFormContainer from '../../containers/forms/LoginForm/LoginForm.container';
-import React from 'react';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
+import React from 'react';
 
 if (typeof window !== 'undefined') injectStyle();
 

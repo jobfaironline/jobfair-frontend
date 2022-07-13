@@ -15,8 +15,7 @@ const agoraSlice = createSlice({
       state.rtcClient = action.payload;
     },
     setChannelId: (state, action) => {
-      state.channelId = '123123abc';
-      // state.channelId = action.payload;
+      state.channelId = action.payload;
     }
   }
 });

@@ -1,6 +1,6 @@
 import JobFairTemplateContainer from '../../containers/JobFairTemplate/JobFairTemplate.container';
-import React from 'react';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
+import React from 'react';
 
 const JobFairTemplatePage = () => (
   <PageLayoutWrapper className='page'>

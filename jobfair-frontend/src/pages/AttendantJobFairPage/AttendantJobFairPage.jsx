@@ -5,9 +5,9 @@ import { createClient } from 'agora-rtc-react';
 import { leaveJobFairBooth, visitJobFairBooth } from '../../services/jobhub-api/VisitControllerService';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import RTMClient from '../../services/agora/RTMClient';
 import React, { useEffect, useRef } from 'react';
-import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 
 const config = {
   mode: 'rtc',

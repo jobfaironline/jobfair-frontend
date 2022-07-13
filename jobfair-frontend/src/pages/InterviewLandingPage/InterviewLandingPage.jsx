@@ -1,8 +1,8 @@
 import { Button } from 'antd';
 import { PATH_ATTENDANT } from '../../constants/Paths/Path';
 import { generatePath, useHistory } from 'react-router-dom';
-import React from 'react';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
+import React from 'react';
 
 const InterviewLandingPage = () => {
   const history = useHistory();
