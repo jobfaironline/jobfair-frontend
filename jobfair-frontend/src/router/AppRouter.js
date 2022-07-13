@@ -30,7 +30,6 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import FAQPage from '../pages/FAQPage/FAQPage';
 import ForgotPasswordPage from '../pages/ForgotPassword/ForgotPasswordPage';
 import HomePage from '../pages/HomePage/HomePage';
-import InterviewLandingPage from '../pages/InterviewLandingPage/InterviewLandingPage';
 import InterviewRoomPage from '../pages/InterviewRoomPage/InterviewRoomPage';
 import InterviewSchedulePage from '../pages/InterviewSchedulePage/InterviewSchedulePage';
 import JobFairAssignmentPage from '../pages/JobFairAssignmentPage/JobFairAssignmentPage';
@@ -173,12 +172,6 @@ const AppRouter = () => {
             key={PATH_ATTENDANT.RESUME_DETAIL_PAGE}
             component={() => <ResumeDetailPage />}
             path={PATH_ATTENDANT.RESUME_DETAIL_PAGE}
-            exact
-          />
-          <AttendantRouter
-            key={PATH.INTERVIEW_LANDING_PAGE}
-            component={() => <InterviewLandingPage />}
-            path={PATH.INTERVIEW_LANDING_PAGE}
             exact
           />
           <AttendantRouter

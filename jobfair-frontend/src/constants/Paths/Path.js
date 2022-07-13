@@ -20,7 +20,6 @@ export const PATH = {
   HOME_PAGE: '/home',
   FINAL_ERROR_PAGE: '/error-500',
   ABOUT_APPLICATION_PAGE: '/about-application',
-  INTERVIEW_LANDING_PAGE: '/interview-landing',
   JOB_FAIR_LANDING_PAGE: `/landing-job-fair/:jobFairId`
 };
 export const PATH_ADMIN = {
