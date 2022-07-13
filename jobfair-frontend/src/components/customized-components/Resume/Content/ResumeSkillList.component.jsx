@@ -11,7 +11,7 @@ export const ResumeSkillList = (props) => {
         Professional Skills
       </Title>
       <Timeline pending={true} pendingDot={<></>}>
-        {data.map((skill, index) => (
+        {data?.map((skill, index) => (
           <div>
             {index !== 0 ? <Divider style={{ margin: '10px 0' }} /> : null}
             <Title style={{ marginBottom: '0' }} level={4}>

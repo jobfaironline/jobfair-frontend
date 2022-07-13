@@ -66,15 +66,12 @@ export const handleConvertRangePicker = (data) => {
 
 //convert enum status to string
 export const convertEnumToString = (data) => {
-  if (data !== undefined) {
-    const arr = data.includes('_') ? data.split('_') : Array.of(data); //['INTERN', 'SHIP', 'STUDENT']
-    const result = arr
-      .map((item) => item.toString().toLowerCase())
-      .map((item) => item[0].toUpperCase() + item.slice(1))
-      .join(' ');
-    return result;
-  }
-  return data;
+  if (!data) return data;
+  const arr = data.includes('_') ? data.split('_') : Array.of(data); //['INTERN', 'SHIP', 'STUDENT']
+  return arr
+    .map((item) => item.toString().toLowerCase())
+    .map((item) => item[0].toUpperCase() + item.slice(1))
+    .join(' ');
 };
 
 export const convertToUTCString = (data) => new Date(data).toUTCString();

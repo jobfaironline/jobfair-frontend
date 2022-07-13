@@ -15,7 +15,7 @@ export const ResumeCertificationList = (props) => {
         Certifications
       </Title>
       <Timeline pending={true} pendingDot={<></>}>
-        {data.map((certification) => (
+        {data?.map((certification) => (
           <Timeline.Item>
             <Title style={{ marginBottom: '0' }} level={4}>
               {certification?.name}

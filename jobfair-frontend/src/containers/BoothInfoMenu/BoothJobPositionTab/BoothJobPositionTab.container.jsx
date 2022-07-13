@@ -152,7 +152,7 @@ export const BoothJobPositionTabContainer = (props) => {
         maskClosable={true}
         footer={null}
         onCancel={onModalClose}
-        zIndex={2}
+        zIndex={100}
         visible={isModalVisible}
         wrapClassName={'company-job-position-tab-modal'}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
