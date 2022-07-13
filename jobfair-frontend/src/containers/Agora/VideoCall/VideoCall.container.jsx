@@ -28,6 +28,7 @@ const VideoCallContainer = (props) => {
   const rtcClient = useSelector((state) => state.agora.rtcClient);
   const channelId = useSelector((state) => state.agora.channelId);
   const webSocketClient = useSelector(selectWebSocket);
+  const rtmClient = useSelector((state) => state.agora.rtmClient);
 
   useEffect(() => {
     webSocketClient.addEvent('is-kick', async (notificationData) => {
@@ -100,9 +101,6 @@ const VideoCallContainer = (props) => {
     await rtcClient.join(REACT_APP_AGORA_APP_ID, channelId, rtcToken, userId);
   }
 
-  const rtcClient = useSelector((state) => state.agora.rtcClient);
-  const rtmClient = useSelector((state) => state.agora.rtmClient);
-  const channelId = useSelector((state) => state.agora.channelId);
   useEffect(async () => {
     const rtcToken = await getAgoraRTCToken(channelId)
       .then((value) => value.data)
