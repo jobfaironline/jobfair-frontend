@@ -6,8 +6,12 @@ const { Title } = Typography;
 export const InterviewReportForm = (props) => {
   const { form, onFinish } = props;
   return (
-    <Form form={form} colon={false} onFinish={onFinish}>
-      <Title level={2}>Interview report</Title>
+    <Form
+      form={form}
+      colon={false}
+      onFinish={onFinish}
+      style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
+      <Title level={3}>Interview report</Title>
       <Form.Item
         name={`advantage`}
         required
@@ -29,9 +33,11 @@ export const InterviewReportForm = (props) => {
         style={{ display: 'inline-block', width: '100%' }}>
         <Input.TextArea className={'text-area'} placeholder="Applicant's disadvantage" rows={7} />
       </Form.Item>
-      <Button className={'button'} type='primary' htmlType={'submit'}>
-        Submit
-      </Button>
+      <div style={{ width: '100%', display: 'flex' }}>
+        <Button className={'button'} type='primary' htmlType={'submit'} style={{ marginLeft: 'auto' }}>
+          Submit
+        </Button>
+      </div>
     </Form>
   );
 };

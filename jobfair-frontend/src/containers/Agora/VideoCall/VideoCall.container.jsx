@@ -102,14 +102,6 @@ const VideoCallContainer = (props) => {
   }
 
   useEffect(async () => {
-    const rtcToken = await getAgoraRTCToken(channelId)
-      .then((value) => value.data)
-      .then((value) => value.token);
-    await initializeRTCClient(rtcClient, rtcToken, userId);
-    setIsRTCClientReady(true);
-  }, []);
-
-  useEffect(async () => {
     if (isRTCClientReady && audioReady && audioTrack) await rtcClient.publish(audioTrack);
     if (isRTCClientReady && cameraReady && cameraTrack) await rtcClient.publish(cameraTrack);
   }, [cameraReady, audioReady, isRTCClientReady]);
@@ -142,7 +134,6 @@ const VideoCallContainer = (props) => {
       }
     } else history.push(PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE);
   };
-
   const handleKickUser = (userId) => {
     kickUser(userId, channelId);
   };

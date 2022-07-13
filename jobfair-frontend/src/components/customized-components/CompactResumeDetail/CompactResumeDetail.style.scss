@@ -1,14 +1,14 @@
 .compact-resume-wrapper {
-  padding: 1rem 3rem;
-}
+  padding: 0 3rem;
 
-.unimportant-field {
-  display: block;
+  .ant-descriptions-item {
+    padding-bottom: 5px;
+  }
 }
 
 @media only screen and (max-width: 1200px) {
   .compact-resume-wrapper {
-    padding: 1rem;
+    padding: 0;
   }
 
   .unimportant-field {

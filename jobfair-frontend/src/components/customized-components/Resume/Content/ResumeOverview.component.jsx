@@ -65,10 +65,6 @@ export const ResumeOverview = ({ userOverview }) => (
           </Col>
         </Row>
       </div>
-
-      <Text strong style={{ marginTop: '1rem', fontSize: '1rem', marginBottom: '1rem' }}>
-        {userOverview?.email}
-      </Text>
     </div>
   </Card>
 );

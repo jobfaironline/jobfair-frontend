@@ -18,7 +18,7 @@ class Message {
 }
 
 const ChatBoxContainer = (props) => {
-  const { audioTrackRef, cameraTrackRef, type } = props;
+  const { audioTrackRef, cameraTrackRef, type, width } = props;
 
   const name = useSelector((state) => state.authentication.user.fullName);
 
@@ -140,6 +140,7 @@ const ChatBoxContainer = (props) => {
     <ChatBoxComponent
       messageList={messageList}
       onEnter={onSubmit}
+      width={width}
       videoCallComponent={
         type === 'INTERVIEW_ROOM'
           ? // eslint-disable-next-line no-empty-function

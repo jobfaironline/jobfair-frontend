@@ -173,7 +173,7 @@ const VideoCallComponent = (props) => {
                 />
               </div>
             ) : (
-              <NoPhotographyIcon />
+              <Button type='primary' disabled={true} shape='circle' size='large' icon={<NoPhotographyIcon />} />
             )}
             <Button
               type='primary'
@@ -195,8 +195,6 @@ const VideoCallComponent = (props) => {
   return (
     <div className={'video-call'} style={{ height, width, padding: '2rem' }}>
       <div className={'topVideoCall'} style={{ padding: '0rem 0.5rem' }}>
-        <div className={'iconMail'}></div>
-        {/*TODO: the 'type' props will decide the style of component*/}
         <div className={'videoCall'} style={{ width: '11rem' }}>
           {cameraReady && !muteState.video ? (
             <AgoraVideoPlayer style={{ height: '95%', width: '95%' }} className='vid' videoTrack={cameraTrack} />
@@ -337,7 +335,7 @@ const VideoCallComponent = (props) => {
               />
             </div>
           ) : (
-            <NoPhotographyIcon />
+            <Button disabled={true} type='primary' shape='circle' size='large' icon={<NoPhotographyIcon />} />
           )}
           <Button
             type='primary'
