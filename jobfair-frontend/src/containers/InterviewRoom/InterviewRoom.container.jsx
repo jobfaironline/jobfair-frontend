@@ -111,9 +111,12 @@ const AttendantInterviewRoomContainer = (props) => {
   );
   const firstColumn = (
     <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column', flex: '1' }}>
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
-        <Typography.Title level={3}>Interview room</Typography.Title>
-      </div>
+      {roomType.includes('interview') ? (
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+          <Typography.Title level={3}>Interview room</Typography.Title>
+        </div>
+      ) : null}
+
       {roomType.includes('waiting-room') ? (
         <WaitingRoomListForIntervieweeContainer
           channelId={channelId}

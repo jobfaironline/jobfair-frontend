@@ -1,4 +1,5 @@
 import { Button, Modal, notification } from 'antd';
+import { INTERVIEW_SCHEDULE_STATUS } from '../../constants/InterviewScheduleConst';
 import { NotificationType } from '../../constants/NotificationConstant';
 import {
   WaitingRoomListForIntervieweeComponent,
@@ -361,7 +362,10 @@ export const WaitingRoomListForIntervieweeContainer = ({ channelId, scheduleId }
 
   const fetchData = async () => {
     const { data } = await getWaitingRoomInfo(channelId);
-    setUserSchedule(data);
+    const result = data
+      .filter((schedule) => schedule.status === INTERVIEW_SCHEDULE_STATUS.NOT_YET)
+      .sort((a, b) => a.beginTime - b.beginTime);
+    setUserSchedule(result);
   };
 
   const getInvitaion = (notificationData) => {
@@ -375,6 +379,7 @@ export const WaitingRoomListForIntervieweeContainer = ({ channelId, scheduleId }
           size='small'
           onClick={() => {
             const url = generatePath(`/attendant/interview/${scheduleId}/${messageObject.interviewRoomId}`);
+            //use href here rather than history to force unmount page
             window.location.href = url;
             notification.close(key);
           }}>
