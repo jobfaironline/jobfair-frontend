@@ -3,14 +3,13 @@ import { InventoryButton } from '../../components/customized-components/Inventor
 import { Modal } from 'antd';
 import { getAttendantCv } from '../../services/jobhub-api/CvControllerService';
 import { inventoryAction } from '../../redux-flow/inventory/inventory-slice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import ResumeDetailForAttendantContainer from '../Resume/attendant/ResumeDetailForAttendant.container';
 
 export const InventoryContainer = (props) => {
   const { onClick, inventoryVisible } = props;
   const dispatch = useDispatch();
-  const attendantId = useSelector((state) => state.authentication.user.userId);
 
   const [inventory, setInventory] = useState({
     'slot-1': undefined,
@@ -74,7 +73,7 @@ export const InventoryContainer = (props) => {
       width: '90rem',
       closable: true,
       maskClosable: true,
-      content: <ResumeDetailForAttendantContainer resumeId={resume.id} attendantId={attendantId} />
+      content: <ResumeDetailForAttendantContainer resumeId={resume.id} isEditable={false} />
     });
   };
 

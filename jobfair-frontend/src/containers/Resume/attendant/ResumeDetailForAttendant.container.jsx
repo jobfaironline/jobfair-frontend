@@ -42,7 +42,7 @@ const mapperResumeDetail = (resume) => {
 };
 
 const ResumeDetailForAttendantContainer = (props) => {
-  const { resumeId } = props;
+  const { resumeId, isEditable = true } = props;
   const history = useHistory();
   const [data, setData] = useState(undefined);
 
@@ -75,9 +75,11 @@ const ResumeDetailForAttendantContainer = (props) => {
     <div style={{ marginTop: '1rem' }}>
       <div style={{ display: 'flex' }}>
         <Typography.Title level={2}>{data.name}</Typography.Title>
-        <Button className={'button'} type={'primary'} style={{ marginLeft: '1rem' }} onClick={handleEditResume}>
-          Edit resume
-        </Button>
+        {isEditable ? (
+          <Button className={'button'} type={'primary'} style={{ marginLeft: '1rem' }} onClick={handleEditResume}>
+            Edit resume
+          </Button>
+        ) : null}
       </div>
       <ResumeDetailComponent data={data} />
     </div>
