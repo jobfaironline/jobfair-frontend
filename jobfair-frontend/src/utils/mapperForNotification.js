@@ -13,10 +13,19 @@ export const mapperForNotification = (data) => {
       notification.message = `You has been assigned to a ${assignmentData.type} type by ${assignerFullName}`;
       notification.infoObj = assignmentData;
       notification.action = () => {
-        const url = generatePath(PATH_COMPANY_EMPLOYEE.BOOTH_DESCRIPTION_PAGE, {
+        window.location.href = generatePath(PATH_COMPANY_EMPLOYEE.BOOTH_DESCRIPTION_PAGE, {
           assignmentId: assignmentData.id
         });
-        window.location.href = url;
+      };
+      return notification;
+    }
+    case NotificationAction.APPLICATION: {
+      const applicationData = JSON.parse(notification.message);
+
+      notification.title = 'You have new pending application';
+      notification.message = `You have a new pending application from ${applicationData.fullName}`;
+      notification.action = () => {
+        window.location.href = generatePath(PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE, { id: applicationData.id });
       };
       return notification;
     }

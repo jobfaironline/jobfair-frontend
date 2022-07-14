@@ -213,7 +213,7 @@ export const EditResumeContainer = (props) => {
     try {
       await updateCv(resumeIdRef.current, body);
       notification['success']({
-        message: `Update account profile successfully`
+        message: `Update resume successfully`
       });
     } catch (e) {
       notification['error']({
