@@ -47,7 +47,7 @@ const ScheduleJobFairFormComponent = ({ jobFairData, form, onFinish, onValueChan
     //disable past date
     if (current < moment().endOf('day').subtract(1, 'days')) return true;
     //disable pass decorate time
-    if (decorateRangesRef.current) if (current.isBefore(decorateRangesRef.current[1])) return true;
+    if (decorateRangesRef.current) if (current.startOf('d').isBefore(decorateRangesRef.current[1])) return true;
 
     if (!publicRangesRef.current) return false;
     const tooLate = publicRangesRef.current[0] && current.diff(publicRangesRef.current[0], 'days') > PUBLIC_RANGE_LIMIT;
