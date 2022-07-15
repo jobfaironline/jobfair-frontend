@@ -104,7 +104,7 @@ const JobFairGridComponent = (props) => {
   return (
     <div className={'job-fair-grid'}>
       <List
-        grid={{ gutter: 20, xs: 1, sm: 3, md: 3, lg: 5, xl: 5, xxl: 5 }}
+        grid={{ gutter: 10, xs: 2, sm: 2, md: 3, lg: 3, xl: 4, xxl: 5 }}
         dataSource={data}
         renderItem={(item) => {
           if (item.isFirst) {

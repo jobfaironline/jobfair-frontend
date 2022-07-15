@@ -11,12 +11,12 @@ import ResumeEducationList from './Content/ResumeEducationList.component';
 const { Title, Text } = Typography;
 
 export const ResumeDetailComponent = (props) => {
-  const { data } = props;
+  const { data, isForCompany = false } = props;
   return (
     <div className='resume-detail'>
       <Row gutter={15}>
         <Col span={7}>
-          <ResumeOverview userOverview={data.overviewData} />
+          <ResumeOverview userOverview={data.overviewData} isForCompany={isForCompany} />
         </Col>
         <Col span={17}>
           <Card style={{ borderRadius: '8px' }} className={'list'}>

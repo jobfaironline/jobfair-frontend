@@ -29,6 +29,7 @@ export const SkillList = ({ id, form }) => (
                         defaultValue={skillName}
                         onChange={(value) => {
                           form.setFieldsValue({ contactPersonName: value });
+                          form.validateFields([name, 'name']);
                         }}
                       />
                     </Form.Item>

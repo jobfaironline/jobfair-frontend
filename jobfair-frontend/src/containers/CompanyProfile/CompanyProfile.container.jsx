@@ -99,6 +99,7 @@ export const CompanyProfileContainer = () => {
         message: `Update company profile successfully`,
         description: `For company with name: ${values.name}`
       });
+      onCancel();
     } catch (err) {
       notification['error']({
         message: `Update company profile failed`,

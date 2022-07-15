@@ -8,5 +8,7 @@ export const NotificationType = {
 };
 
 export const NotificationAction = {
-  ASSIGMENT: 'ASSIGNMENT'
+  ASSIGMENT: 'ASSIGNMENT',
+  APPLICATION: 'APPLICATION',
+  UN_ASSIGNMENT: 'UN_ASSIGNMENT'
 };

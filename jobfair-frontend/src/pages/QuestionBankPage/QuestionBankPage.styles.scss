@@ -1,4 +1,5 @@
 .question-bank-page {
+  position: relative;
   .page-title {
     display: flex;
     justify-content: center;
@@ -7,8 +8,8 @@
   .back {
     display: flex;
     position: absolute;
-    top: 140px;
     align-items: center;
+    top: 1rem;
 
     h5 {
       margin-left: 5px;

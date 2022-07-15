@@ -1,6 +1,5 @@
 import { BUTTON_BG_COLOR } from '../../../styles/custom-theme';
 import { Card, Col, Divider, Row, Typography } from 'antd';
-import { CaretLeftOutlined } from '@ant-design/icons';
 import { MinuteFormat } from '../../../constants/ApplicationConst';
 import { useSelector } from 'react-redux';
 import React from 'react';
@@ -47,7 +46,7 @@ export const WaitingRoomListForIntervieweeComponent = ({ userSchedules }) => {
         <Col span={2}>
           <Typography.Text strong>No</Typography.Text>
         </Col>
-        <Col span={10}>
+        <Col span={15}>
           <Typography.Text strong>Name</Typography.Text>
         </Col>
         <Col span={7}>
@@ -55,27 +54,27 @@ export const WaitingRoomListForIntervieweeComponent = ({ userSchedules }) => {
         </Col>
       </Row>
       {userSchedules?.map((userSchedule, index) => (
-        <div className='name-holder'>
+        <div
+          className='name-holder'
+          style={{ color: userId === userSchedule.attendantId ? `${BUTTON_BG_COLOR}!important` : 'inherit' }}>
           <Row>
             <Col span={2}>
-              <Typography.Text>{index + 1}</Typography.Text>
+              <Typography.Text strong={userId === userSchedule.attendantId} style={{ color: 'inherit' }}>
+                {index + 1}
+              </Typography.Text>
             </Col>
-            <Col span={10}>
-              <Typography.Text>{userSchedule.attendantName}</Typography.Text>
+            <Col span={15}>
+              <Typography.Text strong={userId === userSchedule.attendantId} style={{ color: 'inherit' }}>
+                {userSchedule.attendantName}
+              </Typography.Text>
             </Col>
-            <Col span={5}>
-              <Typography.Text>
+            <Col span={7}>
+              <Typography.Text strong={userId === userSchedule.attendantId} style={{ color: 'inherit' }}>
                 {moment(userSchedule.beginTime).format(MinuteFormat)}
                 {' - '}
                 {moment(userSchedule.endTime).format(MinuteFormat)}
               </Typography.Text>
             </Col>
-            {userId === userSchedule.attendantId ? (
-              <Col span={5} style={{ color: BUTTON_BG_COLOR, gap: '5px' }}>
-                <CaretLeftOutlined />
-                You are here
-              </Col>
-            ) : null}
           </Row>
         </div>
       ))}

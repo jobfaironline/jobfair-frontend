@@ -4,14 +4,15 @@ import { CameraControls } from '../../../components/3D/ThreeJSBaseComponent/Came
 import { Canvas } from '@react-three/fiber';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { Stage } from '@react-three/drei';
+import { Typography, notification } from 'antd';
 import { addVideoTexture, fixTextureOffset, loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
 import { getCompanyBoothLatestLayout } from '../../../services/jobhub-api/CompanyBoothLayoutControllerService';
 import { getMyBoothLayoutById } from '../../../services/jobhub-api/DecoratorBoothLayoutController';
-import { notification } from 'antd';
 import React, { Suspense, useEffect, useState } from 'react';
 
 export const ReviewBoothLayoutContainer = ({ id, type }) => {
   const [boothItems, setBoothItems] = useState();
+  const [notYetDesign, setNotYetDesign] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -43,6 +44,11 @@ export const ReviewBoothLayoutContainer = ({ id, type }) => {
           throw new Error('Invalid type');
       }
     } catch (err) {
+      if (err.response.status === 404 && type === BoothLayoutType.GENERAL) {
+        setNotYetDesign(true);
+        return;
+      }
+
       notification['error']({
         message: `Something went wrong! Try again latter!`,
         description: `There is problem while fetching data, try again later`,
@@ -59,7 +65,17 @@ export const ReviewBoothLayoutContainer = ({ id, type }) => {
     setBoothItems(result);
   };
 
-  if (boothItems === undefined) return <LoadingComponent />;
+  if (boothItems === undefined) {
+    if (type === BoothLayoutType.GENERAL && notYetDesign) {
+      return (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+          <Typography.Title level={1}>This booth has no design</Typography.Title>
+        </div>
+      );
+    }
+
+    return <LoadingComponent />;
+  }
   return (
     <Suspense fallback={<LoadingComponent />}>
       <Canvas dpr={[1, 2]} camera={{ fov: 40, zoom: 1.2, position: [-1, 1, -1] }}>

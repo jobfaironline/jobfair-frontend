@@ -1,44 +1,29 @@
 import { Divider, Tabs, Typography } from 'antd';
-import { useSelector } from 'react-redux';
-import AttendantApplicationView from '../../containers/ApplicationView/attendant/AttendantApplicationView.container';
-import CompanyApplicationView from '../../containers/ApplicationView/company/CompanyApplicationView.container';
+import ApplicationViewContainer from '../../containers/ApplicationView/ApplicationView.container';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import React from 'react';
 
 const { TabPane } = Tabs;
 
-const ApplicationManagementPage = () => {
-  const role = useSelector((state) => state.authentication.user.roles);
-  const ViewComponent = ({ ...viewProps }) => {
-    switch (role) {
-      case 'COMPANY_EMPLOYEE':
-      case 'COMPANY_MANAGER':
-        return <CompanyApplicationView {...viewProps} role={role} />;
-      case 'ATTENDANT':
-        return <AttendantApplicationView {...viewProps} />;
-    }
-  };
-
-  return (
-    <PageLayoutWrapper className='page'>
-      <div>
-        <Divider>
-          <Typography.Title level={2}>Application management</Typography.Title>
-        </Divider>
-        <Tabs defaultActiveKey='1' centered destroyInactiveTabPane>
-          <TabPane tab='Reviewing applications' key='1'>
-            <ViewComponent tabStatus='1' />
-          </TabPane>
-          <TabPane tab='Rejected Applications' key='2'>
-            <ViewComponent tabStatus='2' />
-          </TabPane>
-          <TabPane tab='Approved Applications' key='3'>
-            <ViewComponent tabStatus='3' />
-          </TabPane>
-        </Tabs>
-      </div>
-    </PageLayoutWrapper>
-  );
-};
+const ApplicationManagementPage = () => (
+  <PageLayoutWrapper className='page'>
+    <div>
+      <Divider>
+        <Typography.Title level={2}>Application management</Typography.Title>
+      </Divider>
+      <Tabs defaultActiveKey='1' centered destroyInactiveTabPane>
+        <TabPane tab='Reviewing applications' key='1'>
+          <ApplicationViewContainer tabStatus='1' />
+        </TabPane>
+        <TabPane tab='Rejected Applications' key='2'>
+          <ApplicationViewContainer tabStatus='2' />
+        </TabPane>
+        <TabPane tab='Approved Applications' key='3'>
+          <ApplicationViewContainer tabStatus='3' />
+        </TabPane>
+      </Tabs>
+    </div>
+  </PageLayoutWrapper>
+);
 
 export default ApplicationManagementPage;

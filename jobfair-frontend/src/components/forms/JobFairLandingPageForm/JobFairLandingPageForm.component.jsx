@@ -68,7 +68,7 @@ const JobFairLandingPageFormComponent = ({
         name={'description'}
         rules={OrganizeJobFairValidation.description}
         className={'form-item'}>
-        <TextArea showCount maxLength={1000} autoSize={{ minRows: 6 }} placeholder='Description' />
+        <TextArea showCount maxLength={500} autoSize={{ minRows: 6 }} placeholder='Description' />
       </Form.Item>
     </Form>
   </div>

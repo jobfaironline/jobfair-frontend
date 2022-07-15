@@ -51,7 +51,7 @@ export const AttendantProfileValidation = {
   title: [REQUIRED_VALIDATOR('Title'), MAX_LENGTH_VALIDATOR('Title', 100)],
   jobTitle: [REQUIRED_VALIDATOR('Job title'), MAX_LENGTH_VALIDATOR('Job title', 100)],
   skills: {
-    name: [REQUIRED_VALIDATOR('Skill name')]
+    name: [REQUIRED_VALIDATOR('Skill name'), MAX_LENGTH_VALIDATOR('Skill name', 100)]
   },
   workHistories: {
     company: [REQUIRED_VALIDATOR('Company'), MAX_LENGTH_VALIDATOR('Company', 100)],

@@ -12,7 +12,7 @@ export const Step3Component = (props) => {
             Step 3: Assign employee
           </Text>
           <Row className={'time'}>
-            <Col span={8}>
+            <Col span={10}>
               <Text>Number of assigned employee: </Text>
             </Col>
             <Col>
@@ -22,7 +22,7 @@ export const Step3Component = (props) => {
             </Col>
           </Row>
           <Row className={'time'}>
-            <Col span={8}>
+            <Col span={10}>
               <Text>Number of assigned booth: </Text>
             </Col>
             <Col>

@@ -2,7 +2,7 @@ import { AssignmentConst } from '../../constants/AssignmentConst';
 import { Button, Space } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JOB_FAIR_STATUS_FOR_EMPLOYEE } from '../../constants/JobFairConst';
-import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
+import { PATH, PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { generatePath, useHistory } from 'react-router-dom';
 import React from 'react';
@@ -18,13 +18,12 @@ const TaskActionButton = ({ type, status, record }) => {
             style={{ paddingLeft: 0 }}
             disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
             type='link'
-            onClick={() =>
-              history.push(
-                generatePath(PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE, {
-                  assignmentId: record.id
-                })
-              )
-            }>
+            onClick={() => {
+              const url = generatePath(PATH.BOOTH_PAGE, {
+                companyBoothId: record.jobFairBooth.id
+              });
+              history.push(url);
+            }}>
             Go to the booth
           </Button>
         </Space>

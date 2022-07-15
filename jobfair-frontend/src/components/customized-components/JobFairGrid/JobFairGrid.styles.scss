@@ -15,8 +15,8 @@
 
   .card {
     border-radius: 8px;
-    width: 300px;
-    height: 260px;
+    max-width: 300px;
+    aspect-ratio: 15 / 13;
     border: 1px solid #dddddd;
     margin-bottom: 2rem;
   }
@@ -28,8 +28,8 @@
   }
 
   .cover {
-    width: 300px;
-    height: 150px;
+    max-width: 300px;
+    aspect-ratio: 2 / 1;
     border-radius: 8px;
   }
 }

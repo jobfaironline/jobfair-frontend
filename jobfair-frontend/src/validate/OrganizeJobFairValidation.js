@@ -93,9 +93,9 @@ export const OrganizeJobFairValidation = {
       }
     })
   ],
-  name: [REQUIRED_VALIDATOR('Name'), MAX_LENGTH_VALIDATOR('Name', 300)],
-  hostname: [REQUIRED_VALIDATOR('Host name'), MAX_LENGTH_VALIDATOR('Name', 300)],
-  description: [REQUIRED_VALIDATOR('Description'), MAX_LENGTH_VALIDATOR('Name', 3000)],
+  name: [REQUIRED_VALIDATOR('Name'), MAX_LENGTH_VALIDATOR('Name', 100)],
+  hostname: [REQUIRED_VALIDATOR('Host name'), MAX_LENGTH_VALIDATOR('Name', 100)],
+  description: [REQUIRED_VALIDATOR('Description'), MAX_LENGTH_VALIDATOR('Name', 500)],
   thumbnail: [REQUIRED_VALIDATOR('Thumbnail')],
-  targetAttendant: [REQUIRED_VALIDATOR('Host name'), MAX_LENGTH_VALIDATOR('Name', 300)]
+  targetAttendant: [REQUIRED_VALIDATOR('Target attendant'), MAX_LENGTH_VALIDATOR('Name', 100)]
 };

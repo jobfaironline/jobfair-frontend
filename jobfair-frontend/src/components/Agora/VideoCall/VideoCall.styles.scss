@@ -1,6 +1,8 @@
 .video-call {
+  position: relative;
+
   .topVideoCall {
-    position: relative;
+    position: absolute;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -23,21 +25,20 @@
     width: 10rem;
   }
 
-  .mainVideo {
-    position: relative;
-    transform: translateY(-7rem);
-    max-width: 100%;
-    height: 10rem;
-    max-height: 10rem;
+  .videoIcon {
+    display: flex;
+    justify-content: center;
 
-    .videoIcon {
-      display: flex;
-      justify-content: center;
-
-      button {
-        margin: 1rem 0.5rem;
-      }
+    button {
+      margin: 1rem 0.5rem;
     }
+  }
+
+  .mainVideo {
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-snap-type: y;
 
     .vid {
       height: auto;

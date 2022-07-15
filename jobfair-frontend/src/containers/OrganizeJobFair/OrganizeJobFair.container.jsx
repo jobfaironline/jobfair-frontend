@@ -4,7 +4,6 @@ import { Button, Form, notification } from 'antd';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { SideBarComponent } from '../../components/commons/SideBar/SideBar.component';
-import { convertToDateValue } from '../../utils/common';
 import {
   draftJobFairAPI,
   getJobFairByIDAPI,
@@ -37,10 +36,10 @@ const generateUpdateJobFairRequestBody = (formValues, jobFairId) => {
   return {
     id: jobFairId,
     name: formValues.name,
-    decorateStartTime: convertToDateValue(formValues.decorateRange[0].format()),
-    decorateEndTime: convertToDateValue(formValues.decorateRange[1].format()),
-    publicStartTime: convertToDateValue(formValues.publicRange[0].format()),
-    publicEndTime: convertToDateValue(formValues.publicRange[1].format()),
+    decorateStartTime: formValues.decorateRange[0].startOf('d').valueOf(),
+    decorateEndTime: formValues.decorateRange[1].endOf('d').valueOf(),
+    publicStartTime: formValues.publicRange[0].startOf('d').valueOf(),
+    publicEndTime: formValues.publicRange[1].startOf('d').valueOf(),
     shifts
   };
 };

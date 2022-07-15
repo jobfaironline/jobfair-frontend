@@ -1,14 +1,20 @@
-import { COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../../constants/RoleType';
 import { EyeOutlined } from '@ant-design/icons';
 import { Input, Space, Tooltip, notification } from 'antd';
-import { PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path';
+import { PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { generatePath, useHistory } from 'react-router-dom';
-import { getAllApplication } from '../../../services/jobhub-api/ApplicationControllerService';
-import ApplicationTableColumn from '../../CommonTableComponent/columns/ApplicationTable.column';
-import CommonTableContainer from '../../CommonTableComponent/CommonTableComponent.container';
+import {
+  getAllApplicationForAttendant,
+  getAllApplicationForCompany
+} from '../../services/jobhub-api/ApplicationControllerService';
+import { useSelector } from 'react-redux';
+import ApplicationTableColumn from '../CommonTableComponent/columns/ApplicationTable.column';
+import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import React, { useEffect, useState } from 'react';
-// eslint-disable-next-line no-unused-vars
-const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
+import RoleType, { COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../constants/RoleType';
+
+const ApplicationViewContainer = ({ tabStatus }) => {
+  const role = useSelector((state) => state.authentication.user.roles);
+
   //pagination
   const [totalRecord, setTotalRecord] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -22,12 +28,15 @@ const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
   const fetchData = async (currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue) => {
     const testStatus = filterStatus(tabStatus);
     try {
-      const res = await getAllApplication(
+      const fetchFunction = [RoleType.COMPANY_EMPLOYEE, RoleType.COMPANY_MANAGER].includes(role)
+        ? getAllApplicationForCompany
+        : getAllApplicationForAttendant;
+      const res = await fetchFunction(
         currentPage,
         pageSize,
         [testStatus],
-        jobFairSearchValue,
-        jobPositionSearchValue,
+        jobFairSearchValue.toLowerCase(),
+        jobPositionSearchValue.toLowerCase(),
         tabStatus !== 1 ? 'evaluateDate' : 'appliedDate'
       );
       const { data } = res;
@@ -84,7 +93,7 @@ const CompanyApplicationView = ({ role, tabStatus, ...otherProps }) => {
 
   const applicationTableProps = {
     tableData: applicationData,
-    tableColumns: ApplicationTableColumn,
+    tableColumns: ApplicationTableColumn(role),
     onSearch: () => {
       //TODO: fetch data for search
     },
@@ -146,4 +155,4 @@ const filterStatus = (key) => {
   }
 };
 
-export default CompanyApplicationView;
+export default ApplicationViewContainer;

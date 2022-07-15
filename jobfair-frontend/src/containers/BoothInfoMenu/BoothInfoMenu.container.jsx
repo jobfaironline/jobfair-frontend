@@ -2,6 +2,7 @@ import './BoothInfoMenu.styles.scss';
 import {
   ArrowsAltOutlined,
   CommentOutlined,
+  LeftCircleOutlined,
   ProfileOutlined,
   ShrinkOutlined,
   SolutionOutlined
@@ -12,6 +13,7 @@ import { Tabs, Tooltip, Typography, notification } from 'antd';
 import { boothTabAction } from '../../redux-flow/boothInfoTab/boothInfoTab-slice';
 import { getCompanyBoothById } from '../../services/jobhub-api/CompanyBoothControllerService';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import ChatBoxContainer from '../Agora/ChatBox/ChatBox.container';
 import React, { useEffect, useState } from 'react';
 
@@ -19,6 +21,7 @@ export const BoothInfoMenuContainer = (props) => {
   const { companyBoothId, openInventory, communicationProps } = props;
   const { isShow, activeKey } = useSelector((state) => state.boothTab);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [state, setState] = useState({
     companyInformation: undefined,
@@ -92,7 +95,11 @@ export const BoothInfoMenuContainer = (props) => {
               </div>
             }
             key='0'>
-            {isShow ? <ChatBoxContainer {...communicationProps} /> : null}
+            {
+              <div style={{ display: isShow ? 'block' : 'none' }}>
+                <ChatBoxContainer {...communicationProps} />
+              </div>
+            }
           </Tabs.TabPane>
           <Tabs.TabPane
             tab={
@@ -126,6 +133,23 @@ export const BoothInfoMenuContainer = (props) => {
               <BoothJobPositionTabContainer jobPositions={state.jobPositions} openInventory={openInventory} />
             ) : null}
           </Tabs.TabPane>
+          <Tabs.TabPane
+            key='3'
+            tab={
+              <div
+                style={{ textAlign: 'center' }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  history.goBack();
+                }}>
+                <Tooltip title={'Exit'}>
+                  <Typography.Text strong style={{ fontSize: '2rem' }}>
+                    <LeftCircleOutlined />
+                  </Typography.Text>
+                </Tooltip>
+              </div>
+            }
+          />
         </Tabs>
       </div>
     </div>

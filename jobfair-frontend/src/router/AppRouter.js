@@ -268,12 +268,6 @@ const AppRouter = () => {
             exact
           />
           <CompanyEmployeeRouter
-            key={PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE}
-            component={() => <EmployeeAssignBoothMapPage />}
-            path={PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE}
-            exact
-          />
-          <CompanyEmployeeRouter
             key={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}
             component={() => <InterviewSchedulePage />}
             path={PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE}
