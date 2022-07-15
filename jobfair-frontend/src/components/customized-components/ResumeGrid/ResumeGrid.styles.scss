@@ -1,15 +1,15 @@
-.resume-grid{
-  .card{
+.resume-grid {
+  .card {
     border-radius: 8px;
     max-width: 300px;
     aspect-ratio: 15 / 13;
     border: 1px solid #dddddd;
 
-    .ant-card-body{
+    .ant-card-body {
       padding: 5px 16px;
     }
   }
-  .add-card{
+  .add-card {
     display: flex;
     align-items: center;
     justify-content: center;

@@ -1,5 +1,8 @@
+import { BUTTON_BG_COLOR } from '../../../styles/custom-theme';
 import { Card, Col, Divider, Row, Typography } from 'antd';
+import { CaretLeftOutlined } from '@ant-design/icons';
 import { MinuteFormat } from '../../../constants/ApplicationConst';
+import { useSelector } from 'react-redux';
 import React from 'react';
 import moment from 'moment';
 
@@ -35,27 +38,47 @@ export const WaitingRoomListForInterviewerComponent = ({ waitingList }) => (
   </Card>
 );
 
-export const WaitingRoomListForIntervieweeComponent = ({ userSchedule }) => (
-  <Card>
-    <div>
+export const WaitingRoomListForIntervieweeComponent = ({ userSchedules }) => {
+  const userId = useSelector((state) => state.authentication.user.userId);
+  return (
+    <div style={{ flex: 1, border: '1px solid #f0f0f0', padding: '1rem' }}>
       <Typography.Title level={3}>Waiting room</Typography.Title>
-      {/* <div>
-        <Row>
-          <Col span={10}>Số lượt tiếp theo</Col>
-          <Col span={7}>{turn}</Col>
-        </Row>
-      </div> */}
-      <div className='name-holder'>
-        <Row>
-          <Col span={10}>{userSchedule.fullName}</Col>
-          <Col span={7}>
-            {`${new Date(userSchedule.beginTime).toTimeString().split(' ')[0]} - ${
-              new Date(userSchedule.endTime).toTimeString().split(' ')[0]
-            }`}
-          </Col>
-          <Col span={7}>Tiếp theo</Col>
-        </Row>
-      </div>
+      <Row>
+        <Col span={2}>
+          <Typography.Text strong>No</Typography.Text>
+        </Col>
+        <Col span={10}>
+          <Typography.Text strong>Name</Typography.Text>
+        </Col>
+        <Col span={7}>
+          <Typography.Text strong>Schedule</Typography.Text>
+        </Col>
+      </Row>
+      {userSchedules?.map((userSchedule, index) => (
+        <div className='name-holder'>
+          <Row>
+            <Col span={2}>
+              <Typography.Text>{index + 1}</Typography.Text>
+            </Col>
+            <Col span={10}>
+              <Typography.Text>{userSchedule.attendantName}</Typography.Text>
+            </Col>
+            <Col span={5}>
+              <Typography.Text>
+                {moment(userSchedule.beginTime).format(MinuteFormat)}
+                {' - '}
+                {moment(userSchedule.endTime).format(MinuteFormat)}
+              </Typography.Text>
+            </Col>
+            {userId === userSchedule.attendantId ? (
+              <Col span={5} style={{ color: BUTTON_BG_COLOR, gap: '5px' }}>
+                <CaretLeftOutlined />
+                You are here
+              </Col>
+            ) : null}
+          </Row>
+        </div>
+      ))}
     </div>
-  </Card>
-);
+  );
+};

@@ -7,8 +7,13 @@ import moment from 'moment';
 export const mapperJobFairAssignment = (item, index) => {
   const now = moment();
   let status = JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET;
-  if (now.valueOf() > item.jobFairBooth?.jobFair?.decorateStartTime) status = JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING;
-  if (now.valueOf() > item.jobFairBooth?.jobFair?.decorateEndTime) status = JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE;
+  if (item.type === AssignmentConst.DECORATOR) {
+    if (now.valueOf() > item.jobFairBooth?.jobFair?.decorateStartTime) status = JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING;
+    if (now.valueOf() > item.jobFairBooth?.jobFair?.decorateEndTime) status = JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE;
+  } else {
+    if (now.valueOf() > item.jobFairBooth?.jobFair?.decorateStartTime) status = JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING;
+    if (now.valueOf() > item.jobFairBooth?.jobFair?.publicEndTime) status = JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE;
+  }
   let statusColor;
   switch (status) {
     case JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE:

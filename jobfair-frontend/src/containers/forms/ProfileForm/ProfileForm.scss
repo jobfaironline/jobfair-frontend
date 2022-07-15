@@ -1,4 +1,4 @@
-@import "src/styles/custom-theme";
+@import 'src/styles/custom-theme';
 .profile-form {
   padding: 0 20% 5rem;
 
@@ -10,12 +10,10 @@
     border-radius: 8px;
     margin-bottom: 1rem;
     scroll-margin-top: $navbar-height;
-
   }
 
   #cvName {
     font-size: 1.5rem;
     font-weight: bold;
   }
-
 }

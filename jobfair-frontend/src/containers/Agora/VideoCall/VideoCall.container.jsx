@@ -9,7 +9,6 @@ import { getAgoraRTCToken } from '../../../services/jobhub-api/AgoraTokenControl
 import { interviewRoomAction } from '../../../redux-flow/interviewRoom/interview-room-slice';
 import { kickUser } from '../../../services/jobhub-api/InterviewControllerService';
 import { notification } from 'antd';
-import { notificationAction } from '../../../redux-flow/notification/notification-slice';
 import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
 import { useHistory } from 'react-router-dom';
 import VideoCallComponent from '../../../components/Agora/VideoCall/VideoCall.component';
@@ -79,6 +78,7 @@ const VideoCallContainer = (props) => {
       }
 
       if (mediaType === 'audio') user?.audioTrack?.play();
+      dispatch(interviewRoomAction.setRerender());
     });
 
     rtcClient.on('user-unpublished', (user, type) => {
@@ -88,12 +88,12 @@ const VideoCallContainer = (props) => {
 
       if (type === 'video') user.videoTrack?.stop();
       setUsers((prevUsers) => [...prevUsers]);
+      dispatch(interviewRoomAction.setRerender());
     });
 
     rtcClient.on('user-left', (user) => {
       // eslint-disable-next-line no-console
       console.log('leaving', user);
-      dispatch(notificationAction.setInRoom(false)); //TODO: remove later
       setUsers((prevUsers) => prevUsers.filter((User) => User.uid !== user.uid));
       dispatch(interviewRoomAction.setRerender());
     });
