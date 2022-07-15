@@ -131,9 +131,9 @@ const AttendantInterviewRoomContainer = (props) => {
   );
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', minHeight: `calc(100vh - ${NAVBAR_HEIGHT}` }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', minHeight: `calc(100vh - ${NAVBAR_HEIGHT}` }}>
       <div style={{ gridColumn: 'span 1', display: 'flex' }}>{firstColumn}</div>
-      <div style={{ gridColumn: 'span 2', display: 'flex' }}>{secondColumn}</div>
+      <div style={{ gridColumn: 'span 3', display: 'flex' }}>{secondColumn}</div>
     </div>
   );
 };
