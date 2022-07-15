@@ -4,6 +4,8 @@ import { fetchInterviewingApplicationData } from './interview-room-action';
 const interviewRoomSlice = createSlice({
   name: 'interviewRoom',
   initialState: {
+    newJoinedUserName: undefined,
+    rerenderUserJoin: undefined,
     rerender: false,
     currentInterviewingApplication: {
       applicationData: undefined,
@@ -11,6 +13,13 @@ const interviewRoomSlice = createSlice({
     }
   },
   reducers: {
+    setJoinedUserName: (state, action) => {
+      return {
+        ...state,
+        newJoinedUserName: action.payload,
+        rerenderUserJoin: !state.rerenderUserJoin
+      };
+    },
     setRerender: (state) => {
       //also reset it
       return {

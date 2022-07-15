@@ -32,20 +32,20 @@ const InterviewRoomPage = () => {
 
   useEffect(() => cleanUp);
 
-  const cleanUp = () => {
+  const cleanUp = async () => {
     //close all audio and camera tracks
     audioTrackRef.current?.close();
     cameraTrackRef.current?.close();
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const RTCClient = useClient();
-    RTCClient.unpublish(audioTrackRef.current);
-    RTCClient.unpublish(cameraTrackRef.current);
-    RTCClient.leave();
-    RTCClient.removeAllListeners();
-
-    rtm.logout();
-    rtm.removeAllListeners();
+    await RTCClient.unpublish(audioTrackRef.current);
+    await RTCClient.unpublish(cameraTrackRef.current);
+    await RTCClient.leave();
+    await RTCClient.removeAllListeners();
+    await rtm.leaveChannel(channelId);
+    await rtm.logout();
+    await rtm.removeAllListeners();
   };
 
   return (

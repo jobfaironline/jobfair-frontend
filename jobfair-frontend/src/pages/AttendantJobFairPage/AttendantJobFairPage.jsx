@@ -37,21 +37,7 @@ const AttendantJobFairPage = () => {
   dispatch(agoraAction.setChannelId(channelId));
   geckoClientRef.current = geckoClient;
 
-  useEffect(() => () => {
-    audioTrackRef.current?.close();
-    cameraTrackRef.current?.close();
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const RTCClient = useClient();
-    RTCClient.unpublish(audioTrackRef.current);
-    RTCClient.unpublish(cameraTrackRef.current);
-    RTCClient.leave();
-    RTCClient.removeAllListeners();
-
-    rtm.logout();
-    rtm.removeAllListeners();
-    geckoClientRef.current.close();
-  });
+  useEffect(() => cleanUp);
 
   useEffect(() => {
     visitJobFairBooth(companyBoothId);
@@ -64,6 +50,23 @@ const AttendantJobFairPage = () => {
       leaveJobFairBooth(companyBoothId);
     };
   }, []);
+
+  const cleanUp = async () => {
+    audioTrackRef.current?.close();
+    cameraTrackRef.current?.close();
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const RTCClient = useClient();
+    await RTCClient.unpublish(audioTrackRef.current);
+    await RTCClient.unpublish(cameraTrackRef.current);
+    await RTCClient.leave();
+    await RTCClient.removeAllListeners();
+
+    await rtm.leaveChannel(channelId);
+    await rtm.logout();
+    await rtm.removeAllListeners();
+    geckoClientRef.current.close();
+  };
 
   const communicationProps = {
     audioTrackRef,
