@@ -14,6 +14,105 @@ import NoPhotographyIcon from '@mui/icons-material/NoPhotography';
 import PowerOffIcon from '@mui/icons-material/PowerOff';
 import React from 'react';
 
+const VideoButtonControlGroup = (props) => {
+  const { audioTrack, cameraTrack, muteState, handleMute, handleClose } = props;
+  return (
+    <div className={'videoIcon'}>
+      {audioTrack ? (
+        <div className={muteState.audio ? 'on' : ''}>
+          <Button
+            type='primary'
+            shape='circle'
+            size='large'
+            icon={
+              !muteState.audio ? <FontAwesomeIcon icon={faMicrophone} /> : <FontAwesomeIcon icon={faMicrophoneSlash} />
+            }
+            onClick={() => handleMute('audio')}
+          />
+        </div>
+      ) : (
+        <PowerOffIcon />
+      )}
+      {cameraTrack ? (
+        <div className={muteState.video ? 'on' : ''}>
+          <Button
+            type='primary'
+            shape='circle'
+            size='large'
+            icon={
+              !muteState.video ? (
+                <Tooltip title='Turn off camera'>
+                  <FontAwesomeIcon icon={faVideoCamera} />
+                </Tooltip>
+              ) : (
+                <Tooltip title='Turn on camera'>
+                  <FontAwesomeIcon icon={faVideoSlash} />
+                </Tooltip>
+              )
+            }
+            onClick={() => handleMute('video')}
+          />
+        </div>
+      ) : (
+        <Button disabled={true} type='primary' shape='circle' size='large' icon={<NoPhotographyIcon />} />
+      )}
+      <Button
+        type='primary'
+        shape='circle'
+        size='large'
+        icon={
+          <Tooltip title='Leave call'>
+            <FontAwesomeIcon icon={faPhone} />
+          </Tooltip>
+        }
+        onClick={() => handleClose()}
+      />
+    </div>
+  );
+};
+
+const EmptyScreen = () => (
+  <div
+    style={{
+      height: '100%',
+      width: '100%',
+      margin: '0 0.5rem',
+      background: '#000'
+    }}>
+    <div
+      style={{
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+      <h1 style={{ color: '#FFF' }}>No one is here</h1>
+    </div>
+  </div>
+);
+
+const UserOffScreen = () => (
+  <div
+    style={{
+      height: '100%',
+      width: '100%',
+      margin: '0 0.5rem',
+      background: '#000'
+    }}>
+    <div
+      style={{
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+      <Avatar shape='circle' size={256 / 2} icon={<UserOutlined />} />
+    </div>
+  </div>
+);
+
 const VideoCallComponent = (props) => {
   const {
     cameraReady,
@@ -30,11 +129,13 @@ const VideoCallComponent = (props) => {
     isKickable = false
   } = props;
 
+  const buttonControlGroupProps = { audioTrack, cameraTrack, muteState, handleMute, handleClose };
+
   if (layoutMode === 'WAITINGROOM') {
     return (
       <div className={'video-call'} style={{ height, width, padding: '2rem' }}>
         <div className={'topVideoCall'} style={{ padding: '0rem 0.5rem' }}>
-          <div className={'iconMail'}></div>
+          <div className={'iconMail'} />
           {/*TODO: the 'type' props will decide the style of component*/}
           <div className={'videoCall'}>
             {users.length > 0 ? (
@@ -132,61 +233,7 @@ const VideoCallComponent = (props) => {
               </div>
             </div>
           )}
-          <div className={'videoIcon'}>
-            {audioTrack ? (
-              <div className={muteState.audio ? 'on' : ''}>
-                <Button
-                  type='primary'
-                  shape='circle'
-                  size='large'
-                  icon={
-                    !muteState.audio ? (
-                      <FontAwesomeIcon icon={faMicrophone} />
-                    ) : (
-                      <FontAwesomeIcon icon={faMicrophoneSlash} />
-                    )
-                  }
-                  onClick={() => handleMute('audio')}
-                />
-              </div>
-            ) : (
-              <PowerOffIcon />
-            )}
-            {cameraTrack ? (
-              <div className={muteState.video ? 'on' : ''}>
-                <Button
-                  type='primary'
-                  shape='circle'
-                  size='large'
-                  icon={
-                    !muteState.video ? (
-                      <Tooltip title='Turn off camera'>
-                        <FontAwesomeIcon icon={faVideoCamera} />
-                      </Tooltip>
-                    ) : (
-                      <Tooltip title='Turn on camera'>
-                        <FontAwesomeIcon icon={faVideoSlash} />
-                      </Tooltip>
-                    )
-                  }
-                  onClick={() => handleMute('video')}
-                />
-              </div>
-            ) : (
-              <Button type='primary' disabled={true} shape='circle' size='large' icon={<NoPhotographyIcon />} />
-            )}
-            <Button
-              type='primary'
-              shape='circle'
-              size='large'
-              icon={
-                <Tooltip title='Leave call'>
-                  <FontAwesomeIcon icon={faPhone} />
-                </Tooltip>
-              }
-              onClick={() => handleClose()}
-            />
-          </div>
+          <VideoButtonControlGroup {...buttonControlGroupProps} />
         </div>
       </div>
     );
@@ -220,136 +267,50 @@ const VideoCallComponent = (props) => {
           )}
         </div>
       </div>
+      <div style={{ position: 'absolute', right: '4rem', top: '3rem' }}>
+        <Badge count={users.length}>
+          <Avatar shape='circle' size='large' icon={<UserOutlined />} />
+        </Badge>
+      </div>
+
       <div className={'mainVideo'} style={{ height: '90%', maxHeight: 'none' }}>
         {users.length > 0 ? (
-          <div style={{ height: '100%' }}>
-            {users.length > 0 &&
-              users.map((user) => {
-                if (user.videoTrack) {
-                  return (
-                    <div style={{ height: '100%', width: '100%' }}>
-                      <AgoraVideoPlayer
-                        style={{ height: '100%', width: '100%' }}
-                        className='vid'
-                        videoTrack={user.videoTrack}
-                        key={user.uid}
-                      />
-                      {isKickable ? <div className={'user-icon'} /> : null}
-                      {isKickable ? (
-                        <div className={'user-mask'}>
-                          <Tooltip title={'Remove this user'}>
-                            <div
-                              style={{ color: '#FFF' }}
-                              onClick={() => {
-                                kickUser(user.uid);
-                              }}>
-                              Remove
-                            </div>
-                          </Tooltip>
-                        </div>
-                      ) : null}
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div
-                      style={{
-                        height: '100%',
-                        width: '100%',
-                        margin: '0 0.5rem',
-                        background: '#000'
-                      }}>
-                      <div
-                        style={{
-                          height: '100%',
-                          width: '100%',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center'
-                        }}>
-                        <Avatar shape='circle' size={256} icon={<UserOutlined />} />
+          <>
+            {users.map((user) => {
+              if (user.videoTrack) {
+                return (
+                  <div style={{ height: '100%', width: '100%', scrollSnapAlign: 'center' }}>
+                    <AgoraVideoPlayer
+                      style={{ height: '100%', width: '100%' }}
+                      className='vid'
+                      videoTrack={user.videoTrack}
+                      key={user.uid}
+                    />
+                    {isKickable ? <div className={'user-icon'} /> : null}
+                    {isKickable ? (
+                      <div className={'user-mask'}>
+                        <Tooltip title={'Remove this user'}>
+                          <div
+                            style={{ color: '#FFF' }}
+                            onClick={() => {
+                              kickUser(user.uid);
+                            }}>
+                            Remove
+                          </div>
+                        </Tooltip>
                       </div>
-                    </div>
-                  );
-                }
-              })}
-          </div>
+                    ) : null}
+                  </div>
+                );
+              }
+              return <UserOffScreen />;
+            })}
+          </>
         ) : (
-          <div
-            style={{
-              height: '100%',
-              width: '100%',
-              margin: '0 0.5rem',
-              background: '#000'
-            }}>
-            <div
-              style={{
-                height: '100%',
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}>
-              <h1 style={{ color: '#FFF' }}>No one is here</h1>
-            </div>
-          </div>
+          <EmptyScreen />
         )}
-        <div className={'videoIcon'}>
-          {audioTrack ? (
-            <div className={muteState.audio ? 'on' : ''}>
-              <Button
-                type='primary'
-                shape='circle'
-                size='large'
-                icon={
-                  !muteState.audio ? (
-                    <FontAwesomeIcon icon={faMicrophone} />
-                  ) : (
-                    <FontAwesomeIcon icon={faMicrophoneSlash} />
-                  )
-                }
-                onClick={() => handleMute('audio')}
-              />
-            </div>
-          ) : (
-            <PowerOffIcon />
-          )}
-          {cameraTrack ? (
-            <div className={muteState.video ? 'on' : ''}>
-              <Button
-                type='primary'
-                shape='circle'
-                size='large'
-                icon={
-                  !muteState.video ? (
-                    <Tooltip title='Turn off camera'>
-                      <FontAwesomeIcon icon={faVideoCamera} />
-                    </Tooltip>
-                  ) : (
-                    <Tooltip title='Turn on camera'>
-                      <FontAwesomeIcon icon={faVideoSlash} />
-                    </Tooltip>
-                  )
-                }
-                onClick={() => handleMute('video')}
-              />
-            </div>
-          ) : (
-            <Button disabled={true} type='primary' shape='circle' size='large' icon={<NoPhotographyIcon />} />
-          )}
-          <Button
-            type='primary'
-            shape='circle'
-            size='large'
-            icon={
-              <Tooltip title='Leave call'>
-                <FontAwesomeIcon icon={faPhone} />
-              </Tooltip>
-            }
-            onClick={() => handleClose()}
-          />
-        </div>
       </div>
+      <VideoButtonControlGroup {...buttonControlGroupProps} />
     </div>
   );
 };
