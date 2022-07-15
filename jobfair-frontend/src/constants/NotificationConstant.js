@@ -9,5 +9,6 @@ export const NotificationType = {
 
 export const NotificationAction = {
   ASSIGMENT: 'ASSIGNMENT',
-  APPLICATION: 'APPLICATION'
+  APPLICATION: 'APPLICATION',
+  UN_ASSIGNMENT: 'UN_ASSIGNMENT'
 };
