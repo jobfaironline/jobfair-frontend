@@ -1,10 +1,20 @@
 import { Button, Space } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faFloppyDisk, faHistory, faPlus } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
+import React, { useState } from 'react';
 
 export const ControlButtonGroup = (props) => {
   const { addMoreComponentHandle, saveHandle, reviewHandle, openBoothModal, saveIntoMyBoothLayout } = props;
+
+  const [loadingState, setLoadingState] = useState({
+    save: false
+  });
+
+  const internalSaveHandle = async () => {
+    setLoadingState((prevState) => ({ ...prevState, save: true }));
+    await saveHandle();
+    setLoadingState((prevState) => ({ ...prevState, save: false }));
+  };
 
   return (
     <div style={{ position: 'absolute', top: '180px', right: '10px' }}>
@@ -18,8 +28,9 @@ export const ControlButtonGroup = (props) => {
         </Button>
         <Button
           style={{ width: '12rem' }}
-          onClick={saveHandle}
+          onClick={internalSaveHandle}
           type='primary'
+          loading={loadingState.save}
           icon={<FontAwesomeIcon icon={faFloppyDisk} style={{ paddingRight: '0.5rem' }} />}>
           Save
         </Button>

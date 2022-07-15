@@ -271,7 +271,7 @@ export const Decorate3DBoothContainer = (props) => {
 
   const controlButtonsProps = {
     addMoreComponentHandle,
-    saveHandle: () => saveHandle(),
+    saveHandle,
     reviewHandle,
     openBoothModal,
     saveIntoMyBoothLayout: () => {
