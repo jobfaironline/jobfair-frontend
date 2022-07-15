@@ -23,11 +23,6 @@ const TaskActionButton = ({ type, status, record }) => {
                 companyBoothId: record.jobFairBooth.id
               });
               history.push(url);
-              /*history.push(
-                generatePath(PATH_COMPANY_EMPLOYEE.ASSIGN_BOOTH_MAP_PAGE, {
-                  assignmentId: record.id
-                })
-              );*/
             }}>
             Go to the booth
           </Button>

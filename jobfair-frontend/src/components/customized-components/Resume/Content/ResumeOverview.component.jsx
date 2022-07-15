@@ -17,24 +17,24 @@ export const ResumeOverview = ({ userOverview, isForCompany }) => (
           </Col>
         </Row>
         {isForCompany ? (
-          <Row style={{ marginBottom: '5px' }}>
-            <Col span={8}>
-              <Text strong>Email</Text>
-            </Col>
-            <Col>
-              <Text>{userOverview?.email}</Text>
-            </Col>
-          </Row>
-        ) : null}
-        {isForCompany ? (
-          <Row style={{ marginBottom: '5px' }}>
-            <Col span={8}>
-              <Text strong>Phone</Text>
-            </Col>
-            <Col>
-              <Text>{userOverview?.phoneNumber}</Text>
-            </Col>
-          </Row>
+          <>
+            <Row style={{ marginBottom: '5px' }}>
+              <Col span={8}>
+                <Text strong>Email</Text>
+              </Col>
+              <Col>
+                <Text>{userOverview?.email}</Text>
+              </Col>
+            </Row>
+            <Row style={{ marginBottom: '5px' }}>
+              <Col span={8}>
+                <Text strong>Phone</Text>
+              </Col>
+              <Col>
+                <Text>{userOverview?.phoneNumber}</Text>
+              </Col>
+            </Row>
+          </>
         ) : null}
 
         <Row style={{ marginBottom: '5px' }}>
