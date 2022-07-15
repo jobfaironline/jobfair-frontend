@@ -233,8 +233,8 @@ const VideoCallComponent = (props) => {
               </div>
             </div>
           )}
-          <VideoButtonControlGroup {...buttonControlGroupProps} />
         </div>
+        <VideoButtonControlGroup {...buttonControlGroupProps} />
       </div>
     );
   }
@@ -267,11 +267,13 @@ const VideoCallComponent = (props) => {
           )}
         </div>
       </div>
-      <div style={{ position: 'absolute', right: '4rem', top: '3rem' }}>
-        <Badge count={users.length}>
-          <Avatar shape='circle' size='large' icon={<UserOutlined />} />
-        </Badge>
-      </div>
+      {users.length > 1 ? (
+        <div style={{ position: 'absolute', right: '4rem', top: '3rem' }}>
+          <Badge count={users.length}>
+            <Avatar shape='circle' size='large' icon={<UserOutlined />} />
+          </Badge>
+        </div>
+      ) : null}
 
       <div className={'mainVideo'} style={{ height: '90%', maxHeight: 'none' }}>
         {users.length > 0 ? (
