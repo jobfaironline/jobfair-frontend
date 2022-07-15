@@ -101,7 +101,7 @@ const JobPositionManagementContainer = () => {
       if (data.totalElements) {
         notification['error']({
           message: `This job still has questions!`,
-          description: `Please delete all before delete job position.`
+          description: `Please delete all questions before delete job position.`
         });
         return;
       }
