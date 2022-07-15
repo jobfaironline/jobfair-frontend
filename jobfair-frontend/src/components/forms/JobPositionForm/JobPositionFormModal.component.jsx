@@ -113,7 +113,13 @@ export const JobPositionFormModal = (props) => {
                                   {...restField}
                                   name={[name, 'minSalary']}
                                   rules={PickJobPositionFormValidation.minSalary(name)}>
-                                  <Input prefix='$' placeholder='Min salary' />
+                                  <InputNumber
+                                    prefix='$'
+                                    placeholder='Min salary'
+                                    min={0}
+                                    max={10000}
+                                    style={{ width: '100%' }}
+                                  />
                                 </Form.Item>
                                 <Form.Item label=' '>
                                   <Input
@@ -128,7 +134,14 @@ export const JobPositionFormModal = (props) => {
                                   label='Max salary'
                                   name={[name, 'maxSalary']}
                                   rules={PickJobPositionFormValidation.maxSalary(name)}>
-                                  <Input prefix='$' className='site-input-right' placeholder='Max salary' />
+                                  <InputNumber
+                                    prefix='$'
+                                    className='site-input-right'
+                                    placeholder='Max salary'
+                                    min={0}
+                                    max={10000}
+                                    style={{ width: '100%' }}
+                                  />
                                 </Form.Item>
                               </Input.Group>
                             </div>

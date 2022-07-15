@@ -184,7 +184,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
                   <Input placeholder="Booth's name" />
                 </Form.Item>
                 <Form.Item label='Booth description' name='description' rules={BoothDescriptionValidation.description}>
-                  <TextArea autoSize={{ minRows: 5 }} showCount maxLength={3000} placeholder='Description' />
+                  <TextArea autoSize={{ minRows: 5 }} showCount maxLength={500} placeholder='Description' />
                 </Form.Item>
               </Form>
             </div>

@@ -92,7 +92,7 @@ const CompanyProfileForm = ({ form, editable, mediaUrl, onFinish, onCancel, ...m
           name='companyDescription'>
           <TextArea
             showCount={editable}
-            maxLength={3000}
+            maxLength={500}
             placeholder={editable ? 'Company description' : ''}
             disabled={!editable}
             autoSize={!editable}
@@ -111,6 +111,7 @@ const CompanyProfileForm = ({ form, editable, mediaUrl, onFinish, onCancel, ...m
         <Form.Item
           style={editable ? { display: 'inline-block', width: '60%' } : { margin: 0 }}
           label='Company industry'
+          rules={editable ? CompanyProfileValidation.subCategoriesIds : []}
           name='subCategoriesIds'>
           <Select
             disabled={!editable}
@@ -201,7 +202,6 @@ const CompanyProfileForm = ({ form, editable, mediaUrl, onFinish, onCancel, ...m
           <Button
             style={{ display: editable ? 'block' : 'none' }}
             className={'button'}
-            onClick={onCancel}
             type={'primary'}
             htmlType={'submit'}>
             Save
