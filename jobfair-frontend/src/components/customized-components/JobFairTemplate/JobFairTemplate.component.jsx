@@ -1,25 +1,25 @@
+import '../JobFairGrid/JobFairGrid.styles.scss';
 import { Card, List } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
 const JobFairTemplateComponent = ({ data, handleViewDetail, onAddClick }) => (
-  <div style={{ minHeight: '60vh' }}>
+  <div style={{ minHeight: '60vh' }} className={'job-fair-grid'}>
     <List
-      grid={{ gutter: 20, xs: 1, sm: 3, md: 3, lg: 5, xl: 5, xxl: 5 }}
+      grid={{ gutter: 10, xs: 2, sm: 2, md: 3, lg: 3, xl: 4, xxl: 5 }}
       dataSource={data}
       renderItem={(item) => {
         if (item.isFirst) {
           return (
             <List.Item>
               <Card
+                className={'card add-card'}
                 onClick={onAddClick}
                 style={{
-                  width: 300,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  height: '260px',
                   borderRadius: '8px',
                   border: '1px solid #dddddd'
                 }}
@@ -33,7 +33,8 @@ const JobFairTemplateComponent = ({ data, handleViewDetail, onAddClick }) => (
           <List.Item>
             <Card
               hoverable={true}
-              style={{ width: 300, height: '260px', borderRadius: '8px', border: '1px solid #dddddd' }}
+              className={'card'}
+              style={{ borderRadius: '8px', border: '1px solid #dddddd' }}
               cover={<img src={item.thumbnailUrl} alt={item.name} />}
               onClick={() => handleViewDetail(item.id)}>
               <div>
