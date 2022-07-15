@@ -22,6 +22,17 @@ export const mapperForNotification = (data) => {
           };
           break;
         }
+        case AssignmentConst.DECORATOR: {
+          const jobFairBoothId = assignmentData.jobFairBooth.id;
+          const jobFairId = assignmentData.jobFairBooth.jobFair.id;
+          notification.action = () => {
+            window.location.href = generatePath(PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE, {
+              jobFairId,
+              companyBoothId: jobFairBoothId
+            });
+          };
+          break;
+        }
         default:
           notification.action = () => {
             window.location.href = generatePath(PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE);
