@@ -75,5 +75,7 @@ export const PATH_COMPANY_MANAGER = {
   TEMPLATE_DETAIL: '/company/my-template/:templateId',
   QUESTION_BANK: '/company/question-bank',
   CHECKLIST: '/company/checklist/:jobFairId',
-  REVIEW_MAP: '/company/review-map/:layoutId'
+  REVIEW_MAP: '/company/review-map/:layoutId',
+  JOB_FAIR_DASH_BOARD: '/company/dashboard/jobfair/:jobFairId',
+  BOOTH_DASH_BOARD: '/company/dashboard/booth/:boothId'
 };

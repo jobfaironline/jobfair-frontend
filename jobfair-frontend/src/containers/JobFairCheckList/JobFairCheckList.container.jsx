@@ -240,6 +240,11 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
     }
   };
 
+  const handleViewStatistics = () => {
+    const url = generatePath(PATH_COMPANY_MANAGER.JOB_FAIR_DASH_BOARD, { jobFairId });
+    history.push(url);
+  };
+
   if (state.isLoading) return <LoadingComponent isWholePage={true} />;
 
   return (
@@ -268,6 +273,13 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
               style={{ fontSize: '1.2rem' }}>
               <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: 5 }} />
               Back to my job fair
+            </Button>
+            <Button
+              type={'primary'}
+              className={'button'}
+              style={{ marginLeft: 'auto', display: state.progressData.score === 100 ? 'block' : 'none' }}
+              onClick={handleViewStatistics}>
+              View statistics
             </Button>
             <Button
               type={'primary'}

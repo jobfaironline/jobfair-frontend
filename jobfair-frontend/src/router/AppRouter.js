@@ -17,6 +17,7 @@ import AssignTaskPage from '../pages/AssignTaskPage/AssignTaskPage';
 import AttendantAttemptTestPage from '../pages/AttendantAttemptTestPage/AttendantAttemptTestPage';
 import AttendantJobFairPage from '../pages/AttendantJobFairPage/AttendantJobFairPage';
 import AttendantRouter from './components/AttendantRouter';
+import BoothDashboardPage from '../pages/BoothDashboardPage/BoothDashboardPage';
 import BoothDescriptionPage from '../pages/BoothDescriptionPage/BoothDescriptionPage';
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage';
 import CompanyEmployeeRouter from './components/CompanyEmployeeRouter';
@@ -33,6 +34,7 @@ import HomePage from '../pages/HomePage/HomePage';
 import InterviewRoomPage from '../pages/InterviewRoomPage/InterviewRoomPage';
 import InterviewSchedulePage from '../pages/InterviewSchedulePage/InterviewSchedulePage';
 import JobFairAssignmentPage from '../pages/JobFairAssignmentPage/JobFairAssignmentPage';
+import JobFairDashboardPage from '../pages/JobFairDashboardPage/JobFairDashboardPage';
 import JobFairGridManagerPage from '../pages/JobFairListPage/JobFairGridManagerPage';
 import JobFairLandingPage from '../pages/JobFairLandingPage/JobFairLandingPage';
 import JobFairListPage from '../pages/JobFairListPage/JobFairListPage';
@@ -373,6 +375,18 @@ const AppRouter = () => {
             key={PATH_COMPANY_MANAGER.REVIEW_MAP}
             component={() => <JobFairMapReviewPage />}
             path={PATH_COMPANY_MANAGER.REVIEW_MAP}
+            exact
+          />
+          <CompanyManagerRouter
+            key={PATH_COMPANY_MANAGER.JOB_FAIR_DASH_BOARD}
+            component={() => <JobFairDashboardPage />}
+            path={PATH_COMPANY_MANAGER.JOB_FAIR_DASH_BOARD}
+            exact
+          />
+          <CompanyManagerRouter
+            key={PATH_COMPANY_MANAGER.BOOTH_DASH_BOARD}
+            component={() => <BoothDashboardPage />}
+            path={PATH_COMPANY_MANAGER.BOOTH_DASH_BOARD}
             exact
           />
           <Route path='/index.html'>
