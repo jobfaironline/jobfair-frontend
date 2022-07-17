@@ -1,6 +1,7 @@
-import { Button, Card, Table, Typography } from 'antd';
+import { Button, Card, Table, Tag, Typography } from 'antd';
 import { PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path';
 import { generatePath } from 'react-router';
+import { getMatchingPointColor } from '../../../utils/common';
 import React from 'react';
 
 const { Title } = Typography;
@@ -19,23 +20,45 @@ const JobFairDashBoardBoothTableColumn = [
     }
   },
   {
-    title: 'Name',
+    title: 'Booth name',
     key: 'name',
     dataIndex: 'name'
   },
   {
-    title: 'Visitor traffic',
+    title: 'Number of traffic',
     key: 'visitNum',
-    dataIndex: 'visitNum'
+    dataIndex: 'visitNum',
+    width: '15%',
+    render: (num) => <div style={{ textAlign: 'right' }}>{num}</div>
   },
   {
     title: 'Number of applied CV',
     key: 'cvNum',
-    dataIndex: 'cvNum'
+    dataIndex: 'cvNum',
+    width: '15%',
+    render: (num) => <div style={{ textAlign: 'right' }}>{num}</div>
+  },
+  {
+    title: 'Average matching point',
+    key: 'matchingPointAverage',
+    dataIndex: 'matchingPointAverage',
+    width: '15%',
+    sorter: (a, b) => a.matchingPoint * 100 - b.matchingPoint * 100,
+    render: (num) => {
+      const tagColor = getMatchingPointColor(num);
+      return (
+        <div style={{ display: 'flex' }}>
+          <Tag color={tagColor} style={{ marginLeft: 'auto' }}>
+            {Math.round(num * 100)} %
+          </Tag>
+        </div>
+      );
+    }
   },
   {
     title: 'Actions',
     key: 'action',
+    width: '15%',
     render: (_, item) => (
       <Button
         type={'link'}

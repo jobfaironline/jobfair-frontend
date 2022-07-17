@@ -5,6 +5,7 @@ import { JOB_FAIR_STATUS } from '../../constants/JobFairConst';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { MinuteFormat } from '../../constants/ApplicationConst';
 import { PATH, PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
+import { PieChartOutlined } from '@ant-design/icons';
 import { PublishJobFairConfirmModal } from '../../components/customized-components/PublishJobFairConfirmModal/PublishJobFairConfirmModal.component';
 import { Step1Component } from '../../components/customized-components/JobFairCheckList/Step1.component';
 import { Step2Component } from '../../components/customized-components/JobFairCheckList/Step2.component';
@@ -279,7 +280,7 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
               className={'button'}
               style={{ marginLeft: 'auto', display: state.progressData.score === 100 ? 'block' : 'none' }}
               onClick={handleViewStatistics}>
-              View statistics
+              View statistics <PieChartOutlined />
             </Button>
             <Button
               type={'primary'}

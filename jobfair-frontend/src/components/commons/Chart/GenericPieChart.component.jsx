@@ -14,7 +14,8 @@ export const GenericPieChart = ({ data, config, title = '' }) => {
     radius: 0.9,
     label: {
       type: 'inner',
-      offset: '-30%',
+      offset: '0',
+      autoRotate: false,
       content: ({ percent }) => `${(percent * 100).toFixed(0)}%`,
       style: {
         fontSize: 20,

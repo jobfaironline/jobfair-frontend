@@ -1,4 +1,5 @@
-import { Card, Table, Typography } from 'antd';
+import { Card, Table, Tag, Typography } from 'antd';
+import { getMatchingPointColor } from '../../../utils/common';
 import React from 'react';
 
 const { Title } = Typography;
@@ -7,6 +8,7 @@ const JobFairDashBoardJobPositionTableColumn = [
   {
     title: 'No',
     key: 'no',
+    width: '5%',
     render(text, _, index) {
       return {
         props: {
@@ -22,14 +24,35 @@ const JobFairDashBoardJobPositionTableColumn = [
     dataIndex: 'name'
   },
   {
-    title: 'Goal',
+    title: 'Job position goal',
     key: 'goal',
-    dataIndex: 'goal'
+    dataIndex: 'goal',
+    width: '15%',
+    render: (num) => <div style={{ textAlign: 'right' }}>{num}</div>
   },
   {
-    title: 'Current',
+    title: 'Current applied CV',
     key: 'current',
-    dataIndex: 'current'
+    dataIndex: 'current',
+    width: '15%',
+    render: (num) => <div style={{ textAlign: 'right' }}>{num}</div>
+  },
+  {
+    title: 'Average matching point',
+    key: 'matchingPointAverage',
+    dataIndex: 'matchingPointAverage',
+    width: '20%',
+    sorter: (a, b) => a.matchingPoint * 100 - b.matchingPoint * 100,
+    render: (num) => {
+      const tagColor = getMatchingPointColor(num);
+      return (
+        <div style={{ display: 'flex' }}>
+          <Tag color={tagColor} style={{ marginLeft: 'auto' }}>
+            {Math.round(num * 100)} %
+          </Tag>
+        </div>
+      );
+    }
   }
 ];
 

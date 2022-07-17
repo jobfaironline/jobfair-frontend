@@ -43,25 +43,29 @@ const JobFairDashBoardContainer = ({ jobFairId }) => {
           id: '1',
           name: 'Job position',
           goal: 5,
-          current: 1
+          current: 1,
+          matchingPointAverage: 0.28
         },
         {
           id: '2',
           name: 'Job position',
           goal: 5,
-          current: 1
+          current: 1,
+          matchingPointAverage: 0.28
         },
         {
           id: '3',
           name: 'Job position',
           goal: 5,
-          current: 1
+          current: 1,
+          matchingPointAverage: 0.28
         },
         {
           id: '4',
           name: 'Job position',
           goal: 5,
-          current: 1
+          current: 1,
+          matchingPointAverage: 0.28
         }
       ],
       booths: [
@@ -69,25 +73,29 @@ const JobFairDashBoardContainer = ({ jobFairId }) => {
           id: '123',
           name: 'tien',
           visitNum: 10,
-          cvNum: 10
+          cvNum: 10,
+          matchingPointAverage: 0.28
         },
         {
           id: '112323',
           name: 'tien',
           visitNum: 10,
-          cvNum: 10
+          cvNum: 10,
+          matchingPointAverage: 0.28
         },
         {
           id: '123123',
           name: 'tien',
           visitNum: 10,
-          cvNum: 10
+          cvNum: 10,
+          matchingPointAverage: 0.28
         },
         {
           id: '112323',
           name: 'tien',
           visitNum: 10,
-          cvNum: 10
+          cvNum: 10,
+          matchingPointAverage: 0.28
         }
       ]
     });
