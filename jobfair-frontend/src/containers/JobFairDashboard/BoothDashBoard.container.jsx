@@ -6,77 +6,7 @@ import { LoadingComponent } from '../../components/commons/Loading/Loading.compo
 import { useSWRFetch } from '../../hooks/useSWRFetch';
 import React from 'react';
 
-/*const useBoothStatistics = (jobFairId) => {
-  const { data, error } = useSWR(`${ENDPOINT_JOB_FAIR_STATISTICS}/${jobFairId}`, swrFetcher, {
-    refreshInterval: 10000
-  });
-
-  return {
-    data: data?.data,
-    isLoading: !error && !data,
-    isError: error
-  };
-};*/
-
 const BoothDashBoardContainer = ({ boothId }) => {
-  /*const [data, setData] = useState();
-
-  useEffect(() => {
-    //TODO: add polling interval
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    /!*try {
-      const { data } = await getBoothStatistics(boothId);
-      setData(data);
-    } catch (e) {
-      notification['error']({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching data, try again later`,
-        duration: 2
-      });
-    }*!/
-    setData({
-      booth: {
-        name: 'hello world'
-      },
-      cvStatistics: {
-        pendingNum: 300,
-        approvedNum: 500,
-        rejectNum: 400,
-        matchingAverage: 0.55,
-        matchingRange: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-      },
-      jobPositions: [
-        {
-          id: '1',
-          name: 'Job position',
-          goal: 5,
-          current: 1
-        },
-        {
-          id: '2',
-          name: 'Job position',
-          goal: 5,
-          current: 1
-        },
-        {
-          id: '3',
-          name: 'Job position',
-          goal: 5,
-          current: 1
-        },
-        {
-          id: '4',
-          name: 'Job position',
-          goal: 5,
-          current: 1
-        }
-      ]
-    });
-  };*/
-
   const { response, isLoading, isError } = useSWRFetch(`${ENDPOINT_BOOTH_STATISTICS}/${boothId}`);
   if (isLoading) return <LoadingComponent isWholePage={true} />;
   if (isError) {

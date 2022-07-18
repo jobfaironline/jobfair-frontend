@@ -14,107 +14,6 @@ import React from 'react';
 const JobFairDashBoardContainer = ({ jobFairId }) => {
   const history = useHistory();
 
-  /*const [data, setData] = useState();
-  const history = useHistory();
-
-  useEffect(() => {
-    //TODO: add polling interval
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const { data } = await getJobFairStatistics(jobFairId);
-      setData(data);
-    } catch (e) {
-      notification['error']({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching data, try again later`,
-        duration: 2
-      });
-    }
-    /!*setData({
-      jobFair: {
-        name: 'hello world',
-        beginTime: 0,
-        endTime: 0
-      },
-      generalStatistics: {
-        boothNum: 10,
-        participationNum: 500,
-        jobPositionNum: 500,
-        employeeNum: 10
-      },
-      cvStatistics: {
-        pendingNum: 300,
-        approvedNum: 500,
-        rejectNum: 400,
-        matchingAverage: 0.55,
-        matchingRange: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-      },
-      jobPositions: [
-        {
-          id: '1',
-          name: 'Job position',
-          goal: 5,
-          current: 1,
-          matchingPointAverage: 0.28
-        },
-        {
-          id: '2',
-          name: 'Job position',
-          goal: 5,
-          current: 1,
-          matchingPointAverage: 0.28
-        },
-        {
-          id: '3',
-          name: 'Job position',
-          goal: 5,
-          current: 1,
-          matchingPointAverage: 0.28
-        },
-        {
-          id: '4',
-          name: 'Job position',
-          goal: 5,
-          current: 1,
-          matchingPointAverage: 0.28
-        }
-      ],
-      booths: [
-        {
-          id: '123',
-          name: 'tien',
-          visitNum: 10,
-          cvNum: 10,
-          matchingPointAverage: 0.28
-        },
-        {
-          id: '112323',
-          name: 'tien',
-          visitNum: 10,
-          cvNum: 10,
-          matchingPointAverage: 0.28
-        },
-        {
-          id: '123123',
-          name: 'tien',
-          visitNum: 10,
-          cvNum: 10,
-          matchingPointAverage: 0.28
-        },
-        {
-          id: '112323',
-          name: 'tien',
-          visitNum: 10,
-          cvNum: 10,
-          matchingPointAverage: 0.28
-        }
-      ]
-    });*!/
-  };*/
-
   const { response, isLoading, isError } = useSWRFetch(`${ENDPOINT_JOB_FAIR_STATISTICS}/${jobFairId}`, 'GET');
 
   if (isLoading) return <LoadingComponent isWholePage={true} />;
@@ -127,6 +26,86 @@ const JobFairDashBoardContainer = ({ jobFairId }) => {
     return null;
   }
   const data = response.data;
+  /*const data = {
+    jobFair: {
+      name: 'hello world',
+      beginTime: 0,
+      endTime: 0
+    },
+    generalStatistics: {
+      boothNum: 10,
+      participationNum: 500,
+      jobPositionNum: 500,
+      employeeNum: 10
+    },
+    cvStatistics: {
+      pendingNum: 300,
+      approvedNum: 500,
+      rejectNum: 400,
+      matchingAverage: 0.55,
+      matchingRange: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    },
+    jobPositions: [
+      {
+        id: '1',
+        name: 'Job position',
+        goal: 5,
+        current: 1,
+        matchingPointAverage: 0.28
+      },
+      {
+        id: '2',
+        name: 'Job position',
+        goal: 5,
+        current: 1,
+        matchingPointAverage: 0.28
+      },
+      {
+        id: '3',
+        name: 'Job position',
+        goal: 5,
+        current: 1,
+        matchingPointAverage: 0.28
+      },
+      {
+        id: '4',
+        name: 'Job position',
+        goal: 5,
+        current: 1,
+        matchingPointAverage: 0.28
+      }
+    ],
+    booths: [
+      {
+        id: '123',
+        name: 'tien',
+        visitNum: 10,
+        cvNum: 10,
+        matchingPointAverage: 0.28
+      },
+      {
+        id: '112323',
+        name: 'tien',
+        visitNum: 10,
+        cvNum: 10,
+        matchingPointAverage: 0.28
+      },
+      {
+        id: '123123',
+        name: 'tien',
+        visitNum: 10,
+        cvNum: 10,
+        matchingPointAverage: 0.28
+      },
+      {
+        id: '112323',
+        name: 'tien',
+        visitNum: 10,
+        cvNum: 10,
+        matchingPointAverage: 0.28
+      }
+    ]
+  };*/
 
   return (
     <div style={{ marginBottom: '2rem' }}>
