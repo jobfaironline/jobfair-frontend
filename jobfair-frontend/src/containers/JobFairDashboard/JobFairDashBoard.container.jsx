@@ -1,16 +1,20 @@
-import { Col, PageHeader, Row } from 'antd';
+import { Col, PageHeader, Row, notification } from 'antd';
 import { DashBoardJobPositionStatistics } from '../../components/customized-components/JobFairDashboard/DashBoardJobPositionStatistics.component';
 import { DashboardCVStatistics } from '../../components/customized-components/JobFairDashboard/DashboardCVStatistics.component';
+import { ENDPOINT_JOB_FAIR_STATISTICS } from '../../constants/Endpoints/jobhub-api/StatisticsControllerEndpoint';
 import { JobFairDashBoardBoothTable } from '../../components/customized-components/JobFairDashboard/JobFairDashboardBoothTable.component';
 import { JobFairDashBoardGeneralInformation } from '../../components/customized-components/JobFairDashboard/JobFairDashboardGeneralInformation.component';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { generatePath } from 'react-router';
 import { useHistory } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { useSWRFetch } from '../../hooks/useSWRFetch';
+import React from 'react';
 
 const JobFairDashBoardContainer = ({ jobFairId }) => {
-  const [data, setData] = useState();
+  const history = useHistory();
+
+  /*const [data, setData] = useState();
   const history = useHistory();
 
   useEffect(() => {
@@ -19,7 +23,17 @@ const JobFairDashBoardContainer = ({ jobFairId }) => {
   }, []);
 
   const fetchData = async () => {
-    setData({
+    try {
+      const { data } = await getJobFairStatistics(jobFairId);
+      setData(data);
+    } catch (e) {
+      notification['error']({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching data, try again later`,
+        duration: 2
+      });
+    }
+    /!*setData({
       jobFair: {
         name: 'hello world',
         beginTime: 0,
@@ -98,10 +112,21 @@ const JobFairDashBoardContainer = ({ jobFairId }) => {
           matchingPointAverage: 0.28
         }
       ]
-    });
-  };
+    });*!/
+  };*/
 
-  if (data === undefined) return <LoadingComponent isWholePage={true} />;
+  const { response, isLoading, isError } = useSWRFetch(`${ENDPOINT_JOB_FAIR_STATISTICS}/${jobFairId}`, 'GET');
+
+  if (isLoading) return <LoadingComponent isWholePage={true} />;
+  if (isError) {
+    notification['error']({
+      message: `Something went wrong! Try again latter!`,
+      description: `There is problem while fetching data, try again later`,
+      duration: 2
+    });
+    return null;
+  }
+  const data = response.data;
 
   return (
     <div style={{ marginBottom: '2rem' }}>

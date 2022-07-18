@@ -10,8 +10,8 @@ export const DashboardCVStatistics = ({ data }) => {
     pendingNum = 0,
     approvedNum = 0,
     rejectNum = 0,
-    matchingRange = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    averagePoint = 0.28
+    matchingRange = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    matchingAverage = 0
   } = data;
 
   const cvStatusChartData = [
@@ -54,7 +54,7 @@ export const DashboardCVStatistics = ({ data }) => {
 
   const cvMatchingChartConfig = {
     defaultTitle: 'Average point',
-    defaultValue: `${(averagePoint * 100).toFixed(0)}%`,
+    defaultValue: `${(matchingAverage * 100).toFixed(0)}%`,
     contentSuffix: ' CV(s)',
     color: matchingPointColorMapping
   };

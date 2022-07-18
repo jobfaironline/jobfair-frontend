@@ -1,11 +1,25 @@
-import { Col, PageHeader, Row } from 'antd';
+import { Col, PageHeader, Row, notification } from 'antd';
 import { DashBoardJobPositionStatistics } from '../../components/customized-components/JobFairDashboard/DashBoardJobPositionStatistics.component';
 import { DashboardCVStatistics } from '../../components/customized-components/JobFairDashboard/DashboardCVStatistics.component';
+import { ENDPOINT_BOOTH_STATISTICS } from '../../constants/Endpoints/jobhub-api/StatisticsControllerEndpoint';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
-import React, { useEffect, useState } from 'react';
+import { useSWRFetch } from '../../hooks/useSWRFetch';
+import React from 'react';
+
+/*const useBoothStatistics = (jobFairId) => {
+  const { data, error } = useSWR(`${ENDPOINT_JOB_FAIR_STATISTICS}/${jobFairId}`, swrFetcher, {
+    refreshInterval: 10000
+  });
+
+  return {
+    data: data?.data,
+    isLoading: !error && !data,
+    isError: error
+  };
+};*/
 
 const BoothDashBoardContainer = ({ boothId }) => {
-  const [data, setData] = useState();
+  /*const [data, setData] = useState();
 
   useEffect(() => {
     //TODO: add polling interval
@@ -13,17 +27,19 @@ const BoothDashBoardContainer = ({ boothId }) => {
   }, []);
 
   const fetchData = async () => {
+    /!*try {
+      const { data } = await getBoothStatistics(boothId);
+      setData(data);
+    } catch (e) {
+      notification['error']({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching data, try again later`,
+        duration: 2
+      });
+    }*!/
     setData({
-      jobFair: {
-        name: 'hello world',
-        beginTime: 0,
-        endTime: 0
-      },
-      generalStatistics: {
-        boothNum: 10,
-        participationNum: 500,
-        jobPositionNum: 500,
-        employeeNum: 10
+      booth: {
+        name: 'hello world'
       },
       cvStatistics: {
         pendingNum: 300,
@@ -57,35 +73,21 @@ const BoothDashBoardContainer = ({ boothId }) => {
           goal: 5,
           current: 1
         }
-      ],
-      booths: [
-        {
-          id: '123',
-          name: 'tien',
-          visitNum: 10,
-          cvNum: 10
-        },
-        {
-          id: '112323',
-          name: 'tien',
-          visitNum: 10,
-          cvNum: 10
-        },
-        {
-          id: '123123',
-          name: 'tien',
-          visitNum: 10,
-          cvNum: 10
-        },
-        {
-          id: '112323',
-          name: 'tien',
-          visitNum: 10,
-          cvNum: 10
-        }
       ]
     });
-  };
+  };*/
+
+  const { response, isLoading, isError } = useSWRFetch(`${ENDPOINT_BOOTH_STATISTICS}/${boothId}`);
+  if (isLoading) return <LoadingComponent isWholePage={true} />;
+  if (isError) {
+    notification['error']({
+      message: `Something went wrong! Try again latter!`,
+      description: `There is problem while fetching data, try again later`,
+      duration: 2
+    });
+    return null;
+  }
+  const data = response.data;
 
   if (data === undefined) return <LoadingComponent isWholePage={true} />;
 
@@ -94,7 +96,7 @@ const BoothDashBoardContainer = ({ boothId }) => {
       <PageHeader
         title={
           <div style={{ width: '20vw', paddingBottom: '0.5rem', borderBottom: '1.5px solid #00000026' }}>
-            Booth's name: <span style={{ fontWeight: 400 }}>{data.jobFair.name}</span>
+            Booth's name: <span style={{ fontWeight: 400 }}>{data.booth.name}</span>
           </div>
         }
       />
