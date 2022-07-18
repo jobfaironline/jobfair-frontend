@@ -1,8 +1,7 @@
-import { Button, Card, Table, Tag, Typography } from 'antd';
+import { Button, Card, Table, Typography } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
 import { PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path';
 import { generatePath } from 'react-router';
-import { getMatchingPointColor } from '../../../utils/common';
 import React from 'react';
 
 const { Title } = Typography;
@@ -40,21 +39,12 @@ const JobFairDashBoardBoothTableColumn = [
     render: (num) => <div style={{ textAlign: 'right' }}>{num}</div>
   },
   {
-    title: 'Average matching point',
-    key: 'matchingPointAverage',
-    dataIndex: 'matchingPointAverage',
+    title: 'Number of approved CVs',
+    key: 'approveCV',
+    dataIndex: 'approveCV',
     width: '15%',
-    sorter: (a, b) => a.matchingPoint * 100 - b.matchingPoint * 100,
-    render: (num) => {
-      const tagColor = getMatchingPointColor(num);
-      return (
-        <div style={{ display: 'flex' }}>
-          <Tag color={tagColor} style={{ marginLeft: 'auto' }}>
-            {Math.round(num * 100)} %
-          </Tag>
-        </div>
-      );
-    }
+    sorter: (a, b) => a.approveCV - b.approveCV,
+    render: (num) => <div style={{ textAlign: 'right' }}>{num}</div>
   },
   {
     title: 'Actions',
