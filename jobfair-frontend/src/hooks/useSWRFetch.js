@@ -6,7 +6,7 @@ export const useSWRFetch = (endpoint, params = {}, configHeaders = null, respons
     endpoint,
     (endpoint) => CallAPI(endpoint, 'GET', {}, params, configHeaders, responseType),
     {
-      refreshInterval: 10000
+      refreshInterval: process.env.REACT_APP_SWR_INTERVAL
     }
   );
 
