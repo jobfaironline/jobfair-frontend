@@ -58,6 +58,10 @@ export const AdminMenu = [
   {
     title: 'Job fair list',
     link: PATH_ADMIN.JOB_FAIR_LIST_PAGE
+  },
+  {
+    title: 'Account management',
+    link: PATH_ADMIN.ACCOUNT_MANAGEMENT_PAGE
   }
 ];
 

@@ -3,6 +3,7 @@ import {
   ENDPOINT_CHANGE_PASSWORD,
   ENDPOINT_DEACTIVATE_ACCOUNT,
   ENDPOINT_FORGOT_PASSWORD,
+  ENDPOINT_GET_ACCOUNTS,
   ENDPOINT_GET_ACCOUNT_BY_ID,
   ENDPOINT_GET_GENERAL_INFO,
   ENDPOINT_UPLOAD_PROFILE
@@ -24,3 +25,7 @@ export const getGeneralInfoAPI = (email) =>
 export const deactivateOwnAccountAPI = () => CallAPI(ENDPOINT_DEACTIVATE_ACCOUNT, 'GET');
 export const uploadProfileImage = (body) =>
   CallAPI(ENDPOINT_UPLOAD_PROFILE, 'POST', body, {}, { 'content-type': 'multipart/form-data' });
+export const getAccountsAPI = ({ offset = 0, pageSize = 10, searchContent = '' }) =>
+  CallAPI(`${ENDPOINT_GET_ACCOUNTS}`, 'GET', {}, { offset, pageSize, searchContent });
+//Delete employee
+export const deleteAccountAPI = (employeeId) => CallAPI(`${ENDPOINT_GET_ACCOUNT_BY_ID}/${employeeId}`, 'DELETE');

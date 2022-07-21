@@ -12,6 +12,7 @@ import { selectWebSocket } from '../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import AboutApplicationPage from '../pages/AboutApplicationPage';
 import AccountProfilePage from '../pages/ProfilePage/Account/AccountProfilePage';
+import AccountManagementPage from '../pages/AccountManagementPage/AccountManagementPage';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
 import AssignTaskPage from '../pages/AssignTaskPage/AssignTaskPage';
 import AttendantAttemptTestPage from '../pages/AttendantAttemptTestPage/AttendantAttemptTestPage';
@@ -135,6 +136,9 @@ const AppRouter = () => {
           </Route>
           <Route path={PATH_ADMIN.JOB_FAIR_LIST_PAGE} exact>
             <JobFairTablePage />
+          </Route>
+          <Route path={PATH_ADMIN.ACCOUNT_MANAGEMENT_PAGE} exact>
+            <AccountManagementPage />
           </Route>
           <Route path={PATH_ADMIN.PROFILE_PAGE} exact>
             <AccountProfilePage />
