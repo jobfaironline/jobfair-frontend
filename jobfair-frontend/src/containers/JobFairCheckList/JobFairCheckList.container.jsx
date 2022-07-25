@@ -5,6 +5,7 @@ import { JOB_FAIR_STATUS } from '../../constants/JobFairConst';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { MinuteFormat } from '../../constants/ApplicationConst';
 import { PATH, PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
+import { PieChartOutlined } from '@ant-design/icons';
 import { PublishJobFairConfirmModal } from '../../components/customized-components/PublishJobFairConfirmModal/PublishJobFairConfirmModal.component';
 import { Step1Component } from '../../components/customized-components/JobFairCheckList/Step1.component';
 import { Step2Component } from '../../components/customized-components/JobFairCheckList/Step2.component';
@@ -240,6 +241,11 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
     }
   };
 
+  const handleViewStatistics = () => {
+    const url = generatePath(PATH_COMPANY_MANAGER.JOB_FAIR_DASH_BOARD, { jobFairId });
+    history.push(url);
+  };
+
   if (state.isLoading) return <LoadingComponent isWholePage={true} />;
 
   return (
@@ -268,6 +274,13 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
               style={{ fontSize: '1.2rem' }}>
               <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: 5 }} />
               Back to my job fair
+            </Button>
+            <Button
+              type={'primary'}
+              className={'button'}
+              style={{ marginLeft: 'auto', display: state.progressData.score === 100 ? 'block' : 'none' }}
+              onClick={handleViewStatistics}>
+              View statistics <PieChartOutlined />
             </Button>
             <Button
               type={'primary'}
