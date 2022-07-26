@@ -13,8 +13,8 @@ const handleCardContent = (role, jobFair) => {
     case 'COMPANY_MANAGER':
       return (
         <>
-          <div>
-            <Card.Meta title={jobFair?.name} />
+          <div style={{ maxWidth: '200px' }}>
+            <Card.Meta title={<Text>{jobFair?.name}</Text>} />
             <Text>{convertToDateString(jobFair?.createTime)}</Text>
           </div>
           <div style={{ marginLeft: 'auto' }}>
