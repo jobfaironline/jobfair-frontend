@@ -4,10 +4,12 @@ import { notification } from 'antd';
 import { notificationAction } from '../../redux-flow/notification/notification-slice';
 import store from '../../redux-flow/index';
 
+const { REACT_APP_WEB_SOCKET_URL } = process.env;
+
 export class WebSocketClient {
   constructor(token) {
     this.token = token;
-    this.socket = new WebSocket(`wss://4bzm5epi2c.execute-api.ap-southeast-1.amazonaws.com/fuckyou?token=${token}`);
+    this.socket = new WebSocket(`${REACT_APP_WEB_SOCKET_URL}?token=${token}`);
     this.eventHandlers = {
       default: (data) => {
         let notificationData = JSON.parse(JSON.stringify(data));
