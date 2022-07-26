@@ -162,7 +162,7 @@ const attendantColumns = () => [
 ];
 
 const ApplicationTableColumn = (role) => () => {
-  if (role === RoleType.COMPANY_MANAGER || role === RoleType.COMPANY_MANAGER) return companyColumns();
+  if (role === RoleType.COMPANY_MANAGER || role === RoleType.COMPANY_EMPLOYEE) return companyColumns();
   return attendantColumns();
 };
 
