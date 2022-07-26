@@ -22,8 +22,7 @@ const JobFairOccurredContainer = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const fetchData = async () => {
-    //TODO: fetch API later
-    // getJobFairOccurredForAdmin(currentPage, pageSize)
+    // getAllJobF(currentPage, pageSize)
     //   .then((res) => {
     //     setTotalElements(res.data.totalElements);
     //     const result = mapperResponseJobFairForAdmin(res).map((item) => ({

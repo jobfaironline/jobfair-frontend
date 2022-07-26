@@ -29,7 +29,8 @@ export const PATH_ADMIN = {
   JOB_FAIR_DETAIL_PAGE: '/admin/job-fair-detail',
   JOB_FAIR_PLAN_LIST_PAGE: '/admin/job-fair-plan-list',
   COMPANY_REGISTRATION_DETAIL_PAGE: '/admin/company-registration-detail',
-  ACCOUNT_MANAGEMENT_PAGE: '/admin/account-management'
+  ACCOUNT_MANAGEMENT_PAGE: '/admin/account-management',
+  ADMIN_DASHBOARD: '/admin/dashboard'
 };
 export const PATH_ATTENDANT = {
   PROFILE_PAGE: `/profile`,

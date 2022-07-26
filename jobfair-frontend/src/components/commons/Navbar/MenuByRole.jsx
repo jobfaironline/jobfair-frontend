@@ -62,6 +62,10 @@ export const AdminMenu = [
   {
     title: 'Account management',
     link: PATH_ADMIN.ACCOUNT_MANAGEMENT_PAGE
+  },
+  {
+    title: 'Admin dashboard',
+    link: PATH_ADMIN.ADMIN_DASHBOARD
   }
 ];
 

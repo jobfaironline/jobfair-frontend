@@ -1,4 +1,4 @@
-import { Col, Divider, Drawer, Row, Tag, Typography } from 'antd';
+import { Col, Drawer, Row, Tag, Typography } from 'antd';
 
 const handleTagStatusRender = (status) => {
   switch (status) {

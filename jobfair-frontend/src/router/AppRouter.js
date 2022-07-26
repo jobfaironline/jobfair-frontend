@@ -11,8 +11,9 @@ import { UserAgentModal } from '../components/customized-components/UserAgentWar
 import { selectWebSocket } from '../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import AboutApplicationPage from '../pages/AboutApplicationPage';
-import AccountProfilePage from '../pages/ProfilePage/Account/AccountProfilePage';
 import AccountManagementPage from '../pages/AccountManagementPage/AccountManagementPage';
+import AccountProfilePage from '../pages/ProfilePage/Account/AccountProfilePage';
+import AdminDashboardPage from '../pages/AdminDashboardPage/AdminDashboardPage';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
 import AssignTaskPage from '../pages/AssignTaskPage/AssignTaskPage';
 import AttendantAttemptTestPage from '../pages/AttendantAttemptTestPage/AttendantAttemptTestPage';
@@ -150,6 +151,9 @@ const AppRouter = () => {
           </Route>
           <Route path={PATH.JOB_FAIR_LANDING_PAGE} exact>
             <JobFairLandingPage />
+          </Route>
+          <Route path={PATH_ADMIN.ADMIN_DASHBOARD} exact>
+            <AdminDashboardPage />
           </Route>
           <PublicRouter key={PATH.LOGIN_PAGE} component={() => <LoginPage />} path={PATH.LOGIN_PAGE} exact />
           <PublicRouter key={PATH.REGISTER_PAGE} component={() => <RegisterPage />} path={PATH.REGISTER_PAGE} exact />

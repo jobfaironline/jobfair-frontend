@@ -1,5 +1,5 @@
 import './AccountManagement.styles.scss';
-import { Input, Space, Typography, notification, Row, Col } from 'antd';
+import { Col, Input, Row, Space, Typography, notification } from 'antd';
 import { deleteAccountAPI, getAccountsAPI } from '../../services/jobhub-api/AccountControllerService';
 import { useSelector } from 'react-redux';
 import AccountDrawer from './AccountDrawer.container';
