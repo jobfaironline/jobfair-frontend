@@ -26,5 +26,7 @@ export const getAssignmentByEmployeeId = (
   type
 ) => CallAPI(`${ASSIGNMENT_BY_EMPLOYEE_ID}`, 'GET', {}, { direction, offset, pageSize, sortBy, type });
 export const getAssignmentById = (assignmentId) => CallAPI(`${ASSIGNMENT}/${assignmentId}`, 'GET');
-export const uploadCSVFile = async (formData, jobFairId) =>
+export const uploadManagerCSVFile = async (formData, jobFairId) =>
   CallAPI(`${ASSIGNMENT}/csv`, 'POST', formData, { jobFairId }, { 'content-type': 'multipart/form-data' });
+export const uploadSupervisorCSVFile = async (formData, jobFairBoothId) =>
+  CallAPI(`${ASSIGNMENT}/shift/csv`, 'POST', formData, { jobFairBoothId }, { 'content-type': 'multipart/form-data' });

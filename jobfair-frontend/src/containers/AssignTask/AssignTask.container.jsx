@@ -3,17 +3,20 @@ import { AssignTaskFilterPanel } from '../../components/customized-components/As
 import { AssignTaskModal } from '../../components/forms/AssignTaskModalForm/AsignTaskModalForm.component';
 import { Button, Form, Table, Typography, notification } from 'antd';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
+import { UploadCSVModal } from '../UploadModal/UploadCSVModal.container';
 import {
   assignEmployee,
   getAssigmentByJobFairBoothId,
   unAssignEmployee,
-  updateAssignment
+  updateAssignment,
+  uploadSupervisorCSVFile
 } from '../../services/jobhub-api/AssignmentControllerService';
 import { deepClone } from '../../utils/common';
 import { getAssignmentsData } from './utils/assign-task-utils';
 import { getCompanyBoothById } from '../../services/jobhub-api/JobFairBoothControllerService';
 import { getDataSource, getJobFairPublicDayRange, getStaffAssignments, getStaffList } from './utils/datasource-utils';
 import { getTableColumns } from './column/AssignTask.column';
+import { uploadUtil } from '../../utils/uploadCSVUtil';
 import React, { useEffect, useState } from 'react';
 
 const generateAssignment = (data, shiftData, shiftIndex, assignmentType, dayRange, selectedCellData) => ({
@@ -46,6 +49,7 @@ const AssignTaskContainer = (props) => {
   });
   const [hasChange, setHasChange] = useState(false);
   const [forceRerender, setForceRerender] = useState(false);
+  const [uploadCsvModalVisible, setUploadCSVModalVisible] = useState(false);
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -211,6 +215,15 @@ const AssignTaskContainer = (props) => {
     setTableData((prevState) => ({ ...prevState, dataSource: deepClone(dataSource) }));
   };
 
+  const onChangeUpload = async (info) => {
+    await uploadUtil(info, uploadSupervisorCSVFile, boothId);
+  };
+
+  const onCloseUploadCSVModal = () => {
+    setUploadCSVModalVisible(false);
+    setForceRerender((reRender) => !reRender);
+  };
+
   const modalProps = {
     date: selectedCellData.date,
     visible: selectedCellData.visible,
@@ -223,10 +236,25 @@ const AssignTaskContainer = (props) => {
 
   return (
     <>
+      <UploadCSVModal
+        visible={uploadCsvModalVisible}
+        handleUpload={onChangeUpload}
+        onCancel={onCloseUploadCSVModal}
+        templateURl={`${window.location.origin}/xlsx_template/assignment_supervisor.xlsx`}
+      />
       <AssignTaskModal {...modalProps} />
       <div className={'assign-task-container'}>
         <div style={{ display: 'flex', marginBottom: '1rem' }}>
           <Typography.Title level={3}>Assign task</Typography.Title>
+          <Button
+            className={'button'}
+            type={'primary'}
+            style={{ marginLeft: '1rem' }}
+            onClick={() => {
+              setUploadCSVModalVisible(true);
+            }}>
+            Import CSV file
+          </Button>
           <Button
             style={{ marginLeft: 'auto', display: hasChange ? 'block' : 'none', marginRight: '1rem' }}
             className={'button'}

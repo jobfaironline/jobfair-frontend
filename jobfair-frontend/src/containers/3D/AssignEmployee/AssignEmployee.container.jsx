@@ -6,7 +6,10 @@ import { ChooseBoothCanvas } from '../../../components/3D/ChooseBooth/ChooseBoot
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { SideBarComponent } from '../../../components/commons/SideBar/SideBar.component';
 import { UploadCSVModal } from '../../UploadModal/UploadCSVModal.container';
-import { getAssigmentByJobFairBoothId, uploadCSVFile } from '../../../services/jobhub-api/AssignmentControllerService';
+import {
+  getAssigmentByJobFairBoothId,
+  uploadManagerCSVFile
+} from '../../../services/jobhub-api/AssignmentControllerService';
 import { getJobFairBoothByJobFairId } from '../../../services/jobhub-api/JobFairBoothControllerService';
 import { getLayoutByJobFairId } from '../../../services/jobhub-api/LayoutControllerService';
 import { loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
@@ -100,7 +103,7 @@ export const AssignEmployeeContainer = (props) => {
   };
 
   const onUpload = async (file) => {
-    await uploadUtil(file, uploadCSVFile, jobFairId);
+    await uploadUtil(file, uploadManagerCSVFile, jobFairId);
   };
 
   const onCloseUploadModal = () => {

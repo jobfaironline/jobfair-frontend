@@ -39,7 +39,7 @@ const generateUpdateJobFairRequestBody = (formValues, jobFairId) => {
     decorateStartTime: formValues.decorateRange[0].startOf('d').valueOf(),
     decorateEndTime: formValues.decorateRange[1].endOf('d').valueOf(),
     publicStartTime: formValues.publicRange[0].startOf('d').valueOf(),
-    publicEndTime: formValues.publicRange[1].startOf('d').valueOf(),
+    publicEndTime: formValues.publicRange[1].endOf('d').valueOf(),
     shifts
   };
 };
