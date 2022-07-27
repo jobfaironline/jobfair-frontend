@@ -60,3 +60,5 @@ export const checkJobFairPublishAPI = (jobFairId) =>
   CallAPI(`${JOB_FAIR_END_POINT}/check-publish/${jobFairId}`, 'POST', {}, {});
 
 export const deleteJobFairDraftAPI = (jobFairId) => CallAPI(`${JOB_FAIR_END_POINT}/${jobFairId}`, 'DELETE', {}, {});
+
+export const getJobFairProgress = (jobFairId) => CallAPI(`${JOB_FAIR_END_POINT}/progress/${jobFairId}`, 'GET', {}, {});

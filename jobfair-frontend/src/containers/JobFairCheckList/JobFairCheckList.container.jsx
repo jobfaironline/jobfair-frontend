@@ -2,10 +2,11 @@ import { AssignEmployeeDetailModalContainer } from './AssignEmployeeDetailModal.
 import { Button, Progress, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { JOB_FAIR_STATUS } from '../../constants/JobFairConst';
+import { JobFairProgressDrawerContainer } from '../JobFaiProgress/JobFairProgressDrawer.container';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { MinuteFormat } from '../../constants/ApplicationConst';
 import { PATH, PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
-import { PieChartOutlined } from '@ant-design/icons';
+import { PieChartOutlined, RiseOutlined } from '@ant-design/icons';
 import { PublishJobFairConfirmModal } from '../../components/customized-components/PublishJobFairConfirmModal/PublishJobFairConfirmModal.component';
 import { Step1Component } from '../../components/customized-components/JobFairCheckList/Step1.component';
 import { Step2Component } from '../../components/customized-components/JobFairCheckList/Step2.component';
@@ -110,6 +111,7 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
   const history = useHistory();
   const [publishModalVisible, setPublishModalVisible] = useState(false);
   const [assignEmployeeModalVisible, setAssignEmployeeModalVisible] = useState(false);
+  const [checkEmployeeProgressVisible, setCheckEmployeeProgressVisible] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -246,10 +248,23 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
     history.push(url);
   };
 
+  const onCloseViewEmployeeProgress = async () => {
+    setCheckEmployeeProgressVisible(false);
+  };
+
+  const handleViewEmployeeProgress = () => {
+    setCheckEmployeeProgressVisible(true);
+  };
+
   if (state.isLoading) return <LoadingComponent isWholePage={true} />;
 
   return (
     <>
+      <JobFairProgressDrawerContainer
+        jobFairId={jobFairId}
+        visibility={checkEmployeeProgressVisible}
+        onClose={onCloseViewEmployeeProgress}
+      />
       <AssignEmployeeDetailModalContainer
         visible={assignEmployeeModalVisible}
         onClose={onCloseAssignEmployeeModal}
@@ -279,6 +294,13 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
               type={'primary'}
               className={'button'}
               style={{ marginLeft: 'auto', display: state.progressData.score === 100 ? 'block' : 'none' }}
+              onClick={handleViewEmployeeProgress}>
+              View employee progress <RiseOutlined />
+            </Button>
+            <Button
+              type={'primary'}
+              className={'button'}
+              style={{ marginLeft: '1rem', display: state.progressData.score === 100 ? 'block' : 'none' }}
               onClick={handleViewStatistics}>
               View statistics <PieChartOutlined />
             </Button>
