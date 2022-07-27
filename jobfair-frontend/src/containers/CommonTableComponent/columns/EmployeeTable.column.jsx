@@ -25,7 +25,9 @@ const EmployeeTableColumn = () => [
   {
     title: "Employee's id",
     dataIndex: 'employeeId',
-    key: 'employeeId'
+    key: 'employeeId',
+    onFilter: (value, record) => record.employeeId.indexOf(value) === 0,
+    sorter: (a, b) => a.employeeId.localeCompare(b.employeeId)
   },
   {
     title: 'Department',
