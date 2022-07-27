@@ -1,3 +1,4 @@
+import { CompanyDashboardPage } from '../pages/CompanyDashboardPage/CompanyDashboardPage';
 import { default as CustomFooter } from '../components/commons/Footer/Footer';
 import { Footer } from 'antd/es/layout/layout';
 import { JobFairBoothReviewPage } from '../pages/JobFairBoothReviewPage/JobFairBoothReviewPage';
@@ -395,6 +396,12 @@ const AppRouter = () => {
             key={PATH_COMPANY_MANAGER.BOOTH_DASH_BOARD}
             component={() => <BoothDashboardPage />}
             path={PATH_COMPANY_MANAGER.BOOTH_DASH_BOARD}
+            exact
+          />
+          <CompanyManagerRouter
+            key={PATH_COMPANY_MANAGER.COMPANY_DASHBOARD}
+            component={() => <CompanyDashboardPage />}
+            path={PATH_COMPANY_MANAGER.COMPANY_DASHBOARD}
             exact
           />
           <Route path='/index.html'>

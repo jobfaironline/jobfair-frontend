@@ -44,6 +44,10 @@ export const CompanyManagerMenu = [
   {
     title: 'Job fair 3D layout',
     link: PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE
+  },
+  {
+    title: 'Statistics',
+    link: PATH_COMPANY_MANAGER.COMPANY_DASHBOARD
   }
 ];
 
