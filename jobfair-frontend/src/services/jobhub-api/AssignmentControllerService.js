@@ -4,6 +4,7 @@ import {
   ASSIGNMENT_BY_BOOTH_ID,
   ASSIGNMENT_BY_EMPLOYEE_ID,
   AVAILABLE_COMPANY_EMPLOYEE,
+  JOB_FAIR_ASSIGNMENT_BY_EMPLOYEE_ID,
   STATISTICS,
   UNASSIGNMENT
 } from '../../constants/Endpoints/jobhub-api/AssignmentControllerEndpoint';
@@ -30,3 +31,10 @@ export const uploadManagerCSVFile = async (formData, jobFairId) =>
   CallAPI(`${ASSIGNMENT}/csv`, 'POST', formData, { jobFairId }, { 'content-type': 'multipart/form-data' });
 export const uploadSupervisorCSVFile = async (formData, jobFairBoothId) =>
   CallAPI(`${ASSIGNMENT}/shift/csv`, 'POST', formData, { jobFairBoothId }, { 'content-type': 'multipart/form-data' });
+
+export const getJobFairAssignmentByEmployeeId = (
+  direction = 'ASC',
+  offset = '0',
+  pageSize = '10',
+  sortBy = 'create_time'
+) => CallAPI(`${JOB_FAIR_ASSIGNMENT_BY_EMPLOYEE_ID}`, 'GET', {}, { direction, offset, pageSize, sortBy });

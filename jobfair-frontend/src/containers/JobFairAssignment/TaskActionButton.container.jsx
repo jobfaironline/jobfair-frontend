@@ -47,7 +47,8 @@ const TaskActionButton = ({ type, status, record }) => {
           </Button>
         </Space>
       );
-    case AssignmentConst.DECORATOR:
+    case AssignmentConst.DECORATOR: {
+      const isDoneDecorate = record.isDoneDecorate;
       return (
         <Space>
           <Button
@@ -62,10 +63,16 @@ const TaskActionButton = ({ type, status, record }) => {
                 })
               )
             }>
+            <FontAwesomeIcon
+              icon={faCircleCheck}
+              color={isDoneDecorate ? 'green' : 'gray'}
+              style={{ marginRight: '5px' }}
+            />
             Start decorate booth
           </Button>
         </Space>
       );
+    }
     case AssignmentConst.SUPERVISOR: {
       const isDoneAssignTask = record.boothAssignments.some(
         (assignment) => assignment.type === AssignmentConst.INTERVIEWER || assignment.type === AssignmentConst.RECEPTION
@@ -85,9 +92,11 @@ const TaskActionButton = ({ type, status, record }) => {
                 })
               )
             }>
-            {isDoneDescription ? (
-              <FontAwesomeIcon icon={faCircleCheck} color={'green'} style={{ marginRight: '5px' }} />
-            ) : null}
+            <FontAwesomeIcon
+              icon={faCircleCheck}
+              color={isDoneDescription ? 'green' : 'gray'}
+              style={{ marginRight: '5px' }}
+            />
             My booth profile
           </Button>
           <Button
@@ -101,9 +110,11 @@ const TaskActionButton = ({ type, status, record }) => {
                 })
               )
             }>
-            {isDoneAssignTask ? (
-              <FontAwesomeIcon icon={faCircleCheck} color={'green'} style={{ marginRight: '5px' }} />
-            ) : null}
+            <FontAwesomeIcon
+              icon={faCircleCheck}
+              color={isDoneAssignTask ? 'green' : 'gray'}
+              style={{ marginRight: '5px' }}
+            />
             Assign task
           </Button>
         </Space>

@@ -1,20 +1,66 @@
 import { AssignmentConst } from '../../constants/AssignmentConst';
-import { Button, Select, Space, Tabs, Typography, notification } from 'antd';
+import { Button, Modal, Select, Space, Tabs, Typography, notification } from 'antd';
+import { JOB_FAIR_STATUS_FOR_EMPLOYEE } from '../../constants/JobFairConst';
+import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
+import { generatePath } from 'react-router-dom';
 import {
   getAssigmentByJobFairBoothId,
-  getAssignmentByEmployeeId
+  getAssignmentByEmployeeId,
+  getJobFairAssignmentByEmployeeId
 } from '../../services/jobhub-api/AssignmentControllerService';
+import { getCompanyBoothLatestLayout } from '../../services/jobhub-api/CompanyBoothLayoutControllerService';
 import { mapperJobFairAssignment } from '../../utils/mapperJobFairAssignment';
 import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
-import JobFairAssignmentTableColumn from '../JobFairAssignmentTable/JobFairAssignmentTable.column';
+import JobFairAssignmentTableColumn, {
+  JobFairAllAssignmentColumn,
+  JobFairAssignmentDetailTableColumn
+} from '../JobFairAssignmentTable/JobFairAssignmentTable.column';
 import MyBoothLayoutListContainer from '../MyBoothLayoutList/MyBoothLayoutList.container';
 import React, { useEffect, useState } from 'react';
 import TaskActionButton from './TaskActionButton.container';
+import moment from 'moment';
 
 const { TabPane } = Tabs;
 const { Option } = Select;
+
+export const JobFairAssignmentModal = ({ data, visible, onClose }) => {
+  if (data === undefined) return null;
+  const jobFairAssignmentTableProps = {
+    tableData: data,
+    tableColumns: JobFairAssignmentDetailTableColumn,
+    onSearch: () => {
+      //TODO: fetch data for search
+    },
+    extra: [
+      {
+        title: 'Actions',
+        key: 'action',
+        render: (text, record) => (
+          <TaskActionButton type={record.assignmentType} status={record.status} record={record} />
+        )
+      }
+    ],
+    paginationObject: {
+      handlePageChange: () => {
+        //ignore
+      },
+      totalRecord: data?.length ?? 0
+    }
+  };
+
+  return (
+    <Modal
+      visible={visible}
+      width={'80%'}
+      onOk={onClose}
+      onCancel={onClose}
+      title={`Assignment of job fair ${data[0].jobFairName}`}>
+      <CommonTableContainer {...jobFairAssignmentTableProps} />
+    </Modal>
+  );
+};
 
 const JobFairAssignmentContainer = () => {
   const webSocketClient = useSelector(selectWebSocket);
@@ -28,6 +74,11 @@ const JobFairAssignmentContainer = () => {
   const [totalRecord, setTotalRecord] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+  //modal
+  const [modalState, setModalState] = useState({
+    data: undefined,
+    visible: false
+  });
 
   const getAssignmentCompleted = async (data) => {
     const boothAssignmentPromises = data.map((assignment) => getAssigmentByJobFairBoothId(assignment.jobFairBooth.id));
@@ -35,35 +86,74 @@ const JobFairAssignmentContainer = () => {
     data.forEach((assignment, index) => {
       assignment.boothAssignments = boothAssignments[index].data;
     });
+    for (const item of data) {
+      if (item.type === AssignmentConst.DECORATOR) {
+        try {
+          await getCompanyBoothLatestLayout(item.jobFairBooth.id);
+          item.isDoneDecorate = true;
+        } catch (e) {
+          item.isDoneDecorate = false;
+        }
+      }
+    }
     setData(data);
     setTotalRecord(data.length);
   };
 
-  const filterStaffAssignment = (assignments) => {
-    const assignmentsByBooth = assignments.reduce((prev, current) => {
-      const jobFairBoothId = current.jobFairBooth.id;
-      if (prev[jobFairBoothId] !== undefined) {
-        prev[jobFairBoothId].push(current);
+  const getJobFairAssignmentCompleted = async (data) => {
+    for (const jobFairAssignment of data) {
+      const assignments = jobFairAssignment.assignments;
+      const boothAssignmentPromises = assignments.map((assignment) =>
+        getAssigmentByJobFairBoothId(assignment.jobFairBooth.id)
+      );
+      const boothAssignments = await Promise.all(boothAssignmentPromises);
+      assignments.forEach((assignment, index) => {
+        assignment.boothAssignments = boothAssignments[index].data;
+      });
+      for (const item of assignments) {
+        if (item.type === AssignmentConst.DECORATOR) {
+          try {
+            await getCompanyBoothLatestLayout(item.jobFairBooth.id);
+            item.isDoneDecorate = true;
+          } catch (e) {
+            item.isDoneDecorate = false;
+          }
+        }
+      }
+    }
+    setData(data);
+    setTotalRecord(data.length);
+  };
+
+  const filterStaffAssignment = (jobFairAssignments) => {
+    jobFairAssignments.forEach((jobFairAssignment) => {
+      const assignments = jobFairAssignment.assignments;
+      const assignmentsByBooth = assignments.reduce((prev, current) => {
+        const jobFairBoothId = current.jobFairBooth.id;
+        if (prev[jobFairBoothId] !== undefined) {
+          prev[jobFairBoothId].push(current);
+          return prev;
+        }
+        prev[jobFairBoothId] = [current];
         return prev;
-      }
-      prev[jobFairBoothId] = [current];
-      return prev;
-    }, {});
-    const result = [];
-    Object.keys(assignmentsByBooth).forEach((boothId) => {
-      const assignments = assignmentsByBooth[boothId];
-      const isHasStaff = assignments.some((assignment) => assignment.type === AssignmentConst.STAFF);
-      if (!isHasStaff) {
-        result.push(...assignments);
-        return;
-      }
-      const isHasInterviewer = assignments.some((assignment) => assignment.type === AssignmentConst.INTERVIEWER);
-      const isHasReceptionist = assignments.some((assignment) => assignment.type === AssignmentConst.RECEPTION);
-      if (isHasInterviewer || isHasReceptionist)
-        result.push(...assignments.filter((assignment) => assignment.type !== AssignmentConst.STAFF));
-      else result.push(...assignments);
+      }, {});
+      const result = [];
+      Object.keys(assignmentsByBooth).forEach((boothId) => {
+        const assignments = assignmentsByBooth[boothId];
+        const isHasStaff = assignments.some((assignment) => assignment.type === AssignmentConst.STAFF);
+        if (!isHasStaff) {
+          result.push(...assignments);
+          return;
+        }
+        const isHasInterviewer = assignments.some((assignment) => assignment.type === AssignmentConst.INTERVIEWER);
+        const isHasReceptionist = assignments.some((assignment) => assignment.type === AssignmentConst.RECEPTION);
+        if (isHasInterviewer || isHasReceptionist)
+          result.push(...assignments.filter((assignment) => assignment.type !== AssignmentConst.STAFF));
+        else result.push(...assignments);
+      });
+      jobFairAssignment.assignments = result;
     });
-    return result;
+    return jobFairAssignments;
   };
 
   const fetchData = async () => {
@@ -74,11 +164,40 @@ const JobFairAssignmentContainer = () => {
         await getAssignmentCompleted(data);
         return;
       }
-      const res = await getAssignmentByEmployeeId('', currentPage, pageSize, '');
+      const now = moment();
+      const res = await getJobFairAssignmentByEmployeeId('ASC', currentPage, pageSize, '');
       let data = res.data.content;
       data = filterStaffAssignment(data);
-      data = data.map((item, index) => mapperJobFairAssignment(item, index));
-      await getAssignmentCompleted(data);
+      data.forEach((jobFairAssignment, index) => {
+        jobFairAssignment.assignments = jobFairAssignment.assignments.map((item, index) =>
+          mapperJobFairAssignment(item, index)
+        );
+        jobFairAssignment.no = index + 1;
+        jobFairAssignment.jobFairName = jobFairAssignment.jobFair.name;
+        jobFairAssignment.status = jobFairAssignment.jobFair.status;
+        jobFairAssignment.startTime = jobFairAssignment.jobFairName.decorateStartTime;
+        jobFairAssignment.endTime = jobFairAssignment.jobFairName.publicEndTime;
+        jobFairAssignment.onClickJobFair = () => {
+          const url = generatePath(PATH_COMPANY_EMPLOYEE.CHECKLIST, { jobFairId: jobFairAssignment.jobFair.id });
+          window.open(`${window.location.origin}${url}`);
+        };
+        jobFairAssignment.onClickDetail = () => {
+          setModalState((prevState) => ({ ...prevState, visible: true, data: jobFairAssignment.assignments }));
+        };
+        if (jobFairAssignment.jobFair.decorateStartTime < now && jobFairAssignment.jobFair.publicStartTime > now) {
+          jobFairAssignment.status = JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING;
+          jobFairAssignment.statusColor = 'blue';
+        }
+        if (jobFairAssignment.jobFair.decorateStartTime >= now) {
+          jobFairAssignment.status = JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET;
+          jobFairAssignment.statusColor = 'default';
+        }
+        if (jobFairAssignment.jobFair.publicStartTime <= now) {
+          jobFairAssignment.status = JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE;
+          jobFairAssignment.statusColor = 'green';
+        }
+      });
+      await getJobFairAssignmentCompleted(data);
     } catch (e) {
       notification['error']({
         message: `Something went wrong! Try again latter!`,
@@ -110,6 +229,18 @@ const JobFairAssignmentContainer = () => {
     setPageSize(pageSize);
   };
 
+  const jobFairAllAssignmentTableProps = {
+    tableData: data,
+    tableColumns: JobFairAllAssignmentColumn,
+    onSearch: () => {
+      //TODO: fetch data for search
+    },
+    paginationObject: {
+      handlePageChange,
+      totalRecord
+    }
+  };
+
   const jobFairAssignmentTableProps = {
     tableData: data,
     tableColumns: JobFairAssignmentTableColumn,
@@ -136,72 +267,79 @@ const JobFairAssignmentContainer = () => {
   };
 
   return (
-    <div style={{ paddingTop: '2rem' }}>
-      <MyBoothLayoutListContainer
-        setMyLayoutVisibility={setMyLayoutVisibility}
-        myLayoutVisibility={myLayoutVisibility}
-        deletable
+    <>
+      <JobFairAssignmentModal
+        visible={modalState.visible}
+        data={modalState.data}
+        onClose={() => setModalState((prevState) => ({ ...prevState, visible: false, data: undefined }))}
       />
-      <Space
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginBottom: '1rem'
-        }}>
-        <Typography.Title level={2} style={{ marginBottom: '0rem' }}>
-          My assignment
-        </Typography.Title>
-        <Space>
-          View mode:
-          <Select
-            defaultValue={true}
-            style={{
-              width: 200
-            }}
-            onChange={(value) => setViewAllMode(value)}>
-            <Option value={true}>View all</Option>
-            <Option value={false}>View by assignment type</Option>
-          </Select>
+      <div style={{ paddingTop: '2rem' }}>
+        <MyBoothLayoutListContainer
+          setMyLayoutVisibility={setMyLayoutVisibility}
+          myLayoutVisibility={myLayoutVisibility}
+          deletable
+        />
+        <Space
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginBottom: '1rem'
+          }}>
+          <Typography.Title level={2} style={{ marginBottom: '0rem' }}>
+            My assignment
+          </Typography.Title>
+          <Space>
+            View mode:
+            <Select
+              defaultValue={true}
+              style={{
+                width: 200
+              }}
+              onChange={(value) => setViewAllMode(value)}>
+              <Option value={true}>View all</Option>
+              <Option value={false}>View by assignment type</Option>
+            </Select>
+          </Space>
         </Space>
-      </Space>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {viewAllMode ? (
-          <>
-            <Space style={{ width: '100%', justifyContent: 'end', marginBottom: '1rem' }}>
-              <Button type='primary' onClick={handleOpenMyBoothLayout}>
-                My Booth Layout
-              </Button>
-            </Space>
-            <CommonTableContainer {...jobFairAssignmentTableProps} />
-          </>
-        ) : (
-          <Tabs
-            activeKey={currentTab}
-            centered
-            onTabClick={(key) => {
-              setCurrentTab(key);
-            }}>
-            <TabPane tab='Supervisor task' key={AssignmentConst.SUPERVISOR}>
-              <CommonTableContainer {...jobFairAssignmentTableProps} />
-            </TabPane>
-            <TabPane tab='Receptionist task' key={AssignmentConst.RECEPTION}>
-              <CommonTableContainer {...jobFairAssignmentTableProps} />
-            </TabPane>
-            <TabPane tab='Interview task' key={AssignmentConst.INTERVIEWER}>
-              <CommonTableContainer {...jobFairAssignmentTableProps} />
-            </TabPane>
-            <TabPane tab='Decorate task' key={AssignmentConst.DECORATOR}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {viewAllMode ? (
+            <>
               <Space style={{ width: '100%', justifyContent: 'end', marginBottom: '1rem' }}>
                 <Button type='primary' onClick={handleOpenMyBoothLayout}>
                   My Booth Layout
                 </Button>
               </Space>
-              <CommonTableContainer {...jobFairAssignmentTableProps} />
-            </TabPane>
-          </Tabs>
-        )}
+              <CommonTableContainer {...jobFairAllAssignmentTableProps} />
+            </>
+          ) : (
+            <Tabs
+              activeKey={currentTab}
+              centered
+              onTabClick={(key) => {
+                setCurrentTab(key);
+              }}>
+              <TabPane tab='Supervisor task' key={AssignmentConst.SUPERVISOR}>
+                <CommonTableContainer {...jobFairAssignmentTableProps} />
+              </TabPane>
+              <TabPane tab='Receptionist task' key={AssignmentConst.RECEPTION}>
+                <CommonTableContainer {...jobFairAssignmentTableProps} />
+              </TabPane>
+              <TabPane tab='Interview task' key={AssignmentConst.INTERVIEWER}>
+                <CommonTableContainer {...jobFairAssignmentTableProps} />
+              </TabPane>
+              <TabPane tab='Decorate task' key={AssignmentConst.DECORATOR}>
+                <Space style={{ width: '100%', justifyContent: 'end', marginBottom: '1rem' }}>
+                  <Button type='primary' onClick={handleOpenMyBoothLayout}>
+                    My Booth Layout
+                  </Button>
+                </Space>
+                <CommonTableContainer {...jobFairAssignmentTableProps} />
+              </TabPane>
+            </Tabs>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

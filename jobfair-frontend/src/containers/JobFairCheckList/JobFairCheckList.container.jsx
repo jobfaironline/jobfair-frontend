@@ -260,11 +260,14 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
 
   return (
     <>
-      <JobFairProgressDrawerContainer
-        jobFairId={jobFairId}
-        visibility={checkEmployeeProgressVisible}
-        onClose={onCloseViewEmployeeProgress}
-      />
+      {role === RoleType.COMPANY_MANAGER ? (
+        <JobFairProgressDrawerContainer
+          jobFairId={jobFairId}
+          visibility={checkEmployeeProgressVisible}
+          onClose={onCloseViewEmployeeProgress}
+        />
+      ) : null}
+
       <AssignEmployeeDetailModalContainer
         visible={assignEmployeeModalVisible}
         onClose={onCloseAssignEmployeeModal}

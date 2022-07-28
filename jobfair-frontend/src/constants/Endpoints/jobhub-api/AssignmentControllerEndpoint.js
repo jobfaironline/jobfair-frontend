@@ -5,3 +5,4 @@ export const UNASSIGNMENT = '/api/v1/assignments/unassign';
 export const STATISTICS = '/api/v1/assignments/statistics';
 export const ASSIGNMENT = '/api/v1/assignments';
 export const ASSIGNMENT_BY_EMPLOYEE_ID = '/api/v1/assignments/employee';
+export const JOB_FAIR_ASSIGNMENT_BY_EMPLOYEE_ID = '/api/v1/assignments/employee/jobfair';

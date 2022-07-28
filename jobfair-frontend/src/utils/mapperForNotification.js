@@ -95,7 +95,7 @@ export const mapperForNotification = (data) => {
         notification.message = (
           <>
             <p style={{ marginBottom: 0 }}>
-              You need to assign staff for your booth <strong>{fromNow}</strong>.Click to assign now.
+              You need to assign staff for your booth <strong>{fromNow}</strong>. Click to assign now.
             </p>
           </>
         );
@@ -119,7 +119,7 @@ export const mapperForNotification = (data) => {
         notification.message = (
           <>
             <p style={{ marginBottom: 0 }}>
-              You need to describe your booth <strong>{fromNow}</strong>.Click to describe now.
+              You need to describe your booth <strong>{fromNow}</strong>. Click to describe now.
             </p>
           </>
         );
