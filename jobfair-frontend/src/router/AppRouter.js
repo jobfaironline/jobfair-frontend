@@ -55,6 +55,8 @@ import ResumeAddPage from '../pages/ResumeAddPage/ResumeAddPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
 import ResumeEditPage from '../pages/ResumeEditPage/ResumeEditPage';
 import ResumeManagementPage from '../pages/ResumeManagementPage/ResumeManagementPage';
+import SubscriptionDashboardPage from '../pages/SubscriptionPage/SubscriptionDashboardPage';
+import SubscriptionDetailPage from '../pages/SubscriptionPage/SubscriptionDetailPage';
 
 const excludeFooterPages = [
   PATH.BOOTH_PAGE,
@@ -387,6 +389,18 @@ const AppRouter = () => {
             key={PATH_COMPANY_MANAGER.BOOTH_DASH_BOARD}
             component={() => <BoothDashboardPage />}
             path={PATH_COMPANY_MANAGER.BOOTH_DASH_BOARD}
+            exact
+          />
+          <CompanyManagerRouter
+            key={PATH_COMPANY_MANAGER.SUBSCRIPTION_DASH_BOARD}
+            component={() => <SubscriptionDashboardPage />}
+            path={PATH_COMPANY_MANAGER.SUBSCRIPTION_DASH_BOARD}
+            exact
+          />
+          <CompanyManagerRouter
+            key={PATH_COMPANY_MANAGER.SUBSCRIPTION_DETAIL}
+            component={() => <SubscriptionDetailPage />}
+            path={PATH_COMPANY_MANAGER.SUBSCRIPTION_DETAIL}
             exact
           />
           <Route path='/index.html'>
