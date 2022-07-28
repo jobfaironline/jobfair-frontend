@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { PATH } from '../../constants/Paths/Path';
 import { convertToDateString } from '../../utils/common';
-import { faLink, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getJobFairByIDAPI } from '../../services/jobhub-api/JobFairControllerService';
 import { mapCompanyProfileFromAPIResponse } from '../../utils/mapperCompanyProfile';
@@ -83,15 +83,10 @@ const JobFairLandingContainer = ({ jobFairId, isReview }) => {
         </div>
       </div>
       <div className={'detail'}>
-        <Title level={3}>Description</Title>
+        <Title level={3} style={{ marginBottom: '5px' }}>
+          Description
+        </Title>
         <Text className={'description'}>{jobFairData?.description}</Text>
-        <Divider />
-        <Title level={3}>Schedule</Title>
-        <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem' }}>
-          <div className={'time-cube'}>{convertToDateString(jobFairData?.publicStartTime)}</div>
-          <FontAwesomeIcon icon={faMinus} />
-          <div className={'time-cube'}>{convertToDateString(jobFairData?.publicEndTime)}</div>
-        </div>
         <Divider />
         <Title level={3}>About the host</Title>
 

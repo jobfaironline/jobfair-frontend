@@ -8,7 +8,7 @@ const { Text } = Typography;
 
 export const RemoveResumeComponent = (props) => {
   const { selectedResume, onRemoveResume, matchingPoint } = props;
-  const isSuitable = matchingPoint * 1000 > 50;
+  const isSuitable = matchingPoint * 100 > 50;
   return (
     <>
       <Divider style={{ margin: '1rem 0' }} />

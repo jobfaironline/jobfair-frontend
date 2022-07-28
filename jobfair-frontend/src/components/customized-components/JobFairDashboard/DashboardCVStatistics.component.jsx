@@ -1,4 +1,4 @@
-import { Card, Col, Row, Typography } from 'antd';
+import { Card, Col, Divider, Row, Typography } from 'antd';
 import { GenericDonutChart } from '../../commons/Chart/GenericDonutChart.component';
 import { GenericPieChart } from '../../commons/Chart/GenericPieChart.component';
 import React from 'react';
@@ -61,16 +61,18 @@ export const DashboardCVStatistics = ({ data }) => {
 
   return (
     <>
-      <Card style={{ borderRadius: '10px' }}>
-        <Title level={3}>
-          Number of submitted CV: <span style={{ fontWeight: '400' }}>{pendingNum + approvedNum + rejectNum}</span>
+      <Card style={{ borderRadius: '10px' }} bodyStyle={{ paddingTop: '12px' }}>
+        <Title level={3} style={{ fontWeight: 700 }}>
+          Number of submitted CV:{' '}
+          <span style={{ fontWeight: '400', marginLeft: '1rem' }}>{pendingNum + approvedNum + rejectNum}</span>
         </Title>
+        <Divider style={{ margin: '12px 0' }} />
         <Row gutter={10}>
           <Col span={12}>
-            <GenericPieChart data={cvStatusChartData} config={{ color: cvChartColorMapping }} title={'CV status'} />
+            <GenericPieChart data={cvStatusChartData} config={{ color: cvChartColorMapping }} title={'CV STATUS'} />
           </Col>
           <Col span={12}>
-            <GenericDonutChart data={cvMatchingChartData} config={cvMatchingChartConfig} title={'CV matching ratio'} />
+            <GenericDonutChart data={cvMatchingChartData} config={cvMatchingChartConfig} title={'CV MATCHING RATIO'} />
           </Col>
         </Row>
       </Card>

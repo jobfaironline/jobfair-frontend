@@ -39,7 +39,9 @@ export const GenericPieChart = ({ data, config, title = '' }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Pie {...internalConfig} />
-      <Title level={2}>{title}</Title>
+      <Title level={3} style={{ fontWeight: 500, color: 'gray' }}>
+        {title}
+      </Title>
     </div>
   );
 };

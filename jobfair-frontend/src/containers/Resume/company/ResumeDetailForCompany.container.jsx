@@ -91,7 +91,7 @@ const ResumeDetailForCompanyContainer = ({ resumeId }) => {
   if (data === undefined) return <LoadingComponent isWholePage={true} />;
 
   data.matchingPoint = data.matchingPoint !== undefined ? data.matchingPoint : 0;
-  const tagColor = getMatchingPointColor(data.matchingPoint * 1000);
+  const tagColor = getMatchingPointColor(data.matchingPoint * 100);
 
   return (
     <>
@@ -108,7 +108,7 @@ const ResumeDetailForCompanyContainer = ({ resumeId }) => {
             <Typography.Text style={{ fontSize: '1rem' }}>
               This resume matching point is:{' '}
               <Tag style={{ fontSize: '1rem' }} color={tagColor}>
-                {Math.round(data?.matchingPoint * 1000)} %
+                {Math.round(data?.matchingPoint * 100)} %
               </Tag>
             </Typography.Text>
             <div>

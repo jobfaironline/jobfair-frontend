@@ -78,11 +78,11 @@ const companyColumns = () => [
     width: '10%',
     sorter: (a, b) => a.matchingPoint * 100 - b.matchingPoint * 100,
     render: (num) => {
-      const tagColor = getMatchingPointColor(num * 1000);
+      const tagColor = getMatchingPointColor(num * 100);
       return (
         <div style={{ display: 'flex' }}>
           <Tag color={tagColor} style={{ marginLeft: 'auto' }}>
-            {Math.round(num * 1000)} %
+            {Math.round(num * 100)} %
           </Tag>
         </div>
       );

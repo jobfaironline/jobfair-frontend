@@ -22,10 +22,10 @@ export const PublishJobFairConfirmModal = (props) => {
       width={'40%'}
       onCancel={onCancel}>
       <div>
-        <Title level={5} className={'content'}>
+        <Title level={4} className={'content'} style={{ marginBottom: '5px' }}>
           Schedule job fair
         </Title>
-        <Row style={{ marginBottom: '5px' }}>
+        <Row style={{ marginBottom: '5px', marginLeft: '1rem' }}>
           <Col span={7}>
             <Text>Decorate time ({getTimeZoneCode()}):</Text>
           </Col>
@@ -45,7 +45,7 @@ export const PublishJobFairConfirmModal = (props) => {
             )}
           </Col>
         </Row>
-        <Row style={{ marginBottom: '5px' }}>
+        <Row style={{ marginBottom: '5px', marginLeft: '1rem' }}>
           <Col span={7}>
             <Text>Public time ({getTimeZoneCode()}):</Text>
           </Col>
@@ -65,7 +65,7 @@ export const PublishJobFairConfirmModal = (props) => {
             )}
           </Col>
         </Row>
-        <Row style={{ marginBottom: '5px' }}>
+        <Row style={{ marginBottom: '5px', marginLeft: '1rem' }}>
           <Col span={7}>
             <Text>Morning shift ({getTimeZoneCode()}):</Text>
           </Col>
@@ -85,7 +85,7 @@ export const PublishJobFairConfirmModal = (props) => {
             )}
           </Col>
         </Row>
-        <Row style={{ marginBottom: '5px' }}>
+        <Row style={{ marginBottom: '5px', marginLeft: '1rem' }}>
           <Col span={7}>
             <Text>Afternoon shift ({getTimeZoneCode()}):</Text>
           </Col>
@@ -107,8 +107,10 @@ export const PublishJobFairConfirmModal = (props) => {
         </Row>
       </div>
       <div>
-        <Title level={5}>Assign employee</Title>
-        <Row style={{ marginBottom: '5px' }}>
+        <Title level={4} style={{ marginBottom: '5px' }}>
+          Assign employee
+        </Title>
+        <Row style={{ marginBottom: '5px', marginLeft: '1rem' }}>
           <Col span={8}>
             <Text>Number of assigned employee: </Text>
           </Col>
@@ -118,7 +120,7 @@ export const PublishJobFairConfirmModal = (props) => {
             </Text>
           </Col>
         </Row>
-        <Row style={{ marginBottom: '5px' }}>
+        <Row style={{ marginBottom: '5px', marginLeft: '1rem' }}>
           <Col span={8}>
             <Text>Number of assigned booth: </Text>
           </Col>
@@ -130,10 +132,14 @@ export const PublishJobFairConfirmModal = (props) => {
         </Row>
       </div>
       <div>
-        <Title level={5}>Confirmation</Title>
-        <Text>After you publish a job fair, you cannot alter the following information:</Text>
-        <Typography.Paragraph>
-          <ul>
+        <Title level={4} style={{ marginBottom: '5px' }}>
+          Confirmation
+        </Title>
+        <Text style={{ marginLeft: '1rem' }}>
+          After you publish a job fair, you cannot alter the following information:
+        </Text>
+        <Typography.Paragraph style={{ marginLeft: '1rem' }}>
+          <ul style={{ marginLeft: '1rem' }}>
             <li>3D layout</li>
             <li>Schedule</li>
             <li>Employee assignment</li>

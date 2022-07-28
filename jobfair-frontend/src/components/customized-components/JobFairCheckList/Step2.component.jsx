@@ -18,7 +18,7 @@ export const Step2Component = (props) => {
             Step 2: Schedule job fair
           </Text>
           <Row className={'time'}>
-            <Col span={5}>
+            <Col span={7}>
               <Text>Decorate time ({getTimeZoneCode()}):</Text>
             </Col>
             <Col>
@@ -38,7 +38,7 @@ export const Step2Component = (props) => {
             </Col>
           </Row>
           <Row className={'time'}>
-            <Col span={5}>
+            <Col span={7}>
               <Text>Public time ({getTimeZoneCode()}):</Text>
             </Col>
             <Col>
@@ -58,7 +58,7 @@ export const Step2Component = (props) => {
             </Col>
           </Row>
           <Row className={'time'}>
-            <Col span={5}>
+            <Col span={7}>
               <Text>Morning shift ({getTimeZoneCode()}):</Text>
             </Col>
             <Col>
@@ -78,7 +78,7 @@ export const Step2Component = (props) => {
             </Col>
           </Row>
           <Row className={'time'}>
-            <Col span={5}>
+            <Col span={7}>
               <Text>Afternoon shift ({getTimeZoneCode()}):</Text>
             </Col>
             <Col>

@@ -12,11 +12,19 @@ const { Title, Text } = Typography;
 
 export const ResumeDetailComponent = (props) => {
   const { data, isForCompany = false } = props;
+  const isSuitable = data.matchingPoint * 100 > 50;
   return (
     <div className='resume-detail'>
       <Row gutter={15}>
         <Col span={7}>
           <ResumeOverview userOverview={data.overviewData} isForCompany={isForCompany} />
+          <div>
+            {isSuitable ? (
+              <Text style={{ color: 'green' }}>This application is suitable for your job position</Text>
+            ) : (
+              <Text style={{ color: 'red' }}>This application is not suitable for your job position</Text>
+            )}
+          </div>
         </Col>
         <Col span={17}>
           <Card style={{ borderRadius: '8px' }} className={'list'}>

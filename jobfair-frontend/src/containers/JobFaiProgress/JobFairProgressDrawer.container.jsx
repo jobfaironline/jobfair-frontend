@@ -1,5 +1,5 @@
 import './JobFairProgressDrawer.styles.scss';
-import { Col, Collapse, Drawer, Progress, Row, Typography, notification } from 'antd';
+import { Col, Collapse, Divider, Drawer, Progress, Row, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
@@ -33,11 +33,11 @@ export const JobFairProgressDrawerContainer = ({ jobFairId, visibility, onClose 
   if (data === undefined) return <LoadingComponent isWholePage={false} />;
 
   return (
-    <Drawer width={640} placement='right' closable={false} onClose={onClose} visible={visibility}>
+    <Drawer width={500} placement='right' closable={false} onClose={onClose} visible={visibility}>
       <div className={'job-fair-progress'}>
-        <Title level={3}>Employee progress of job fair '{data.name}'</Title>
+        <Title level={3}>Employee progress of '{data.name}'</Title>
         <div className={'progress-bar'}>
-          <Progress percent={(data.overallProgress * 100).toFixed(2)} strokeColor={green[6]} />
+          <Progress percent={(data.overallProgress * 100).toFixed(0)} strokeColor={green[6]} />
         </div>
         {data.booths.map((boothInfo) => {
           let taskCount = 0;
@@ -57,7 +57,7 @@ export const JobFairProgressDrawerContainer = ({ jobFairId, visibility, onClose 
                   </div>
                 }>
                 <Row gutter={10}>
-                  <Col span={12}>
+                  <Col span={24}>
                     <Text strong={true} style={{ fontSize: '1rem' }}>
                       Supervisor: {boothInfo.supervisor.name}
                     </Text>
@@ -76,7 +76,8 @@ export const JobFairProgressDrawerContainer = ({ jobFairId, visibility, onClose 
                       <Text>Fill booth description</Text>
                     </div>
                   </Col>
-                  <Col span={12}>
+                  <Divider type={'vertical'} />
+                  <Col span={24}>
                     <Text strong={true} style={{ fontSize: '1rem' }}>
                       Decorator: {boothInfo.decorator.name}
                     </Text>

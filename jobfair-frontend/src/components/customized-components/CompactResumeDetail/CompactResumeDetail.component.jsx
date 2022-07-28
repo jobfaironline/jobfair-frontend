@@ -50,7 +50,7 @@ export const CompactResumeDetail = (props) => {
       width: '90rem',
       closable: true,
       maskClosable: true,
-      content: <ResumeDetailComponent data={resumeData} />
+      content: <ResumeDetailComponent data={resumeData} isForCompany={true} />
     });
   };
 

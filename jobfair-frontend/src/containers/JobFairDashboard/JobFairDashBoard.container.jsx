@@ -1,9 +1,11 @@
-import { Col, PageHeader, Row, notification } from 'antd';
+import './JobFairDashBoard.container.scss';
+import { Col, PageHeader, Row, Tooltip, notification } from 'antd';
 import { DashBoardJobPositionStatistics } from '../../components/customized-components/JobFairDashboard/DashBoardJobPositionStatistics.component';
 import { DashboardCVStatistics } from '../../components/customized-components/JobFairDashboard/DashboardCVStatistics.component';
 import { ENDPOINT_JOB_FAIR_STATISTICS } from '../../constants/Endpoints/jobhub-api/StatisticsControllerEndpoint';
 import { JobFairDashBoardBoothTable } from '../../components/customized-components/JobFairDashboard/JobFairDashboardBoothTable.component';
 import { JobFairDashBoardGeneralInformation } from '../../components/customized-components/JobFairDashboard/JobFairDashboardGeneralInformation.component';
+import { LeftOutlined, ProjectFilled } from '@ant-design/icons';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { generatePath } from 'react-router';
@@ -28,15 +30,28 @@ const JobFairDashBoardContainer = ({ jobFairId }) => {
   const data = response.data;
 
   return (
-    <div style={{ marginBottom: '2rem' }}>
+    <div style={{ marginBottom: '2rem' }} className={'job-fair-dashboard-container'}>
       <PageHeader
+        backIcon={
+          <Tooltip title={'Back to job fair check list'}>
+            <LeftOutlined style={{ fontSize: '2rem' }} />
+          </Tooltip>
+        }
         onBack={() => {
           const url = generatePath(PATH_COMPANY_MANAGER.CHECKLIST, { jobFairId });
           history.push(url);
         }}
         title={
-          <div style={{ width: '20vw', paddingBottom: '0.5rem', borderBottom: '1.5px solid #00000026' }}>
-            Job fair's name: <span style={{ fontWeight: 400 }}>{data.jobFair.name}</span>
+          <div
+            style={{
+              width: '30vw',
+              paddingBottom: '0.5rem',
+              borderBottom: '1.5px solid #00000026',
+              fontWeight: 500,
+              fontSize: '2rem'
+            }}>
+            <ProjectFilled style={{ marginRight: '5px' }} />
+            Dashboard of '{data.jobFair.name}'
           </div>
         }
       />

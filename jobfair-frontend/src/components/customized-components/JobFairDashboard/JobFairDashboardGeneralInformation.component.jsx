@@ -1,3 +1,4 @@
+import { EyeFilled, HomeFilled, IdcardFilled, ReconciliationFilled } from '@ant-design/icons';
 import { Tag } from 'antd';
 import React from 'react';
 
@@ -10,21 +11,77 @@ export const JobFairDashBoardGeneralInformation = ({ data }) => {
   } = data;
   return (
     <div style={{ display: 'flex', gap: '20px' }}>
-      <Tag color={'blue'} style={{ padding: '0.8rem 1rem 1.5rem 1rem', borderRadius: '10px', flex: 1 }}>
-        <p style={{ marginBottom: 10, fontSize: '1.3rem' }}>Number of booths</p>
-        <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600' }}>{boothNum}</p>
+      <Tag
+        color={'blue'}
+        style={{
+          padding: '0.8rem 1.2rem 0.8rem',
+          borderRadius: '10px',
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+        <div style={{ display: 'flex' }}>
+          <HomeFilled style={{ fontSize: '45px', marginRight: '15px', display: 'flex', alignItems: 'center' }} />
+          <div>
+            <p style={{ marginBottom: 0, fontSize: '1.3rem', fontWeight: '600' }}>Number of booths</p>
+            <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600', lineHeight: '2rem' }}>{boothNum}</p>
+          </div>
+        </div>
       </Tag>
-      <Tag color={'green'} style={{ padding: '0.8rem 1rem 1.5rem 1rem', borderRadius: '10px', flex: 1 }}>
-        <p style={{ marginBottom: 10, fontSize: '1.3rem' }}>Number of visitors</p>
-        <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600' }}>{participationNum}</p>
+      <Tag
+        color={'blue'}
+        style={{
+          padding: '0.8rem 1.2rem 0.8rem',
+          borderRadius: '10px',
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+        <div style={{ display: 'flex' }}>
+          <EyeFilled style={{ fontSize: '45px', marginRight: '15px', display: 'flex', alignItems: 'center' }} />
+          <div>
+            <p style={{ marginBottom: 0, fontSize: '1.3rem', fontWeight: '600' }}>Number of visitors</p>
+            <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600', lineHeight: '2rem' }}>
+              {participationNum}
+            </p>
+          </div>
+        </div>
       </Tag>
-      <Tag color={'magenta'} style={{ padding: '0.8rem 1rem 1.5rem 1rem', borderRadius: '10px', flex: 1 }}>
-        <p style={{ marginBottom: 10, fontSize: '1.3rem' }}>Number of job positions</p>
-        <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600' }}>{jobPositionNum}</p>
+      <Tag
+        color={'blue'}
+        style={{
+          padding: '0.8rem 1.2rem 0.8rem',
+          borderRadius: '10px',
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+        <div style={{ display: 'flex' }}>
+          <ReconciliationFilled
+            style={{ fontSize: '45px', marginRight: '15px', display: 'flex', alignItems: 'center' }}
+          />
+          <div>
+            <p style={{ marginBottom: 0, fontSize: '1.3rem', fontWeight: '600' }}>Number of job positions</p>
+            <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600', lineHeight: '2rem' }}>{jobPositionNum}</p>
+          </div>
+        </div>
       </Tag>
-      <Tag color={'purple'} style={{ padding: '0.8rem 1rem 1.5rem 1rem', borderRadius: '10px', flex: 1 }}>
-        <p style={{ marginBottom: 10, fontSize: '1.3rem' }}>Number of employees</p>
-        <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600' }}>{employeeNum}</p>
+      <Tag
+        color={'blue'}
+        style={{
+          padding: '0.8rem 1.2rem 0.8rem',
+          borderRadius: '10px',
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+        <div style={{ display: 'flex' }}>
+          <IdcardFilled style={{ fontSize: '45px', marginRight: '15px', display: 'flex', alignItems: 'center' }} />
+          <div>
+            <p style={{ marginBottom: 0, fontSize: '1.3rem', fontWeight: '600' }}>Number of employees</p>
+            <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600', lineHeight: '2rem' }}>{employeeNum}</p>
+          </div>
+        </div>
       </Tag>
     </div>
   );
