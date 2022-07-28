@@ -50,11 +50,16 @@ const AssignTaskContainer = (props) => {
   const [hasChange, setHasChange] = useState(false);
   const [forceRerender, setForceRerender] = useState(false);
   const [uploadCsvModalVisible, setUploadCSVModalVisible] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [form] = Form.useForm();
 
   useEffect(() => {
     fetchData();
   }, [forceRerender]);
+
+  useEffect(() => {
+    validate();
+  });
 
   const fetchData = async () => {
     try {
@@ -125,7 +130,7 @@ const AssignTaskContainer = (props) => {
         }
       }
 
-      setHasChange(true);
+      onChangeAssignment(true);
       setTableData((prevState) => ({ ...prevState, dataSource: deepClone(tableData.dataSource) }));
       onCancelModal();
     } catch (e) {
@@ -152,17 +157,24 @@ const AssignTaskContainer = (props) => {
   };
 
   const onRemoveChange = () => {
-    setHasChange(false);
     setTableData((prevState) => ({
       ...prevState,
       dataSource: [...tableData.oldDataSource].map((item) => ({ ...item }))
     }));
+    onChangeAssignment(false);
   };
 
   const onSaveChange = async () => {
     const oldData = tableData.oldDataSource;
     const newData = tableData.dataSource;
     const dayRange = tableData.dayRange;
+
+    const expectedAssignmentNum = Object.keys(dayRange).length * newData.length * 2;
+    let newAssignmentNum = 0;
+    for (const date of Object.keys(dayRange))
+      for (let i = 0; i < newData.length; i++) newAssignmentNum += newData[i][date].length;
+    if (expectedAssignmentNum !== newAssignmentNum) return;
+
     const [newAssignments, deletedAssignments, updatedAssignments] = getAssignmentsData(oldData, newData, dayRange);
 
     const promises = [];
@@ -186,7 +198,7 @@ const AssignTaskContainer = (props) => {
     try {
       await Promise.all(promises);
       setForceRerender((prevState) => !prevState);
-      setHasChange(false);
+      onChangeAssignment(false);
     } catch (e) {
       notification['error']({
         message: `Error occurred: ${e.response.data.message}`
@@ -224,6 +236,26 @@ const AssignTaskContainer = (props) => {
     setForceRerender((reRender) => !reRender);
   };
 
+  const validate = () => {
+    try {
+      const newData = tableData.dataSource;
+      const dayRange = tableData.dayRange;
+      const expectedAssignmentNum = Object.keys(dayRange).length * newData.length * 2;
+      let newAssignmentNum = 0;
+      for (const date of Object.keys(dayRange))
+        for (let i = 0; i < newData.length; i++) newAssignmentNum += newData[i][date].length;
+      const newIsError = expectedAssignmentNum !== newAssignmentNum;
+      if (isError !== newIsError) setIsError(newIsError);
+    } catch (e) {
+      //ignored
+    }
+  };
+
+  const onChangeAssignment = (value) => {
+    validate();
+    setHasChange(value);
+  };
+
   const modalProps = {
     date: selectedCellData.date,
     visible: selectedCellData.visible,
@@ -255,20 +287,26 @@ const AssignTaskContainer = (props) => {
             }}>
             Import CSV file
           </Button>
-          <Button
-            style={{ marginLeft: 'auto', display: hasChange ? 'block' : 'none', marginRight: '1rem' }}
-            className={'button'}
-            onClick={onRemoveChange}>
-            Remove change
-          </Button>
-          <Button
-            className={'button'}
-            disabled={!hasChange}
-            type={'primary'}
-            onClick={onSaveChange}
-            style={{ marginLeft: hasChange ? '1rem' : 'auto' }}>
-            Save new schedule
-          </Button>
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
+            {isError ? (
+              <p style={{ marginBottom: 0, color: 'red', marginRight: '1rem' }}>Please assign all slot</p>
+            ) : null}
+
+            <Button
+              style={{ display: hasChange ? 'block' : 'none', marginRight: '1rem' }}
+              className={'button'}
+              onClick={onRemoveChange}>
+              Remove change
+            </Button>
+            <Button
+              className={'button'}
+              disabled={!hasChange || isError}
+              type={'primary'}
+              onClick={onSaveChange}
+              style={{ marginLeft: hasChange ? '1rem' : 'auto' }}>
+              Save new schedule
+            </Button>
+          </div>
         </div>
         {tableData.dataSource === undefined ? (
           <LoadingComponent isWholePage={true} />
