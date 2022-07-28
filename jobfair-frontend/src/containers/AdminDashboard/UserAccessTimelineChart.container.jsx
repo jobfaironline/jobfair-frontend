@@ -8,68 +8,44 @@ const { RangePicker } = DatePicker;
 
 const fakeData = [
   {
-    Date: 1658840587,
-    scales: 1998
+    Date: 1654041600000,
+    scales: 1
   },
   {
-    Date: 2668840588,
-    scales: 1850
+    Date: 1654387200000,
+    scales: 8
   },
   {
-    Date: 3678840589,
-    scales: 1720
+    Date: 1654819200000,
+    scales: 10
   },
   {
-    Date: 4688840590,
-    scales: 1818
+    Date: 1655251200000,
+    scales: 20
   },
   {
-    Date: 5698840591,
-    scales: 1920
+    Date: 1655683200000,
+    scales: 13
   },
   {
-    Date: 6708840592,
-    scales: 1802
+    Date: 165654720000,
+    scales: 30
   },
   {
-    Date: 7718840593,
-    scales: 1945
+    Date: 165663360000,
+    scales: 32
   },
   {
-    Date: 8728840594,
-    scales: 1856
+    Date: 165741120000,
+    scales: 42
   },
   {
-    Date: 9738840595,
-    scales: 2107
+    Date: 165827520000,
+    scales: 19
   },
   {
-    Date: 13678840589,
-    scales: 1720
-  },
-  {
-    Date: 14688840590,
-    scales: 1818
-  },
-  {
-    Date: 15698840591,
-    scales: 1920
-  },
-  {
-    Date: 16708840592,
-    scales: 1802
-  },
-  {
-    Date: 17718840593,
-    scales: 1945
-  },
-  {
-    Date: 18728840594,
-    scales: 1856
-  },
-  {
-    Date: 19738840595,
-    scales: 2107
+    Date: 165896640000,
+    scales: 10
   }
 ];
 
@@ -86,7 +62,8 @@ const UserAccessTimelineChartContainer = () => {
 
   useEffect(() => {
     //please use this useEffect to force this chart rerender when changing date range
-    setData([...fakeData]?.map((obj) => ({ ...obj, Date: moment(obj.Date).format('YYYY-MM-DD') })));
+    const data = [...fakeData]?.map((obj) => ({ ...obj, Date: moment(obj.Date).format('YYYY-MM-DD') }));
+    setData(data);
   }, [dateRange]);
 
   //   const { response, isLoading, isError } = useSWRFetch(`./fake-data-admin`, 'GET');
@@ -145,7 +122,7 @@ const UserAccessTimelineChartContainer = () => {
     <>
       <Row align='middle'>
         <Col span={12}>
-          <Typography.Title level={2}>User Access Timeline</Typography.Title>
+          <Typography.Title level={4}>User Access Timeline</Typography.Title>
         </Col>
         <Col span={12}>
           <Form name='time_related_controls' form={form} onFinish={onFinish}>
