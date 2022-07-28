@@ -213,3 +213,11 @@ export const getCurrentUserAgent = () => {
     version: M[1]
   };
 };
+
+export function delay(delayInms) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(2);
+    }, delayInms);
+  });
+}

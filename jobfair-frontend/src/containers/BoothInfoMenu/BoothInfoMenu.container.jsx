@@ -11,15 +11,19 @@ import { BoothJobPositionTabContainer } from './BoothJobPositionTab/BoothJobPosi
 import { CompanyInformation } from '../../components/customized-components/BoothInfoMenu/BoothInformationTab/BoothInformationTab.component';
 import { Tabs, Tooltip, Typography, notification } from 'antd';
 import { boothTabAction } from '../../redux-flow/boothInfoTab/boothInfoTab-slice';
+import { delay } from '../../utils/common';
 import { getCompanyBoothById } from '../../services/jobhub-api/CompanyBoothControllerService';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import ChatBoxContainer from '../Agora/ChatBox/ChatBox.container';
 import React, { useEffect, useState } from 'react';
 
 export const BoothInfoMenuContainer = (props) => {
   const { companyBoothId, openInventory, communicationProps } = props;
   const { isShow, activeKey } = useSelector((state) => state.boothTab);
+  const location = useLocation();
+
+  const { boothJobPositionId } = location.state ?? {};
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -49,12 +53,19 @@ export const BoothInfoMenuContainer = (props) => {
     }
   };
 
+  const checkAfterQuiz = async () => {
+    if (boothJobPositionId) {
+      await delay(200);
+      dispatch(boothTabAction.setIsShow(true));
+      dispatch(boothTabAction.setActiveKey('2'));
+    }
+  };
+
   useEffect(() => {
-    fetchData();
+    fetchData().then(checkAfterQuiz);
   }, []);
 
   if (state.companyInformation === undefined) return null;
-
   return (
     <div className={'booth-info-menu-container'}>
       <div className={'booth-info-menu'}>
@@ -66,7 +77,7 @@ export const BoothInfoMenuContainer = (props) => {
             style={{ marginLeft: 'auto', cursor: 'pointer' }}
             onClick={() => {
               dispatch(boothTabAction.setIsShow(!isShow));
-              dispatch(boothTabAction.activeKey(0));
+              dispatch(boothTabAction.setActiveKey(0));
             }}>
             {isShow ? (
               <ShrinkOutlined style={{ fontSize: '1.2rem' }} />
@@ -112,11 +123,9 @@ export const BoothInfoMenuContainer = (props) => {
               </div>
             }
             key='1'>
-            {isShow ? (
-              <div className={'aboutCompany'}>
-                <CompanyInformation data={state.companyInformation} />
-              </div>
-            ) : null}
+            <div className={'aboutCompany'} style={{ display: isShow ? 'block' : 'none' }}>
+              <CompanyInformation data={state.companyInformation} />
+            </div>
           </Tabs.TabPane>
           <Tabs.TabPane
             tab={
@@ -129,9 +138,9 @@ export const BoothInfoMenuContainer = (props) => {
               </div>
             }
             key='2'>
-            {isShow ? (
+            <div style={{ display: isShow ? 'block' : 'none' }}>
               <BoothJobPositionTabContainer jobPositions={state.jobPositions} openInventory={openInventory} />
-            ) : null}
+            </div>
           </Tabs.TabPane>
           <Tabs.TabPane
             key='3'

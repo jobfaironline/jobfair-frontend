@@ -50,6 +50,8 @@ export const BoothJobPositionTabContainer = (props) => {
         }
         if (resume) {
           const data = (await getApplicationById(applicationId)).data;
+          const res = await getMatchingPoint(resume.id, jobPosition.id);
+          cvMatchingPointRef.current = res.data.result;
           setApplicationData(data);
           setSelectedJobPosition(jobPosition);
           setIsModalVisible(true);
@@ -99,6 +101,12 @@ export const BoothJobPositionTabContainer = (props) => {
     try {
       if (applicationData) {
         if (applicationData.testStatus === TestStatus.PASS) await submitApplication(applicationData.id);
+        setIsModalVisible(false);
+        setSelectedResume(undefined);
+        setApplicationData(undefined);
+        notification['success']({
+          message: 'Your application has been submitted'
+        });
         return;
       }
 
