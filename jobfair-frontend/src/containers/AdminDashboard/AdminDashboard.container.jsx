@@ -1,3 +1,4 @@
+import './AdminDashboard.container.scss';
 import { AdminDashBoardAccountStatistics } from './AdminDashBoardAccountStatistics.component';
 import { AdminDashBoardJobFairStatistics } from './AdminDashboardJobFairStatistics.component';
 import { Col, PageHeader, Row, Typography, notification } from 'antd';
@@ -5,6 +6,7 @@ import { ENDPOINT_ADMIN_STATISTICS } from '../../constants/Endpoints/jobhub-api/
 import { GenericDonutChart } from '../../components/commons/Chart/GenericDonutChart.component';
 import { GenericPieChart } from '../../components/commons/Chart/GenericPieChart.component';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
+import { ProjectFilled } from '@ant-design/icons';
 import { useSWRFetch } from '../../hooks/useSWRFetch';
 import AnchorComponent from '../../components/commons/Anchor/Achor.component';
 import React from 'react';
@@ -37,17 +39,17 @@ const AdminDashBoardContainer = () => {
     {
       type: 'Finished',
       value: data.jobFairStatistics.pastNum,
-      color: 'green'
+      color: '#62daab'
     },
     {
       type: 'In progress',
       value: data.jobFairStatistics.inProgressNum,
-      color: 'gold'
+      color: '#f6cf32'
     },
     {
       type: 'Incoming',
       value: data.jobFairStatistics.incomingNum,
-      color: 'gray'
+      color: '#6395f9'
     }
   ];
 
@@ -69,22 +71,22 @@ const AdminDashBoardContainer = () => {
     {
       type: 'Verified',
       value: data.accountStatistics.verifiedNum,
-      color: 'green'
+      color: '#62daab'
     },
     {
       type: 'Registered',
       value: data.accountStatistics.registeredNum,
-      color: 'yellow'
+      color: '#f6cf32'
     },
     {
       type: 'Inactive',
       value: data.accountStatistics.inactiveNum,
-      color: 'blue'
+      color: '#6395f9'
     },
     {
       type: 'Suspended',
       value: data.accountStatistics.suspendedNum,
-      color: 'red'
+      color: '#f34b49'
     }
   ];
   const accountStatusChartColorMapping = ({ type }) =>
@@ -94,35 +96,41 @@ const AdminDashBoardContainer = () => {
     {
       type: 'Attendant',
       value: data.accountStatistics.attendantNum,
-      color: 'green'
+      color: '#6395f9'
     },
     {
       type: 'Company manager',
       value: data.accountStatistics.companyManagerNum,
-      color: 'yellow'
+      color: '#62daab'
     },
     {
       type: 'Employee',
       value: data.accountStatistics.companyEmployeeNum,
-      color: 'red'
+      color: '#f34b49'
     }
   ];
   const accountRatioChartColorMapping = ({ type }) =>
     accountRatioChartData.find((category) => category.type === type).color;
 
   return (
-    <div style={{ marginBottom: '2rem' }}>
+    <div style={{ marginBottom: '2rem' }} className={'admin-dashboard-container'}>
       <PageHeader
         title={
           <div
-            id={'admin-dashboard'}
-            style={{ width: '20vw', paddingBottom: '0.5rem', borderBottom: '1.5px solid #00000026' }}>
-            <span style={{ fontWeight: 400 }}>Admin dashboard</span>
+            style={{
+              width: '30vw',
+              paddingBottom: '0.5rem',
+              borderBottom: '1.5px solid #00000026',
+              fontWeight: 500,
+              fontSize: '2rem'
+            }}>
+            <ProjectFilled style={{ marginRight: '5px' }} />
+            Admin dashboard
           </div>
         }
       />
       <div style={{ display: 'flex', gap: '2rem' }}>
-        <div style={{ position: 'fixed', left: '2%' }}>
+        <div style={{ position: 'fixed', left: '2%', top: '100px' }}>
           <AnchorComponent listData={formTitles} href={'#admin-dashboard'} title={'Admin dashboard'} />
         </div>
         <div style={{ flex: 1, marginLeft: '13%' }}>
@@ -140,7 +148,7 @@ const AdminDashBoardContainer = () => {
               <GenericDonutChart
                 data={jobfairStatusChartData}
                 config={jobfairChartConfig}
-                title={'Jobfair statistics'}
+                title={'Job fair statistics'}
               />
             </Col>
           </Row>

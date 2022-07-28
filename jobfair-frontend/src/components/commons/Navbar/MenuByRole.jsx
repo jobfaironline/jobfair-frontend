@@ -46,7 +46,7 @@ export const CompanyManagerMenu = [
     link: PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE
   },
   {
-    title: 'Statistics',
+    title: 'Dashboard',
     link: PATH_COMPANY_MANAGER.COMPANY_DASHBOARD
   }
 ];

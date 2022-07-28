@@ -1,4 +1,4 @@
-import { Card, Col, Row, Typography } from 'antd';
+import { Card, Col, Divider, Row, Typography } from 'antd';
 import { GenericPieChart } from '../../../commons/Chart/GenericPieChart.component';
 import React from 'react';
 
@@ -51,21 +51,21 @@ export const CompanyCVStatistics = ({ data }) => {
 
   return (
     <>
-      <Card style={{ borderRadius: '10px' }}>
+      <Card style={{ borderRadius: '10px' }} bodyStyle={{ paddingTop: '12px' }}>
         <Row>
           <Col span={12}>
-            <Title level={3}>
+            <Title level={3} style={{ fontWeight: 700 }}>
               Number of submitted CV: <span style={{ fontWeight: '400' }}>{cvNum}</span>
             </Title>
           </Col>
           <Col span={12}>
-            <Title level={3}>
+            <Title level={3} style={{ fontWeight: 700 }}>
               Interview ratio:{' '}
               <span style={{ fontWeight: '400' }}>{cvNum === 0 ? '0%' : `${(interviewNum / cvNum).toFixed(2)}%`}</span>
             </Title>
           </Col>
         </Row>
-
+        <Divider style={{ margin: '12px 0' }} />
         <Row gutter={10}>
           <Col span={12}>
             <GenericPieChart data={cvStatusChartData} config={{ color: cvChartColorMapping }} title={'CV status'} />

@@ -1,3 +1,4 @@
+import './JobFairDashBoard.container.scss';
 import { Col, PageHeader, Row, notification } from 'antd';
 import { CompanyCVStatistics } from '../../components/customized-components/JobFairDashboard/company/CompanyCVStatistics.component';
 import { CompanyDashBoardGeneralInformation } from '../../components/customized-components/JobFairDashboard/company/CompanyDashBoardGeneralInformation.component';
@@ -5,6 +6,7 @@ import { CompanyDashBoardJobFairTable } from '../../components/customized-compon
 import { DashBoardJobPositionStatistics } from '../../components/customized-components/JobFairDashboard/DashBoardJobPositionStatistics.component';
 import { ENDPOINT_COMPANY_STATISTICS } from '../../constants/Endpoints/jobhub-api/StatisticsControllerEndpoint';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
+import { ProjectFilled } from '@ant-design/icons';
 import { useSWRFetch } from '../../hooks/useSWRFetch';
 import React from 'react';
 
@@ -23,11 +25,19 @@ export const CompanyDashboardContainer = () => {
   const data = response.data;
 
   return (
-    <div style={{ marginBottom: '2rem' }}>
+    <div style={{ marginBottom: '2rem' }} className={'job-fair-dashboard-container'}>
       <PageHeader
         title={
-          <div style={{ width: '20vw', paddingBottom: '0.5rem', borderBottom: '1.5px solid #00000026' }}>
-            Job fairs statistics for <span style={{ fontWeight: 400 }}>{data.generalStatistics.companyName}</span>
+          <div
+            style={{
+              width: '30vw',
+              paddingBottom: '0.5rem',
+              borderBottom: '1.5px solid #00000026',
+              fontWeight: 500,
+              fontSize: '2rem'
+            }}>
+            <ProjectFilled style={{ marginRight: '5px' }} />
+            Company dashboard
           </div>
         }
       />

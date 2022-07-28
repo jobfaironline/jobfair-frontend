@@ -21,7 +21,7 @@ export const JobFairDashBoardGeneralInformation = ({ data }) => {
           alignItems: 'center'
         }}>
         <div style={{ display: 'flex' }}>
-          <HomeFilled style={{ fontSize: '45px', marginRight: '15px', display: 'flex', alignItems: 'center' }} />
+          <HomeFilled style={{ fontSize: '40px', marginRight: '15px', display: 'flex', alignItems: 'center' }} />
           <div>
             <p style={{ marginBottom: 0, fontSize: '1.3rem', fontWeight: '600' }}>Number of booths</p>
             <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600', lineHeight: '2rem' }}>{boothNum}</p>
@@ -38,7 +38,7 @@ export const JobFairDashBoardGeneralInformation = ({ data }) => {
           alignItems: 'center'
         }}>
         <div style={{ display: 'flex' }}>
-          <EyeFilled style={{ fontSize: '45px', marginRight: '15px', display: 'flex', alignItems: 'center' }} />
+          <EyeFilled style={{ fontSize: '40px', marginRight: '15px', display: 'flex', alignItems: 'center' }} />
           <div>
             <p style={{ marginBottom: 0, fontSize: '1.3rem', fontWeight: '600' }}>Number of visitors</p>
             <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600', lineHeight: '2rem' }}>
@@ -58,7 +58,7 @@ export const JobFairDashBoardGeneralInformation = ({ data }) => {
         }}>
         <div style={{ display: 'flex' }}>
           <ReconciliationFilled
-            style={{ fontSize: '45px', marginRight: '15px', display: 'flex', alignItems: 'center' }}
+            style={{ fontSize: '40px', marginRight: '15px', display: 'flex', alignItems: 'center' }}
           />
           <div>
             <p style={{ marginBottom: 0, fontSize: '1.3rem', fontWeight: '600' }}>Number of job positions</p>
@@ -76,7 +76,7 @@ export const JobFairDashBoardGeneralInformation = ({ data }) => {
           alignItems: 'center'
         }}>
         <div style={{ display: 'flex' }}>
-          <IdcardFilled style={{ fontSize: '45px', marginRight: '15px', display: 'flex', alignItems: 'center' }} />
+          <IdcardFilled style={{ fontSize: '40px', marginRight: '15px', display: 'flex', alignItems: 'center' }} />
           <div>
             <p style={{ marginBottom: 0, fontSize: '1.3rem', fontWeight: '600' }}>Number of employees</p>
             <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600', lineHeight: '2rem' }}>{employeeNum}</p>
