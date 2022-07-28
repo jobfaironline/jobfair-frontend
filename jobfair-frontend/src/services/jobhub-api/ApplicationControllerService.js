@@ -7,6 +7,7 @@ export const getAllApplicationForCompany = (
   status,
   jobFairSearchValue,
   jobPositionSearchValue,
+  attendantSearchValue,
   sortField
 ) => {
   const filterStatusString = status
@@ -27,7 +28,8 @@ export const getAllApplicationForCompany = (
       direction: 'DESC',
       sortBy: sortField,
       jobPositionName: jobPositionSearchValue,
-      jobFairName: jobFairSearchValue
+      jobFairName: jobFairSearchValue,
+      attendantName: attendantSearchValue
     }
   );
 };

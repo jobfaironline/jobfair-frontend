@@ -91,28 +91,33 @@ const ResumeDetailForCompanyContainer = ({ resumeId }) => {
   if (data === undefined) return <LoadingComponent isWholePage={true} />;
 
   data.matchingPoint = data.matchingPoint !== undefined ? data.matchingPoint : 0;
-  const tagColor = getMatchingPointColor(data.matchingPoint);
+  const tagColor = getMatchingPointColor(data.matchingPoint * 1000);
 
   return (
-    <div style={{ marginTop: '1rem' }}>
-      <Typography.Title level={1}>Candidate resume</Typography.Title>
-      <ResumeDetailComponent data={data} />
+    <>
+      <div style={{ marginTop: '1rem' }}>
+        <Typography.Title level={1}>Candidate resume</Typography.Title>
+        <ResumeDetailComponent data={data} />
+      </div>
       {data.status === 'PENDING' ? (
-        <div style={{ paddingBottom: '5rem' }}>
+        <div style={{ position: 'absolute', top: '600px', left: '-100px', width: '700px' }}>
           <Card
             title='Evaluate this registration'
-            style={{ width: 500, margin: '2rem auto' }}
+            style={{ width: '50%', margin: '2rem auto' }}
             headStyle={{ fontWeight: 700, fontSize: 24 }}>
-            <Typography.Text>
-              This resume matching point is: <Tag color={tagColor}>{Math.round(data?.matchingPoint * 100)} %</Tag>
+            <Typography.Text style={{ fontSize: '1rem' }}>
+              This resume matching point is:{' '}
+              <Tag style={{ fontSize: '1rem' }} color={tagColor}>
+                {Math.round(data?.matchingPoint * 1000)} %
+              </Tag>
             </Typography.Text>
-            <div style={{ marginLeft: '5rem' }}>
+            <div>
               <EvaluationFormComponent onFinish={onFinish} name='applicationId' id={data.id} />
             </div>
           </Card>
         </div>
       ) : null}
-    </div>
+    </>
   );
 };
 

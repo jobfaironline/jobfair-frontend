@@ -22,10 +22,9 @@ const ApplicationViewContainer = ({ tabStatus }) => {
   //
   const [applicationData, setApplicationData] = useState([]);
   const history = useHistory();
-  const [jobFairSearchValue, setJobfairSearchValue] = useState('');
-  const [jobPositionSearchValue, setJobPositionSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState('');
 
-  const fetchData = async (currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue) => {
+  const fetchData = async (currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue, attendantSearchValue) => {
     const testStatus = filterStatus(tabStatus);
     try {
       const fetchFunction = [RoleType.COMPANY_EMPLOYEE, RoleType.COMPANY_MANAGER].includes(role)
@@ -37,6 +36,7 @@ const ApplicationViewContainer = ({ tabStatus }) => {
         [testStatus],
         jobFairSearchValue.toLowerCase(),
         jobPositionSearchValue.toLowerCase(),
+        attendantSearchValue.toLowerCase(),
         tabStatus !== 1 ? 'evaluateDate' : 'appliedDate'
       );
       const { data } = res;
@@ -88,8 +88,8 @@ const ApplicationViewContainer = ({ tabStatus }) => {
   };
 
   useEffect(() => {
-    fetchData(currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue);
-  }, [currentPage, pageSize, jobFairSearchValue, jobPositionSearchValue]);
+    fetchData(currentPage, pageSize, searchValue, searchValue, searchValue);
+  }, [currentPage, pageSize, searchValue]);
 
   const applicationTableProps = {
     tableData: applicationData,
@@ -123,19 +123,13 @@ const ApplicationViewContainer = ({ tabStatus }) => {
     <div>
       <div>
         <Space style={{ marginBottom: '1rem' }}>
-          <Input
-            placeholder='Search by jobfair name'
+          <Input.Search
+            placeholder='Search application'
             onChange={(e) => {
-              setJobfairSearchValue(e.target.value);
+              setSearchValue(e.target.value);
             }}
-            style={{ width: 200 }}
-          />
-          <Input
-            placeholder='Search by job position'
-            onChange={(e) => {
-              setJobPositionSearchValue(e.target.value);
-            }}
-            style={{ width: 200 }}
+            enterButton='Search'
+            style={{ width: 500 }}
           />
         </Space>
         <CommonTableContainer {...applicationTableProps} />

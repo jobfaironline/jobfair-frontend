@@ -29,3 +29,5 @@ export const uploadProfileImage = (body) =>
   CallAPI(ENDPOINT_CV_UPLOAD_PROFILE_CONTROLLER, 'POST', body, {}, { 'content-type': 'multipart/form-data' });
 export const deleteCv = (cvId) => CallAPI(`${ENDPOINT_CV_CONTROLLER}/${cvId}`, 'DELETE');
 export const draftCv = () => CallAPI(`${ENDPOINT_CV_CONTROLLER}`, 'POST');
+export const getMatchingPoint = (cvId, boothJobPositionId) =>
+  CallAPI(`${ENDPOINT_CV_CONTROLLER}/matching-point`, 'POST', {}, { boothJobPositionId, cvId });

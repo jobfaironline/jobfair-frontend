@@ -14,6 +14,7 @@ import {
   submitApplication
 } from '../../../services/jobhub-api/ApplicationControllerService';
 import { generatePath, useHistory, useLocation } from 'react-router-dom';
+import { getMatchingPoint } from '../../../services/jobhub-api/CvControllerService';
 import { useSelector } from 'react-redux';
 import ConfirmSubmitResumeFormComponent from '../../../components/forms/SubmitResumeForm/ConfirmSubmitResumeForm.component';
 import JobPositionDetailModalComponent from '../../../components/customized-components/JobPositionDetailModal/JobPositionDetailModal.component';
@@ -30,6 +31,7 @@ export const BoothJobPositionTabContainer = (props) => {
   const [applicationData, setApplicationData] = useState();
   const [requiredTestModalVisible, setRequiredTestModalVisible] = useState(false);
   const draftApplicationRef = useRef();
+  const cvMatchingPointRef = useRef(0.0);
 
   useEffect(() => {
     renderAfterDoQuiz();
@@ -74,10 +76,13 @@ export const BoothJobPositionTabContainer = (props) => {
     event.dataTransfer.dropEffect = 'move';
   };
 
-  const onDropResume = (event) => {
+  const onDropResume = async (event) => {
     const dragId = event.dataTransfer.getData('text/plain');
     const resume = inventory[dragId];
-    setSelectedResume(resume);
+
+    const res = await getMatchingPoint(resume.id, selectedJobPosition.id);
+    cvMatchingPointRef.current = res.data.result;
+    await setSelectedResume(resume);
   };
   const onRemoveResume = () => {
     setSelectedResume(undefined);
@@ -163,7 +168,11 @@ export const BoothJobPositionTabContainer = (props) => {
             </>
           ) : (
             <>
-              <RemoveResumeComponent selectedResume={selectedResume} onRemoveResume={onRemoveResume} />
+              <RemoveResumeComponent
+                selectedResume={selectedResume}
+                onRemoveResume={onRemoveResume}
+                matchingPoint={cvMatchingPointRef.current}
+              />
               <ConfirmSubmitResumeFormComponent
                 onFinish={onFinishSubmitForm}
                 applicationData={applicationData}

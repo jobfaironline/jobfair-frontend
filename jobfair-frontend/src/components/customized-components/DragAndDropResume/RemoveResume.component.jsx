@@ -7,7 +7,8 @@ import React from 'react';
 const { Text } = Typography;
 
 export const RemoveResumeComponent = (props) => {
-  const { selectedResume, onRemoveResume } = props;
+  const { selectedResume, onRemoveResume, matchingPoint } = props;
+  const isSuitable = matchingPoint * 1000 > 50;
   return (
     <>
       <Divider style={{ margin: '1rem 0' }} />
@@ -52,6 +53,13 @@ export const RemoveResumeComponent = (props) => {
           }}>
           <FontAwesomeIcon icon={faTrash} size={'2x'} style={{ display: 'block' }} onClick={onRemoveResume} />
         </div>
+      </div>
+      <div style={{ marginTop: '1rem' }}>
+        {isSuitable ? (
+          <Text style={{ color: 'green' }}>Your resume is suitable for this job</Text>
+        ) : (
+          <Text style={{ color: 'red' }}>Your resume is not suitable for this job</Text>
+        )}
       </div>
       <Divider style={{ margin: '1rem 0' }} />
     </>

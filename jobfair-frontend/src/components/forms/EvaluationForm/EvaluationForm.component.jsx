@@ -1,7 +1,6 @@
-import { Button, Form, Input, Space } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { EvaluateConst } from '../../../constants/JobPositionConst';
 import React from 'react';
-import TextArea from 'antd/es/input/TextArea';
 
 const EvaluationFormComponent = ({ onFinish, id, name }) => {
   const [form] = Form.useForm();
@@ -16,53 +15,53 @@ const EvaluationFormComponent = ({ onFinish, id, name }) => {
         requiredMark='required'
         autoComplete='off'
         scrollToFirstError={{ block: 'center', behavior: 'smooth' }}>
-        <Space direction='vertical' size='medium'>
-          <Form.Item name={name} noStyle initialValue={id}>
-            <Input type='text' type='hidden' />
-          </Form.Item>
-          <Form.Item label='Message' name={'message'} hasFeedback>
-            <TextArea placeholder='Message' showCount maxLength='1000' />
-          </Form.Item>
-          <Space direction='horizontal'>
-            {name === 'companyRegistrationId'
-              ? EvaluateConst.map((item) => (
-                  <div key={item.id}>
-                    <Form.Item name='status' noStyle>
-                      <Input type='text' type='hidden' />
-                    </Form.Item>
-                    <Button
-                      value={item.id}
-                      type='primary'
-                      htmlType='submit'
-                      onClick={() => {
-                        form.setFieldsValue({
-                          status: item.id
-                        });
-                      }}>
-                      {item.name}
-                    </Button>
-                  </div>
-                ))
-              : EvaluateConst.filter((item) => item.id !== 'REQUEST_CHANGE').map((item) => (
-                  <div key={item.id}>
-                    <Form.Item name='status' noStyle>
-                      <Input type='text' type='hidden' />
-                    </Form.Item>
-                    <Button
-                      value={item.id}
-                      type='primary'
-                      htmlType='submit'
-                      onClick={() => {
-                        form.setFieldsValue({
-                          status: item.id
-                        });
-                      }}>
-                      {item.name}
-                    </Button>
-                  </div>
-                ))}
-          </Space>
-        </Space>
+        <Form.Item name={name} noStyle initialValue={id}>
+          <Input type='text' type='hidden' />
+        </Form.Item>
+        <div
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginTop: '1rem' }}>
+          {name === 'companyRegistrationId'
+            ? EvaluateConst.map((item) => (
+                <div key={item.id}>
+                  <Form.Item name='status' noStyle>
+                    <Input type='text' type='hidden' />
+                  </Form.Item>
+                  <Button
+                    value={item.id}
+                    type='primary'
+                    htmlType='submit'
+                    className={'button'}
+                    style={{ backgroundColor: item.id === 'APPROVE' ? 'green' : 'red' }}
+                    onClick={() => {
+                      form.setFieldsValue({
+                        status: item.id
+                      });
+                    }}>
+                    {item.name}
+                  </Button>
+                </div>
+              ))
+            : EvaluateConst.filter((item) => item.id !== 'REQUEST_CHANGE').map((item) => (
+                <div key={item.id}>
+                  <Form.Item name='status' noStyle>
+                    <Input type='text' type='hidden' />
+                  </Form.Item>
+                  <Button
+                    value={item.id}
+                    type='primary'
+                    htmlType='submit'
+                    className={'button'}
+                    style={{ backgroundColor: item.id === 'APPROVE' ? 'green' : 'red' }}
+                    onClick={() => {
+                      form.setFieldsValue({
+                        status: item.id
+                      });
+                    }}>
+                    {item.name}
+                  </Button>
+                </div>
+              ))}
+        </div>
       </Form>
     </>
   );

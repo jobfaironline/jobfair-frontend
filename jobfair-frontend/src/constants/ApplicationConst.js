@@ -34,10 +34,10 @@ export const MatchingPointColor = {
   },
   medium: {
     color: 'gold',
-    score: 0.5
+    score: 50
   },
   high: {
     color: 'green',
-    score: 0.7
+    score: 70
   }
 };
