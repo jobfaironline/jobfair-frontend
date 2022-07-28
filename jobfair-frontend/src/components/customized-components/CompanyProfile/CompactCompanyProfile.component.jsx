@@ -12,7 +12,7 @@ export const CompactCompanyProfile = (props) => {
   return (
     <div className={'compact-company-profile'}>
       <div>
-        <Image height={'9rem'} width={'8rem'} src={data.companyLogoURL} />
+        <Image height={'9rem'} src={data.companyLogoURL} />
       </div>
       <div className={'info'}>
         <Title style={{ fontWeight: '700' }} level={2}>
