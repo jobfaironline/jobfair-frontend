@@ -1,9 +1,7 @@
-import { Tag } from 'antd';
-import { convertEnumToString } from '../../../utils/common';
-import { handleFilterStatus } from '../../../utils/filterJobFairByStatus';
-import React from 'react';
+import { CustomDateFormat, DateFormat } from '../../../constants/ApplicationConst';
+import moment from 'moment';
 
-const JobFairForAdminColumn = (getColumnSearchProps, key) => [
+const JobFairForAdminColumn = () => [
   {
     title: 'No.',
     dataIndex: 'no',
@@ -21,67 +19,35 @@ const JobFairForAdminColumn = (getColumnSearchProps, key) => [
   {
     title: 'Name',
     dataIndex: 'name',
-    key: 'name',
-    ...getColumnSearchProps('name')
+    key: 'name'
   },
   {
-    title: 'Company register',
+    title: 'Company name',
+    dataIndex: 'companyName',
+    key: 'companyName'
+  },
+  {
+    title: 'Create time',
+    dataIndex: 'createdTime',
+    key: 'createdTime',
+    render: (time) => moment(time).format(CustomDateFormat)
+  },
+  {
+    title: 'Job fair time range',
     children: [
       {
         title: 'Start time',
-        dataIndex: 'companyRegisterStartTime',
-        key: 'companyRegisterStartTime',
-        ...getColumnSearchProps('companyRegisterStartTime')
+        dataIndex: 'jobFairDecorateStartTime',
+        key: 'jobFairDecorateStartTime',
+        render: (time) => moment(time).format(DateFormat)
       },
       {
         title: 'End time',
-        dataIndex: 'companyRegisterEndTime',
-        key: 'companyRegisterEndTime',
-        ...getColumnSearchProps('companyRegisterEndTime')
+        dataIndex: 'jobFairPublicEndTime',
+        key: 'jobFairPublicEndTime',
+        render: (time) => moment(time).format(DateFormat)
       }
     ]
-  },
-  {
-    title: 'Attendant register time',
-    dataIndex: 'attendantRegisterStartTime',
-    key: 'attendantRegisterStartTime',
-    ...getColumnSearchProps('attendantRegisterStartTime')
-  },
-  {
-    title: 'Job fair',
-    children: [
-      {
-        title: 'Start time',
-        dataIndex: 'startTime',
-        key: 'startTime',
-        ...getColumnSearchProps('startTime')
-      },
-      {
-        title: 'End time',
-        dataIndex: 'endTime',
-        key: 'endTime',
-        ...getColumnSearchProps('endTime')
-      }
-    ]
-  },
-  {
-    title: 'Status',
-    key: 'status',
-    dataIndex: 'status',
-    filters: handleFilterStatus(key),
-    onFilter: (value, record) => record.status === value,
-    render: (status) => {
-      let objStatus;
-      switch (status) {
-        default:
-          objStatus = {
-            color: 'green',
-            message: convertEnumToString(status)
-          };
-          break;
-      }
-      return <Tag color={objStatus.color}>{objStatus.message.toUpperCase()}</Tag>;
-    }
   }
 ];
 

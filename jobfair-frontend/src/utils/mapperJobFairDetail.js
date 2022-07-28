@@ -1,12 +1,9 @@
-import { convertToDateString } from './common';
-
-export const mapperJobFairDetail = (data, creatorInfo) => ({
+export const mapperJobFairDetail = (data) => ({
   attendantRegisterStartTime: data?.attendantRegisterStartTime,
   companyBuyBoothEndTime: data?.companyBuyBoothEndTime,
   companyBuyBoothStartTime: data?.companyBuyBoothStartTime,
   companyRegisterEndTime: data?.companyRegisterEndTime,
   companyRegisterStartTime: data?.companyRegisterStartTime,
-  creatorInfo,
   description: data?.description,
   endTime: data?.endTime,
   id: data?.id,
@@ -22,22 +19,12 @@ export const mapperJobFairDetail = (data, creatorInfo) => ({
 export const mapperResponseJobFairForAdmin = (res) =>
   res.data.content.map((item, index) => ({
     no: index + 1,
-    id: item.jobFairId,
-    companyRegisterStartTime: convertToDateString(item.jobFair.companyRegisterStartTime),
-    companyRegisterEndTime: convertToDateString(item.jobFair.companyRegisterEndTime),
-    companyBuyBoothStartTime: convertToDateString(item.jobFair.companyBuyBoothStartTime),
-    companyBuyBoothEndTime: convertToDateString(item.jobFair.companyBuyBoothEndTime),
-    attendantRegisterStartTime: convertToDateString(item.jobFair.attendantRegisterStartTime),
-    startTime: convertToDateString(item.jobFair.startTime),
-    endTime: convertToDateString(item.jobFair.endTime),
-    description: item.jobFair.description,
-    layoutId: item.jobFair.layoutId,
-    creatorId: item.jobFair.creatorId,
-    name: item.jobFair.name,
-    estimateParticipant: item.jobFair.estimateParticipant,
-    targetCompany: item.jobFair.targetCompany,
-    targetAttendant: item.jobFair.targetAttendant,
-    createTime: convertToDateString(item.jobFair.createTime),
-    thumbnail: item.jobFair.thumbnail,
-    status: item.status
+    id: item.id,
+    name: item.name,
+    companyName: item.company.name,
+    jobFairDecorateStartTime: item.decorateStartTime,
+    jobFairDecorateEndTime: item.decorateEndTime,
+    jobFairPublicStartTime: item.publicStartTime,
+    jobFairPublicEndTime: item.publicEndTime,
+    createdTime: item.createTime
   }));

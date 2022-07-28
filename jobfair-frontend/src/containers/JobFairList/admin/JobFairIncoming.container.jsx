@@ -1,45 +1,42 @@
-import { Modal, Space, Tooltip } from 'antd';
-import { MoreOutlined } from '@ant-design/icons';
+import { ADMIN_JOB_FAIR_STATUS } from '../../../constants/JobFairConst';
+import { EyeOutlined } from '@ant-design/icons';
+import { Modal, Space, Tooltip, notification } from 'antd';
+import { getAllJobFairForAdminAPI } from '../../../services/jobhub-api/JobFairControllerService';
+import { mapperResponseJobFairForAdmin } from '../../../utils/mapperJobFairDetail';
 import CommonTableContainer from '../../CommonTableComponent/CommonTableComponent.container';
 import JobFairDetailModalContainer from '../../JobFairDetail/JobFairDetailModal.container';
 import JobFairForAdminColumn from '../../CommonTableComponent/columns/JobFairForAdmin.column';
-import React, { useLayoutEffect, useState } from 'react';
-import ViewRegistrationButtonComponent from '../../../components/customized-components/ViewRegistrationButton/ViewRegistrationButton.component';
+import React, { useEffect, useState } from 'react';
 
 const JobFairIncomingContainer = () => {
-  //TODO: fetch data
-  // eslint-disable-next-line no-unused-vars
   const [data, setData] = useState([]);
   //pagination
   const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(5000);
+  const [pageSize, setPageSize] = useState(10);
   //modal
   const [jobFairId, setJobFairId] = useState('');
-  const [creatorId, setCreatorId] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  //TODO:fetch API later
-  // eslint-disable-next-line no-unused-vars
   const [totalElements, setTotalElements] = useState(0);
 
   const fetchData = async () => {
-    //TODO: fetch API later
-    // getJobFairIncomingForAdmin(currentPage, pageSize)
-    //   .then((res) => {
-    //     setTotalElements(res.data.totalElements);
-    //     const result = mapperResponseJobFairForAdmin(res).map((item) => ({
-    //       ...item,
-    //       key: 'NOT_YET'
-    //     }));
-    //     setData([...result]);
-    //   })
-    //   .catch((err) => {
-    //     notification['error']({
-    //       message: `Error: ${err}`
-    //     });
-    //   });
+    try {
+      const res = await getAllJobFairForAdminAPI({ status: ADMIN_JOB_FAIR_STATUS.COMING_SOON });
+      const result = mapperResponseJobFairForAdmin(res).map((item) => ({
+        ...item,
+        key: ADMIN_JOB_FAIR_STATUS.COMING_SOON
+      }));
+      setTotalElements(res.data.totalElements);
+      setData([...result]);
+    } catch (e) {
+      notification['error']({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching data, try again later`,
+        duration: 2
+      });
+    }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     fetchData();
   }, [currentPage, pageSize]);
 
@@ -49,18 +46,10 @@ const JobFairIncomingContainer = () => {
 
     setPageSize(pageSize);
   };
-  const jobFairDetailProps = {
-    jobFairId,
-    creatorId,
-    jobFairList: [...data],
-    //TODO: check whether this prop would be used ?
-    visible: modalVisible
-  };
 
-  const handleViewModal = (id, creatorId) => {
+  const handleViewModal = (id) => {
     setModalVisible(true);
     setJobFairId(id);
-    setCreatorId(creatorId);
   };
   const onOk = () => {
     setModalVisible(false);
@@ -73,9 +62,6 @@ const JobFairIncomingContainer = () => {
   const jobFairTableProps = {
     tableData: data,
     tableColumns: JobFairForAdminColumn,
-    onSearch: () => {
-      //TODO: fetch data for search
-    },
     extra: [
       {
         title: 'Actions',
@@ -84,11 +70,10 @@ const JobFairIncomingContainer = () => {
         render: (text, record) => (
           <Space size='middle'>
             <Tooltip placement='top' title='View detail'>
-              <a onClick={() => handleViewModal(record.id, record.creatorId)}>
-                <MoreOutlined />
+              <a onClick={() => handleViewModal(record.id)}>
+                <EyeOutlined />
               </a>
             </Tooltip>
-            <ViewRegistrationButtonComponent status={record.status} id={record.id} />
           </Space>
         )
       }
@@ -101,8 +86,8 @@ const JobFairIncomingContainer = () => {
 
   return (
     <>
-      <Modal title='Job Fair Detail' visible={modalVisible} onOk={onOk} onCancel={onCancel} width={1300}>
-        <JobFairDetailModalContainer {...jobFairDetailProps} />
+      <Modal title='Job Fair Detail' visible={modalVisible} onOk={onOk} onCancel={onCancel} width={500}>
+        <JobFairDetailModalContainer jobFairId={jobFairId} />
       </Modal>
       <CommonTableContainer {...jobFairTableProps} />
     </>

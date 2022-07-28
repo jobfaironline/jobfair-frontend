@@ -62,3 +62,25 @@ export const checkJobFairPublishAPI = (jobFairId) =>
 export const deleteJobFairDraftAPI = (jobFairId) => CallAPI(`${JOB_FAIR_END_POINT}/${jobFairId}`, 'DELETE', {}, {});
 
 export const getJobFairProgress = (jobFairId) => CallAPI(`${JOB_FAIR_END_POINT}/progress/${jobFairId}`, 'GET', {}, {});
+
+export const getAllJobFairForAdminAPI = ({
+  name = '',
+  direction = 'DESC',
+  offset = '0',
+  pageSize = '100',
+  sortBy = 'createTime',
+  status = null
+}) =>
+  CallAPI(
+    `${JOB_FAIR_END_POINT}/admins`,
+    'GET',
+    {},
+    {
+      direction,
+      offset,
+      pageSize,
+      sortBy,
+      name,
+      status
+    }
+  );
