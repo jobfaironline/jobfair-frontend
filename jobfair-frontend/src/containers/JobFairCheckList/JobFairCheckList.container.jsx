@@ -260,7 +260,7 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
 
   return (
     <>
-      {role === RoleType.COMPANY_MANAGER ? (
+      {role === RoleType.COMPANY_MANAGER && state.progressData.score === 100 ? (
         <JobFairProgressDrawerContainer
           jobFairId={jobFairId}
           visibility={checkEmployeeProgressVisible}
