@@ -1,7 +1,8 @@
 import { AssignmentConst } from '../constants/AssignmentConst';
 import { NotificationAction } from '../constants/NotificationConstant';
-import { PATH_COMPANY_EMPLOYEE } from '../constants/Paths/Path';
+import { PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
 import { generatePath } from 'react-router-dom';
+import moment from 'moment';
 
 export const mapperForNotification = (data) => {
   const notification = JSON.parse(JSON.stringify(data));
@@ -59,6 +60,103 @@ export const mapperForNotification = (data) => {
       notification.message = `You has been un assigned from role ${assignmentData.type} by ${assignerFullName}`;
       notification.infoObj = assignmentData;
       return notification;
+    }
+    case NotificationAction.WARNING_TASK_MANAGER: {
+      try {
+        const assignmentData = JSON.parse(notification.message);
+        const { endTime, jobFairId } = assignmentData;
+        const fromNow = moment(parseInt(endTime)).fromNow();
+        notification.title = 'Incomplete job fair tasks';
+
+        notification.message = (
+          <>
+            <p style={{ marginBottom: 0 }}>
+              A job fair is about to be public <strong>{fromNow}</strong>. Click to check.
+            </p>
+          </>
+        );
+        notification.infoObj = assignmentData;
+        notification.action = () => {
+          window.location.href = generatePath(PATH_COMPANY_MANAGER.CHECKLIST, {
+            jobFairId
+          });
+        };
+      } catch (e) {
+        //ignore
+      }
+    }
+    case NotificationAction.WARNING_TASK_SUPERVISOR_ASSIGN: {
+      try {
+        const assignmentData = JSON.parse(notification.message);
+        const { endTime, jobFairBoothId } = assignmentData;
+        const fromNow = moment(parseInt(endTime)).fromNow();
+        notification.title = 'Incomplete job fair tasks';
+
+        notification.message = (
+          <>
+            <p style={{ marginBottom: 0 }}>
+              You need to assign staff for your booth <strong>{fromNow}</strong>.Click to assign now.
+            </p>
+          </>
+        );
+        notification.infoObj = assignmentData;
+        notification.action = () => {
+          window.location.href = generatePath(PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE, {
+            boothId: jobFairBoothId
+          });
+        };
+      } catch (e) {
+        //ignore
+      }
+    }
+    case NotificationAction.WARNING_TASK_SUPERVISOR_PROFILE: {
+      try {
+        const assignmentData = JSON.parse(notification.message);
+        const { endTime, assignmentId } = assignmentData;
+        const fromNow = moment(parseInt(endTime)).fromNow();
+        notification.title = 'Incomplete job fair tasks';
+
+        notification.message = (
+          <>
+            <p style={{ marginBottom: 0 }}>
+              You need to describe your booth <strong>{fromNow}</strong>.Click to describe now.
+            </p>
+          </>
+        );
+        notification.infoObj = assignmentData;
+        notification.action = () => {
+          window.location.href = generatePath(PATH_COMPANY_EMPLOYEE.BOOTH_DESCRIPTION_PAGE, {
+            assignmentId
+          });
+        };
+      } catch (e) {
+        //ignore
+      }
+    }
+    case NotificationAction.WARNING_TASK_DECORATOR: {
+      try {
+        const assignmentData = JSON.parse(notification.message);
+        const { endTime, jobFairId, jobFairBoothId } = assignmentData;
+        const fromNow = moment(parseInt(endTime)).fromNow();
+        notification.title = 'Incomplete decorate tasks';
+
+        notification.message = (
+          <>
+            <p style={{ marginBottom: 0 }}>
+              You need to decorate a booth <strong>{fromNow}</strong>. Click to decorate now.
+            </p>
+          </>
+        );
+        notification.infoObj = assignmentData;
+        notification.action = () => {
+          window.location.href = generatePath(PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE, {
+            jobFairId,
+            companyBoothId: jobFairBoothId
+          });
+        };
+      } catch (e) {
+        //ignore
+      }
     }
     default:
       return notification;

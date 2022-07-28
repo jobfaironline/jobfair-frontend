@@ -102,7 +102,7 @@ const AdminDashBoardContainer = () => {
       color: 'yellow'
     },
     {
-      type: 'Company employee',
+      type: 'Employee',
       value: data.accountStatistics.companyEmployeeNum,
       color: 'red'
     }

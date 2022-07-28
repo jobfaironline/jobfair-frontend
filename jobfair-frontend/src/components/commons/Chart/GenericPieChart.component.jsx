@@ -31,7 +31,7 @@ export const GenericPieChart = ({ data, config, title = '' }) => {
       layout: 'horizontal',
       position: 'bottom',
       itemName: { style: { fontSize: 14 } },
-      itemSpacing: 10
+      itemSpacing: 0
     },
 
     ...config

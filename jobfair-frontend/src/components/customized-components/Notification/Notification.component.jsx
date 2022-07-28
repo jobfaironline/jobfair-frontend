@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { getDateDifferent } from '../../../utils/common';
 import React from 'react';
+import moment from 'moment';
 
 export const NotificationComponent = (props) => {
   const { onClick, unreadNotification, isVisible, onReadAll, notificationData, onRead, dialogRef } = props;
@@ -33,7 +34,7 @@ export const NotificationComponent = (props) => {
                 <div className={'title'}>{item.title}</div>
                 <div className={'message'}>{item.message}</div>
               </div>
-              <div className={'time'}>{getDateDifferent(item.createDate)}</div>
+              <div className={'time'}>{moment(item.createDate).toNow(true)}</div>
               <div className={'is-read'}>
                 <div className={'check-mark'} style={{ backgroundColor: item.read ? '#C8E0F0' : '#009AFF' }} />
               </div>
