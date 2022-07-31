@@ -25,7 +25,7 @@ export const getGeneralInfoAPI = (email) =>
 export const deactivateOwnAccountAPI = () => CallAPI(ENDPOINT_DEACTIVATE_ACCOUNT, 'GET');
 export const uploadProfileImage = (body) =>
   CallAPI(ENDPOINT_UPLOAD_PROFILE, 'POST', body, {}, { 'content-type': 'multipart/form-data' });
-export const getAccountsAPI = ({ offset = 0, pageSize = 10, searchContent = '' }) =>
-  CallAPI(`${ENDPOINT_GET_ACCOUNTS}`, 'GET', {}, { offset, pageSize, searchContent });
+export const getAccountsAPI = ({ offset = 0, pageSize = 10, searchValue = '' }) =>
+  CallAPI(`${ENDPOINT_GET_ACCOUNTS}`, 'GET', {}, { offset, pageSize, searchValue });
 //Delete employee
 export const deleteAccountAPI = (employeeId) => CallAPI(`${ENDPOINT_GET_ACCOUNT_BY_ID}/${employeeId}`, 'DELETE');

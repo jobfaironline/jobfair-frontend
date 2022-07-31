@@ -1,4 +1,4 @@
-import { Tag } from 'antd';
+import { Avatar, Tag } from 'antd';
 
 const AccountTableColumn = () => [
   {
@@ -15,6 +15,18 @@ const AccountTableColumn = () => [
     }
   },
   {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 'email',
+    sorter: (a, b) => a.email.localeCompare(b.email),
+    sortDirections: ['email']
+  },
+  {
+    title: 'Avatar',
+    key: 'avatar',
+    render: (_, record) => <Avatar src={record.profileImageUrl} size={50} />
+  },
+  {
     title: 'Full name',
     dataIndex: 'fullName',
     key: 'fullName',
@@ -23,19 +35,9 @@ const AccountTableColumn = () => [
     sortDirections: ['descend']
   },
   {
-    title: "Account's id",
-    dataIndex: 'accountId',
-    key: 'accountId'
-  },
-  {
     title: 'Phone number',
     dataIndex: 'phone',
     key: 'phone'
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email'
   },
   {
     title: 'Status',

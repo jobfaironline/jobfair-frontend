@@ -31,12 +31,12 @@ const AccountManagementContainer = (props) => {
 
   const fetchData = async () => {
     try {
-      const data = (await getAccountsAPI({ companyId, searchContent: searchValue, pageSize, offset: currentPage }))
-        .data;
+      const data = (await getAccountsAPI({ companyId, searchValue, pageSize, offset: currentPage })).data;
       const newValues = data.content.map((account, index) => {
         const { firstname, middlename, lastname } = account;
         const fullName = `${firstname} ${middlename ? `${middlename} ` : ''}${lastname}`;
         return {
+          ...account,
           id: account.id,
           no: index + 1,
           fullName,
@@ -131,7 +131,7 @@ const AccountManagementContainer = (props) => {
         <div className={'header'}>
           {isAccountManagement ? (
             <>
-              <Typography.Title level={2} style={{ marginRight: '2rem' }}>
+              <Typography.Title level={2} style={{ marginLeft: '5rem' }}>
                 Account management
               </Typography.Title>
             </>
