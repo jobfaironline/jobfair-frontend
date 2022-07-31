@@ -6,7 +6,6 @@ import { JobFairMapReviewPage } from '../pages/JobFairMapReviewPage/JobFairMapRe
 import { Layout } from 'antd';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
 import { Redirect, Route, Switch, matchPath, useLocation } from 'react-router-dom';
-import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
 import { UserAgentModal } from '../components/customized-components/UserAgentWarningModal/UserAgentWarningModal.component';
 import { selectWebSocket } from '../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
@@ -51,6 +50,7 @@ import React, { useEffect } from 'react';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
+import ResultSuccessPage from '../pages/ResultSuccessPage/ResultSuccessPage';
 import ResumeAddPage from '../pages/ResumeAddPage/ResumeAddPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
 import ResumeEditPage from '../pages/ResumeEditPage/ResumeEditPage';

@@ -17,7 +17,7 @@ const SubscriptionDashboardPage = () => (
       }}>
       {/*<div style={{ backdropFilter: 'blur(10px)', color: 'white' }}>*/}
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem' }}>
-        <Title level={3}>Why go premium?</Title>
+        <Title level={1}>Why go premium?</Title>
       </div>
       <div>
         <ul style={{ display: 'flex', flexWrap: 'nowrap', justifyContent: 'space-between', listStyle: 'none' }}>

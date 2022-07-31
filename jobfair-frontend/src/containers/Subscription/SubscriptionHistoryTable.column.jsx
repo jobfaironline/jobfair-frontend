@@ -1,3 +1,12 @@
+// "id": "4d6a5fad-fe7a-43c2-a4b0-e6451f49ba9e",
+//   "status": null,
+//   "currentPeriodStart": 1659265055228,
+//   "currentPeriodEnd": 1690822007228,
+//   "cancelAt": null,
+//   "defaultPaymentMethod": null,
+//   "price": 800
+import { convertToUTCString } from '../../utils/common';
+
 const SubscriptionHistoryTableColumn = () => [
   {
     title: 'No',
@@ -11,14 +20,28 @@ const SubscriptionHistoryTableColumn = () => [
     })
   },
   {
-    title: 'Subscription ID',
-    dataIndex: 'id',
-    key: 'id'
+    title: 'Start date',
+    dataIndex: 'currentPeriodStart',
+    key: 'currentPeriodStart',
+    render: (value) => ({
+      children: convertToUTCString(value)
+    })
+  },
+  {
+    title: 'End date',
+    dataIndex: 'currentPeriodEnd',
+    key: 'currentPeriodEnd',
+    render: (value) => ({
+      children: convertToUTCString(value)
+    })
   },
   {
     title: 'Total price',
     dataIndex: 'price',
-    key: 'price'
+    key: 'price',
+    render: (value) => ({
+      children: `$${value}.00`
+    })
   }
 ];
 
