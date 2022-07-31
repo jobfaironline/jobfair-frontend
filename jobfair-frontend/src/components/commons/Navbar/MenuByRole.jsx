@@ -46,7 +46,7 @@ export const CompanyManagerMenu = [
     link: PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE
   },
   {
-    title: 'My subscription',
+    title: 'Subscription plans',
     link: PATH_COMPANY_MANAGER.SUBSCRIPTION_DASH_BOARD
   }
 ];

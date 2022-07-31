@@ -2,7 +2,7 @@ import { Button, Card, Collapse, Descriptions, Divider, Typography } from 'antd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { convertToUTCString, getNYearAfter } from '../../utils/common';
-import { faArrowLeft, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { subscriptionDataConst } from '../../constants/SubscriptionConst';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -22,8 +22,9 @@ const EnjoyPlanPayment = ({ amount }) => (
   <Card bodyStyle={{ color: '#4FC3E9', backgroundColor: '#E6FFFB' }}>
     <Title level={2}>Enjoy your payment</Title>
     <Paragraph>
-      You'll be charged {amount} per year starting {convertToUTCString(new Date().getTime())}. Your subscription will be
-      end at {convertToUTCString(getNYearAfter(1))}. You can cancel at any time in your Setting page.
+      You'll be charged <Text strong>${amount}.00</Text> per year starting{' '}
+      <Text strong>{convertToUTCString(new Date().getTime())}</Text>. Your subscription will be end at{' '}
+      <Text strong>{convertToUTCString(getNYearAfter(1))}</Text>. You can cancel at any time in your Setting page.
     </Paragraph>
   </Card>
 );
@@ -41,7 +42,7 @@ const SubscriptionDetailComponent = ({ subscriptionId }) => {
       case '5fdb64a4-a6f1-43dd-8361-1bbd8a940158':
         return (
           <div style={{ width: '50%', marginRight: '2rem' }}>
-            <div style={{ marginBottom: '2rem' }}>
+            <div style={{ marginBottom: '2rem', marginTop: '2rem' }}>
               <EnjoyPlanPayment amount={basicItem.price} />
             </div>
             <Collapse bordered={false} defaultActiveKey={'0'} activeKey={'0'}>
@@ -81,7 +82,11 @@ const SubscriptionDetailComponent = ({ subscriptionId }) => {
                     {basicItem.benefits.map((benefit) => (
                       <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <div style={{ marginTop: '1rem' }}>
-                          <FontAwesomeIcon icon={faCircleCheck} color={benefit.status ? 'green' : 'red'} size={'2x'} />
+                          <FontAwesomeIcon
+                            icon={benefit.status ? faCircleCheck : faCircleXmark}
+                            color={benefit.status ? 'green' : 'red'}
+                            size={'2x'}
+                          />
                         </div>
                         <Text strong style={{ marginLeft: '1rem' }}>
                           {benefit.name}
@@ -138,7 +143,7 @@ const SubscriptionDetailComponent = ({ subscriptionId }) => {
       case '6f038fc7-4b72-4e38-b9b8-523a013da217':
         return (
           <div style={{ width: '50%', marginRight: '2rem' }}>
-            <div style={{ marginBottom: '2rem' }}>
+            <div style={{ marginBottom: '2rem', marginTop: '2rem' }}>
               <EnjoyPlanPayment amount={standardItem.price} />
             </div>
             <Collapse bordered={false} defaultActiveKey={'0'} activeKey={'0'}>
@@ -178,7 +183,11 @@ const SubscriptionDetailComponent = ({ subscriptionId }) => {
                     {standardItem.benefits.map((benefit) => (
                       <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <div style={{ marginTop: '1rem' }}>
-                          <FontAwesomeIcon icon={faCircleCheck} color={benefit.status ? 'green' : 'red'} size={'2x'} />
+                          <FontAwesomeIcon
+                            icon={benefit.status ? faCircleCheck : faCircleXmark}
+                            color={benefit.status ? 'green' : 'red'}
+                            size={'2x'}
+                          />
                         </div>
                         <Text strong style={{ marginLeft: '1rem' }}>
                           {benefit.name}
@@ -235,7 +244,7 @@ const SubscriptionDetailComponent = ({ subscriptionId }) => {
       case '4b586522-eee3-4c3a-83db-95e2a4d56aa1':
         return (
           <div style={{ width: '50%', marginRight: '2rem' }}>
-            <div style={{ marginBottom: '2rem' }}>
+            <div style={{ marginBottom: '2rem', marginTop: '2rem' }}>
               <EnjoyPlanPayment amount={premiumItem.price} />
             </div>
             <Collapse bordered={false} defaultActiveKey={'0'} activeKey={'0'}>
@@ -275,7 +284,11 @@ const SubscriptionDetailComponent = ({ subscriptionId }) => {
                     {premiumItem.benefits.map((benefit) => (
                       <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <div style={{ marginTop: '1rem' }}>
-                          <FontAwesomeIcon icon={faCircleCheck} color={benefit.status ? 'green' : 'red'} size={'2x'} />
+                          <FontAwesomeIcon
+                            icon={benefit.status ? faCircleCheck : faCircleXmark}
+                            color={benefit.status ? 'green' : 'red'}
+                            size={'2x'}
+                          />
                         </div>
                         <Text strong style={{ marginLeft: '1rem' }}>
                           {benefit.name}
@@ -345,7 +358,7 @@ const SubscriptionDetailComponent = ({ subscriptionId }) => {
           display: 'flex',
           flexDirection: 'column',
           marginRight: '2rem',
-          marginTop: '10rem'
+          marginTop: '-20rem'
         }}>
         <Title level={3}>Start your subscription pack today!</Title>
         <CheckoutFormComponent subscriptionId={subscriptionId} />

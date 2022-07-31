@@ -2,7 +2,7 @@ import './Navbar.styles.scss';
 import { Avatar, Button, Dropdown, Image, Menu, Typography } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import { NotificationContainer } from '../../../containers/NotificationContainer/Notification.container';
-import { PATH, PATH_ATTENDANT } from '../../../constants/Paths/Path';
+import { PATH, PATH_ATTENDANT, PATH_COMPANY_MANAGER } from '../../../constants/Paths/Path';
 import { UserOutlined } from '@ant-design/icons';
 import { logoutHandler } from '../../../redux-flow/authentication/authentication-action';
 import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
@@ -79,6 +79,7 @@ const AvatarMenu = ({ logoutFunction }) => {
   const history = useHistory();
   const name = useSelector((state) => state.authentication.user.fullName);
   const profileUrl = useSelector((state) => state.authentication?.user.profileUrl);
+  const role = useSelector((state) => state?.authentication?.user?.roles);
 
   const menu = (
     <Menu
@@ -93,10 +94,13 @@ const AvatarMenu = ({ logoutFunction }) => {
           case 'PROFILE':
             history.push(PATH_ATTENDANT.PROFILE_PAGE);
             break;
+          case 'MY_SUBSCRIPTION':
+            history.push(PATH_COMPANY_MANAGER.SUBSCRIPTION_HISTORY);
         }
       }}
       style={{ zIndex: 10000000 }}>
       <Menu.Item key='PROFILE'>Account</Menu.Item>
+      {role === 'COMPANY_MANAGER' && <Menu.Item key='MY_SUBSCRIPTION'>My subscription</Menu.Item>}
       <Menu.Item key='CHANGE_PASSWORD_PAGE'>Change password</Menu.Item>
       <Menu.Item key='LOGOUT'>Logout</Menu.Item>
     </Menu>

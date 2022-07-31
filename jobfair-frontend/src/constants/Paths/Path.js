@@ -79,5 +79,6 @@ export const PATH_COMPANY_MANAGER = {
   JOB_FAIR_DASH_BOARD: '/company/dashboard/jobfair/:jobFairId',
   BOOTH_DASH_BOARD: '/company/dashboard/booth/:boothId',
   SUBSCRIPTION_DASH_BOARD: '/company/subscription/',
-  SUBSCRIPTION_DETAIL: '/company/subscription/:subscriptionId'
+  SUBSCRIPTION_DETAIL: '/company/subscription/:subscriptionId',
+  SUBSCRIPTION_HISTORY: '/company/subscription-history'
 };

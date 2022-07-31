@@ -1,7 +1,7 @@
 import { Button, Card, Descriptions, Divider, List, Tag, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
-import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getAllSubscriptionAPI } from '../../services/jobhub-api/SubscriptionControllerService';
 import React, { useEffect, useState } from 'react';
@@ -137,7 +137,7 @@ const SubscriptionListContainer = () => {
     }
   };
 
-  const fetchAllSubscriptions = async () => {
+  useEffect(async () => {
     try {
       const res = await getAllSubscriptionAPI();
       const result = res.data
@@ -157,10 +157,6 @@ const SubscriptionListContainer = () => {
         duration: 2
       });
     }
-  };
-
-  useEffect(async () => {
-    await fetchAllSubscriptions();
   }, []);
 
   return (
@@ -201,7 +197,7 @@ const SubscriptionListContainer = () => {
               <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>{item.description}</p>
             </Descriptions.Item>
             <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
-              <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>{item.price}$</p>
+              <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>${item.price}.00</p>
             </Descriptions.Item>
             <Descriptions.Item>
               <Divider />
@@ -209,7 +205,11 @@ const SubscriptionListContainer = () => {
             {item.benefits.map((benefit) => (
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <div style={{ marginTop: '1rem' }}>
-                  <FontAwesomeIcon icon={faCircleCheck} color={benefit.status ? 'green' : 'red'} size={'2x'} />
+                  <FontAwesomeIcon
+                    icon={benefit.status ? faCircleCheck : faCircleXmark}
+                    color={benefit.status ? 'green' : 'red'}
+                    size={'2x'}
+                  />
                 </div>
                 <Text strong style={{ marginLeft: '1rem' }}>
                   {benefit.name}
