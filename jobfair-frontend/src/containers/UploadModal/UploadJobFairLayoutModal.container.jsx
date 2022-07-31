@@ -10,6 +10,7 @@ import React, { useRef, useState } from 'react';
 import UploadComponent from '../../components/commons/UploadComponent/Upload.component';
 
 const { TextArea } = Input;
+const { Text } = Typography;
 const UploadJobFairLayoutModalContainer = ({ visible, onCancel, onSubmit }) => {
   const glbFormData = useRef(new FormData());
   const thumbnailFormData = useRef(new FormData());
@@ -133,6 +134,10 @@ const UploadJobFairLayoutModalContainer = ({ visible, onCancel, onSubmit }) => {
       footer={null}
       onCancel={onInternalCancel}
       centered>
+      <Text>
+        <Text strong={true}>Attention:</Text> Your glb file must follow some rules for JobHub being able to process your
+        layout. Click <a style={{ fontWeight: 600 }}>here</a> to see the detail documentation
+      </Text>
       <Form
         form={form}
         requiredMark='required'
