@@ -89,7 +89,7 @@ const JobFairHappeningContainer = () => {
 
   return (
     <>
-      <Modal title='Job Fair Detail' visible={modalVisible} onOk={onOk} onCancel={onCancel} width={500}>
+      <Modal title='Job Fair Detail' visible={modalVisible} onOk={onOk} onCancel={onCancel} width={'700px'}>
         <JobFairDetailModalContainer jobFairId={jobFairId} />
       </Modal>
       <CommonTableContainer {...jobFairTableProps} />

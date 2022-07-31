@@ -1,6 +1,6 @@
 import { CountryConst } from '../constants/AttendantConstants';
 import { DateFormat, MatchingPointColor } from '../constants/ApplicationConst';
-import { JOB_FAIR_PLAN_STATUS } from '../constants/JobFairConst';
+import { JOB_FAIR_STATUS } from '../constants/JobFairConst';
 import { Progress, Tag } from 'antd';
 import React from 'react';
 import moment from 'moment';
@@ -126,16 +126,10 @@ export const handleStatusTag = (status) => {
   if (status === undefined) return;
 
   switch (status) {
-    case JOB_FAIR_PLAN_STATUS.PENDING:
-      return <Tag color='blue'>{convertEnumToString(status)}</Tag>;
-    case JOB_FAIR_PLAN_STATUS.APPROVE:
+    case JOB_FAIR_STATUS.PUBLISH:
       return <Tag color='green'>{convertEnumToString(status)}</Tag>;
-    case JOB_FAIR_PLAN_STATUS.DRAFT:
+    case JOB_FAIR_STATUS.DRAFT:
       return <Tag color='gold'>{convertEnumToString(status)}</Tag>;
-    case JOB_FAIR_PLAN_STATUS.REJECT:
-      return <Tag color='red'>{convertEnumToString(status)}</Tag>;
-    case JOB_FAIR_PLAN_STATUS.DELETED:
-      return <Tag color='volcano'>{convertEnumToString(status)}</Tag>;
     default:
       return <Tag color='orange'>{convertEnumToString(status)}</Tag>;
   }

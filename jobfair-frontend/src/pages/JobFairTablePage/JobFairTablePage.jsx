@@ -1,5 +1,5 @@
 import './JobFairTablePage.styles.scss';
-import { Divider, Tabs, Typography } from 'antd';
+import { Tabs, Typography } from 'antd';
 import JobFairHappeningContainer from '../../containers/JobFairList/admin/JobFairHappening.container';
 import JobFairIncomingContainer from '../../containers/JobFairList/admin/JobFairIncoming.container';
 import JobFairOccurredContainer from '../../containers/JobFairList/admin/JobFairOccurred.container';
@@ -9,10 +9,10 @@ import React from 'react';
 const { TabPane } = Tabs;
 const JobFairTablePage = () => (
   <PageLayoutWrapper className='page jobfair-list-page'>
-    <div style={{ padding: '2rem 0' }}>
-      <Divider>
-        <Typography.Title level={2}>Job fair list</Typography.Title>
-      </Divider>
+    <div style={{ padding: '1rem 0' }}>
+      <Typography.Title level={2} style={{ marginLeft: '5rem' }}>
+        Job fair list
+      </Typography.Title>
       <Tabs defaultActiveKey='2' centered>
         <TabPane tab='Taken place' key='1'>
           <JobFairOccurredContainer />
