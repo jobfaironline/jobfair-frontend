@@ -5,7 +5,6 @@ import { notificationAction } from '../../redux-flow/notification/notification-s
 import store from '../../redux-flow/index';
 
 const { REACT_APP_WEB_SOCKET_URL } = process.env;
-
 export class WebSocketClient {
   constructor(token) {
     this.token = token;
@@ -19,7 +18,7 @@ export class WebSocketClient {
             notification['success']({
               message: notificationData.title,
               description: notificationData.message,
-              duration: 0,
+              duration: 5,
               onClick: notificationData.action,
               className: notificationData.action ? 'notification-message-clickable' : ''
             });
