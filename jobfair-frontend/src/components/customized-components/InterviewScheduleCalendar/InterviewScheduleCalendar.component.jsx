@@ -1,44 +1,90 @@
 import './InterviewScheduleCalendar.styles.scss';
-import { Badge, Calendar, Col, Radio, Row, Select, Typography } from 'antd';
+import { Badge, Calendar, Col, Row, Select, Typography } from 'antd';
+import { INTERVIEW_SCHEDULE_STATUS } from '../../../constants/InterviewScheduleConst';
 import React from 'react';
-import moment from 'moment';
 
 const { Text } = Typography;
 
-export const InterviewScheduleCalendar = (props) => {
-  const { data, setScheduleModalVisible, setScheduleModalDetail, onPanelChange } = props;
+const getBadgeType = (status) => {
+  switch (status) {
+    case INTERVIEW_SCHEDULE_STATUS.NOT_YET:
+      return 'warning';
+    case INTERVIEW_SCHEDULE_STATUS.DONE:
+      return 'success';
+    case INTERVIEW_SCHEDULE_STATUS.REQUEST_CHANGE:
+      return 'error';
+    case INTERVIEW_SCHEDULE_STATUS.INTERVIEWING:
+      return 'processing';
+    default:
+      return 'default';
+  }
+};
 
-  const generateContent = (item) => (
-    <div>
-      <Text strong>{item.title}</Text>
-      <br />
-      <Text>{`(${moment(item.timeStart).format('hh:mm')}-${moment(item.timeEnd).format('hh:mm')})`}</Text>
-    </div>
-  );
+export const InterviewScheduleCalendar = (props) => {
+  const { data, onPanelChange, onOpenScheduleDetail } = props;
 
   const dateCellRender = (date) => {
     const listData = data.filter(
       (item) => item.day === date.date() && item.month === date.month() && item.year === date.year()
     );
+    if (listData === undefined || listData.length === 0) return;
+    const notYetNum = listData.filter((item) => item.status === INTERVIEW_SCHEDULE_STATUS.NOT_YET).length;
+    const doneNum = listData.filter((item) => item.status === INTERVIEW_SCHEDULE_STATUS.DONE).length;
+    const requestChangeNum = listData.filter((item) => item.status === INTERVIEW_SCHEDULE_STATUS.REQUEST_CHANGE).length;
+    const interviewingNum = listData.filter((item) => item.status === INTERVIEW_SCHEDULE_STATUS.INTERVIEWING).length;
+
     return (
-      <div>
-        {listData.map((item) => (
-          <div
-            key={item.id}
-            onClick={() => {
-              setScheduleModalVisible(true);
-              setScheduleModalDetail(item);
-            }}>
-            <Badge status={item.badgeType} text={generateContent(item)} />
-          </div>
-        ))}
+      <div
+        onClick={() => {
+          onOpenScheduleDetail(date, listData);
+        }}>
+        {notYetNum === 0 ? null : (
+          <Badge
+            status={getBadgeType(INTERVIEW_SCHEDULE_STATUS.NOT_YET)}
+            text={
+              <Text style={{ fontSize: '1rem' }}>
+                <Text strong={true}>{notYetNum}</Text> not yet interview(s)
+              </Text>
+            }
+          />
+        )}
+        {doneNum === 0 ? null : (
+          <Badge
+            status={getBadgeType(INTERVIEW_SCHEDULE_STATUS.DONE)}
+            text={
+              <Text style={{ fontSize: '1rem' }}>
+                <Text strong={true}>{doneNum}</Text> done interview(s)
+              </Text>
+            }
+          />
+        )}
+        {requestChangeNum === 0 ? null : (
+          <Badge
+            status={getBadgeType(INTERVIEW_SCHEDULE_STATUS.REQUEST_CHANGE)}
+            text={
+              <Text style={{ fontSize: '1rem' }}>
+                <Text strong={true}>{requestChangeNum}</Text> request change interview(s)
+              </Text>
+            }
+          />
+        )}
+        {interviewingNum === 0 ? null : (
+          <Badge
+            status={getBadgeType(INTERVIEW_SCHEDULE_STATUS.INTERVIEWING)}
+            text={
+              <Text style={{ fontSize: '1rem' }}>
+                <Text strong={true}>{interviewingNum}</Text> happening interview(s)
+              </Text>
+            }
+          />
+        )}
       </div>
     );
   };
 
   const monthCellRender = () => null;
 
-  const headerRender = ({ value, type, onChange, onTypeChange }) => {
+  const headerRender = ({ value, onChange }) => {
     const start = 0;
     const end = 12;
     const monthOptions = [];
@@ -97,12 +143,12 @@ export const InterviewScheduleCalendar = (props) => {
               {monthOptions}
             </Select>
           </Col>
-          <Col>
+          {/*<Col>
             <Radio.Group onChange={(e) => onTypeChange(e.target.value)} value={type}>
               <Radio.Button value='month'>Month</Radio.Button>
               <Radio.Button value='year'>Year</Radio.Button>
             </Radio.Group>
-          </Col>
+          </Col>*/}
         </Row>
       </div>
     );

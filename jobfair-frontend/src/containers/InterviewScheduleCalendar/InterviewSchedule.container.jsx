@@ -2,6 +2,7 @@ import './InterviewScheduleContainer.styles.scss';
 import { Badge, Button, Form, Typography, notification } from 'antd';
 import { INTERVIEW_SCHEDULE_STATUS } from '../../constants/InterviewScheduleConst';
 import { InterviewScheduleCalendar } from '../../components/customized-components/InterviewScheduleCalendar/InterviewScheduleCalendar.component';
+import { ScheduleDetailDrawer } from '../../components/customized-components/InterviewScheduleCalendar/ScheduleDetailDrawer.component';
 import { getSchedule, requestChangeSchedule } from '../../services/jobhub-api/InterviewControllerService';
 import { useSelector } from 'react-redux';
 import InterviewScheduleModalDetailComponent from '../../components/customized-components/InterviewScheduleModalDetail/InterviewScheduleModalDetail.component';
@@ -12,6 +13,8 @@ import moment from 'moment';
 const { Title } = Typography;
 
 const InterviewScheduleContainer = () => {
+  const role = useSelector((state) => state.authentication.user.roles);
+
   const [pivotDate, setPivotDate] = useState(moment());
   const [interviewSchedule, setInterviewSchedule] = useState([]);
   //modals state
@@ -22,8 +25,11 @@ const InterviewScheduleContainer = () => {
   const [reRender, setReRender] = useState(true);
 
   const [requestChangeError, setRequestChangeError] = useState(undefined);
-
-  const role = useSelector((state) => state.authentication.user.roles);
+  const [scheduleDetailDrawer, setScheduleDetailDrawer] = useState({
+    visible: false,
+    date: undefined,
+    scheduleData: undefined
+  });
 
   const [form] = Form.useForm();
 
@@ -54,13 +60,8 @@ const InterviewScheduleContainer = () => {
         beginTime,
         endTime
       });
-      if (response.status === 204) {
-        notification['info']({
-          message: `You have no interview schedule yet`,
-          duration: 2
-        });
-        return;
-      }
+      if (response.status === 204) return;
+
       let data = response.data;
 
       data = data?.map((item) => {
@@ -164,40 +165,62 @@ const InterviewScheduleContainer = () => {
     setPivotDate(value);
   };
 
+  const onOpenScheduleDetail = (date, scheduleData) => {
+    setScheduleDetailDrawer((prevState) => ({ ...prevState, date, scheduleData, visible: true }));
+  };
+
+  const onCloseScheduleDetail = () => {
+    setScheduleDetailDrawer((prevState) => ({
+      ...prevState,
+      visible: false,
+      date: undefined,
+      scheduleData: undefined
+    }));
+  };
+
   return (
-    <div className={'interview-schedule-container'}>
-      <InterviewScheduleModalDetailComponent
-        visible={scheduleDetailModalVisible}
-        onCancel={onCancelModal}
-        data={modalDetail}
-        handleRequestChange={handleRequestChange}
-        buttonAction={buttonAction}
-        role={role}
-      />
-      <InterviewScheduleModalRequestChangeComponent
-        data={modalDetail}
-        visible={requestChangeModalVisible}
-        onCancel={onCancelRequestChangeModal}
-        form={form}
-        onFinish={onFinish}
-        requestChangeError={requestChangeError}
-      />
-      <InterviewScheduleCalendar
+    <>
+      <ScheduleDetailDrawer
+        visible={scheduleDetailDrawer.visible}
+        date={scheduleDetailDrawer.date}
+        scheduleData={scheduleDetailDrawer.scheduleData}
         setScheduleModalVisible={setScheduleDetailModalVisible}
+        onClose={onCloseScheduleDetail}
         setScheduleModalDetail={setModalDetail}
-        data={interviewSchedule}
-        onPanelChange={onPanelChange}
       />
-      <div className={'legend'}>
-        <Title level={4}>Legend</Title>
-        <div className={'container'}>
-          <Badge status='warning' text={'Not yet'} />
-          <Badge status='success' text={'Done'} />
-          <Badge status='error' text={'Request change'} />
-          <Badge status='processing' text={'Happening'} />
+      <div className={'interview-schedule-container'}>
+        <InterviewScheduleModalDetailComponent
+          visible={scheduleDetailModalVisible}
+          onCancel={onCancelModal}
+          data={modalDetail}
+          handleRequestChange={handleRequestChange}
+          buttonAction={buttonAction}
+          role={role}
+        />
+        <InterviewScheduleModalRequestChangeComponent
+          data={modalDetail}
+          visible={requestChangeModalVisible}
+          onCancel={onCancelRequestChangeModal}
+          form={form}
+          onFinish={onFinish}
+          requestChangeError={requestChangeError}
+        />
+        <InterviewScheduleCalendar
+          data={interviewSchedule}
+          onPanelChange={onPanelChange}
+          onOpenScheduleDetail={onOpenScheduleDetail}
+        />
+        <div className={'legend'}>
+          <Title level={4}>Legend</Title>
+          <div className={'container'}>
+            <Badge status='warning' text={'Not yet'} />
+            <Badge status='success' text={'Done'} />
+            <Badge status='error' text={'Request change'} />
+            <Badge status='processing' text={'Happening'} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
