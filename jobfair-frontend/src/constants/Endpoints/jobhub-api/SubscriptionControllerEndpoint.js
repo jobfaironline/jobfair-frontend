@@ -1,0 +1,2 @@
+export const GET_ALL_SUBSCRIPTION_END_POINT = '/api/v1/subscriptions';
+export const PURCHASE_SUBSCRIPTION_END_POINT = `${GET_ALL_SUBSCRIPTION_END_POINT}/pay`;

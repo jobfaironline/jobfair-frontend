@@ -1,6 +1,6 @@
 import { Button, Result, Typography } from 'antd';
-import { Link, useHistory } from 'react-router-dom';
 import { PATH } from '../../constants/Paths/Path';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import React from 'react';
@@ -14,24 +14,21 @@ export const ResultSuccessPage = () => {
 
   return (
     <PageLayoutWrapper className='page'>
-      <Result status='success' title='Register successfully'>
+      <Result status='success' title='Payment successfully'>
         <div className='desc'>
           <Paragraph>
             <Text
               strong
               style={{
-                fontSize: 16
+                fontSize: 16,
+                color: 'green'
               }}>
-              Thank you for your registration!
+              You're Premium now.
             </Text>
           </Paragraph>
           <Paragraph>
-            We will look over your registration and get back to you by 3-5 days. After that, we will send you at this
-            email address: <a href={`mailto:${email}`}>{email}</a> to inform the result.
-          </Paragraph>
-          <Paragraph>
-            In the meantime, you can check the <Link to={PATH.FAQ_PAGE}>FAQ Section</Link> or{' '}
-            <Link to={PATH.PUBLICIZED_JOB_FAIR_LIST_PAGE}>Job Fair Page</Link> to check other job fairs !
+            Your purchase is completed. A receipt for order will be sent to your email:{' '}
+            <a href={`mailto:${email}`}>{email}</a>.
           </Paragraph>
           <Button type='primary' key='console' onClick={() => history.push(PATH.INDEX)}>
             Back to home page

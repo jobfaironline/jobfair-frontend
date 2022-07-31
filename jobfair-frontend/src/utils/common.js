@@ -76,6 +76,16 @@ export const convertEnumToString = (data) => {
 
 export const convertToUTCString = (data) => new Date(data).toUTCString();
 
+//Get date (long) after n years
+export const getNYearAfter = (numberOfYears) => {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = d.getMonth();
+  const day = d.getDate();
+  const result = new Date(year + numberOfYears, month, day).getTime();
+  return result;
+};
+
 //
 export const handleCreateListEmailFromListAccount = (arr) => {
   const listEmail = [];
