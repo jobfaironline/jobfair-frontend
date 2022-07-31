@@ -1,5 +1,5 @@
 import { AssignmentConst } from '../../constants/AssignmentConst';
-import { Button, Modal, Select, Space, Tabs, Typography, notification } from 'antd';
+import { Button, Input, Modal, Select, Space, Tabs, Typography, notification } from 'antd';
 import { JOB_FAIR_STATUS_FOR_EMPLOYEE } from '../../constants/JobFairConst';
 import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
 import { generatePath } from 'react-router-dom';
@@ -18,7 +18,7 @@ import JobFairAssignmentTableColumn, {
   JobFairAssignmentDetailTableColumn
 } from '../JobFairAssignmentTable/JobFairAssignmentTable.column';
 import MyBoothLayoutListContainer from '../MyBoothLayoutList/MyBoothLayoutList.container';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TaskActionButton from './TaskActionButton.container';
 import moment from 'moment';
 
@@ -79,6 +79,7 @@ const JobFairAssignmentContainer = () => {
     data: undefined,
     visible: false
   });
+  const searchValueRef = useRef('');
 
   const getAssignmentCompleted = async (data) => {
     const boothAssignmentPromises = data.map((assignment) => getAssigmentByJobFairBoothId(assignment.jobFairBooth.id));
@@ -159,13 +160,26 @@ const JobFairAssignmentContainer = () => {
   const fetchData = async () => {
     try {
       if (!viewAllMode) {
-        const res = await getAssignmentByEmployeeId('', currentPage, pageSize, '', currentTab);
+        const res = await getAssignmentByEmployeeId(
+          searchValueRef.current,
+          'ASC',
+          currentPage,
+          pageSize,
+          'createTime',
+          currentTab
+        );
         const data = res.data.content.map((item, index) => mapperJobFairAssignment(item, index));
         await getAssignmentCompleted(data);
         return;
       }
       const now = moment();
-      const res = await getJobFairAssignmentByEmployeeId('ASC', currentPage, pageSize, '');
+      const res = await getJobFairAssignmentByEmployeeId(
+        searchValueRef.current,
+        'ASC',
+        currentPage,
+        pageSize,
+        'create_time'
+      );
       let data = res.data.content;
       data = filterStaffAssignment(data);
       data.forEach((jobFairAssignment, index) => {
@@ -218,9 +232,11 @@ const JobFairAssignmentContainer = () => {
     else setCurrentTab(AssignmentConst.SUPERVISOR);
   }, [viewAllMode]);
 
-  webSocketClient.addEvent('refresh-assignment-list', () => {
-    setRerender((prevState) => !prevState);
-  });
+  useEffect(() => {
+    webSocketClient.addEvent('refresh-assignment-list', () => {
+      setRerender((prevState) => !prevState);
+    });
+  }, []);
 
   const handlePageChange = (page, pageSize) => {
     if (page > 0) setCurrentPage(page - 1);
@@ -266,6 +282,11 @@ const JobFairAssignmentContainer = () => {
     setMyLayoutVisibility(true);
   };
 
+  const onSearchAssignment = (value) => {
+    searchValueRef.current = value;
+    fetchData();
+  };
+
   return (
     <>
       <JobFairAssignmentModal
@@ -285,9 +306,16 @@ const JobFairAssignmentContainer = () => {
             justifyContent: 'space-between',
             marginBottom: '1rem'
           }}>
-          <Typography.Title level={2} style={{ marginBottom: '0rem' }}>
-            My assignment
-          </Typography.Title>
+          <Space>
+            <Typography.Title level={2} style={{ marginBottom: '0rem' }}>
+              My assignment
+            </Typography.Title>
+            <Input.Search
+              style={{ marginLeft: '1rem' }}
+              placeholder={'Search by job fair name'}
+              onSearch={onSearchAssignment}
+            />
+          </Space>
           <Space>
             View mode:
             <Select

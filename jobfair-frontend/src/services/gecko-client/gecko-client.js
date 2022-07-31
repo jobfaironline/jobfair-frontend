@@ -1,6 +1,8 @@
 import { geckos } from '@geckos.io/client';
 import EventEmitter from 'events';
 
+const { REACT_APP_GAME_SERVER_URL, REACT_APP_GAME_SERVER_PORT } = process.env;
+
 export class GeckoClient extends EventEmitter {
   // eslint-disable-next-line no-useless-constructor
   constructor() {
@@ -14,8 +16,8 @@ export class GeckoClient extends EventEmitter {
       initialQuaternion
     )}`;
     this.channel = geckos({
-      url: 'https://geckos.jobhub.works',
-      port: 3001,
+      url: REACT_APP_GAME_SERVER_URL,
+      port: REACT_APP_GAME_SERVER_PORT,
       authorization: auth
     });
 

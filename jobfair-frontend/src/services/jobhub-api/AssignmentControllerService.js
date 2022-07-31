@@ -20,12 +20,13 @@ export const updateAssignment = (assignmentId, beginTime, endTime, type) =>
   CallAPI(`${ASSIGNMENT}/${assignmentId}`, 'PUT', {}, { beginTime, endTime, type });
 export const getStatisticsByJobFair = (jobFairId) => CallAPI(`${STATISTICS}/${jobFairId}`, 'GET');
 export const getAssignmentByEmployeeId = (
+  jobFairName = '',
   direction = 'ASC',
   offset = '0',
   pageSize = '10',
   sortBy = 'createTime',
   type
-) => CallAPI(`${ASSIGNMENT_BY_EMPLOYEE_ID}`, 'GET', {}, { direction, offset, pageSize, sortBy, type });
+) => CallAPI(`${ASSIGNMENT_BY_EMPLOYEE_ID}`, 'GET', {}, { direction, offset, pageSize, sortBy, type, jobFairName });
 export const getAssignmentById = (assignmentId) => CallAPI(`${ASSIGNMENT}/${assignmentId}`, 'GET');
 export const uploadManagerCSVFile = async (formData, jobFairId) =>
   CallAPI(`${ASSIGNMENT}/csv`, 'POST', formData, { jobFairId }, { 'content-type': 'multipart/form-data' });
@@ -33,8 +34,9 @@ export const uploadSupervisorCSVFile = async (formData, jobFairBoothId) =>
   CallAPI(`${ASSIGNMENT}/shift/csv`, 'POST', formData, { jobFairBoothId }, { 'content-type': 'multipart/form-data' });
 
 export const getJobFairAssignmentByEmployeeId = (
+  jobFairName = '',
   direction = 'ASC',
   offset = '0',
   pageSize = '10',
   sortBy = 'create_time'
-) => CallAPI(`${JOB_FAIR_ASSIGNMENT_BY_EMPLOYEE_ID}`, 'GET', {}, { direction, offset, pageSize, sortBy });
+) => CallAPI(`${JOB_FAIR_ASSIGNMENT_BY_EMPLOYEE_ID}`, 'GET', {}, { jobFairName, direction, offset, pageSize, sortBy });
