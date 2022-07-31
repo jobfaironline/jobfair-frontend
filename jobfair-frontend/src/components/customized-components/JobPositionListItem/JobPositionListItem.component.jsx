@@ -23,9 +23,9 @@ export const JobPositionComponent = (props) => {
             <Row>
               <Col span={12}>
                 <Text strong>Job level: </Text>
-                <Text>
+                <Tag color={'purple'}>
                   {data.level !== undefined ? convertEnumToString(data.level) : convertEnumToString(data.jobLevel)}
-                </Text>
+                </Tag>
               </Col>
               <Col span={12}>
                 <Text strong>Job type: </Text>
@@ -37,7 +37,7 @@ export const JobPositionComponent = (props) => {
                 Required skills:
               </Text>
               {data.skillTagDTOS.map((skill) => (
-                <Tag color='blue' style={{ padding: '0px 5px' }}>
+                <Tag color='green' style={{ padding: '0px 5px' }}>
                   {skill.name}
                 </Tag>
               ))}

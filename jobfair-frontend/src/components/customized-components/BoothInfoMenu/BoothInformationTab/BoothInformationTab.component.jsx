@@ -1,10 +1,10 @@
-import { Avatar, Col, Row, Tag, Typography } from 'antd';
+import { Col, Image, Row, Tag, Typography } from 'antd';
 
 export const CompanyInformation = (props) => {
   const { data } = props;
   return (
     <div>
-      <Avatar shape='square' size={100} src={data.companyLogoURL} />
+      <Image width={100} src={data.companyLogoURL} />
       <Typography.Title level={3}>{data?.name}</Typography.Title>
       <Typography.Title level={4}>Company information</Typography.Title>
       <Typography.Paragraph>

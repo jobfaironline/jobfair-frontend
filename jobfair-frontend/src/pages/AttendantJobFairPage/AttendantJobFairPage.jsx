@@ -1,5 +1,5 @@
-import { AttendantJobFairBoothViewContainer } from '../../containers/3D/JobFairBooth/AttendantJobFairBoothView.container';
 import { GeckoClient } from '../../services/gecko-client/gecko-client';
+import { JobFairBoothViewContainer } from '../../containers/3D/JobFairBooth/JobFairBoothViewContainer';
 import { agoraAction } from '../../redux-flow/agora/agora-slice';
 import { createClient } from 'agora-rtc-react';
 import { leaveJobFairBooth, visitJobFairBooth } from '../../services/jobhub-api/VisitControllerService';
@@ -75,7 +75,7 @@ const AttendantJobFairPage = () => {
 
   return (
     <PageLayoutWrapper className={'page fullscreen-page'} style={{ overflow: 'hidden' }}>
-      <AttendantJobFairBoothViewContainer
+      <JobFairBoothViewContainer
         companyBoothId={companyBoothId}
         geckoClientRef={geckoClientRef}
         communicationProps={communicationProps}

@@ -1,5 +1,5 @@
 import { BREADCUMB_HEIGHT, NAVBAR_HEIGHT } from '../../../styles/custom-theme';
-import { Button, Form, Input, Modal, notification } from 'antd';
+import { Button, Form, Input, Modal, Typography, notification } from 'antd';
 import { ControlButtonGroup } from '../../../components/customized-components/DecoratedBoothTool/ControlButton/ControlButtonGroup.component';
 import { DecorateBooth3DItemMenuContainer } from '../../SampleItemMenu/DecorateBooth3DItemMenu.container';
 import { DecorateBoothCanvas } from '../../../components/3D/DecorateBooth/DeoratedBoothCanvas/DecorateBoothCanvas.component';
@@ -25,6 +25,7 @@ import {
 } from '../../../utils/ThreeJS/threeJSUtil';
 import { decorateBoothAction } from '../../../redux-flow/decorateBooth/decorate-booth-slice';
 import { generatePath, useHistory } from 'react-router-dom';
+import { getCompanyBoothById } from '../../../services/jobhub-api/JobFairBoothControllerService';
 import {
   getCompanyBoothLatestLayout,
   saveDecoratedBooth,
@@ -42,6 +43,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import MyBoothLayoutListContainer from '../../MyBoothLayoutList/MyBoothLayoutList.container';
 import React, { useEffect, useRef, useState } from 'react';
 
+const { Text } = Typography;
+
 export const Decorate3DBoothContainer = (props) => {
   const { companyBoothId, jobFairId } = props;
   const history = useHistory();
@@ -53,10 +56,13 @@ export const Decorate3DBoothContainer = (props) => {
   const meshGroupRef = useRef();
   const rendererRef = useRef();
   const hasUnsavedChangeRef = useRef(false);
+  const boothNameRef = useRef('');
+  const jobFairNameRef = useRef('');
 
   useEffect(async () => {
     let url = GENERIC_BOOTH_LAYOUT_URL;
     const companyBoothLayoutVideos = {};
+
     try {
       const response = await getCompanyBoothLatestLayout(companyBoothId);
       url = response.data.url;
@@ -66,14 +72,26 @@ export const Decorate3DBoothContainer = (props) => {
     } catch (err) {
       //handle error in here
     }
-    //parse file and get items
-    const glb = await loadGLBModel(url);
-    const result = glb.scene.children;
-    for (const mesh of result) {
-      addVideoTexture(mesh, companyBoothLayoutVideos);
-      fixTextureOffset(mesh);
+    try {
+      const { data } = await getCompanyBoothById(companyBoothId);
+      boothNameRef.current = data.name;
+      jobFairNameRef.current = data.jobFair.name;
+
+      //parse file and get items
+      const glb = await loadGLBModel(url);
+      const result = glb.scene.children;
+      for (const mesh of result) {
+        addVideoTexture(mesh, companyBoothLayoutVideos);
+        fixTextureOffset(mesh);
+      }
+      setModelItems(result);
+    } catch (e) {
+      notification['error']({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching data, try again later`,
+        duration: 2
+      });
     }
-    setModelItems(result);
   }, []);
 
   useEffect(async () => {
@@ -298,6 +316,11 @@ export const Decorate3DBoothContainer = (props) => {
   return (
     <>
       <div style={{ height: `calc(100vh - ${NAVBAR_HEIGHT}) - ${BREADCUMB_HEIGHT}` }}>
+        <div style={{ position: 'absolute', top: '90px', right: '20px', zIndex: '2' }}>
+          <Text strong={true}>Job fair: {jobFairNameRef.current} </Text>
+          <br />
+          <Text strong={true}>Booth: {boothNameRef.current} </Text>
+        </div>
         <MyBoothLayoutListContainer
           setMyLayoutVisibility={setMyLayoutVisibility}
           myLayoutVisibility={myLayoutVisibility}

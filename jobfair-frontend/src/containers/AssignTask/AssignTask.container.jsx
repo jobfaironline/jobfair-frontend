@@ -1,8 +1,11 @@
 import './AssignTask.styles.scss';
+import { ArrowRightOutlined } from '@ant-design/icons';
 import { AssignTaskFilterPanel } from '../../components/customized-components/AssignTask/AssignTaskFilterPanel.component';
 import { AssignTaskModal } from '../../components/forms/AssignTaskModalForm/AsignTaskModalForm.component';
+import { AssignmentConst } from '../../constants/AssignmentConst';
 import { Button, Form, Table, Typography, notification } from 'antd';
 import { LoadingComponent } from '../../components/commons/Loading/Loading.component';
+import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
 import { UploadCSVModal } from '../UploadModal/UploadCSVModal.container';
 import {
   assignEmployee,
@@ -12,12 +15,13 @@ import {
   uploadSupervisorCSVFile
 } from '../../services/jobhub-api/AssignmentControllerService';
 import { deepClone } from '../../utils/common';
+import { generatePath, useHistory } from 'react-router-dom';
 import { getAssignmentsData } from './utils/assign-task-utils';
 import { getCompanyBoothById } from '../../services/jobhub-api/JobFairBoothControllerService';
 import { getDataSource, getJobFairPublicDayRange, getStaffAssignments, getStaffList } from './utils/datasource-utils';
 import { getTableColumns } from './column/AssignTask.column';
 import { uploadUtil } from '../../utils/uploadCSVUtil';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const generateAssignment = (data, shiftData, shiftIndex, assignmentType, dayRange, selectedCellData) => ({
   beginTime: dayRange[selectedCellData.date].beginTime.valueOf() + shiftData[shiftIndex].beginTime,
@@ -32,6 +36,8 @@ const generateAssignment = (data, shiftData, shiftIndex, assignmentType, dayRang
 
 const AssignTaskContainer = (props) => {
   const { boothId } = props;
+  const history = useHistory();
+
   const [tableData, setTableData] = useState({
     oldDataSource: undefined,
     dataSource: undefined,
@@ -52,6 +58,8 @@ const AssignTaskContainer = (props) => {
   const [uploadCsvModalVisible, setUploadCSVModalVisible] = useState(false);
   const [isError, setIsError] = useState(false);
   const [form] = Form.useForm();
+  const supervisorAssignmentIdRef = useRef('');
+  const jobFairNameRef = useRef('');
 
   useEffect(() => {
     fetchData();
@@ -66,10 +74,14 @@ const AssignTaskContainer = (props) => {
       let res = await getCompanyBoothById(boothId);
       const jobFairBooth = res.data;
       const jobFairInfo = res.data.jobFair;
+      jobFairNameRef.current = jobFairInfo.name;
       const shiftData = jobFairInfo.shifts.sort((a, b) => a.beginTime - b.beginTime);
       res = await getAssigmentByJobFairBoothId(boothId);
       const assignments = res.data;
-
+      const supervisorAssignment = assignments.filter(
+        (assignment) => assignment.type === AssignmentConst.SUPERVISOR
+      )[0];
+      supervisorAssignmentIdRef.current = supervisorAssignment.id;
       const staffAssignments = await getStaffAssignments(assignments, shiftData);
       const staffs = await getStaffList(assignments);
       const dayRange = await getJobFairPublicDayRange(jobFairInfo);
@@ -276,8 +288,22 @@ const AssignTaskContainer = (props) => {
       />
       <AssignTaskModal {...modalProps} />
       <div className={'assign-task-container'}>
+        <div style={{ position: 'absolute', top: '100px', right: '30px' }}>
+          <Button
+            type={'link'}
+            style={{ fontSize: '1rem' }}
+            onClick={() =>
+              history.push(
+                generatePath(PATH_COMPANY_EMPLOYEE.BOOTH_DESCRIPTION_PAGE, {
+                  assignmentId: supervisorAssignmentIdRef.current
+                })
+              )
+            }>
+            Go to booth profile <ArrowRightOutlined />
+          </Button>
+        </div>
         <div style={{ display: 'flex', marginBottom: '1rem' }}>
-          <Typography.Title level={3}>Assign task</Typography.Title>
+          <Typography.Title level={3}>Assign task for booth '{jobFairNameRef.current}'</Typography.Title>
           <Button
             className={'button'}
             type={'primary'}

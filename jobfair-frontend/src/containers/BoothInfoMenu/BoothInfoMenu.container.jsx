@@ -77,7 +77,7 @@ export const BoothInfoMenuContainer = (props) => {
             style={{ marginLeft: 'auto', cursor: 'pointer' }}
             onClick={() => {
               dispatch(boothTabAction.setIsShow(!isShow));
-              dispatch(boothTabAction.setActiveKey(0));
+              dispatch(boothTabAction.setActiveKey('0'));
             }}>
             {isShow ? (
               <ShrinkOutlined style={{ fontSize: '1.2rem' }} />
@@ -123,7 +123,7 @@ export const BoothInfoMenuContainer = (props) => {
               </div>
             }
             key='1'>
-            <div className={'aboutCompany'} style={{ display: isShow ? 'block' : 'none' }}>
+            <div className={'aboutCompany'} style={{ display: isShow ? 'block' : 'none', maxWidth: '27vw' }}>
               <CompanyInformation data={state.companyInformation} />
             </div>
           </Tabs.TabPane>

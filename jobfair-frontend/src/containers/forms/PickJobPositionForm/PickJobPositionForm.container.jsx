@@ -1,13 +1,14 @@
 import './PickJobPositionForm.styles.scss';
+import { ArrowRightOutlined } from '@ant-design/icons';
 import { BoothDescriptionValidation } from '../../../validate/BoothDescriptionValidation';
-import { Card, Form, Image, Input, Modal, Typography, notification } from 'antd';
+import { Button, Card, Form, Image, Input, Modal, Typography, notification } from 'antd';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { PATH, PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import {
   assignJobPositionToBooth,
   getCompanyBoothById
 } from '../../../services/jobhub-api/JobFairBoothControllerService';
-import { generatePath } from 'react-router-dom';
+import { generatePath, useHistory } from 'react-router-dom';
 import { getAssignmentById } from '../../../services/jobhub-api/AssignmentControllerService';
 import { handleFieldsError } from '../../../utils/handleFIeldsError';
 import { mapperCompanyBooth } from '../../../utils/mapperCompanyBoooth';
@@ -19,12 +20,14 @@ const { TextArea } = Input;
 const { Text, Title } = Typography;
 
 const PickJobPositionFormContainer = ({ assignmentId }) => {
+  const history = useHistory();
   const [modalVisible, setModalVisible] = useState(false);
   const [arrKey, setArrKey] = useState([]);
   const [formData, setFormData] = useState();
 
   const hasFetchData = useRef(false);
   const [form] = Form.useForm();
+  const jobFairNameRef = useRef('');
 
   useEffect(() => {
     fetchData();
@@ -40,6 +43,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
 
   const fetchData = async () => {
     const assigmentData = (await getAssignmentById(assignmentId)).data;
+    jobFairNameRef.current = assigmentData.jobFairBooth.jobFair.name;
     const data = (await getCompanyBoothById(assigmentData.jobFairBooth.id)).data;
     const formData = mapperCompanyBooth(data, assigmentData);
     const hasTestArr = formData?.jobPositions
@@ -146,9 +150,23 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
         ) : null}
       </Modal>
       <div className={'pick-job-position-container'}>
+        <div style={{ position: 'absolute', top: '100px', right: '30px' }}>
+          <Button
+            type={'link'}
+            style={{ fontSize: '1rem' }}
+            onClick={() =>
+              history.push(
+                generatePath(PATH_COMPANY_EMPLOYEE.ASSIGN_TASK_PAGE, {
+                  boothId: formData.boothId
+                })
+              )
+            }>
+            Go to assign task <ArrowRightOutlined />
+          </Button>
+        </div>
         <div className={'content-container'}>
           <div className={'left-side'}>
-            <Title level={3}>My booth profile</Title>
+            <Title level={3}>Booth profile {jobFairNameRef.current ? `for '${jobFairNameRef.current}'` : ''}</Title>
             <div className={'card-container'}>
               <Card bordered={true} className={'card'} onClick={handleView3DBooth} hoverable>
                 <Image

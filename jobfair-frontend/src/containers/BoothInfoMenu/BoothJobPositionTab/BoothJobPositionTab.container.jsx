@@ -18,9 +18,11 @@ import { getMatchingPoint } from '../../../services/jobhub-api/CvControllerServi
 import { useSelector } from 'react-redux';
 import ConfirmSubmitResumeFormComponent from '../../../components/forms/SubmitResumeForm/ConfirmSubmitResumeForm.component';
 import JobPositionDetailModalComponent from '../../../components/customized-components/JobPositionDetailModal/JobPositionDetailModal.component';
+import RoleType from '../../../constants/RoleType';
 
 export const BoothJobPositionTabContainer = (props) => {
   const { jobPositions, openInventory } = props;
+  const role = useSelector((state) => state.authentication.user.roles);
   const location = useLocation();
   const { boothJobPositionId, cvId, applicationId, quizId } = location.state ?? {};
   const history = useHistory();
@@ -147,6 +149,31 @@ export const BoothJobPositionTabContainer = (props) => {
 
   const componentProps = { jobPositions, onClick };
 
+  const renderCvComponent = () => {
+    if (role !== RoleType.ATTENDANT) return;
+    if (selectedResume === undefined) {
+      return (
+        <>
+          <DragAndDropResumeComponent onDragOver={onDragResumeOver} onDrop={onDropResume} />
+        </>
+      );
+    }
+    return (
+      <>
+        <RemoveResumeComponent
+          selectedResume={selectedResume}
+          onRemoveResume={onRemoveResume}
+          matchingPoint={cvMatchingPointRef.current}
+        />
+        <ConfirmSubmitResumeFormComponent
+          onFinish={onFinishSubmitForm}
+          applicationData={applicationData}
+          quizId={quizId}
+        />
+      </>
+    );
+  };
+
   return (
     <>
       <CompanyJobPositionTab {...componentProps} />
@@ -159,7 +186,7 @@ export const BoothJobPositionTabContainer = (props) => {
         This job position required an entry test. Do you want to do it?
       </Modal>
       <Modal
-        title={'Apply to job position'}
+        title={role === RoleType.ATTENDANT ? 'Apply to job position' : 'Job position detail'}
         width={'50%'}
         closable={true}
         maskClosable={true}
@@ -170,24 +197,7 @@ export const BoothJobPositionTabContainer = (props) => {
         wrapClassName={'company-job-position-tab-modal'}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <JobPositionDetailModalComponent data={selectedJobPosition} />
-          {selectedResume === undefined ? (
-            <>
-              <DragAndDropResumeComponent onDragOver={onDragResumeOver} onDrop={onDropResume} />
-            </>
-          ) : (
-            <>
-              <RemoveResumeComponent
-                selectedResume={selectedResume}
-                onRemoveResume={onRemoveResume}
-                matchingPoint={cvMatchingPointRef.current}
-              />
-              <ConfirmSubmitResumeFormComponent
-                onFinish={onFinishSubmitForm}
-                applicationData={applicationData}
-                quizId={quizId}
-              />
-            </>
-          )}
+          {renderCvComponent()}
         </div>
       </Modal>
     </>

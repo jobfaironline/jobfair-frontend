@@ -4,15 +4,17 @@ import { ControlTipsModalContainer } from '../../ControlTipModal/ControlTipsModa
 import { InventoryContainer } from '../../Inventory/Inventory.container';
 import { JobFairBoothContainer } from './JobFairBooth.container';
 import { boothTabAction } from '../../../redux-flow/boothInfoTab/boothInfoTab-slice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
+import RoleType from '../../../constants/RoleType';
 
-export const AttendantJobFairBoothViewContainer = (props) => {
+export const JobFairBoothViewContainer = (props) => {
   const { companyBoothId, geckoClientRef, communicationProps } = props;
   const location = useLocation();
   const { applicationId } = location.state ?? {};
   const dispatch = useDispatch();
+  const role = useSelector((state) => state.authentication.user.roles);
 
   const [inventoryVisible, setInventoryVisible] = useState(false);
 
@@ -33,7 +35,9 @@ export const AttendantJobFairBoothViewContainer = (props) => {
         communicationProps={communicationProps}
       />
       <div className={'booth'}>
-        <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />
+        {role === RoleType.ATTENDANT ? (
+          <InventoryContainer onClick={openInventory} inventoryVisible={inventoryVisible} />
+        ) : null}
         <ControlTipsModalContainer>
           <>
             <p>Movement controls:</p>

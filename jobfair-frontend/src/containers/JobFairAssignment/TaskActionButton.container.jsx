@@ -51,25 +51,44 @@ const TaskActionButton = ({ type, status, record }) => {
       const isDoneDecorate = record.isDoneDecorate;
       return (
         <Space>
-          <Button
-            style={{ paddingLeft: 0 }}
-            type='link'
-            disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
-            onClick={() =>
-              history.push(
-                generatePath(PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE, {
-                  jobFairId: record?.jobFair?.id,
-                  companyBoothId: record?.jobFairBoothId
-                })
-              )
-            }>
-            <FontAwesomeIcon
-              icon={faCircleCheck}
-              color={isDoneDecorate ? 'green' : 'gray'}
-              style={{ marginRight: '5px' }}
-            />
-            Start decorate booth
-          </Button>
+          {status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING ? (
+            <Button
+              style={{ paddingLeft: 0 }}
+              type='link'
+              onClick={() =>
+                history.push(
+                  generatePath(PATH_COMPANY_EMPLOYEE.JOB_FAIR_BOOTH_REVIEW, {
+                    boothId: record?.jobFairBoothId
+                  })
+                )
+              }>
+              <FontAwesomeIcon
+                icon={faCircleCheck}
+                color={isDoneDecorate ? 'green' : 'gray'}
+                style={{ marginRight: '5px' }}
+              />
+              See your decoration
+            </Button>
+          ) : (
+            <Button
+              style={{ paddingLeft: 0 }}
+              type='link'
+              onClick={() =>
+                history.push(
+                  generatePath(PATH_COMPANY_EMPLOYEE.DECORATE_BOOTH_PAGE, {
+                    jobFairId: record?.jobFair?.id,
+                    companyBoothId: record?.jobFairBoothId
+                  })
+                )
+              }>
+              <FontAwesomeIcon
+                icon={faCircleCheck}
+                color={isDoneDecorate ? 'green' : 'gray'}
+                style={{ marginRight: '5px' }}
+              />
+              Start decorate booth
+            </Button>
+          )}
         </Space>
       );
     }

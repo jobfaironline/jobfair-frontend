@@ -14,6 +14,7 @@ const JobPositionSubmodalContainer = ({ jobPositionId, visible, handleCloseModal
 
   return (
     <Modal
+      width={'50vw'}
       wrapClassName='detail-modal'
       title="Job position's details"
       visible={visible}
