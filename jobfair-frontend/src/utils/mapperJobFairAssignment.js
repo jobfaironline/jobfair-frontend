@@ -50,7 +50,34 @@ export const mapperJobFairAssignment = (item, index) => {
       dueTime = item.jobFairBooth?.jobFair?.publicEndTime;
   }
 
+  let endTime;
+  switch (item.type) {
+    case AssignmentConst.SUPERVISOR:
+      endTime = item.jobFairBooth?.jobFair?.decorateEndTime;
+      break;
+    case AssignmentConst.DECORATOR: {
+      endTime = item.jobFairBooth?.jobFair?.decorateEndTime;
+      break;
+    }
+    default:
+      endTime = item.endTime;
+  }
+
+  let beginTime;
+  switch (item.type) {
+    case AssignmentConst.SUPERVISOR:
+      beginTime = item.jobFairBooth?.jobFair?.decorateStartTime;
+      break;
+    case AssignmentConst.DECORATOR: {
+      beginTime = item.jobFairBooth?.jobFair?.decorateStartTime;
+      break;
+    }
+    default:
+      beginTime = item.beginTime;
+  }
+
   return {
+    ...item,
     key: item.id,
     no: index + 1,
     id: item.id,
@@ -74,6 +101,7 @@ export const mapperJobFairAssignment = (item, index) => {
     assignerFullName: `${item?.assigner?.account.firstname} ${item?.assigner?.account.middlename} ${item?.assigner?.account.lastname}`,
     createTime: item?.createTime,
     dueTime,
-    ...item
+    endTime,
+    beginTime
   };
 };

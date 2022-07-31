@@ -53,7 +53,7 @@ export const JobFairAssignmentModal = ({ data, visible, onClose }) => {
   return (
     <Modal
       visible={visible}
-      width={'80%'}
+      width={'90%'}
       onOk={onClose}
       onCancel={onClose}
       title={`Assignment of job fair ${data[0].jobFairName}`}>
@@ -186,6 +186,7 @@ const JobFairAssignmentContainer = () => {
         jobFairAssignment.assignments = jobFairAssignment.assignments.map((item, index) =>
           mapperJobFairAssignment(item, index)
         );
+        jobFairAssignment.assignments = jobFairAssignment.assignments.sort((a, b) => a.beginTime - b.beginTime);
         jobFairAssignment.no = index + 1;
         jobFairAssignment.jobFairName = jobFairAssignment.jobFair.name;
         jobFairAssignment.status = jobFairAssignment.jobFair.status;

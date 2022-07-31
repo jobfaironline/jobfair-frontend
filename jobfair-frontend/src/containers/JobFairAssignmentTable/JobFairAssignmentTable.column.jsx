@@ -114,107 +114,6 @@ export const JobFairAllAssignmentColumn = (getColumnSearchProps) => [
   }
 ];
 
-const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
-  {
-    title: 'No',
-    dataIndex: 'no',
-    key: 'no',
-    width: '3%',
-    render(text) {
-      return {
-        props: {
-          style: { width: '3rem', textAlign: 'right' }
-        },
-        children: <div>{text}</div>
-      };
-    }
-  },
-  {
-    title: 'Job fair name',
-    dataIndex: 'jobFairName',
-    key: 'jobFairName',
-    width: '10%',
-    ...getColumnSearchProps('jobFairName'),
-    onFilter: (value, record) => record.title.indexOf(value) === 0,
-    sorter: (a, b) => a.title.localeCompare(b.title),
-    sortDirections: ['descend'],
-    render: (text, record) => (
-      <a onClick={record.onClickJobFair}>
-        <Text>{text}</Text>
-        <FontAwesomeIcon icon={faExternalLink} style={{ marginLeft: '5px' }} />
-      </a>
-    )
-  },
-  {
-    title: 'Booth name',
-    render: (_, record) => record?.jobFairBooth?.name,
-    width: '10%'
-  },
-  {
-    title: 'Assignment type',
-    dataIndex: 'assignmentType',
-    key: 'assignmentType',
-    width: '15%',
-    ...getColumnSearchProps('assignmentType'),
-    render: (assignmentType) => (
-      <>
-        <Tag color={'green'}>{convertEnumToString(assignmentType)}</Tag>
-      </>
-    )
-  },
-  {
-    title: 'Assigner',
-    width: '18%',
-    key: 'assignerFullName',
-    dataIndex: 'assignerFullName',
-    ...getColumnSearchProps('assignerFullName')
-  },
-  {
-    title: 'Created',
-    width: '10%',
-    key: 'createTime',
-    dataIndex: 'createTime',
-    sorter: (a, b) => a.createTime - b.createTime,
-    sortDirections: ['descend'],
-    render: (text) => <Text>{moment(text).format(DateFormat)}</Text>
-  },
-  {
-    title: 'Deadline',
-    width: '10%',
-    key: 'dueTime',
-    dataIndex: 'dueTime',
-    sorter: (a, b) => a.dueTime - b.dueTime,
-    sortDirections: ['descend'],
-    render: (text) => <Text>{moment(text).format(DateFormat)}</Text>
-  },
-  {
-    title: 'Status',
-    key: 'status',
-    width: '10%',
-    dataIndex: 'status',
-    filters: [
-      {
-        text: JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE,
-        value: JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE
-      },
-      {
-        text: JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING,
-        value: JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING
-      },
-      {
-        text: JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET,
-        value: JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET
-      }
-    ],
-    onFilter: (value, record) => record.status === value,
-    render: (status, record) => (
-      <>
-        <Tag color={record.statusColor}>{status}</Tag>
-      </>
-    )
-  }
-];
-
 export const JobFairAssignmentDetailTableColumn = (getColumnSearchProps) => [
   {
     title: 'No',
@@ -224,7 +123,7 @@ export const JobFairAssignmentDetailTableColumn = (getColumnSearchProps) => [
     render(text) {
       return {
         props: {
-          style: { width: '3rem', textAlign: 'right' }
+          style: { textAlign: 'right' }
         },
         children: <div>{text}</div>
       };
@@ -264,11 +163,128 @@ export const JobFairAssignmentDetailTableColumn = (getColumnSearchProps) => [
     render: (text) => <Text>{moment(text).format(CustomDateFormat)}</Text>
   },
   {
+    title: 'Begin time',
+    width: '15%',
+    key: 'beginTime',
+    dataIndex: 'beginTime',
+    sorter: (a, b) => a.beginTime - b.beginTime,
+    render: (text) => <Text>{moment(text).format(CustomDateFormat)}</Text>
+  },
+  {
     title: 'Deadline',
     width: '15%',
     key: 'dueTime',
-    dataIndex: 'dueTime',
-    sorter: (a, b) => a.dueTime - b.dueTime,
+    dataIndex: 'endTime',
+    sorter: (a, b) => a.endTime - b.endTime,
+    render: (text) => <Text>{moment(text).format(CustomDateFormat)}</Text>
+  },
+  {
+    title: 'Status',
+    key: 'status',
+    width: '8%',
+    dataIndex: 'status',
+    filters: [
+      {
+        text: JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE,
+        value: JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE
+      },
+      {
+        text: JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING,
+        value: JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING
+      },
+      {
+        text: JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET,
+        value: JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET
+      }
+    ],
+    onFilter: (value, record) => record.status === value,
+    render: (status, record) => (
+      <>
+        <Tag color={record.statusColor}>{status}</Tag>
+      </>
+    )
+  }
+];
+
+const JobFairAssignmentTableColumn = (getColumnSearchProps) => [
+  {
+    title: 'No',
+    dataIndex: 'no',
+    key: 'no',
+    width: '3%',
+    render(text) {
+      return {
+        props: {
+          style: { textAlign: 'right' }
+        },
+        children: <div>{text}</div>
+      };
+    }
+  },
+  {
+    title: 'Job fair name',
+    dataIndex: 'jobFairName',
+    key: 'jobFairName',
+    width: '10%',
+    ...getColumnSearchProps('jobFairName'),
+    onFilter: (value, record) => record.title.indexOf(value) === 0,
+    sorter: (a, b) => a.title.localeCompare(b.title),
+    sortDirections: ['descend'],
+    render: (text, record) => (
+      <a onClick={record.onClickJobFair}>
+        <Text>{text}</Text>
+        <FontAwesomeIcon icon={faExternalLink} style={{ marginLeft: '5px' }} />
+      </a>
+    )
+  },
+  {
+    title: 'Booth name',
+    render: (_, record) => record?.jobFairBooth?.name,
+    width: '10%'
+  },
+  {
+    title: 'Assignment type',
+    dataIndex: 'assignmentType',
+    key: 'assignmentType',
+    width: '10%',
+    ...getColumnSearchProps('assignmentType'),
+    render: (assignmentType) => (
+      <>
+        <Tag color={'green'}>{convertEnumToString(assignmentType)}</Tag>
+      </>
+    )
+  },
+  {
+    title: 'Assigner',
+    width: '13%',
+    key: 'assignerFullName',
+    dataIndex: 'assignerFullName',
+    ...getColumnSearchProps('assignerFullName')
+  },
+  {
+    title: 'Created',
+    width: '10%',
+    key: 'createTime',
+    dataIndex: 'createTime',
+    sorter: (a, b) => a.createTime - b.createTime,
+    sortDirections: ['descend'],
+    render: (text) => <Text>{moment(text).format(DateFormat)}</Text>
+  },
+  {
+    title: 'Begin time',
+    width: '15%',
+    key: 'beginTime',
+    dataIndex: 'beginTime',
+    sorter: (a, b) => a.beginTime - b.beginTime,
+    sortDirections: ['descend'],
+    render: (text) => <Text>{moment(text).format(CustomDateFormat)}</Text>
+  },
+  {
+    title: 'Deadline',
+    width: '15%',
+    key: 'dueTime',
+    dataIndex: 'endTime',
+    sorter: (a, b) => a.endTime - b.endTime,
     sortDirections: ['descend'],
     render: (text) => <Text>{moment(text).format(CustomDateFormat)}</Text>
   },
