@@ -149,16 +149,13 @@ const AppRouter = () => {
           <Route path={PATH.JOB_FAIR_LANDING_PAGE} exact>
             <JobFairLandingPage />
           </Route>
+          <Route path={PATH_ADMIN.PROFILE_PAGE} exact>
+            <AccountProfilePage />
+          </Route>
           <AdminRouter
             key={PATH_ADMIN.ADMIN_DASHBOARD}
             component={() => <AdminDashboardPage />}
             path={PATH_ADMIN.ADMIN_DASHBOARD}
-            exact
-          />
-          <AdminRouter
-            key={PATH_ADMIN.PROFILE_PAGE}
-            component={() => <AccountProfilePage />}
-            path={PATH_ADMIN.PROFILE_PAGE}
             exact
           />
           <AdminRouter
@@ -245,12 +242,6 @@ const AppRouter = () => {
             key={PATH_ATTENDANT.WAITING_ROOM_PAGE}
             component={() => <InterviewRoomPage />}
             path={PATH_ATTENDANT.WAITING_ROOM_PAGE}
-            exact
-          />
-          <CompanyEmployeeRouter
-            key={PATH_COMPANY_EMPLOYEE.PROFILE_PAGE}
-            component={() => <AccountProfilePage />}
-            path={PATH_COMPANY_EMPLOYEE.PROFILE_PAGE}
             exact
           />
           <CompanyEmployeeRouter

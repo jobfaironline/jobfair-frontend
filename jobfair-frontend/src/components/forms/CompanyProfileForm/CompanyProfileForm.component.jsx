@@ -95,7 +95,7 @@ const CompanyProfileForm = ({ form, editable, mediaUrl, onFinish, onCancel, ...m
             maxLength={500}
             placeholder={editable ? 'Company description' : ''}
             disabled={!editable}
-            autoSize={!editable}
+            autoSize={{ minRows: 5 }}
           />
         </Form.Item>
         <Form.Item

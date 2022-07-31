@@ -135,6 +135,7 @@ const JobPositionFormComponent = (props) => {
 
                   setTotalSkillTags(value.length);
                 }}
+                filterOption={(input, option) => option.children?.toLowerCase().includes(input?.toLowerCase())}
                 dropdownRender={(menu) => (
                   <>
                     {menu}
@@ -167,9 +168,9 @@ const JobPositionFormComponent = (props) => {
                 onChange={(value) => {
                   //value is a array
                   if (value.length > NUM_OF_SIZE_MAXIMUM) value.pop();
-
                   setTotalSelect(value.length);
                 }}
+                filterOption={(input, option) => option.children?.toLowerCase().includes(input?.toLowerCase())}
                 showSearch
                 dropdownRender={(menu) => (
                   <>

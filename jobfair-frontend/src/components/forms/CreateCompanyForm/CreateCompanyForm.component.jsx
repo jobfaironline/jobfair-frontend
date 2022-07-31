@@ -81,6 +81,7 @@ const CreateCompanyFormComponent = ({ form, onFinish, onPrev }) => {
           <Select
             mode='multiple'
             suffixIcon={<FontAwesomeIcon icon={faIndustry} />}
+            filterOption={(input, option) => option.children?.toLowerCase().includes(input?.toLowerCase())}
             onChange={(value) => {
               //value is a array
               if (value.length > MAX_TOTAL_INDUSTRY) value.pop();
