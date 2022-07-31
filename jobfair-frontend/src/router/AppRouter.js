@@ -15,6 +15,7 @@ import AboutApplicationPage from '../pages/AboutApplicationPage';
 import AccountManagementPage from '../pages/AccountManagementPage/AccountManagementPage';
 import AccountProfilePage from '../pages/ProfilePage/Account/AccountProfilePage';
 import AdminDashboardPage from '../pages/AdminDashboardPage/AdminDashboardPage';
+import AdminRouter from './components/AdminRouter';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
 import AssignTaskPage from '../pages/AssignTaskPage/AssignTaskPage';
 import AttendantAttemptTestPage from '../pages/AttendantAttemptTestPage/AttendantAttemptTestPage';
@@ -24,6 +25,7 @@ import BoothDashboardPage from '../pages/BoothDashboardPage/BoothDashboardPage';
 import BoothDescriptionPage from '../pages/BoothDescriptionPage/BoothDescriptionPage';
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage';
 import CompanyEmployeeRouter from './components/CompanyEmployeeRouter';
+import CompanyManagementPage from '../pages/CompanyManagementPage/CompanyManagementPage';
 import CompanyManagerRouter from './components/CompanyManagerRouter';
 import CompanyProfilePage from '../pages/ProfilePage/Company/CompanyProfilePage';
 import ContactPage from '../pages/ContactPage/ContactPage';
@@ -141,21 +143,36 @@ const AppRouter = () => {
           <Route path={PATH_ADMIN.JOB_FAIR_LIST_PAGE} exact>
             <JobFairTablePage />
           </Route>
-          <Route path={PATH_ADMIN.ACCOUNT_MANAGEMENT_PAGE} exact>
-            <AccountManagementPage />
-          </Route>
-          <Route path={PATH_ADMIN.PROFILE_PAGE} exact>
-            <AccountProfilePage />
-          </Route>
           <Route path={PATH.RESULT_SUCCESS_PAGE} exact>
             <ResultSuccessPage />
           </Route>
           <Route path={PATH.JOB_FAIR_LANDING_PAGE} exact>
             <JobFairLandingPage />
           </Route>
-          <Route path={PATH_ADMIN.ADMIN_DASHBOARD} exact>
-            <AdminDashboardPage />
-          </Route>
+          <AdminRouter
+            key={PATH_ADMIN.ADMIN_DASHBOARD}
+            component={() => <AdminDashboardPage />}
+            path={PATH_ADMIN.ADMIN_DASHBOARD}
+            exact
+          />
+          <AdminRouter
+            key={PATH_ADMIN.PROFILE_PAGE}
+            component={() => <AccountProfilePage />}
+            path={PATH_ADMIN.PROFILE_PAGE}
+            exact
+          />
+          <AdminRouter
+            key={PATH_ADMIN.ACCOUNT_MANAGEMENT_PAGE}
+            component={() => <AccountManagementPage />}
+            path={PATH_ADMIN.ACCOUNT_MANAGEMENT_PAGE}
+            exact
+          />
+          <AdminRouter
+            key={PATH_ADMIN.COMPANY_MANAGEMENT_PAGE}
+            component={() => <CompanyManagementPage />}
+            path={PATH_ADMIN.COMPANY_MANAGEMENT_PAGE}
+            exact
+          />
           <PublicRouter key={PATH.LOGIN_PAGE} component={() => <LoginPage />} path={PATH.LOGIN_PAGE} exact />
           <PublicRouter key={PATH.REGISTER_PAGE} component={() => <RegisterPage />} path={PATH.REGISTER_PAGE} exact />
           <PublicRouter

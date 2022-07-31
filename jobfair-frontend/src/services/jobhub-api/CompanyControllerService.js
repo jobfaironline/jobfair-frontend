@@ -9,3 +9,5 @@ export const updateCompanyProfileAPI = (body, companyId) => CallAPI(`${ENDPOINT_
 export const createCompanyAPI = (body) => CallAPI(ENDPOINT_COMPANY, 'POST', body);
 export const uploadCompanyLogo = (body) =>
   CallAPI(ENDPOINT_UPLOAD_COMPANY_LOGO, 'POST', body, {}, { 'content-type': 'multipart/form-data' });
+export const getCompaniesAPI = ({ offset = 0, pageSize = 10, searchValue = '' }) =>
+  CallAPI(`${ENDPOINT_COMPANY}`, 'GET', {}, { offset, pageSize, searchValue });
