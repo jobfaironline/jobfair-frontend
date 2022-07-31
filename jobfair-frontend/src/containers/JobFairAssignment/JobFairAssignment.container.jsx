@@ -175,7 +175,7 @@ const JobFairAssignmentContainer = () => {
       const now = moment();
       const res = await getJobFairAssignmentByEmployeeId(
         searchValueRef.current,
-        'ASC',
+        'DESC',
         currentPage,
         pageSize,
         'create_time'
@@ -190,8 +190,8 @@ const JobFairAssignmentContainer = () => {
         jobFairAssignment.no = index + 1;
         jobFairAssignment.jobFairName = jobFairAssignment.jobFair.name;
         jobFairAssignment.status = jobFairAssignment.jobFair.status;
-        jobFairAssignment.startTime = jobFairAssignment.jobFairName.decorateStartTime;
-        jobFairAssignment.endTime = jobFairAssignment.jobFairName.publicEndTime;
+        jobFairAssignment.startTime = jobFairAssignment.jobFair.decorateStartTime;
+        jobFairAssignment.endTime = jobFairAssignment.jobFair.publicEndTime;
         jobFairAssignment.onClickJobFair = () => {
           const url = generatePath(PATH_COMPANY_EMPLOYEE.CHECKLIST, { jobFairId: jobFairAssignment.jobFair.id });
           window.open(`${window.location.origin}${url}`);
