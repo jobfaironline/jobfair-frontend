@@ -75,6 +75,9 @@ const SubscriptionDetailComponent = ({ subscriptionId }) => {
                     <Descriptions.Item>
                       <Divider style={{ fontWeight: 'bold', backgroundColor: '#000' }} />
                     </Descriptions.Item>
+                    <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
+                      <Title level={3}>Package benefits:</Title>
+                    </Descriptions.Item>
                     {basicItem.benefits.map((benefit) => (
                       <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <div style={{ marginTop: '1rem' }}>
@@ -87,7 +90,7 @@ const SubscriptionDetailComponent = ({ subscriptionId }) => {
                     ))}
                   </Descriptions>
                   <Descriptions.Item>
-                    <Divider type='vertical' style={{ fontSize: 'bold', backgroundColor: '#000', height: '40rem' }} />
+                    <Divider type='vertical' style={{ fontSize: 'bold', backgroundColor: '#000', height: '50rem' }} />
                   </Descriptions.Item>
                   <Descriptions title={<Title level={3}>Order detail:</Title>} column={1}>
                     <Descriptions.Item
@@ -169,6 +172,9 @@ const SubscriptionDetailComponent = ({ subscriptionId }) => {
                     <Descriptions.Item>
                       <Divider style={{ fontWeight: 'bold', backgroundColor: '#000' }} />
                     </Descriptions.Item>
+                    <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
+                      <Title level={3}>Package benefits:</Title>
+                    </Descriptions.Item>
                     {standardItem.benefits.map((benefit) => (
                       <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <div style={{ marginTop: '1rem' }}>
@@ -181,7 +187,7 @@ const SubscriptionDetailComponent = ({ subscriptionId }) => {
                     ))}
                   </Descriptions>
                   <Descriptions.Item>
-                    <Divider type='vertical' style={{ fontSize: 'bold', backgroundColor: '#000', height: '40rem' }} />
+                    <Divider type='vertical' style={{ fontSize: 'bold', backgroundColor: '#000', height: '50rem' }} />
                   </Descriptions.Item>
                   <Descriptions title={<Title level={3}>Order detail:</Title>} column={1}>
                     <Descriptions.Item
@@ -263,6 +269,9 @@ const SubscriptionDetailComponent = ({ subscriptionId }) => {
                     <Descriptions.Item>
                       <Divider style={{ fontWeight: 'bold', backgroundColor: '#000' }} />
                     </Descriptions.Item>
+                    <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
+                      <Title level={3}>Package benefits:</Title>
+                    </Descriptions.Item>
                     {premiumItem.benefits.map((benefit) => (
                       <div style={{ display: 'flex', flexDirection: 'column' }}>
                         <div style={{ marginTop: '1rem' }}>
@@ -275,7 +284,7 @@ const SubscriptionDetailComponent = ({ subscriptionId }) => {
                     ))}
                   </Descriptions>
                   <Descriptions.Item>
-                    <Divider type='vertical' style={{ fontSize: 'bold', backgroundColor: '#000', height: '40rem' }} />
+                    <Divider type='vertical' style={{ fontSize: 'bold', backgroundColor: '#000', height: '50rem' }} />
                   </Descriptions.Item>
                   <Descriptions title={<Title level={3}>Order detail:</Title>} column={1}>
                     <Descriptions.Item
