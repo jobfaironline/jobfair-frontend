@@ -167,7 +167,7 @@ export const AssignEmployeeModalContainer = (props) => {
           showSearch={true}
           onChange={onTableTransferChange}
           filterOption={(inputValue, item) =>
-            item.title.indexOf(inputValue) !== -1 || item.tag.indexOf(inputValue) !== -1
+            item?.title?.indexOf(inputValue) !== -1 || item?.tag?.indexOf(inputValue) !== -1
           }
           leftColumns={leftTableColumns}
           rightColumns={rightTableColumns}
