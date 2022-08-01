@@ -1,16 +1,17 @@
-import { Card, Modal, Typography } from 'antd';
+import { Card, Checkbox, Modal, Typography } from 'antd';
 import { Field, Form } from 'react-final-form';
 import { PATH } from '../../../constants/Paths/Path';
 import { formatCVC, formatCreditCardNumber, formatExpirationDate, formatName } from './CardUtil';
 import { purchaseSubscriptionAPI } from '../../../services/jobhub-api/SubscriptionControllerService';
 import { useHistory } from 'react-router-dom';
-import React from 'react';
+import React, { useState } from 'react';
 import ResultFailedComponent from '../../commons/Result/ResultFailed.component';
 import VisaCard from './Card';
 
 const CheckoutFormComponent = ({ subscriptionId }) => {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const history = useHistory();
+  const [agree, setIsAgree] = useState(false);
 
   const onSubmit = async (values) => {
     await sleep(300);
@@ -199,6 +200,11 @@ const CheckoutFormComponent = ({ subscriptionId }) => {
                         </Field>
                       </div>
                     </div>
+                    <Checkbox onChange={(e) => setIsAgree(e.target.checked)}>
+                      <p style={{ fontSize: '1rem', width: '20rem' }}>
+                        By clicking this checkbox, you confirm that there will be NO REFUND
+                      </p>
+                    </Checkbox>
                     <div
                       style={{
                         display: 'flex',
@@ -208,25 +214,27 @@ const CheckoutFormComponent = ({ subscriptionId }) => {
                         marginTop: '1rem',
                         padding: '0 2px'
                       }}>
-                      <button
-                        type='submit'
-                        disabled={submitting}
-                        style={{
-                          backgroundColor: '#04AA6D',
-                          border: 'none',
-                          color: 'white',
-                          padding: '10px',
-                          width: 'fit-content',
-                          textAlign: 'center',
-                          textDecoration: 'none',
-                          display: 'inline-block',
-                          fontSize: '16px',
-                          margin: '4px 2px',
-                          cursor: 'pointer',
-                          borderRadius: '12px'
-                        }}>
-                        Checkout
-                      </button>
+                      {agree && (
+                        <button
+                          type='submit'
+                          disabled={submitting}
+                          style={{
+                            backgroundColor: '#04AA6D',
+                            border: 'none',
+                            color: 'white',
+                            padding: '10px',
+                            width: 'fit-content',
+                            textAlign: 'center',
+                            textDecoration: 'none',
+                            display: 'inline-block',
+                            fontSize: '16px',
+                            margin: '4px 2px',
+                            cursor: 'pointer',
+                            borderRadius: '12px'
+                          }}>
+                          Checkout
+                        </button>
+                      )}
                       <button
                         type='button'
                         onClick={form.reset}

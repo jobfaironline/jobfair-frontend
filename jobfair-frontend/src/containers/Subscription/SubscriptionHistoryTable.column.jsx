@@ -19,6 +19,14 @@ const SubscriptionHistoryTableColumn = () => [
       children: text
     })
   },
+  // {
+  //   title: 'Status',
+  //   dataIndex: 'status',
+  //   key: 'status',
+  //   render: (value) => ({
+  //     children: value ? <Tag>{value}</Tag> : <Tag>ACTIVE</Tag>
+  //   })
+  // },
   {
     title: 'Start date',
     dataIndex: 'currentPeriodStart',

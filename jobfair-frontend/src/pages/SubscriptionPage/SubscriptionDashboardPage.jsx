@@ -89,7 +89,7 @@ const SubscriptionDashboardPage = () => (
       <Title level={2}>Pick your favorite pack</Title>
       <Title level={3}>Explore all the features of JobHub with just 1 purchase!</Title>
     </div>
-    <div style={{ marginLeft: '8rem', marginBottom: '2rem' }}>
+    <div>
       <SubscriptionListContainer />
     </div>
   </PageLayoutWrapper>

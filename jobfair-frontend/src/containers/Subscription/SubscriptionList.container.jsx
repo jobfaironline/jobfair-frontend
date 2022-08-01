@@ -1,9 +1,13 @@
 import { Button, Card, Descriptions, Divider, List, Tag, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
+import { convertToUTCString } from '../../utils/common';
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { generatePath, useHistory } from 'react-router-dom';
-import { getAllSubscriptionAPI } from '../../services/jobhub-api/SubscriptionControllerService';
+import {
+  getAllSubscriptionAPI,
+  getCurrentSubscriptionAPI
+} from '../../services/jobhub-api/SubscriptionControllerService';
 import React, { useEffect, useState } from 'react';
 
 const { Text, Title } = Typography;
@@ -11,12 +15,24 @@ const { Text, Title } = Typography;
 const SubscriptionListContainer = () => {
   const history = useHistory();
   const [subscriptionData, setSubscriptionData] = useState();
+  const [currentSubscription, setCurrentSubscription] = useState();
 
   const handleGetStarted = (subscriptionId) => {
     const url = generatePath(PATH_COMPANY_MANAGER.SUBSCRIPTION_DETAIL, {
       subscriptionId
     });
     history.push(url);
+  };
+
+  const getCurrentSubscription = async () => {
+    try {
+      const res = await getCurrentSubscriptionAPI();
+      setCurrentSubscription(res.data);
+    } catch (err) {
+      notification['info']({
+        message: 'You have no subscription yet'
+      });
+    }
   };
 
   const typeAndBenefitsMapper = (item) => {
@@ -139,6 +155,7 @@ const SubscriptionListContainer = () => {
 
   useEffect(async () => {
     try {
+      await getCurrentSubscription();
       const res = await getAllSubscriptionAPI();
       const result = res.data
         .map((item) => ({
@@ -159,67 +176,103 @@ const SubscriptionListContainer = () => {
     }
   }, []);
 
+  const currentSubscriptionWarning = (item) => {
+    if (!item) return;
+    return (
+      <Card
+        bodyStyle={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column'
+        }}>
+        <Typography.Title level={3} type='danger'>
+          Warning
+        </Typography.Title>
+        <Typography.Paragraph type='danger'>
+          You have to <a href={PATH_COMPANY_MANAGER.SUBSCRIPTION_HISTORY}>cancel your current subscription</a> to buy
+          the new one.
+        </Typography.Paragraph>
+        <Descriptions title='Your subscription detail' bordered size='small' style={{ textAlign: 'center' }}>
+          <Descriptions.Item label='Subscription Id'>{item.id}</Descriptions.Item>
+          <Descriptions.Item label='From date'>{convertToUTCString(item.currentPeriodStart)}</Descriptions.Item>
+          <Descriptions.Item label='To date'>{convertToUTCString(item.currentPeriodEnd)}</Descriptions.Item>
+        </Descriptions>
+      </Card>
+    );
+  };
+
   return (
-    <List
-      grid={{
-        gutter: 16 + 8 * 8, //16 + 8n
-        column: 3,
-        xs: 1,
-        sm: 1,
-        md: 1,
-        lg: 1,
-        xl: 3,
-        xxl: 3
-      }}
-      dataSource={subscriptionData}
-      renderItem={(item) => (
-        <Card
-          style={{
-            boxShadow: '5px 8px 24px 5px rgba(208, 216, 243, 0.6)',
-            marginBottom: '2rem',
-            marginTop: '2rem',
-            width: '75%'
-          }}
-          headStyle={{ backgroundColor: 'white', border: 0 }}
-          bodyStyle={{ backgroundColor: 'white', border: 0 }}
-          actions={[
-            <div style={{ height: 30, marginBottom: '1rem' }} onClick={() => handleGetStarted(item.id)}>
-              <Button type='primary' size='large' shape='round'>
-                Get started
-              </Button>
-            </div>
-          ]}>
-          <Descriptions title={<Title level={3}>{item.title}</Title>} column={1}>
-            <Descriptions.Item>
-              <Tag color={'blue'}>One-time purchase</Tag>
-            </Descriptions.Item>
-            <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
-              <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>{item.description}</p>
-            </Descriptions.Item>
-            <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
-              <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>${item.price}.00</p>
-            </Descriptions.Item>
-            <Descriptions.Item>
-              <Divider />
-            </Descriptions.Item>
-            {item.benefits.map((benefit) => (
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ marginTop: '1rem' }}>
-                  <FontAwesomeIcon
-                    icon={benefit.status ? faCircleCheck : faCircleXmark}
-                    color={benefit.status ? 'green' : 'red'}
-                    size={'2x'}
-                  />
-                </div>
-                <Text strong style={{ marginLeft: '1rem' }}>
-                  {benefit.name}
-                </Text>
-              </div>
-            ))}
-          </Descriptions>
-        </Card>
+    <>
+      {currentSubscriptionWarning(currentSubscription)}
+      {!currentSubscription && (
+        <div style={{ marginLeft: '9rem', marginTop: '2rem' }}>
+          <List
+            grid={{
+              gutter: 16 + 8 * 8, //16 + 8n
+              column: 3,
+              xs: 1,
+              sm: 1,
+              md: 1,
+              lg: 1,
+              xl: 3,
+              xxl: 3
+            }}
+            dataSource={subscriptionData}
+            renderItem={(item) => (
+              <Card
+                style={{
+                  boxShadow: '5px 8px 24px 5px rgba(208, 216, 243, 0.6)',
+                  marginBottom: '2rem',
+                  marginTop: '2rem',
+                  width: '75%'
+                }}
+                headStyle={{ backgroundColor: 'white', border: 0 }}
+                bodyStyle={{ backgroundColor: 'white', border: 0 }}
+                actions={[
+                  <div style={{ height: 30, marginBottom: '1rem' }} onClick={() => handleGetStarted(item.id)}>
+                    {!currentSubscription ? (
+                      <Button type='primary' size='large' shape='round'>
+                        Get started
+                      </Button>
+                    ) : null}
+                  </div>
+                ]}>
+                <Descriptions title={<Title level={3}>{item.title}</Title>} column={1}>
+                  <Descriptions.Item>
+                    <Tag color={'blue'}>One-time purchase</Tag>
+                  </Descriptions.Item>
+                  <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
+                    <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>{item.description}</p>
+                  </Descriptions.Item>
+                  <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
+                    <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>${item.price}.00</p>
+                  </Descriptions.Item>
+                  <Descriptions.Item>
+                    <Divider />
+                  </Descriptions.Item>
+                  {item.benefits.map((benefit) => (
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <div style={{ marginTop: '1rem' }}>
+                        <FontAwesomeIcon
+                          icon={benefit.status ? faCircleCheck : faCircleXmark}
+                          color={benefit.status ? 'green' : 'red'}
+                          size={'2x'}
+                        />
+                      </div>
+                      <Text strong style={{ marginLeft: '1rem' }}>
+                        {benefit.name}
+                      </Text>
+                    </div>
+                  ))}
+                </Descriptions>
+              </Card>
+            )}
+          />
+        </div>
       )}
-    />
+    </>
   );
 };
 
