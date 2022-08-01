@@ -5,10 +5,10 @@ import { convertToUTCString } from '../../utils/common';
 import { faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { generatePath, useHistory } from 'react-router-dom';
 import {
-  getAllSubscriptionAPI,
+  getAllSubscriptionPlanAPI,
   getCurrentSubscriptionAPI
 } from '../../services/jobhub-api/SubscriptionControllerService';
-import React, { useEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 
 const { Text, Title } = Typography;
 
@@ -153,10 +153,10 @@ const SubscriptionListContainer = () => {
     }
   };
 
-  useEffect(async () => {
+  const fetchData = async () => {
     try {
       await getCurrentSubscription();
-      const res = await getAllSubscriptionAPI();
+      const res = await getAllSubscriptionPlanAPI();
       const result = res.data
         .map((item) => ({
           id: item.id,
@@ -174,6 +174,10 @@ const SubscriptionListContainer = () => {
         duration: 2
       });
     }
+  };
+
+  useLayoutEffect(() => {
+    fetchData();
   }, []);
 
   const currentSubscriptionWarning = (item) => {
