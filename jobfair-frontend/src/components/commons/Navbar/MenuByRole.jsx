@@ -62,6 +62,10 @@ export const AdminMenu = [
   {
     title: 'Job fair list',
     link: PATH_ADMIN.JOB_FAIR_LIST_PAGE
+  },
+  {
+    title: 'Manage subscription plans',
+    link: PATH_ADMIN.SUBSCRIPTION_PLAN
   }
 ];
 

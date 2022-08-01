@@ -11,6 +11,7 @@ import { selectWebSocket } from '../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import AboutApplicationPage from '../pages/AboutApplicationPage';
 import AccountProfilePage from '../pages/ProfilePage/Account/AccountProfilePage';
+import AdminRouter from './components/AdminRouter';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
 import AssignTaskPage from '../pages/AssignTaskPage/AssignTaskPage';
 import AttendantAttemptTestPage from '../pages/AttendantAttemptTestPage/AttendantAttemptTestPage';
@@ -58,6 +59,7 @@ import ResumeManagementPage from '../pages/ResumeManagementPage/ResumeManagement
 import SubscriptionDashboardPage from '../pages/SubscriptionPage/SubscriptionDashboardPage';
 import SubscriptionDetailPage from '../pages/SubscriptionPage/SubscriptionDetailPage';
 import SubscriptionHistoryPage from '../pages/SubscriptionPage/SubscriptionHistoryPage';
+import SubscriptionPlanManagementPage from '../pages/SubscriptionPlan/SubscriptionPlanManagementPage';
 
 const excludeFooterPages = [
   PATH.BOOTH_PAGE,
@@ -156,6 +158,12 @@ const AppRouter = () => {
             key={PATH.FORGOT_PASSWORD_PAGE}
             component={() => <ForgotPasswordPage />}
             path={PATH.FORGOT_PASSWORD_PAGE}
+            exact
+          />
+          <AdminRouter
+            key={PATH_ADMIN.SUBSCRIPTION_PLAN}
+            component={SubscriptionPlanManagementPage}
+            path={PATH_ADMIN.SUBSCRIPTION_PLAN}
             exact
           />
           <AttendantRouter
