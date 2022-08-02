@@ -1,5 +1,5 @@
 import { Badge, Divider, Drawer, Typography } from 'antd';
-import { DateFormat } from '../../../constants/ApplicationConst';
+import { DateFormat, MinuteFormat } from '../../../constants/ApplicationConst';
 import { INTERVIEW_SCHEDULE_STATUS } from '../../../constants/InterviewScheduleConst';
 import { convertEnumToString } from '../../../utils/common';
 import React from 'react';
@@ -11,7 +11,7 @@ const generateContent = (item) => (
   <div>
     <Text strong>{item.title}</Text>
     <br />
-    <Text>{`(${moment(item.timeStart).format('hh:mm')}-${moment(item.timeEnd).format('hh:mm')})`}</Text>
+    <Text>{`(${moment(item.timeStart).format(MinuteFormat)}-${moment(item.timeEnd).format(MinuteFormat)})`}</Text>
   </div>
 );
 

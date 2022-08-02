@@ -1,10 +1,12 @@
 import './CompactResumeDetail.style.scss';
 import { Avatar, Button, Card, Descriptions, Modal } from 'antd';
 import { CountryConst, QualificationConst } from '../../../constants/AttendantConstants';
+import { Provider } from 'react-redux';
 import { ResumeDetailComponent } from '../Resume/ResumeDetail.component';
 import { UserOutlined } from '@ant-design/icons';
 import { convertEnumToString } from '../../../utils/common';
 import React from 'react';
+import store from '../../../redux-flow';
 
 const mapperResumeDetail = (resume) => {
   const result =
@@ -44,13 +46,18 @@ export const CompactResumeDetail = (props) => {
   const { data } = props;
   const handleOpenResume = () => {
     const resumeData = mapperResumeDetail(data);
+    /* https://github.com/ant-design/ant-design/issues/6321 */
     Modal.info({
       bodyStyle: { padding: '1rem' },
       title: 'Resume detail',
       width: '90rem',
       closable: true,
       maskClosable: true,
-      content: <ResumeDetailComponent data={resumeData} isForCompany={true} />
+      content: (
+        <Provider store={store}>
+          <ResumeDetailComponent data={resumeData} isForCompany={true} />
+        </Provider>
+      )
     });
   };
 
