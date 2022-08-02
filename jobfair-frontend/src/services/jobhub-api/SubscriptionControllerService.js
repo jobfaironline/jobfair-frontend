@@ -34,6 +34,25 @@ export const createSubscriptionPlan = (body) => CallAPI(SUBSCRIPTION_PLAN_ENDPOI
 export const updateSubscriptionPlan = (body) => CallAPI(SUBSCRIPTION_PLAN_ENDPOINT, 'PUT', body);
 //---------------------
 export const purchaseSubscriptionAPI = (body) => CallAPI(PURCHASE_SUBSCRIPTION_END_POINT, 'POST', body);
+export const getAllSubscriptionForAdmin = (
+  companyName = '',
+  direction = 'ASC',
+  offset = '0',
+  pageSize = '10',
+  sortBy = 'currentPeriodStart'
+) =>
+  CallAPI(
+    `${GET_ALL_SUBSCRIPTION_PLAN_END_POINT}/admin`,
+    'GET',
+    {},
+    {
+      companyName,
+      direction,
+      offset,
+      pageSize,
+      sortBy
+    }
+  );
 export const getAllCompanySubscriptionsAPI = (
   direction = 'ASC',
   offset = 0,

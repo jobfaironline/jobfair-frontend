@@ -15,28 +15,34 @@ const PaymentReportTableColumn = () => [
   },
   {
     title: 'Amount',
-    dataIndex: 'amount',
-    key: 'amount'
+    dataIndex: 'price',
+    key: 'price',
+    render: (text) => ({
+      children: `$${text}.00`
+    })
   },
   {
-    title: 'Description',
+    title: 'Start date',
+    dataIndex: 'currentPeriodStart',
+    key: 'currentPeriodEnd',
+    render: (text) => ({
+      children: convertToUTCString(text)
+    })
+  },
+  {
+    title: 'End date',
     dataIndex: 'currentPeriodEnd',
-    key: 'currentPeriodEnd'
+    key: 'currentPeriodEnd',
+    render: (value) => ({
+      children: convertToUTCString(value)
+    })
   },
   {
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
     render: (value) => ({
-      children: value ? <Tag>{value}</Tag> : <Tag>ACTIVE</Tag>
-    })
-  },
-  {
-    title: 'Date',
-    dataIndex: 'date',
-    key: 'date',
-    render: (value) => ({
-      children: convertToUTCString(value)
+      children: value ? <Tag>{value}</Tag> : <Tag color={'green'}>ACTIVE</Tag>
     })
   }
 ];

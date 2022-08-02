@@ -1,20 +1,20 @@
-import { Button, Card, Col, PageHeader, Row, Tooltip, Typography } from 'antd';
+import { Button, Card, Input, PageHeader, Tooltip, Typography } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { GenericDonutChart } from '../../components/commons/Chart/GenericDonutChart.component';
-import { GenericPieChart } from '../../components/commons/Chart/GenericPieChart.component';
 import { PATH_ADMIN } from '../../constants/Paths/Path';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { generatePath } from 'react-router';
+import { getAllSubscriptionForAdmin, getInvoiceAPI } from '../../services/jobhub-api/SubscriptionControllerService';
 import { useHistory } from 'react-router-dom';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import PaymentReportTableColumn from './PaymentReportTable.column';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const fakeData = [];
-
+const { Search } = Input;
 const PaymentReportContainer = () => {
   const history = useHistory();
 
+  const [data, setData] = useState();
+  const [searchValue, setSearchValue] = useState('');
   //pagination
   // eslint-disable-next-line no-unused-vars
   const [totalRecord, setTotalRecord] = useState(0);
@@ -24,7 +24,25 @@ const PaymentReportContainer = () => {
   const [pageSize, setPageSize] = useState(10);
   //
 
-  const handleViewDetail = () => {};
+  const handleViewDetail = async (id) => {
+    const res = await getInvoiceAPI(id);
+    return window.open(res.data);
+  };
+
+  const fetchData = async () => {
+    const res = await getAllSubscriptionForAdmin(searchValue, 'ASC', 0, pageSize, 'currentPeriodStart');
+    setData(
+      res.data.content.map((item, index) => ({
+        no: index + 1,
+        ...item
+      }))
+    );
+    setTotalRecord(res.data.totalElements);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [currentPage, pageSize, searchValue]);
 
   const handlePageChange = (page, pageSize) => {
     if (page > 0) setCurrentPage(page - 1);
@@ -33,7 +51,7 @@ const PaymentReportContainer = () => {
   };
 
   const tableProps = {
-    tableData: fakeData,
+    tableData: data,
     tableColumns: PaymentReportTableColumn,
     extra: [
       {
@@ -55,6 +73,11 @@ const PaymentReportContainer = () => {
       totalRecord
     }
   };
+
+  const handleOnSearch = (values) => {
+    setSearchValue(values);
+  };
+
   return (
     <div style={{ marginBottom: '2rem' }}>
       <PageHeader
@@ -64,23 +87,26 @@ const PaymentReportContainer = () => {
         }}
         title={
           <div style={{ width: '20vw', paddingBottom: '0.5rem', borderBottom: '1.5px solid #00000026' }}>
-            Payments report: <span style={{ fontWeight: 400 }}>ABC</span>
+            Payments report
           </div>
         }
       />
-      <Card style={{ borderRadius: '10px', height: '100%' }}>
-        <Row gutter={20} style={{ marginTop: '1rem' }}>
-          <Col xs={24} xxl={12}>
-            <div>From ... To ..</div>
-            <GenericPieChart data={[]} config={{ color: 'blue' }} title={'Total Revenue'} />
-          </Col>
-          <Col xs={24} xxl={12}>
-            <GenericDonutChart data={[]} config={{ color: 'blue' }} title={'CV matching ratio'} />
-          </Col>
-        </Row>
-      </Card>
+      {/*<Card style={{ borderRadius: '10px', height: '100%' }}>*/}
+      {/*  <Row gutter={20} style={{ marginTop: '1rem' }}>*/}
+      {/*    <Col xs={24} xxl={12}>*/}
+      {/*      <div>From ... To ..</div>*/}
+      {/*      <GenericPieChart data={[]} config={{ color: 'blue' }} title={'Total Revenue'} />*/}
+      {/*    </Col>*/}
+      {/*    <Col xs={24} xxl={12}>*/}
+      {/*      <GenericDonutChart data={[]} config={{ color: 'blue' }} title={'CV matching ratio'} />*/}
+      {/*    </Col>*/}
+      {/*  </Row>*/}
+      {/*</Card>*/}
       <Card style={{ borderRadius: '10px', height: '100%', marginTop: '1rem' }}>
-        <Typography.Title level={3}>Orders report</Typography.Title>
+        <Typography.Title level={3}>Payments report</Typography.Title>
+        <div className={'search-filter-container'}>
+          <Search placeholder='Search employee' className={'search-bar'} onSearch={handleOnSearch} />
+        </div>
         <CommonTableContainer {...tableProps} />
       </Card>
     </div>
