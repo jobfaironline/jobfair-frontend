@@ -1,3 +1,6 @@
+import { Tag } from 'antd';
+import { getTimeDifferenceInDate } from '../../utils/common';
+
 const SubscriptionPlanTableColumn = () => [
   {
     title: 'No',
@@ -35,6 +38,13 @@ const SubscriptionPlanTableColumn = () => [
     render: (value) => ({
       children: `$${value}.00`
     })
+  },
+  {
+    title: 'Valid time',
+    dataIndex: 'validPeriod',
+    render: (value) => (
+      <Tag color={'green'}>{Math.round(getTimeDifferenceInDate(value, new Date().getTime()))} days</Tag>
+    )
   }
 ];
 

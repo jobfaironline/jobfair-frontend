@@ -44,6 +44,8 @@ export const convertToDateString = (dateValue) => {
   }
 };
 
+export const getTimeDifferenceInDate = (date1, date2) => (date1 - date2) / (1000 * 3600 * 24);
+
 export const convertToDateValue = (dateString) => Date.parse(dateString);
 
 export const convertToMoment = (data) => {
@@ -63,6 +65,8 @@ export const handleConvertRangePicker = (data) => {
   }));
   return result;
 };
+
+export const convertMomentToMilliseconds = (moment) => convertToDateValue(moment.format());
 
 //convert enum status to string
 export const convertEnumToString = (data) => {

@@ -17,13 +17,21 @@ const SubscriptionListContainer = () => {
   const [subscriptionData, setSubscriptionData] = useState();
   const [currentSubscription, setCurrentSubscription] = useState();
 
+  //pagination
+  // eslint-disable-next-line no-unused-vars
+  const [totalRecord, setTotalRecord] = useState(0);
+  // eslint-disable-next-line no-unused-vars
+  const [currentPage, setCurrentPage] = useState(0);
+  // eslint-disable-next-line no-unused-vars
+  const [pageSize, setPageSize] = useState(10);
+  //
+
   const handleGetStarted = (subscriptionId) => {
     const url = generatePath(PATH_COMPANY_MANAGER.SUBSCRIPTION_DETAIL, {
       subscriptionId
     });
     history.push(url);
   };
-
   const getCurrentSubscription = async () => {
     try {
       const res = await getCurrentSubscriptionAPI();
@@ -156,8 +164,8 @@ const SubscriptionListContainer = () => {
   const fetchData = async () => {
     try {
       await getCurrentSubscription();
-      const res = await getAllSubscriptionPlanAPI();
-      const result = res.data
+      const res = await getAllSubscriptionPlanAPI('ASC', '', '0', pageSize, 'name');
+      const result = res.data.content
         .map((item) => ({
           id: item.id,
           title: item.name,
@@ -167,6 +175,7 @@ const SubscriptionListContainer = () => {
           benefits: typeAndBenefitsMapper(item).benefits
         }))
         .sort((a, b) => a.price - b.price);
+      setTotalRecord(res.data.totalElements);
       setSubscriptionData(result);
     } catch (error) {
       notification['error']({
@@ -178,7 +187,7 @@ const SubscriptionListContainer = () => {
 
   useLayoutEffect(() => {
     fetchData();
-  }, []);
+  }, [currentPage, pageSize]);
 
   const currentSubscriptionWarning = (item) => {
     if (!item) return;

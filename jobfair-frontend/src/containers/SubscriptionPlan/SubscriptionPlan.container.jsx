@@ -1,35 +1,20 @@
-import { Button, Checkbox, Form, Input, Modal, Tooltip, Typography, notification } from 'antd';
+import { Button, DatePicker, Form, Input, InputNumber, Modal, Tooltip, Typography, notification } from 'antd';
+import { DateFormat } from '../../constants/ApplicationConst';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { cancelSubscriptionAPI, getInvoiceAPI } from '../../services/jobhub-api/SubscriptionControllerService';
-import { faEdit, faEye } from '@fortawesome/free-solid-svg-icons';
+import { SubscriptionPlanValidation } from '../../validate/SubscriptionPlanValidation';
+import { convertMomentToMilliseconds, convertToDateString } from '../../utils/common';
+import {
+  createSubscriptionPlan,
+  getAllSubscriptionPlanAPI,
+  getSubscriptionPlanById,
+  updateSubscriptionPlan
+} from '../../services/jobhub-api/SubscriptionControllerService';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import React, { useEffect, useState } from 'react';
 import SubscriptionPlanTableColumn from './SubscriptionPlanTable.column';
 import TextArea from 'antd/es/input/TextArea';
-
-const fakeData = [
-  {
-    no: 1,
-    id: 'ID001',
-    name: 'Basic pack',
-    description: 'Basic pack',
-    price: '600'
-  },
-  {
-    no: 2,
-    id: 'ID002',
-    name: 'Standard pack',
-    description: 'Standard pack',
-    price: '800'
-  },
-  {
-    no: 3,
-    id: 'ID003',
-    name: 'Premium pack',
-    description: 'Premium pack',
-    price: '1000'
-  }
-];
+import moment from 'moment';
 
 const { Title } = Typography;
 const { Search } = Input;
@@ -37,10 +22,10 @@ const { Search } = Input;
 const SubscriptionPlanContainer = () => {
   const [data, setData] = useState();
   const [visible, setVisible] = useState(false);
-  const [isAgree, setIsAgree] = useState(false);
-  const [forceRender, setForceRender] = useState(true);
+  const [isEditable, setIsEditable] = useState(false);
   const [createModal, setCreateModal] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [item, setItem] = useState({});
 
   const [form] = Form.useForm();
 
@@ -53,6 +38,24 @@ const SubscriptionPlanContainer = () => {
   const [pageSize, setPageSize] = useState(10);
   //
 
+  const range = (start, end) => {
+    const result = [];
+
+    for (let i = start; i < end; i++) result.push(i);
+
+    return result;
+  };
+
+  const disabledDate = (current) =>
+    // Can not select days before today and today
+    current && current < moment().endOf('day');
+
+  const disabledDateTime = () => ({
+    disabledHours: () => range(0, 24).splice(4, 20),
+    disabledMinutes: () => range(30, 60),
+    disabledSeconds: () => [55, 56]
+  });
+
   const CreateSubscriptionForm = () => (
     <Form
       form={form}
@@ -64,67 +67,103 @@ const SubscriptionPlanContainer = () => {
       wrapperCol={21}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Form.Item name='name' label='Name' rules={[]} style={{ marginRight: '1rem', flex: 1, width: '40%' }}>
+          <Form.Item
+            name='name'
+            label='Name'
+            rules={SubscriptionPlanValidation.name}
+            style={{ marginRight: '1rem', flex: 1, width: '40%' }}>
             <Input placeholder='Enter subscription name' />
           </Form.Item>
-          <Form.Item name='price' label='Price' rules={[]} style={{ flex: 1, width: '30%' }}>
-            <Input placeholder='Enter price' />
+          <Form.Item
+            name='price'
+            label='Price'
+            rules={SubscriptionPlanValidation.price}
+            style={{ flex: 1, width: '30%' }}>
+            <InputNumber addonAfter='$' min={1} max={10000} />
           </Form.Item>
         </div>
-        <Form.Item
-          name='description'
-          label='Description'
-          rules={[]}
-          style={{ marginRight: '1rem', flex: 1, width: '50%' }}>
-          <TextArea showCount maxLength={300} autoSize={{ minRows: 3 }} />
-        </Form.Item>
-        <Form.Item>
-          <Button type='primary' htmlType='submit'>
-            Create subscription
-          </Button>
-        </Form.Item>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Form.Item label='Valid date' name='validPeriod' rules={SubscriptionPlanValidation.validPeriod}>
+            <DatePicker format={DateFormat} disabledDate={disabledDate} disabledTime={disabledDateTime} />
+          </Form.Item>
+          <Form.Item
+            name='description'
+            label='Description'
+            rules={SubscriptionPlanValidation.description}
+            style={{ marginLeft: '1rem', flex: 1, width: '50%' }}>
+            <TextArea showCount maxLength={300} autoSize={{ minRows: 3 }} />
+          </Form.Item>
+        </div>
+        {isEditable ? (
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Form.Item>
+              <Button type='primary' onClick={() => handleEditSubscription(form.getFieldsValue(true))}>
+                Edit
+              </Button>
+            </Form.Item>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Form.Item>
+              <Button type='primary' htmlType='submit'>
+                Create subscription
+              </Button>
+            </Form.Item>
+          </div>
+        )}
       </div>
     </Form>
   );
 
-  const handleCreateSubscription = (values) => {
-    console.log(values);
+  const handleCreateSubscription = async (values) => {
+    try {
+      const body = {
+        ...values,
+        validPeriod: convertMomentToMilliseconds(values.validPeriod)
+      };
+      const res = await createSubscriptionPlan(body);
+      if (res.status === 200) {
+        setCreateModal(false);
+        form.resetFields();
+        notification['success']({
+          message: 'Create new subscription plan successfully!'
+        });
+        fetchData();
+      }
+    } catch (err) {
+      notification['error']({
+        message: 'Create new subscription plan failed!'
+      });
+    }
   };
 
   const fetchData = async () => {
     try {
-      //   const res = await getAllCompanySubscriptionsAPI('ASC', 0, pageSize);
-      //   if (res.status === 204) {
-      //     notification['info']({
-      //       message: 'The subscription history is empty'
-      //     });
-      //   }
-      //   if (res.status === 404) {
-      //     notification['error']({
-      //       message: 'Error when get subscription history'
-      //     });
-      //   }
-      //   setTotalRecord(res.data.totalElements);
-      //   const result = res.data.content.map((item, index) => ({
-      //     no: index + 1,
-      //     id: item.id,
-      //     currentPeriodStart: item.currentPeriodStart,
-      //     currentPeriodEnd: item.currentPeriodEnd,
-      //     price: item.price
-      //   }));
-      setData(fakeData);
+      const res = await getAllSubscriptionPlanAPI('ASC', searchValue, 0, pageSize, 'name');
+      res.data.content.sort((a, b) => a.price - b.price);
+      const result = res.data.content.map((item, index) => ({
+        no: index,
+        ...item
+      }));
+
+      setData(result);
     } catch (err) {
-      //
+      notification['error']({
+        message: 'Fetch subscription plans error'
+      });
     }
   };
 
   useEffect(async () => {
     await fetchData();
-  }, [currentPage, pageSize, forceRender, searchValue]);
+  }, [currentPage, pageSize, searchValue]);
 
   const handleViewDetail = async (id) => {
-    const res = await getInvoiceAPI(id);
-    return window.open(res.data);
+    setIsEditable(true);
+    const res = await getSubscriptionPlanById(id);
+    res.data['validPeriod'] = moment(convertToDateString(item.validPeriod));
+    setItem(res.data);
+    setVisible(true);
   };
 
   const handlePageChange = (page, pageSize) => {
@@ -137,19 +176,22 @@ const SubscriptionPlanContainer = () => {
     setVisible(false);
   };
 
-  const handleEditSubscription = async () => {
-    const res = await cancelSubscriptionAPI();
-    notification['success']({
-      message: res.data,
-      duration: 2
-    });
-    setVisible(false);
-    await fetchData();
-    setForceRender(false);
-  };
-
-  const handleOpenModalEdit = (id) => {
-    setVisible(true);
+  const handleEditSubscription = async (values) => {
+    const body = {
+      description: values.description,
+      id: values.id,
+      name: values.name,
+      price: values.price,
+      validPeriod: convertMomentToMilliseconds(values.validPeriod)
+    };
+    const res = await updateSubscriptionPlan(body);
+    if (res.status === 200) {
+      notification['success']({
+        message: 'Update subscription plan successfully!'
+      });
+      setVisible(false);
+      fetchData();
+    }
   };
 
   const handleOnSearch = (value) => {
@@ -170,13 +212,6 @@ const SubscriptionPlanContainer = () => {
                 <FontAwesomeIcon icon={faEye} />
               </Button>
             </Tooltip>
-            {forceRender ? (
-              <Tooltip title='Edit'>
-                <Button type='link' onClick={() => handleOpenModalEdit(record.id)}>
-                  <FontAwesomeIcon icon={faEdit} />
-                </Button>
-              </Tooltip>
-            ) : null}
           </>
         )
       }
@@ -186,6 +221,8 @@ const SubscriptionPlanContainer = () => {
       totalRecord
     }
   };
+
+  form.setFieldsValue(item);
   return (
     <div style={{ marginTop: '5rem' }}>
       <div style={{ display: 'flex', flexDirection: 'row', padding: '0 2px', justifyContent: 'space-between' }}>
@@ -208,21 +245,13 @@ const SubscriptionPlanContainer = () => {
           onCancel={() => setCreateModal(false)}
           title={'Create subscription plan'}
           footer={null}>
-          <CreateSubscriptionForm />
+          {item}
+          {/*<CreateSubscriptionForm />*/}
         </Modal>
       )}
       {visible ? (
         <Modal visible={visible} onCancel={handleCloseModal} title={'Edit subscription plan'} footer={null}>
-          <Checkbox onChange={(e) => setIsAgree(e.target.checked)}>
-            <span>I confirm that all information above are correct.</span>
-          </Checkbox>
-          {isAgree && (
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button type='primary' onClick={handleEditSubscription}>
-                Edit
-              </Button>
-            </div>
-          )}
+          <CreateSubscriptionForm />
         </Modal>
       ) : null}
       <CommonTableContainer {...tableProps} />

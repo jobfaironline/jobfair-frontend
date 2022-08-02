@@ -4,13 +4,35 @@ import {
   GET_ALL_SUBSCRIPTION_PLAN_END_POINT,
   GET_CURRENT_SUBSCRIPTION,
   GET_INVOICE,
-  PURCHASE_SUBSCRIPTION_END_POINT
+  PURCHASE_SUBSCRIPTION_END_POINT,
+  SUBSCRIPTION_PLAN_ENDPOINT
 } from '../../constants/Endpoints/jobhub-api/SubscriptionControllerEndpoint';
 import { CallAPI } from '../axiosBase';
 
-export const getAllSubscriptionPlanAPI = () => CallAPI(GET_ALL_SUBSCRIPTION_PLAN_END_POINT, 'GET');
+//Subscription plan APIs
+export const getAllSubscriptionPlanAPI = (
+  direction = 'ASC',
+  name = '',
+  offset = '0',
+  pageSize = '10',
+  sortBy = 'name'
+) =>
+  CallAPI(
+    GET_ALL_SUBSCRIPTION_PLAN_END_POINT,
+    'GET',
+    {},
+    {
+      direction,
+      name,
+      offset,
+      pageSize,
+      sortBy
+    }
+  );
 export const getSubscriptionPlanById = (id) => CallAPI(`${GET_ALL_SUBSCRIPTION_PLAN_END_POINT}/${id}`, 'GET');
-
+export const createSubscriptionPlan = (body) => CallAPI(SUBSCRIPTION_PLAN_ENDPOINT, 'POST', body);
+export const updateSubscriptionPlan = (body) => CallAPI(SUBSCRIPTION_PLAN_ENDPOINT, 'PUT', body);
+//---------------------
 export const purchaseSubscriptionAPI = (body) => CallAPI(PURCHASE_SUBSCRIPTION_END_POINT, 'POST', body);
 export const getAllCompanySubscriptionsAPI = (
   direction = 'ASC',
