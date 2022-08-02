@@ -66,6 +66,10 @@ export const AdminMenu = [
   {
     title: 'Manage subscription plans',
     link: PATH_ADMIN.SUBSCRIPTION_PLAN
+  },
+  {
+    title: 'Payments report',
+    link: PATH_ADMIN.PAYMENT_REPORT
   }
 ];
 

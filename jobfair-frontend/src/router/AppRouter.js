@@ -44,6 +44,7 @@ import JobFairTemplatePage from '../pages/JobFairTemplatePage/JobFairTemplatePag
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavigationBar from '../components/commons/Navbar/Navbar';
 import OrganizeJobFairPage from '../pages/OrganizeJobFairPage/OrganizeJobFairPage';
+import PaymentReportPage from '../pages/PaymentReport/PaymentReportPage';
 import PublicRouter from './components/PublicRouter';
 import PublicizedBoothPage from '../pages/PublicizedBoothPage/PublicizedBoothPage';
 import QuestionBankPage from '../pages/QuestionBankPage/QuestionBankPage';
@@ -162,8 +163,14 @@ const AppRouter = () => {
           />
           <AdminRouter
             key={PATH_ADMIN.SUBSCRIPTION_PLAN}
-            component={SubscriptionPlanManagementPage}
+            component={() => <SubscriptionPlanManagementPage />}
             path={PATH_ADMIN.SUBSCRIPTION_PLAN}
+            exact
+          />
+          <AdminRouter
+            key={PATH_ADMIN.PAYMENT_REPORT}
+            component={() => <PaymentReportPage />}
+            path={PATH_ADMIN.PAYMENT_REPORT}
             exact
           />
           <AttendantRouter
