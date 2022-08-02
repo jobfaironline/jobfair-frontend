@@ -245,8 +245,7 @@ const SubscriptionPlanContainer = () => {
           onCancel={() => setCreateModal(false)}
           title={'Create subscription plan'}
           footer={null}>
-          {item}
-          {/*<CreateSubscriptionForm />*/}
+          <CreateSubscriptionForm />
         </Modal>
       )}
       {visible ? (

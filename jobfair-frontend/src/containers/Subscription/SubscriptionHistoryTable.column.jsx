@@ -5,6 +5,7 @@
 //   "cancelAt": null,
 //   "defaultPaymentMethod": null,
 //   "price": 800
+import { Tag } from 'antd';
 import { convertToUTCString } from '../../utils/common';
 
 const SubscriptionHistoryTableColumn = () => [
@@ -19,14 +20,16 @@ const SubscriptionHistoryTableColumn = () => [
       children: text
     })
   },
-  // {
-  //   title: 'Status',
-  //   dataIndex: 'status',
-  //   key: 'status',
-  //   render: (value) => ({
-  //     children: value ? <Tag>{value}</Tag> : <Tag>ACTIVE</Tag>
-  //   })
-  // },
+  {
+    title: 'Product name',
+    dataIndex: 'name',
+    key: 'name'
+  },
+  {
+    title: 'Product description',
+    dataIndex: 'description',
+    key: 'description'
+  },
   {
     title: 'Start date',
     dataIndex: 'currentPeriodStart',
@@ -49,6 +52,14 @@ const SubscriptionHistoryTableColumn = () => [
     key: 'price',
     render: (value) => ({
       children: `$${value}.00`
+    })
+  },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    key: 'status',
+    render: (value) => ({
+      children: value ? <Tag>{value}</Tag> : <Tag color={'green'}>ACTIVE</Tag>
     })
   }
 ];

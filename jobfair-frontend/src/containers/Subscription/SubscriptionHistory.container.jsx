@@ -1,14 +1,11 @@
-import { Button, Checkbox, Modal, Tooltip, Typography, notification } from 'antd';
+import { Button, Form, Modal, Tooltip, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  cancelSubscriptionAPI,
-  getAllCompanySubscriptionsAPI,
-  getInvoiceAPI
-} from '../../services/jobhub-api/SubscriptionControllerService';
-import { faCancel, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
+import { getAllCompanySubscriptionsAPI, getInvoiceAPI } from '../../services/jobhub-api/SubscriptionControllerService';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import React, { useEffect, useState } from 'react';
 import SubscriptionHistoryTableColumn from './SubscriptionHistoryTable.column';
+import TextArea from 'antd/es/input/TextArea';
 
 const { Title } = Typography;
 
@@ -16,7 +13,8 @@ const SubscriptionHistoryContainer = () => {
   const [data, setData] = useState();
   const [visible, setVisible] = useState(false);
   const [isAgree, setIsAgree] = useState(false);
-  const [forceRender, setForceRender] = useState(true);
+
+  const [form] = Form.useForm();
 
   //pagination
   // eslint-disable-next-line no-unused-vars
@@ -46,7 +44,10 @@ const SubscriptionHistoryContainer = () => {
         id: item.id,
         currentPeriodStart: item.currentPeriodStart,
         currentPeriodEnd: item.currentPeriodEnd,
-        price: item.price
+        price: item.price,
+        name: item.subscriptionPlan.name,
+        description: item.subscriptionPlan.description,
+        validPeriod: item.subscriptionPlan.validPeriod
       }));
       setData(result);
     } catch (err) {
@@ -56,7 +57,7 @@ const SubscriptionHistoryContainer = () => {
 
   useEffect(async () => {
     await fetchData();
-  }, [currentPage, pageSize, forceRender]);
+  }, [currentPage, pageSize]);
 
   const handleViewDetail = async (id) => {
     const res = await getInvoiceAPI(id);
@@ -69,24 +70,30 @@ const SubscriptionHistoryContainer = () => {
     setPageSize(pageSize);
   };
 
-  const handleCloseModal = () => {
+  const handleSendRequestToRefund = (values) => {};
+
+  const handleCloseRefundModal = () => {
     setVisible(false);
   };
 
-  const handleCancelSubscription = async () => {
-    const res = await cancelSubscriptionAPI();
-    notification['success']({
-      message: res.data,
-      duration: 2
-    });
-    setVisible(false);
-    await fetchData();
-    setForceRender(false);
-  };
-
-  const openCancelModal = () => {
+  const handleOpenRefundModal = () => {
     setVisible(true);
   };
+
+  const RequestToRefundForm = () => (
+    <Form
+      form={form}
+      name='register'
+      onFinish={handleSendRequestToRefund}
+      scrollToFirstError
+      layout='vertical'
+      labelCol={21}
+      wrapperCol={21}>
+      <Form.Item name={'reason'} rules={[]}>
+        <TextArea showCount min={1} max={400} />
+      </Form.Item>
+    </Form>
+  );
 
   const tableProps = {
     tableData: data,
@@ -102,13 +109,11 @@ const SubscriptionHistoryContainer = () => {
                 <FontAwesomeIcon icon={faEye} />
               </Button>
             </Tooltip>
-            {forceRender ? (
-              <Tooltip title='Cancel subscription'>
-                <Button type='link' onClick={openCancelModal}>
-                  <FontAwesomeIcon icon={faCancel} />
-                </Button>
-              </Tooltip>
-            ) : null}
+            <Tooltip title='Refund'>
+              <Button type='link' onClick={handleOpenRefundModal}>
+                <FontAwesomeIcon icon={faMoneyBill} />
+              </Button>
+            </Tooltip>
           </>
         )
       }
@@ -122,20 +127,13 @@ const SubscriptionHistoryContainer = () => {
     <div style={{ marginTop: '5rem' }}>
       <Title level={3}>My subscription history</Title>
       {visible ? (
-        <Modal visible={visible} onCancel={handleCloseModal} title={'Cancel subscription'} footer={null}>
-          <Checkbox onChange={(e) => setIsAgree(e.target.checked)}>
-            <span>
-              By clicking this checkbox, you confirm that there will be NO REFUND after cancelling this current
-              subscription
-            </span>
-          </Checkbox>
-          {isAgree && (
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button type='primary' onClick={handleCancelSubscription}>
-                Ok
-              </Button>
-            </div>
-          )}
+        <Modal
+          className={'add-employee-modal'}
+          visible={visible}
+          onCancel={() => setVisible(false)}
+          title={'Send request to refund'}
+          footer={null}>
+          <RequestToRefundForm />
         </Modal>
       ) : null}
       <CommonTableContainer {...tableProps} />

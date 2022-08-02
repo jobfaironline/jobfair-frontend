@@ -1,19 +1,26 @@
-import { Button, Card, Input, PageHeader, Tooltip, Typography } from 'antd';
+import { Button, Card, Col, Divider, Input, Modal, PageHeader, Row, Tag, Timeline, Tooltip, Typography } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PATH_ADMIN } from '../../constants/Paths/Path';
+import { convertToUTCString } from '../../utils/common';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { generatePath } from 'react-router';
-import { getAllSubscriptionForAdmin, getInvoiceAPI } from '../../services/jobhub-api/SubscriptionControllerService';
+import {
+  getAllSubscriptionForAdmin,
+  getSubscriptionById
+} from '../../services/jobhub-api/SubscriptionControllerService';
 import { useHistory } from 'react-router-dom';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import PaymentReportTableColumn from './PaymentReportTable.column';
 import React, { useEffect, useState } from 'react';
 
 const { Search } = Input;
+const { Text, Title } = Typography;
 const PaymentReportContainer = () => {
   const history = useHistory();
 
   const [data, setData] = useState();
+  const [visible, setVisible] = useState(false);
+  const [item, setItem] = useState({});
   const [searchValue, setSearchValue] = useState('');
   //pagination
   // eslint-disable-next-line no-unused-vars
@@ -24,9 +31,66 @@ const PaymentReportContainer = () => {
   const [pageSize, setPageSize] = useState(10);
   //
 
+  const SubscriptionDetailComponent = ({ item }) => (
+    <div>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Card>
+          <Title level={3}>Product information: </Title>
+          <Row align='left' gutter={[4, 24]}>
+            <Col span={8}>Total price: ${item.price}.00</Col>
+            <Col span={8}>Name: {item.subscriptionPlan.name}</Col>
+          </Row>
+          <Row align='left' gutter={[4, 24]}>
+            <Col span={8}>Description: {item.subscriptionPlan.description}</Col>
+            <Col span={8}>Valid period: {item.subscriptionPlan.validPeriod} months</Col>
+          </Row>
+          <Row align='left' gutter={[4, 24]}>
+            <div>
+              Status: <Tag color={item.status === 'ACTIVE' ? 'green' : 'red'}>{item.status} </Tag>
+            </div>
+          </Row>
+        </Card>
+        <Divider />
+        <Card>
+          <Title level={3}>Timeline: </Title>
+          <Timeline>
+            <Timeline.Item color='green'>Start at: {convertToUTCString(item.currentPeriodStart)}</Timeline.Item>
+          </Timeline>
+          <Timeline>
+            <Timeline.Item color='green'>End at: {convertToUTCString(item.currentPeriodEnd)}</Timeline.Item>
+          </Timeline>
+        </Card>
+        <Divider />
+        <Card>
+          <Title level={3}>Payment detail: </Title>
+          <Row align='left' gutter={[4, 24]}>
+            <Col span={8}>Payment Id: ${item.id}</Col>
+            <Col span={8}>
+              Status: <Tag>{item.status}</Tag>
+            </Col>
+          </Row>
+          <Row align='left' gutter={[4, 24]}>
+            <Col span={8}>Period start: {convertToUTCString(item.currentPeriodStart)}</Col>
+            <Col span={8}>Period end: {convertToUTCString(item.currentPeriodEnd)}</Col>
+          </Row>
+          <Row align='left' gutter={[4, 24]}>
+            <Col span={8}>Payment method: VISA</Col>
+            <Col span={8}>Period end: {item.cancelAt ? convertToUTCString(item.cancelAt) : 'Not cancel yet'}</Col>
+          </Row>
+          <Row align='left' gutter={[4, 24]}>
+            <Col span={8}>Refund status: {item.refundStatus ? item.refundStatus : 'Not refund yet'}</Col>
+            <Col span={8}>Refund reason: {item.refundReason ? item.refundReason : 'Empty'}</Col>
+          </Row>
+        </Card>
+        <Divider />
+      </div>
+    </div>
+  );
+
   const handleViewDetail = async (id) => {
-    const res = await getInvoiceAPI(id);
-    return window.open(res.data);
+    const res = await getSubscriptionById(id);
+    setVisible(true);
+    setItem(res.data);
   };
 
   const fetchData = async () => {
@@ -102,10 +166,21 @@ const PaymentReportContainer = () => {
       {/*    </Col>*/}
       {/*  </Row>*/}
       {/*</Card>*/}
+      {visible && (
+        <Modal
+          width='1000px'
+          title={'Subscription detail'}
+          visible={visible}
+          onCancel={() => setVisible(false)}
+          footer={null}
+          centered={true}>
+          <SubscriptionDetailComponent item={item} />
+        </Modal>
+      )}
       <Card style={{ borderRadius: '10px', height: '100%', marginTop: '1rem' }}>
         <Typography.Title level={3}>Payments report</Typography.Title>
         <div className={'search-filter-container'}>
-          <Search placeholder='Search employee' className={'search-bar'} onSearch={handleOnSearch} />
+          <Search placeholder='Search payment' className={'search-bar'} onSearch={handleOnSearch} />
         </div>
         <CommonTableContainer {...tableProps} />
       </Card>

@@ -2,7 +2,7 @@ import { Card, Checkbox, Modal, Typography } from 'antd';
 import { Field, Form } from 'react-final-form';
 import { PATH } from '../../../constants/Paths/Path';
 import { formatCVC, formatCreditCardNumber, formatExpirationDate, formatName } from './CardUtil';
-import { purchaseSubscriptionAPI } from '../../../services/jobhub-api/SubscriptionControllerService';
+import { getInvoiceAPI, purchaseSubscriptionAPI } from '../../../services/jobhub-api/SubscriptionControllerService';
 import { useHistory } from 'react-router-dom';
 import React, { useState } from 'react';
 import ResultFailedComponent from '../../commons/Result/ResultFailed.component';
@@ -26,7 +26,12 @@ const CheckoutFormComponent = ({ subscriptionId }) => {
     };
     try {
       const res = await purchaseSubscriptionAPI(body);
-      if (res.status === 200) history.push(PATH.RESULT_SUCCESS_PAGE);
+      const invoiceUrl = await getInvoiceAPI(res.data.id);
+      if (res.status === 200) {
+        history.push(PATH.RESULT_SUCCESS_PAGE, {
+          invoiceURL: invoiceUrl.data
+        });
+      }
     } catch (err) {
       Modal.error({
         title: 'Your card is invalid',
