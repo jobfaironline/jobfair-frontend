@@ -48,6 +48,7 @@ const SubscriptionHistoryContainer = () => {
         no: index + 1,
         name: item.subscriptionPlan.name,
         description: item.subscriptionPlan.description,
+        status: item.jobfairQuota === 0 ? 'OUT_OF_STOCK' : item.status,
         ...item
       }));
       setData(result);

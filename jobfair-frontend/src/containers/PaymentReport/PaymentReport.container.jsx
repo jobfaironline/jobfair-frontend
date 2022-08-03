@@ -65,7 +65,7 @@ const PaymentReportContainer = () => {
             <Col span={8}>
               Status: <Tag color={item.status === 'ACTIVE' ? 'green' : 'red'}>{item?.status} </Tag>
             </Col>
-            <Col span={8}>Job fair max quota: {item?.jobfairQuota} job fairs</Col>
+            <Col span={8}>Available job fair: {item?.jobfairQuota} left</Col>
           </Row>
         </Card>
         <Divider />
@@ -83,9 +83,6 @@ const PaymentReportContainer = () => {
           <Title level={3}>Payment detail: </Title>
           <Row align='left' gutter={[4, 24]}>
             <Col span={8}>Payment Id: ${item.id}</Col>
-            <Col span={8}>
-              Status: <Tag>{item?.status}</Tag>
-            </Col>
           </Row>
           <Row align='left' gutter={[4, 24]}>
             <Col span={8}>Period start: {convertToUTCString(item?.currentPeriodStart)}</Col>
@@ -212,17 +209,6 @@ const PaymentReportContainer = () => {
           </div>
         }
       />
-      {/*<Card style={{ borderRadius: '10px', height: '100%' }}>*/}
-      {/*  <Row gutter={20} style={{ marginTop: '1rem' }}>*/}
-      {/*    <Col xs={24} xxl={12}>*/}
-      {/*      <div>From ... To ..</div>*/}
-      {/*      <GenericPieChart data={[]} config={{ color: 'blue' }} title={'Total Revenue'} />*/}
-      {/*    </Col>*/}
-      {/*    <Col xs={24} xxl={12}>*/}
-      {/*      <GenericDonutChart data={[]} config={{ color: 'blue' }} title={'CV matching ratio'} />*/}
-      {/*    </Col>*/}
-      {/*  </Row>*/}
-      {/*</Card>*/}
       {evaluateModal && (
         <Modal
           width='1000px'

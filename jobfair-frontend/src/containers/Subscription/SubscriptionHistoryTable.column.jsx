@@ -48,11 +48,11 @@ const SubscriptionHistoryTableColumn = () => [
     })
   },
   {
-    title: 'Job fair max quota',
+    title: 'Available job fairs',
     dataIndex: 'jobfairQuota',
     key: 'jobfairQuota',
     render: (value) => ({
-      children: `${value} job fairs`
+      children: `${value} left`
     })
   },
   {

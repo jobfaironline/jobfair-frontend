@@ -2,7 +2,7 @@ import { Button, Card, Collapse, Descriptions, Divider, Typography, notification
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { convertToUTCString, getNYearAfter } from '../../utils/common';
-import { faArrowLeft, faCircleCheck, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { getSubscriptionPlanById } from '../../services/jobhub-api/SubscriptionControllerService';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -103,22 +103,8 @@ const SubscriptionDetailComponent = ({ subscription }) => {
                   <Divider style={{ fontWeight: 'bold', backgroundColor: '#000' }} />
                 </Descriptions.Item>
                 <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
-                  <Title level={3}>Package benefits:</Title>
+                  <Title level={3}>Package benefits: {subscription?.jobfairQuota} job fairs</Title>
                 </Descriptions.Item>
-                {subscription?.benefits?.map((benefit) => (
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <div style={{ marginTop: '1rem' }}>
-                      <FontAwesomeIcon
-                        icon={benefit.status ? faCircleCheck : faCircleXmark}
-                        color={benefit.status ? 'green' : 'red'}
-                        size={'2x'}
-                      />
-                    </div>
-                    <Text strong style={{ marginLeft: '1rem' }}>
-                      {benefit.name}
-                    </Text>
-                  </div>
-                ))}
               </Descriptions>
               <Descriptions.Item>
                 <Divider type='vertical' style={{ fontSize: 'bold', backgroundColor: '#000', height: '50rem' }} />

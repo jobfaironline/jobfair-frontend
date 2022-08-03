@@ -18,12 +18,14 @@ import {
   getJobFairByIDAPI,
   publishJobFairAPI
 } from '../../services/jobhub-api/JobFairControllerService';
+import { chooseSubscriptionAction } from '../../redux-flow/choose-subscription/choose-subscription-slice';
+import { decreaseQuota } from '../../services/jobhub-api/SubscriptionControllerService';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getLayoutByJobFairId } from '../../services/jobhub-api/LayoutControllerService';
 import { getStatisticsByJobFair } from '../../services/jobhub-api/AssignmentControllerService';
 import { green } from '@ant-design/colors';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import RoleType from '../../constants/RoleType';
 import moment from 'moment';
@@ -90,6 +92,8 @@ const { Text } = Typography;
 
 export const JobFairCheckListContainer = ({ jobFairId }) => {
   const role = useSelector((state) => state?.authentication?.user?.roles);
+  const chooseSubscription = useSelector((state) => state?.chooseSubscription?.subscriptionItem);
+  const dispatch = useDispatch();
   const [state, setState] = useState({
     jobFairData: undefined,
     layoutData: undefined,
@@ -195,12 +199,14 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
 
   const publishJobFairEvent = async () => {
     try {
+      await decreaseQuota(chooseSubscription.id);
       await publishJobFairAPI(state.jobFairData?.id);
       notification['success']({
         message: 'Publish job fair successfully'
       });
       setPublishModalVisible(false);
       setRerender((prevState) => !prevState);
+      dispatch(chooseSubscriptionAction.clearSubscriptionItem({}));
     } catch (e) {
       notification['error']({
         message: `Failed to publish job fair`,
@@ -261,6 +267,7 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
         onCancel={onCancelPublish}
         jobFairData={state.jobFairData}
         statistics={state.statistics}
+        chooseSubscription={chooseSubscription}
       />
 
       <div className={'job-fair-check-list-container'}>

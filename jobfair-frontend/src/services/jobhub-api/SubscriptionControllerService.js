@@ -1,5 +1,6 @@
 import { CallAPI } from '../axiosBase';
 import {
+  DECREASE_QUOTA,
   EVALUATE_REFUND_REQUEST,
   GET_ALL_COMPANY_SUBSCRIPTION,
   GET_ALL_SUBSCRIPTION_PLAN_END_POINT,
@@ -77,3 +78,4 @@ export const getSubscriptionById = (subscriptionId) =>
 export const sendRequestToRefund = (body, id) => CallAPI(`${SEND_REQUEST_TO_REFUND}/${id}`, 'POST', body);
 export const evaluateRequestToRefund = (status, subscriptionId) =>
   CallAPI(`${EVALUATE_REFUND_REQUEST}?status=${status}&subscriptionId=${subscriptionId}`, 'GET');
+export const decreaseQuota = (subscriptionId) => CallAPI(`${DECREASE_QUOTA}/${subscriptionId}`, 'GET');

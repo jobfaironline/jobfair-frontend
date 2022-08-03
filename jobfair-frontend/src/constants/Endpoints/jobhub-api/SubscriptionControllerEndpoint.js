@@ -5,3 +5,4 @@ export const GET_ALL_COMPANY_SUBSCRIPTION = `${GET_ALL_SUBSCRIPTION_PLAN_END_POI
 export const GET_INVOICE = `${GET_ALL_SUBSCRIPTION_PLAN_END_POINT}/invoice`;
 export const SEND_REQUEST_TO_REFUND = '/api/v1/subscriptions/cancel';
 export const EVALUATE_REFUND_REQUEST = '/api/v1/subscriptions/evaluate-refund-request';
+export const DECREASE_QUOTA = '/api/v1/subscriptions/quota';
