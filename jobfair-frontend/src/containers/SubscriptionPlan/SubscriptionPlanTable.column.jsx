@@ -12,14 +12,6 @@ const SubscriptionPlanTableColumn = () => [
       children: text
     })
   },
-  // {
-  //   title: 'Status',
-  //   dataIndex: 'status',
-  //   key: 'status',
-  //   render: (value) => ({
-  //     children: value ? <Tag>{value}</Tag> : <Tag>ACTIVE</Tag>
-  //   })
-  // },
   {
     title: 'Name',
     dataIndex: 'name',
@@ -36,6 +28,14 @@ const SubscriptionPlanTableColumn = () => [
     key: 'price',
     render: (value) => ({
       children: `$${value}.00`
+    })
+  },
+  {
+    title: 'Job fair max quota',
+    dataIndex: 'jobfairQuota',
+    key: 'jobfairQuota',
+    render: (value) => ({
+      children: `${value} job fairs`
     })
   },
   {

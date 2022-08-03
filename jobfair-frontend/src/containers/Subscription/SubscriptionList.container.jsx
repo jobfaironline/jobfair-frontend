@@ -78,8 +78,8 @@ const SubscriptionListContainer = () => {
         title: item.name,
         price: item.price,
         description: item.description,
-        type: typeAndBenefitsMapper(item).type,
-        benefits: typeAndBenefitsMapper(item).benefits
+        jobfairQuota: item.jobfairQuota,
+        type: typeAndBenefitsMapper(item).type
       }));
       setTotalRecord(res.data.totalElements);
       setSubscriptionData(result);
@@ -144,9 +144,7 @@ const SubscriptionListContainer = () => {
                   contentStyle={{ fontSize: '1rem' }}
                   labelStyle={{ fontSize: '1rem' }}
                   label={'Benefits'}>
-                  {item.benefits.map((benefit) => (
-                    <Tag color={'green'}>{benefit.name}</Tag>
-                  ))}
+                  {item.jobfairQuota} job fairs
                 </Descriptions.Item>
               </Descriptions>
             </Card>
