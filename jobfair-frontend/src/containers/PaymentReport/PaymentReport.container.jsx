@@ -260,7 +260,7 @@ const PaymentReportContainer = () => {
       <Card style={{ borderRadius: '10px', height: '100%', marginTop: '1rem' }}>
         <Typography.Title level={3}>Payments report</Typography.Title>
         <div className={'search-filter-container'}>
-          <Search placeholder='Search payment' className={'search-bar'} onSearch={handleOnSearch} />
+          <Search placeholder='Search payment by company name' className={'search-bar'} onSearch={handleOnSearch} />
         </div>
         <CommonTableContainer {...tableProps} />
       </Card>
