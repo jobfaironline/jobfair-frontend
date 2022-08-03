@@ -1,9 +1,11 @@
 import { CallAPI } from '../axiosBase';
 import {
+  EVALUATE_REFUND_REQUEST,
   GET_ALL_COMPANY_SUBSCRIPTION,
   GET_ALL_SUBSCRIPTION_PLAN_END_POINT,
   GET_INVOICE,
   PURCHASE_SUBSCRIPTION_END_POINT,
+  SEND_REQUEST_TO_REFUND,
   SUBSCRIPTION_PLAN_ENDPOINT
 } from '../../constants/Endpoints/jobhub-api/SubscriptionControllerEndpoint';
 
@@ -72,3 +74,6 @@ export const getAllCompanySubscriptionsAPI = (
 export const getInvoiceAPI = (subscriptionId) => CallAPI(`${GET_INVOICE}/${subscriptionId}`, 'GET', {});
 export const getSubscriptionById = (subscriptionId) =>
   CallAPI(`${GET_ALL_SUBSCRIPTION_PLAN_END_POINT}/${subscriptionId}`, 'GET');
+export const sendRequestToRefund = (body, id) => CallAPI(`${SEND_REQUEST_TO_REFUND}/${id}`, 'POST', body);
+export const evaluateRequestToRefund = (status, subscriptionId) =>
+  CallAPI(`${EVALUATE_REFUND_REQUEST}?status=${status}&subscriptionId=${subscriptionId}`, 'GET');

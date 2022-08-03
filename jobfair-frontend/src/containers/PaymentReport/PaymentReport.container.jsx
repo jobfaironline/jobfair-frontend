@@ -1,13 +1,28 @@
-import { Button, Card, Col, Divider, Input, Modal, PageHeader, Row, Tag, Timeline, Tooltip, Typography } from 'antd';
+import {
+  Button,
+  Card,
+  Col,
+  Divider,
+  Input,
+  Modal,
+  PageHeader,
+  Row,
+  Tag,
+  Timeline,
+  Tooltip,
+  Typography,
+  notification
+} from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PATH_ADMIN } from '../../constants/Paths/Path';
 import { convertToUTCString } from '../../utils/common';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { generatePath } from 'react-router';
 import {
+  evaluateRequestToRefund,
   getAllSubscriptionForAdmin,
   getSubscriptionById
 } from '../../services/jobhub-api/SubscriptionControllerService';
+import { faEye, faFileEdit } from '@fortawesome/free-solid-svg-icons';
+import { generatePath } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import PaymentReportTableColumn from './PaymentReportTable.column';
@@ -22,6 +37,8 @@ const PaymentReportContainer = () => {
   const [visible, setVisible] = useState(false);
   const [item, setItem] = useState({});
   const [searchValue, setSearchValue] = useState('');
+  const [evaluateModal, setEvaluateModal] = useState(false);
+
   //pagination
   // eslint-disable-next-line no-unused-vars
   const [totalRecord, setTotalRecord] = useState(0);
@@ -37,27 +54,28 @@ const PaymentReportContainer = () => {
         <Card>
           <Title level={3}>Product information: </Title>
           <Row align='left' gutter={[4, 24]}>
-            <Col span={8}>Total price: ${item.price}.00</Col>
-            <Col span={8}>Name: {item.subscriptionPlan.name}</Col>
+            <Col span={8}>Total price: ${item?.price}.00</Col>
+            <Col span={8}>Name: {item?.subscriptionPlan?.name}</Col>
           </Row>
           <Row align='left' gutter={[4, 24]}>
-            <Col span={8}>Description: {item.subscriptionPlan.description}</Col>
-            <Col span={8}>Valid period: {item.subscriptionPlan.validPeriod} months</Col>
+            <Col span={8}>Description: {item?.subscriptionPlan?.description}</Col>
+            <Col span={8}>Valid period: {item?.subscriptionPlan?.validPeriod} months</Col>
           </Row>
           <Row align='left' gutter={[4, 24]}>
-            <div>
-              Status: <Tag color={item.status === 'ACTIVE' ? 'green' : 'red'}>{item.status} </Tag>
-            </div>
+            <Col span={8}>
+              Status: <Tag color={item.status === 'ACTIVE' ? 'green' : 'red'}>{item?.status} </Tag>
+            </Col>
+            <Col span={8}>Job fair max quota: {item?.jobfairQuota} job fairs</Col>
           </Row>
         </Card>
         <Divider />
         <Card>
           <Title level={3}>Timeline: </Title>
           <Timeline>
-            <Timeline.Item color='green'>Start at: {convertToUTCString(item.currentPeriodStart)}</Timeline.Item>
+            <Timeline.Item color='green'>Start at: {convertToUTCString(item?.currentPeriodStart)}</Timeline.Item>
           </Timeline>
           <Timeline>
-            <Timeline.Item color='green'>End at: {convertToUTCString(item.currentPeriodEnd)}</Timeline.Item>
+            <Timeline.Item color='green'>End at: {convertToUTCString(item?.currentPeriodEnd)}</Timeline.Item>
           </Timeline>
         </Card>
         <Divider />
@@ -66,20 +84,20 @@ const PaymentReportContainer = () => {
           <Row align='left' gutter={[4, 24]}>
             <Col span={8}>Payment Id: ${item.id}</Col>
             <Col span={8}>
-              Status: <Tag>{item.status}</Tag>
+              Status: <Tag>{item?.status}</Tag>
             </Col>
           </Row>
           <Row align='left' gutter={[4, 24]}>
-            <Col span={8}>Period start: {convertToUTCString(item.currentPeriodStart)}</Col>
-            <Col span={8}>Period end: {convertToUTCString(item.currentPeriodEnd)}</Col>
+            <Col span={8}>Period start: {convertToUTCString(item?.currentPeriodStart)}</Col>
+            <Col span={8}>Period end: {convertToUTCString(item?.currentPeriodEnd)}</Col>
           </Row>
           <Row align='left' gutter={[4, 24]}>
             <Col span={8}>Payment method: VISA</Col>
-            <Col span={8}>Period end: {item.cancelAt ? convertToUTCString(item.cancelAt) : 'Not cancel yet'}</Col>
+            <Col span={8}>Period end: {item.cancelAt ? convertToUTCString(item?.cancelAt) : 'Not cancel yet'}</Col>
           </Row>
           <Row align='left' gutter={[4, 24]}>
-            <Col span={8}>Refund status: {item.refundStatus ? item.refundStatus : 'Not refund yet'}</Col>
-            <Col span={8}>Refund reason: {item.refundReason ? item.refundReason : 'Empty'}</Col>
+            <Col span={8}>Refund status: {item?.refundStatus ? item.refundStatus : 'Not refund yet'}</Col>
+            <Col span={8}>Refund reason: {item?.refundReason ? item.refundReason : 'Empty'}</Col>
           </Row>
         </Card>
         <Divider />
@@ -114,6 +132,38 @@ const PaymentReportContainer = () => {
     setPageSize(pageSize);
   };
 
+  const handleEvaluateRequest = async (key) => {
+    let res;
+    switch (key) {
+      case 'REFUNDED':
+        res = await evaluateRequestToRefund('REFUNDED', item.id);
+        if (res.status === 200) {
+          notification['success']({
+            message: 'Approved refund request'
+          });
+        }
+        setEvaluateModal(false);
+        fetchData();
+        break;
+      case 'REFUND_DECLINED':
+        res = await evaluateRequestToRefund('REFUND_DECLINED', item.id);
+        if (res.status === 200) {
+          notification['success']({
+            message: 'Rejected refund request'
+          });
+        }
+        setEvaluateModal(false);
+        fetchData();
+        break;
+      default:
+    }
+  };
+
+  const handleShowEvaluateModal = (item) => {
+    setItem(item);
+    setEvaluateModal(true);
+  };
+
   const tableProps = {
     tableData: data,
     tableColumns: PaymentReportTableColumn,
@@ -128,6 +178,13 @@ const PaymentReportContainer = () => {
                 <FontAwesomeIcon icon={faEye} />
               </Button>
             </Tooltip>
+            {record.refundStatus === 'REQUESTED_REFUND' && (
+              <Tooltip title='Evaluate refund request'>
+                <Button type='link' onClick={() => handleShowEvaluateModal(record)}>
+                  <FontAwesomeIcon icon={faFileEdit} />
+                </Button>
+              </Tooltip>
+            )}
           </>
         )
       }
@@ -166,6 +223,29 @@ const PaymentReportContainer = () => {
       {/*    </Col>*/}
       {/*  </Row>*/}
       {/*</Card>*/}
+      {evaluateModal && (
+        <Modal
+          width='1000px'
+          title={'Evaluate request to refund'}
+          visible={evaluateModal}
+          onCancel={() => setEvaluateModal(false)}
+          footer={null}
+          centered={true}>
+          <div>Refund message: {item.refundReason}</div>
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+            <div style={{ marginRight: '1rem' }}>
+              <Button type='primary' onClick={() => handleEvaluateRequest('REFUNDED')}>
+                Approve
+              </Button>
+            </div>
+            <div>
+              <Button type='primary' onClick={() => handleEvaluateRequest('REFUND_DECLINED')}>
+                Reject
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
       {visible && (
         <Modal
           width='1000px'

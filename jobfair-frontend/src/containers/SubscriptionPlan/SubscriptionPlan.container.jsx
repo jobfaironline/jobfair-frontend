@@ -1,8 +1,7 @@
-import { Button, DatePicker, Form, Input, InputNumber, Modal, Tooltip, Typography, notification } from 'antd';
-import { DateFormat } from '../../constants/ApplicationConst';
+import { Button, Form, Input, InputNumber, Modal, Tooltip, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SubscriptionPlanValidation } from '../../validate/SubscriptionPlanValidation';
-import { convertMomentToMilliseconds, convertToDateString } from '../../utils/common';
+import { convertMomentToMilliseconds } from '../../utils/common';
 import {
   createSubscriptionPlan,
   getAllSubscriptionPlanAPI,
@@ -84,7 +83,8 @@ const SubscriptionPlanContainer = () => {
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
           <Form.Item label='Valid date' name='validPeriod' rules={SubscriptionPlanValidation.validPeriod}>
-            <DatePicker format={DateFormat} disabledDate={disabledDate} disabledTime={disabledDateTime} />
+            {/*<DatePicker format={DateFormat} disabledDate={disabledDate} disabledTime={disabledDateTime} />*/}
+            <InputNumber addonAfter='months' min={1} max={10000} />
           </Form.Item>
           <Form.Item
             name='description'
@@ -142,7 +142,7 @@ const SubscriptionPlanContainer = () => {
       const res = await getAllSubscriptionPlanAPI('ASC', searchValue, 0, pageSize, 'name');
       res.data.content.sort((a, b) => a.price - b.price);
       const result = res.data.content.map((item, index) => ({
-        no: index,
+        no: index + 1,
         ...item
       }));
 
@@ -161,7 +161,7 @@ const SubscriptionPlanContainer = () => {
   const handleViewDetail = async (id) => {
     setIsEditable(true);
     const res = await getSubscriptionPlanById(id);
-    res.data['validPeriod'] = moment(convertToDateString(item.validPeriod));
+    // res.data['validPeriod'] = moment(convertToDateString(item.validPeriod));
     setItem(res.data);
     setVisible(true);
   };
@@ -182,7 +182,7 @@ const SubscriptionPlanContainer = () => {
       id: values.id,
       name: values.name,
       price: values.price,
-      validPeriod: convertMomentToMilliseconds(values.validPeriod)
+      validPeriod: values.validPeriod
     };
     const res = await updateSubscriptionPlan(body);
     if (res.status === 200) {

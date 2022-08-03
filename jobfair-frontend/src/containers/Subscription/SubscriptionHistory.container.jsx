@@ -1,7 +1,12 @@
 import { Button, Form, Modal, Tooltip, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { REQUIRED_VALIDATOR } from '../../validate/GeneralValidation';
 import { faEye, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
-import { getAllCompanySubscriptionsAPI, getInvoiceAPI } from '../../services/jobhub-api/SubscriptionControllerService';
+import {
+  getAllCompanySubscriptionsAPI,
+  getInvoiceAPI,
+  sendRequestToRefund
+} from '../../services/jobhub-api/SubscriptionControllerService';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import React, { useEffect, useState } from 'react';
 import SubscriptionHistoryTableColumn from './SubscriptionHistoryTable.column';
@@ -12,8 +17,8 @@ const { Title } = Typography;
 const SubscriptionHistoryContainer = () => {
   const [data, setData] = useState();
   const [visible, setVisible] = useState(false);
-  const [isAgree, setIsAgree] = useState(false);
 
+  const [id, setId] = useState();
   const [form] = Form.useForm();
 
   //pagination
@@ -41,13 +46,9 @@ const SubscriptionHistoryContainer = () => {
       setTotalRecord(res.data.totalElements);
       const result = res.data.content.map((item, index) => ({
         no: index + 1,
-        id: item.id,
-        currentPeriodStart: item.currentPeriodStart,
-        currentPeriodEnd: item.currentPeriodEnd,
-        price: item.price,
         name: item.subscriptionPlan.name,
         description: item.subscriptionPlan.description,
-        validPeriod: item.subscriptionPlan.validPeriod
+        ...item
       }));
       setData(result);
     } catch (err) {
@@ -70,14 +71,29 @@ const SubscriptionHistoryContainer = () => {
     setPageSize(pageSize);
   };
 
-  const handleSendRequestToRefund = (values) => {};
-
-  const handleCloseRefundModal = () => {
-    setVisible(false);
+  const handleSendRequestToRefund = async (values) => {
+    try {
+      const body = {
+        reason: values.reason
+      };
+      const res = await sendRequestToRefund(body, id);
+      if (res.status === 200) {
+        notification['success'] = {
+          message: 'Send request to refund successfully!'
+        };
+        setVisible(false);
+        fetchData();
+      }
+    } catch (err) {
+      notification['error'] = {
+        message: 'Send request to refund failed!'
+      };
+    }
   };
 
-  const handleOpenRefundModal = () => {
+  const handleOpenRefundModal = (id) => {
     setVisible(true);
+    setId(id);
   };
 
   const RequestToRefundForm = () => (
@@ -89,8 +105,16 @@ const SubscriptionHistoryContainer = () => {
       layout='vertical'
       labelCol={21}
       wrapperCol={21}>
-      <Form.Item name={'reason'} rules={[]}>
+      <Form.Item
+        name={'reason'}
+        rules={[REQUIRED_VALIDATOR('Why you want to refund?')]}
+        label={'Why you want to refund?'}>
         <TextArea showCount min={1} max={400} />
+      </Form.Item>
+      <Form.Item>
+        <Button type='primary' htmlType='submit'>
+          Send request
+        </Button>
       </Form.Item>
     </Form>
   );
@@ -110,7 +134,7 @@ const SubscriptionHistoryContainer = () => {
               </Button>
             </Tooltip>
             <Tooltip title='Refund'>
-              <Button type='link' onClick={handleOpenRefundModal}>
+              <Button type='link' onClick={() => handleOpenRefundModal(record.id)}>
                 <FontAwesomeIcon icon={faMoneyBill} />
               </Button>
             </Tooltip>

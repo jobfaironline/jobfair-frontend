@@ -1,10 +1,3 @@
-// "id": "4d6a5fad-fe7a-43c2-a4b0-e6451f49ba9e",
-//   "status": null,
-//   "currentPeriodStart": 1659265055228,
-//   "currentPeriodEnd": 1690822007228,
-//   "cancelAt": null,
-//   "defaultPaymentMethod": null,
-//   "price": 800
 import { Tag } from 'antd';
 import { convertToUTCString } from '../../utils/common';
 
@@ -55,11 +48,19 @@ const SubscriptionHistoryTableColumn = () => [
     })
   },
   {
+    title: 'Job fair max quota',
+    dataIndex: 'jobfairQuota',
+    key: 'jobfairQuota',
+    render: (value) => ({
+      children: `${value} job fairs`
+    })
+  },
+  {
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
     render: (value) => ({
-      children: value ? <Tag>{value}</Tag> : <Tag color={'green'}>ACTIVE</Tag>
+      children: value === 'NOT_USED' ? <Tag color={'green'}>ACTIVE</Tag> : <Tag>{value}</Tag>
     })
   }
 ];

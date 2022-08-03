@@ -42,7 +42,15 @@ const PaymentReportTableColumn = () => [
     dataIndex: 'status',
     key: 'status',
     render: (value) => ({
-      children: value ? <Tag>{value}</Tag> : <Tag color={'green'}>ACTIVE</Tag>
+      children: value === 'NOT_USED' ? <Tag color={'green'}>ACTIVE</Tag> : <Tag>{value}</Tag>
+    })
+  },
+  {
+    title: 'Refund status',
+    dataIndex: 'refundStatus',
+    key: 'status',
+    render: (value) => ({
+      children: value ? <Tag>{value}</Tag> : 'Not available'
     })
   }
 ];
