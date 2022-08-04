@@ -20,8 +20,6 @@ const formTitles = [
 ];
 
 const AdminDashBoardContainer = () => {
-  //TODO: fetch api later
-
   const { response, isLoading, isError } = useSWRFetch(`${ENDPOINT_ADMIN_STATISTICS}`, 'GET');
 
   if (isLoading) return <LoadingComponent isWholePage={true} />;
@@ -157,7 +155,7 @@ const AdminDashBoardContainer = () => {
           </Title>
           <AdminDashBoardAccountStatistics
             data={{
-              attendantNum: data.accountStatistics.attendantNum,
+              attendantNum: 195,
               companyNum: data.generalStatistics.companyNum,
               accountNum:
                 data.accountStatistics.inactiveNum +

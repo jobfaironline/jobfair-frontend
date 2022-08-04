@@ -10,11 +10,11 @@ export const AdminDashBoardAccountStatistics = ({ data }) => {
         <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600' }}>{accountNum}</p>
       </Tag>
       <Tag color={'blue'} style={{ padding: '0.8rem 1rem 1.5rem 1rem', borderRadius: '10px', flex: 1 }}>
-        <p style={{ marginBottom: 10, fontSize: '1.3rem' }}>Number of attendant</p>
+        <p style={{ marginBottom: 10, fontSize: '1.3rem' }}>Number of visitors</p>
         <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600' }}>{attendantNum}</p>
       </Tag>
       <Tag color={'blue'} style={{ padding: '0.8rem 1rem 1.5rem 1rem', borderRadius: '10px', flex: 1 }}>
-        <p style={{ marginBottom: 10, fontSize: '1.3rem' }}>Number of company</p>
+        <p style={{ marginBottom: 10, fontSize: '1.3rem' }}>Number of companies</p>
         <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600' }}>{companyNum}</p>
       </Tag>
     </div>
