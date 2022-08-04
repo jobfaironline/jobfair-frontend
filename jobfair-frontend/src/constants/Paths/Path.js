@@ -31,7 +31,9 @@ export const PATH_ADMIN = {
   COMPANY_REGISTRATION_DETAIL_PAGE: '/admin/company-registration-detail',
   ACCOUNT_MANAGEMENT_PAGE: '/admin/account-management',
   COMPANY_MANAGEMENT_PAGE: '/admin/company-management',
-  ADMIN_DASHBOARD: '/admin/dashboard'
+  ADMIN_DASHBOARD: '/admin/dashboard',
+  LAYOUT_MANAGEMENT: '/admin/layout-management',
+  TEMPLATE_DETAIL: '/admin/default-template/:templateId'
 };
 export const PATH_ATTENDANT = {
   PROFILE_PAGE: `/profile`,

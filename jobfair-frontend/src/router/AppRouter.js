@@ -46,6 +46,7 @@ import JobFairListPage from '../pages/JobFairListPage/JobFairListPage';
 import JobFairTablePage from '../pages/JobFairTablePage/JobFairTablePage';
 import JobFairTemplateDetailPage from '../pages/JobFairTemplateDetailPage/JobFairTemplateDetailPage';
 import JobFairTemplatePage from '../pages/JobFairTemplatePage/JobFairTemplatePage';
+import LayoutManagementPage from '../pages/LayoutManagementPage/LayoutManagementPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavigationBar from '../components/commons/Navbar/Navbar';
 import OrganizeJobFairPage from '../pages/OrganizeJobFairPage/OrganizeJobFairPage';
@@ -168,6 +169,18 @@ const AppRouter = () => {
             key={PATH_ADMIN.COMPANY_MANAGEMENT_PAGE}
             component={() => <CompanyManagementPage />}
             path={PATH_ADMIN.COMPANY_MANAGEMENT_PAGE}
+            exact
+          />
+          <AdminRouter
+            key={PATH_ADMIN.LAYOUT_MANAGEMENT}
+            component={() => <LayoutManagementPage />}
+            path={PATH_ADMIN.LAYOUT_MANAGEMENT}
+            exact
+          />
+          <AdminRouter
+            key={PATH_ADMIN.TEMPLATE_DETAIL}
+            component={() => <JobFairTemplateDetailPage />}
+            path={PATH_ADMIN.TEMPLATE_DETAIL}
             exact
           />
           <PublicRouter key={PATH.LOGIN_PAGE} component={() => <LoginPage />} path={PATH.LOGIN_PAGE} exact />

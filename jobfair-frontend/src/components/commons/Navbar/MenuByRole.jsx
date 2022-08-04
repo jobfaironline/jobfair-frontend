@@ -72,8 +72,12 @@ export const AdminMenu = [
     link: PATH_ADMIN.COMPANY_MANAGEMENT_PAGE
   },
   {
-    title: 'Admin dashboard',
+    title: 'Dashboard',
     link: PATH_ADMIN.ADMIN_DASHBOARD
+  },
+  {
+    title: 'Default layout',
+    link: PATH_ADMIN.LAYOUT_MANAGEMENT
   }
 ];
 
