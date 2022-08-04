@@ -18,7 +18,7 @@ export const Step5Component = (props) => {
       {selectionVisible && (
         <Modal
           visible={selectionVisible}
-          width={'50rem'}
+          width={'70rem'}
           onCancel={() => setSelectionVisible(false)}
           footer={null}
           centered={true}
@@ -39,13 +39,13 @@ export const Step5Component = (props) => {
             </Row>
             {progressScore === 80 && hasAnotherPublishJobFair === false ? (
               <Row>
-                <Button type='link' onClick={() => setSelectionVisible(true)}>
+                <Button type='button' onClick={() => setSelectionVisible(true)}>
                   Select subscription to publish job fair
                 </Button>
               </Row>
             ) : null}
             {Object.keys(chooseSubscription).length !== 0 && (
-              <Card style={{ backgroundColor: '#E99937', color: 'black', borderRadius: '15px' }}>
+              <Card style={{ borderRadius: '15px', border: '1px solid #F5B862', marginTop: '2rem' }}>
                 <Title level={5}>Subscription detail</Title>
                 <Row>
                   <Col>Package name: {chooseSubscription.name}</Col>

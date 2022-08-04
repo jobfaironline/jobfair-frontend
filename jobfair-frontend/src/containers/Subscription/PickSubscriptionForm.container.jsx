@@ -1,4 +1,5 @@
-import { Button, notification } from 'antd';
+import { Button, Typography, notification } from 'antd';
+import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { chooseSubscriptionAction } from '../../redux-flow/choose-subscription/choose-subscription-slice';
 import { getAllCompanySubscriptionsAPI } from '../../services/jobhub-api/SubscriptionControllerService';
 import { useDispatch } from 'react-redux';
@@ -6,8 +7,9 @@ import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.c
 import React, { useLayoutEffect, useState } from 'react';
 import SubscriptionHistoryTableColumn from './SubscriptionHistoryTable.column';
 
+const { Text } = Typography;
 const PickSubscriptionFormContainer = ({ setSelectionVisible }) => {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -35,17 +37,21 @@ const PickSubscriptionFormContainer = ({ setSelectionVisible }) => {
           message: 'Error when get subscription history'
         });
       }
-      setTotalRecord(res.data.totalElements);
-      const result = res.data.content.map((item, index) => ({
-        ...item,
-        key: index + 1,
-        no: index + 1,
-        name: item.subscriptionPlan.name,
-        description: item.subscriptionPlan.description,
-        status: item.jobfairQuota == 0 ? 'OUT_OF_STOCK' : item.status
-      }));
-      result.filter((item) => item.jobfairQuota !== 0);
+      const result = res.data.content
+        .sort((a, b) => a.currentPeriodEnd > b.currentPeriodEnd)
+        .filter(
+          (item) => item.jobfairQuota != 0 && item.status !== 'INACTIVE' && item.currentPeriodEnd > new Date().getTime()
+        )
+        .map((item, index) => ({
+          ...item,
+          key: index + 1,
+          no: index + 1,
+          name: item.subscriptionPlan.name,
+          description: item.subscriptionPlan.description,
+          publishedJobFair: item.subscriptionPlan.jobfairQuota - item.jobfairQuota
+        }));
       setData(result);
+      setTotalRecord(res.data.totalElements);
     } catch (err) {
       //
     }
@@ -91,6 +97,11 @@ const PickSubscriptionFormContainer = ({ setSelectionVisible }) => {
   };
   return (
     <>
+      {data.length === 0 && (
+        <Text type='danger'>
+          Please <a href={PATH_COMPANY_MANAGER.SUBSCRIPTION_DASH_BOARD}>buy more subscription</a> to publish job fair!
+        </Text>
+      )}
       <CommonTableContainer {...tableProps} />
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Button type={'primary'} onClick={handleChooseSubscription}>

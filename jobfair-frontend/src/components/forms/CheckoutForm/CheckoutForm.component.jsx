@@ -2,7 +2,11 @@ import { Card, Checkbox, Modal, Typography } from 'antd';
 import { Field, Form } from 'react-final-form';
 import { PATH } from '../../../constants/Paths/Path';
 import { formatCVC, formatCreditCardNumber, formatExpirationDate, formatName } from './CardUtil';
-import { getInvoiceAPI, purchaseSubscriptionAPI } from '../../../services/jobhub-api/SubscriptionControllerService';
+import {
+  getInvoiceAPI,
+  getInvoiceData,
+  purchaseSubscriptionAPI
+} from '../../../services/jobhub-api/SubscriptionControllerService';
 import { useHistory } from 'react-router-dom';
 import React, { useState } from 'react';
 import ResultFailedComponent from '../../commons/Result/ResultFailed.component';
@@ -27,9 +31,13 @@ const CheckoutFormComponent = ({ subscriptionId }) => {
     try {
       const res = await purchaseSubscriptionAPI(body);
       const invoiceUrl = await getInvoiceAPI(res.data.id);
+      const invoiceData = await getInvoiceData(res.data.id);
+      console.log(invoiceData.data);
+
       if (res.status === 200) {
         history.push(PATH.RESULT_SUCCESS_PAGE, {
-          invoiceURL: invoiceUrl.data
+          invoiceURL: invoiceUrl.data,
+          invoiceData: invoiceData.data
         });
       }
     } catch (err) {
@@ -207,7 +215,8 @@ const CheckoutFormComponent = ({ subscriptionId }) => {
                     </div>
                     <Checkbox onChange={(e) => setIsAgree(e.target.checked)}>
                       <p style={{ fontSize: '1rem', width: '20rem' }}>
-                        By clicking this checkbox, you confirm that there will be NO REFUND
+                        By clicking this checkbox, you confirm that only subscription has available job fair can be
+                        requested to refund
                       </p>
                     </Checkbox>
                     <div

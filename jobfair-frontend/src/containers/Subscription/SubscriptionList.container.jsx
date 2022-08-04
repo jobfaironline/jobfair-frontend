@@ -1,5 +1,8 @@
+import './SubscriptionList.styles.scss';
 import { Button, Card, Descriptions, Divider, List, Tag, Typography, notification } from 'antd';
-import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { PATH, PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getAllSubscriptionPlanAPI } from '../../services/jobhub-api/SubscriptionControllerService';
 import React, { useLayoutEffect, useState } from 'react';
@@ -100,12 +103,12 @@ const SubscriptionListContainer = () => {
       <div style={{ marginLeft: '9rem', marginTop: '2rem' }}>
         <List
           grid={{
-            gutter: 16 + 8 * 8, //16 + 8n
+            gutter: 16 + 8, //16 + 8n
             column: 3,
             xs: 1,
             sm: 1,
-            md: 1,
-            lg: 1,
+            md: 2,
+            lg: 3,
             xl: 3,
             xxl: 3
           }}
@@ -113,18 +116,35 @@ const SubscriptionListContainer = () => {
           renderItem={(item) => (
             <Card
               style={{
-                boxShadow: '5px 8px 24px 5px rgba(208, 216, 243, 0.6)',
                 marginBottom: '2rem',
                 marginTop: '2rem',
-                width: '75%'
+                width: '75%',
+                borderRadius: '20px',
+                border: '1px solid black'
               }}
               headStyle={{ backgroundColor: 'white', border: 0 }}
-              bodyStyle={{ backgroundColor: 'white', border: 0 }}
+              bodyStyle={{
+                backgroundColor: 'white',
+                border: 0,
+                width: 'fit-content',
+                display: 'flex',
+                justifyContent: 'center',
+                borderRadius: '30px'
+              }}
               actions={[
-                <div style={{ height: 30, marginBottom: '1rem' }} onClick={() => handleGetStarted(item.id)}>
-                  <Button type='primary' size='large' shape='round'>
+                <div
+                  style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                  <Button
+                    type='primary'
+                    size='large'
+                    shape='round'
+                    onClick={() => handleGetStarted(item.id)}
+                    style={{ width: '75%' }}>
                     Get started
                   </Button>
+                  <Text>
+                    <a onClick={() => window.open(PATH.FAQ_PAGE)}>Terms and conditions apply.</a>
+                  </Text>
                 </div>
               ]}>
               <Descriptions title={<Title level={3}>{item.title}</Title>} column={1}>
@@ -138,13 +158,13 @@ const SubscriptionListContainer = () => {
                   <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>${item.price}.00</p>
                 </Descriptions.Item>
                 <Descriptions.Item>
-                  <Divider />
+                  <Divider style={{ fontWeight: 'bold', backgroundColor: '#000' }} />
                 </Descriptions.Item>
-                <Descriptions.Item
-                  contentStyle={{ fontSize: '1rem' }}
-                  labelStyle={{ fontSize: '1rem' }}
-                  label={'Benefits'}>
-                  {item.jobfairQuota} job fairs
+                <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
+                  <FontAwesomeIcon icon={faCheck} />
+                  <div style={{ marginLeft: '1rem' }}>
+                    <Text> Publish {item.jobfairQuota} job fairs</Text>
+                  </div>
                 </Descriptions.Item>
               </Descriptions>
             </Card>

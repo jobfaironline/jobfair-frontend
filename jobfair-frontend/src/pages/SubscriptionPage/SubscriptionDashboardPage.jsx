@@ -85,11 +85,17 @@ const SubscriptionDashboardPage = () => (
       </div>
     </div>
     {/*</div>*/}
-    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginTop: '5rem' }}>
-      <Title level={2}>Pick your favorite pack</Title>
-      <Title level={3}>Explore all the features of JobHub with just 1 purchase!</Title>
-    </div>
-    <div>
+    <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: '#EFEFEF', flexDirection: 'column' }}>
+      <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', marginTop: '5rem' }}>
+        <Title level={3}>Pick your favorite pack</Title>
+        <div>
+          <Title level={5}>Explore all the features of JobHub with just 1 purchase!</Title>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          Recommended payment method:{' '}
+          <img style={{ width: '5%' }} src={`${window.location.origin}/icon/Visa_Inc._logo.svg`} />
+        </div>
+      </div>
       <SubscriptionListContainer />
     </div>
   </PageLayoutWrapper>

@@ -20,6 +20,7 @@ const SubscriptionHistoryContainer = () => {
 
   const [id, setId] = useState();
   const [form] = Form.useForm();
+  const [item, setItem] = useState();
 
   //pagination
   // eslint-disable-next-line no-unused-vars
@@ -45,11 +46,12 @@ const SubscriptionHistoryContainer = () => {
       }
       setTotalRecord(res.data.totalElements);
       const result = res.data.content.map((item, index) => ({
+        ...item,
         no: index + 1,
         name: item.subscriptionPlan.name,
         description: item.subscriptionPlan.description,
-        status: item.jobfairQuota === 0 ? 'OUT_OF_STOCK' : item.status,
-        ...item
+        publishedJobFair: item.maxJobFairQuota - item.jobfairQuota,
+        status: new Date().getTime() > item.currentPeriodEnd ? 'EXPIRED' : item.status
       }));
       setData(result);
     } catch (err) {
@@ -79,22 +81,23 @@ const SubscriptionHistoryContainer = () => {
       };
       const res = await sendRequestToRefund(body, id);
       if (res.status === 200) {
-        notification['success'] = {
-          message: 'Send request to refund successfully!'
-        };
+        notification['success']({
+          message: `Send request to refund successfully!`
+        });
         setVisible(false);
         fetchData();
       }
     } catch (err) {
-      notification['error'] = {
-        message: 'Send request to refund failed!'
-      };
+      notification['error']({
+        message: `Send request to refund failed! - ${err.response.data.message}`
+      });
     }
   };
 
-  const handleOpenRefundModal = (id) => {
+  const handleOpenRefundModal = (item) => {
     setVisible(true);
-    setId(id);
+    setId(item.id);
+    setItem(item);
   };
 
   const RequestToRefundForm = () => (
@@ -110,13 +113,15 @@ const SubscriptionHistoryContainer = () => {
         name={'reason'}
         rules={[REQUIRED_VALIDATOR('Why you want to refund?')]}
         label={'Why you want to refund?'}>
-        <TextArea showCount min={1} max={400} />
+        <TextArea showCount min={1} max={400} style={{ height: '5rem' }} />
       </Form.Item>
-      <Form.Item>
-        <Button type='primary' htmlType='submit'>
-          Send request
-        </Button>
-      </Form.Item>
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Form.Item>
+          <Button type='primary' htmlType='submit'>
+            Send request
+          </Button>
+        </Form.Item>
+      </div>
     </Form>
   );
 
@@ -134,11 +139,16 @@ const SubscriptionHistoryContainer = () => {
                 <FontAwesomeIcon icon={faEye} />
               </Button>
             </Tooltip>
-            <Tooltip title='Refund'>
-              <Button type='link' onClick={() => handleOpenRefundModal(record.id)}>
-                <FontAwesomeIcon icon={faMoneyBill} />
-              </Button>
-            </Tooltip>
+            {record.status !== 'INACTIVE' &&
+              record.jobfairQuota !== 0 &&
+              record.subscriptionPlan.jobfairQuota - record.jobfairQuota === 0 &&
+              new Date().getTime() < record.currentPeriodEnd && (
+                <Tooltip title='Refund'>
+                  <Button type='link' onClick={() => handleOpenRefundModal(record)}>
+                    <FontAwesomeIcon icon={faMoneyBill} />
+                  </Button>
+                </Tooltip>
+              )}
           </>
         )
       }

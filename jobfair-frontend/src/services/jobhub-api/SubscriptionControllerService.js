@@ -5,6 +5,7 @@ import {
   GET_ALL_COMPANY_SUBSCRIPTION,
   GET_ALL_SUBSCRIPTION_PLAN_END_POINT,
   GET_INVOICE,
+  GET_INVOICE_DATA,
   PURCHASE_SUBSCRIPTION_END_POINT,
   SEND_REQUEST_TO_REFUND,
   SUBSCRIPTION_PLAN_ENDPOINT
@@ -79,3 +80,4 @@ export const sendRequestToRefund = (body, id) => CallAPI(`${SEND_REQUEST_TO_REFU
 export const evaluateRequestToRefund = (status, subscriptionId) =>
   CallAPI(`${EVALUATE_REFUND_REQUEST}?status=${status}&subscriptionId=${subscriptionId}`, 'GET');
 export const decreaseQuota = (subscriptionId) => CallAPI(`${DECREASE_QUOTA}/${subscriptionId}`, 'GET');
+export const getInvoiceData = (subscriptionId) => CallAPI(`${GET_INVOICE_DATA}/${subscriptionId}`);

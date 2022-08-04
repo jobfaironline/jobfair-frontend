@@ -90,11 +90,11 @@ const PaymentReportContainer = () => {
           </Row>
           <Row align='left' gutter={[4, 24]}>
             <Col span={8}>Payment method: VISA</Col>
-            <Col span={8}>Period end: {item.cancelAt ? convertToUTCString(item?.cancelAt) : 'Not cancel yet'}</Col>
+            {item.cancelAt ? <Col span={8}>Cancel at: {convertToUTCString(item?.cancelAt)}</Col> : null}
           </Row>
           <Row align='left' gutter={[4, 24]}>
-            <Col span={8}>Refund status: {item?.refundStatus ? item.refundStatus : 'Not refund yet'}</Col>
-            <Col span={8}>Refund reason: {item?.refundReason ? item.refundReason : 'Empty'}</Col>
+            {item.refundStatus ? <Col span={8}>Refund status: {item?.refundStatus}</Col> : null}
+            {item.refundReason ? <Col span={8}>Refund reason: {item?.refundReason}</Col> : null}
           </Row>
         </Card>
         <Divider />
@@ -112,8 +112,10 @@ const PaymentReportContainer = () => {
     const res = await getAllSubscriptionForAdmin(searchValue, 'ASC', 0, pageSize, 'currentPeriodStart');
     setData(
       res.data.content.map((item, index) => ({
+        ...item,
         no: index + 1,
-        ...item
+        publishedJobFair: item.subscriptionPlan.jobfairQuota - item.jobfairQuota,
+        status: new Date().getTime() > item.currentPeriodEnd ? 'EXPIRED' : item.status
       }))
     );
     setTotalRecord(res.data.totalElements);
@@ -131,26 +133,45 @@ const PaymentReportContainer = () => {
 
   const handleEvaluateRequest = async (key) => {
     let res;
+    if (item.jobfairQuota === 0) {
+      notification['error']({
+        message: 'You have published all job fairs in your package. Cannot refund!'
+      });
+      setEvaluateModal(false);
+      return;
+    }
     switch (key) {
       case 'REFUNDED':
-        res = await evaluateRequestToRefund('REFUNDED', item.id);
-        if (res.status === 200) {
-          notification['success']({
-            message: 'Approved refund request'
+        try {
+          res = await evaluateRequestToRefund('REFUNDED', item.id);
+          if (res.status === 200) {
+            notification['success']({
+              message: 'Approved refund request'
+            });
+          }
+          setEvaluateModal(false);
+          fetchData();
+        } catch (err) {
+          notification['error']({
+            message: `${err.response.data.message}`
           });
         }
-        setEvaluateModal(false);
-        fetchData();
         break;
       case 'REFUND_DECLINED':
-        res = await evaluateRequestToRefund('REFUND_DECLINED', item.id);
-        if (res.status === 200) {
-          notification['success']({
-            message: 'Rejected refund request'
+        try {
+          res = await evaluateRequestToRefund('REFUND_DECLINED', item.id);
+          if (res.status === 200) {
+            notification['success']({
+              message: 'Rejected refund request'
+            });
+          }
+          setEvaluateModal(false);
+          fetchData();
+        } catch (err) {
+          notification['error']({
+            message: `${err.response.data.message}`
           });
         }
-        setEvaluateModal(false);
-        fetchData();
         break;
       default:
     }
@@ -211,14 +232,15 @@ const PaymentReportContainer = () => {
       />
       {evaluateModal && (
         <Modal
-          width='1000px'
+          width='30rem'
+          height='20rem'
           title={'Evaluate request to refund'}
           visible={evaluateModal}
           onCancel={() => setEvaluateModal(false)}
           footer={null}
           centered={true}>
           <div>Refund message: {item.refundReason}</div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: '2rem' }}>
             <div style={{ marginRight: '1rem' }}>
               <Button type='primary' onClick={() => handleEvaluateRequest('REFUNDED')}>
                 Approve

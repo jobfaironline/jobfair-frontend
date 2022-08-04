@@ -1,6 +1,7 @@
-import { Tag } from 'antd';
-import { convertToUTCString } from '../../utils/common';
+import { Tag, Tooltip, Typography } from 'antd';
+import { convertEnumToString, convertToUTCString } from '../../utils/common';
 
+const { Text } = Typography;
 const PaymentReportTableColumn = () => [
   {
     title: 'No',
@@ -14,6 +15,11 @@ const PaymentReportTableColumn = () => [
     })
   },
   {
+    title: 'Company name',
+    dataIndex: 'companyName',
+    key: 'companyName'
+  },
+  {
     title: 'Amount',
     dataIndex: 'price',
     key: 'price',
@@ -22,35 +28,66 @@ const PaymentReportTableColumn = () => [
     })
   },
   {
-    title: 'Start date',
+    title: 'Purchase date',
     dataIndex: 'currentPeriodStart',
     key: 'currentPeriodEnd',
     render: (text) => ({
-      children: convertToUTCString(text)
+      children: `${convertToUTCString(text)}+7`
     })
   },
   {
-    title: 'End date',
+    title: 'Expired date',
     dataIndex: 'currentPeriodEnd',
     key: 'currentPeriodEnd',
-    render: (value) => ({
-      children: convertToUTCString(value)
-    })
+    render: (value) => {
+      if (new Date().getTime() > value) {
+        return {
+          children: (
+            <Tooltip title={<Text type='danger'>This subscription is expired</Text>}>
+              <Text>{convertToUTCString(value)}+7</Text>
+            </Tooltip>
+          )
+        };
+      }
+      return {
+        children: (
+          <Tooltip title={<Text type='success'>This subscription is available</Text>}>
+            <Text>{convertToUTCString(value)}+7</Text>
+          </Tooltip>
+        )
+      };
+    }
   },
   {
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
     render: (value) => ({
-      children: value === 'NOT_USED' ? <Tag color={'green'}>ACTIVE</Tag> : <Tag>{value}</Tag>
+      children: value === 'NOT_USED' ? <Tag color={'green'}>ACTIVE</Tag> : <Tag>{convertEnumToString(value)}</Tag>
     })
   },
   {
     title: 'Refund status',
     dataIndex: 'refundStatus',
-    key: 'status',
+    key: 'refundStatus',
     render: (value) => ({
-      children: value ? <Tag>{value}</Tag> : 'Not available'
+      children: value ? <Tag>{convertEnumToString(value)}</Tag> : 'Not available'
+    })
+  },
+  {
+    title: 'Published job fairs',
+    dataIndex: 'publishedJobFair',
+    key: 'publishedJobFair',
+    render: (value) => ({
+      children: `${value} job fairs`
+    })
+  },
+  {
+    title: 'Total job fairs origin',
+    dataIndex: 'maxJobFairQuota',
+    key: 'maxJobFairQuota',
+    render: (value) => ({
+      children: `${value} job fairs`
     })
   }
 ];

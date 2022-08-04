@@ -1,4 +1,4 @@
-import { Button, Card, Collapse, Descriptions, Divider, Typography, notification } from 'antd';
+import { Button, Card, Descriptions, Modal, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { convertToUTCString, getNYearAfter } from '../../utils/common';
@@ -30,10 +30,11 @@ const SubscriptionDetailContainer = ({ subscriptionId }) => {
 };
 
 const { Title, Text, Paragraph } = Typography;
-const { Panel } = Collapse;
 
 const EnjoyPlanPayment = ({ amount }) => (
-  <Card bodyStyle={{ color: '#4FC3E9', backgroundColor: '#E6FFFB' }}>
+  <Card
+    bodyStyle={{ color: '#4FC3E9', backgroundColor: '#E6FFFB', borderRadius: '30px' }}
+    style={{ borderRadius: '30px', border: '1px solid black' }}>
     <Title level={2}>Enjoy your payment</Title>
     <Paragraph>
       You'll be charged <Text strong>${amount}.00</Text> per year starting{' '}
@@ -47,6 +48,7 @@ const SubscriptionDetailComponent = ({ subscription }) => {
   const history = useHistory();
   const fullName = useSelector((state) => state?.authentication?.user?.fullName);
   const userEmail = useSelector((state) => state?.authentication?.user?.email);
+  const [visible, setVisible] = useState(false);
 
   return (
     <div
@@ -57,39 +59,44 @@ const SubscriptionDetailComponent = ({ subscription }) => {
         alignItems: 'center',
         marginBottom: '2rem'
       }}>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          marginRight: '2rem',
-          marginTop: '-20rem'
-        }}>
-        <Title level={3}>Start your subscription pack today!</Title>
-        <CheckoutFormComponent subscriptionId={subscription?.id} />
-      </div>
+      {visible && (
+        <Modal
+          width={'max-content'}
+          visible={visible}
+          onCancel={() => setVisible(false)}
+          footer={null}
+          centered={true}
+          title={'Please input Card Information'}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column'
+              // marginRight: '2rem',
+              // marginTop: '-20rem',
+              // position: 'absolute'
+            }}>
+            <Title level={3}>Start your subscription pack today!</Title>
+            <CheckoutFormComponent subscriptionId={subscription?.id} />
+          </div>
+        </Modal>
+      )}
       <div style={{ width: '50%', marginRight: '2rem' }}>
         <div style={{ marginBottom: '2rem', marginTop: '2rem' }}>
           <EnjoyPlanPayment amount={subscription?.price} />
         </div>
-        <Collapse bordered={false} defaultActiveKey={'0'} activeKey={'0'}>
-          <Panel
-            header={
-              <Text strong style={{ fontSize: '1rem' }}>
-                General information
-              </Text>
-            }
-            extra={
-              <Button
-                type={'link'}
-                onClick={() => {
-                  history.push(PATH_COMPANY_MANAGER.SUBSCRIPTION_DASH_BOARD);
-                }}
-                style={{ fontSize: '1rem' }}>
-                <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: 5 }} />
-                Back to subscription plans
-              </Button>
-            }>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <Button
+          type={'link'}
+          onClick={() => {
+            history.push(PATH_COMPANY_MANAGER.SUBSCRIPTION_DASH_BOARD);
+          }}
+          style={{ fontSize: '1rem' }}>
+          <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: 5 }} />
+          Back to subscription plans
+        </Button>
+
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <Card style={{ borderRadius: '30px' }}>
+            <Card style={{ borderRadius: '30px' }}>
               <Descriptions title={<Title level={3}>{subscription?.name}</Title>} column={1}>
                 <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
                   <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>{subscription?.description}</p>
@@ -99,16 +106,12 @@ const SubscriptionDetailComponent = ({ subscription }) => {
                   labelStyle={{ fontSize: '1rem' }}>
                   <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>${subscription?.price}.00</p>
                 </Descriptions.Item>
-                <Descriptions.Item>
-                  <Divider style={{ fontWeight: 'bold', backgroundColor: '#000' }} />
-                </Descriptions.Item>
                 <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
-                  <Title level={3}>Package benefits: {subscription?.jobfairQuota} job fairs</Title>
+                  <Title level={3}>Package benefits: {subscription?.jobfairQuota} published job fairs</Title>
                 </Descriptions.Item>
               </Descriptions>
-              <Descriptions.Item>
-                <Divider type='vertical' style={{ fontSize: 'bold', backgroundColor: '#000', height: '50rem' }} />
-              </Descriptions.Item>
+            </Card>
+            <Card style={{ borderRadius: '30px', marginTop: '1rem' }}>
               <Descriptions title={<Title level={3}>Order detail:</Title>} column={1}>
                 <Descriptions.Item
                   contentStyle={{ fontSize: '1rem' }}
@@ -128,9 +131,6 @@ const SubscriptionDetailComponent = ({ subscription }) => {
                   label='Payment method'>
                   <img style={{ width: '30px', height: '20px' }} src={`${window.location.origin}/icon/visa.png`} />
                 </Descriptions.Item>
-                <Descriptions.Item>
-                  <Divider style={{ fontWeight: 'bold', backgroundColor: '#000' }} />
-                </Descriptions.Item>
                 <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
                   <Title level={3}>Customer information:</Title>
                 </Descriptions.Item>
@@ -141,9 +141,14 @@ const SubscriptionDetailComponent = ({ subscription }) => {
                   <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>{userEmail}</p>
                 </Descriptions.Item>
               </Descriptions>
-            </div>
-          </Panel>
-        </Collapse>
+              <div>
+                <Button type='primary' onClick={() => setVisible(true)}>
+                  Proceed to checkout
+                </Button>
+              </div>
+            </Card>
+          </Card>
+        </div>
       </div>
     </div>
   );

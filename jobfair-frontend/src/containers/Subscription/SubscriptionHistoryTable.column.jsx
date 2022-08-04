@@ -1,6 +1,7 @@
-import { Tag } from 'antd';
-import { convertToUTCString } from '../../utils/common';
+import { Tag, Tooltip, Typography } from 'antd';
+import { convertEnumToString, convertToUTCString } from '../../utils/common';
 
+const { Text } = Typography;
 const SubscriptionHistoryTableColumn = () => [
   {
     title: 'No',
@@ -19,25 +20,35 @@ const SubscriptionHistoryTableColumn = () => [
     key: 'name'
   },
   {
-    title: 'Product description',
-    dataIndex: 'description',
-    key: 'description'
-  },
-  {
-    title: 'Start date',
+    title: 'Purchase date',
     dataIndex: 'currentPeriodStart',
     key: 'currentPeriodStart',
     render: (value) => ({
-      children: convertToUTCString(value)
+      children: `${convertToUTCString(value)}+7`
     })
   },
   {
-    title: 'End date',
+    title: 'Expired date',
     dataIndex: 'currentPeriodEnd',
     key: 'currentPeriodEnd',
-    render: (value) => ({
-      children: convertToUTCString(value)
-    })
+    render: (value) => {
+      if (new Date().getTime() > value) {
+        return {
+          children: (
+            <Tooltip title={<Text type='danger'>This subscription is expired</Text>}>
+              <Text>{convertToUTCString(value)}+7</Text>
+            </Tooltip>
+          )
+        };
+      }
+      return {
+        children: (
+          <Tooltip title={<Text type='success'>This subscription is available</Text>}>
+            <Text>{convertToUTCString(value)}+7</Text>
+          </Tooltip>
+        )
+      };
+    }
   },
   {
     title: 'Total price',
@@ -48,11 +59,19 @@ const SubscriptionHistoryTableColumn = () => [
     })
   },
   {
-    title: 'Available job fairs',
-    dataIndex: 'jobfairQuota',
-    key: 'jobfairQuota',
+    title: 'Total job fair origin',
+    dataIndex: 'maxJobFairQuota',
+    key: 'maxJobFairQuota',
     render: (value) => ({
-      children: `${value} left`
+      children: `${value} job fairs`
+    })
+  },
+  {
+    title: 'Published job fair',
+    dataIndex: 'publishedJobFair',
+    key: 'publishedJobFair',
+    render: (value) => ({
+      children: `${value} job fairs`
     })
   },
   {
@@ -60,7 +79,15 @@ const SubscriptionHistoryTableColumn = () => [
     dataIndex: 'status',
     key: 'status',
     render: (value) => ({
-      children: value === 'NOT_USED' ? <Tag color={'green'}>ACTIVE</Tag> : <Tag>{value}</Tag>
+      children: value === 'NOT_USED' ? <Tag color={'green'}>ACTIVE</Tag> : <Tag>{convertEnumToString(value)}</Tag>
+    })
+  },
+  {
+    title: 'Refund status',
+    dataIndex: 'refundStatus',
+    key: 'refundStatus',
+    render: (value) => ({
+      children: value ? <Tag>{convertEnumToString(value)}</Tag> : 'Not available'
     })
   }
 ];
