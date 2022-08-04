@@ -41,3 +41,13 @@ export const MatchingPointColor = {
     score: 70
   }
 };
+
+export const APPLICATION_STATUS = {
+  FINISHED: 'FINISHED',
+  DRAFT: 'DRAFT',
+  DELETED: 'DELETED',
+  PENDING: 'PENDING',
+  CANCEL: 'CANCEL',
+  APPROVE: 'APPROVE',
+  REJECT: 'REJECT'
+};

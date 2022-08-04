@@ -1,5 +1,7 @@
 import './ResumeDetail.styles.scss';
-import { Card, Col, Row, Typography } from 'antd';
+import { APPLICATION_STATUS } from '../../../constants/ApplicationConst';
+import { Card, Col, Descriptions, Row, Tag, Typography } from 'antd';
+import { INTERVIEW_SCHEDULE_STATUS } from '../../../constants/InterviewScheduleConst';
 import { ResumeCertificationList } from './Content/ResumeCertificationList.component';
 import { ResumeOverview } from './Content/ResumeOverview.component';
 import { ResumeReferenceList } from './Content/ResumeReferenceList.component';
@@ -11,6 +13,40 @@ import ResumeEducationList from './Content/ResumeEducationList.component';
 import RoleType from '../../../constants/RoleType';
 
 const { Title, Text } = Typography;
+
+export const InterviewOverview = (props) => {
+  const { data } = props;
+  if (data.status !== APPLICATION_STATUS.APPROVE) return null;
+
+  const tagColor = {
+    NOT_YET: 'lime',
+    INTERVIEWING: 'blue',
+    DONE: 'green',
+    REQUEST_CHANGE: 'red'
+  };
+
+  return (
+    <Card style={{ borderRadius: '8px' }}>
+      <Title level={4}>Interview overview</Title>
+      <div style={{ marginBottom: '10px' }}>
+        <Text strong={true}>Status:</Text> <Tag color={tagColor[data.interviewStatus]}>{data.interviewStatus}</Tag>
+      </div>
+      {data.interviewStatus === INTERVIEW_SCHEDULE_STATUS.DONE ? (
+        <Descriptions layout={'vertical'} size={'small'}>
+          <Descriptions.Item span={3} label={`Interviewer's note`} labelStyle={{ fontWeight: 600 }}>
+            {data.interviewNote}{' '}
+          </Descriptions.Item>
+          <Descriptions.Item span={3} label={`Candidate's advantage`} labelStyle={{ fontWeight: 600 }}>
+            {data.attendantAdvantage}
+          </Descriptions.Item>
+          <Descriptions.Item span={3} label={`Candidate's disadvantage`} labelStyle={{ fontWeight: 600 }}>
+            {data.attendantDisadvantage}
+          </Descriptions.Item>
+        </Descriptions>
+      ) : null}
+    </Card>
+  );
+};
 
 export const ResumeDetailComponent = (props) => {
   const { data, isForCompany = false } = props;
@@ -28,6 +64,7 @@ export const ResumeDetailComponent = (props) => {
         <Col span={7}>
           <ResumeOverview userOverview={data.overviewData} isForCompany={isForCompany} />
           <div>{matchingStatement()}</div>
+          <InterviewOverview data={data} />
         </Col>
         <Col span={17}>
           <Card style={{ borderRadius: '8px' }} className={'list'}>

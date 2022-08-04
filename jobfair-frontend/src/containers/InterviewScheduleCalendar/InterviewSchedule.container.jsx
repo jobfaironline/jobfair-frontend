@@ -2,7 +2,9 @@ import './InterviewScheduleContainer.styles.scss';
 import { Badge, Button, Form, Typography, notification } from 'antd';
 import { INTERVIEW_SCHEDULE_STATUS } from '../../constants/InterviewScheduleConst';
 import { InterviewScheduleCalendar } from '../../components/customized-components/InterviewScheduleCalendar/InterviewScheduleCalendar.component';
+import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
 import { ScheduleDetailDrawer } from '../../components/customized-components/InterviewScheduleCalendar/ScheduleDetailDrawer.component';
+import { generatePath } from 'react-router-dom';
 import { getSchedule, requestChangeSchedule } from '../../services/jobhub-api/InterviewControllerService';
 import { useSelector } from 'react-redux';
 import InterviewScheduleModalDetailComponent from '../../components/customized-components/InterviewScheduleModalDetail/InterviewScheduleModalDetail.component';
@@ -178,6 +180,12 @@ const InterviewScheduleContainer = () => {
     }));
   };
 
+  const handleViewApplication = (applicationId) => {
+    const url = generatePath(PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE, { id: applicationId });
+    const src = `${window.location.origin}${url}?review`;
+    window.open(src);
+  };
+
   return (
     <>
       <ScheduleDetailDrawer
@@ -196,6 +204,7 @@ const InterviewScheduleContainer = () => {
           handleRequestChange={handleRequestChange}
           buttonAction={buttonAction}
           role={role}
+          handleViewApplication={handleViewApplication}
         />
         <InterviewScheduleModalRequestChangeComponent
           data={modalDetail}

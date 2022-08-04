@@ -55,7 +55,7 @@ export const CompactResumeDetail = (props) => {
       maskClosable: true,
       content: (
         <Provider store={store}>
-          <ResumeDetailComponent data={resumeData} isForCompany={true} />
+          <ResumeDetailComponent data={resumeData} isForCompany={false} />
         </Provider>
       )
     });
@@ -65,17 +65,11 @@ export const CompactResumeDetail = (props) => {
     <div className='compact-resume-wrapper'>
       <Card>
         <div style={{ display: 'flex', justifyContent: 'center', width: '100%', padding: '1rem' }}>
-          <Avatar size={80} icon={<UserOutlined />} />
+          <Avatar size={80} icon={<UserOutlined />} src={data.profileImageUrl} />
         </div>
         <Descriptions title={'Applicant resume'} layout={'horizontal'}>
           <Descriptions.Item label='Full name' span={24} style={{ paddingBottom: 0 }}>
             {data.attendant.account.firstname} {data.attendant.account.middlename} {data.attendant.account.lastname}
-          </Descriptions.Item>
-          <Descriptions.Item label='Email' className='unimportant-field' span={24}>
-            {data.email}
-          </Descriptions.Item>
-          <Descriptions.Item label='Phone' span={24}>
-            {data.phone}
           </Descriptions.Item>
           <Descriptions.Item label='Year of exp:' span={24} className='unimportant-field'>
             {data.yearOfExp}

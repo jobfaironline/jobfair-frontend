@@ -1,7 +1,9 @@
 import { Badge, Button, Card, Col, Modal, Row, Space, Typography } from 'antd';
 import { CalendarOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { INTERVIEW_SCHEDULE_STATUS } from '../../../constants/InterviewScheduleConst';
 import { convertEnumToString, convertToDateString } from '../../../utils/common';
+import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import moment from 'moment';
 
@@ -19,7 +21,7 @@ export const handleTag = (status) => {
 };
 
 const InterviewScheduleModalDetailComponent = (props) => {
-  const { data, visible, onCancel, handleRequestChange, buttonAction, role, handleTakeReport } = props;
+  const { data, visible, onCancel, handleRequestChange, buttonAction, role, handleViewApplication } = props;
 
   return (
     <Modal visible={visible} onCancel={onCancel} footer={null} centered={true}>
@@ -88,7 +90,14 @@ const InterviewScheduleModalDetailComponent = (props) => {
                     <Typography.Text type='success'>
                       {role === 'ATTENDANT' && 'You have attended on this interview. Thank you for your time!'}
                     </Typography.Text>
-                    <div>{role === 'COMPANY_EMPLOYEE' && <a onClick={handleTakeReport}>Take report</a>}</div>
+                    <div>
+                      {role === 'COMPANY_EMPLOYEE' && (
+                        <Button type={'primary'} className={'button'} onClick={() => handleViewApplication(data.id)}>
+                          View application{' '}
+                          <FontAwesomeIcon style={{ marginLeft: '5px' }} icon={faArrowUpRightFromSquare} />
+                        </Button>
+                      )}
+                    </div>
                   </>
                 )}
               </Space>

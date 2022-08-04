@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import ApplicationTableColumn from '../CommonTableComponent/columns/ApplicationTable.column';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import React, { useEffect, useState } from 'react';
-import RoleType, { COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../constants/RoleType';
+import RoleType, { ATTENDANT, COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../constants/RoleType';
 
 const ApplicationViewContainer = ({ tabStatus }) => {
   const role = useSelector((state) => state.authentication.user.roles);
@@ -70,15 +70,15 @@ const ApplicationViewContainer = ({ tabStatus }) => {
     setPageSize(pageSize);
   };
 
-  const handleViewResumeDetail = (resumeId, role) => {
+  const handleViewResumeDetail = (record, role) => {
     switch (role) {
       case COMPANY_MANAGER: {
-        const url = generatePath(PATH_COMPANY_MANAGER.RESUME_DETAIL_PAGE, { id: resumeId });
+        const url = generatePath(PATH_COMPANY_MANAGER.RESUME_DETAIL_PAGE, { id: record.id });
         history.push(url);
         break;
       }
       case COMPANY_EMPLOYEE: {
-        const url = generatePath(PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE, { id: resumeId });
+        const url = generatePath(PATH_COMPANY_EMPLOYEE.RESUME_DETAIL_PAGE, { id: record.id });
         history.push(url);
         break;
       }
@@ -97,22 +97,25 @@ const ApplicationViewContainer = ({ tabStatus }) => {
     onSearch: () => {
       //TODO: fetch data for search
     },
-    extra: [
-      {
-        title: 'Actions',
-        key: 'action',
-        width: '6rem',
-        render: (text, record) => (
-          <Space size='middle'>
-            <Tooltip placement='top' title='View detail'>
-              <a onClick={() => handleViewResumeDetail(record.id, role)}>
-                <EyeOutlined />
-              </a>
-            </Tooltip>
-          </Space>
-        )
-      }
-    ],
+    extra:
+      role !== ATTENDANT
+        ? [
+            {
+              title: 'Actions',
+              key: 'action',
+              width: '6rem',
+              render: (text, record) => (
+                <Space size='middle'>
+                  <Tooltip placement='top' title='View detail'>
+                    <a onClick={() => handleViewResumeDetail(record, role)}>
+                      <EyeOutlined />
+                    </a>
+                  </Tooltip>
+                </Space>
+              )
+            }
+          ]
+        : [],
     paginationObject: {
       handlePageChange,
       totalRecord
