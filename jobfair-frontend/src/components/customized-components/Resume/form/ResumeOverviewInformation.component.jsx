@@ -93,7 +93,7 @@ export const ResumeOverviewInformation = ({ id, form }) => (
     <Row>
       <Col span={24}>
         <Form.Item label='About me' name='aboutMe' hasFeedback>
-          <Input.TextArea placeholder='Year of exp' smaxLength={5000} autoSize={{ minRows: 10, maxRows: 10 }} />
+          <Input.TextArea placeholder='About yourself' smaxLength={5000} autoSize={{ minRows: 10, maxRows: 10 }} />
         </Form.Item>
       </Col>
     </Row>
