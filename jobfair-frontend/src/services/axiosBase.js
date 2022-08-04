@@ -1,5 +1,4 @@
-import * as cookie from 'js-cookie';
-import { TOKEN_KEY } from '../constants/AppConst';
+import { USER_STORAGE } from '../constants/AppConst';
 import axios from 'axios';
 
 export const CallAPI = (
@@ -16,7 +15,7 @@ export const CallAPI = (
     : {
         'content-type': 'application/json'
       };
-  token = cookie.get(TOKEN_KEY);
+  token = JSON.parse(localStorage.getItem(USER_STORAGE))?.token;
   if (token && token !== 'undefined') headers.Authorization = `Bearer ${token}`;
 
   return axios({
