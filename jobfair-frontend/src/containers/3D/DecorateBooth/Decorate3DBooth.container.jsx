@@ -8,7 +8,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { GENERIC_BOOTH_LAYOUT_URL } from '../../../constants/3DConst';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { ModeConstant } from '../../../constants/AppConst';
-import { PATH } from '../../../constants/Paths/Path';
+import { PATH, PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import { Stats } from '@react-three/drei';
 import { ToastContainer } from 'react-toastify';
 import {
@@ -287,6 +287,11 @@ export const Decorate3DBoothContainer = (props) => {
       });
     });
 
+  const onClose = () => {
+    const url = PATH_COMPANY_EMPLOYEE.JOB_FAIR_ASSIGNMENT_PAGE;
+    history.push(url);
+  };
+
   const controlButtonsProps = {
     addMoreComponentHandle,
     saveHandle,
@@ -303,7 +308,8 @@ export const Decorate3DBoothContainer = (props) => {
           </>
         )
       });
-    }
+    },
+    onClose
   };
   const sideBarProps = {
     handleOnRotationLeft,

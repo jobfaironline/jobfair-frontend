@@ -1,10 +1,10 @@
 import { Button, Space } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faFloppyDisk, faHistory, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faFloppyDisk, faHistory, faPlus, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
 
 export const ControlButtonGroup = (props) => {
-  const { addMoreComponentHandle, saveHandle, reviewHandle, openBoothModal, saveIntoMyBoothLayout } = props;
+  const { addMoreComponentHandle, saveHandle, reviewHandle, openBoothModal, saveIntoMyBoothLayout, onClose } = props;
 
   const [loadingState, setLoadingState] = useState({
     save: false
@@ -54,6 +54,13 @@ export const ControlButtonGroup = (props) => {
           onClick={openBoothModal}
           icon={<FontAwesomeIcon icon={faHistory} style={{ paddingRight: '0.5rem' }} />}>
           Layout gallery
+        </Button>
+        <Button
+          style={{ width: '12rem' }}
+          type='primary'
+          onClick={onClose}
+          icon={<FontAwesomeIcon icon={faRightFromBracket} style={{ paddingRight: '0.5rem' }} />}>
+          Close
         </Button>
       </Space>
     </div>
