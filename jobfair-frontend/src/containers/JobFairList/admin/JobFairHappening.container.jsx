@@ -8,7 +8,7 @@ import JobFairDetailModalContainer from '../../JobFairDetail/JobFairDetailModal.
 import JobFairForAdminColumn from '../../CommonTableComponent/columns/JobFairForAdmin.column';
 import React, { useEffect, useState } from 'react';
 
-const JobFairHappeningContainer = () => {
+const JobFairHappeningContainer = ({ searchValue }) => {
   const [data, setData] = useState([]);
   //pagination
   const [currentPage, setCurrentPage] = useState(0);
@@ -22,7 +22,7 @@ const JobFairHappeningContainer = () => {
 
   const fetchData = async () => {
     try {
-      const res = await getAllJobFairForAdminAPI({ status: ADMIN_JOB_FAIR_STATUS.HAPPENING });
+      const res = await getAllJobFairForAdminAPI({ status: ADMIN_JOB_FAIR_STATUS.HAPPENING, name: searchValue });
       const result = mapperResponseJobFairForAdmin(res).map((item) => ({
         ...item,
         key: ADMIN_JOB_FAIR_STATUS.HAPPENING
@@ -40,7 +40,7 @@ const JobFairHappeningContainer = () => {
 
   useEffect(() => {
     fetchData();
-  }, [currentPage, pageSize]);
+  }, [currentPage, pageSize, searchValue]);
 
   const handlePageChange = (page, pageSize) => {
     if (page > 0) setCurrentPage(page - 1);
