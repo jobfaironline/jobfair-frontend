@@ -117,7 +117,6 @@ const JobFairGridPublicContainer = ({ role }) => {
           showSearch
           allowClear
           placeholder='Filter by country'
-          //TODO: wait for implement company location
           style={{ width: 200, display: 'none' }}
           onChange={(value) => filterJobFair('country', value)}
           onClear={() => filterJobFair('country', '')}>

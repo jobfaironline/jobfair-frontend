@@ -1,18 +1,24 @@
 import './JobFairGrid.styles.scss';
 import { Button, Card, Col, List, Row, Typography } from 'antd';
-import { EyeOutlined, HeartOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { convertToDateString } from '../../../utils/common';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import Countdown from 'react-countdown';
 import React from 'react';
 
 const { Text } = Typography;
 
 const handleCardContent = (role, jobFair) => {
+  const renderer = ({ hours, minutes, seconds, days }) => (
+    <div>
+      {days ? `${days.toString()}day(s) ` : null}
+      {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
+    </div>
+  );
   switch (role) {
     case 'COMPANY_MANAGER':
       return (
-        <>
+        <div style={{ display: 'flex' }}>
           <div style={{ maxWidth: '200px' }}>
             <Card.Meta title={<Text>{jobFair?.name}</Text>} />
             <Text>{convertToDateString(jobFair?.createTime)}</Text>
@@ -20,23 +26,23 @@ const handleCardContent = (role, jobFair) => {
           <div style={{ marginLeft: 'auto' }}>
             <Text>{jobFair?.status}</Text>
           </div>
-        </>
+        </div>
       );
     case 'ATTENDANT':
       return (
-        <>
-          <Card.Meta title={jobFair?.name} description={jobFair?.companyName} />
-          <div className={'card-footer'}>
-            <div className={'card-footer-item'}>
-              <HeartOutlined />
-              <Text>{jobFair?.hearts}</Text>
+        <div>
+          <Card.Meta title={`${jobFair?.name} from ${jobFair?.company?.name}`} style={{ width: '100%' }} />
+          <div style={{ marginTop: '10px' }}>
+            <div style={{ display: 'flex' }}>
+              <p style={{ marginRight: '5px', marginBottom: '0' }}>Remaining time: </p>{' '}
+              <Countdown date={jobFair?.publicEndTime} renderer={renderer} />
             </div>
             <div className={'card-footer-item'}>
-              <EyeOutlined />
-              <Text>{jobFair?.visitCount}</Text>
+              <Text>Visitors: </Text>
+              <Text> {jobFair?.visitCount}</Text>
             </div>
           </div>
-        </>
+        </div>
       );
     default:
       return <Card.Meta title={jobFair?.name} description={jobFair?.companyName} />;
@@ -94,7 +100,7 @@ const JobFairGridCard = ({ onClick, item, defaultImage, role }) => (
         className={'cover'}
       />
     }>
-    <div style={{ display: 'flex' }}>{handleCardContent(role, item)}</div>
+    {handleCardContent(role, item)}
   </Card>
 );
 
