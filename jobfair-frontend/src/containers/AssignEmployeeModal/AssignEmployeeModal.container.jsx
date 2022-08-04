@@ -104,12 +104,9 @@ export const AssignEmployeeModalContainer = (props) => {
   };
 
   const onOK = async () => {
-    const assginedEmployees = state.data.filter((employee) => state.targetKeys.includes(employee.key));
-    //check for not assign anyone or missing assignment type
-    if (assginedEmployees.length === 0 || assginedEmployees.some((employee) => employee.assignmentType === undefined)) {
-      setIsError(true);
-      return;
-    }
+    const assginedEmployees = state.data
+      .filter((employee) => state.targetKeys.includes(employee.key))
+      .filter((employee) => employee.assignmentType !== undefined);
     //check for required assignment in booth
     const decoratorNum = assginedEmployees.filter(
       (employee) => employee.assignmentType === AssignmentConst.DECORATOR
