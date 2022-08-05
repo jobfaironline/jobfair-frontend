@@ -75,15 +75,23 @@ const SubscriptionListContainer = () => {
   const fetchData = async () => {
     try {
       const res = await getAllSubscriptionPlanAPI('ASC', '', '0', pageSize, 'name');
+
       res.data.content.sort((a, b) => a.price - b.price);
-      const result = res.data.content.map((item) => ({
-        id: item.id,
-        title: item.name,
-        price: item.price,
-        description: item.description,
-        jobfairQuota: item.jobfairQuota,
-        type: typeAndBenefitsMapper(item).type
-      }));
+      const result = res.data.content
+        .map((item) => ({
+          id: item.id,
+          title: item.name,
+          price: item.price,
+          description: item.description,
+          jobfairQuota: item.jobfairQuota,
+          type: typeAndBenefitsMapper(item).type
+        }))
+        .filter(
+          (item) =>
+            item.id === '6f038fc7-4b72-4e38-b9b8-523a013da217' ||
+            item.id === '5fdb64a4-a6f1-43dd-8361-1bbd8a940158' ||
+            item.id === '4b586522-eee3-4c3a-83db-95e2a4d56aa1'
+        );
       setTotalRecord(res.data.totalElements);
       setSubscriptionData(result);
     } catch (error) {

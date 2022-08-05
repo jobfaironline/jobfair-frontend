@@ -18,7 +18,6 @@ const CheckoutFormComponent = ({ subscriptionId }) => {
   const [agree, setIsAgree] = useState(false);
 
   const onSubmit = async (values) => {
-    await sleep(300);
     const body = {
       card: {
         cvc: values.cvc,
@@ -32,7 +31,6 @@ const CheckoutFormComponent = ({ subscriptionId }) => {
       const res = await purchaseSubscriptionAPI(body);
       const invoiceUrl = await getInvoiceAPI(res.data.id);
       const invoiceData = await getInvoiceData(res.data.id);
-      console.log(invoiceData.data);
 
       if (res.status === 200) {
         history.push(PATH.RESULT_SUCCESS_PAGE, {

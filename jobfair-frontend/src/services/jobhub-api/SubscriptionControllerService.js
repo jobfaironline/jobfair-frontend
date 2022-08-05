@@ -76,7 +76,7 @@ export const getAllCompanySubscriptionsAPI = (
 export const getInvoiceAPI = (subscriptionId) => CallAPI(`${GET_INVOICE}/${subscriptionId}`, 'GET', {});
 export const getSubscriptionById = (subscriptionId) =>
   CallAPI(`${GET_ALL_SUBSCRIPTION_PLAN_END_POINT}/${subscriptionId}`, 'GET');
-export const sendRequestToRefund = (body, id) => CallAPI(`${SEND_REQUEST_TO_REFUND}/${id}`, 'POST', body);
+export const sendRequestToRefund = (body) => CallAPI(`${SEND_REQUEST_TO_REFUND}`, 'POST', body);
 export const evaluateRequestToRefund = (status, subscriptionId) =>
   CallAPI(`${EVALUATE_REFUND_REQUEST}?status=${status}&subscriptionId=${subscriptionId}`, 'GET');
 export const decreaseQuota = (subscriptionId) => CallAPI(`${DECREASE_QUOTA}/${subscriptionId}`, 'GET');

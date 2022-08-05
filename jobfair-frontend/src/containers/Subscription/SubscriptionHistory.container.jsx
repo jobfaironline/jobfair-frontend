@@ -77,9 +77,11 @@ const SubscriptionHistoryContainer = () => {
   const handleSendRequestToRefund = async (values) => {
     try {
       const body = {
-        reason: values.reason
+        subscriptionId: id,
+        reason: values.reason,
+        adminEmail: 'admin@jobfair.com'
       };
-      const res = await sendRequestToRefund(body, id);
+      const res = await sendRequestToRefund(body);
       if (res.status === 200) {
         notification['success']({
           message: `Send request to refund successfully!`

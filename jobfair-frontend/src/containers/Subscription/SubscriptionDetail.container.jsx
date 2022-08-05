@@ -37,9 +37,10 @@ const EnjoyPlanPayment = ({ amount }) => (
     style={{ borderRadius: '30px', border: '1px solid black' }}>
     <Title level={2}>Enjoy your payment</Title>
     <Paragraph>
-      You'll be charged <Text strong>${amount}.00</Text> per year starting{' '}
+      You'll be charged <Text strong>${amount}.00</Text> at{' '}
       <Text strong>{convertToUTCString(new Date().getTime())}</Text>. Your subscription will be end at{' '}
-      <Text strong>{convertToUTCString(getNYearAfter(1))}</Text>. You can cancel at any time in your Setting page.
+      <Text strong>{convertToUTCString(getNYearAfter(1))}</Text>. You can refund at any time in your{' '}
+      <a onClick={() => window.open(PATH_COMPANY_MANAGER.SUBSCRIPTION_HISTORY)}>Subscription history </a> page.
     </Paragraph>
   </Card>
 );
@@ -117,7 +118,25 @@ const SubscriptionDetailComponent = ({ subscription }) => {
                   contentStyle={{ fontSize: '1rem' }}
                   labelStyle={{ fontSize: '1rem' }}
                   label='Item name'>
-                  <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>{subscription?.name} for 1 year</p>
+                  <p
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold'
+                    }}>
+                    {subscription?.name} for {subscription?.validPeriod} months
+                  </p>
+                </Descriptions.Item>
+                <Descriptions.Item
+                  contentStyle={{ fontSize: '1rem' }}
+                  labelStyle={{ fontSize: '1rem' }}
+                  label='Available in'>
+                  <p
+                    style={{
+                      fontSize: '1rem',
+                      fontWeight: 'bold'
+                    }}>
+                    {subscription?.validPeriod} months
+                  </p>
                 </Descriptions.Item>
                 <Descriptions.Item
                   contentStyle={{ fontSize: '1rem' }}

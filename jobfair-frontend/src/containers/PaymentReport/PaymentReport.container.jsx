@@ -1,20 +1,5 @@
-import {
-  Button,
-  Card,
-  Col,
-  Divider,
-  Input,
-  Modal,
-  PageHeader,
-  Row,
-  Tag,
-  Timeline,
-  Tooltip,
-  Typography,
-  notification
-} from 'antd';
+import { Button, Card, Col, Divider, Input, Modal, Row, Tag, Timeline, Tooltip, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PATH_ADMIN } from '../../constants/Paths/Path';
 import { convertToUTCString } from '../../utils/common';
 import {
   evaluateRequestToRefund,
@@ -22,7 +7,6 @@ import {
   getSubscriptionById
 } from '../../services/jobhub-api/SubscriptionControllerService';
 import { faEye, faFileEdit } from '@fortawesome/free-solid-svg-icons';
-import { generatePath } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import PaymentReportTableColumn from './PaymentReportTable.column';
@@ -109,9 +93,9 @@ const PaymentReportContainer = () => {
   };
 
   const fetchData = async () => {
-    const res = await getAllSubscriptionForAdmin(searchValue, 'ASC', 0, pageSize, 'currentPeriodStart');
+    const res = await getAllSubscriptionForAdmin(searchValue, 'ASC', currentPage, pageSize, 'currentPeriodStart');
     setData(
-      res.data.content.map((item, index) => ({
+      res.data.content?.map((item, index) => ({
         ...item,
         no: index + 1,
         publishedJobFair: item.subscriptionPlan.jobfairQuota - item.jobfairQuota,
@@ -219,17 +203,6 @@ const PaymentReportContainer = () => {
 
   return (
     <div style={{ marginBottom: '2rem' }}>
-      <PageHeader
-        onBack={() => {
-          const url = generatePath(PATH_ADMIN.JOB_FAIR_LIST_PAGE);
-          history.push(url);
-        }}
-        title={
-          <div style={{ width: '20vw', paddingBottom: '0.5rem', borderBottom: '1.5px solid #00000026' }}>
-            Payments report
-          </div>
-        }
-      />
       {evaluateModal && (
         <Modal
           width='30rem'
@@ -266,9 +239,13 @@ const PaymentReportContainer = () => {
         </Modal>
       )}
       <Card style={{ borderRadius: '10px', height: '100%', marginTop: '1rem' }}>
-        <Typography.Title level={3}>Payments report</Typography.Title>
-        <div className={'search-filter-container'}>
-          <Search placeholder='Search payment by company name' className={'search-bar'} onSearch={handleOnSearch} />
+        <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <Typography.Title level={3}>Payments report</Typography.Title>
+          <Search
+            placeholder='Search payment by company name'
+            onSearch={handleOnSearch}
+            style={{ width: '20rem', marginLeft: '2rem' }}
+          />
         </div>
         <CommonTableContainer {...tableProps} />
       </Card>

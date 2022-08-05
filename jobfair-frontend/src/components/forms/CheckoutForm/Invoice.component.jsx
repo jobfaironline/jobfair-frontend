@@ -1,5 +1,5 @@
 import { Card, Divider, Typography } from 'antd';
-import { convertToUTCString } from '../../../utils/common';
+import { toLocaleUTCDateString } from '../../../utils/common';
 import React from 'react';
 
 const { Title, Text } = Typography;
@@ -21,7 +21,7 @@ const InvoiceComponent = (props) => {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <Title level={5}>DATE PAID</Title>
-              <Text>{convertToUTCString(item?.purchaseDate)}+7</Text>
+              <Text>{toLocaleUTCDateString(item?.purchaseDate * 1000, 'en-US', '7')}</Text>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <Title level={5}>PAYMENT METHOD</Title>

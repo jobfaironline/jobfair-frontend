@@ -1,7 +1,6 @@
 import { Button, Form, Input, InputNumber, Modal, Tooltip, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SubscriptionPlanValidation } from '../../validate/SubscriptionPlanValidation';
-import { convertMomentToMilliseconds } from '../../utils/common';
 import {
   createSubscriptionPlan,
   getAllSubscriptionPlanAPI,
@@ -13,13 +12,12 @@ import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.c
 import React, { useEffect, useState } from 'react';
 import SubscriptionPlanTableColumn from './SubscriptionPlanTable.column';
 import TextArea from 'antd/es/input/TextArea';
-import moment from 'moment';
 
 const { Title } = Typography;
 const { Search } = Input;
 
 const SubscriptionPlanContainer = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
   const [createModal, setCreateModal] = useState(false);
@@ -45,15 +43,15 @@ const SubscriptionPlanContainer = () => {
     return result;
   };
 
-  const disabledDate = (current) =>
-    // Can not select days before today and today
-    current && current < moment().endOf('day');
-
-  const disabledDateTime = () => ({
-    disabledHours: () => range(0, 24).splice(4, 20),
-    disabledMinutes: () => range(30, 60),
-    disabledSeconds: () => [55, 56]
-  });
+  // const disabledDate = (current) =>
+  //   // Can not select days before today and today
+  //   current && current < moment().endOf('day');
+  //
+  // const disabledDateTime = () => ({
+  //   disabledHours: () => range(0, 24).splice(4, 20),
+  //   disabledMinutes: () => range(30, 60),
+  //   disabledSeconds: () => [55, 56]
+  // });
 
   const CreateSubscriptionForm = () => (
     <Form
@@ -71,7 +69,7 @@ const SubscriptionPlanContainer = () => {
             label='Name'
             rules={SubscriptionPlanValidation.name}
             style={{ marginRight: '1rem', flex: 1, width: '40%' }}>
-            <Input placeholder='Enter subscription name' />
+            <Input />
           </Form.Item>
           <Form.Item
             name='price'
@@ -82,15 +80,28 @@ const SubscriptionPlanContainer = () => {
           </Form.Item>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Form.Item label='Valid date' name='validPeriod' rules={SubscriptionPlanValidation.validPeriod}>
+          <Form.Item
+            label='Valid month'
+            name='validPeriod'
+            rules={SubscriptionPlanValidation.validPeriod}
+            style={{ marginRight: '1rem', flex: 1, width: '40%' }}>
             {/*<DatePicker format={DateFormat} disabledDate={disabledDate} disabledTime={disabledDateTime} />*/}
-            <InputNumber addonAfter='months' min={1} max={10000} />
+            <InputNumber addonAfter='months' min={1} max={12} />
           </Form.Item>
+          <Form.Item
+            label='Total allow job fairs'
+            name='jobfairQuota'
+            rules={SubscriptionPlanValidation.jobfairQuota}
+            style={{ flex: 1, width: '30%' }}>
+            <InputNumber addonAfter='job fairs' min={1} max={100} />
+          </Form.Item>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Form.Item
             name='description'
             label='Description'
             rules={SubscriptionPlanValidation.description}
-            style={{ marginLeft: '1rem', flex: 1, width: '50%' }}>
+            style={{ flex: 1, width: '100%' }}>
             <TextArea showCount maxLength={300} autoSize={{ minRows: 3 }} />
           </Form.Item>
         </div>
@@ -117,11 +128,7 @@ const SubscriptionPlanContainer = () => {
 
   const handleCreateSubscription = async (values) => {
     try {
-      const body = {
-        ...values,
-        validPeriod: convertMomentToMilliseconds(values.validPeriod)
-      };
-      const res = await createSubscriptionPlan(body);
+      const res = await createSubscriptionPlan(values);
       if (res.status === 200) {
         setCreateModal(false);
         form.resetFields();
@@ -139,13 +146,13 @@ const SubscriptionPlanContainer = () => {
 
   const fetchData = async () => {
     try {
-      const res = await getAllSubscriptionPlanAPI('ASC', searchValue, 0, pageSize, 'name');
-      res.data.content.sort((a, b) => a.price - b.price);
-      const result = res.data.content.map((item, index) => ({
+      const res = await getAllSubscriptionPlanAPI('ASC', searchValue, currentPage, pageSize, 'name');
+      res.data.content?.sort((a, b) => a.price - b.price);
+      const result = res.data.content?.map((item, index) => ({
         no: index + 1,
         ...item
       }));
-
+      setTotalRecord(res.data.totalElements);
       setData(result);
     } catch (err) {
       notification['error']({
@@ -182,7 +189,8 @@ const SubscriptionPlanContainer = () => {
       id: values.id,
       name: values.name,
       price: values.price,
-      validPeriod: values.validPeriod
+      validPeriod: values.validPeriod,
+      jobfairQuota: values.jobfairQuota
     };
     const res = await updateSubscriptionPlan(body);
     if (res.status === 200) {
@@ -234,7 +242,12 @@ const SubscriptionPlanContainer = () => {
             <Search placeholder='Search plan' className={'search-bar'} onSearch={handleOnSearch} />
           </div>
         </div>
-        <Button type='primary' onClick={() => setCreateModal(true)}>
+        <Button
+          type='primary'
+          onClick={() => {
+            setCreateModal(true);
+            form.resetFields();
+          }}>
           Create subscription plan
         </Button>
       </div>

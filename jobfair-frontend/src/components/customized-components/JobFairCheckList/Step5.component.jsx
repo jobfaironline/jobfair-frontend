@@ -1,6 +1,6 @@
 import { Button, Card, Col, Modal, Row, Tooltip, Typography } from 'antd';
 import { StepComponent } from './Step.component';
-import { convertToUTCString } from '../../../utils/common';
+import { toLocaleUTCDateString } from '../../../utils/common';
 import { useSelector } from 'react-redux';
 import PickSubscriptionFormContainer from '../../../containers/Subscription/PickSubscriptionForm.container';
 import React, { useState } from 'react';
@@ -51,7 +51,7 @@ export const Step5Component = (props) => {
                   <Col>Package name: {chooseSubscription.name}</Col>
                 </Row>
                 <Row>
-                  <Col>Expired date : {convertToUTCString(chooseSubscription.currentPeriodEnd)}</Col>
+                  <Col>Expired date : {toLocaleUTCDateString(chooseSubscription.currentPeriodEnd, 'en-US', '7')}</Col>
                 </Row>
                 <Row>
                   <Col>

@@ -1,5 +1,5 @@
 import { Tag, Tooltip, Typography } from 'antd';
-import { convertEnumToString, convertToUTCString } from '../../utils/common';
+import { convertEnumToString, toLocaleUTCDateString } from '../../utils/common';
 
 const { Text } = Typography;
 const SubscriptionHistoryTableColumn = () => [
@@ -24,7 +24,7 @@ const SubscriptionHistoryTableColumn = () => [
     dataIndex: 'currentPeriodStart',
     key: 'currentPeriodStart',
     render: (value) => ({
-      children: `${convertToUTCString(value)}+7`
+      children: `${toLocaleUTCDateString(value, 'en-US', '7')}`
     })
   },
   {
@@ -36,7 +36,7 @@ const SubscriptionHistoryTableColumn = () => [
         return {
           children: (
             <Tooltip title={<Text type='danger'>This subscription is expired</Text>}>
-              <Text>{convertToUTCString(value)}+7</Text>
+              <Text>{toLocaleUTCDateString(value, 'en-US', '7')}</Text>
             </Tooltip>
           )
         };
@@ -44,7 +44,7 @@ const SubscriptionHistoryTableColumn = () => [
       return {
         children: (
           <Tooltip title={<Text type='success'>This subscription is available</Text>}>
-            <Text>{convertToUTCString(value)}+7</Text>
+            <Text>{toLocaleUTCDateString(value, 'en-US', '7')}</Text>
           </Tooltip>
         )
       };
@@ -79,7 +79,14 @@ const SubscriptionHistoryTableColumn = () => [
     dataIndex: 'status',
     key: 'status',
     render: (value) => ({
-      children: value === 'NOT_USED' ? <Tag color={'green'}>ACTIVE</Tag> : <Tag>{convertEnumToString(value)}</Tag>
+      children:
+        value === 'ACTIVE' ? (
+          <Tag color={'green'}>{convertEnumToString(value)}</Tag>
+        ) : value === 'INACTIVE' ? (
+          <Tag color={'red'}>{convertEnumToString(value)}</Tag>
+        ) : (
+          <Tag>{convertEnumToString(value)}</Tag>
+        )
     })
   },
   {
@@ -87,7 +94,14 @@ const SubscriptionHistoryTableColumn = () => [
     dataIndex: 'refundStatus',
     key: 'refundStatus',
     render: (value) => ({
-      children: value ? <Tag>{convertEnumToString(value)}</Tag> : 'Not available'
+      children:
+        value === 'REQUESTED_REFUND' ? (
+          <Tag color={'gold'}>{convertEnumToString(value)}</Tag>
+        ) : value === 'REFUNDED' ? (
+          <Tag color={'green'}>{convertEnumToString(value)}</Tag>
+        ) : (
+          <Tag color={'red'}>{value ? value : 'Not yet'}</Tag>
+        )
     })
   }
 ];

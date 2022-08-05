@@ -80,6 +80,23 @@ export const convertEnumToString = (data) => {
 
 export const convertToUTCString = (data) => new Date(data).toUTCString();
 
+export function toLocaleUTCDateString(date, locales, offset) {
+  if (!date) return;
+  const timeDiff = 60000;
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZone: 'Asia/Bangkok'
+  };
+  const adjustedDate = new Date(date.valueOf() + timeDiff);
+  return adjustedDate.toLocaleDateString(locales, options, offset);
+}
+
 //Get date (long) after n years
 export const getNYearAfter = (numberOfYears) => {
   const d = new Date();

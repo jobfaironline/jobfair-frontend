@@ -1,5 +1,5 @@
 import { Tag, Tooltip, Typography } from 'antd';
-import { convertEnumToString, convertToUTCString } from '../../utils/common';
+import { convertEnumToString, toLocaleUTCDateString } from '../../utils/common';
 
 const { Text } = Typography;
 const PaymentReportTableColumn = () => [
@@ -31,8 +31,8 @@ const PaymentReportTableColumn = () => [
     title: 'Purchase date',
     dataIndex: 'currentPeriodStart',
     key: 'currentPeriodEnd',
-    render: (text) => ({
-      children: `${convertToUTCString(text)}+7`
+    render: (value) => ({
+      children: `${toLocaleUTCDateString(value, 'en-US', '7')}`
     })
   },
   {
@@ -44,7 +44,7 @@ const PaymentReportTableColumn = () => [
         return {
           children: (
             <Tooltip title={<Text type='danger'>This subscription is expired</Text>}>
-              <Text>{convertToUTCString(value)}+7</Text>
+              <Text>{toLocaleUTCDateString(value, 'en-US', '7')}</Text>
             </Tooltip>
           )
         };
@@ -52,7 +52,7 @@ const PaymentReportTableColumn = () => [
       return {
         children: (
           <Tooltip title={<Text type='success'>This subscription is available</Text>}>
-            <Text>{convertToUTCString(value)}+7</Text>
+            <Text>{toLocaleUTCDateString(value, 'en-US', '7')}</Text>
           </Tooltip>
         )
       };
@@ -62,17 +62,43 @@ const PaymentReportTableColumn = () => [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
+    filter: [
+      {
+        text: 'Active',
+        value: 'ACTIVE'
+      },
+      {
+        text: 'Inactive',
+        value: 'INACTIVE'
+      }
+    ],
     render: (value) => ({
-      children: value === 'NOT_USED' ? <Tag color={'green'}>ACTIVE</Tag> : <Tag>{convertEnumToString(value)}</Tag>
-    })
+      children:
+        value === 'ACTIVE' ? (
+          <Tag color={'green'}>{convertEnumToString(value)}</Tag>
+        ) : value === 'INACTIVE' ? (
+          <Tag color={'red'}>{convertEnumToString(value)}</Tag>
+        ) : (
+          <Tag>{convertEnumToString(value)}</Tag>
+        )
+    }),
+    onFilter: (value, record) => record.status.includes(value)
   },
   {
     title: 'Refund status',
     dataIndex: 'refundStatus',
     key: 'refundStatus',
     render: (value) => ({
-      children: value ? <Tag>{convertEnumToString(value)}</Tag> : 'Not available'
-    })
+      children:
+        value === 'REQUESTED_REFUND' ? (
+          <Tag color={'gold'}>{convertEnumToString(value)}</Tag>
+        ) : value === 'REFUNDED' ? (
+          <Tag color={'green'}>{convertEnumToString(value)}</Tag>
+        ) : (
+          <Tag color={'red'}>{value ? value : 'Not yet'}</Tag>
+        )
+    }),
+    onFilter: (value, record) => record.name.includes(value)
   },
   {
     title: 'Published job fairs',
