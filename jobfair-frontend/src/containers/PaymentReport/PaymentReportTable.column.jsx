@@ -109,7 +109,7 @@ const PaymentReportTableColumn = () => [
     })
   },
   {
-    title: 'Total job fairs origin',
+    title: 'Total allow job fair',
     dataIndex: 'maxJobFairQuota',
     key: 'maxJobFairQuota',
     render: (value) => ({

@@ -3,17 +3,19 @@ import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
 import { chooseSubscriptionAction } from '../../redux-flow/choose-subscription/choose-subscription-slice';
 import { getAllCompanySubscriptionsAPI } from '../../services/jobhub-api/SubscriptionControllerService';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
+import PickSubscriptionTableColumn from './PickSubscriptionTable.column';
 import React, { useLayoutEffect, useState } from 'react';
-import SubscriptionHistoryTableColumn from './SubscriptionHistoryTable.column';
 
 const { Text } = Typography;
-const PickSubscriptionFormContainer = ({ setSelectionVisible }) => {
+const PickSubscriptionFormContainer = ({ setSelectionVisible, jobFairId }) => {
   const [data, setData] = useState([]);
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   //pagination
   // eslint-disable-next-line no-unused-vars
@@ -71,6 +73,11 @@ const PickSubscriptionFormContainer = ({ setSelectionVisible }) => {
     setSelectionVisible(false);
   };
 
+  const handleBuyMoreSubscription = (jobFairId) => {
+    dispatch(chooseSubscriptionAction.saveJobFairId(jobFairId));
+    history.push(PATH_COMPANY_MANAGER.SUBSCRIPTION_DASH_BOARD);
+  };
+
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       setSelectedRowKeys(selectedRowKeys);
@@ -85,7 +92,7 @@ const PickSubscriptionFormContainer = ({ setSelectionVisible }) => {
 
   const tableProps = {
     tableData: data,
-    tableColumns: SubscriptionHistoryTableColumn,
+    tableColumns: PickSubscriptionTableColumn,
     paginationObject: {
       handlePageChange,
       totalRecord
@@ -99,7 +106,7 @@ const PickSubscriptionFormContainer = ({ setSelectionVisible }) => {
     <>
       {data.length === 0 && (
         <Text type='danger'>
-          Please <a href={PATH_COMPANY_MANAGER.SUBSCRIPTION_DASH_BOARD}>buy more subscription</a> to publish job fair!
+          Please <a onClick={() => handleBuyMoreSubscription(jobFairId)}>buy more subscription</a> to publish job fair!
         </Text>
       )}
       <CommonTableContainer {...tableProps} />

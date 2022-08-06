@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const chooseSubscriptionSlice = createSlice({
   name: "chooseSubscription",
   initialState: {
-    subscriptionItem: {}
+    subscriptionItem: {},
+    jobFairId: ""
   },
   reducers: {
     setSubscriptionItem: (state, action) => {
@@ -16,6 +17,12 @@ const chooseSubscriptionSlice = createSlice({
       return {
         ...state,
         subscriptionItem: {}
+      };
+    },
+    saveJobFairId: (state, action) => {
+      return {
+        ...state,
+        jobFairId: action.payload
       };
     }
   }

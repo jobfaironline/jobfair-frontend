@@ -1,5 +1,6 @@
 import { Button, Card, Col, Divider, Input, Modal, Row, Tag, Timeline, Tooltip, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { NotificationType } from '../../constants/NotificationConstant';
 import { convertToUTCString } from '../../utils/common';
 import {
   evaluateRequestToRefund,
@@ -7,7 +8,8 @@ import {
   getSubscriptionById
 } from '../../services/jobhub-api/SubscriptionControllerService';
 import { faEye, faFileEdit } from '@fortawesome/free-solid-svg-icons';
-import { useHistory } from 'react-router-dom';
+import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
+import { useSelector } from 'react-redux';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import PaymentReportTableColumn from './PaymentReportTable.column';
 import React, { useEffect, useState } from 'react';
@@ -15,8 +17,6 @@ import React, { useEffect, useState } from 'react';
 const { Search } = Input;
 const { Text, Title } = Typography;
 const PaymentReportContainer = () => {
-  const history = useHistory();
-
   const [data, setData] = useState();
   const [visible, setVisible] = useState(false);
   const [item, setItem] = useState({});
@@ -31,6 +31,8 @@ const PaymentReportContainer = () => {
   // eslint-disable-next-line no-unused-vars
   const [pageSize, setPageSize] = useState(10);
   //
+
+  const webSocketClient = useSelector(selectWebSocket);
 
   const SubscriptionDetailComponent = ({ item }) => (
     <div>
@@ -108,6 +110,15 @@ const PaymentReportContainer = () => {
   useEffect(() => {
     fetchData();
   }, [currentPage, pageSize, searchValue]);
+
+  useEffect(() => {
+    webSocketClient.addEvent('new-request-refund', async (notificationData) => {
+      if (notificationData.notificationType === NotificationType.NOTI) await fetchData();
+    });
+    return () => {
+      webSocketClient.removeEvent('new-request-refund');
+    };
+  }, []);
 
   const handlePageChange = (page, pageSize) => {
     if (page > 0) setCurrentPage(page - 1);

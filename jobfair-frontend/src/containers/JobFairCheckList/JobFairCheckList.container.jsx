@@ -351,6 +351,7 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
             progressScore={state.progressData.score}
             hasAnotherPublishJobFair={state.hasAnotherPublishJobFair}
             handlePublishJobFair={handlePublishJobFair}
+            jobFairId={jobFairId}
           />
         </div>
       </div>

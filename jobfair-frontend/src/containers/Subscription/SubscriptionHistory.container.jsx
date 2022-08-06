@@ -1,5 +1,6 @@
 import { Button, Form, Modal, Tooltip, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { NotificationType } from '../../constants/NotificationConstant';
 import { REQUIRED_VALIDATOR } from '../../validate/GeneralValidation';
 import { faEye, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -7,6 +8,8 @@ import {
   getInvoiceAPI,
   sendRequestToRefund
 } from '../../services/jobhub-api/SubscriptionControllerService';
+import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
+import { useSelector } from 'react-redux';
 import CommonTableContainer from '../CommonTableComponent/CommonTableComponent.container';
 import React, { useEffect, useState } from 'react';
 import SubscriptionHistoryTableColumn from './SubscriptionHistoryTable.column';
@@ -21,6 +24,7 @@ const SubscriptionHistoryContainer = () => {
   const [id, setId] = useState();
   const [form] = Form.useForm();
   const [item, setItem] = useState();
+  const webSocketClient = useSelector(selectWebSocket);
 
   //pagination
   // eslint-disable-next-line no-unused-vars
@@ -62,6 +66,15 @@ const SubscriptionHistoryContainer = () => {
   useEffect(async () => {
     await fetchData();
   }, [currentPage, pageSize]);
+
+  useEffect(() => {
+    webSocketClient.addEvent('new-evaluation', async (notificationData) => {
+      if (notificationData.notificationType === NotificationType.NOTI) await fetchData();
+    });
+    return () => {
+      webSocketClient.removeEvent('new-evaluation');
+    };
+  }, []);
 
   const handleViewDetail = async (id) => {
     const res = await getInvoiceAPI(id);

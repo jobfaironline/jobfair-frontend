@@ -92,7 +92,7 @@ const SubscriptionDashboardPage = () => (
           <Title level={5}>Explore all the features of JobHub with just 1 purchase!</Title>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          Recommended payment method:{' '}
+          Available payment method:{' '}
           <img style={{ width: '5%' }} src={`${window.location.origin}/icon/Visa_Inc._logo.svg`} />
         </div>
       </div>

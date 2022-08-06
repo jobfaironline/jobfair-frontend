@@ -8,11 +8,10 @@ import React, { useState } from 'react';
 const { Text, Title } = Typography;
 
 export const Step5Component = (props) => {
-  const { isFinish, progressScore, handlePublishJobFair, hasAnotherPublishJobFair } = props;
+  const { isFinish, progressScore, handlePublishJobFair, hasAnotherPublishJobFair, jobFairId } = props;
   const [selectionVisible, setSelectionVisible] = useState(false);
   const chooseSubscription = useSelector((state) => state?.chooseSubscription?.subscriptionItem);
 
-  console.log(hasAnotherPublishJobFair);
   return (
     <>
       {selectionVisible && (
@@ -23,7 +22,7 @@ export const Step5Component = (props) => {
           footer={null}
           centered={true}
           title={'Select your subscription to continue'}>
-          <PickSubscriptionFormContainer setSelectionVisible={setSelectionVisible} />
+          <PickSubscriptionFormContainer setSelectionVisible={setSelectionVisible} jobFairId={jobFairId} />
         </Modal>
       )}
       <StepComponent isFinish={isFinish}>

@@ -1,8 +1,9 @@
+import { Divider, Popover, Result, Typography } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
-import { Result, Typography } from 'antd';
-import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
-import { useHistory, useLocation } from 'react-router-dom';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { generatePath, useHistory, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import InvoiceComponent from '../../components/forms/CheckoutForm/Invoice.component';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import React, { useEffect, useState } from 'react';
@@ -15,6 +16,7 @@ const ResultSuccessPage = () => {
   const history = useHistory();
   const urlDestination = location.state.invoiceURL;
   const invoiceData = location.state.invoiceData;
+  const jobFairId = useSelector((state) => state?.chooseSubscription?.jobFairId);
 
   useEffect(async () => {
     setUrl(urlDestination);
@@ -45,9 +47,28 @@ const ResultSuccessPage = () => {
               </a>{' '}
               to view your receipt
             </Paragraph>
-            <a onClick={() => history.push(PATH_COMPANY_MANAGER.SUBSCRIPTION_HISTORY)}>
-              Go to my subscription <FontAwesomeIcon icon={faArrowRightLong} />
-            </a>
+            <Popover
+              placement={'top'}
+              trigger={'hover'}
+              content={
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <a onClick={() => history.push(PATH_COMPANY_MANAGER.SUBSCRIPTION_HISTORY)}>Go to my subscription</a>
+                  <Divider />
+                  {jobFairId !== '' && (
+                    <a
+                      onClick={() => {
+                        const url = generatePath(PATH_COMPANY_MANAGER.CHECKLIST, {
+                          jobFairId
+                        });
+                        history.push(url);
+                      }}>
+                      Use this subscription now!
+                    </a>
+                  )}
+                </div>
+              }>
+              <FontAwesomeIcon icon={faInfoCircle} />
+            </Popover>
           </div>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <InvoiceComponent item={data} />

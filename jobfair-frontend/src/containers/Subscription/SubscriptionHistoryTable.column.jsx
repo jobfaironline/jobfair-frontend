@@ -59,7 +59,7 @@ const SubscriptionHistoryTableColumn = () => [
     })
   },
   {
-    title: 'Total job fair origin',
+    title: 'Total allow job fair',
     dataIndex: 'maxJobFairQuota',
     key: 'maxJobFairQuota',
     render: (value) => ({
