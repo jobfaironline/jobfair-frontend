@@ -1,8 +1,10 @@
 import { AssignmentConst } from '../constants/AssignmentConst';
 import { NotificationAction } from '../constants/NotificationConstant';
-import { PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
+import { PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
 import { generatePath } from 'react-router-dom';
+import RoleType from '../constants/RoleType';
 import moment from 'moment';
+import store from '../redux-flow';
 
 export const mapperForNotification = (data) => {
   const notification = JSON.parse(JSON.stringify(data));
@@ -84,6 +86,7 @@ export const mapperForNotification = (data) => {
       } catch (e) {
         //ignore
       }
+      break;
     }
     case NotificationAction.WARNING_TASK_SUPERVISOR_ASSIGN: {
       try {
@@ -108,6 +111,7 @@ export const mapperForNotification = (data) => {
       } catch (e) {
         //ignore
       }
+      break;
     }
     case NotificationAction.WARNING_TASK_SUPERVISOR_PROFILE: {
       try {
@@ -132,6 +136,7 @@ export const mapperForNotification = (data) => {
       } catch (e) {
         //ignore
       }
+      break;
     }
     case NotificationAction.WARNING_TASK_DECORATOR: {
       try {
@@ -157,6 +162,25 @@ export const mapperForNotification = (data) => {
       } catch (e) {
         //ignore
       }
+      break;
+    }
+    case NotificationAction.WARNING_INTERVIEW: {
+      try {
+        notification.title = 'Up comming interview schedule';
+
+        notification.message = 'You have an up comming interview. Check your schedule now!';
+        notification.action = () => {
+          const { authentication } = store.getState();
+          const role = authentication.user.roles;
+          window.location.href =
+            role === RoleType.COMPANY_EMPLOYEE
+              ? generatePath(PATH_COMPANY_EMPLOYEE.INTERVIEW_SCHEDULE)
+              : generatePath(PATH_ATTENDANT.INTERVIEW_SCHEDULE);
+        };
+      } catch (e) {
+        //ignore
+      }
+      break;
     }
     default:
       return notification;
