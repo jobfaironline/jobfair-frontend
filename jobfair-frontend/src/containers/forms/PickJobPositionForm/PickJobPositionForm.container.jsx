@@ -4,14 +4,17 @@ import { BoothDescriptionValidation } from '../../../validate/BoothDescriptionVa
 import { Button, Card, Form, Image, Input, Modal, Typography, notification } from 'antd';
 import { LoadingComponent } from '../../../components/commons/Loading/Loading.component';
 import { PATH, PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
+import { UploadCSVModal } from '../../UploadModal/UploadCSVModal.container';
 import {
   assignJobPositionToBooth,
+  assignJobPositionToBoothCSV,
   getCompanyBoothById
 } from '../../../services/jobhub-api/JobFairBoothControllerService';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getAssignmentById } from '../../../services/jobhub-api/AssignmentControllerService';
 import { handleFieldsError } from '../../../utils/handleFIeldsError';
 import { mapperCompanyBooth } from '../../../utils/mapperCompanyBoooth';
+import { uploadUtil } from '../../../utils/uploadCSVUtil';
 import PickJobPositionForm from '../../../components/forms/PickJobPositionForm/PickJobPositionForm.component';
 import PickJobPositionTableContainer from '../../JobPositionTable/JobPositionTable.container';
 import React, { useEffect, useRef, useState } from 'react';
@@ -24,6 +27,8 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [arrKey, setArrKey] = useState([]);
   const [formData, setFormData] = useState();
+  const [uploadCSVModalVisibility, setUploadCSVModalVisibility] = useState(false);
+  const [rerender, setRender] = useState(false);
 
   const hasFetchData = useRef(false);
   const [form] = Form.useForm();
@@ -31,7 +36,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [rerender]);
 
   const calculateKeyArr = () => {
     const hasTestArr = form
@@ -135,8 +140,28 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
     });
     window.open(`${window.location.origin}${url}`);
   };
+
+  const onClickUploadCSV = () => {
+    setUploadCSVModalVisibility(true);
+  };
+
+  const onCloseUploadModal = () => {
+    setUploadCSVModalVisibility(false);
+    setRender((prevState) => !prevState);
+  };
+
+  const onUpload = async (file) => {
+    await uploadUtil(file, assignJobPositionToBoothCSV, formData.boothId);
+    hasFetchData.current = false;
+  };
   return (
     <>
+      <UploadCSVModal
+        visible={uploadCSVModalVisibility}
+        handleUpload={onUpload}
+        onCancel={onCloseUploadModal}
+        templateURl={`${window.location.origin}/xlsx_template/job_position_booth_profile_success.xlsx`}
+      />
       <Modal
         width={800}
         title='Choose job position'
@@ -215,6 +240,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
               handleRemove={handleRemove}
               onChangeHaveTest={onChangeHaveTest}
               arrKey={arrKey}
+              onClickUploadCSV={onClickUploadCSV}
             />
           </div>
         </div>

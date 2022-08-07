@@ -6,3 +6,11 @@ export const getJobFairBoothByJobFairId = (jobFairId) =>
 export const getCompanyBoothById = (companyBoothId) =>
   CallAPI(`${ENDPOINT_JOB_FAIR_BOOTH}/${companyBoothId}`, 'GET', {}, {});
 export const assignJobPositionToBooth = (body) => CallAPI(`${ENDPOINT_JOB_FAIR_BOOTH}`, 'POST', body, {});
+export const assignJobPositionToBoothCSV = (formData, jobFairBoothId) =>
+  CallAPI(
+    `${ENDPOINT_JOB_FAIR_BOOTH}/csv`,
+    'POST',
+    formData,
+    { jobFairBoothId },
+    { 'content-type': 'multipart/form-data' }
+  );

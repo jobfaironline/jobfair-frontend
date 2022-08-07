@@ -1,14 +1,14 @@
 import './PickJobPositionForm.styles.scss';
 import { Button, Card, Checkbox, Form, Input, InputNumber, Popconfirm, Typography } from 'antd';
 import { JobPositionFormModal } from '../JobPositionForm/JobPositionFormModal.component';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { formatMoney, parseMoney } from '../../../utils/common';
 import React, { useState } from 'react';
 
 const { Title, Text } = Typography;
 
 const PickJobPositionForm = (props) => {
-  const { handlePickJobPosition, form, handleRemove, onChangeHaveTest, arrKey, onFinish } = props;
+  const { handlePickJobPosition, form, handleRemove, onChangeHaveTest, arrKey, onFinish, onClickUploadCSV } = props;
 
   const finishModal = async () => {
     try {
@@ -35,7 +35,12 @@ const PickJobPositionForm = (props) => {
         onCancel={finishModal}
         onFinish={finishModal}
       />
-      <Title level={3}>Booth's job position</Title>
+      <div style={{ display: 'flex' }}>
+        <Title level={3}>Booth's job position</Title>
+        <Button style={{ marginLeft: 'auto' }} type={'primary'} icon={<UploadOutlined />} onClick={onClickUploadCSV}>
+          Upload CSV
+        </Button>
+      </div>
       <Form
         form={form}
         layout='vertical'
