@@ -42,8 +42,8 @@ const JobFairLandingPageFormComponent = ({
         className={'form-item'}
         tooltip={'Thumbnail for your landing page'}
         required>
-        <UploadComponent uploadProps={uploadProps} aspect={2 / 1} isImageCrop={true}>
-          {thumbnailUrl ? <img src={thumbnailUrl} alt='avatar' style={{ width: '100%' }} /> : undefined}
+        <UploadComponent uploadProps={uploadProps} aspect={2} isImageCrop={true}>
+          {thumbnailUrl ? <img src={thumbnailUrl} alt='avatar' style={{ width: '50%' }} /> : undefined}
         </UploadComponent>
       </Form.Item>
       <Form.Item

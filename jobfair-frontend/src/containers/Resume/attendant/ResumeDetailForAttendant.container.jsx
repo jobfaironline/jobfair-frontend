@@ -26,7 +26,7 @@ const mapperResumeDetail = (resume) => {
       phoneNumber: resume.phone,
       jobTitle: resume.jobTitle,
       yearOfExperience: resume.yearOfExp,
-      location: CountryConst.find((item) => (item.id = resume.countryId))?.name,
+      location: CountryConst.find((item) => item.id === resume.countryId)?.name,
       educationLevel: highestEducationLevel,
       profileImage: resume.profileImageUrl,
       jobLevel: resume.jobLevel
@@ -81,7 +81,7 @@ const ResumeDetailForAttendantContainer = (props) => {
           </Button>
         ) : null}
       </div>
-      <ResumeDetailComponent data={data} />
+      <ResumeDetailComponent data={data} isForCompany={false} />
     </div>
   );
 };

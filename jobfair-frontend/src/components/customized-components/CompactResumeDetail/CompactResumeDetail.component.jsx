@@ -55,7 +55,7 @@ export const CompactResumeDetail = (props) => {
       maskClosable: true,
       content: (
         <Provider store={store}>
-          <ResumeDetailComponent data={resumeData} isForCompany={false} />
+          <ResumeDetailComponent data={resumeData} isForCompany={true} />
         </Provider>
       )
     });

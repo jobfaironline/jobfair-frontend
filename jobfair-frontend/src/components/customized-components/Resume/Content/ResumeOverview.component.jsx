@@ -16,7 +16,7 @@ export const ResumeOverview = ({ userOverview, isForCompany }) => (
             <Text>{userOverview?.fullName}</Text>
           </Col>
         </Row>
-        {isForCompany ? (
+        {!isForCompany ? (
           <>
             <Row style={{ marginBottom: '5px' }}>
               <Col span={8}>

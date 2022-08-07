@@ -97,7 +97,7 @@ const ResumeDetailForCompanyContainer = ({ resumeId }) => {
     <>
       <div style={{ marginTop: '1rem' }}>
         <Typography.Title level={1}>Candidate resume</Typography.Title>
-        <ResumeDetailComponent data={data} />
+        <ResumeDetailComponent data={data} isForCompany={true} />
       </div>
       {data.status === 'PENDING' ? (
         <div style={{ position: 'absolute', top: '600px', left: '-100px', width: '700px' }}>

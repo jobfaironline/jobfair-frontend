@@ -349,13 +349,13 @@ const OrganizeJobFairContainer = () => {
             }}>
             Go to checklist
           </Button>
-          {layoutData.glb ? (
-            <>
+          {/*{layoutData.glb ? (
+            <div style={{ display: 'none' }}>
               <JobFairParkMapComponent mapMesh={layoutData.glb} />{' '}
-            </>
+            </div>
           ) : (
             <div className={'no-layout'}>No layout is chosen</div>
-          )}
+          )}*/}
         </>
       }
       leftSide={
@@ -375,7 +375,7 @@ const OrganizeJobFairContainer = () => {
       isNextButtonDisable={isError}
       isPrevButtonDisable={false}
       onPrev={onPrev(currentStep)}
-      ratio={450 / 1728}
+      ratio={100 / 1}
       currentStep={currentStep}
     />
   ];
