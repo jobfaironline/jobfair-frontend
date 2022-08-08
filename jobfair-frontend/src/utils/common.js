@@ -44,6 +44,8 @@ export const convertToDateString = (dateValue) => {
   }
 };
 
+export const getTimeDifferenceInDate = (date1, date2) => (date1 - date2) / (1000 * 3600 * 24);
+
 export const convertToDateValue = (dateString) => Date.parse(dateString);
 
 export const convertToMoment = (data) => {
@@ -64,6 +66,8 @@ export const handleConvertRangePicker = (data) => {
   return result;
 };
 
+export const convertMomentToMilliseconds = (moment) => convertToDateValue(moment.format());
+
 //convert enum status to string
 export const convertEnumToString = (data) => {
   if (!data) return data;
@@ -75,6 +79,33 @@ export const convertEnumToString = (data) => {
 };
 
 export const convertToUTCString = (data) => new Date(data).toUTCString();
+
+export function toLocaleUTCDateString(date, locales, offset) {
+  if (!date) return;
+  const timeDiff = 60000;
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZone: 'Asia/Bangkok'
+  };
+  const adjustedDate = new Date(date.valueOf() + timeDiff);
+  return adjustedDate.toLocaleDateString(locales, options, offset);
+}
+
+//Get date (long) after n years
+export const getNYearAfter = (numberOfYears) => {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = d.getMonth();
+  const day = d.getDate();
+  const result = new Date(year + numberOfYears, month, day).getTime();
+  return result;
+};
 
 //
 export const handleCreateListEmailFromListAccount = (arr) => {

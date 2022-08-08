@@ -1,0 +1,15 @@
+.ant-card-actions {
+  width: 100%;
+  border-radius: 30px;
+}
+
+.ant-list ant-list-split ant-list-grid {
+  .ant-spin-nested-loading {
+    .ant-spin-container {
+      .ant-row {
+        width: 100% !important;
+      }
+    }
+  }
+}
+

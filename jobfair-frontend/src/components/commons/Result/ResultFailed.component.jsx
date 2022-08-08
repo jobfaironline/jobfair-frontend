@@ -1,24 +1,24 @@
-import { Button, Result, Space, Typography } from 'antd';
 import { CloseCircleOutlined } from '@ant-design/icons';
-import { Link, useHistory } from 'react-router-dom';
-import { PATH } from '../../../constants/Paths/Path';
+import { Result, Space, Typography } from 'antd';
 import React from 'react';
 
 const ResultFailedComponent = () => {
   const { Paragraph, Text } = Typography;
-  const history = useHistory();
+  // const history = useHistory();
 
   return (
     <>
       <Result
         status='error'
-        title='Submission Failed'
+        title='Failed to checkout'
         subTitle='Please check and modify the following information before resubmitting.'
-        extra={[
-          <Button type='primary' key='console' onClick={() => history.push(PATH.INDEX)}>
-            Back to home page
-          </Button>
-        ]}>
+        extra={
+          [
+            // <Button type='primary' key='console' onClick={() => history.push(PATH.INDEX)}>
+            //   Back to home page
+            // </Button>
+          ]
+        }>
         <div className='desc'>
           <Paragraph>
             <Text
@@ -26,15 +26,13 @@ const ResultFailedComponent = () => {
               style={{
                 fontSize: 16
               }}>
-              The content you submitted has the following error:
+              There is an error occurred when we process your transaction
             </Text>
           </Paragraph>
           <Paragraph>
             <Space>
               <CloseCircleOutlined className='site-result-demo-error-icon' />
-              There is a registration still in evaluating process. Please wait at least 12 hours to resubmit another
-              registration
-              <Link to='/contacts'>Contact with admin &gt;&gt;</Link>
+              Sorry! The card you provided is invalid. Please check your card carefully and try again!
             </Space>
           </Paragraph>
         </div>

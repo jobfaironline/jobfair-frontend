@@ -1,13 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authenticationReducer from './authentication/authentication-slice';
-import jobPositionsReducer from './jobPositions/job-positions-slice';
-import agoraReducer from './agora/agora-slice';
-import decorateBoothReducer from './decorateBooth/decorate-booth-slice';
-import inventoryReducer from './inventory/inventory-slice';
-import webSocketReducer from './web-socket/web-socket-slice';
-import notificationReducer from './notification/notification-slice';
-import boothTabReducer from './boothInfoTab/boothInfoTab-slice';
-import interviewRoomReducer from './interviewRoom/interview-room-slice';
+import { configureStore } from "@reduxjs/toolkit";
+import authenticationReducer from "./authentication/authentication-slice";
+import jobPositionsReducer from "./jobPositions/job-positions-slice";
+import agoraReducer from "./agora/agora-slice";
+import decorateBoothReducer from "./decorateBooth/decorate-booth-slice";
+import inventoryReducer from "./inventory/inventory-slice";
+import webSocketReducer from "./web-socket/web-socket-slice";
+import notificationReducer from "./notification/notification-slice";
+import boothTabReducer from "./boothInfoTab/boothInfoTab-slice";
+import interviewRoomReducer from "./interviewRoom/interview-room-slice";
+import chooseSubscription from "./choose-subscription/choose-subscription-slice";
 
 const store = configureStore({
   reducer: {
@@ -19,7 +20,8 @@ const store = configureStore({
     webSocket: webSocketReducer,
     notification: notificationReducer,
     boothTab: boothTabReducer,
-    interviewRoom: interviewRoomReducer
+    interviewRoom: interviewRoomReducer,
+    chooseSubscription: chooseSubscription
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

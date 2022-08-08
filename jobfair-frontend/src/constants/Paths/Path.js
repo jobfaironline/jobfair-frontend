@@ -28,7 +28,9 @@ export const PATH_ADMIN = {
   APPROVAL_REGISTRATION_PAGE: '/admin/approval-registration/:jobFairId',
   JOB_FAIR_DETAIL_PAGE: '/admin/job-fair-detail',
   JOB_FAIR_PLAN_LIST_PAGE: '/admin/job-fair-plan-list',
-  COMPANY_REGISTRATION_DETAIL_PAGE: '/admin/company-registration-detail'
+  COMPANY_REGISTRATION_DETAIL_PAGE: '/admin/company-registration-detail',
+  SUBSCRIPTION_PLAN: '/admin/subscription-plans',
+  PAYMENT_REPORT: '/admin/payment-report'
 };
 export const PATH_ATTENDANT = {
   PROFILE_PAGE: `/profile`,
@@ -77,5 +79,8 @@ export const PATH_COMPANY_MANAGER = {
   CHECKLIST: '/company/checklist/:jobFairId',
   REVIEW_MAP: '/company/review-map/:layoutId',
   JOB_FAIR_DASH_BOARD: '/company/dashboard/jobfair/:jobFairId',
-  BOOTH_DASH_BOARD: '/company/dashboard/booth/:boothId'
+  BOOTH_DASH_BOARD: '/company/dashboard/booth/:boothId',
+  SUBSCRIPTION_DASH_BOARD: '/company/subscription/',
+  SUBSCRIPTION_DETAIL: '/company/subscription/:subscriptionId',
+  SUBSCRIPTION_HISTORY: '/company/subscription-history'
 };

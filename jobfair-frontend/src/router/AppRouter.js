@@ -6,12 +6,12 @@ import { JobFairMapReviewPage } from '../pages/JobFairMapReviewPage/JobFairMapRe
 import { Layout } from 'antd';
 import { PATH, PATH_ADMIN, PATH_ATTENDANT, PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../constants/Paths/Path';
 import { Redirect, Route, Switch, matchPath, useLocation } from 'react-router-dom';
-import { ResultSuccessPage } from '../pages/ResultSuccessPage/ResultSuccessPage';
 import { UserAgentModal } from '../components/customized-components/UserAgentWarningModal/UserAgentWarningModal.component';
 import { selectWebSocket } from '../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import AboutApplicationPage from '../pages/AboutApplicationPage';
 import AccountProfilePage from '../pages/ProfilePage/Account/AccountProfilePage';
+import AdminRouter from './components/AdminRouter';
 import ApplicationManagementPage from '../pages/ApplicationManagementPage/ApplicationManagementPage';
 import AssignTaskPage from '../pages/AssignTaskPage/AssignTaskPage';
 import AttendantAttemptTestPage from '../pages/AttendantAttemptTestPage/AttendantAttemptTestPage';
@@ -44,6 +44,7 @@ import JobFairTemplatePage from '../pages/JobFairTemplatePage/JobFairTemplatePag
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NavigationBar from '../components/commons/Navbar/Navbar';
 import OrganizeJobFairPage from '../pages/OrganizeJobFairPage/OrganizeJobFairPage';
+import PaymentReportPage from '../pages/PaymentReport/PaymentReportPage';
 import PublicRouter from './components/PublicRouter';
 import PublicizedBoothPage from '../pages/PublicizedBoothPage/PublicizedBoothPage';
 import QuestionBankPage from '../pages/QuestionBankPage/QuestionBankPage';
@@ -51,10 +52,15 @@ import React, { useEffect } from 'react';
 import RegisterPage from '../pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from '../pages/ResetPasswordPage/ResetPasswordPage';
 import ResultFailedPage from '../pages/ResultFailedPage/ResultFailedPage';
+import ResultSuccessPage from '../pages/ResultSuccessPage/ResultSuccessPage';
 import ResumeAddPage from '../pages/ResumeAddPage/ResumeAddPage';
 import ResumeDetailPage from '../pages/ResumeDetailPage/ResumeDetailPage';
 import ResumeEditPage from '../pages/ResumeEditPage/ResumeEditPage';
 import ResumeManagementPage from '../pages/ResumeManagementPage/ResumeManagementPage';
+import SubscriptionDashboardPage from '../pages/SubscriptionPage/SubscriptionDashboardPage';
+import SubscriptionDetailPage from '../pages/SubscriptionPage/SubscriptionDetailPage';
+import SubscriptionHistoryPage from '../pages/SubscriptionPage/SubscriptionHistoryPage';
+import SubscriptionPlanManagementPage from '../pages/SubscriptionPlan/SubscriptionPlanManagementPage';
 
 const excludeFooterPages = [
   PATH.BOOTH_PAGE,
@@ -153,6 +159,18 @@ const AppRouter = () => {
             key={PATH.FORGOT_PASSWORD_PAGE}
             component={() => <ForgotPasswordPage />}
             path={PATH.FORGOT_PASSWORD_PAGE}
+            exact
+          />
+          <AdminRouter
+            key={PATH_ADMIN.SUBSCRIPTION_PLAN}
+            component={() => <SubscriptionPlanManagementPage />}
+            path={PATH_ADMIN.SUBSCRIPTION_PLAN}
+            exact
+          />
+          <AdminRouter
+            key={PATH_ADMIN.PAYMENT_REPORT}
+            component={() => <PaymentReportPage />}
+            path={PATH_ADMIN.PAYMENT_REPORT}
             exact
           />
           <AttendantRouter
@@ -387,6 +405,24 @@ const AppRouter = () => {
             key={PATH_COMPANY_MANAGER.BOOTH_DASH_BOARD}
             component={() => <BoothDashboardPage />}
             path={PATH_COMPANY_MANAGER.BOOTH_DASH_BOARD}
+            exact
+          />
+          <CompanyManagerRouter
+            key={PATH_COMPANY_MANAGER.SUBSCRIPTION_DASH_BOARD}
+            component={() => <SubscriptionDashboardPage />}
+            path={PATH_COMPANY_MANAGER.SUBSCRIPTION_DASH_BOARD}
+            exact
+          />
+          <CompanyManagerRouter
+            key={PATH_COMPANY_MANAGER.SUBSCRIPTION_DETAIL}
+            component={() => <SubscriptionDetailPage />}
+            path={PATH_COMPANY_MANAGER.SUBSCRIPTION_DETAIL}
+            exact
+          />
+          <CompanyManagerRouter
+            key={PATH_COMPANY_MANAGER.SUBSCRIPTION_HISTORY}
+            component={() => <SubscriptionHistoryPage />}
+            path={PATH_COMPANY_MANAGER.SUBSCRIPTION_HISTORY}
             exact
           />
           <Route path='/index.html'>

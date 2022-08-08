@@ -44,6 +44,10 @@ export const CompanyManagerMenu = [
   {
     title: 'Job fair 3D layout',
     link: PATH_COMPANY_MANAGER.TEMPLATE_GRID_PAGE
+  },
+  {
+    title: 'Subscription plans',
+    link: PATH_COMPANY_MANAGER.SUBSCRIPTION_DASH_BOARD
   }
 ];
 
@@ -58,6 +62,14 @@ export const AdminMenu = [
   {
     title: 'Job fair list',
     link: PATH_ADMIN.JOB_FAIR_LIST_PAGE
+  },
+  {
+    title: 'Manage subscription plans',
+    link: PATH_ADMIN.SUBSCRIPTION_PLAN
+  },
+  {
+    title: 'Payments report',
+    link: PATH_ADMIN.PAYMENT_REPORT
   }
 ];
 

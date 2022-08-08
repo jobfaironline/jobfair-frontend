@@ -10,7 +10,7 @@ import moment from 'moment';
 const { Text, Title } = Typography;
 
 export const PublishJobFairConfirmModal = (props) => {
-  const { publishModalVisible, publishJobFairEvent, onCancel, jobFairData, statistics } = props;
+  const { publishModalVisible, publishJobFairEvent, onCancel, jobFairData, statistics, chooseSubscription } = props;
   const [agree, setAgree] = useState();
   return (
     <Modal
@@ -125,6 +125,40 @@ export const PublishJobFairConfirmModal = (props) => {
           <Col>
             <Text strong style={{ color: statistics.assignedBoothNum === 0 ? 'red' : 'green' }}>
               {statistics.assignedBoothNum}
+            </Text>
+          </Col>
+        </Row>
+      </div>
+      <div>
+        <Title level={5}>Confirm charge subscription</Title>
+        <Text>The following subscription will be charged: </Text>
+        <Row style={{ marginBottom: '5px' }}>
+          <Col span={8}>
+            <Text>Package name: </Text>
+          </Col>
+          <Col>
+            <Text strong style={{ color: statistics.assignedBoothNum === 0 ? 'red' : 'green' }}>
+              {chooseSubscription?.name}
+            </Text>
+          </Col>
+        </Row>
+        <Row style={{ marginBottom: '5px' }}>
+          <Col span={8}>
+            <Text>Package description: </Text>
+          </Col>
+          <Col>
+            <Text strong style={{ color: statistics.assignedBoothNum === 0 ? 'red' : 'green' }}>
+              {chooseSubscription?.description}
+            </Text>
+          </Col>
+        </Row>
+        <Row style={{ marginBottom: '5px' }}>
+          <Col span={8}>
+            <Text>Valid during: </Text>
+          </Col>
+          <Col>
+            <Text strong style={{ color: statistics.assignedBoothNum === 0 ? 'red' : 'green' }}>
+              {chooseSubscription?.subscriptionPlan?.validPeriod} months
             </Text>
           </Col>
         </Row>
