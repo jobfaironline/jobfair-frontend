@@ -1,12 +1,13 @@
-import { Button, Card, Col, Divider, Input, Modal, Row, Tag, Timeline, Tooltip, Typography, notification } from 'antd';
+import { Button, Card, Col, Divider, Input, Modal, Row, Tag, Tooltip, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NotificationType } from '../../constants/NotificationConstant';
-import { convertToUTCString } from '../../utils/common';
 import {
+  adminGetInvoiceURL,
   evaluateRequestToRefund,
   getAllSubscriptionForAdmin,
   getSubscriptionById
 } from '../../services/jobhub-api/SubscriptionControllerService';
+import { convertEnumToString, toLocaleUTCDateString } from '../../utils/common';
 import { faEye, faFileEdit } from '@fortawesome/free-solid-svg-icons';
 import { selectWebSocket } from '../../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
@@ -34,6 +35,11 @@ const PaymentReportContainer = () => {
 
   const webSocketClient = useSelector(selectWebSocket);
 
+  const handleViewReceipt = async (id) => {
+    const res = await adminGetInvoiceURL(id);
+    return window.open(res.data);
+  };
+
   const SubscriptionDetailComponent = ({ item }) => (
     <div>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -49,41 +55,51 @@ const PaymentReportContainer = () => {
           </Row>
           <Row align='left' gutter={[4, 24]}>
             <Col span={8}>
-              Status: <Tag color={item.status === 'ACTIVE' ? 'green' : 'red'}>{item?.status} </Tag>
+              Status: <Tag color={item.status === 'ACTIVE' ? 'green' : 'red'}>{convertEnumToString(item?.status)} </Tag>
             </Col>
             <Col span={8}>Available job fair: {item?.jobfairQuota} left</Col>
           </Row>
         </Card>
         <Divider />
         <Card>
-          <Title level={3}>Timeline: </Title>
-          <Timeline>
-            <Timeline.Item color='green'>Start at: {convertToUTCString(item?.currentPeriodStart)}</Timeline.Item>
-          </Timeline>
-          <Timeline>
-            <Timeline.Item color='green'>End at: {convertToUTCString(item?.currentPeriodEnd)}</Timeline.Item>
-          </Timeline>
-        </Card>
-        <Divider />
-        <Card>
           <Title level={3}>Payment detail: </Title>
           <Row align='left' gutter={[4, 24]}>
-            <Col span={8}>Payment Id: ${item.id}</Col>
+            <Col span={8}>Payment Id: {item.id}</Col>
           </Row>
           <Row align='left' gutter={[4, 24]}>
-            <Col span={8}>Period start: {convertToUTCString(item?.currentPeriodStart)}</Col>
-            <Col span={8}>Period end: {convertToUTCString(item?.currentPeriodEnd)}</Col>
+            <Col span={8}>Period start: {toLocaleUTCDateString(item?.currentPeriodStart, 'en-US', '7')}</Col>
+            <Col span={8}>Period end: {toLocaleUTCDateString(item?.currentPeriodEnd, 'en-US', '7')}</Col>
           </Row>
           <Row align='left' gutter={[4, 24]}>
             <Col span={8}>Payment method: VISA</Col>
-            {item.cancelAt ? <Col span={8}>Cancel at: {convertToUTCString(item?.cancelAt)}</Col> : null}
-          </Row>
-          <Row align='left' gutter={[4, 24]}>
-            {item.refundStatus ? <Col span={8}>Refund status: {item?.refundStatus}</Col> : null}
-            {item.refundReason ? <Col span={8}>Refund reason: {item?.refundReason}</Col> : null}
+            {item.cancelAt ? (
+              <Col span={8}>Cancel at: {toLocaleUTCDateString(item?.cancelAt, 'en-US', '7')}</Col>
+            ) : null}
           </Row>
         </Card>
+        {item.refundReason && item.refundStatus && (
+          <>
+            <Divider />
+            <Card>
+              <Title level={3}>Refund detail: </Title>
+              <Row align='left' gutter={[4, 24]}>
+                {item.refundStatus ? (
+                  <Col span={8}>
+                    Refund status:{' '}
+                    <Tag color={item?.refundStatus === 'REFUNDED' ? 'green' : 'red'}>
+                      {convertEnumToString(item?.refundStatus)}
+                    </Tag>
+                  </Col>
+                ) : null}
+                {item.refundReason ? <Col span={8}>Refund reason: {item?.refundReason}</Col> : null}
+              </Row>
+            </Card>
+          </>
+        )}
         <Divider />
+        <Text>
+          <a onClick={() => handleViewReceipt(item.id)}>View this subscription receipt</a>
+        </Text>
       </div>
     </div>
   );

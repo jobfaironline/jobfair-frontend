@@ -28,7 +28,8 @@ const SubscriptionPlanTableColumn = () => [
     key: 'price',
     render: (value) => ({
       children: `$${value}.00`
-    })
+    }),
+    sorter: (a, b) => a.price - b.price
   },
   {
     title: 'Job fair max quota',

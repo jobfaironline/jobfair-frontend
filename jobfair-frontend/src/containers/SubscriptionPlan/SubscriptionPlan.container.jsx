@@ -245,8 +245,10 @@ const SubscriptionPlanContainer = () => {
         <Button
           type='primary'
           onClick={() => {
-            setCreateModal(true);
             form.resetFields();
+            setItem({});
+            setIsEditable(false);
+            setCreateModal(true);
           }}>
           Create subscription plan
         </Button>

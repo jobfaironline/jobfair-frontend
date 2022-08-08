@@ -1,8 +1,8 @@
-import { Button, Card, Descriptions, Modal, Typography, notification } from 'antd';
+import { Button, Card, Descriptions, Modal, Select, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
-import { convertToUTCString, getNYearAfter } from '../../utils/common';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { getNYearAfter, toLocaleUTCDateString } from '../../utils/common';
 import { getSubscriptionPlanById } from '../../services/jobhub-api/SubscriptionControllerService';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -38,8 +38,8 @@ const EnjoyPlanPayment = ({ amount }) => (
     <Title level={2}>Enjoy your payment</Title>
     <Paragraph>
       You'll be charged <Text strong>${amount}.00</Text> at{' '}
-      <Text strong>{convertToUTCString(new Date().getTime())}</Text>. Your subscription will be end at{' '}
-      <Text strong>{convertToUTCString(getNYearAfter(1))}</Text>. You can refund at any time in your{' '}
+      <Text strong>{toLocaleUTCDateString(new Date().getTime(), 'en-US', '7')}</Text>. Your subscription will be end at{' '}
+      <Text strong>{toLocaleUTCDateString(getNYearAfter(1), 'en-US', '7')}</Text>. You can refund at any time in your{' '}
       <a onClick={() => window.open(PATH_COMPANY_MANAGER.SUBSCRIPTION_HISTORY)}>Subscription history </a> page.
     </Paragraph>
   </Card>
@@ -148,7 +148,21 @@ const SubscriptionDetailComponent = ({ subscription }) => {
                   contentStyle={{ fontSize: '1rem' }}
                   labelStyle={{ fontSize: '1rem' }}
                   label='Payment method'>
-                  <img style={{ width: '30px', height: '20px' }} src={`${window.location.origin}/icon/visa.png`} />
+                  <Select
+                    labelInValue
+                    defaultValue={{
+                      value: (
+                        <img
+                          style={{ width: '30px', height: '20px' }}
+                          src={`${window.location.origin}/icon/visa.png`}
+                        />
+                      )
+                    }}
+                    style={{ width: 120, position: 'absolute', zIndex: 10 }}>
+                    <Select.Option value={'VISA'}>
+                      <img style={{ width: '30px', height: '20px' }} src={`${window.location.origin}/icon/visa.png`} />
+                    </Select.Option>
+                  </Select>
                 </Descriptions.Item>
                 <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
                   <Title level={3}>Customer information:</Title>

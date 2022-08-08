@@ -29,49 +29,6 @@ const SubscriptionListContainer = () => {
     history.push(url);
   };
 
-  const typeAndBenefitsMapper = (item) => {
-    switch (item.id) {
-      case '5fdb64a4-a6f1-43dd-8361-1bbd8a940158':
-        return {
-          type: 'FREE',
-          benefits: [
-            {
-              id: 1,
-              name: '3 job fairs',
-              status: true
-            }
-          ]
-        };
-      case '6f038fc7-4b72-4e38-b9b8-523a013da217':
-        return {
-          type: 'STANDARD',
-          benefits: [
-            {
-              id: 1,
-              name: '5 job fairs',
-              status: true
-            }
-          ]
-        };
-      case '4b586522-eee3-4c3a-83db-95e2a4d56aa1':
-        return {
-          type: 'PREMIUM',
-          benefits: [
-            {
-              id: 1,
-              name: '7 job fairs',
-              status: true
-            }
-          ]
-        };
-      default:
-        return {
-          type: 'OTHERS',
-          benefits: []
-        };
-    }
-  };
-
   const fetchData = async () => {
     try {
       const res = await getAllSubscriptionPlanAPI('ASC', '', '0', pageSize, 'name');
@@ -84,7 +41,7 @@ const SubscriptionListContainer = () => {
           price: item.price,
           description: item.description,
           jobfairQuota: item.jobfairQuota,
-          type: typeAndBenefitsMapper(item).type
+          validPeriod: item.validPeriod
         }))
         .filter(
           (item) =>
@@ -164,6 +121,9 @@ const SubscriptionListContainer = () => {
                 </Descriptions.Item>
                 <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
                   <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>${item.price}.00</p>
+                </Descriptions.Item>
+                <Descriptions.Item contentStyle={{ fontSize: '1rem' }} labelStyle={{ fontSize: '1rem' }}>
+                  <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>Available in {item.validPeriod} months</p>
                 </Descriptions.Item>
                 <Descriptions.Item>
                   <Divider style={{ fontWeight: 'bold', backgroundColor: '#000' }} />

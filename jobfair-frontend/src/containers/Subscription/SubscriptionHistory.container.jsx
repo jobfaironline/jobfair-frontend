@@ -2,7 +2,7 @@ import { Button, Form, Modal, Tooltip, Typography, notification } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NotificationType } from '../../constants/NotificationConstant';
 import { REQUIRED_VALIDATOR } from '../../validate/GeneralValidation';
-import { faEye, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faInfoCircle, faMoneyBill } from '@fortawesome/free-solid-svg-icons';
 import {
   getAllCompanySubscriptionsAPI,
   getInvoiceAPI,
@@ -15,11 +15,12 @@ import React, { useEffect, useState } from 'react';
 import SubscriptionHistoryTableColumn from './SubscriptionHistoryTable.column';
 import TextArea from 'antd/es/input/TextArea';
 
-const { Title } = Typography;
+const { Text, Title } = Typography;
 
 const SubscriptionHistoryContainer = () => {
   const [data, setData] = useState();
   const [visible, setVisible] = useState(false);
+  const [warningModal, setWarningModal] = useState(false);
 
   const [id, setId] = useState();
   const [form] = Form.useForm();
@@ -155,6 +156,7 @@ const SubscriptionHistoryContainer = () => {
               </Button>
             </Tooltip>
             {record.status !== 'INACTIVE' &&
+              record.refundStatus !== 'REFUND_DECLINED' &&
               record.jobfairQuota !== 0 &&
               record.subscriptionPlan.jobfairQuota - record.jobfairQuota === 0 &&
               new Date().getTime() < record.currentPeriodEnd && (
@@ -164,6 +166,13 @@ const SubscriptionHistoryContainer = () => {
                   </Button>
                 </Tooltip>
               )}
+            {record.refundStatus === 'REFUND_DECLINED' && (
+              <Tooltip title='Click for more detail'>
+                <Button type='link' onClick={() => setWarningModal(true)}>
+                  <FontAwesomeIcon icon={faInfoCircle} />
+                </Button>
+              </Tooltip>
+            )}
           </>
         )
       }
@@ -186,6 +195,19 @@ const SubscriptionHistoryContainer = () => {
           <RequestToRefundForm />
         </Modal>
       ) : null}
+      {warningModal && (
+        <Modal
+          className={'add-employee-modal'}
+          visible={warningModal}
+          onCancel={() => setWarningModal(false)}
+          title={'Reject reason'}
+          footer={null}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <Text strong>We reviewed your request and your purchase does not meet the conditions for a refund</Text>
+            <Button onClick={() => (window.location = 'mailto:contact@jobhub.works')}>Contact us</Button>
+          </div>
+        </Modal>
+      )}
       <CommonTableContainer {...tableProps} />
     </div>
   );

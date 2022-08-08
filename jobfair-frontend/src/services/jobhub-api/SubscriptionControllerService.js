@@ -81,3 +81,4 @@ export const evaluateRequestToRefund = (status, subscriptionId) =>
   CallAPI(`${EVALUATE_REFUND_REQUEST}?status=${status}&subscriptionId=${subscriptionId}`, 'GET');
 export const decreaseQuota = (subscriptionId) => CallAPI(`${DECREASE_QUOTA}/${subscriptionId}`, 'GET');
 export const getInvoiceData = (subscriptionId) => CallAPI(`${GET_INVOICE_DATA}/${subscriptionId}`);
+export const adminGetInvoiceURL = (subscriptionId) => CallAPI(`${GET_INVOICE}/admin/${subscriptionId}`, 'GET');

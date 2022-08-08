@@ -56,7 +56,8 @@ const SubscriptionHistoryTableColumn = () => [
     key: 'price',
     render: (value) => ({
       children: `$${value}.00`
-    })
+    }),
+    sorter: (a, b) => a.price - b.price
   },
   {
     title: 'Total allow job fair',
@@ -78,6 +79,17 @@ const SubscriptionHistoryTableColumn = () => [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
+    filters: [
+      {
+        text: 'Active',
+        value: 'ACTIVE'
+      },
+      {
+        text: 'Inactive',
+        value: 'INACTIVE'
+      }
+    ],
+    onFilter: (value, record) => record.status.indexOf(value) === 0,
     render: (value) => ({
       children:
         value === 'ACTIVE' ? (
@@ -93,6 +105,21 @@ const SubscriptionHistoryTableColumn = () => [
     title: 'Refund status',
     dataIndex: 'refundStatus',
     key: 'refundStatus',
+    filters: [
+      {
+        text: 'Requested refund',
+        value: 'REQUESTED_REFUND'
+      },
+      {
+        text: 'Refunded',
+        value: 'REFUNDED'
+      },
+      {
+        text: 'Refund declined',
+        value: 'REFUND_DECLINED'
+      }
+    ],
+    onFilter: (value, record) => record.refundStatus?.indexOf(value) === 0,
     render: (value) => ({
       children:
         value === 'REQUESTED_REFUND' ? (
@@ -100,7 +127,7 @@ const SubscriptionHistoryTableColumn = () => [
         ) : value === 'REFUNDED' ? (
           <Tag color={'green'}>{convertEnumToString(value)}</Tag>
         ) : (
-          <Tag color={'red'}>{value ? value : 'Not yet'}</Tag>
+          <Tag color={'red'}>{value ? convertEnumToString(value) : 'Not yet'}</Tag>
         )
     })
   }

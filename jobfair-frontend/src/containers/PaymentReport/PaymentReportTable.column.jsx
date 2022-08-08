@@ -25,7 +25,8 @@ const PaymentReportTableColumn = () => [
     key: 'price',
     render: (text) => ({
       children: `$${text}.00`
-    })
+    }),
+    sorter: (a, b) => a.price - b.price
   },
   {
     title: 'Purchase date',
@@ -62,7 +63,7 @@ const PaymentReportTableColumn = () => [
     title: 'Status',
     dataIndex: 'status',
     key: 'status',
-    filter: [
+    filters: [
       {
         text: 'Active',
         value: 'ACTIVE'
@@ -72,6 +73,7 @@ const PaymentReportTableColumn = () => [
         value: 'INACTIVE'
       }
     ],
+    onFilter: (value, record) => record.status.indexOf(value) === 0,
     render: (value) => ({
       children:
         value === 'ACTIVE' ? (
@@ -81,13 +83,27 @@ const PaymentReportTableColumn = () => [
         ) : (
           <Tag>{convertEnumToString(value)}</Tag>
         )
-    }),
-    onFilter: (value, record) => record.status.includes(value)
+    })
   },
   {
     title: 'Refund status',
     dataIndex: 'refundStatus',
     key: 'refundStatus',
+    filters: [
+      {
+        text: 'Requested refund',
+        value: 'REQUESTED_REFUND'
+      },
+      {
+        text: 'Refunded',
+        value: 'REFUNDED'
+      },
+      {
+        text: 'Refund declined',
+        value: 'REFUND_DECLINED'
+      }
+    ],
+    onFilter: (value, record) => record.refundStatus?.indexOf(value) === 0,
     render: (value) => ({
       children:
         value === 'REQUESTED_REFUND' ? (
@@ -95,10 +111,9 @@ const PaymentReportTableColumn = () => [
         ) : value === 'REFUNDED' ? (
           <Tag color={'green'}>{convertEnumToString(value)}</Tag>
         ) : (
-          <Tag color={'red'}>{value ? value : 'Not yet'}</Tag>
+          <Tag color={'red'}>{value ? convertEnumToString(value) : 'Not yet'}</Tag>
         )
-    }),
-    onFilter: (value, record) => record.name.includes(value)
+    })
   },
   {
     title: 'Published job fairs',
