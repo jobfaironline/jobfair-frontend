@@ -16,10 +16,10 @@ export class WebSocketClient {
           case NotificationType.NOTI: {
             notificationData = mapperForNotification(notificationData);
             notification['success']({
-              message: notificationData.title,
-              description: notificationData.message,
+              message: notificationData?.title ?? '',
+              description: notificationData?.message ?? '',
               duration: 5,
-              onClick: notificationData.action,
+              onClick: notificationData?.action,
               className: notificationData.action ? 'notification-message-clickable' : ''
             });
             store.dispatch(notificationAction.addNotification(notificationData));

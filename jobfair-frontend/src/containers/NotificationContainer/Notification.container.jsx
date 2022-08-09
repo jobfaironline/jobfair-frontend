@@ -14,7 +14,7 @@ import React, { useLayoutEffect, useRef, useState } from 'react';
 
 export const NotificationContainer = () => {
   const notificationData = useSelector((state) => state.notification.data);
-  const unreadNotification = notificationData.filter((notification) => !notification.read);
+  const unreadNotification = notificationData.filter((notification) => !notification?.read);
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState(false);
   const dialogRef = useRef();

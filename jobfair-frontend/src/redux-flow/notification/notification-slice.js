@@ -8,7 +8,7 @@ const notificationSlice = createSlice({
   },
   reducers: {
     setData: (state, action) => {
-      state.data = action.payload;
+      state.data = action.payload.filter((noti) => noti !== undefined);
     },
     addNotification: (state, action) => {
       state.data.push(action.payload);

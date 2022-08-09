@@ -223,9 +223,6 @@ const JobFairAssignmentContainer = () => {
   };
   useEffect(() => {
     fetchData();
-    return () => {
-      webSocketClient.removeEvent('refresh-assignment-list');
-    };
   }, [currentPage, pageSize, reRender, currentTab]);
 
   useEffect(() => {
@@ -237,6 +234,9 @@ const JobFairAssignmentContainer = () => {
     webSocketClient.addEvent('refresh-assignment-list', () => {
       setRerender((prevState) => !prevState);
     });
+    return () => {
+      webSocketClient.removeEvent('refresh-assignment-list');
+    };
   }, []);
 
   const handlePageChange = (page, pageSize) => {
