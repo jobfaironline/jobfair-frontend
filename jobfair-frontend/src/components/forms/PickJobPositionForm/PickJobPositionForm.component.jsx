@@ -8,7 +8,8 @@ import React, { useState } from 'react';
 const { Title, Text } = Typography;
 
 const PickJobPositionForm = (props) => {
-  const { handlePickJobPosition, form, handleRemove, onChangeHaveTest, arrKey, onFinish, onClickUploadCSV } = props;
+  const { handlePickJobPosition, form, handleRemove, onChangeHaveTest, arrKey, onFinish, onClickUploadCSV, formData } =
+    props;
 
   const finishModal = async () => {
     try {
@@ -48,7 +49,7 @@ const PickJobPositionForm = (props) => {
         requiredMark='required'
         autoComplete='off'
         scrollToFirstError
-        initialValues={{ description: undefined, jobPositions: [] }} //will go
+        initialValues={{ ...formData }}
         className={'pick-job-position-form'}>
         <Form.Item>
           <Button className={'add-job-button'} onClick={() => handlePickJobPosition()} block icon={<PlusOutlined />}>

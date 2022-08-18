@@ -123,15 +123,27 @@ export const SkillTagsConst = [
   },
   {
     id: 5,
-    name: 'Ban hang'
+    name: 'Cybersecurity'
   },
   {
     id: 6,
-    name: 'Bao Chi'
+    name: 'Cloud computing'
   },
   {
     id: 7,
-    name: 'Bat dong san'
+    name: 'Data analytics and data science'
+  },
+  {
+    id: 8,
+    name: 'Networking and wireless'
+  },
+  {
+    id: 9,
+    name: 'Software development'
+  },
+  {
+    id: 10,
+    name: 'AI and machine learning'
   }
 ];
 

@@ -28,7 +28,6 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
   const [arrKey, setArrKey] = useState([]);
   const [formData, setFormData] = useState();
   const [uploadCSVModalVisibility, setUploadCSVModalVisibility] = useState(false);
-  const [rerender, setRender] = useState(false);
 
   const hasFetchData = useRef(false);
   const [form] = Form.useForm();
@@ -36,7 +35,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
 
   useEffect(() => {
     fetchData();
-  }, [rerender]);
+  }, [uploadCSVModalVisibility]);
 
   const calculateKeyArr = () => {
     const hasTestArr = form
@@ -56,6 +55,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
       .map((position) => position.no);
     setArrKey(hasTestArr);
     setFormData(formData);
+    form.setFieldsValue({ ...formData });
   };
 
   const handlePickJobPosition = () => {
@@ -122,10 +122,10 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
 
   if (!formData) return <LoadingComponent isWholePage={true} />;
 
-  if (hasFetchData.current === false) {
+  /*  if (hasFetchData.current === false) {
     form.setFieldsValue({ ...formData });
     hasFetchData.current = true;
-  }
+  }*/
 
   const handleView3DBooth = () => {
     const url = generatePath(PATH_COMPANY_EMPLOYEE.JOB_FAIR_BOOTH_REVIEW, {
@@ -147,7 +147,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
 
   const onCloseUploadModal = () => {
     setUploadCSVModalVisibility(false);
-    setRender((prevState) => !prevState);
+    //setRender((prevState) => !prevState);
   };
 
   const onUpload = async (file) => {
@@ -222,7 +222,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
               </Card>
             </div>
             <div className={'booth-description-container'}>
-              <Form form={form} onFinish={onFinish}>
+              <Form form={form} onFinish={onFinish} initialValues={{ ...formData }}>
                 <Form.Item label='Booth name' name='name' rules={BoothDescriptionValidation.name}>
                   <Input placeholder="Booth's name" />
                 </Form.Item>
@@ -234,6 +234,7 @@ const PickJobPositionFormContainer = ({ assignmentId }) => {
           </div>
           <div className={'right-side'}>
             <PickJobPositionForm
+              formData={formData}
               handlePickJobPosition={handlePickJobPosition}
               form={form}
               onFinish={onFinish}

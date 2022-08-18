@@ -1,11 +1,12 @@
 import { Inventory } from '../../components/customized-components/Inventory/Inventory/Inventory.component';
 import { InventoryButton } from '../../components/customized-components/Inventory/InventoryButton/InventoryButton.component';
 import { Modal } from 'antd';
+import { Provider, useDispatch } from 'react-redux';
 import { getAttendantCv } from '../../services/jobhub-api/CvControllerService';
 import { inventoryAction } from '../../redux-flow/inventory/inventory-slice';
-import { useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import ResumeDetailForAttendantContainer from '../Resume/attendant/ResumeDetailForAttendant.container';
+import store from '../../redux-flow';
 
 export const InventoryContainer = (props) => {
   const { onClick, inventoryVisible } = props;
@@ -68,12 +69,17 @@ export const InventoryContainer = (props) => {
     e.preventDefault();
     const id = e.target.id;
     const resume = inventory[id];
+    /* https://github.com/ant-design/ant-design/issues/6321 */
     Modal.info({
       title: 'Resume detail',
       width: '90rem',
       closable: true,
       maskClosable: true,
-      content: <ResumeDetailForAttendantContainer resumeId={resume.id} isEditable={false} />
+      content: (
+        <Provider store={store}>
+          <ResumeDetailForAttendantContainer resumeId={resume.id} isEditable={false} />
+        </Provider>
+      )
     });
   };
 
