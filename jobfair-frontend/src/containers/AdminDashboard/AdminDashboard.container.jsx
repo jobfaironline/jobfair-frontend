@@ -155,7 +155,7 @@ const AdminDashBoardContainer = () => {
           </Title>
           <AdminDashBoardAccountStatistics
             data={{
-              attendantNum: 195,
+              attendantNum: data.accountStatistics.attendantNum,
               companyNum: data.generalStatistics.companyNum,
               accountNum:
                 data.accountStatistics.inactiveNum +

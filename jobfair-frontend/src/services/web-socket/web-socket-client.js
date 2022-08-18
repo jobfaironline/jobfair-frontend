@@ -20,7 +20,7 @@ export class WebSocketClient {
               description: notificationData?.message ?? '',
               duration: 5,
               onClick: notificationData?.action,
-              className: notificationData.action ? 'notification-message-clickable' : ''
+              className: notificationData?.action ? 'notification-message-clickable' : ''
             });
             store.dispatch(notificationAction.addNotification(notificationData));
             break;

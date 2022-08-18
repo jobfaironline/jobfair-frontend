@@ -185,4 +185,5 @@ export const mapperForNotification = (data) => {
     default:
       return notification;
   }
+  return notification;
 };

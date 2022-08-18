@@ -125,15 +125,18 @@ const mappingTodayScheduleAndWaitingRoomList = async (
           );
 
           try {
-            await swapSchedule(applicationId, curInterviewee[0].id);
-            waitingRoomId &&
-              (await mappingTodayScheduleAndWaitingRoomList(
-                setIntervieweeList,
-                waitingRoomId,
-                intervieweeListRef,
-                interviewRoomId,
-                agoraUserListRef
-              ));
+            if (curInterviewee[0] !== undefined) {
+              await swapSchedule(applicationId, curInterviewee[0].id);
+              waitingRoomId &&
+                (await mappingTodayScheduleAndWaitingRoomList(
+                  setIntervieweeList,
+                  waitingRoomId,
+                  intervieweeListRef,
+                  interviewRoomId,
+                  agoraUserListRef
+                ));
+            }
+
             //invite again
             await inviteInterviewee(attendantId, interviewRoomId);
           } catch (e) {
