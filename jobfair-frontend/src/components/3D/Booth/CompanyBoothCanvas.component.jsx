@@ -18,7 +18,7 @@ const AiCharacter = (props) => {
   const { state } = props;
 
   useFrame((rootState, delta) => {
-    if (state.isMoving) {
+    if (state?.isMoving) {
       state.animations.walk.timeScale = 1;
       state.animations.walk.crossFadeTo(state.animations.idle, 2, true);
       state.animations.walk.play();

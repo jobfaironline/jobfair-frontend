@@ -16,6 +16,7 @@ import {
   loadGLBModel
 } from '../../../utils/ThreeJS/threeJSUtil';
 import { getCompanyBoothLatestLayout } from '../../../services/jobhub-api/CompanyBoothLayoutControllerService';
+import { makeTextSprite } from '../../../utils/ThreeJS/sprite-util';
 import { useSelector } from 'react-redux';
 import BasicCharacterControl from '../../../utils/ThreeJS/BasicCharacterControl';
 import BasicControlInput from '../../../utils/ThreeJS/BasicControlInput';
@@ -61,6 +62,7 @@ export const JobFairBoothContainer = (props) => {
   const cameraRef = useRef();
   const sceneMeshRef = useRef();
   const isChangeCamera = useRef(true);
+  const name = useSelector((state) => state.authentication.user.fullName);
 
   const [state, setState] = useState({
     model: undefined,
@@ -81,12 +83,21 @@ export const JobFairBoothContainer = (props) => {
     const floorHeight = calculateMeshSize(floorMesh).height;
     //load model
     const model = await loadCharacterModel(DEFAULT_HUMAN_MODEL_URL, DEFAULT_HUMAN_MODEL_TEXTURE_URL);
-
     const boothSize = calculateMeshSize(boothMesh);
 
     scalingModel(model, boothSize);
 
     model.position.setY(floorMesh.position.y + floorHeight / 2);
+
+    model.add(
+      makeTextSprite(name, {
+        fontsize: 80,
+        position: { x: model.position.x, y: model.position.y + 200, z: model.position.z },
+        borderColor: { r: 0, g: 0, b: 0, a: 0 },
+        backgroundColor: { r: 255, g: 255, b: 255, a: 0.9 },
+        scaleFactor: { x: 1.25, y: 0.25, z: 0.75 }
+      })
+    );
 
     const modelSize = calculateMeshSize(model);
     //load animation
@@ -151,7 +162,8 @@ export const JobFairBoothContainer = (props) => {
         const state = prevState.filter((abc) => abc.id === data.userId)[0];
         state?.model.position.set(data.position.x, data.position.y, data.position.z);
         state?.model.quaternion.set(data.quaternion.x, data.quaternion.y, data.quaternion.z, data.quaternion.w);
-        state.isMoving = true;
+        if (state !== undefined) state.isMoving = true;
+
         return prevState;
       });
     });
@@ -159,7 +171,8 @@ export const JobFairBoothContainer = (props) => {
       isChangeCamera.current = false;
       setUser((prevState) => {
         const state = prevState.filter((abc) => abc.id === data.id)[0];
-        state.isMoving = false;
+        if (state !== undefined) state.isMoving = false;
+
         return prevState;
       });
     });
@@ -171,7 +184,7 @@ export const JobFairBoothContainer = (props) => {
     };
     const initialQuaternion = new THREE.Quaternion();
 
-    geckoClientRef.current.joinChannel(companyBoothId, userId, initialPosition, initialQuaternion);
+    geckoClientRef.current.joinChannel(companyBoothId, userId, name, initialPosition, initialQuaternion);
 
     setState((prevState) => ({
       ...prevState,
@@ -206,6 +219,16 @@ export const JobFairBoothContainer = (props) => {
     scalingModel(model, boothSize);
     model.position.set(data.position.x, data.position.y, data.position.z);
     model.quaternion.set(data.quaternion.x, data.quaternion.y, data.quaternion.z, data.quaternion.w);
+    model.add(
+      makeTextSprite(characterState.fullName, {
+        fontsize: 80,
+        position: { x: model.position.x, y: model.position.y + 200, z: model.position.z },
+        borderColor: { r: 0, g: 0, b: 0, a: 0 },
+        backgroundColor: { r: 255, g: 255, b: 255, a: 0.9 },
+        scaleFactor: { x: 1.25, y: 0.25, z: 0.75 }
+      })
+    );
+
     data.model = model;
     data.mixer = mixer;
     data.animations = animations;

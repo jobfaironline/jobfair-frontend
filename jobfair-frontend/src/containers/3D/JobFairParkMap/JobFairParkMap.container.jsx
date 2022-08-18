@@ -70,7 +70,7 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
     const leaveJobFairFn = () => {
       leaveJobFair(jobFairId);
       webSocketClient.removeEvent('change-job-fair-booth-view');
-      window.removeEventListener(leaveJobFairFn);
+      window.removeEventListener('beforeunload', leaveJobFairFn);
     };
     window.addEventListener('beforeunload', leaveJobFairFn);
     return () => {

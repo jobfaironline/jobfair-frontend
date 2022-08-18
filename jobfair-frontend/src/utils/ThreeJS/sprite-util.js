@@ -34,6 +34,7 @@ export const makeTextSprite = (message, parameters) => {
   const borderColor = parameters?.borderColor ?? { r: 0, g: 0, b: 0, a: 1.0 };
   const backgroundColor = parameters?.backgroundColor ?? { r: 255, g: 255, b: 255, a: 1.0 };
   const textColor = parameters?.textColor ?? { r: 0, g: 0, b: 0, a: 1.0 };
+  const scaleFactor = parameters?.scaleFactor ?? { x: 0.5, y: 0.25, z: 0.75 };
 
   const canvas = document.createElement('canvas');
   canvas.width =
@@ -66,6 +67,6 @@ export const makeTextSprite = (message, parameters) => {
   const spriteMaterial = new THREE.SpriteMaterial({ map: texture });
   const sprite = new THREE.Sprite(spriteMaterial);
   if (parameters.position) sprite.position.set(parameters.position.x, parameters.position.y, parameters.position.z);
-  sprite.scale.set(0.5 * fontsize, 0.25 * fontsize, 0.75 * fontsize);
+  sprite.scale.set(scaleFactor.x * fontsize, scaleFactor.y * fontsize, scaleFactor.z * fontsize);
   return sprite;
 };

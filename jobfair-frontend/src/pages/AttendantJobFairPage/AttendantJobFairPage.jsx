@@ -43,7 +43,7 @@ const AttendantJobFairPage = () => {
     visitJobFairBooth(companyBoothId);
     const leaveBooth = () => {
       leaveJobFairBooth(companyBoothId);
-      window.removeEventListener(leaveBooth);
+      window.removeEventListener('beforeunload', leaveBooth);
     };
     window.addEventListener('beforeunload', leaveBooth);
     return () => {

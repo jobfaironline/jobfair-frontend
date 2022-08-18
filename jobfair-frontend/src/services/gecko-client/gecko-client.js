@@ -9,12 +9,13 @@ export class GeckoClient extends EventEmitter {
     super();
   }
 
-  joinChannel(companyBoothId, userId, initialPosition, initialQuaternion) {
+  joinChannel(companyBoothId, userId, fullName, initialPosition, initialQuaternion) {
     this.companyBoothId = companyBoothId;
     this.userId = userId;
-    const auth = `${this.companyBoothId}/${this.userId}/${JSON.stringify(initialPosition)}/${JSON.stringify(
-      initialQuaternion
-    )}`;
+    this.fullName = fullName;
+    const auth = `${this.companyBoothId}/${this.userId}/${this.fullName}/${JSON.stringify(
+      initialPosition
+    )}/${JSON.stringify(initialQuaternion)}`;
     this.channel = geckos({
       url: REACT_APP_GAME_SERVER_URL,
       port: REACT_APP_GAME_SERVER_PORT,
