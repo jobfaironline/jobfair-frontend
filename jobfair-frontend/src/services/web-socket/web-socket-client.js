@@ -1,6 +1,5 @@
 import { NotificationType } from '../../constants/NotificationConstant';
 import { mapperForNotification } from '../../utils/mapperForNotification';
-import { notification } from 'antd';
 import { notificationAction } from '../../redux-flow/notification/notification-slice';
 import store from '../../redux-flow/index';
 
@@ -15,13 +14,14 @@ export class WebSocketClient {
         switch (notificationData?.notificationType) {
           case NotificationType.NOTI: {
             notificationData = mapperForNotification(notificationData);
-            notification['success']({
+            //only comment this when demo
+            /*notification['success']({
               message: notificationData?.title ?? '',
               description: notificationData?.message ?? '',
               duration: 5,
               onClick: notificationData?.action,
               className: notificationData?.action ? 'notification-message-clickable' : ''
-            });
+            });*/
             store.dispatch(notificationAction.addNotification(notificationData));
             break;
           }
