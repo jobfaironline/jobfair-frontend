@@ -61,7 +61,9 @@ export const CompanyCVStatistics = ({ data }) => {
           <Col span={12}>
             <Title level={3} style={{ fontWeight: 700 }}>
               Interview ratio:{' '}
-              <span style={{ fontWeight: '400' }}>{cvNum === 0 ? '0%' : `${(interviewNum / cvNum).toFixed(2)}%`}</span>
+              <span style={{ fontWeight: '400' }}>
+                {cvNum === 0 ? '0%' : `${((interviewNum / cvNum) * 100).toFixed(2)}%`}
+              </span>
             </Title>
           </Col>
         </Row>
