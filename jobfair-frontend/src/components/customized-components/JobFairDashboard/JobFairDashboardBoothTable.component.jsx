@@ -28,15 +28,6 @@ const JobFairDashBoardBoothTableColumn = [
     sorter: (a, b) => a.name.localeCompare(b.name)
   },
   {
-    title: 'Number of traffic',
-    key: 'visitNum',
-    dataIndex: 'visitNum',
-    width: '15%',
-    align: 'center',
-    sorter: (a, b) => a.visitNum - b.visitNum,
-    render: (num) => <div style={{ textAlign: 'right', marginRight: '1rem' }}>{num}</div>
-  },
-  {
     title: 'Number of applied CV',
     key: 'cvNum',
     dataIndex: 'cvNum',
@@ -52,6 +43,15 @@ const JobFairDashBoardBoothTableColumn = [
     width: '15%',
     align: 'center',
     sorter: (a, b) => a.approveCV - b.approveCV,
+    render: (num) => <div style={{ textAlign: 'right', marginRight: '1rem' }}>{num}</div>
+  },
+  {
+    title: 'Number of interviewed attendants',
+    key: 'interviewNum',
+    dataIndex: 'interviewNum',
+    width: '15%',
+    align: 'center',
+    sorter: (a, b) => a.interviewNum - b.interviewNum,
     render: (num) => <div style={{ textAlign: 'right', marginRight: '1rem' }}>{num}</div>
   },
   {
