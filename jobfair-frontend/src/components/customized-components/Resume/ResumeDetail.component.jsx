@@ -63,7 +63,7 @@ export const ResumeDetailComponent = (props) => {
       <Row gutter={15}>
         <Col span={7}>
           <ResumeOverview userOverview={data.overviewData} isForCompany={isForCompany} />
-          <div>{matchingStatement()}</div>
+          <div style={{ marginBottom: '1rem' }}>{matchingStatement()}</div>
           <InterviewOverview data={data} />
         </Col>
         <Col span={17}>

@@ -1,10 +1,13 @@
-import { Button, Form, Input, Typography } from 'antd';
+import { Button, Form, Input, Tag, Typography } from 'antd';
+import { getMatchingPointColor } from '../../../utils/common';
 import React from 'react';
 
 const { Title } = Typography;
 
 export const InterviewReportForm = (props) => {
-  const { form, onFinish } = props;
+  const { form, onFinish, applicationData } = props;
+  const matchingPoint = applicationData?.matchingPoint;
+  const matchingPointColor = getMatchingPointColor(matchingPoint * 100 ?? 0);
   return (
     <Form
       form={form}
@@ -12,6 +15,12 @@ export const InterviewReportForm = (props) => {
       onFinish={onFinish}
       style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
       <Title level={3}>Interview report</Title>
+      <div>
+        Application's matching point:{' '}
+        <Tag color={matchingPointColor} style={{ marginLeft: 'auto' }}>
+          {Math.round(matchingPoint * 100)} %
+        </Tag>
+      </div>
       <Form.Item
         name={`advantage`}
         required
@@ -33,6 +42,7 @@ export const InterviewReportForm = (props) => {
         style={{ display: 'inline-block', width: '100%' }}>
         <Input.TextArea className={'text-area'} placeholder="Applicant's disadvantage" rows={7} />
       </Form.Item>
+
       <div style={{ width: '100%', display: 'flex' }}>
         <Button className={'button'} type='primary' htmlType={'submit'} style={{ marginLeft: 'auto' }}>
           Submit

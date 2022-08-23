@@ -49,7 +49,11 @@ const CompanyEmployeeInterviewRoomContainer = (props) => {
     interviewingData?.applicationData?.interviewStatus &&
     interviewingData.applicationData.interviewStatus === 'INTERVIEWING' ? (
       <div style={{ padding: '1.5rem 0 2rem 1rem', flex: 1 }}>
-        <InterviewReportForm form={form} onFinish={handleSubmitReport} />
+        <InterviewReportForm
+          form={form}
+          onFinish={handleSubmitReport}
+          applicationData={interviewingData?.applicationData}
+        />
       </div>
     ) : (
       <div />

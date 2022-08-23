@@ -84,3 +84,14 @@ export const getAllJobFairForAdminAPI = ({
       status
     }
   );
+
+export const getAllJobFairForAdminInRangeAPI = ({ to, from }) =>
+  CallAPI(
+    `${JOB_FAIR_END_POINT}/admins/range`,
+    'GET',
+    {},
+    {
+      to,
+      from
+    }
+  );

@@ -1,6 +1,9 @@
 import './InterviewScheduleCalendar.styles.scss';
-import { Badge, Calendar, Col, Row, Select, Typography } from 'antd';
+import { ArrowRightOutlined } from '@ant-design/icons';
+import { Badge, Button, Calendar, Col, Row, Select, Typography } from 'antd';
 import { INTERVIEW_SCHEDULE_STATUS } from '../../../constants/InterviewScheduleConst';
+import { PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
+import { generatePath, useHistory } from 'react-router-dom';
 import React from 'react';
 
 const { Text } = Typography;
@@ -22,6 +25,7 @@ const getBadgeType = (status) => {
 
 export const InterviewScheduleCalendar = (props) => {
   const { data, onPanelChange, onOpenScheduleDetail } = props;
+  const history = useHistory();
 
   const dateCellRender = (date) => {
     const listData = data.filter(
@@ -118,6 +122,14 @@ export const InterviewScheduleCalendar = (props) => {
     return (
       <div className={'header'}>
         <Typography.Title level={3}>Interview schedule</Typography.Title>
+        <div style={{ position: 'absolute', top: '100px', right: '30px' }}>
+          <Button
+            type={'link'}
+            style={{ fontSize: '1rem' }}
+            onClick={() => history.push(generatePath(PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE))}>
+            Go to application list schedule <ArrowRightOutlined />
+          </Button>
+        </div>
         <Row gutter={8} style={{ marginLeft: 'auto' }}>
           <Col>
             <Select
