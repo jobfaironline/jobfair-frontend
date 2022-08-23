@@ -76,7 +76,7 @@ const OverallDashBoardStatistics = ({ data }) => {
             <FontAwesomeIcon icon={faUser} style={{ fontSize: '40px' }} />
           </div>
           <div>
-            <p style={{ marginBottom: 0, fontSize: '1.3rem', fontWeight: '600' }}>Number of accounts</p>
+            <p style={{ marginBottom: 0, fontSize: '1.3rem', fontWeight: '600' }}>Number of attendants</p>
             <p style={{ marginBottom: 0, fontSize: '2rem', fontWeight: '600', lineHeight: '2rem' }}>{accountNum}</p>
           </div>
         </div>
@@ -320,7 +320,7 @@ const AdminDashBoardContainer = () => {
         <TabPane tab='Overall statistic' key='1'>
           <div style={{ display: 'flex', margin: '0 15%', flexDirection: 'column' }}>
             <Title level={3} id={'overall-statistics'}>
-              Overall statistics
+              Overall statistic
             </Title>
             <div>
               <OverallDashBoardStatistics
@@ -330,7 +330,7 @@ const AdminDashBoardContainer = () => {
                     data.jobFairStatistics.inProgressNum +
                     data.jobFairStatistics.incomingNum +
                     data.jobFairStatistics.pastNum,
-                  accountNum: data.generalStatistics.userNum,
+                  accountNum: data.accountStatistics.attendantNum,
                   visitorNum: data.generalStatistics.visitorNum
                 }}
               />
