@@ -50,7 +50,7 @@ export const JobFairProgressDrawerContainer = ({ jobFairId, visibility, onClose 
                 key={boothInfo.id}
                 header={
                   <div className={'booth-header'}>
-                    <Title level={5}>{boothInfo.name}</Title>
+                    <Title level={5}>{boothInfo.name ?? 'Untitled'}</Title>
                     <Text strong={true} style={{ marginLeft: 'auto', color: taskCount === 3 ? green[6] : 'red' }}>
                       {taskCount}/3 tasks done
                     </Text>

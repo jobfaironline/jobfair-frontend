@@ -33,22 +33,24 @@ const organizeJobFairStep = 5;
 
 const mapJobFairData = (jobFairData) => {
   const startOfDate = moment().startOf('day');
+  const morningShiftIndex = jobFairData.shifts?.[0]?.beginTime < jobFairData.shifts?.[1]?.beginTime ? 0 : 1;
+  const afternoonShiftIndex = jobFairData.shifts?.[0]?.beginTime < jobFairData.shifts?.[1]?.beginTime ? 1 : 0;
   return {
     ...jobFairData,
     morningShift: [
-      jobFairData.shifts?.[0]?.beginTime !== undefined
-        ? moment(startOfDate.valueOf() + jobFairData.shifts[0].beginTime).format(MinuteFormat)
+      jobFairData.shifts?.[morningShiftIndex]?.beginTime !== undefined
+        ? moment(startOfDate.valueOf() + jobFairData.shifts[morningShiftIndex].beginTime).format(MinuteFormat)
         : undefined,
-      jobFairData.shifts?.[0]?.endTime !== undefined
-        ? moment(startOfDate.valueOf() + jobFairData.shifts[0].endTime).format(MinuteFormat)
+      jobFairData.shifts?.[morningShiftIndex]?.endTime !== undefined
+        ? moment(startOfDate.valueOf() + jobFairData.shifts[morningShiftIndex].endTime).format(MinuteFormat)
         : undefined
     ],
     afternoonShift: [
-      jobFairData.shifts?.[1]?.beginTime !== undefined
-        ? moment(startOfDate.valueOf() + jobFairData.shifts[1].beginTime).format(MinuteFormat)
+      jobFairData.shifts?.[afternoonShiftIndex]?.beginTime !== undefined
+        ? moment(startOfDate.valueOf() + jobFairData.shifts[afternoonShiftIndex].beginTime).format(MinuteFormat)
         : undefined,
-      jobFairData.shifts?.[1]?.endTime !== undefined
-        ? moment(startOfDate.valueOf() + jobFairData.shifts[1].endTime).format(MinuteFormat)
+      jobFairData.shifts?.[afternoonShiftIndex]?.endTime !== undefined
+        ? moment(startOfDate.valueOf() + jobFairData.shifts[afternoonShiftIndex].endTime).format(MinuteFormat)
         : undefined
     ]
   };

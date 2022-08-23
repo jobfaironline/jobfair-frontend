@@ -119,7 +119,7 @@ export const AssignEmployeeModalContainer = (props) => {
     if (
       decoratorNum !== AssignmentBoothConstraint.decoratorNum ||
       supervisorNum !== AssignmentBoothConstraint.supervisorNum ||
-      staffNum !== AssignmentBoothConstraint.staffNum
+      staffNum < AssignmentBoothConstraint.staffNum
     ) {
       setIsError(true);
       return;

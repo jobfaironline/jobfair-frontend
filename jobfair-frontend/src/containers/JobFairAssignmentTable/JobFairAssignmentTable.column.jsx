@@ -131,7 +131,7 @@ export const JobFairAssignmentDetailTableColumn = (getColumnSearchProps) => [
   },
   {
     title: 'Booth name',
-    render: (_, record) => record.jobFairBooth.name,
+    render: (_, record) => record.jobFairBooth.name ?? 'Untitled',
     width: '15%'
   },
   {

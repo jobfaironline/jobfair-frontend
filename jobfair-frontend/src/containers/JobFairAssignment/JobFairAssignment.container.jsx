@@ -56,7 +56,7 @@ export const JobFairAssignmentModal = ({ data, visible, onClose }) => {
       width={'90%'}
       onOk={onClose}
       onCancel={onClose}
-      title={`Assignment of job fair ${data[0].jobFairName}`}>
+      title={`Assignment(s) of "${data[0].jobFairName}"`}>
       <CommonTableContainer {...jobFairAssignmentTableProps} />
     </Modal>
   );
@@ -97,6 +97,7 @@ const JobFairAssignmentContainer = () => {
         }
       }
     }
+    data.sort((a, b) => b.createTime - a.createTime);
     setData(data);
     setTotalRecord(data.length);
   };
