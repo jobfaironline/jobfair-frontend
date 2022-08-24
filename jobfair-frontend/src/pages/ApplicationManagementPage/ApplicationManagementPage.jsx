@@ -2,20 +2,29 @@ import { ArrowRightOutlined } from '@ant-design/icons';
 import { Button, Divider, Tabs, Typography } from 'antd';
 import { PATH_COMPANY_EMPLOYEE } from '../../constants/Paths/Path';
 import { generatePath, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ApplicationViewContainer from '../../containers/ApplicationView/ApplicationView.container';
 import PageLayoutWrapper from '../../components/commons/PageLayoutWrapper/PageLayoutWrapper.component';
 import React from 'react';
+import RoleType from '../../constants/RoleType';
 
 const { TabPane } = Tabs;
 
 const ApplicationManagementPage = () => {
+  const role = useSelector((state) => state?.authentication?.user?.roles);
   const history = useHistory();
   return (
     <PageLayoutWrapper className='page'>
       <div>
         <Divider>
           <Typography.Title level={2}>Application management</Typography.Title>
-          <div style={{ position: 'absolute', top: '100px', right: '30px' }}>
+          <div
+            style={{
+              position: 'absolute',
+              top: '100px',
+              right: '30px',
+              display: role === RoleType.COMPANY_EMPLOYEE ? 'block' : 'none'
+            }}>
             <Button
               type={'link'}
               style={{ fontSize: '1rem' }}

@@ -4,7 +4,9 @@ import { Badge, Button, Calendar, Col, Row, Select, Typography } from 'antd';
 import { INTERVIEW_SCHEDULE_STATUS } from '../../../constants/InterviewScheduleConst';
 import { PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
 import { generatePath, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import React from 'react';
+import RoleType from '../../../constants/RoleType';
 
 const { Text } = Typography;
 
@@ -26,6 +28,7 @@ const getBadgeType = (status) => {
 export const InterviewScheduleCalendar = (props) => {
   const { data, onPanelChange, onOpenScheduleDetail } = props;
   const history = useHistory();
+  const role = useSelector((state) => state?.authentication?.user?.roles);
 
   const dateCellRender = (date) => {
     const listData = data.filter(
@@ -122,7 +125,13 @@ export const InterviewScheduleCalendar = (props) => {
     return (
       <div className={'header'}>
         <Typography.Title level={3}>Interview schedule</Typography.Title>
-        <div style={{ position: 'absolute', top: '100px', right: '30px' }}>
+        <div
+          style={{
+            position: 'absolute',
+            top: '100px',
+            right: '30px',
+            display: role === RoleType.COMPANY_EMPLOYEE ? 'block' : 'none'
+          }}>
           <Button
             type={'link'}
             style={{ fontSize: '1rem' }}
