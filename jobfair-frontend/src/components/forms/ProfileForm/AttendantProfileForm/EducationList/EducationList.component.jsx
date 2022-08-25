@@ -125,7 +125,9 @@ const EducationComponent = ({ data, onClick }) => {
         </div>
       </div>
       <div style={{ marginTop: '1rem' }}>
-        <Text strong>Achievement:</Text>
+        <Text strong style={{ whiteSpace: 'pre-line' }}>
+          Achievement:
+        </Text>
         <Paragraph>{achievement}</Paragraph>
       </div>
     </Card>

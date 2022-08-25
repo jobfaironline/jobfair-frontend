@@ -11,7 +11,7 @@ const { Text } = Typography;
 const handleCardContent = (role, jobFair) => {
   const renderer = ({ hours, minutes, seconds, days }) => (
     <div>
-      {days ? `${days.toString()}day(s) ` : null}
+      {days ? `${days.toString()} day(s) ` : null}
       {hours.toString().padStart(2, '0')}:{minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
     </div>
   );

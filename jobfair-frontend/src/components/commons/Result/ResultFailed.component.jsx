@@ -24,7 +24,8 @@ const ResultFailedComponent = () => {
             <Text
               strong
               style={{
-                fontSize: 16
+                fontSize: 16,
+                whiteSpace: 'pre-line'
               }}>
               The content you submitted has the following error:
             </Text>

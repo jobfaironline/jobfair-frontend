@@ -62,7 +62,7 @@ export const AttendantProfileValidation = {
   educations: {
     subject: [REQUIRED_VALIDATOR('Subject'), MAX_LENGTH_VALIDATOR('Subject', 100)],
     school: [REQUIRED_VALIDATOR('School'), MAX_LENGTH_VALIDATOR('School', 100)],
-    achievement: [REQUIRED_VALIDATOR('Achievement'), MAX_LENGTH_VALIDATOR('Achievement', 5000)],
+    achievement: [MAX_LENGTH_VALIDATOR('Achievement', 5000)],
     range: [REQUIRED_VALIDATOR('Date range'), DATE_RANGE_VALIDATOR(new Date(1940, 0, 1).getTime(), Date.now())]
   },
   certifications: {

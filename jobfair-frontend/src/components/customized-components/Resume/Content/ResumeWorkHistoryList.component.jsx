@@ -25,7 +25,7 @@ export const ResumeWorkHistoryList = (props) => {
             <Text>
               {moment(history?.fromDate).format(MonthFormat)} - {moment(history?.toDate).format(MonthFormat)}
             </Text>
-            <Paragraph style={{ marginTop: '5px' }}>{history?.description}</Paragraph>
+            <Paragraph style={{ marginTop: '5px', whiteSpace: 'pre-line' }}>{history?.description}</Paragraph>
           </Timeline.Item>
         ))}
       </Timeline>

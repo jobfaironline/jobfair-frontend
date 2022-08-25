@@ -25,7 +25,7 @@ const ResumeEducationList = (props) => {
             <Text>
               {moment(education?.fromDate).format(MonthFormat)} - {moment(education?.toDate).format(MonthFormat)}
             </Text>
-            <Paragraph style={{ marginTop: '5px' }}>{education?.achievement}</Paragraph>
+            <Paragraph style={{ marginTop: '5px', whiteSpace: 'pre-line' }}>{education?.achievement}</Paragraph>
           </Timeline.Item>
         ))}
       </Timeline>

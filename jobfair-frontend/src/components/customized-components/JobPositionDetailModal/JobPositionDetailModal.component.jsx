@@ -98,13 +98,13 @@ const JobPositionDetailModalComponent = ({ data }) => (
           <div key='description'>
             <Space align='start' direction='vertical' size={'0.3rem'}>
               <Text strong>Job description: </Text>
-              <Text>{data.description}</Text>
+              <Text style={{ whiteSpace: 'pre-line' }}>{data.description}</Text>
             </Space>
           </div>
           <div key='requirement'>
             <Space align='start' direction='vertical' size={'0.3rem'}>
               <Text strong>Job requirements: </Text>
-              <Text>{data.requirements}</Text>
+              <Text style={{ whiteSpace: 'pre-line' }}>{data.requirements}</Text>
             </Space>
           </div>
         </div>

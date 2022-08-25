@@ -19,7 +19,9 @@ const { Text, Title } = Typography;
 const Description = ({ label, value }) => (
   <Row className={'description'}>
     <Col span={6}>
-      <Text strong>{label}</Text>
+      <Text strong style={{ whiteSpace: 'pre-line' }}>
+        {label}
+      </Text>
     </Col>
     <Col flex={1} className={'value'}>
       {value}
@@ -71,8 +73,14 @@ export const JobPositionFormModal = (props) => {
                 </>
               }
             />
-            <Description label={'Description:'} value={jobPositionData.description} />
-            <Description label={'Requirement:'} value={jobPositionData.requirements} />
+            <Description
+              label={'Description:'}
+              value={<Text style={{ whiteSpace: 'pre-line' }}>{jobPositionData.description}</Text>}
+            />
+            <Description
+              label={'Requirement:'}
+              value={<Text style={{ whiteSpace: 'pre-line' }}>{jobPositionData.requirements}</Text>}
+            />
           </Col>
           <Col span={12}>
             <Title level={4}>Additional information for job position</Title>

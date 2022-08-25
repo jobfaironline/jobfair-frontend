@@ -6,7 +6,7 @@ import { LoadingComponent } from '../../../components/commons/Loading/Loading.co
 import { NotificationType } from '../../../constants/NotificationConstant';
 import { PATH } from '../../../constants/Paths/Path';
 import { addVideoTexture, fixTextureOffset, loadGLBModel } from '../../../utils/ThreeJS/threeJSUtil';
-import { faHeart, faUsers, faX } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faX } from '@fortawesome/free-solid-svg-icons';
 import { generatePath, useHistory } from 'react-router-dom';
 import { getCompanyBoothById } from '../../../services/jobhub-api/CompanyBoothControllerService';
 import {
@@ -197,13 +197,10 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
                   </Title>
                   <FontAwesomeIcon icon={faUsers} size={'xl'} />
                 </div>
-                <div>
-                  <FontAwesomeIcon icon={faHeart} size={'xl'} />
-                </div>
               </div>
             }>
             <div className={'booth-name'}>{boothDialogState.boothData?.name}</div>
-            <Paragraph ellipsis={{ rows: 5, expandable: true, symbol: 'more' }}>
+            <Paragraph ellipsis={{ rows: 5, expandable: true, symbol: 'more' }} style={{ whiteSpace: 'pre-line' }}>
               {boothDialogState.boothData?.description}
             </Paragraph>
             <Title level={5}>{'Job positions'}</Title>

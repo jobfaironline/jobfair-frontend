@@ -69,9 +69,11 @@ export const ResumeDetailComponent = (props) => {
         <Col span={17}>
           <Card style={{ borderRadius: '8px' }} className={'list'}>
             <Title id='candidatesAbout' level={4}>
-              Candidates About
+              About me
             </Title>
-            <Text type='secondary'>{data.about}</Text>
+            <Text type='secondary' style={{ whiteSpace: 'pre-line' }}>
+              {data.about}
+            </Text>
           </Card>
           <ResumeEducationList data={data.educations} />
           <ResumeWorkHistoryList data={data.workHistories} />

@@ -47,7 +47,7 @@ const AccountDrawer = ({ visible, onClose, data }) => {
           <Title level={3}>User Profile</Title>
         </p>
         <p className='site-description-item-profile-p'>
-          <Text strong italic>
+          <Text strong italic style={{ whiteSpace: 'pre-line' }}>
             Account information
           </Text>
         </p>

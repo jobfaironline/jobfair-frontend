@@ -49,7 +49,7 @@ const WorkHistoryComponent = ({ data, onClick }) => {
       <div style={{ marginTop: '1rem' }}>
         <Text strong>Descriptions</Text>
 
-        <Paragraph>{description}</Paragraph>
+        <Paragraph style={{ whiteSpace: 'pre-line' }}>{description}</Paragraph>
       </div>
     </Card>
   );
