@@ -2,8 +2,7 @@ import './InterviewScheduleCalendar.styles.scss';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { Badge, Button, Calendar, Col, Row, Select, Typography } from 'antd';
 import { INTERVIEW_SCHEDULE_STATUS } from '../../../constants/InterviewScheduleConst';
-import { PATH_COMPANY_EMPLOYEE } from '../../../constants/Paths/Path';
-import { generatePath, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import React from 'react';
 import RoleType from '../../../constants/RoleType';
@@ -132,10 +131,7 @@ export const InterviewScheduleCalendar = (props) => {
             right: '30px',
             display: role === RoleType.COMPANY_EMPLOYEE ? 'block' : 'none'
           }}>
-          <Button
-            type={'link'}
-            style={{ fontSize: '1rem' }}
-            onClick={() => history.push(generatePath(PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE))}>
+          <Button type={'link'} style={{ fontSize: '1rem' }} onClick={() => history.goBack()}>
             Go to application list schedule <ArrowRightOutlined />
           </Button>
         </div>

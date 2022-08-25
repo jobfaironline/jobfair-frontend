@@ -200,7 +200,7 @@ const JobFairAssignmentContainer = () => {
         jobFairAssignment.onClickDetail = () => {
           setModalState((prevState) => ({ ...prevState, visible: true, data: jobFairAssignment.assignments }));
         };
-        if (jobFairAssignment.jobFair.decorateStartTime < now && jobFairAssignment.jobFair.publicStartTime > now) {
+        if (jobFairAssignment.jobFair.decorateStartTime < now && jobFairAssignment.jobFair.publicEndTime > now) {
           jobFairAssignment.status = JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING;
           jobFairAssignment.statusColor = 'blue';
         }
@@ -208,7 +208,7 @@ const JobFairAssignmentContainer = () => {
           jobFairAssignment.status = JOB_FAIR_STATUS_FOR_EMPLOYEE.NOT_YET;
           jobFairAssignment.statusColor = 'default';
         }
-        if (jobFairAssignment.jobFair.publicStartTime <= now) {
+        if (jobFairAssignment.jobFair.publicEndTime <= now) {
           jobFairAssignment.status = JOB_FAIR_STATUS_FOR_EMPLOYEE.DONE;
           jobFairAssignment.statusColor = 'green';
         }
