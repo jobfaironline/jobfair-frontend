@@ -117,7 +117,7 @@ const InterviewScheduleModalDetailComponent = (props) => {
             </div>
           ) : null
         ) : (
-          <div style={{ marginTop: '2rem' }}>
+          <div style={{ marginTop: '2rem', display: 'none' }}>
             <Row>
               <Col span={24}>
                 <Space direction='horizontal'>
