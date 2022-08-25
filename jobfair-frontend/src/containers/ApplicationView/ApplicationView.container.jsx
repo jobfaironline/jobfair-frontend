@@ -93,7 +93,7 @@ const ApplicationViewContainer = ({ tabStatus }) => {
 
   const applicationTableProps = {
     tableData: applicationData,
-    tableColumns: ApplicationTableColumn(role),
+    tableColumns: ApplicationTableColumn(role, filterStatus(tabStatus)),
     onSearch: () => {
       //TODO: fetch data for search
     },

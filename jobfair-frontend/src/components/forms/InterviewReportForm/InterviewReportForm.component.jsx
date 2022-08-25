@@ -1,4 +1,4 @@
-import { Button, Form, Input, Tag, Typography } from 'antd';
+import { Button, Checkbox, Form, Input, Tag, Typography } from 'antd';
 import { getMatchingPointColor } from '../../../utils/common';
 import React from 'react';
 
@@ -41,6 +41,17 @@ export const InterviewReportForm = (props) => {
         label={<Title level={4}>Note</Title>}
         style={{ display: 'inline-block', width: '100%' }}>
         <Input.TextArea className={'text-area'} placeholder="Applicant's disadvantage" rows={7} />
+      </Form.Item>
+      <Form.Item
+        name={'isQualified'}
+        required
+        valuePropName='checked'
+        label={
+          <Title style={{ margin: 0 }} level={4}>
+            Is qualified:
+          </Title>
+        }>
+        <Checkbox />
       </Form.Item>
 
       <div style={{ width: '100%', display: 'flex' }}>

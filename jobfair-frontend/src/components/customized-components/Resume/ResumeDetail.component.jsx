@@ -1,6 +1,6 @@
 import './ResumeDetail.styles.scss';
 import { APPLICATION_STATUS } from '../../../constants/ApplicationConst';
-import { Card, Col, Descriptions, Row, Tag, Typography } from 'antd';
+import { Card, Checkbox, Col, Descriptions, Row, Tag, Typography } from 'antd';
 import { INTERVIEW_SCHEDULE_STATUS } from '../../../constants/InterviewScheduleConst';
 import { ResumeCertificationList } from './Content/ResumeCertificationList.component';
 import { ResumeOverview } from './Content/ResumeOverview.component';
@@ -41,6 +41,9 @@ export const InterviewOverview = (props) => {
           </Descriptions.Item>
           <Descriptions.Item span={3} label={`Candidate's disadvantage`} labelStyle={{ fontWeight: 600 }}>
             {data.attendantDisadvantage}
+          </Descriptions.Item>
+          <Descriptions.Item span={3} label={`Is qualified`} labelStyle={{ fontWeight: 600 }}>
+            <Checkbox checked={data.isQualified} />
           </Descriptions.Item>
         </Descriptions>
       ) : null}

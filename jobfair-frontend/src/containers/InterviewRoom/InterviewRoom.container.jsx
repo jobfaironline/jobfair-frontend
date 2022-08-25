@@ -177,7 +177,8 @@ const InterviewRoomContainer = (props) => {
         advantage: values.advantage ?? '',
         disadvantage: values.disadvantage ?? '',
         note: values.note ?? '',
-        applicationId: interviewingData.applicationData.id
+        applicationId: interviewingData.applicationData.id,
+        isQualified: values.isQualified ?? false
       });
       notification['success']({
         message: 'Submit report successfully',

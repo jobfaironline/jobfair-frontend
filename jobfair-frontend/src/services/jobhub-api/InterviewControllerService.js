@@ -49,10 +49,17 @@ export const endInterview = (attendantId, interviewRoomId) =>
 
 export const kickUser = (userId, channelId) => CallAPI(`${ENDPOINT_KICK_FROM_ROOM}`, 'POST', {}, { channelId, userId });
 
-export const submitReport = ({ advantage = '', applicationId = '', disadvantage = '', note = '' }) =>
+export const submitReport = ({
+  advantage = '',
+  applicationId = '',
+  disadvantage = '',
+  note = '',
+  isQualified = false
+}) =>
   CallAPI(`${ENDPOINT_REPORT}`, 'POST', {
     advantage,
     disadvantage,
     applicationId,
-    note
+    note,
+    isQualified
   });
