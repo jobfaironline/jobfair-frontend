@@ -28,7 +28,8 @@ const TaskActionButton = ({ type, status, record }) => {
           </Button>
         </Space>
       );
-    case AssignmentConst.INTERVIEWER:
+    case AssignmentConst.INTERVIEWER: {
+      const jobFairId = record.jobFair.id;
       return (
         <Space>
           <Button
@@ -42,11 +43,14 @@ const TaskActionButton = ({ type, status, record }) => {
             style={{ paddingLeft: 0 }}
             disabled={status !== JOB_FAIR_STATUS_FOR_EMPLOYEE.HAPPENING}
             type='link'
-            onClick={() => history.push(generatePath(PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE))}>
+            onClick={() =>
+              history.push(generatePath(PATH_COMPANY_EMPLOYEE.APPLICATION_MANAGEMENT_PAGE, { jobFairId }))
+            }>
             Application list
           </Button>
         </Space>
       );
+    }
     case AssignmentConst.DECORATOR: {
       const isDoneDecorate = record.isDoneDecorate;
       return (

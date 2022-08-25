@@ -1,11 +1,11 @@
-import { Card, Col, Divider, Row, Typography } from 'antd';
+import { Button, Card, Col, Divider, Row, Typography } from 'antd';
 import { GenericDonutChart } from '../../commons/Chart/GenericDonutChart.component';
 import { GenericPieChart } from '../../commons/Chart/GenericPieChart.component';
 import React from 'react';
 
 const { Title } = Typography;
 
-export const DashboardCVStatistics = ({ data }) => {
+export const DashboardCVStatistics = ({ data, isBooth = true, openModal }) => {
   const {
     pendingNum = 0,
     approvedNum = 0,
@@ -62,10 +62,20 @@ export const DashboardCVStatistics = ({ data }) => {
   return (
     <>
       <Card style={{ borderRadius: '10px' }} bodyStyle={{ paddingTop: '12px' }}>
-        <Title level={3} style={{ fontWeight: 700 }}>
-          Number of submitted CV:{' '}
-          <span style={{ fontWeight: '400', marginLeft: '1rem' }}>{pendingNum + approvedNum + rejectNum}</span>
-        </Title>
+        <div style={{ display: 'flex', marginBottom: '1.2rem' }}>
+          <Title level={3} style={{ fontWeight: 700, margin: 0 }}>
+            Number of submitted CV:{' '}
+            <span style={{ fontWeight: '400', marginLeft: '1rem' }}>{pendingNum + approvedNum + rejectNum}</span>
+          </Title>
+          <Button
+            type={'primary'}
+            className={'button'}
+            style={{ marginLeft: 'auto', display: isBooth ? 'none' : 'block' }}
+            onClick={openModal}>
+            View CV lists
+          </Button>
+        </div>
+
         <Divider style={{ margin: '12px 0' }} />
         <Row gutter={10}>
           <Col span={12}>

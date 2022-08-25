@@ -1,7 +1,7 @@
 import { EyeOutlined } from '@ant-design/icons';
 import { Input, Space, Tooltip, notification } from 'antd';
 import { PATH_COMPANY_EMPLOYEE, PATH_COMPANY_MANAGER } from '../../constants/Paths/Path';
-import { generatePath, useHistory } from 'react-router-dom';
+import { generatePath, useHistory, useParams } from 'react-router-dom';
 import {
   getAllApplicationForAttendant,
   getAllApplicationForCompany
@@ -14,6 +14,7 @@ import RoleType, { ATTENDANT, COMPANY_EMPLOYEE, COMPANY_MANAGER } from '../../co
 
 const ApplicationViewContainer = ({ tabStatus }) => {
   const role = useSelector((state) => state.authentication.user.roles);
+  const { jobFairId } = useParams();
 
   //pagination
   const [totalRecord, setTotalRecord] = useState(0);
@@ -37,7 +38,8 @@ const ApplicationViewContainer = ({ tabStatus }) => {
         jobFairSearchValue.toLowerCase(),
         jobPositionSearchValue.toLowerCase(),
         attendantSearchValue.toLowerCase(),
-        tabStatus !== 1 ? 'evaluateDate' : 'appliedDate'
+        tabStatus !== 1 ? 'evaluateDate' : 'appliedDate',
+        jobFairId
       );
       const { data } = res;
       if (res.status !== 204) {

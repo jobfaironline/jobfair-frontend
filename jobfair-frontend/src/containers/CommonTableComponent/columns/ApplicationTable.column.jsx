@@ -46,6 +46,21 @@ const approvedCompanyColums = () => [
     title: 'Status',
     key: 'status',
     dataIndex: 'status',
+    filters: [
+      {
+        text: 'Approve',
+        value: 'APPROVE'
+      },
+      {
+        text: 'Pending',
+        value: 'PENDING'
+      },
+      {
+        text: 'Rejected',
+        value: 'REJECTED'
+      }
+    ],
+    onFilter: (value, record) => record.status === value,
     render: (status) => {
       let objStatus;
       switch (status) {

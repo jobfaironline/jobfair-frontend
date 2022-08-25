@@ -52,7 +52,7 @@ export const PATH_ATTENDANT = {
 export const PATH_COMPANY_EMPLOYEE = {
   PROFILE_PAGE: `/profile`,
   COMPANY_PROFILE_PAGE: '/employee/company-profile',
-  APPLICATION_MANAGEMENT_PAGE: '/employee/application-management',
+  APPLICATION_MANAGEMENT_PAGE: '/employee/application-management/:jobFairId',
   RESUME_DETAIL_PAGE: '/employee/resume-detail/:id',
   JOB_FAIR_DETAIL_PAGE: '/employee/job-fair-detail',
   ASSIGN_BOOTH_MAP_PAGE: '/employee/assign-map/:assignmentId',

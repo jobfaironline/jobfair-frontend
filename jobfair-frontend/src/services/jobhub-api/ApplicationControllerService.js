@@ -8,7 +8,8 @@ export const getAllApplicationForCompany = (
   jobFairSearchValue,
   jobPositionSearchValue,
   attendantSearchValue,
-  sortField
+  sortField,
+  jobFairId
 ) => {
   const filterStatusString = status
     ? status.reduce((previousValue, currentValue, index) => {
@@ -29,7 +30,8 @@ export const getAllApplicationForCompany = (
       sortBy: sortField,
       jobPositionName: jobPositionSearchValue,
       jobFairName: jobFairSearchValue,
-      attendantName: attendantSearchValue
+      attendantName: attendantSearchValue,
+      jobFairId
     }
   );
 };
@@ -75,3 +77,5 @@ export const draftApplication = (body) => CallAPI(`${ENDPOINT_APPLICATION}/draft
 export const submitApplication = (applicationId) => CallAPI(`${ENDPOINT_APPLICATION}/submit/${applicationId}`, 'POST');
 
 export const getApplicationById = (applicationId) => CallAPI(`${ENDPOINT_APPLICATION}/${applicationId}`, 'GET');
+
+export const exportApplications = (jobFairId) => CallAPI(`${ENDPOINT_APPLICATION}/export`, 'GET', {}, { jobFairId });
