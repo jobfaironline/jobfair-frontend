@@ -2,6 +2,7 @@ import './JobFairLandingPageForm.styles.scss';
 import { EyeOutlined } from '@ant-design/icons';
 import { Form, Input, Tooltip, Typography } from 'antd';
 import { OrganizeJobFairValidation } from '../../../validate/OrganizeJobFairValidation';
+import { SuggestedTargetAttendantContainer } from '../../../containers/SuggestedComponent/SuggestedTargetAttendant.container';
 import React from 'react';
 import UploadComponent from '../../commons/UploadComponent/Upload.component';
 
@@ -60,7 +61,14 @@ const JobFairLandingPageFormComponent = ({
         name={'targetAttendant'}
         rules={OrganizeJobFairValidation.targetAttendant}
         className={'form-item'}>
-        <Input placeholder='Target attendant' />
+        <SuggestedTargetAttendantContainer
+          disabled={false}
+          defaultValue={''}
+          onChange={(value) => {
+            form.setFieldsValue({ targetAttendant: value });
+            form.validateFields(['targetAttendant']);
+          }}
+        />
       </Form.Item>
       <Form.Item
         tooltip={'Tell briefly your attendant what this job fair is about.'}

@@ -41,3 +41,26 @@ export const ADMIN_JOB_FAIR_STATUS = {
   HAPPENING: 'HAPPENING',
   COMING_SOON: 'COMING_SOON'
 };
+
+export const TargetAttendants = [
+  {
+    id: 0,
+    name: 'College students'
+  },
+  {
+    id: 1,
+    name: 'University students'
+  },
+  {
+    id: 2,
+    name: 'New graduates from colleges and universities'
+  },
+  {
+    id: 3,
+    name: 'Employed candidates'
+  },
+  {
+    id: 4,
+    name: 'Unemployed candidates'
+  }
+];

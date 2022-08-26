@@ -84,9 +84,17 @@ const JobFairLandingContainer = ({ jobFairId, isReview }) => {
       </div>
       <div className={'detail'}>
         <Title level={3} style={{ marginBottom: '5px' }}>
+          Target attendant
+        </Title>
+        <Text className={'description'} style={{ whiteSpace: 'pre-line' }}>
+          {jobFairData?.targetAttendant}
+        </Text>
+        <Title level={3} style={{ marginBottom: '5px' }}>
           Description
         </Title>
-        <Text className={'description'}>{jobFairData?.description}</Text>
+        <Text className={'description'} style={{ whiteSpace: 'pre-line' }}>
+          {jobFairData?.description}
+        </Text>
         <Divider />
         <Title level={3}>About the host</Title>
 

@@ -121,8 +121,10 @@ export const AssignEmployeeModalContainer = (props) => {
       supervisorNum !== AssignmentBoothConstraint.supervisorNum ||
       staffNum < AssignmentBoothConstraint.staffNum
     ) {
-      setIsError(true);
-      return;
+      if (decoratorNum !== 0 && supervisorNum !== 0 && staffNum !== 0) {
+        setIsError(true);
+        return;
+      }
     }
 
     const unassignedEmployee = state.oldAssignedEmployees.filter(

@@ -8,7 +8,7 @@ import DoTestComponent from '../../components/customized-components/DoTest/DoTes
 import React, { useEffect, useState } from 'react';
 import TestCountDownComponent from '../../components/customized-components/TestCountDown/TestCountDown.component';
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 const { Meta } = Card;
 
 const AttendantAttemptTestContainer = (props) => {
@@ -139,8 +139,10 @@ const AttendantAttemptTestContainer = (props) => {
       <div>
         <Card className={'test-description'}>
           <Title level={3}>Test for {testData.jobPositionTitle}</Title>
-          <Text style={{ fontSize: 18, fontWeight: 500 }}>{'PRJ321 - Final exam'}</Text>
-          <Meta style={{ marginTop: '2rem', fontSize: 13 }} description={'*You have 20 minutes to attempt this test'} />
+          <Meta
+            style={{ marginTop: '2rem', fontSize: 13 }}
+            description={`*You have ${testData.duration} minutes to attempt this test`}
+          />
         </Card>
       </div>
       <TestCountDownComponent
