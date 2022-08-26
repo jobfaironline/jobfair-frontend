@@ -48,3 +48,5 @@ export const passwordStrengthSetting = {
   height: 5,
   alwaysVisible: false
 };
+
+export const maxAttendantInBooth = 5;

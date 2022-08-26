@@ -54,7 +54,7 @@ export default class BasicCharacterControl {
     }
   }
 
-  Update(timeInSeconds) {
+  Update(timeInSeconds, scene) {
     const characterTime = timeInSeconds * 0.5;
     const velocity = this._velocity;
     const frameDecceleration = new THREE.Vector3(
@@ -133,8 +133,6 @@ export default class BasicCharacterControl {
     this.switchAnimation();
     this.mixer.update(timeInSeconds);
     this.thirdPersonCamera.Update(timeInSeconds);
-    /*if (this.checkTargetCollision(scene)){
-      controlObject.position.copy(oldPosition)
-    }*/
+    if (this.checkTargetCollision(scene)) controlObject.position.copy(oldPosition);
   }
 }

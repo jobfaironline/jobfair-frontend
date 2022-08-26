@@ -2,6 +2,7 @@ import './ResumeDetail.styles.scss';
 import { APPLICATION_STATUS } from '../../../constants/ApplicationConst';
 import { Card, Checkbox, Col, Descriptions, Row, Tag, Typography } from 'antd';
 import { INTERVIEW_SCHEDULE_STATUS } from '../../../constants/InterviewScheduleConst';
+import { ResumeActivityList } from './Content/ResumeActivityList.component';
 import { ResumeCertificationList } from './Content/ResumeCertificationList.component';
 import { ResumeOverview } from './Content/ResumeOverview.component';
 import { ResumeReferenceList } from './Content/ResumeReferenceList.component';
@@ -78,11 +79,12 @@ export const ResumeDetailComponent = (props) => {
               {data.about}
             </Text>
           </Card>
-          <ResumeEducationList data={data.educations} />
           <ResumeWorkHistoryList data={data.workHistories} />
+          <ResumeEducationList data={data.educations} />
           <ResumeSkillList data={data.skills} />
           <ResumeCertificationList data={data.certifications} />
           <ResumeReferenceList data={data.references} />
+          <ResumeActivityList data={data.activities} />
         </Col>
       </Row>
     </div>

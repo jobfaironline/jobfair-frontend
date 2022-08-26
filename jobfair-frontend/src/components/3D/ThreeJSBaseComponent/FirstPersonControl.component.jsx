@@ -77,31 +77,24 @@ export const FirstPersonControl = (props) => {
     } else geckoClientRef.current.stop();
 
     //make model bouding box
-    /*const skeleton = new THREE.SkeletonHelper(model);
-    var bone_min = {x: Infinity, y: Infinity, z: Infinity};
-    var bone_max = {x: -Infinity, y: -Infinity, z: -Infinity};
-    for (var b = 0; b < skeleton.bones.length; b++) {
-      var child = skeleton.bones[b];
-      var position = new THREE.Vector3();
+    const skeleton = new THREE.SkeletonHelper(model);
+    const bone_min = { x: Infinity, y: Infinity, z: Infinity };
+    const bone_max = { x: -Infinity, y: -Infinity, z: -Infinity };
+    for (let b = 0; b < skeleton.bones.length; b++) {
+      const child = skeleton.bones[b];
+      const position = new THREE.Vector3();
       child.getWorldPosition(position);
-      if (position.x < bone_min.x) {
-        bone_min.x = position.x;
-      }
-      if (position.y < bone_min.y) {
-        bone_min.y = position.y;
-      }
-      if (position.z < bone_min.z) {
-        bone_min.z = position.z;
-      }
-      if (position.x > bone_max.x) {
-        bone_max.x = position.x;
-      }
-      if (position.y > bone_max.y) {
-        bone_max.y = position.y;
-      }
-      if (position.z > bone_max.z) {
-        bone_max.z = position.z;
-      }
+      if (position.x < bone_min.x) bone_min.x = position.x;
+
+      if (position.y < bone_min.y) bone_min.y = position.y;
+
+      if (position.z < bone_min.z) bone_min.z = position.z;
+
+      if (position.x > bone_max.x) bone_max.x = position.x;
+
+      if (position.y > bone_max.y) bone_max.y = position.y;
+
+      if (position.z > bone_max.z) bone_max.z = position.z;
     }
 
     bone_max.x += camera.position.x - (bone_max.x + bone_min.x) / 2;
@@ -109,19 +102,22 @@ export const FirstPersonControl = (props) => {
     bone_min.z += camera.position.z - (bone_max.z + bone_min.z) / 2;
     bone_min.z += camera.position.z - (bone_max.z + bone_min.z) / 2;
 
-    const box = new THREE.Box3(new THREE.Vector3(bone_min.x, bone_min.y, bone_min.z), new THREE.Vector3(bone_max.x, bone_max.y, bone_max.z))*/
+    const box = new THREE.Box3(
+      new THREE.Vector3(bone_min.x, bone_min.y, bone_min.z),
+      new THREE.Vector3(bone_max.x, bone_max.y, bone_max.z)
+    );
     //check collision
-    /*if (collidableMeshListRef !== undefined) {
+    if (collidableMeshListRef !== undefined) {
       for (const child of collidableMeshListRef.current.children) {
-        if (child.name === "sand") continue
+        if (child.name === 'sand') continue;
         const childBox = new THREE.Box3().setFromObject(child);
-        if (box.intersectsBox(childBox)){
+        if (box.intersectsBox(childBox)) {
           camera.position.copy(cameraOldPosition);
           model.position.copy(modelOldPosition);
           return;
         }
       }
-    }*/
+    }
   }
 
   if (isChangeCamera.current) {

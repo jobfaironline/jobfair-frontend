@@ -128,7 +128,7 @@ const EducationComponent = ({ data, onClick }) => {
         <Text strong style={{ whiteSpace: 'pre-line' }}>
           Achievement:
         </Text>
-        <Paragraph>{achievement}</Paragraph>
+        <Paragraph style={{ whiteSpace: 'pre-line' }}>{achievement}</Paragraph>
       </div>
     </Card>
   );

@@ -14,6 +14,7 @@ import {
   getLayoutInformationForJobFairPark
 } from '../../../services/jobhub-api/JobFairControllerService';
 import { leaveJobFair, visitJobFair } from '../../../services/jobhub-api/VisitControllerService';
+import { maxAttendantInBooth } from '../../../constants/AppConst';
 import { selectWebSocket } from '../../../redux-flow/web-socket/web-socket-selector';
 import { useSelector } from 'react-redux';
 import JobFairParkMapComponent from '../../../components/3D/JobFairParkMap/JobFairParkMap.component';
@@ -185,9 +186,13 @@ const JobFairParkMapContainer = ({ jobFairId }) => {
               </div>
             }
             actions={[
-              <Title level={4} onClick={handleJoinBooth}>
-                Join now
-              </Title>
+              boothDialogState.boothData?.visitCount < maxAttendantInBooth ? (
+                <Title level={4} onClick={handleJoinBooth}>
+                  Join now
+                </Title>
+              ) : (
+                <Title level={4}>Sorry this booth is full please return later</Title>
+              )
             ]}
             title={
               <div className={'header-status'}>

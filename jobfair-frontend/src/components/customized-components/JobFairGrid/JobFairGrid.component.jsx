@@ -115,9 +115,11 @@ const JobFairGridComponent = (props) => {
         renderItem={(item) => {
           if (item.isFirst) {
             return (
-              <Card className={'card add-card'} hoverable={true} onClick={onAddJobFair}>
-                <FontAwesomeIcon icon={faPlus} size={'xl'} />
-              </Card>
+              <div style={{ height: '100%', paddingBottom: '2rem' }}>
+                <Card className={'card add-card'} hoverable={true} onClick={onAddJobFair}>
+                  <FontAwesomeIcon icon={faPlus} size={'xl'} />
+                </Card>
+              </div>
             );
           }
           return (
@@ -129,7 +131,7 @@ const JobFairGridComponent = (props) => {
                 </div>
               ) : null}
               {role !== undefined ? (
-                <div>
+                <div style={{ height: '100%', paddingBottom: '2rem' }}>
                   <JobFairGridCard item={item} onClick={onClick} role={role} defaultImage={defaultImage} />
                 </div>
               ) : null}
