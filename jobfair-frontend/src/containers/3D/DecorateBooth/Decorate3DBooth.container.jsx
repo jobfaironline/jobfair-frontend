@@ -129,7 +129,6 @@ export const Decorate3DBoothContainer = (props) => {
   });
 
   const uploadVideo = async (textureObj, layoutId, itemName, isSaveInMyBoothLayout) => {
-    hasUnsavedChangeRef.current = true;
     if (textureObj.texture.image.src.substring(0, 4) !== 'data') {
       if (isSaveInMyBoothLayout) {
         return saveLayoutVideoWithUrlIntoMyBoothLayout({
@@ -187,7 +186,7 @@ export const Decorate3DBoothContainer = (props) => {
     //upload video
     const videoUploadPromises = [];
     for (const textureObj of textureList) {
-      const promise = uploadVideo(textureObj, response.data.id, textureObj.meshName);
+      const promise = uploadVideo(textureObj, response.data.id, textureObj.meshName, isSaveInMyBoothLayout);
       videoUploadPromises.push(promise);
     }
     await Promise.all(videoUploadPromises);
@@ -355,7 +354,7 @@ export const Decorate3DBoothContainer = (props) => {
   );
 };
 
-const InputLayoutNameForm = ({ saveHandle }) => {
+export const InputLayoutNameForm = ({ saveHandle }) => {
   //for layout name form
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);

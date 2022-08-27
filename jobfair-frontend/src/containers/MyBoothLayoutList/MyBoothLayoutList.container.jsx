@@ -2,19 +2,20 @@ import { BoothLayoutType } from '../../constants/LayoutConstant';
 import { Button, Card, Modal, Space, Tooltip, Typography, notification } from 'antd';
 import { CustomDateFormat } from '../../constants/ApplicationConst';
 import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { Provider, useDispatch } from 'react-redux';
 import { ReviewBoothLayoutContainer } from '../3D/ReviewBoothLayout/ReviewBoothLayout.container';
 import { decorateBoothAction } from '../../redux-flow/decorateBooth/decorate-booth-slice';
 import {
   deleteBoothLayoutInMyBoothLayout,
   getAllMyBoothLayout
 } from '../../services/jobhub-api/DecoratorBoothLayoutController';
-import { useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import store from '../../redux-flow';
 
 const { Meta } = Card;
 
-const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility, deletable }) => {
+const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility, deletable, choosable = true }) => {
   const [myBoothLayouts, setMyBoothLayouts] = useState([]);
   const dispatch = useDispatch();
 
@@ -53,6 +54,10 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility,
   };
 
   const handleChoose = (layoutId, layoutName) => {
+    if (!choosable) {
+      handlePreviewLayout(layoutId, layoutName);
+      return;
+    }
     const modal = Modal.confirm();
     modal.update({
       title: 'Confirm using layout',
@@ -92,14 +97,15 @@ const MyBoothLayoutListContainer = ({ myLayoutVisibility, setMyLayoutVisibility,
   };
 
   const handlePreviewLayout = (layoutId, layoutName) => {
-    const modal = Modal.info();
-    modal.update({
+    Modal.info({
       centered: true,
       width: '800px',
       title: `Layout: ${layoutName}`,
       content: (
         <div style={{ height: '500px' }}>
-          <ReviewBoothLayoutContainer id={layoutId} type={BoothLayoutType.DECORATOR} />
+          <Provider store={store}>
+            <ReviewBoothLayoutContainer id={layoutId} type={BoothLayoutType.DECORATOR} />
+          </Provider>
         </div>
       )
     });

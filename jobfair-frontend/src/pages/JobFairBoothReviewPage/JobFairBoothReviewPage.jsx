@@ -7,7 +7,7 @@ export const JobFairBoothReviewPage = () => {
   const { boothId } = useParams();
   return (
     <div style={{ width: '100%', height: `calc(100vh - ${NAVBAR_HEIGHT})`, paddingTop: '80px' }}>
-      <ReviewBoothLayoutContainer type={BoothLayoutType.GENERAL} id={boothId} />
+      <ReviewBoothLayoutContainer type={BoothLayoutType.GENERAL} id={boothId} isPage={true} />
     </div>
   );
 };
