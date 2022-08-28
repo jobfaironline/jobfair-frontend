@@ -2,18 +2,26 @@ import { Badge, Divider, Drawer, Typography } from 'antd';
 import { DateFormat, MinuteFormat } from '../../../constants/ApplicationConst';
 import { INTERVIEW_SCHEDULE_STATUS } from '../../../constants/InterviewScheduleConst';
 import { convertEnumToString } from '../../../utils/common';
+import { useSelector } from 'react-redux';
 import React from 'react';
+import RoleType from '../../../constants/RoleType';
 import moment from 'moment';
 
 const { Text } = Typography;
 
-const generateContent = (item) => (
-  <div>
-    <Text strong>{item.title}</Text>
-    <br />
-    <Text>{`(${moment(item.timeStart).format(MinuteFormat)}-${moment(item.timeEnd).format(MinuteFormat)})`}</Text>
-  </div>
-);
+const generateContent = (item, role) => {
+  const title =
+    role === RoleType.COMPANY_EMPLOYEE
+      ? `Interview with ${item.attendantName}`
+      : `Interview with ${item.interviewerName}`;
+  return (
+    <div>
+      <Text strong>{title}</Text>
+      <br />
+      <Text>{`(${moment(item.timeStart).format(MinuteFormat)}-${moment(item.timeEnd).format(MinuteFormat)})`}</Text>
+    </div>
+  );
+};
 
 const getBadgeColor = (status) => {
   switch (status) {
@@ -38,6 +46,7 @@ export const ScheduleDetailDrawer = ({
   date,
   scheduleData
 }) => {
+  const role = useSelector((state) => state?.authentication?.user?.roles);
   if (!visible) return <div />;
 
   return (
@@ -58,7 +67,7 @@ export const ScheduleDetailDrawer = ({
                   setScheduleModalVisible(true);
                   setScheduleModalDetail(item);
                 }}>
-                {generateContent(item)}
+                {generateContent(item, role)}
               </div>
             </Badge.Ribbon>
             <Divider style={{ margin: '12px 0' }} />

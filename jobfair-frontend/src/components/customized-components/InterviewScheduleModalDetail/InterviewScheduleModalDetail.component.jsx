@@ -5,6 +5,7 @@ import { INTERVIEW_SCHEDULE_STATUS } from '../../../constants/InterviewScheduleC
 import { convertEnumToString, convertToDateString } from '../../../utils/common';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
+import RoleType from '../../../constants/RoleType';
 import moment from 'moment';
 
 export const handleTag = (status) => {
@@ -23,9 +24,13 @@ export const handleTag = (status) => {
 const InterviewScheduleModalDetailComponent = (props) => {
   const { data, visible, onCancel, handleRequestChange, buttonAction, role, handleViewApplication } = props;
 
+  const title =
+    role === RoleType.COMPANY_EMPLOYEE
+      ? `Interview with ${data?.attendantName}`
+      : `Interview with ${data?.interviewerName}`;
   return (
     <Modal visible={visible} onCancel={onCancel} footer={null} centered={true}>
-      <Card title={data?.title} bordered={false}>
+      <Card title={title} bordered={false}>
         <Card.Meta
           style={{ marginBottom: '2rem', marginTop: '1rem' }}
           description={
@@ -44,7 +49,7 @@ const InterviewScheduleModalDetailComponent = (props) => {
           description={
             <div>
               <Typography.Text strong>Description: </Typography.Text>
-              <Typography.Text>{data?.description}</Typography.Text>
+              <Typography.Text>{title}</Typography.Text>
             </div>
           }
         />

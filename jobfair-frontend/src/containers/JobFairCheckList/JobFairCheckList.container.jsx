@@ -165,8 +165,8 @@ export const JobFairCheckListContainer = ({ jobFairId }) => {
   };
 
   const handleReviewLayout = () => {
-    const url = generatePath(PATH_COMPANY_MANAGER.REVIEW_MAP, {
-      layoutId: state.layoutData.id
+    const url = generatePath(PATH.PUBLICIZED_BOOTH_PAGE, {
+      jobFairId: state.jobFairData.id
     });
     const src = `${window.location.origin}${url}`;
     window.open(src);
